@@ -440,126 +440,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pad name="SH2" x="-3.81" y="7.25" drill="1.4"/>
 <pad name="SH1" x="1.09" y="7.85" drill="1.4"/>
 </package>
-<package name="TSOP54-400">
-<wire x1="-11.0084" y1="1.4" x2="-11.0084" y2="3.4" width="0.2032" layer="21" curve="180"/>
-<wire x1="11.0084" y1="-4.9784" x2="11.0084" y2="4.9784" width="0.2032" layer="21"/>
-<wire x1="11.0084" y1="4.9784" x2="-11.0084" y2="4.9784" width="0.2032" layer="21"/>
-<wire x1="-11.0084" y1="4.9784" x2="-11.0084" y2="3.4" width="0.2032" layer="21"/>
-<wire x1="-11.0084" y1="3.4" x2="-11.0084" y2="1.4" width="0.2032" layer="21"/>
-<wire x1="-11.0084" y1="1.4" x2="-11.0084" y2="-4.9784" width="0.2032" layer="21"/>
-<wire x1="-11.0084" y1="-4.9784" x2="11.0084" y2="-4.9784" width="0.2032" layer="21"/>
-<circle x="-10.4" y="-4.4" radius="0.4" width="0" layer="21"/>
-<smd name="1" x="-10.4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="2" x="-9.6" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="3" x="-8.8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="4" x="-8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="5" x="-7.2" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="6" x="-6.4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="7" x="-5.6" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="8" x="-4.8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="9" x="-4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="10" x="-3.2" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="11" x="-2.4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="12" x="-1.6" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="13" x="-0.8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="14" x="0" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="15" x="0.8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="16" x="1.6" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="17" x="2.4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="18" x="3.2" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="19" x="4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="20" x="4.8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="21" x="5.6" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="22" x="6.4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="23" x="7.2" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="24" x="8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="25" x="8.8" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="26" x="9.6" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="27" x="10.4" y="-5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="28" x="10.4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R270"/>
-<smd name="29" x="9.6" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="30" x="8.8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="31" x="8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="32" x="7.2" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="33" x="6.4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="34" x="5.6" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="35" x="4.8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="36" x="4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="37" x="3.2" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="38" x="2.4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="39" x="1.6" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="40" x="0.8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="41" x="0" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="42" x="-0.8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="43" x="-1.6" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="44" x="-2.4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="45" x="-3.2" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="46" x="-4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="47" x="-4.8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="48" x="-5.6" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="49" x="-6.4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="50" x="-7.2" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="51" x="-8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="52" x="-8.8" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="53" x="-9.6" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<smd name="54" x="-10.4" y="5.68" dx="0.9" dy="0.4" layer="1" rot="R90"/>
-<text x="-9.118" y="2.964" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-9.048" y="2.14" size="0.4064" layer="27">&gt;VALUE</text>
-<rectangle x1="-10.8" y1="-5.6675" x2="-10" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-10" y1="-5.6675" x2="-9.2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-9.2" y1="-5.6675" x2="-8.4" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-8.4" y1="-5.6675" x2="-7.6" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-7.6" y1="-5.6675" x2="-6.8" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-6.8" y1="-5.6675" x2="-6" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-6" y1="-5.6675" x2="-5.2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-5.2" y1="-5.6675" x2="-4.4" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-4.4" y1="-5.6675" x2="-3.6" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-3.6" y1="-5.6675" x2="-2.8" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-2.8" y1="-5.6675" x2="-2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-2" y1="-5.6675" x2="-1.2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-1.2" y1="-5.6675" x2="-0.4" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="-0.4" y1="-5.6675" x2="0.4" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="0.4" y1="-5.6675" x2="1.2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="1.2" y1="-5.6675" x2="2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="2" y1="-5.6675" x2="2.8" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="2.8" y1="-5.6675" x2="3.6" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="3.6" y1="-5.6675" x2="4.4" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="4.4" y1="-5.6675" x2="5.2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="5.2" y1="-5.6675" x2="6" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="6" y1="-5.6675" x2="6.8" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="6.8" y1="-5.6675" x2="7.6" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="7.6" y1="-5.6675" x2="8.4" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="8.4" y1="-5.6675" x2="9.2" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="9.2" y1="-5.6675" x2="10" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="10" y1="-5.6675" x2="10.8" y2="-5.2925" layer="51" rot="R90"/>
-<rectangle x1="10" y1="5.2925" x2="10.8" y2="5.6675" layer="51" rot="R270"/>
-<rectangle x1="9.2" y1="5.2925" x2="10" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="8.4" y1="5.2925" x2="9.2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="7.6" y1="5.2925" x2="8.4" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="6.8" y1="5.2925" x2="7.6" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="6" y1="5.2925" x2="6.8" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="5.2" y1="5.2925" x2="6" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="4.4" y1="5.2925" x2="5.2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="3.6" y1="5.2925" x2="4.4" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="2.8" y1="5.2925" x2="3.6" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="2" y1="5.2925" x2="2.8" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="1.2" y1="5.2925" x2="2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="0.4" y1="5.2925" x2="1.2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-0.4" y1="5.2925" x2="0.4" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-1.2" y1="5.2925" x2="-0.4" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-2" y1="5.2925" x2="-1.2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-2.8" y1="5.2925" x2="-2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-3.6" y1="5.2925" x2="-2.8" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-4.4" y1="5.2925" x2="-3.6" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-5.2" y1="5.2925" x2="-4.4" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-6" y1="5.2925" x2="-5.2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-6.8" y1="5.2925" x2="-6" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-7.6" y1="5.2925" x2="-6.8" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-8.4" y1="5.2925" x2="-7.6" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-9.2" y1="5.2925" x2="-8.4" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-10" y1="5.2925" x2="-9.2" y2="5.6675" layer="51" rot="R90"/>
-<rectangle x1="-10.8" y1="5.2925" x2="-10" y2="5.6675" layer="51" rot="R90"/>
-</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -836,68 +716,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-10.16" y="23.622" size="1.778" layer="95">&gt;NAME</text>
 <text x="-10.16" y="-27.94" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
-<symbol name="MT48LC16M16A2P">
-<wire x1="-10.16" y1="43.18" x2="10.16" y2="43.18" width="0.254" layer="94"/>
-<wire x1="10.16" y1="43.18" x2="10.16" y2="-40.64" width="0.254" layer="94"/>
-<wire x1="10.16" y1="-40.64" x2="-10.16" y2="-40.64" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="-40.64" x2="-10.16" y2="43.18" width="0.254" layer="94"/>
-<text x="-10.16" y="44.196" size="1.27" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-43.18" size="1.27" layer="95">&gt;VALUE</text>
-<pin name="A0" x="-12.7" y="40.64" length="short"/>
-<pin name="A1" x="-12.7" y="38.1" length="short"/>
-<pin name="A2" x="-12.7" y="35.56" length="short"/>
-<pin name="A3" x="-12.7" y="33.02" length="short"/>
-<pin name="A4" x="-12.7" y="30.48" length="short"/>
-<pin name="A5" x="-12.7" y="27.94" length="short"/>
-<pin name="A6" x="-12.7" y="25.4" length="short"/>
-<pin name="A7" x="-12.7" y="22.86" length="short"/>
-<pin name="A8" x="-12.7" y="20.32" length="short"/>
-<pin name="A9" x="-12.7" y="17.78" length="short"/>
-<pin name="A10" x="-12.7" y="15.24" length="short"/>
-<pin name="A11" x="-12.7" y="12.7" length="short"/>
-<pin name="BA0" x="-12.7" y="5.08" length="short"/>
-<pin name="BA1" x="-12.7" y="2.54" length="short"/>
-<pin name="DQML" x="-12.7" y="-2.54" length="short"/>
-<pin name="DQMH" x="-12.7" y="-5.08" length="short"/>
-<pin name="CS" x="-12.7" y="-10.16" length="short"/>
-<pin name="WE" x="-12.7" y="-12.7" length="short"/>
-<pin name="CAS" x="-12.7" y="-15.24" length="short"/>
-<pin name="RAS" x="-12.7" y="-17.78" length="short"/>
-<pin name="CLK" x="-12.7" y="-22.86" length="short"/>
-<pin name="CKE" x="-12.7" y="-25.4" length="short"/>
-<pin name="DQ0" x="12.7" y="40.64" length="short" rot="R180"/>
-<pin name="DQ1" x="12.7" y="38.1" length="short" rot="R180"/>
-<pin name="DQ2" x="12.7" y="35.56" length="short" rot="R180"/>
-<pin name="DQ3" x="12.7" y="33.02" length="short" rot="R180"/>
-<pin name="DQ4" x="12.7" y="30.48" length="short" rot="R180"/>
-<pin name="DQ5" x="12.7" y="27.94" length="short" rot="R180"/>
-<pin name="DQ6" x="12.7" y="25.4" length="short" rot="R180"/>
-<pin name="DQ7" x="12.7" y="22.86" length="short" rot="R180"/>
-<pin name="DQ8" x="12.7" y="20.32" length="short" rot="R180"/>
-<pin name="DQ9" x="12.7" y="17.78" length="short" rot="R180"/>
-<pin name="DQ10" x="12.7" y="15.24" length="short" rot="R180"/>
-<pin name="DQ11" x="12.7" y="12.7" length="short" rot="R180"/>
-<pin name="DQ12" x="12.7" y="10.16" length="short" rot="R180"/>
-<pin name="DQ13" x="12.7" y="7.62" length="short" rot="R180"/>
-<pin name="DQ14" x="12.7" y="5.08" length="short" rot="R180"/>
-<pin name="DQ15" x="12.7" y="2.54" length="short" rot="R180"/>
-<pin name="VDD1" x="12.7" y="-2.54" length="short" rot="R180"/>
-<pin name="VDD2" x="12.7" y="-5.08" length="short" rot="R180"/>
-<pin name="VDD3" x="12.7" y="-7.62" length="short" rot="R180"/>
-<pin name="VDDQ1" x="12.7" y="-10.16" length="short" rot="R180"/>
-<pin name="VDDQ2" x="12.7" y="-12.7" length="short" rot="R180"/>
-<pin name="VDDQ3" x="12.7" y="-15.24" length="short" rot="R180"/>
-<pin name="VDDQ4" x="12.7" y="-17.78" length="short" rot="R180"/>
-<pin name="VSS1" x="12.7" y="-22.86" length="short" rot="R180"/>
-<pin name="VSS2" x="12.7" y="-25.4" length="short" rot="R180"/>
-<pin name="VSS3" x="12.7" y="-27.94" length="short" rot="R180"/>
-<pin name="VSSQ1" x="12.7" y="-30.48" length="short" rot="R180"/>
-<pin name="VSSQ2" x="12.7" y="-33.02" length="short" rot="R180"/>
-<pin name="VSSQ3" x="12.7" y="-35.56" length="short" rot="R180"/>
-<pin name="VSSQ4" x="12.7" y="-38.1" length="short" rot="R180"/>
-<pin name="A12" x="-12.7" y="10.16" length="short"/>
-<pin name="NC" x="-12.7" y="-35.56" length="short"/>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -1159,74 +977,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="TMDS_D2N" pad="P3"/>
 <connect gate="G$1" pin="TMDS_D2P" pad="P1"/>
 <connect gate="G$1" pin="TMDS_D2_SHLD" pad="P2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="MT48LC16M16A2P">
-<gates>
-<gate name="G$1" symbol="MT48LC16M16A2P" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="TSOP54-400">
-<connects>
-<connect gate="G$1" pin="A0" pad="23"/>
-<connect gate="G$1" pin="A1" pad="24"/>
-<connect gate="G$1" pin="A10" pad="22"/>
-<connect gate="G$1" pin="A11" pad="35"/>
-<connect gate="G$1" pin="A12" pad="36"/>
-<connect gate="G$1" pin="A2" pad="25"/>
-<connect gate="G$1" pin="A3" pad="26"/>
-<connect gate="G$1" pin="A4" pad="29"/>
-<connect gate="G$1" pin="A5" pad="30"/>
-<connect gate="G$1" pin="A6" pad="31"/>
-<connect gate="G$1" pin="A7" pad="32"/>
-<connect gate="G$1" pin="A8" pad="33"/>
-<connect gate="G$1" pin="A9" pad="34"/>
-<connect gate="G$1" pin="BA0" pad="20"/>
-<connect gate="G$1" pin="BA1" pad="21"/>
-<connect gate="G$1" pin="CAS" pad="17"/>
-<connect gate="G$1" pin="CKE" pad="37"/>
-<connect gate="G$1" pin="CLK" pad="38"/>
-<connect gate="G$1" pin="CS" pad="19"/>
-<connect gate="G$1" pin="DQ0" pad="2"/>
-<connect gate="G$1" pin="DQ1" pad="4"/>
-<connect gate="G$1" pin="DQ10" pad="45"/>
-<connect gate="G$1" pin="DQ11" pad="47"/>
-<connect gate="G$1" pin="DQ12" pad="48"/>
-<connect gate="G$1" pin="DQ13" pad="50"/>
-<connect gate="G$1" pin="DQ14" pad="51"/>
-<connect gate="G$1" pin="DQ15" pad="53"/>
-<connect gate="G$1" pin="DQ2" pad="5"/>
-<connect gate="G$1" pin="DQ3" pad="7"/>
-<connect gate="G$1" pin="DQ4" pad="8"/>
-<connect gate="G$1" pin="DQ5" pad="10"/>
-<connect gate="G$1" pin="DQ6" pad="11"/>
-<connect gate="G$1" pin="DQ7" pad="13"/>
-<connect gate="G$1" pin="DQ8" pad="42"/>
-<connect gate="G$1" pin="DQ9" pad="44"/>
-<connect gate="G$1" pin="DQMH" pad="39"/>
-<connect gate="G$1" pin="DQML" pad="15"/>
-<connect gate="G$1" pin="NC" pad="40"/>
-<connect gate="G$1" pin="RAS" pad="18"/>
-<connect gate="G$1" pin="VDD1" pad="1"/>
-<connect gate="G$1" pin="VDD2" pad="14"/>
-<connect gate="G$1" pin="VDD3" pad="27"/>
-<connect gate="G$1" pin="VDDQ1" pad="3"/>
-<connect gate="G$1" pin="VDDQ2" pad="9"/>
-<connect gate="G$1" pin="VDDQ3" pad="43"/>
-<connect gate="G$1" pin="VDDQ4" pad="49"/>
-<connect gate="G$1" pin="VSS1" pad="28"/>
-<connect gate="G$1" pin="VSS2" pad="41"/>
-<connect gate="G$1" pin="VSS3" pad="54"/>
-<connect gate="G$1" pin="VSSQ1" pad="6"/>
-<connect gate="G$1" pin="VSSQ2" pad="12"/>
-<connect gate="G$1" pin="VSSQ3" pad="46"/>
-<connect gate="G$1" pin="VSSQ4" pad="52"/>
-<connect gate="G$1" pin="WE" pad="16"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4456,7 +4206,6 @@ Variant PTH is our storefront SKU PRT-08032</description>
 <part name="U$1" library="reclone-rise" deviceset="PCA9527" device=""/>
 <part name="U$2" library="reclone-rise" deviceset="DP83848C" device=""/>
 <part name="U$3" library="reclone-rise" deviceset="HDMI_A" device=""/>
-<part name="U$4" library="reclone-rise" deviceset="MT48LC16M16A2P" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4474,7 +4223,6 @@ Variant PTH is our storefront SKU PRT-08032</description>
 <instance part="U$1" gate="G$1" x="-45.72" y="177.8"/>
 <instance part="U$2" gate="G$1" x="-33.02" y="228.6"/>
 <instance part="U$3" gate="G$1" x="-55.88" y="27.94"/>
-<instance part="U$4" gate="G$1" x="-106.68" y="137.16"/>
 </instances>
 <busses>
 </busses>
