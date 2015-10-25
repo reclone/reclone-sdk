@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -1016,7 +1016,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="L8" x="2.4" y="-2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="K9" x="3.2" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="K7" x="1.6" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
-<smd name="P$68" x="2.4" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="K8" x="2.4" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="J7" x="1.6" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="J8" x="2.4" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="J9" x="3.2" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
@@ -1384,6 +1384,96 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-10.16" y="8.382" size="1.27" layer="95">&gt;NAME</text>
 <text x="-10.16" y="-9.398" size="1.27" layer="96">&gt;VALUE</text>
 </symbol>
+<symbol name="DDR2_128MX16">
+<wire x1="-27.94" y1="38.1" x2="-27.94" y2="-35.56" width="0.254" layer="94"/>
+<wire x1="-27.94" y1="-35.56" x2="27.94" y2="-35.56" width="0.254" layer="94"/>
+<wire x1="27.94" y1="-35.56" x2="27.94" y2="38.1" width="0.254" layer="94"/>
+<wire x1="27.94" y1="38.1" x2="-27.94" y2="38.1" width="0.254" layer="94"/>
+<pin name="DQ0" x="30.48" y="35.56" length="short" rot="R180"/>
+<pin name="DQ1" x="30.48" y="33.02" length="short" rot="R180"/>
+<pin name="DQ2" x="30.48" y="30.48" length="short" rot="R180"/>
+<pin name="DQ3" x="30.48" y="27.94" length="short" rot="R180"/>
+<pin name="DQ4" x="30.48" y="25.4" length="short" rot="R180"/>
+<pin name="DQ5" x="30.48" y="22.86" length="short" rot="R180"/>
+<pin name="DQ6" x="30.48" y="20.32" length="short" rot="R180"/>
+<pin name="DQ7" x="30.48" y="17.78" length="short" rot="R180"/>
+<pin name="DQ8" x="30.48" y="15.24" length="short" rot="R180"/>
+<pin name="DQ9" x="30.48" y="12.7" length="short" rot="R180"/>
+<pin name="DQ10" x="30.48" y="10.16" length="short" rot="R180"/>
+<pin name="DQ11" x="30.48" y="7.62" length="short" rot="R180"/>
+<pin name="DQ12" x="30.48" y="5.08" length="short" rot="R180"/>
+<pin name="DQ13" x="30.48" y="2.54" length="short" rot="R180"/>
+<pin name="DQ14" x="30.48" y="0" length="short" rot="R180"/>
+<pin name="DQ15" x="30.48" y="-2.54" length="short" rot="R180"/>
+<pin name="A0" x="-30.48" y="35.56" length="short"/>
+<pin name="A1" x="-30.48" y="33.02" length="short"/>
+<pin name="A2" x="-30.48" y="30.48" length="short"/>
+<pin name="A3" x="-30.48" y="27.94" length="short"/>
+<pin name="A4" x="-30.48" y="25.4" length="short"/>
+<pin name="A5" x="-30.48" y="22.86" length="short"/>
+<pin name="A6" x="-30.48" y="20.32" length="short"/>
+<pin name="A7" x="-30.48" y="17.78" length="short"/>
+<pin name="A8" x="-30.48" y="15.24" length="short"/>
+<pin name="A9" x="-30.48" y="12.7" length="short"/>
+<pin name="A10" x="-30.48" y="10.16" length="short"/>
+<pin name="A11" x="-30.48" y="7.62" length="short"/>
+<pin name="A12" x="-30.48" y="5.08" length="short"/>
+<pin name="A13" x="-30.48" y="2.54" length="short"/>
+<pin name="RFU/A14" x="-30.48" y="0" length="short"/>
+<pin name="RFU/A15" x="-30.48" y="-2.54" length="short"/>
+<pin name="BA2" x="-30.48" y="-5.08" length="short"/>
+<pin name="BA1" x="-30.48" y="-7.62" length="short"/>
+<pin name="BA0" x="-30.48" y="-10.16" length="short"/>
+<pin name="CK" x="-30.48" y="-12.7" length="short"/>
+<pin name="CK#" x="-30.48" y="-15.24" length="short"/>
+<pin name="CKE" x="-30.48" y="-17.78" length="short"/>
+<pin name="CS#" x="-30.48" y="-20.32" length="short"/>
+<pin name="LDM" x="30.48" y="-5.08" length="short" rot="R180"/>
+<pin name="UDM" x="30.48" y="-7.62" length="short" rot="R180"/>
+<pin name="ODT" x="-30.48" y="-22.86" length="short"/>
+<pin name="RAS#" x="-30.48" y="-25.4" length="short"/>
+<pin name="CAS#" x="-30.48" y="-27.94" length="short"/>
+<pin name="WE#" x="-30.48" y="-30.48" length="short"/>
+<pin name="NC1" x="30.48" y="-22.86" length="short" rot="R180"/>
+<pin name="NC2" x="30.48" y="-25.4" length="short" rot="R180"/>
+<pin name="LDQS" x="30.48" y="-10.16" length="short" rot="R180"/>
+<pin name="LDQS#" x="30.48" y="-12.7" length="short" rot="R180"/>
+<pin name="UDQS" x="30.48" y="-15.24" length="short" rot="R180"/>
+<pin name="UDQS#" x="30.48" y="-17.78" length="short" rot="R180"/>
+<pin name="VDD@A1" x="-20.32" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@A9" x="-17.78" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C1" x="-15.24" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C3" x="-12.7" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C7" x="-10.16" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C9" x="-7.62" y="40.64" length="short" rot="R270"/>
+<pin name="VDD@E1" x="-5.08" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@E9" x="-2.54" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G1" x="0" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G3" x="2.54" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G7" x="5.08" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G9" x="7.62" y="40.64" length="short" rot="R270"/>
+<pin name="VDDL@J1" x="10.16" y="40.64" length="short" rot="R270"/>
+<pin name="VREF" x="12.7" y="40.64" length="short" rot="R270"/>
+<pin name="VDD@J9" x="15.24" y="40.64" length="short" rot="R270"/>
+<pin name="VDD@M9" x="17.78" y="40.64" length="short" rot="R270"/>
+<pin name="VDD@R1" x="20.32" y="40.64" length="short" rot="R270"/>
+<pin name="VSS@A3" x="-20.32" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@A7" x="-17.78" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@B2" x="-15.24" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@B8" x="-12.7" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@D2" x="-10.16" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@D8" x="-7.62" y="-38.1" length="short" rot="R90"/>
+<pin name="VSS@E3" x="-5.08" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@E7" x="-2.54" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@F2" x="0" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@F8" x="2.54" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@H2" x="5.08" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSQ@H8" x="7.62" y="-38.1" length="short" rot="R90"/>
+<pin name="VSS@J3" x="10.16" y="-38.1" length="short" rot="R90"/>
+<pin name="VSSDL@J7" x="12.7" y="-38.1" length="short" rot="R90"/>
+<pin name="VSS@N1" x="15.24" y="-38.1" length="short" rot="R90"/>
+<pin name="VSS@P9" x="17.78" y="-38.1" length="short" rot="R90"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="DP83848C">
@@ -1713,6 +1803,104 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="SDAB" pad="8"/>
 <connect gate="G$1" pin="VCCA" pad="1"/>
 <connect gate="G$1" pin="VCCB" pad="10"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MT47H128M16">
+<gates>
+<gate name="G$1" symbol="DDR2_128MX16" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="84-FBGA-9X12.5">
+<connects>
+<connect gate="G$1" pin="A0" pad="M8"/>
+<connect gate="G$1" pin="A1" pad="M3"/>
+<connect gate="G$1" pin="A10" pad="M2"/>
+<connect gate="G$1" pin="A11" pad="P7"/>
+<connect gate="G$1" pin="A12" pad="R2"/>
+<connect gate="G$1" pin="A13" pad="R8"/>
+<connect gate="G$1" pin="A2" pad="M7"/>
+<connect gate="G$1" pin="A3" pad="N2"/>
+<connect gate="G$1" pin="A4" pad="N8"/>
+<connect gate="G$1" pin="A5" pad="N3"/>
+<connect gate="G$1" pin="A6" pad="N7"/>
+<connect gate="G$1" pin="A7" pad="P2"/>
+<connect gate="G$1" pin="A8" pad="P8"/>
+<connect gate="G$1" pin="A9" pad="P3"/>
+<connect gate="G$1" pin="BA0" pad="L2"/>
+<connect gate="G$1" pin="BA1" pad="L3"/>
+<connect gate="G$1" pin="BA2" pad="L1"/>
+<connect gate="G$1" pin="CAS#" pad="L7"/>
+<connect gate="G$1" pin="CK" pad="J8"/>
+<connect gate="G$1" pin="CK#" pad="K8"/>
+<connect gate="G$1" pin="CKE" pad="K2"/>
+<connect gate="G$1" pin="CS#" pad="L8"/>
+<connect gate="G$1" pin="DQ0" pad="G8"/>
+<connect gate="G$1" pin="DQ1" pad="G2"/>
+<connect gate="G$1" pin="DQ10" pad="D7"/>
+<connect gate="G$1" pin="DQ11" pad="D3"/>
+<connect gate="G$1" pin="DQ12" pad="D1"/>
+<connect gate="G$1" pin="DQ13" pad="D9"/>
+<connect gate="G$1" pin="DQ14" pad="B1"/>
+<connect gate="G$1" pin="DQ15" pad="B9"/>
+<connect gate="G$1" pin="DQ2" pad="H7"/>
+<connect gate="G$1" pin="DQ3" pad="H3"/>
+<connect gate="G$1" pin="DQ4" pad="H1"/>
+<connect gate="G$1" pin="DQ5" pad="H9"/>
+<connect gate="G$1" pin="DQ6" pad="F1"/>
+<connect gate="G$1" pin="DQ7" pad="F9"/>
+<connect gate="G$1" pin="DQ8" pad="C8"/>
+<connect gate="G$1" pin="DQ9" pad="C2"/>
+<connect gate="G$1" pin="LDM" pad="F3"/>
+<connect gate="G$1" pin="LDQS" pad="F7"/>
+<connect gate="G$1" pin="LDQS#" pad="E8"/>
+<connect gate="G$1" pin="NC1" pad="A2"/>
+<connect gate="G$1" pin="NC2" pad="E2"/>
+<connect gate="G$1" pin="ODT" pad="K9"/>
+<connect gate="G$1" pin="RAS#" pad="K7"/>
+<connect gate="G$1" pin="RFU/A14" pad="R3"/>
+<connect gate="G$1" pin="RFU/A15" pad="R7"/>
+<connect gate="G$1" pin="UDM" pad="B3"/>
+<connect gate="G$1" pin="UDQS" pad="B7"/>
+<connect gate="G$1" pin="UDQS#" pad="A8"/>
+<connect gate="G$1" pin="VDD@A1" pad="A1"/>
+<connect gate="G$1" pin="VDD@E1" pad="E1"/>
+<connect gate="G$1" pin="VDD@J9" pad="J9"/>
+<connect gate="G$1" pin="VDD@M9" pad="M9"/>
+<connect gate="G$1" pin="VDD@R1" pad="R1"/>
+<connect gate="G$1" pin="VDDL@J1" pad="J1"/>
+<connect gate="G$1" pin="VDDQ@A9" pad="A9"/>
+<connect gate="G$1" pin="VDDQ@C1" pad="C1"/>
+<connect gate="G$1" pin="VDDQ@C3" pad="C3"/>
+<connect gate="G$1" pin="VDDQ@C7" pad="C7"/>
+<connect gate="G$1" pin="VDDQ@C9" pad="C9"/>
+<connect gate="G$1" pin="VDDQ@E9" pad="E9"/>
+<connect gate="G$1" pin="VDDQ@G1" pad="G1"/>
+<connect gate="G$1" pin="VDDQ@G3" pad="G3"/>
+<connect gate="G$1" pin="VDDQ@G7" pad="G7"/>
+<connect gate="G$1" pin="VDDQ@G9" pad="G9"/>
+<connect gate="G$1" pin="VREF" pad="J2"/>
+<connect gate="G$1" pin="VSS@A3" pad="A3"/>
+<connect gate="G$1" pin="VSS@E3" pad="E3"/>
+<connect gate="G$1" pin="VSS@J3" pad="J3"/>
+<connect gate="G$1" pin="VSS@N1" pad="N1"/>
+<connect gate="G$1" pin="VSS@P9" pad="P9"/>
+<connect gate="G$1" pin="VSSDL@J7" pad="J7"/>
+<connect gate="G$1" pin="VSSQ@A7" pad="A7"/>
+<connect gate="G$1" pin="VSSQ@B2" pad="B2"/>
+<connect gate="G$1" pin="VSSQ@B8" pad="B8"/>
+<connect gate="G$1" pin="VSSQ@D2" pad="D2"/>
+<connect gate="G$1" pin="VSSQ@D8" pad="D8"/>
+<connect gate="G$1" pin="VSSQ@E7" pad="E7"/>
+<connect gate="G$1" pin="VSSQ@F2" pad="F2"/>
+<connect gate="G$1" pin="VSSQ@F8" pad="F8"/>
+<connect gate="G$1" pin="VSSQ@H2" pad="H2"/>
+<connect gate="G$1" pin="VSSQ@H8" pad="H8"/>
+<connect gate="G$1" pin="WE#" pad="K3"/>
 </connects>
 <technologies>
 <technology name=""/>

@@ -152,7 +152,6 @@
 <hole x="3.5" y="52.5" drill="2.75"/>
 <hole x="61.5" y="52.5" drill="2.75"/>
 <hole x="61.5" y="3.5" drill="2.75"/>
-<rectangle x1="28" y1="39" x2="40.5" y2="47" layer="1"/>
 </plain>
 <libraries>
 <library name="reclone-rise">
@@ -454,6 +453,103 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pad name="SH3" x="-3.81" y="-7.25" drill="1.4"/>
 <pad name="SH2" x="-3.81" y="7.25" drill="1.4"/>
 <pad name="SH1" x="1.09" y="7.85" drill="1.4"/>
+</package>
+<package name="84-FBGA-9X12.5">
+<wire x1="-4.5" y1="-6.25" x2="-4.5" y2="6.25" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="6.25" x2="-0.9" y2="6.25" width="0.127" layer="21"/>
+<wire x1="-0.9" y1="6.25" x2="0.9" y2="6.25" width="0.127" layer="21"/>
+<wire x1="0.9" y1="6.25" x2="4.5" y2="6.25" width="0.127" layer="21"/>
+<wire x1="4.5" y1="6.25" x2="4.5" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="4.5" y1="-6.25" x2="0.9" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="0.9" y1="-6.25" x2="-0.9" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="-0.9" y1="-6.25" x2="-4.5" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="0.9" y1="6.25" x2="0.9" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="-0.9" y1="6.25" x2="-0.9" y2="-6.25" width="0.127" layer="21"/>
+<smd name="H7" x="1.6" y="0" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="H8" x="2.4" y="0" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="H9" x="3.2" y="0" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="G7" x="1.6" y="0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="G8" x="2.4" y="0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="G9" x="3.2" y="0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="F7" x="1.6" y="1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="F8" x="2.4" y="1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="F9" x="3.2" y="1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="E7" x="1.6" y="2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="E8" x="2.4" y="2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="E9" x="3.2" y="2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="D7" x="1.6" y="3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="D8" x="2.4" y="3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="D9" x="3.2" y="3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="C7" x="1.6" y="4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="C8" x="2.4" y="4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="C9" x="3.2" y="4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="B7" x="1.6" y="4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="B8" x="2.4" y="4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="B9" x="3.2" y="4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="A7" x="1.6" y="5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="A8" x="2.4" y="5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="A9" x="3.2" y="5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="H1" x="-3.2" y="0" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="H2" x="-2.4" y="0" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="H3" x="-1.6" y="0" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="G1" x="-3.2" y="0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="G2" x="-2.4" y="0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="G3" x="-1.6" y="0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="F1" x="-3.2" y="1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="F2" x="-2.4" y="1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="F3" x="-1.6" y="1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="E1" x="-3.2" y="2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="E2" x="-2.4" y="2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="E3" x="-1.6" y="2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="D1" x="-3.2" y="3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="D2" x="-2.4" y="3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="D3" x="-1.6" y="3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="C1" x="-3.2" y="4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="C2" x="-2.4" y="4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="C3" x="-1.6" y="4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="B1" x="-3.2" y="4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="B2" x="-2.4" y="4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="B3" x="-1.6" y="4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="A1" x="-3.2" y="5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="A2" x="-2.4" y="5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="A3" x="-1.6" y="5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="R7" x="1.6" y="-5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="R8" x="2.4" y="-5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="P9" x="3.2" y="-4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="P7" x="1.6" y="-4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="P8" x="2.4" y="-4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="N7" x="1.6" y="-4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="N8" x="2.4" y="-4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="M9" x="3.2" y="-3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="M7" x="1.6" y="-3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="M8" x="2.4" y="-3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="L7" x="1.6" y="-2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="L8" x="2.4" y="-2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="K9" x="3.2" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="K7" x="1.6" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="K8" x="2.4" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="J7" x="1.6" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="J8" x="2.4" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="J9" x="3.2" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="R2" x="-2.4" y="-5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="R3" x="-1.6" y="-5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="R1" x="-3.2" y="-5.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="P2" x="-2.4" y="-4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="P3" x="-1.6" y="-4.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="N2" x="-2.4" y="-4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="N3" x="-1.6" y="-4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="N1" x="-3.2" y="-4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="M2" x="-2.4" y="-3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="M3" x="-1.6" y="-3.2" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="L2" x="-2.4" y="-2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="L3" x="-1.6" y="-2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="L1" x="-3.2" y="-2.4" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="K2" x="-2.4" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="K3" x="-1.6" y="-1.6" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="J1" x="-3.2" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="J2" x="-2.4" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<smd name="J3" x="-1.6" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
+<circle x="0" y="0" radius="0.1" width="0.2" layer="21"/>
 </package>
 </packages>
 </library>
@@ -1395,6 +1491,7 @@ design rules under a new name.</description>
 <element name="U$3" library="reclone-rise" package="HDMI_A_SMT" value="HDMI_A" x="32" y="4" locked="yes" rot="R270"/>
 <element name="U1" library="xilinx_devices_V6" package="FT256" value="6SLX16FTG256" x="35" y="28"/>
 <element name="U$4" library="Gadgeteer" package="SHF105DSM_1" value="SHF105" x="76" y="46"/>
+<element name="U$5" library="reclone-rise" package="84-FBGA-9X12.5" value="MT47H128M16" x="26" y="43" rot="R90"/>
 </elements>
 <signals>
 <signal name="GND">
