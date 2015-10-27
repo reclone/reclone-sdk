@@ -537,6 +537,53 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="J3" x="-1.6" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <circle x="0" y="0" radius="0.1" width="0.2" layer="21"/>
 </package>
+<package name="FPC15-1.0">
+<smd name="1@A" x="-7" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="1@B" x="-7" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="2@B" x="-6" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="3@B" x="-5" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="4@B" x="-4" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="5@B" x="-3" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="6@B" x="-2" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="7@B" x="-1" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="8@B" x="0" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="9@B" x="1" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="10@B" x="2" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="11@B" x="3" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="12@B" x="4" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="13@B" x="5" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="14@B" x="6" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<smd name="15@B" x="7" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
+<wire x1="-10.8" y1="1.8" x2="-10" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-10" y1="1.8" x2="-9" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-9" y1="1.8" x2="-8.1" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-8.1" y1="1.8" x2="8.1" y2="1.8" width="0.127" layer="21"/>
+<wire x1="8.1" y1="1.8" x2="10.8" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-10.8" y1="1.8" x2="-10.8" y2="-1.55" width="0.127" layer="21"/>
+<wire x1="-10.8" y1="-1.55" x2="-10.55" y2="-1.8" width="0.127" layer="21" curve="90"/>
+<wire x1="-10.55" y1="-1.8" x2="10.55" y2="-1.8" width="0.127" layer="21"/>
+<wire x1="10.55" y1="-1.8" x2="10.8" y2="-1.55" width="0.127" layer="21" curve="90"/>
+<wire x1="10.8" y1="-1.55" x2="10.8" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-10" y1="1.8" x2="-9.5" y2="1.3" width="0.127" layer="21"/>
+<wire x1="-9.5" y1="1.3" x2="-9" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-8.1" y1="1.8" x2="-8.1" y2="-0.05" width="0.127" layer="21"/>
+<wire x1="8.1" y1="1.8" x2="8.1" y2="-0.05" width="0.127" layer="21"/>
+<wire x1="-8.1" y1="-0.05" x2="8.1" y2="-0.05" width="0.127" layer="21"/>
+<smd name="2@A" x="-6" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="3@A" x="-5" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="4@A" x="-4" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="5@A" x="-3" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="6@A" x="-2" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="7@A" x="-1" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="8@A" x="0" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="9@A" x="1" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="10@A" x="2" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="11@A" x="3" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="12@A" x="4" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="13@A" x="5" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="14@A" x="6" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<smd name="15@A" x="7" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -903,6 +950,42 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="VSS@N1" x="15.24" y="-38.1" length="short" rot="R90"/>
 <pin name="VSS@P9" x="17.78" y="-38.1" length="short" rot="R90"/>
 </symbol>
+<symbol name="FPC15">
+<pin name="8@A" x="-7.62" y="0" length="short"/>
+<pin name="7@A" x="-7.62" y="2.54" length="short"/>
+<pin name="6@A" x="-7.62" y="5.08" length="short"/>
+<pin name="5@A" x="-7.62" y="7.62" length="short"/>
+<pin name="4@A" x="-7.62" y="10.16" length="short"/>
+<pin name="3@A" x="-7.62" y="12.7" length="short"/>
+<pin name="2@A" x="-7.62" y="15.24" length="short"/>
+<pin name="1@A" x="-7.62" y="17.78" length="short"/>
+<pin name="9@A" x="-7.62" y="-2.54" length="short"/>
+<pin name="10@A" x="-7.62" y="-5.08" length="short"/>
+<pin name="11@A" x="-7.62" y="-7.62" length="short"/>
+<pin name="12@A" x="-7.62" y="-10.16" length="short"/>
+<pin name="13@A" x="-7.62" y="-12.7" length="short"/>
+<pin name="14@A" x="-7.62" y="-15.24" length="short"/>
+<pin name="15@A" x="-7.62" y="-17.78" length="short"/>
+<pin name="1@B" x="12.7" y="17.78" length="short" rot="R180"/>
+<pin name="2@B" x="12.7" y="15.24" length="short" rot="R180"/>
+<pin name="3@B" x="12.7" y="12.7" length="short" rot="R180"/>
+<pin name="4@B" x="12.7" y="10.16" length="short" rot="R180"/>
+<pin name="5@B" x="12.7" y="7.62" length="short" rot="R180"/>
+<pin name="6@B" x="12.7" y="5.08" length="short" rot="R180"/>
+<pin name="7@B" x="12.7" y="2.54" length="short" rot="R180"/>
+<pin name="8@B" x="12.7" y="0" length="short" rot="R180"/>
+<pin name="9@B" x="12.7" y="-2.54" length="short" rot="R180"/>
+<pin name="10@B" x="12.7" y="-5.08" length="short" rot="R180"/>
+<pin name="11@B" x="12.7" y="-7.62" length="short" rot="R180"/>
+<pin name="12@B" x="12.7" y="-10.16" length="short" rot="R180"/>
+<pin name="13@B" x="12.7" y="-12.7" length="short" rot="R180"/>
+<pin name="14@B" x="12.7" y="-15.24" length="short" rot="R180"/>
+<pin name="15@B" x="12.7" y="-17.78" length="short" rot="R180"/>
+<wire x1="-5.08" y1="20.32" x2="-5.08" y2="-20.32" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-20.32" x2="10.16" y2="-20.32" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-20.32" x2="10.16" y2="20.32" width="0.254" layer="94"/>
+<wire x1="10.16" y1="20.32" x2="-5.08" y2="20.32" width="0.254" layer="94"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -1262,6 +1345,50 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="VSSQ@H2" pad="H2"/>
 <connect gate="G$1" pin="VSSQ@H8" pad="H8"/>
 <connect gate="G$1" pin="WE#" pad="K3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="FPC15-1.0">
+<gates>
+<gate name="G$1" symbol="FPC15" x="-2.54" y="0"/>
+</gates>
+<devices>
+<device name="" package="FPC15-1.0">
+<connects>
+<connect gate="G$1" pin="10@A" pad="10@A"/>
+<connect gate="G$1" pin="10@B" pad="10@B"/>
+<connect gate="G$1" pin="11@A" pad="11@A"/>
+<connect gate="G$1" pin="11@B" pad="11@B"/>
+<connect gate="G$1" pin="12@A" pad="12@A"/>
+<connect gate="G$1" pin="12@B" pad="12@B"/>
+<connect gate="G$1" pin="13@A" pad="13@A"/>
+<connect gate="G$1" pin="13@B" pad="13@B"/>
+<connect gate="G$1" pin="14@A" pad="14@A"/>
+<connect gate="G$1" pin="14@B" pad="14@B"/>
+<connect gate="G$1" pin="15@A" pad="15@A"/>
+<connect gate="G$1" pin="15@B" pad="15@B"/>
+<connect gate="G$1" pin="1@A" pad="1@A"/>
+<connect gate="G$1" pin="1@B" pad="1@B"/>
+<connect gate="G$1" pin="2@A" pad="2@A"/>
+<connect gate="G$1" pin="2@B" pad="2@B"/>
+<connect gate="G$1" pin="3@A" pad="3@A"/>
+<connect gate="G$1" pin="3@B" pad="3@B"/>
+<connect gate="G$1" pin="4@A" pad="4@A"/>
+<connect gate="G$1" pin="4@B" pad="4@B"/>
+<connect gate="G$1" pin="5@A" pad="5@A"/>
+<connect gate="G$1" pin="5@B" pad="5@B"/>
+<connect gate="G$1" pin="6@A" pad="6@A"/>
+<connect gate="G$1" pin="6@B" pad="6@B"/>
+<connect gate="G$1" pin="7@A" pad="7@A"/>
+<connect gate="G$1" pin="7@B" pad="7@B"/>
+<connect gate="G$1" pin="8@A" pad="8@A"/>
+<connect gate="G$1" pin="8@B" pad="8@B"/>
+<connect gate="G$1" pin="9@A" pad="9@A"/>
+<connect gate="G$1" pin="9@B" pad="9@B"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4800,6 +4927,8 @@ NOTE: CD1 and CD2 are connected internally</description>
 <part name="U$4" library="Gadgeteer" deviceset="SHF105" device=""/>
 <part name="U$5" library="reclone-rise" deviceset="MT47H128M16" device=""/>
 <part name="U2" library="SparkFun-Connectors" deviceset="USD-SOCKET" device="NEW"/>
+<part name="U$8" library="reclone-rise" deviceset="FPC15-1.0" device=""/>
+<part name="U$9" library="reclone-rise" deviceset="FPC15-1.0" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4811,7 +4940,7 @@ NOTE: CD1 and CD2 are connected internally</description>
 <instance part="JP1" gate="G$1" x="-55.88" y="99.06"/>
 <instance part="J1" gate="G$1" x="38.1" y="81.28"/>
 <instance part="IC1" gate="G$1" x="55.88" y="193.04"/>
-<instance part="JP2" gate="G$1" x="-10.16" y="180.34"/>
+<instance part="JP2" gate="G$1" x="10.16" y="195.58" rot="R180"/>
 <instance part="JP3" gate="G$1" x="-10.16" y="162.56"/>
 <instance part="U$1" gate="G$1" x="-45.72" y="177.8"/>
 <instance part="U$2" gate="G$1" x="-33.02" y="228.6"/>
@@ -4820,10 +4949,27 @@ NOTE: CD1 and CD2 are connected internally</description>
 <instance part="U$4" gate="X" x="-63.5" y="147.32"/>
 <instance part="U$5" gate="G$1" x="-121.92" y="106.68"/>
 <instance part="U2" gate="G$1" x="-116.84" y="30.48"/>
+<instance part="U$8" gate="G$1" x="-165.1" y="208.28"/>
+<instance part="U$9" gate="G$1" x="-121.92" y="208.28"/>
 </instances>
 <busses>
 </busses>
 <nets>
+<net name="N$1" class="0">
+<segment>
+<pinref part="JP2" gate="G$1" pin="D+"/>
+<pinref part="IC1" gate="G$1" pin="D+"/>
+<wire x1="12.7" y1="187.96" x2="22.86" y2="187.96" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="JP2" gate="G$1" pin="D-"/>
+<pinref part="IC1" gate="G$1" pin="D-"/>
+<wire x1="12.7" y1="190.5" x2="22.86" y2="190.5" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="190.5" x2="22.86" y2="195.58" width="0.1524" layer="91"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
