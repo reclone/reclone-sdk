@@ -4497,12 +4497,14 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="SUPPLY1" gate="G$1" x="142.24" y="-30.48"/>
 <instance part="SUPPLY2" gate="G$1" x="154.94" y="-30.48"/>
 <instance part="SUPPLY5" gate="GND" x="121.92" y="-109.22"/>
-<instance part="SUPPLY6" gate="GND" x="165.1" y="-101.6"/>
+<instance part="SUPPLY6" gate="GND" x="165.1" y="-109.22"/>
 <instance part="+3V2" gate="G$1" x="99.06" y="7.62"/>
 <instance part="P+2" gate="1" x="124.46" y="7.62"/>
 <instance part="SUPPLY3" gate="GND" x="124.46" y="-12.7"/>
 <instance part="U$7" gate="G$10" x="78.74" y="25.4"/>
 <instance part="U$7" gate="G$9" x="127" y="25.4"/>
+<instance part="U$7" gate="G$7" x="-208.28" y="-81.28"/>
+<instance part="U$7" gate="G$2" x="-210.82" y="-58.42"/>
 </instances>
 <busses>
 </busses>
@@ -5150,10 +5152,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <junction x="121.92" y="-106.68"/>
 </segment>
 <segment>
-<pinref part="GPIO" gate="G$1" pin="34"/>
 <pinref part="SUPPLY6" gate="GND" pin="GND"/>
 <pinref part="GPIO" gate="G$1" pin="30"/>
-<wire x1="165.1" y1="-99.06" x2="152.4" y2="-99.06" width="0.1524" layer="91"/>
 <wire x1="152.4" y1="-93.98" x2="165.1" y2="-93.98" width="0.1524" layer="91"/>
 <pinref part="GPIO" gate="G$1" pin="20"/>
 <wire x1="152.4" y1="-81.28" x2="165.1" y2="-81.28" width="0.1524" layer="91"/>
@@ -5168,6 +5168,10 @@ In this library the device names are the same as the pin names of the symbols, t
 <junction x="165.1" y="-73.66"/>
 <wire x1="165.1" y1="-93.98" x2="165.1" y2="-99.06" width="0.1524" layer="91"/>
 <junction x="165.1" y="-93.98"/>
+<pinref part="GPIO" gate="G$1" pin="34"/>
+<wire x1="165.1" y1="-99.06" x2="165.1" y2="-106.68" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="-99.06" x2="165.1" y2="-99.06" width="0.1524" layer="91"/>
+<junction x="165.1" y="-99.06"/>
 </segment>
 <segment>
 <pinref part="U$4" gate="X" pin="10"/>
@@ -5472,6 +5476,73 @@ In this library the device names are the same as the pin names of the symbols, t
 <pinref part="U$7" gate="G$9" pin="I2C1_SCL/CAN1_RX"/>
 <wire x1="132.08" y1="25.4" x2="137.16" y2="25.4" width="0.1524" layer="91"/>
 <label x="134.62" y="25.4" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CONFIG_CLK" class="0">
+<segment>
+<pinref part="U$7" gate="G$7" pin="SPI1_SCK"/>
+<wire x1="-203.2" y1="-76.2" x2="-198.12" y2="-76.2" width="0.1524" layer="91"/>
+<label x="-200.66" y="-76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B2" pin="IO_L1P_CCLK_2"/>
+<wire x1="-12.7" y1="-50.8" x2="-7.62" y2="-50.8" width="0.1524" layer="91"/>
+<label x="-10.16" y="-50.8" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CONFIG_DONE" class="0">
+<segment>
+<pinref part="U$7" gate="G$7" pin="SPI2_MISO"/>
+<wire x1="-203.2" y1="-86.36" x2="-198.12" y2="-86.36" width="0.1524" layer="91"/>
+<label x="-200.66" y="-86.36" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B2" pin="DONE_2"/>
+<wire x1="-12.7" y1="-45.72" x2="-7.62" y2="-45.72" width="0.1524" layer="91"/>
+<label x="-10.16" y="-45.72" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CONFIG_PROGRAM_B" class="0">
+<segment>
+<pinref part="U$7" gate="G$7" pin="SPI2_MOSI"/>
+<wire x1="-203.2" y1="-88.9" x2="-198.12" y2="-88.9" width="0.1524" layer="91"/>
+<label x="-200.66" y="-88.9" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B2" pin="PROGRAM_B_2"/>
+<wire x1="-12.7" y1="-48.26" x2="-7.62" y2="-48.26" width="0.1524" layer="91"/>
+<label x="-10.16" y="-48.26" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CONFIG_INIT_B" class="0">
+<segment>
+<pinref part="U$7" gate="G$7" pin="SPI1_MISO"/>
+<wire x1="-203.2" y1="-78.74" x2="-198.12" y2="-78.74" width="0.1524" layer="91"/>
+<label x="-200.66" y="-78.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B2" pin="IO_L65P_INIT_B_2"/>
+<wire x1="-12.7" y1="-142.24" x2="-7.62" y2="-142.24" width="0.1524" layer="91"/>
+<label x="-10.16" y="-142.24" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CONFIG_DIN" class="0">
+<segment>
+<pinref part="U$7" gate="G$7" pin="SPI1_MOSI"/>
+<wire x1="-203.2" y1="-81.28" x2="-198.12" y2="-81.28" width="0.1524" layer="91"/>
+<label x="-200.66" y="-81.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B2" pin="IO_L3P_D0_DIN_MISO_MISO1_2"/>
+<wire x1="-12.7" y1="-60.96" x2="-7.62" y2="-60.96" width="0.1524" layer="91"/>
+<label x="-10.16" y="-60.96" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_OUT" class="0">
+<segment>
+<pinref part="U$7" gate="G$7" pin="SPI2_SCK"/>
+<wire x1="-203.2" y1="-83.82" x2="-198.12" y2="-83.82" width="0.1524" layer="91"/>
+<label x="-200.66" y="-83.82" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
