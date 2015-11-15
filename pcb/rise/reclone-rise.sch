@@ -150,7 +150,7 @@
 <pad name="GND1" x="-3.99" y="-3.45" drill="0.9144" rot="R270"/>
 <pad name="SH1" x="-6.7" y="-6.5" drill="2.3114" rot="R270"/>
 <pad name="SH4" x="-6.7" y="6.6" drill="2.3114" rot="R270"/>
-<text x="1.97" y="-5.07" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="1" y="-5" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="top-left">&gt;NAME</text>
 <wire x1="0" y1="6.6" x2="-17" y2="6.6" width="0.127" layer="21"/>
 <wire x1="-17" y1="-6.5" x2="-17" y2="6.6" width="0.127" layer="21"/>
 <wire x1="0" y1="-6.5" x2="0" y2="6.6" width="0.127" layer="21"/>
@@ -166,6 +166,7 @@
 <pad name="DP2" x="-1.37" y="-0.95" drill="0.9144" rot="R270"/>
 <pad name="DM2" x="-1.37" y="1.05" drill="0.9144" rot="R270"/>
 <pad name="VBUS2" x="-1.37" y="3.55" drill="0.9144" rot="R270"/>
+<text x="1" y="5" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-right">&gt;VALUE</text>
 </package>
 <package name="TSSOP10">
 <wire x1="-1.5" y1="1.5" x2="-1.5" y2="-1.5" width="0.127" layer="21"/>
@@ -195,7 +196,6 @@
 <wire x1="-3.4" y1="-3.1" x2="-3.1" y2="-3.4" width="0.2032" layer="21"/>
 <wire x1="3.1" y1="-3.4" x2="3.4" y2="-3.1" width="0.2032" layer="21"/>
 <wire x1="3.4" y1="3.1" x2="3.1" y2="3.4" width="0.2032" layer="21"/>
-<circle x="-4.3" y="3.704" radius="0.15" width="0.4064" layer="21"/>
 <circle x="-2.4" y="2.35" radius="0.2" width="0.4" layer="21"/>
 <smd name="1" x="-4.3" y="2.75" dx="1.5" dy="0.254" layer="1"/>
 <smd name="2" x="-4.3" y="2.25" dx="1.5" dy="0.254" layer="1"/>
@@ -245,8 +245,8 @@
 <smd name="46" x="-1.75" y="4.3" dx="0.254" dy="1.5" layer="1"/>
 <smd name="47" x="-2.25" y="4.3" dx="0.254" dy="1.5" layer="1"/>
 <smd name="48" x="-2.75" y="4.3" dx="0.254" dy="1.5" layer="1"/>
-<text x="-2.974" y="5.3001" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-2.9261" y="-5.9379" size="0.4064" layer="27">&gt;VALUE</text>
+<text x="-3" y="5.4" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+<text x="-3" y="-6.2" size="0.8" layer="27" font="vector" ratio="19">&gt;VALUE</text>
 <rectangle x1="-4.4999" y1="2.5999" x2="-3.4501" y2="2.9001" layer="51"/>
 <rectangle x1="-4.4999" y1="2.0999" x2="-3.4501" y2="2.4001" layer="51"/>
 <rectangle x1="-4.4999" y1="1.5999" x2="-3.4501" y2="1.9001" layer="51"/>
@@ -321,8 +321,8 @@
 <smd name="P17" x="-4.76" y="-3.5" dx="1.9" dy="0.3" layer="1"/>
 <smd name="P18" x="-4.76" y="-4" dx="1.9" dy="0.3" layer="1"/>
 <smd name="P19" x="-4.76" y="-4.5" dx="1.9" dy="0.3" layer="1"/>
-<text x="-5.06" y="9.41" size="1.27" layer="51">&gt;NAME</text>
-<text x="-5.08" y="-10.43" size="1.27" layer="51">&gt;VALUE</text>
+<text x="-6.5" y="-6" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
+<text x="-6.5" y="6" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 <pad name="SH4" x="1.09" y="-7.85" drill="1.4"/>
 <pad name="SH3" x="-3.81" y="-7.25" drill="1.4"/>
 <pad name="SH2" x="-3.81" y="7.25" drill="1.4"/>
@@ -440,6 +440,8 @@
 <wire x1="-3.5" y1="4.3" x2="-3.5" y2="-0.7" width="0.127" layer="21"/>
 <wire x1="-4" y1="0" x2="4" y2="0" width="0.127" layer="51"/>
 <wire x1="-3.5" y1="-0.7" x2="3.5" y2="-0.7" width="0.127" layer="21"/>
+<text x="-3" y="5.6" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+<text x="-3" y="6.8" size="0.8" layer="27" font="vector" ratio="19">&gt;VALUE</text>
 </package>
 <package name="LQFP-100">
 <description>&lt;h3&gt;LQFP-100&lt;/h3&gt;
@@ -550,8 +552,8 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="7" y1="7" x2="7" y2="-7" width="0.127" layer="51"/>
 <wire x1="-7" y1="-7" x2="7" y2="-7" width="0.127" layer="51"/>
 <circle x="-5.65" y="-5.65" radius="0.5" width="0.127" layer="51"/>
-<text x="-6.15" y="-9.62" size="0.8128" layer="51" font="vector" ratio="12">&gt;NAME</text>
-<text x="-8.784" y="7.058" size="0.8128" layer="51" font="vector" ratio="12" rot="R90" align="bottom-right">&gt;VALUE</text>
+<text x="-6.15" y="-9.62" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+<text x="-8.784" y="7.058" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 </package>
 <package name="FPC15-1.0">
 <smd name="1" x="-7" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
@@ -599,6 +601,8 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="13" x="5" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
 <smd name="14" x="6" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
 <smd name="15" x="7" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
+<text x="11.4" y="-1.8" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="top-left">&gt;NAME</text>
+<text x="12.6" y="-1.8" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
 </package>
 </packages>
 <symbols>
@@ -4436,8 +4440,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="IC1" library="ftdichip-3" deviceset="FT2232H" device="L"/>
 <part name="JP3" library="SparkFun-Connectors" deviceset="AUDIO-JACK" device="SMD2"/>
 <part name="U$1" library="reclone-rise" deviceset="PCA9527" device=""/>
-<part name="U$2" library="reclone-rise" deviceset="DP83848C" device=""/>
-<part name="U$3" library="reclone-rise" deviceset="HDMI_A" device="">
+<part name="ETH_PHY" library="reclone-rise" deviceset="DP83848C" device=""/>
+<part name="HDMI" library="reclone-rise" deviceset="HDMI_A" device="">
 <attribute name="DIGIKEY#" value="609-4614-1-ND"/>
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10029449-111RLF"/>
@@ -4446,12 +4450,12 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="U$4" library="Gadgeteer" deviceset="SHF105" device=""/>
 <part name="U$5" library="reclone-rise" deviceset="MT47H128M16" device=""/>
 <part name="U2" library="SparkFun-Connectors" deviceset="USD-SOCKET" device="NEW"/>
-<part name="U$6" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
+<part name="PWR_DBG" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
 <attribute name="DIGIKEY#" value="609-4618-1-ND"/>
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10118194-0001LF"/>
 </part>
-<part name="U$7" library="reclone-rise" deviceset="STM32F407VGT6" device=""/>
+<part name="MCU" library="reclone-rise" deviceset="STM32F407VGT6" device=""/>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY1" library="supply2" deviceset="+5V/3" device="" value="+1V8"/>
@@ -4461,12 +4465,12 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="P+2" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
-<part name="DSI" library="reclone-rise" deviceset="DSI" device="">
+<part name="DISPLAY" library="reclone-rise" deviceset="DSI" device="">
 <attribute name="DIGIKEY#" value="WM11008CT-ND"/>
 <attribute name="MANF" value="Molex"/>
 <attribute name="MANF#" value="0526101572"/>
 </part>
-<part name="CSI" library="reclone-rise" deviceset="CSI" device="">
+<part name="CAMERA" library="reclone-rise" deviceset="CSI" device="">
 <attribute name="DIGIKEY#" value="WM11008CT-ND"/>
 <attribute name="MANF" value="Molex"/>
 <attribute name="MANF#" value="0526101572"/>
@@ -4483,8 +4487,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="IC1" gate="G$1" x="55.88" y="193.04"/>
 <instance part="JP3" gate="G$1" x="-10.16" y="162.56"/>
 <instance part="U$1" gate="G$1" x="-45.72" y="177.8"/>
-<instance part="U$2" gate="G$1" x="-33.02" y="228.6"/>
-<instance part="U$3" gate="G$1" x="-55.88" y="27.94">
+<instance part="ETH_PHY" gate="G$1" x="-33.02" y="228.6"/>
+<instance part="HDMI" gate="G$1" x="-55.88" y="27.94">
 <attribute name="MANF" x="-55.88" y="27.94" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY#" x="-55.88" y="27.94" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="-55.88" y="27.94" size="1.778" layer="96" display="off"/>
@@ -4493,12 +4497,12 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="U$4" gate="X" x="111.76" y="-2.54"/>
 <instance part="U$5" gate="G$1" x="281.94" y="-5.08"/>
 <instance part="U2" gate="G$1" x="-116.84" y="30.48"/>
-<instance part="U$6" gate="G$1" x="10.16" y="195.58" rot="R180">
+<instance part="PWR_DBG" gate="G$1" x="10.16" y="195.58" rot="R180">
 <attribute name="DIGIKEY#" x="10.16" y="195.58" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="10.16" y="195.58" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="10.16" y="195.58" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="U$7" gate="G$1" x="22.86" y="10.16"/>
+<instance part="MCU" gate="G$1" x="22.86" y="10.16"/>
 <instance part="FPGA" gate="B3" x="215.9" y="-7.62"/>
 <instance part="FPGA" gate="B1" x="-88.9" y="-88.9"/>
 <instance part="FPGA" gate="B2" x="-17.78" y="-88.9"/>
@@ -4511,17 +4515,17 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="+3V2" gate="G$1" x="99.06" y="7.62"/>
 <instance part="P+2" gate="1" x="124.46" y="7.62"/>
 <instance part="SUPPLY3" gate="GND" x="124.46" y="-12.7"/>
-<instance part="U$7" gate="G$10" x="78.74" y="25.4"/>
-<instance part="U$7" gate="G$9" x="127" y="25.4"/>
-<instance part="U$7" gate="G$7" x="-208.28" y="-81.28"/>
-<instance part="U$7" gate="G$2" x="-210.82" y="-58.42"/>
-<instance part="U$7" gate="G$5" x="38.1" y="76.2"/>
-<instance part="DSI" gate="G$1" x="-170.18" y="208.28">
+<instance part="MCU" gate="G$10" x="78.74" y="25.4"/>
+<instance part="MCU" gate="G$9" x="127" y="25.4"/>
+<instance part="MCU" gate="G$7" x="-208.28" y="-81.28"/>
+<instance part="MCU" gate="G$2" x="-210.82" y="-58.42"/>
+<instance part="MCU" gate="G$5" x="38.1" y="76.2"/>
+<instance part="DISPLAY" gate="G$1" x="-170.18" y="208.28">
 <attribute name="DIGIKEY#" x="-170.18" y="208.28" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="-170.18" y="208.28" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="-170.18" y="208.28" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="CSI" gate="G$1" x="-134.62" y="208.28">
+<instance part="CAMERA" gate="G$1" x="-134.62" y="208.28">
 <attribute name="DIGIKEY#" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
@@ -4534,7 +4538,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <segment>
 <pinref part="IC1" gate="G$1" pin="D+"/>
 <wire x1="12.7" y1="187.96" x2="22.86" y2="187.96" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="D+"/>
+<pinref part="PWR_DBG" gate="G$1" pin="D+"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -4542,7 +4546,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <pinref part="IC1" gate="G$1" pin="D-"/>
 <wire x1="12.7" y1="190.5" x2="22.86" y2="190.5" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="190.5" x2="22.86" y2="195.58" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="D-"/>
+<pinref part="PWR_DBG" gate="G$1" pin="D-"/>
 </segment>
 </net>
 <net name="M3A0" class="0">
@@ -5422,7 +5426,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="124.46" y="0" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$10" pin="ADC123_IN3"/>
+<pinref part="MCU" gate="G$10" pin="ADC123_IN3"/>
 <wire x1="83.82" y1="25.4" x2="88.9" y2="25.4" width="0.1524" layer="91"/>
 <label x="86.36" y="25.4" size="1.778" layer="95"/>
 </segment>
@@ -5434,7 +5438,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="124.46" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$10" pin="ADC12_IN9"/>
+<pinref part="MCU" gate="G$10" pin="ADC12_IN9"/>
 <wire x1="83.82" y1="20.32" x2="88.9" y2="20.32" width="0.1524" layer="91"/>
 <label x="86.36" y="20.32" size="1.778" layer="95"/>
 </segment>
@@ -5446,7 +5450,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="124.46" y="-5.08" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$9" pin="I2C1_SDA/CAN1_TX"/>
+<pinref part="MCU" gate="G$9" pin="I2C1_SDA/CAN1_TX"/>
 <wire x1="132.08" y1="22.86" x2="137.16" y2="22.86" width="0.1524" layer="91"/>
 <label x="134.62" y="22.86" size="1.778" layer="95"/>
 </segment>
@@ -5458,7 +5462,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="83.82" y="0" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$10" pin="ADC123_IN0/WKUP"/>
+<pinref part="MCU" gate="G$10" pin="ADC123_IN0/WKUP"/>
 <wire x1="83.82" y1="27.94" x2="88.9" y2="27.94" width="0.1524" layer="91"/>
 <label x="86.36" y="27.94" size="1.778" layer="95"/>
 </segment>
@@ -5470,7 +5474,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="83.82" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$10" pin="ADC12_IN4/DAC_OUT1"/>
+<pinref part="MCU" gate="G$10" pin="ADC12_IN4/DAC_OUT1"/>
 <wire x1="83.82" y1="22.86" x2="88.9" y2="22.86" width="0.1524" layer="91"/>
 <label x="86.36" y="22.86" size="1.778" layer="95"/>
 </segment>
@@ -5482,7 +5486,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="83.82" y="-5.08" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$10" pin="TIM4_CH1"/>
+<pinref part="MCU" gate="G$10" pin="TIM4_CH1"/>
 <wire x1="83.82" y1="17.78" x2="88.9" y2="17.78" width="0.1524" layer="91"/>
 <label x="86.36" y="17.78" size="1.778" layer="95"/>
 </segment>
@@ -5494,14 +5498,14 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="78.74" y="-7.62" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$9" pin="I2C1_SCL/CAN1_RX"/>
+<pinref part="MCU" gate="G$9" pin="I2C1_SCL/CAN1_RX"/>
 <wire x1="132.08" y1="25.4" x2="137.16" y2="25.4" width="0.1524" layer="91"/>
 <label x="134.62" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_CLK" class="0">
 <segment>
-<pinref part="U$7" gate="G$7" pin="SPI1_SCK"/>
+<pinref part="MCU" gate="G$7" pin="SPI1_SCK"/>
 <wire x1="-203.2" y1="-76.2" x2="-198.12" y2="-76.2" width="0.1524" layer="91"/>
 <label x="-200.66" y="-76.2" size="1.778" layer="95"/>
 </segment>
@@ -5513,7 +5517,7 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="FPGA_CONFIG_DONE" class="0">
 <segment>
-<pinref part="U$7" gate="G$7" pin="SPI2_MISO"/>
+<pinref part="MCU" gate="G$7" pin="SPI2_MISO"/>
 <wire x1="-203.2" y1="-86.36" x2="-198.12" y2="-86.36" width="0.1524" layer="91"/>
 <label x="-200.66" y="-86.36" size="1.778" layer="95"/>
 </segment>
@@ -5525,7 +5529,7 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="FPGA_CONFIG_PROGRAM_B" class="0">
 <segment>
-<pinref part="U$7" gate="G$7" pin="SPI2_MOSI"/>
+<pinref part="MCU" gate="G$7" pin="SPI2_MOSI"/>
 <wire x1="-203.2" y1="-88.9" x2="-198.12" y2="-88.9" width="0.1524" layer="91"/>
 <label x="-200.66" y="-88.9" size="1.778" layer="95"/>
 </segment>
@@ -5537,7 +5541,7 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="FPGA_CONFIG_INIT_B" class="0">
 <segment>
-<pinref part="U$7" gate="G$7" pin="SPI1_MISO"/>
+<pinref part="MCU" gate="G$7" pin="SPI1_MISO"/>
 <wire x1="-203.2" y1="-78.74" x2="-198.12" y2="-78.74" width="0.1524" layer="91"/>
 <label x="-200.66" y="-78.74" size="1.778" layer="95"/>
 </segment>
@@ -5549,7 +5553,7 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="FPGA_CONFIG_DIN" class="0">
 <segment>
-<pinref part="U$7" gate="G$7" pin="SPI1_MOSI"/>
+<pinref part="MCU" gate="G$7" pin="SPI1_MOSI"/>
 <wire x1="-203.2" y1="-81.28" x2="-198.12" y2="-81.28" width="0.1524" layer="91"/>
 <label x="-200.66" y="-81.28" size="1.778" layer="95"/>
 </segment>
@@ -5561,14 +5565,14 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="LED_OUT" class="0">
 <segment>
-<pinref part="U$7" gate="G$7" pin="SPI2_SCK"/>
+<pinref part="MCU" gate="G$7" pin="SPI2_SCK"/>
 <wire x1="-203.2" y1="-83.82" x2="-198.12" y2="-83.82" width="0.1524" layer="91"/>
 <label x="-200.66" y="-83.82" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="U$7" gate="G$5" pin="USB_HS_DP"/>
+<pinref part="MCU" gate="G$5" pin="USB_HS_DP"/>
 <wire x1="48.26" y1="88.9" x2="55.88" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="88.9" x2="55.88" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="DP1"/>
@@ -5577,7 +5581,7 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="U$7" gate="G$5" pin="USB_HS_DM"/>
+<pinref part="MCU" gate="G$5" pin="USB_HS_DM"/>
 <wire x1="48.26" y1="86.36" x2="58.42" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="86.36" x2="58.42" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="DM1"/>
@@ -5586,7 +5590,7 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="U$7" gate="G$5" pin="USB_FS_DM"/>
+<pinref part="MCU" gate="G$5" pin="USB_FS_DM"/>
 <wire x1="48.26" y1="78.74" x2="53.34" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="78.74" x2="53.34" y2="76.2" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="DM2"/>
@@ -5598,7 +5602,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <pinref part="USB" gate="USB_A_2H" pin="DP2"/>
 <wire x1="66.04" y1="78.74" x2="55.88" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="78.74" x2="55.88" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$5" pin="USB_FS_DP"/>
+<pinref part="MCU" gate="G$5" pin="USB_FS_DP"/>
 <wire x1="55.88" y1="81.28" x2="48.26" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
