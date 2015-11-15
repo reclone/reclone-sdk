@@ -437,7 +437,9 @@
 <smd name="J1" x="-3.2" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="J2" x="-2.4" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
 <smd name="J3" x="-1.6" y="-0.8" dx="0.35" dy="0.35" layer="1" roundness="100"/>
-<circle x="0" y="0" radius="0.1" width="0.2" layer="21"/>
+<circle x="-4" y="5.75" radius="0.1" width="0.2" layer="21"/>
+<text x="-4.75" y="-6.25" size="0.8" layer="27" font="vector" ratio="19" rot="R90">&gt;VALUE</text>
+<text x="-4.75" y="6.25" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;NAME</text>
 </package>
 <package name="USB-MICRO-B-SMD">
 <smd name="3" x="0" y="4.15" dx="1.35" dy="0.4" layer="1" rot="R90"/>
@@ -646,6 +648,79 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <hole x="5.715" y="11.095" drill="3.2"/>
 <text x="-7.62" y="22" size="0.8" layer="27" font="vector" ratio="19">&gt;VALUE</text>
 <text x="7.58" y="22" size="0.8" layer="25" font="vector" ratio="19" align="bottom-right">&gt;NAME</text>
+</package>
+<package name="TQFP64-12X12">
+<wire x1="-5" y1="5" x2="5" y2="5" width="0.1524" layer="21"/>
+<wire x1="5" y1="5" x2="5" y2="-5" width="0.1524" layer="21"/>
+<wire x1="5" y1="-5" x2="-5" y2="-5" width="0.1524" layer="21"/>
+<wire x1="-5" y1="-5" x2="-5" y2="5" width="0.1524" layer="21"/>
+<circle x="-3.8" y="-3.8" radius="0.5" width="0.1524" layer="21"/>
+<smd name="1" x="-3.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="2" x="-3.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="3" x="-2.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="4" x="-2.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="5" x="-1.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="6" x="-1.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="7" x="-0.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="8" x="-0.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="9" x="0.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="10" x="0.7499" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="11" x="1.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="12" x="1.7499" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="13" x="2.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="14" x="2.7501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="15" x="3.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="16" x="3.7501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="17" x="6.0001" y="-3.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="18" x="6.0001" y="-3.2499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="19" x="6.0001" y="-2.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="20" x="6.0001" y="-2.2499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="21" x="6.0001" y="-1.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="22" x="6.0001" y="-1.2499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="23" x="6.0001" y="-0.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="24" x="6.0001" y="-0.2499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="25" x="6.0001" y="0.25" dx="1.7" dy="0.25" layer="1"/>
+<smd name="26" x="6.0001" y="0.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="27" x="6.0001" y="1.2469" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="28" x="6.0001" y="1.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="29" x="6.0001" y="2.2469" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="30" x="6.0001" y="2.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="31" x="6.0001" y="3.2469" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="32" x="6.0001" y="3.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
+<smd name="33" x="3.7501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="34" x="3.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="35" x="2.7501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="36" x="2.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="37" x="1.7501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="38" x="1.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="39" x="0.7499" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="40" x="0.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="41" x="-0.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="42" x="-0.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="43" x="-1.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="44" x="-1.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="45" x="-2.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="46" x="-2.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="47" x="-3.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="48" x="-3.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
+<smd name="51" x="-6.0001" y="2.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="52" x="-6.0001" y="2.2501" dx="1.7" dy="0.25" layer="1"/>
+<smd name="53" x="-6.0001" y="1.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="54" x="-6.0001" y="1.2501" dx="1.7" dy="0.25" layer="1"/>
+<smd name="55" x="-6.0001" y="0.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="56" x="-6.0001" y="0.2501" dx="1.7" dy="0.25" layer="1"/>
+<smd name="57" x="-6.0001" y="-0.25" dx="1.7" dy="0.25" layer="1"/>
+<smd name="58" x="-6.0001" y="-0.7499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="59" x="-6.0001" y="-1.25" dx="1.7" dy="0.25" layer="1"/>
+<smd name="60" x="-6.0001" y="-1.7499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="61" x="-6.0001" y="-2.25" dx="1.7" dy="0.25" layer="1"/>
+<smd name="62" x="-6.0001" y="-2.7499" dx="1.7" dy="0.25" layer="1"/>
+<smd name="63" x="-6.0001" y="-3.25" dx="1.7" dy="0.25" layer="1"/>
+<smd name="64" x="-6.0001" y="-3.7501" dx="1.7" dy="0.25" layer="1"/>
+<smd name="49" x="-6.0001" y="3.75" dx="1.7" dy="0.25" layer="1"/>
+<smd name="50" x="-6.0001" y="3.2499" dx="1.7" dy="0.25" layer="1"/>
+<text x="-4" y="-7.5" size="0.8" layer="25" font="vector" ratio="19" align="top-left">&gt;NAME</text>
+<text x="-7.5" y="4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 </package>
 </packages>
 </library>
@@ -942,109 +1017,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="0.635" y="15.875" size="1.27" layer="51" font="vector" ratio="10" align="center-left">Pressed</text>
 <text x="0.635" y="17.78" size="1.27" layer="51" font="vector" ratio="10" align="center-left">Locked</text>
 <text x="0.635" y="20.955" size="1.27" layer="51" font="vector" ratio="10" align="center-left">Unlocked</text>
-</package>
-</packages>
-</library>
-<library name="ftdichip-3">
-<description>&lt;html&gt;
-&lt;head&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h2&gt;&lt;b&gt;USB-Controllers from Future Technology Devices International Ltd.&lt;/b&gt;&lt;/h2&gt;
-&lt;h2 align=center&gt;&lt;a href="http://www.ftdichip.com/"&gt;www.ftdichip.com&lt;/a&gt;&lt;/h2&gt;
-&lt;p align=right&gt; Version 4.00 17&lt;supth&lt;/sup&gt; July 2010&lt;/p&gt;
-&lt;p&gt;Based on the source of the libraries ftdi3.lbr and ft2232c.lbr.&lt;/p&gt;
-&lt;p&gt;With new FTxxxR Types. Old AM Types (first generation) are not included.&lt;/p&gt;
-&lt;P&gt;Updated to make consistent symbol style, and other updates like same prefix for all devices, and improve this page.&lt;/P&gt;
-&lt;p&gt;Includes the following controller:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;FT232BL , FT245BL (2nd generation)&lt;/li&gt;
-  &lt;li&gt;FT2232C (3rd generation)&lt;/li&gt;
-  &lt;li&gt;FT232RL , FT232RQ, FT245RL, FT245RQ (4th generation)&lt;/li&gt;
-  &lt;li&gt;FT2232C&lt;/li&gt;
-  &lt;li&gt;FT2232D (4th generation)&lt;/li&gt;
-  &lt;li&gt;FT2232H  USB 2.0 64 pin device&lt;/li&gt;
-  &lt;li&gt;Viniculum host controller chip&lt;/li&gt;
-&lt;/ul&gt;
-&lt;P&gt;Originally by B.Redemann, www.b-redemann.de&lt;/P&gt;
-&lt;P&gt;Updated Paul Carpenter, &lt;B&gt;PC Services&lt;/B&gt; &lt;a href="http://www.pcserviceselectronics.co.uk/"&gt;www.pcserviceselectronics.co.uk&lt;/a&gt;&lt;/P&gt;
-&lt;/body&gt;
-&lt;/html&gt;</description>
-<packages>
-<package name="TQFP64-12X12">
-<description>TQFP64 12x12mm 0.5mm pitch 0.25mm pad width</description>
-<wire x1="-7.895" y1="7.895" x2="7.895" y2="7.895" width="0.1524" layer="21"/>
-<wire x1="7.895" y1="7.895" x2="7.895" y2="-7.895" width="0.1524" layer="21"/>
-<wire x1="7.895" y1="-7.895" x2="-5.835" y2="-7.9" width="0.1524" layer="21"/>
-<wire x1="-5.835" y1="-7.9" x2="-7.885" y2="-5.85" width="0.1524" layer="21"/>
-<wire x1="-7.885" y1="-5.85" x2="-7.895" y2="7.895" width="0.1524" layer="21"/>
-<circle x="-5.905" y="-5.875" radius="0.635" width="0.1524" layer="21"/>
-<smd name="1" x="-3.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="2" x="-3.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="3" x="-2.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="4" x="-2.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="5" x="-1.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="6" x="-1.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="7" x="-0.75" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="8" x="-0.2501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="9" x="0.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="10" x="0.7499" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="11" x="1.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="12" x="1.7499" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="13" x="2.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="14" x="2.7501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="15" x="3.25" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="16" x="3.7501" y="-6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="17" x="6.0001" y="-3.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="18" x="6.0001" y="-3.2499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="19" x="6.0001" y="-2.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="20" x="6.0001" y="-2.2499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="21" x="6.0001" y="-1.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="22" x="6.0001" y="-1.2499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="23" x="6.0001" y="-0.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="24" x="6.0001" y="-0.2499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="25" x="6.0001" y="0.25" dx="1.7" dy="0.25" layer="1"/>
-<smd name="26" x="6.0001" y="0.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="27" x="6.0001" y="1.2469" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="28" x="6.0001" y="1.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="29" x="6.0001" y="2.2469" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="30" x="6.0001" y="2.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="31" x="6.0001" y="3.2469" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="32" x="6.0001" y="3.747" dx="1.7" dy="0.25" layer="1" rot="R180"/>
-<smd name="33" x="3.7501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="34" x="3.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="35" x="2.7501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="36" x="2.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="37" x="1.7501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="38" x="1.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="39" x="0.7499" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="40" x="0.25" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="41" x="-0.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="42" x="-0.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="43" x="-1.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="44" x="-1.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="45" x="-2.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="46" x="-2.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="47" x="-3.2501" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="48" x="-3.75" y="6.0001" dx="0.25" dy="1.7" layer="1"/>
-<smd name="51" x="-6.0001" y="2.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="52" x="-6.0001" y="2.2501" dx="1.7" dy="0.25" layer="1"/>
-<smd name="53" x="-6.0001" y="1.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="54" x="-6.0001" y="1.2501" dx="1.7" dy="0.25" layer="1"/>
-<smd name="55" x="-6.0001" y="0.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="56" x="-6.0001" y="0.2501" dx="1.7" dy="0.25" layer="1"/>
-<smd name="57" x="-6.0001" y="-0.25" dx="1.7" dy="0.25" layer="1"/>
-<smd name="58" x="-6.0001" y="-0.7499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="59" x="-6.0001" y="-1.25" dx="1.7" dy="0.25" layer="1"/>
-<smd name="60" x="-6.0001" y="-1.7499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="61" x="-6.0001" y="-2.25" dx="1.7" dy="0.25" layer="1"/>
-<smd name="62" x="-6.0001" y="-2.7499" dx="1.7" dy="0.25" layer="1"/>
-<smd name="63" x="-6.0001" y="-3.25" dx="1.7" dy="0.25" layer="1"/>
-<smd name="64" x="-6.0001" y="-3.7501" dx="1.7" dy="0.25" layer="1"/>
-<smd name="49" x="-6.0001" y="3.75" dx="1.7" dy="0.25" layer="1"/>
-<smd name="50" x="-6.0001" y="3.2499" dx="1.7" dy="0.25" layer="1"/>
-<text x="-8.426" y="-4.472" size="1.778" layer="25" ratio="10" rot="R90">&gt;NAME</text>
-<text x="10.034" y="-5.239" size="1.778" layer="27" ratio="10" rot="R90">&gt;VALUE</text>
 </package>
 </packages>
 </library>
@@ -1536,7 +1508,6 @@ design rules under a new name.</description>
 <elements>
 <element name="USB" library="reclone-rise" package="USB-A-2H" value="USB_A_2H" x="69" y="29" locked="yes" rot="R180"/>
 <element name="GPIO" library="SparkFun-Connectors" package="2X20" value="M20X2" x="32.5" y="52.5" locked="yes"/>
-<element name="IC1" library="ftdichip-3" package="TQFP64-12X12" value="" x="15" y="15.5"/>
 <element name="JP3" library="SparkFun-Connectors" package="AUDIO-JACK-3.5MM-SMD" value="" x="53.5" y="0" locked="yes" rot="R90">
 <attribute name="PROD_ID" value="CONN-10353" x="53.5" y="0" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
@@ -1549,7 +1520,7 @@ design rules under a new name.</description>
 </element>
 <element name="FPGA" library="xilinx_devices_V6" package="FT256" value="6SLX16FTG256" x="31" y="36"/>
 <element name="U$4" library="Gadgeteer" package="SHF105DSM_1" value="SHF105" x="76" y="47" locked="yes"/>
-<element name="U$5" library="reclone-rise" package="84-FBGA-9X12.5" value="MT47H128M16" x="11.5" y="42" rot="R180"/>
+<element name="RAM" library="reclone-rise" package="84-FBGA-9X12.5" value="MT47H128M16" x="12" y="41" rot="R180"/>
 <element name="U2" library="SparkFun-Connectors" package="MICRO-SD-SOCKET-PP" value="USD-SOCKETNEW" x="16" y="22.5" locked="yes" rot="MR270">
 <attribute name="PROD_ID" value="CONN-07820" x="16" y="22.5" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
@@ -1570,17 +1541,10 @@ design rules under a new name.</description>
 <attribute name="MANF#" value="0526101572" x="45" y="11" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="ETHERNET" library="reclone-rise" package="MAGJACK" value="MAGJACK" x="86" y="10.25" rot="R90"/>
+<element name="USB2SERIAL" library="reclone-rise" package="TQFP64-12X12" value="FT2232H" x="15.5" y="16"/>
 </elements>
 <signals>
 <signal name="GND">
-<contactref element="IC1" pad="1"/>
-<contactref element="IC1" pad="5"/>
-<contactref element="IC1" pad="11"/>
-<contactref element="IC1" pad="15"/>
-<contactref element="IC1" pad="25"/>
-<contactref element="IC1" pad="35"/>
-<contactref element="IC1" pad="47"/>
-<contactref element="IC1" pad="51"/>
 <contactref element="FPGA" pad="A1"/>
 <contactref element="FPGA" pad="A16"/>
 <contactref element="FPGA" pad="B7"/>
@@ -1616,6 +1580,14 @@ design rules under a new name.</description>
 <contactref element="GPIO" pad="20"/>
 <contactref element="U$4" pad="10"/>
 <contactref element="GPIO" pad="34"/>
+<contactref element="USB2SERIAL" pad="1"/>
+<contactref element="USB2SERIAL" pad="5"/>
+<contactref element="USB2SERIAL" pad="11"/>
+<contactref element="USB2SERIAL" pad="15"/>
+<contactref element="USB2SERIAL" pad="25"/>
+<contactref element="USB2SERIAL" pad="35"/>
+<contactref element="USB2SERIAL" pad="47"/>
+<contactref element="USB2SERIAL" pad="51"/>
 <wire x1="56.63" y1="51.23" x2="78.254" y2="44.5" width="0" layer="19" extent="1-1"/>
 <wire x1="49.01" y1="53.77" x2="56.63" y2="51.23" width="0" layer="19" extent="1-1"/>
 <wire x1="43.93" y1="53.77" x2="49.01" y2="53.77" width="0" layer="19" extent="1-1"/>
@@ -1650,297 +1622,272 @@ design rules under a new name.</description>
 <wire x1="23.61" y1="53.77" x2="31.23" y2="53.77" width="0" layer="19" extent="1-1"/>
 <wire x1="18.53" y1="51.23" x2="23.61" y2="53.77" width="0" layer="19" extent="1-1"/>
 <wire x1="13.45" y1="53.77" x2="18.53" y2="51.23" width="0" layer="19" extent="1-1"/>
-<wire x1="17.7501" y1="21.5001" x2="23.5" y2="28.5" width="0" layer="19" extent="1-1"/>
-<wire x1="11.7499" y1="21.5001" x2="17.7501" y2="21.5001" width="0" layer="19" extent="1-1"/>
-<wire x1="8.9999" y1="18.25" x2="11.7499" y2="21.5001" width="0" layer="19" extent="1-1"/>
-<wire x1="21.0001" y1="15.75" x2="17.7501" y2="21.5001" width="0" layer="19" extent="1-1"/>
-<wire x1="18.25" y1="9.4999" x2="21.0001" y2="15.75" width="0" layer="19" extent="1-1"/>
-<wire x1="16.25" y1="9.4999" x2="18.25" y2="9.4999" width="0" layer="19" extent="1-1"/>
-<wire x1="13.25" y1="9.4999" x2="16.25" y2="9.4999" width="0" layer="19" extent="1-1"/>
-<wire x1="11.25" y1="9.4999" x2="13.25" y2="9.4999" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="AGND">
-<contactref element="IC1" pad="10"/>
-</signal>
-<signal name="VPHY">
-<contactref element="IC1" pad="4"/>
-</signal>
-<signal name="VCORE">
-<contactref element="IC1" pad="12"/>
-<contactref element="IC1" pad="37"/>
-<contactref element="IC1" pad="64"/>
-<wire x1="16.7499" y1="9.4999" x2="16.7501" y2="21.5001" width="0" layer="19" extent="1-1"/>
-<wire x1="8.9999" y1="11.7499" x2="16.7499" y2="9.4999" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="VCCIO">
-<contactref element="IC1" pad="31"/>
-<contactref element="IC1" pad="20"/>
-<contactref element="IC1" pad="42"/>
-<contactref element="IC1" pad="56"/>
-<wire x1="21.0001" y1="13.2501" x2="21.0001" y2="18.7469" width="0" layer="19" extent="1-1"/>
-<wire x1="14.25" y1="21.5001" x2="21.0001" y2="18.7469" width="0" layer="19" extent="1-1"/>
-<wire x1="8.9999" y1="15.7501" x2="14.25" y2="21.5001" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="VPLL">
-<contactref element="IC1" pad="9"/>
+<wire x1="18.2501" y1="22.0001" x2="23.5" y2="28.5" width="0" layer="19" extent="1-1"/>
+<wire x1="12.2499" y1="22.0001" x2="18.2501" y2="22.0001" width="0" layer="19" extent="1-1"/>
+<wire x1="9.4999" y1="18.75" x2="12.2499" y2="22.0001" width="0" layer="19" extent="1-1"/>
+<wire x1="21.5001" y1="16.25" x2="18.2501" y2="22.0001" width="0" layer="19" extent="1-1"/>
+<wire x1="18.75" y1="9.9999" x2="21.5001" y2="16.25" width="0" layer="19" extent="1-1"/>
+<wire x1="16.75" y1="9.9999" x2="18.75" y2="9.9999" width="0" layer="19" extent="1-1"/>
+<wire x1="13.75" y1="9.9999" x2="16.75" y2="9.9999" width="0" layer="19" extent="1-1"/>
+<wire x1="11.75" y1="9.9999" x2="13.75" y2="9.9999" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
-<contactref element="IC1" pad="8"/>
 <contactref element="PWR_DBG" pad="3"/>
-<wire x1="10.6" y1="4.15" x2="14.7499" y2="9.4999" width="0" layer="19" extent="1-1"/>
+<contactref element="USB2SERIAL" pad="8"/>
+<wire x1="15.2499" y1="9.9999" x2="10.6" y2="4.15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$2">
-<contactref element="IC1" pad="7"/>
 <contactref element="PWR_DBG" pad="2"/>
-<wire x1="9.95" y1="4.15" x2="14.25" y2="9.4999" width="0" layer="19" extent="1-1"/>
+<contactref element="USB2SERIAL" pad="7"/>
+<wire x1="9.95" y1="4.15" x2="14.75" y2="9.9999" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A0">
 <contactref element="FPGA" pad="K5"/>
-<contactref element="U$5" pad="M8"/>
-<wire x1="9.1" y1="45.2" x2="27.5" y2="34.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="M8"/>
+<wire x1="9.6" y1="44.2" x2="27.5" y2="34.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A1">
 <contactref element="FPGA" pad="K6"/>
-<contactref element="U$5" pad="M3"/>
-<wire x1="13.1" y1="45.2" x2="28.5" y2="34.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="M3"/>
+<wire x1="13.6" y1="44.2" x2="28.5" y2="34.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3BA0">
 <contactref element="FPGA" pad="C3"/>
-<contactref element="U$5" pad="L2"/>
-<wire x1="13.9" y1="44.4" x2="25.5" y2="41.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="L2"/>
+<wire x1="14.4" y1="43.4" x2="25.5" y2="41.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3BA1">
 <contactref element="FPGA" pad="C2"/>
-<contactref element="U$5" pad="L3"/>
-<wire x1="13.1" y1="44.4" x2="24.5" y2="41.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="L3"/>
+<wire x1="13.6" y1="43.4" x2="24.5" y2="41.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A7">
 <contactref element="FPGA" pad="D3"/>
-<contactref element="U$5" pad="P2"/>
-<wire x1="13.9" y1="46.8" x2="25.5" y2="40.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="P2"/>
+<wire x1="14.4" y1="45.8" x2="25.5" y2="40.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A2">
 <contactref element="FPGA" pad="D1"/>
-<contactref element="U$5" pad="M7"/>
-<wire x1="9.9" y1="45.2" x2="23.5" y2="40.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="M7"/>
+<wire x1="10.4" y1="44.2" x2="23.5" y2="40.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3WE">
 <contactref element="FPGA" pad="C1"/>
-<contactref element="U$5" pad="K3"/>
-<wire x1="13.1" y1="43.6" x2="23.5" y2="41.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="K3"/>
+<wire x1="13.6" y1="42.6" x2="23.5" y2="41.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3BA2">
 <contactref element="FPGA" pad="B1"/>
-<contactref element="U$5" pad="L1"/>
-<wire x1="14.7" y1="44.4" x2="23.5" y2="42.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="L1"/>
+<wire x1="15.2" y1="43.4" x2="23.5" y2="42.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A10">
 <contactref element="FPGA" pad="G6"/>
-<contactref element="U$5" pad="M2"/>
-<wire x1="13.9" y1="45.2" x2="28.5" y2="37.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="M2"/>
+<wire x1="14.4" y1="44.2" x2="28.5" y2="37.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A4">
 <contactref element="FPGA" pad="G5"/>
-<contactref element="U$5" pad="N8"/>
-<wire x1="9.1" y1="46" x2="27.5" y2="37.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="N8"/>
+<wire x1="9.6" y1="45" x2="27.5" y2="37.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A8">
 <contactref element="FPGA" pad="B2"/>
-<contactref element="U$5" pad="P8"/>
-<wire x1="9.1" y1="46.8" x2="24.5" y2="42.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="P8"/>
+<wire x1="9.6" y1="45.8" x2="24.5" y2="42.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A9">
 <contactref element="FPGA" pad="A2"/>
-<contactref element="U$5" pad="P3"/>
-<wire x1="13.1" y1="46.8" x2="24.5" y2="43.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="P3"/>
+<wire x1="13.6" y1="45.8" x2="24.5" y2="43.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3CKE">
 <contactref element="FPGA" pad="F4"/>
-<contactref element="U$5" pad="K2"/>
-<wire x1="13.9" y1="43.6" x2="26.5" y2="38.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="K2"/>
+<wire x1="14.4" y1="42.6" x2="26.5" y2="38.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A12">
 <contactref element="FPGA" pad="F3"/>
-<contactref element="U$5" pad="R2"/>
-<wire x1="13.9" y1="47.6" x2="25.5" y2="38.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="R2"/>
+<wire x1="14.4" y1="46.6" x2="25.5" y2="38.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3RESET">
 <contactref element="FPGA" pad="E4"/>
 </signal>
 <signal name="M3A11">
 <contactref element="FPGA" pad="E3"/>
-<contactref element="U$5" pad="P7"/>
-<wire x1="9.9" y1="46.8" x2="25.5" y2="39.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="P7"/>
+<wire x1="10.4" y1="45.8" x2="25.5" y2="39.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A13">
 <contactref element="FPGA" pad="F6"/>
-<contactref element="U$5" pad="R8"/>
-<wire x1="9.1" y1="47.6" x2="28.5" y2="38.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="R8"/>
+<wire x1="9.6" y1="46.6" x2="28.5" y2="38.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A14">
 <contactref element="FPGA" pad="F5"/>
-<contactref element="U$5" pad="R3"/>
-<wire x1="13.1" y1="47.6" x2="27.5" y2="38.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="R3"/>
+<wire x1="13.6" y1="46.6" x2="27.5" y2="38.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3CLKN">
 <contactref element="FPGA" pad="E1"/>
-<contactref element="U$5" pad="K8"/>
-<wire x1="9.1" y1="43.6" x2="23.5" y2="39.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="K8"/>
+<wire x1="9.6" y1="42.6" x2="23.5" y2="39.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3CLK">
 <contactref element="FPGA" pad="E2"/>
-<contactref element="U$5" pad="J8"/>
-<wire x1="9.1" y1="42.8" x2="24.5" y2="39.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="J8"/>
+<wire x1="9.6" y1="41.8" x2="24.5" y2="39.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3ODT">
 <contactref element="FPGA" pad="L5"/>
-<contactref element="U$5" pad="K9"/>
-<wire x1="8.3" y1="43.6" x2="27.5" y2="33.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="K9"/>
+<wire x1="8.8" y1="42.6" x2="27.5" y2="33.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A3">
 <contactref element="FPGA" pad="L4"/>
-<contactref element="U$5" pad="N2"/>
-<wire x1="13.9" y1="46" x2="26.5" y2="33.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="N2"/>
+<wire x1="14.4" y1="45" x2="26.5" y2="33.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A6">
 <contactref element="FPGA" pad="H3"/>
-<contactref element="U$5" pad="N7"/>
-<wire x1="9.9" y1="46" x2="25.5" y2="36.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="N7"/>
+<wire x1="10.4" y1="45" x2="25.5" y2="36.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A5">
 <contactref element="FPGA" pad="H4"/>
-<contactref element="U$5" pad="N3"/>
-<wire x1="13.1" y1="46" x2="26.5" y2="36.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="N3"/>
+<wire x1="13.6" y1="45" x2="26.5" y2="36.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3CASN">
 <contactref element="FPGA" pad="H5"/>
-<contactref element="U$5" pad="L7"/>
-<wire x1="9.9" y1="44.4" x2="27.5" y2="36.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="L7"/>
+<wire x1="10.4" y1="43.4" x2="27.5" y2="36.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3RASN">
 <contactref element="FPGA" pad="J6"/>
-<contactref element="U$5" pad="K7"/>
-<wire x1="9.9" y1="43.6" x2="28.5" y2="35.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="K7"/>
+<wire x1="10.4" y1="42.6" x2="28.5" y2="35.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3LDM">
 <contactref element="FPGA" pad="J4"/>
-<contactref element="U$5" pad="F3"/>
-<wire x1="13.1" y1="40.4" x2="26.5" y2="35.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="F3"/>
+<wire x1="13.6" y1="39.4" x2="26.5" y2="35.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3UDM">
 <contactref element="FPGA" pad="K3"/>
-<contactref element="U$5" pad="B3"/>
-<wire x1="13.1" y1="37.2" x2="25.5" y2="34.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="B3"/>
+<wire x1="13.6" y1="36.2" x2="25.5" y2="34.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ5">
 <contactref element="FPGA" pad="F1"/>
-<contactref element="U$5" pad="H9"/>
-<wire x1="8.3" y1="42" x2="23.5" y2="38.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="H9"/>
+<wire x1="8.8" y1="41" x2="23.5" y2="38.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ4">
 <contactref element="FPGA" pad="F2"/>
-<contactref element="U$5" pad="H1"/>
-<wire x1="14.7" y1="42" x2="24.5" y2="38.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="H1"/>
+<wire x1="15.2" y1="41" x2="24.5" y2="38.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ7">
 <contactref element="FPGA" pad="G1"/>
-<contactref element="U$5" pad="F9"/>
-<wire x1="8.3" y1="40.4" x2="23.5" y2="37.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="F9"/>
+<wire x1="8.8" y1="39.4" x2="23.5" y2="37.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ6">
 <contactref element="FPGA" pad="G3"/>
-<contactref element="U$5" pad="F1"/>
-<wire x1="14.7" y1="40.4" x2="25.5" y2="37.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="F1"/>
+<wire x1="15.2" y1="39.4" x2="25.5" y2="37.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3LDQSN">
 <contactref element="FPGA" pad="H1"/>
-<contactref element="U$5" pad="E8"/>
-<wire x1="9.1" y1="39.6" x2="23.5" y2="36.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="E8"/>
+<wire x1="9.6" y1="38.6" x2="23.5" y2="36.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3LDQS">
 <contactref element="FPGA" pad="H2"/>
-<contactref element="U$5" pad="F7"/>
-<wire x1="9.9" y1="40.4" x2="24.5" y2="36.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="F7"/>
+<wire x1="10.4" y1="39.4" x2="24.5" y2="36.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ3">
 <contactref element="FPGA" pad="J1"/>
-<contactref element="U$5" pad="H3"/>
-<wire x1="13.1" y1="42" x2="23.5" y2="35.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="H3"/>
+<wire x1="13.6" y1="41" x2="23.5" y2="35.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ2">
 <contactref element="FPGA" pad="J3"/>
-<contactref element="U$5" pad="H7"/>
-<wire x1="9.9" y1="42" x2="25.5" y2="35.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="H7"/>
+<wire x1="10.4" y1="41" x2="25.5" y2="35.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ1">
 <contactref element="FPGA" pad="K1"/>
-<contactref element="U$5" pad="G2"/>
-<wire x1="13.9" y1="41.2" x2="23.5" y2="34.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="G2"/>
+<wire x1="14.4" y1="40.2" x2="23.5" y2="34.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ0">
 <contactref element="FPGA" pad="K2"/>
-<contactref element="U$5" pad="G8"/>
-<wire x1="9.1" y1="41.2" x2="24.5" y2="34.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="G8"/>
+<wire x1="9.6" y1="40.2" x2="24.5" y2="34.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ9">
 <contactref element="FPGA" pad="L1"/>
-<contactref element="U$5" pad="C2"/>
-<wire x1="13.9" y1="38" x2="23.5" y2="33.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="C2"/>
+<wire x1="14.4" y1="37" x2="23.5" y2="33.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ8">
 <contactref element="FPGA" pad="L3"/>
-<contactref element="U$5" pad="C8"/>
-<wire x1="9.1" y1="38" x2="25.5" y2="33.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="C8"/>
+<wire x1="9.6" y1="37" x2="25.5" y2="33.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ11">
 <contactref element="FPGA" pad="M1"/>
-<contactref element="U$5" pad="D3"/>
-<wire x1="13.1" y1="38.8" x2="23.5" y2="32.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="D3"/>
+<wire x1="13.6" y1="37.8" x2="23.5" y2="32.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ10">
 <contactref element="FPGA" pad="M2"/>
-<contactref element="U$5" pad="D7"/>
-<wire x1="9.9" y1="38.8" x2="24.5" y2="32.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="D7"/>
+<wire x1="10.4" y1="37.8" x2="24.5" y2="32.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3UDQSN">
 <contactref element="FPGA" pad="N1"/>
-<contactref element="U$5" pad="A8"/>
-<wire x1="9.1" y1="36.4" x2="23.5" y2="31.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="A8"/>
+<wire x1="9.6" y1="35.4" x2="23.5" y2="31.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3UDQS">
 <contactref element="FPGA" pad="N3"/>
-<contactref element="U$5" pad="B7"/>
-<wire x1="9.9" y1="37.2" x2="25.5" y2="31.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="B7"/>
+<wire x1="10.4" y1="36.2" x2="25.5" y2="31.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ13">
 <contactref element="FPGA" pad="P1"/>
-<contactref element="U$5" pad="D9"/>
-<wire x1="8.3" y1="38.8" x2="23.5" y2="30.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="D9"/>
+<wire x1="8.8" y1="37.8" x2="23.5" y2="30.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ12">
 <contactref element="FPGA" pad="P2"/>
-<contactref element="U$5" pad="D1"/>
-<wire x1="14.7" y1="38.8" x2="24.5" y2="30.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="D1"/>
+<wire x1="15.2" y1="37.8" x2="24.5" y2="30.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ15">
 <contactref element="FPGA" pad="R1"/>
-<contactref element="U$5" pad="B9"/>
-<wire x1="8.3" y1="37.2" x2="23.5" y2="29.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="B9"/>
+<wire x1="8.8" y1="36.2" x2="23.5" y2="29.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3DQ14">
 <contactref element="FPGA" pad="R2"/>
-<contactref element="U$5" pad="B1"/>
-<wire x1="14.7" y1="37.2" x2="24.5" y2="29.5" width="0" layer="19" extent="1-1"/>
+<contactref element="RAM" pad="B1"/>
+<wire x1="15.2" y1="36.2" x2="24.5" y2="29.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A15">
-<contactref element="U$5" pad="R7"/>
+<contactref element="RAM" pad="R7"/>
 <contactref element="FPGA" pad="B3"/>
-<wire x1="9.9" y1="47.6" x2="25.5" y2="42.5" width="0" layer="19" extent="1-1"/>
+<wire x1="10.4" y1="46.6" x2="25.5" y2="42.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3CSN">
-<contactref element="U$5" pad="L8"/>
+<contactref element="RAM" pad="L8"/>
 <contactref element="FPGA" pad="M4"/>
-<wire x1="9.1" y1="44.4" x2="26.5" y2="32.5" width="0" layer="19" extent="1-1"/>
+<wire x1="9.6" y1="43.4" x2="26.5" y2="32.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="U$4" pad="2"/>
@@ -2122,6 +2069,31 @@ design rules under a new name.</description>
 <contactref element="USB" pad="DP2"/>
 <contactref element="MCU" pad="71"/>
 <wire x1="70.37" y1="29.95" x2="61.75" y2="42" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="AGND">
+<contactref element="USB2SERIAL" pad="10"/>
+</signal>
+<signal name="VPHY">
+<contactref element="USB2SERIAL" pad="4"/>
+</signal>
+<signal name="VCORE">
+<contactref element="USB2SERIAL" pad="12"/>
+<contactref element="USB2SERIAL" pad="37"/>
+<contactref element="USB2SERIAL" pad="64"/>
+<wire x1="17.2499" y1="9.9999" x2="9.4999" y2="12.2499" width="0" layer="19" extent="1-1"/>
+<wire x1="17.2501" y1="22.0001" x2="17.2499" y2="9.9999" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="VCCIO">
+<contactref element="USB2SERIAL" pad="31"/>
+<contactref element="USB2SERIAL" pad="20"/>
+<contactref element="USB2SERIAL" pad="42"/>
+<contactref element="USB2SERIAL" pad="56"/>
+<wire x1="14.75" y1="22.0001" x2="9.4999" y2="16.2501" width="0" layer="19" extent="1-1"/>
+<wire x1="21.5001" y1="19.2469" x2="14.75" y2="22.0001" width="0" layer="19" extent="1-1"/>
+<wire x1="21.5001" y1="13.7501" x2="21.5001" y2="19.2469" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="VPLL">
+<contactref element="USB2SERIAL" pad="9"/>
 </signal>
 </signals>
 </board>
