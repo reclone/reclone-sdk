@@ -604,6 +604,35 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="11.4" y="-1.8" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="top-left">&gt;NAME</text>
 <text x="12.6" y="-1.8" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
 </package>
+<package name="MAGJACK">
+<wire x1="-7.62" y1="21.095" x2="7.52" y2="21.095" width="0.2032" layer="21"/>
+<wire x1="-7.62" y1="5.895" x2="7.62" y2="5.895" width="0.2032" layer="21"/>
+<wire x1="-7.62" y1="8.095" x2="-7.62" y2="-0.105" width="0.2032" layer="51"/>
+<wire x1="-7.62" y1="-0.105" x2="7.62" y2="-0.105" width="0.2032" layer="51"/>
+<wire x1="7.62" y1="-0.105" x2="7.62" y2="8.095" width="0.2032" layer="51"/>
+<wire x1="-7.62" y1="21" x2="-7.62" y2="15.5" width="0.2032" layer="21"/>
+<wire x1="7.58" y1="21.1" x2="7.58" y2="15.5" width="0.2032" layer="21"/>
+<wire x1="-7.62" y1="6" x2="-7.62" y2="12.7" width="0.2032" layer="21"/>
+<wire x1="7.58" y1="5.9" x2="7.58" y2="12.7" width="0.2032" layer="21"/>
+<pad name="8" x="4.445" y="19.985" drill="1" diameter="1.8796"/>
+<pad name="7" x="3.175" y="17.445" drill="1" diameter="1.8796"/>
+<pad name="6" x="1.905" y="19.985" drill="1" diameter="1.8796"/>
+<pad name="4" x="-0.635" y="19.985" drill="1" diameter="1.8796"/>
+<pad name="2" x="-3.175" y="19.985" drill="1" diameter="1.8796"/>
+<pad name="5" x="0.635" y="17.445" drill="1" diameter="1.8796"/>
+<pad name="3" x="-1.905" y="17.445" drill="1" diameter="1.8796"/>
+<pad name="1" x="-4.445" y="17.445" drill="1" diameter="1.8796" shape="square"/>
+<pad name="M1" x="-7.62" y="14.1" drill="1.6" diameter="2.1844"/>
+<pad name="M2" x="7.58" y="14.1" drill="1.6" diameter="2.1844"/>
+<pad name="9" x="-6.62" y="7.1" drill="1" diameter="1.27"/>
+<pad name="12" x="6.58" y="7.1" drill="1" diameter="1.27"/>
+<pad name="11" x="4.08" y="7.1" drill="1" diameter="1.27"/>
+<pad name="10" x="-4.12" y="7.1" drill="1" diameter="1.27"/>
+<hole x="-5.715" y="11.095" drill="3.2"/>
+<hole x="5.715" y="11.095" drill="3.2"/>
+<text x="-7.62" y="22" size="0.8" layer="27" font="vector" ratio="19">&gt;VALUE</text>
+<text x="7.58" y="22" size="0.8" layer="25" font="vector" ratio="19" align="bottom-right">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -1035,6 +1064,61 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="0" y1="-20.32" x2="7.62" y2="-20.32" width="0.254" layer="94"/>
 <wire x1="7.62" y1="20.32" x2="0" y2="20.32" width="0.254" layer="94"/>
 <text x="0" y="-22.86" size="1.27" layer="95">&gt;NAME</text>
+</symbol>
+<symbol name="MAGJACK">
+<wire x1="-12.7" y1="-15.24" x2="12.7" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-15.24" x2="12.7" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-12.7" x2="12.7" y2="2.54" width="0.254" layer="94"/>
+<wire x1="12.7" y1="2.54" x2="12.7" y2="10.16" width="0.254" layer="94"/>
+<wire x1="12.7" y1="10.16" x2="12.7" y2="12.7" width="0.254" layer="94"/>
+<wire x1="12.7" y1="12.7" x2="-12.7" y2="12.7" width="0.254" layer="94"/>
+<wire x1="-12.7" y1="12.7" x2="-12.7" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="12.7" y1="10.16" x2="10.668" y2="10.16" width="0.254" layer="94"/>
+<wire x1="10.668" y1="10.16" x2="10.668" y2="7.112" width="0.254" layer="94"/>
+<wire x1="10.668" y1="7.112" x2="9.398" y2="7.112" width="0.254" layer="94"/>
+<wire x1="9.398" y1="7.112" x2="10.668" y2="5.842" width="0.254" layer="94"/>
+<wire x1="10.668" y1="5.842" x2="11.938" y2="7.112" width="0.254" layer="94"/>
+<wire x1="11.938" y1="7.112" x2="10.668" y2="7.112" width="0.254" layer="94"/>
+<wire x1="10.668" y1="5.842" x2="11.938" y2="5.842" width="0.254" layer="94"/>
+<wire x1="9.398" y1="5.842" x2="10.668" y2="5.842" width="0.254" layer="94"/>
+<wire x1="10.668" y1="5.842" x2="10.668" y2="2.54" width="0.254" layer="94"/>
+<wire x1="10.668" y1="2.54" x2="12.7" y2="2.54" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-5.08" x2="10.668" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="10.668" y1="-5.08" x2="10.668" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="10.668" y1="-8.128" x2="9.398" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="9.398" y1="-8.128" x2="10.668" y2="-9.398" width="0.254" layer="94"/>
+<wire x1="10.668" y1="-9.398" x2="11.938" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="11.938" y1="-8.128" x2="10.668" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="10.668" y1="-9.398" x2="11.938" y2="-9.398" width="0.254" layer="94"/>
+<wire x1="9.398" y1="-9.398" x2="10.668" y2="-9.398" width="0.254" layer="94"/>
+<wire x1="10.668" y1="-9.398" x2="10.668" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="10.668" y1="-12.7" x2="12.7" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="8.89" y1="6.35" x2="8.128" y2="7.112" width="0.254" layer="94"/>
+<wire x1="8.128" y1="6.604" x2="8.128" y2="7.112" width="0.254" layer="94"/>
+<wire x1="8.128" y1="7.112" x2="8.636" y2="7.112" width="0.254" layer="94"/>
+<wire x1="8.89" y1="5.334" x2="8.128" y2="6.096" width="0.254" layer="94"/>
+<wire x1="8.128" y1="5.588" x2="8.128" y2="6.096" width="0.254" layer="94"/>
+<wire x1="8.128" y1="6.096" x2="8.636" y2="6.096" width="0.254" layer="94"/>
+<wire x1="8.89" y1="-8.89" x2="8.128" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="8.128" y1="-8.636" x2="8.128" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="8.128" y1="-8.128" x2="8.636" y2="-8.128" width="0.254" layer="94"/>
+<wire x1="8.89" y1="-9.906" x2="8.128" y2="-9.144" width="0.254" layer="94"/>
+<wire x1="8.128" y1="-9.652" x2="8.128" y2="-9.144" width="0.254" layer="94"/>
+<wire x1="8.128" y1="-9.144" x2="8.636" y2="-9.144" width="0.254" layer="94"/>
+<text x="-12.7" y="13.208" size="1.778" layer="95">&gt;NAME</text>
+<text x="-12.7" y="-17.526" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="YLED-" x="17.78" y="2.54" length="middle" rot="R180"/>
+<pin name="YLED+" x="17.78" y="10.16" length="middle" rot="R180"/>
+<pin name="GLED-" x="17.78" y="-12.7" length="middle" rot="R180"/>
+<pin name="GLED+" x="17.78" y="-5.08" length="middle" rot="R180"/>
+<pin name="RD-" x="-17.78" y="-5.08" length="middle"/>
+<pin name="RCT" x="-17.78" y="-2.54" length="middle"/>
+<pin name="RD+" x="-17.78" y="0" length="middle"/>
+<pin name="TD-" x="-17.78" y="5.08" length="middle"/>
+<pin name="TCT" x="-17.78" y="7.62" length="middle"/>
+<pin name="TD+" x="-17.78" y="10.16" length="middle"/>
+<pin name="SHIELD@0" x="-17.78" y="-10.16" length="middle"/>
+<pin name="SHIELD@1" x="-17.78" y="-12.7" length="middle"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -1473,6 +1557,32 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="GND@10" pad="10"/>
 <connect gate="G$1" pin="GND@4" pad="4"/>
 <connect gate="G$1" pin="GND@7" pad="7"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MAGJACK">
+<gates>
+<gate name="G$1" symbol="MAGJACK" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MAGJACK">
+<connects>
+<connect gate="G$1" pin="GLED+" pad="11"/>
+<connect gate="G$1" pin="GLED-" pad="12"/>
+<connect gate="G$1" pin="RCT" pad="3"/>
+<connect gate="G$1" pin="RD+" pad="1"/>
+<connect gate="G$1" pin="RD-" pad="2"/>
+<connect gate="G$1" pin="SHIELD@0" pad="M1"/>
+<connect gate="G$1" pin="SHIELD@1" pad="M2"/>
+<connect gate="G$1" pin="TCT" pad="6"/>
+<connect gate="G$1" pin="TD+" pad="7"/>
+<connect gate="G$1" pin="TD-" pad="8"/>
+<connect gate="G$1" pin="YLED+" pad="9"/>
+<connect gate="G$1" pin="YLED-" pad="10"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -1971,33 +2081,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <smd name="39" x="-3.5687" y="-24.13" dx="4.1402" dy="0.9906" layer="1"/>
 <smd name="40" x="3.5687" y="-24.13" dx="4.1402" dy="0.9906" layer="1"/>
 </package>
-<package name="MAGJACK">
-<wire x1="0" y1="21.095" x2="15.14" y2="21.095" width="0.2032" layer="21"/>
-<wire x1="0" y1="5.895" x2="15.24" y2="5.895" width="0.2032" layer="21"/>
-<wire x1="0" y1="8.095" x2="0" y2="-0.105" width="0.2032" layer="51"/>
-<wire x1="0" y1="-0.105" x2="15.24" y2="-0.105" width="0.2032" layer="51"/>
-<wire x1="15.24" y1="-0.105" x2="15.24" y2="8.095" width="0.2032" layer="51"/>
-<wire x1="0" y1="21" x2="0" y2="15.5" width="0.2032" layer="21"/>
-<wire x1="15.2" y1="21.1" x2="15.2" y2="15.5" width="0.2032" layer="21"/>
-<wire x1="0" y1="6" x2="0" y2="12.7" width="0.2032" layer="21"/>
-<wire x1="15.2" y1="5.9" x2="15.2" y2="12.7" width="0.2032" layer="21"/>
-<pad name="8" x="12.065" y="19.985" drill="1" diameter="1.8796"/>
-<pad name="7" x="10.795" y="17.445" drill="1" diameter="1.8796"/>
-<pad name="6" x="9.525" y="19.985" drill="1" diameter="1.8796"/>
-<pad name="4" x="6.985" y="19.985" drill="1" diameter="1.8796"/>
-<pad name="2" x="4.445" y="19.985" drill="1" diameter="1.8796"/>
-<pad name="5" x="8.255" y="17.445" drill="1" diameter="1.8796"/>
-<pad name="3" x="5.715" y="17.445" drill="1" diameter="1.8796"/>
-<pad name="1" x="3.175" y="17.445" drill="1" diameter="1.8796" shape="square"/>
-<pad name="M1" x="0" y="14.1" drill="1.6" diameter="2.1844"/>
-<pad name="M2" x="15.2" y="14.1" drill="1.6" diameter="2.1844"/>
-<pad name="9" x="1" y="7.1" drill="1" diameter="1.27"/>
-<pad name="12" x="14.2" y="7.1" drill="1" diameter="1.27"/>
-<pad name="11" x="11.7" y="7.1" drill="1" diameter="1.27"/>
-<pad name="10" x="3.5" y="7.1" drill="1" diameter="1.27"/>
-<hole x="1.905" y="11.095" drill="3.2"/>
-<hole x="13.335" y="11.095" drill="3.2"/>
-</package>
 <package name="AUDIO-JACK">
 <wire x1="7.5" y1="6" x2="7.5" y2="-6" width="0.2032" layer="21"/>
 <wire x1="-3.5" y1="6" x2="-3.5" y2="4.5" width="0.2032" layer="51"/>
@@ -2335,61 +2418,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-1.27" y1="-22.86" x2="-2.54" y2="-22.86" width="0.6096" layer="94"/>
 <wire x1="-1.27" y1="-25.4" x2="-2.54" y2="-25.4" width="0.6096" layer="94"/>
 </symbol>
-<symbol name="MAGJACK">
-<wire x1="-12.7" y1="-15.24" x2="12.7" y2="-15.24" width="0.254" layer="94"/>
-<wire x1="12.7" y1="-15.24" x2="12.7" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="12.7" y1="-12.7" x2="12.7" y2="2.54" width="0.254" layer="94"/>
-<wire x1="12.7" y1="2.54" x2="12.7" y2="10.16" width="0.254" layer="94"/>
-<wire x1="12.7" y1="10.16" x2="12.7" y2="12.7" width="0.254" layer="94"/>
-<wire x1="12.7" y1="12.7" x2="-12.7" y2="12.7" width="0.254" layer="94"/>
-<wire x1="-12.7" y1="12.7" x2="-12.7" y2="-15.24" width="0.254" layer="94"/>
-<wire x1="12.7" y1="10.16" x2="10.668" y2="10.16" width="0.254" layer="94"/>
-<wire x1="10.668" y1="10.16" x2="10.668" y2="7.112" width="0.254" layer="94"/>
-<wire x1="10.668" y1="7.112" x2="9.398" y2="7.112" width="0.254" layer="94"/>
-<wire x1="9.398" y1="7.112" x2="10.668" y2="5.842" width="0.254" layer="94"/>
-<wire x1="10.668" y1="5.842" x2="11.938" y2="7.112" width="0.254" layer="94"/>
-<wire x1="11.938" y1="7.112" x2="10.668" y2="7.112" width="0.254" layer="94"/>
-<wire x1="10.668" y1="5.842" x2="11.938" y2="5.842" width="0.254" layer="94"/>
-<wire x1="9.398" y1="5.842" x2="10.668" y2="5.842" width="0.254" layer="94"/>
-<wire x1="10.668" y1="5.842" x2="10.668" y2="2.54" width="0.254" layer="94"/>
-<wire x1="10.668" y1="2.54" x2="12.7" y2="2.54" width="0.254" layer="94"/>
-<wire x1="12.7" y1="-5.08" x2="10.668" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="10.668" y1="-5.08" x2="10.668" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="10.668" y1="-8.128" x2="9.398" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="9.398" y1="-8.128" x2="10.668" y2="-9.398" width="0.254" layer="94"/>
-<wire x1="10.668" y1="-9.398" x2="11.938" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="11.938" y1="-8.128" x2="10.668" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="10.668" y1="-9.398" x2="11.938" y2="-9.398" width="0.254" layer="94"/>
-<wire x1="9.398" y1="-9.398" x2="10.668" y2="-9.398" width="0.254" layer="94"/>
-<wire x1="10.668" y1="-9.398" x2="10.668" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="10.668" y1="-12.7" x2="12.7" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="8.89" y1="6.35" x2="8.128" y2="7.112" width="0.254" layer="94"/>
-<wire x1="8.128" y1="6.604" x2="8.128" y2="7.112" width="0.254" layer="94"/>
-<wire x1="8.128" y1="7.112" x2="8.636" y2="7.112" width="0.254" layer="94"/>
-<wire x1="8.89" y1="5.334" x2="8.128" y2="6.096" width="0.254" layer="94"/>
-<wire x1="8.128" y1="5.588" x2="8.128" y2="6.096" width="0.254" layer="94"/>
-<wire x1="8.128" y1="6.096" x2="8.636" y2="6.096" width="0.254" layer="94"/>
-<wire x1="8.89" y1="-8.89" x2="8.128" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="8.128" y1="-8.636" x2="8.128" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="8.128" y1="-8.128" x2="8.636" y2="-8.128" width="0.254" layer="94"/>
-<wire x1="8.89" y1="-9.906" x2="8.128" y2="-9.144" width="0.254" layer="94"/>
-<wire x1="8.128" y1="-9.652" x2="8.128" y2="-9.144" width="0.254" layer="94"/>
-<wire x1="8.128" y1="-9.144" x2="8.636" y2="-9.144" width="0.254" layer="94"/>
-<text x="-12.7" y="13.208" size="1.778" layer="95">&gt;NAME</text>
-<text x="-12.7" y="-17.526" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="YLED-" x="17.78" y="2.54" length="middle" rot="R180"/>
-<pin name="YLED+" x="17.78" y="10.16" length="middle" rot="R180"/>
-<pin name="GLED-" x="17.78" y="-12.7" length="middle" rot="R180"/>
-<pin name="GLED+" x="17.78" y="-5.08" length="middle" rot="R180"/>
-<pin name="RD-" x="-17.78" y="-5.08" length="middle"/>
-<pin name="RCT" x="-17.78" y="-2.54" length="middle"/>
-<pin name="RD+" x="-17.78" y="0" length="middle"/>
-<pin name="TD-" x="-17.78" y="5.08" length="middle"/>
-<pin name="TCT" x="-17.78" y="7.62" length="middle"/>
-<pin name="TD+" x="-17.78" y="10.16" length="middle"/>
-<pin name="SHIELD@0" x="-17.78" y="-10.16" length="middle"/>
-<pin name="SHIELD@1" x="-17.78" y="-12.7" length="middle"/>
-</symbol>
 <symbol name="AUDIO-JACK">
 <wire x1="-1.27" y1="-2.54" x2="0" y2="-1.27" width="0.1524" layer="94"/>
 <wire x1="0" y1="-1.27" x2="1.27" y2="-2.54" width="0.1524" layer="94"/>
@@ -2623,33 +2651,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <connect gate="G$1" pin="7" pad="7"/>
 <connect gate="G$1" pin="8" pad="8"/>
 <connect gate="G$1" pin="9" pad="9"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="MAGJACK" prefix="J">
-<description>RJ-45 with LEDs</description>
-<gates>
-<gate name="G$1" symbol="MAGJACK" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="MAGJACK">
-<connects>
-<connect gate="G$1" pin="GLED+" pad="11"/>
-<connect gate="G$1" pin="GLED-" pad="12"/>
-<connect gate="G$1" pin="RCT" pad="3"/>
-<connect gate="G$1" pin="RD+" pad="1"/>
-<connect gate="G$1" pin="RD-" pad="2"/>
-<connect gate="G$1" pin="SHIELD@0" pad="M1"/>
-<connect gate="G$1" pin="SHIELD@1" pad="M2"/>
-<connect gate="G$1" pin="TCT" pad="6"/>
-<connect gate="G$1" pin="TD+" pad="7"/>
-<connect gate="G$1" pin="TD-" pad="8"/>
-<connect gate="G$1" pin="YLED+" pad="9"/>
-<connect gate="G$1" pin="YLED-" pad="10"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4436,7 +4437,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <parts>
 <part name="USB" library="reclone-rise" deviceset="USB_A_2H" device=""/>
 <part name="GPIO" library="SparkFun-Connectors" deviceset="M20X2" device=""/>
-<part name="J1" library="SparkFun-Connectors" deviceset="MAGJACK" device=""/>
 <part name="IC1" library="ftdichip-3" deviceset="FT2232H" device="L"/>
 <part name="JP3" library="SparkFun-Connectors" deviceset="AUDIO-JACK" device="SMD2"/>
 <part name="U$1" library="reclone-rise" deviceset="PCA9527" device=""/>
@@ -4475,6 +4475,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <attribute name="MANF" value="Molex"/>
 <attribute name="MANF#" value="0526101572"/>
 </part>
+<part name="ETHERNET" library="reclone-rise" deviceset="MAGJACK" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4483,7 +4484,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <instances>
 <instance part="USB" gate="USB_A_2H" x="71.12" y="78.74"/>
 <instance part="GPIO" gate="G$1" x="144.78" y="-81.28"/>
-<instance part="J1" gate="G$1" x="-30.48" y="91.44"/>
 <instance part="IC1" gate="G$1" x="55.88" y="193.04"/>
 <instance part="JP3" gate="G$1" x="-10.16" y="162.56"/>
 <instance part="U$1" gate="G$1" x="-45.72" y="177.8"/>
@@ -4530,6 +4530,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <attribute name="MANF" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
 </instance>
+<instance part="ETHERNET" gate="G$1" x="-40.64" y="99.06"/>
 </instances>
 <busses>
 </busses>

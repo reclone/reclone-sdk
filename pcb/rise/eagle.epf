@@ -17,8 +17,8 @@ UsedLibrary="lbr/scout119/Gadgeteer.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="0 0 599 688"
-State=2
+Loc="-7 0 673 695"
+State=0
 Number=0
 
 [Desktop]
