@@ -708,6 +708,45 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-4" y="-7.5" size="0.8" layer="25" font="vector" ratio="19" align="top-left">&gt;NAME</text>
 <text x="-7.5" y="4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 </package>
+<package name="SHF105DSM">
+<wire x1="-2.54" y1="6.35" x2="-2.54" y2="-6.35" width="0.127" layer="51"/>
+<wire x1="-2.54" y1="6.35" x2="3.048" y2="6.35" width="0.127" layer="51"/>
+<wire x1="3.048" y1="6.35" x2="3.048" y2="5.4102" width="0.127" layer="51"/>
+<wire x1="3.048" y1="5.4102" x2="2.54" y2="5.4102" width="0.127" layer="51"/>
+<wire x1="2.54" y1="5.4102" x2="2.54" y2="0.635" width="0.127" layer="51"/>
+<wire x1="2.54" y1="0.635" x2="3.048" y2="0.635" width="0.127" layer="51"/>
+<wire x1="3.048" y1="0.635" x2="3.048" y2="-0.635" width="0.127" layer="51"/>
+<wire x1="3.048" y1="-0.635" x2="2.54" y2="-0.635" width="0.127" layer="51"/>
+<wire x1="2.54" y1="-0.635" x2="2.54" y2="-5.4102" width="0.127" layer="51"/>
+<wire x1="2.54" y1="-5.4102" x2="3.048" y2="-5.4102" width="0.127" layer="51"/>
+<wire x1="3.048" y1="-5.4102" x2="3.048" y2="-6.35" width="0.127" layer="51"/>
+<wire x1="3.048" y1="-6.35" x2="-2.54" y2="-6.35" width="0.127" layer="51"/>
+<wire x1="-2.54" y1="3.175" x2="-2.54" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="6.35" x2="3.048" y2="6.35" width="0.127" layer="21"/>
+<wire x1="3.048" y1="6.35" x2="3.048" y2="5.4102" width="0.127" layer="21"/>
+<wire x1="3.048" y1="5.4102" x2="2.54" y2="5.4102" width="0.127" layer="21"/>
+<wire x1="2.54" y1="5.4102" x2="2.54" y2="3.175" width="0.127" layer="21"/>
+<wire x1="2.54" y1="0.635" x2="3.048" y2="0.635" width="0.127" layer="21"/>
+<wire x1="2.54" y1="-0.635" x2="3.048" y2="-0.635" width="0.127" layer="21"/>
+<wire x1="2.54" y1="-3.175" x2="2.54" y2="-5.4102" width="0.127" layer="21"/>
+<wire x1="2.54" y1="-5.4102" x2="3.048" y2="-5.4102" width="0.127" layer="21"/>
+<wire x1="3.048" y1="-5.4102" x2="3.048" y2="-6.35" width="0.127" layer="21"/>
+<wire x1="3.048" y1="-6.35" x2="-2.54" y2="-6.35" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="-6.35" x2="-2.54" y2="-3.175" width="0.127" layer="21"/>
+<smd name="5" x="-2.286" y="0" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="3" x="-2.286" y="1.27" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="1" x="-2.286" y="2.54" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="7" x="-2.286" y="-1.27" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="9" x="-2.286" y="-2.54" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="6" x="2.286" y="0" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="4" x="2.286" y="1.27" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="2" x="2.286" y="2.54" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="8" x="2.286" y="-1.27" dx="3.302" dy="0.7366" layer="1"/>
+<smd name="10" x="2.286" y="-2.54" dx="3.302" dy="0.7366" layer="1"/>
+<text x="-5.08" y="2.159" size="0.8" layer="21" font="vector" ratio="19">1</text>
+<text x="5.5" y="-6" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
+<text x="-4.5" y="-5" size="0.8" layer="27" font="vector" ratio="19" rot="R90">&gt;VALUE</text>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -1267,6 +1306,22 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="TEST" x="-33.02" y="-48.26" length="short" direction="in"/>
 <pin name="-SUSPEND" x="33.02" y="-48.26" length="short" direction="out" rot="R180"/>
 </symbol>
+<symbol name="SHF105">
+<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
+<pin name="1" x="-10.16" y="5.08" length="middle" direction="pas"/>
+<pin name="2" x="10.16" y="5.08" visible="pin" length="middle" direction="pas" rot="R180"/>
+<pin name="3" x="-10.16" y="2.54" length="middle" direction="pas"/>
+<pin name="4" x="10.16" y="2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="5" x="-10.16" y="0" length="middle" direction="pas"/>
+<pin name="6" x="10.16" y="0" length="middle" direction="pas" rot="R180"/>
+<pin name="7" x="-10.16" y="-2.54" length="middle" direction="pas"/>
+<pin name="8" x="10.16" y="-2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="9" x="-10.16" y="-5.08" length="middle" direction="pas"/>
+<pin name="10" x="10.16" y="-5.08" length="middle" direction="pas" rot="R180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -1808,6 +1863,30 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="VREGOUT" pad="49"/>
 <connect gate="G$1" pin="XTIN" pad="2"/>
 <connect gate="G$1" pin="XTOUT" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SHF105">
+<gates>
+<gate name="G$1" symbol="SHF105" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SHF105DSM">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="10" pad="10"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+<connect gate="G$1" pin="9" pad="9"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -3906,129 +3985,6 @@ NOTE: CD1 and CD2 are connected internally</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="Gadgeteer">
-<packages>
-<package name="SHF105DSM">
-<wire x1="-2.54" y1="6.35" x2="-2.54" y2="-6.35" width="0.127" layer="51"/>
-<wire x1="-2.54" y1="6.35" x2="3.048" y2="6.35" width="0.127" layer="51"/>
-<wire x1="3.048" y1="6.35" x2="3.048" y2="5.4102" width="0.127" layer="51"/>
-<wire x1="3.048" y1="5.4102" x2="2.54" y2="5.4102" width="0.127" layer="51"/>
-<wire x1="2.54" y1="5.4102" x2="2.54" y2="0.635" width="0.127" layer="51"/>
-<wire x1="2.54" y1="0.635" x2="3.048" y2="0.635" width="0.127" layer="51"/>
-<wire x1="3.048" y1="0.635" x2="3.048" y2="-0.635" width="0.127" layer="51"/>
-<wire x1="3.048" y1="-0.635" x2="2.54" y2="-0.635" width="0.127" layer="51"/>
-<wire x1="2.54" y1="-0.635" x2="2.54" y2="-5.4102" width="0.127" layer="51"/>
-<wire x1="2.54" y1="-5.4102" x2="3.048" y2="-5.4102" width="0.127" layer="51"/>
-<wire x1="3.048" y1="-5.4102" x2="3.048" y2="-6.35" width="0.127" layer="51"/>
-<wire x1="3.048" y1="-6.35" x2="-2.54" y2="-6.35" width="0.127" layer="51"/>
-<wire x1="-2.54" y1="3.175" x2="-2.54" y2="6.35" width="0.127" layer="21"/>
-<wire x1="-2.54" y1="6.35" x2="3.048" y2="6.35" width="0.127" layer="21"/>
-<wire x1="3.048" y1="6.35" x2="3.048" y2="5.4102" width="0.127" layer="21"/>
-<wire x1="3.048" y1="5.4102" x2="2.54" y2="5.4102" width="0.127" layer="21"/>
-<wire x1="2.54" y1="5.4102" x2="2.54" y2="3.175" width="0.127" layer="21"/>
-<wire x1="2.54" y1="0.635" x2="3.048" y2="0.635" width="0.127" layer="21"/>
-<wire x1="2.54" y1="-0.635" x2="3.048" y2="-0.635" width="0.127" layer="21"/>
-<wire x1="2.54" y1="-3.175" x2="2.54" y2="-5.4102" width="0.127" layer="21"/>
-<wire x1="2.54" y1="-5.4102" x2="3.048" y2="-5.4102" width="0.127" layer="21"/>
-<wire x1="3.048" y1="-5.4102" x2="3.048" y2="-6.35" width="0.127" layer="21"/>
-<wire x1="3.048" y1="-6.35" x2="-2.54" y2="-6.35" width="0.127" layer="21"/>
-<wire x1="-2.54" y1="-6.35" x2="-2.54" y2="-3.175" width="0.127" layer="21"/>
-<smd name="5" x="-2.286" y="0" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="3" x="-2.286" y="1.27" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="1" x="-2.286" y="2.54" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="7" x="-2.286" y="-1.27" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="9" x="-2.286" y="-2.54" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="6" x="2.286" y="0" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="4" x="2.286" y="1.27" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="2" x="2.286" y="2.54" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="8" x="2.286" y="-1.27" dx="3.302" dy="0.7366" layer="1"/>
-<smd name="10" x="2.286" y="-2.54" dx="3.302" dy="0.7366" layer="1"/>
-</package>
-<package name="SHF105DSM_1">
-<wire x1="2.5" y1="-3.5" x2="2.5" y2="-6.2" width="0.127" layer="21"/>
-<wire x1="2.5" y1="-6.2" x2="-2.5" y2="-6.2" width="0.127" layer="21"/>
-<wire x1="-2.5" y1="-6.2" x2="-2.5" y2="-3.5" width="0.127" layer="21"/>
-<wire x1="-0.5" y1="-1.9" x2="-0.5" y2="2" width="0.127" layer="21"/>
-<wire x1="-2.5" y1="3.5" x2="-2.5" y2="6.2" width="0.127" layer="21"/>
-<smd name="1" x="-2.254" y="2.58" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="2" x="2.254" y="2.58" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="3" x="-2.254" y="1.31" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="4" x="2.254" y="1.31" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="5" x="-2.254" y="0.04" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="6" x="2.254" y="0.04" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="7" x="-2.254" y="-1.23" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="8" x="2.254" y="-1.23" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="9" x="-2.254" y="-2.5" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<smd name="10" x="2.254" y="-2.5" dx="0.74" dy="3.108" layer="1" rot="R90"/>
-<text x="-2" y="3.8" size="0.6096" layer="21" ratio="12">1</text>
-<text x="-1.94" y="6.85" size="0.8128" layer="25" ratio="12">&gt;NAME</text>
-<text x="-2.54" y="-7.62" size="0.8128" layer="27" ratio="12">&gt;VALUE</text>
-<wire x1="-2.5" y1="6.2" x2="2.5" y2="6.2" width="0.127" layer="21"/>
-<wire x1="2.5" y1="6.2" x2="2.5" y2="3.5" width="0.127" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="SHF105">
-<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
-<wire x1="5.08" y1="7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
-<pin name="1" x="-10.16" y="5.08" length="middle" direction="pas"/>
-<pin name="2" x="10.16" y="5.08" visible="pin" length="middle" direction="pas" rot="R180"/>
-<pin name="3" x="-10.16" y="2.54" length="middle" direction="pas"/>
-<pin name="4" x="10.16" y="2.54" length="middle" direction="pas" rot="R180"/>
-<pin name="5" x="-10.16" y="0" length="middle" direction="pas"/>
-<pin name="6" x="10.16" y="0" length="middle" direction="pas" rot="R180"/>
-<pin name="7" x="-10.16" y="-2.54" length="middle" direction="pas"/>
-<pin name="8" x="10.16" y="-2.54" length="middle" direction="pas" rot="R180"/>
-<pin name="9" x="-10.16" y="-5.08" length="middle" direction="pas"/>
-<pin name="10" x="10.16" y="-5.08" length="middle" direction="pas" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="SHF105">
-<gates>
-<gate name="X" symbol="SHF105" x="0" y="0"/>
-</gates>
-<devices>
-<device name="SM" package="SHF105DSM">
-<connects>
-<connect gate="X" pin="1" pad="1"/>
-<connect gate="X" pin="10" pad="10"/>
-<connect gate="X" pin="2" pad="2"/>
-<connect gate="X" pin="3" pad="3"/>
-<connect gate="X" pin="4" pad="4"/>
-<connect gate="X" pin="5" pad="5"/>
-<connect gate="X" pin="6" pad="6"/>
-<connect gate="X" pin="7" pad="7"/>
-<connect gate="X" pin="8" pad="8"/>
-<connect gate="X" pin="9" pad="9"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="" package="SHF105DSM_1">
-<connects>
-<connect gate="X" pin="1" pad="1"/>
-<connect gate="X" pin="10" pad="10"/>
-<connect gate="X" pin="2" pad="2"/>
-<connect gate="X" pin="3" pad="3"/>
-<connect gate="X" pin="4" pad="4"/>
-<connect gate="X" pin="5" pad="5"/>
-<connect gate="X" pin="6" pad="6"/>
-<connect gate="X" pin="7" pad="7"/>
-<connect gate="X" pin="8" pad="8"/>
-<connect gate="X" pin="9" pad="9"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="supply1">
 <description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
  GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
@@ -4178,7 +4134,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <attribute name="MANF#" value="10029449-111RLF"/>
 </part>
 <part name="FPGA" library="xilinx_devices_V6" deviceset="6SLX16FTG256" device=""/>
-<part name="U$4" library="Gadgeteer" deviceset="SHF105" device=""/>
 <part name="RAM" library="reclone-rise" deviceset="MT47H128M16" device=""/>
 <part name="U2" library="SparkFun-Connectors" deviceset="USD-SOCKET" device="NEW"/>
 <part name="PWR_DBG" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
@@ -4207,7 +4162,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <attribute name="MANF#" value="0526101572"/>
 </part>
 <part name="ETHERNET" library="reclone-rise" deviceset="MAGJACK" device=""/>
-<part name="USB2SERIAL" library="reclone-rise" deviceset="FT2232H" device=""/>
+<part name="USB-TO-SERIAL" library="reclone-rise" deviceset="FT2232H" device=""/>
+<part name="GADGETEER-AIOPXY" library="reclone-rise" deviceset="SHF105" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4225,7 +4181,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <attribute name="MANF#" x="-55.88" y="27.94" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="FPGA" gate="B0" x="88.9" y="-101.6"/>
-<instance part="U$4" gate="X" x="111.76" y="-2.54"/>
 <instance part="RAM" gate="G$1" x="281.94" y="-5.08"/>
 <instance part="U2" gate="G$1" x="-116.84" y="30.48"/>
 <instance part="PWR_DBG" gate="G$1" x="10.16" y="195.58" rot="R180">
@@ -4262,7 +4217,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <attribute name="MANF#" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="ETHERNET" gate="G$1" x="-40.64" y="99.06"/>
-<instance part="USB2SERIAL" gate="G$1" x="60.96" y="185.42"/>
+<instance part="USB-TO-SERIAL" gate="G$1" x="60.96" y="185.42"/>
+<instance part="GADGETEER-AIOPXY" gate="G$1" x="111.76" y="-2.54"/>
 </instances>
 <busses>
 </busses>
@@ -4271,7 +4227,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <segment>
 <wire x1="12.7" y1="187.96" x2="27.94" y2="187.96" width="0.1524" layer="91"/>
 <pinref part="PWR_DBG" gate="G$1" pin="D+"/>
-<pinref part="USB2SERIAL" gate="G$1" pin="D+"/>
+<pinref part="USB-TO-SERIAL" gate="G$1" pin="D+"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -4279,7 +4235,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="12.7" y1="190.5" x2="22.86" y2="190.5" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="190.5" x2="22.86" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="PWR_DBG" gate="G$1" pin="D-"/>
-<pinref part="USB2SERIAL" gate="G$1" pin="D-"/>
+<pinref part="USB-TO-SERIAL" gate="G$1" pin="D-"/>
 <wire x1="22.86" y1="195.58" x2="27.94" y2="195.58" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -4880,10 +4836,10 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="+5V" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="2"/>
 <pinref part="P+2" gate="1" pin="+5V"/>
 <wire x1="121.92" y1="2.54" x2="124.46" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="2.54" x2="124.46" y2="5.08" width="0.1524" layer="91"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="GPIO" gate="G$1" pin="2"/>
@@ -4933,10 +4889,10 @@ In this library the device names are the same as the pin names of the symbols, t
 <junction x="165.1" y="-99.06"/>
 </segment>
 <segment>
-<pinref part="U$4" gate="X" pin="10"/>
 <pinref part="SUPPLY3" gate="GND" pin="GND"/>
 <wire x1="121.92" y1="-7.62" x2="124.46" y2="-7.62" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="-7.62" x2="124.46" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="10"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -4952,9 +4908,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </segment>
 <segment>
 <pinref part="+3V2" gate="G$1" pin="+3V3"/>
-<pinref part="U$4" gate="X" pin="1"/>
 <wire x1="99.06" y1="5.08" x2="99.06" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="2.54" x2="101.6" y2="2.54" width="0.1524" layer="91"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="GPIO02" class="0">
@@ -5155,9 +5111,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_AIN1" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="4"/>
 <wire x1="121.92" y1="0" x2="124.46" y2="0" width="0.1524" layer="91"/>
 <label x="124.46" y="0" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="4"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC123_IN3"/>
@@ -5167,9 +5123,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_AIN3" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="6"/>
 <wire x1="121.92" y1="-2.54" x2="124.46" y2="-2.54" width="0.1524" layer="91"/>
 <label x="124.46" y="-2.54" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="6"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC12_IN9"/>
@@ -5179,9 +5135,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_SDA_CANTX" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="8"/>
 <wire x1="121.92" y1="-5.08" x2="124.46" y2="-5.08" width="0.1524" layer="91"/>
 <label x="124.46" y="-5.08" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="8"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$9" pin="I2C1_SDA/CAN1_TX"/>
@@ -5191,9 +5147,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_AIN0" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="3"/>
 <wire x1="101.6" y1="0" x2="99.06" y2="0" width="0.1524" layer="91"/>
 <label x="83.82" y="0" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC123_IN0/WKUP"/>
@@ -5203,9 +5159,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_AIN2" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="5"/>
 <wire x1="101.6" y1="-2.54" x2="99.06" y2="-2.54" width="0.1524" layer="91"/>
 <label x="83.82" y="-2.54" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="5"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC12_IN4/DAC_OUT1"/>
@@ -5215,9 +5171,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_PWM" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="7"/>
 <wire x1="101.6" y1="-5.08" x2="99.06" y2="-5.08" width="0.1524" layer="91"/>
 <label x="83.82" y="-5.08" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="7"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="TIM4_CH1"/>
@@ -5227,9 +5183,9 @@ In this library the device names are the same as the pin names of the symbols, t
 </net>
 <net name="GADG_SCL_CANRX" class="0">
 <segment>
-<pinref part="U$4" gate="X" pin="9"/>
 <wire x1="101.6" y1="-7.62" x2="99.06" y2="-7.62" width="0.1524" layer="91"/>
 <label x="78.74" y="-7.62" size="1.778" layer="95"/>
+<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="9"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$9" pin="I2C1_SCL/CAN1_RX"/>
