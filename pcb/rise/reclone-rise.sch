@@ -1294,6 +1294,35 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="6.2" y="-16" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="top-left">&gt;Name</text>
 <text x="6.2" y="-2.5" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-right">&gt;Value</text>
 </package>
+<package name="SOT-23-5">
+<smd name="2" x="0" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="1" x="-0.95" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="3" x="0.95" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="5" x="-0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="4" x="0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<circle x="-1.7" y="-1.7" radius="0.08" width="0.2" layer="21"/>
+<wire x1="-1.4" y1="0.6" x2="1.4" y2="0.6" width="0.127" layer="21"/>
+<wire x1="1.4" y1="0.6" x2="1.4" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="1.4" y1="-0.6" x2="-1.4" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="-1.4" y1="-0.6" x2="-1.4" y2="0.6" width="0.127" layer="21"/>
+<text x="-1.8" y="-1.4" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
+<text x="1.8" y="-1.4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
+</package>
+<package name="SOT-23-6">
+<smd name="2" x="0" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="1" x="-0.95" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="3" x="0.95" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="5" x="0" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<smd name="4" x="0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+<circle x="-1.7" y="-1.7" radius="0.08" width="0.2" layer="21"/>
+<wire x1="-1.4" y1="0.6" x2="1.4" y2="0.6" width="0.127" layer="21"/>
+<wire x1="1.4" y1="0.6" x2="1.4" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="1.4" y1="-0.6" x2="-1.4" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="-1.4" y1="-0.6" x2="-1.4" y2="0.6" width="0.127" layer="21"/>
+<text x="-1.8" y="-1.4" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
+<text x="1.8" y="-1.4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
+<smd name="6" x="-0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -2309,6 +2338,32 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-0.762" y1="-17.78" x2="-2.032" y2="-17.78" width="0.254" layer="94"/>
 <wire x1="-0.762" y1="-12.7" x2="-2.032" y2="-12.7" width="0.254" layer="94"/>
 </symbol>
+<symbol name="I2C_EEPROM">
+<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<pin name="SCL" x="-10.16" y="0" length="middle"/>
+<pin name="SDA" x="-10.16" y="-2.54" length="middle"/>
+<pin name="VCC" x="-10.16" y="2.54" length="middle"/>
+<pin name="VSS" x="-10.16" y="-5.08" length="middle"/>
+<text x="-5.08" y="5.842" size="1.27" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-8.636" size="1.27" layer="96" align="top-left">&gt;VALUE</text>
+</symbol>
+<symbol name="MICROWIRE_EEPROM">
+<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-7.62" x2="7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<pin name="DI" x="12.7" y="-2.54" length="middle" rot="R180"/>
+<pin name="CLK" x="12.7" y="0" length="middle" rot="R180"/>
+<pin name="VCC" x="-10.16" y="2.54" length="middle"/>
+<pin name="VSS" x="-10.16" y="-5.08" length="middle"/>
+<text x="-5.08" y="5.842" size="1.27" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-8.636" size="1.27" layer="96" align="top-left">&gt;VALUE</text>
+<pin name="DO" x="12.7" y="-5.08" length="middle" rot="R180"/>
+<pin name="CS" x="12.7" y="2.54" length="middle" rot="R180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -3259,6 +3314,44 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="24AA02E48">
+<gates>
+<gate name="G$1" symbol="I2C_EEPROM" x="0" y="1.016"/>
+</gates>
+<devices>
+<device name="" package="SOT-23-5">
+<connects>
+<connect gate="G$1" pin="SCL" pad="1"/>
+<connect gate="G$1" pin="SDA" pad="3"/>
+<connect gate="G$1" pin="VCC" pad="4"/>
+<connect gate="G$1" pin="VSS" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="93LC46B">
+<gates>
+<gate name="G$1" symbol="MICROWIRE_EEPROM" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT-23-6">
+<connects>
+<connect gate="G$1" pin="CLK" pad="4"/>
+<connect gate="G$1" pin="CS" pad="5"/>
+<connect gate="G$1" pin="DI" pad="3"/>
+<connect gate="G$1" pin="DO" pad="1"/>
+<connect gate="G$1" pin="VCC" pad="6"/>
+<connect gate="G$1" pin="VSS" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 <library name="supply1">
@@ -3440,6 +3533,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="AUDIO-OUT" library="reclone-rise" deviceset="AUDIO-JACK" device=""/>
 <part name="FPGA" library="reclone-rise" deviceset="XC6SLX16FTG256" device=""/>
 <part name="MICRO-SD" library="reclone-rise" deviceset="USD-SOCKET" device=""/>
+<part name="MAC" library="reclone-rise" deviceset="24AA02E48" device=""/>
+<part name="CFG" library="reclone-rise" deviceset="93LC46B" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3499,6 +3594,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="FPGA" gate="BVCCAUX" x="68.58" y="-88.9"/>
 <instance part="FPGA" gate="BVCCINT" x="68.58" y="-121.92"/>
 <instance part="MICRO-SD" gate="G$1" x="-114.3" y="33.02"/>
+<instance part="MAC" gate="G$1" x="-114.3" y="86.36"/>
+<instance part="CFG" gate="G$1" x="-114.3" y="111.76"/>
 </instances>
 <busses>
 </busses>
