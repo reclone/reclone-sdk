@@ -1611,7 +1611,7 @@ design rules under a new name.</description>
 <contactref element="FPGA" pad="R10"/>
 <contactref element="FPGA" pad="T1"/>
 <contactref element="FPGA" pad="T16"/>
-<polygon width="0.2" layer="1">
+<polygon width="0.1" layer="1">
 <vertex x="1" y="55"/>
 <vertex x="1" y="1"/>
 <vertex x="84" y="1"/>
@@ -1632,7 +1632,6 @@ design rules under a new name.</description>
 <wire x1="31.5" y1="30.5" x2="30.5" y2="32.5" width="0" layer="19" extent="1-1"/>
 <wire x1="30.5" y1="40.5" x2="32.5" y2="37.5" width="0" layer="19" extent="1-1"/>
 <wire x1="27.5" y1="39.5" x2="30.5" y2="40.5" width="0" layer="19" extent="1-1"/>
-<wire x1="27.5" y1="38.5" x2="27.5" y2="39.5" width="0" layer="19" extent="1-1"/>
 <wire x1="25.5" y1="35.5" x2="28.5" y2="33.5" width="0" layer="19" extent="1-1"/>
 <wire x1="33.5" y1="27.5" x2="31.5" y2="30.5" width="0" layer="19" extent="1-1"/>
 <wire x1="36.5" y1="29.5" x2="33.5" y2="27.5" width="0" layer="19" extent="1-1"/>
@@ -1975,24 +1974,24 @@ design rules under a new name.</description>
 <contactref element="MCU" pad="47"/>
 </signal>
 <signal name="N$3">
-<contactref element="MCU" pad="54"/>
+<contactref element="MCU" pad="71"/>
 <contactref element="USB" pad="DP1"/>
-<wire x1="61.75" y1="33.5" x2="73.0272" y2="29.95" width="0" layer="19" extent="1-1"/>
+<wire x1="73.0272" y1="29.95" x2="61.75" y2="42" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
-<contactref element="MCU" pad="53"/>
+<contactref element="MCU" pad="70"/>
 <contactref element="USB" pad="DM1"/>
-<wire x1="61.75" y1="33" x2="73.0272" y2="27.95" width="0" layer="19" extent="1-1"/>
+<wire x1="73.0272" y1="27.95" x2="61.75" y2="41.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$5">
-<contactref element="MCU" pad="70"/>
+<contactref element="MCU" pad="53"/>
 <contactref element="USB" pad="DM2"/>
-<wire x1="70.37" y1="27.95" x2="61.75" y2="41.5" width="0" layer="19" extent="1-1"/>
+<wire x1="61.75" y1="33" x2="70.37" y2="27.95" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
 <contactref element="USB" pad="DP2"/>
-<contactref element="MCU" pad="71"/>
-<wire x1="70.37" y1="29.95" x2="61.75" y2="42" width="0" layer="19" extent="1-1"/>
+<contactref element="MCU" pad="54"/>
+<wire x1="61.75" y1="33.5" x2="70.37" y2="29.95" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AGND">
 <contactref element="USB-TO-SERIAL" pad="10"/>
@@ -2036,23 +2035,23 @@ design rules under a new name.</description>
 </signal>
 <signal name="GPIO00">
 <contactref element="GPIO" pad="11"/>
-<contactref element="FPGA" pad="A6"/>
-<wire x1="29.5" y1="41.5" x2="21.07" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="B6"/>
+<wire x1="29.5" y1="40.5" x2="21.07" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO02">
 <contactref element="GPIO" pad="13"/>
-<contactref element="FPGA" pad="A7"/>
-<wire x1="30.5" y1="41.5" x2="23.61" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="C7"/>
+<wire x1="30.5" y1="39.5" x2="23.61" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO03">
 <contactref element="GPIO" pad="15"/>
-<contactref element="FPGA" pad="C6"/>
-<wire x1="29.5" y1="39.5" x2="26.15" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="A7"/>
+<wire x1="30.5" y1="41.5" x2="26.15" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO12">
 <contactref element="GPIO" pad="19"/>
-<contactref element="FPGA" pad="C9"/>
-<wire x1="32.5" y1="39.5" x2="31.23" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="B8"/>
+<wire x1="31.5" y1="40.5" x2="31.23" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO14">
 <contactref element="GPIO" pad="23"/>
@@ -2061,38 +2060,38 @@ design rules under a new name.</description>
 </signal>
 <signal name="ID_SD">
 <contactref element="GPIO" pad="27"/>
-<contactref element="FPGA" pad="C11"/>
-<wire x1="34.5" y1="39.5" x2="41.39" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="C8"/>
+<wire x1="31.5" y1="39.5" x2="41.39" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO05">
 <contactref element="GPIO" pad="18"/>
-<contactref element="FPGA" pad="A8"/>
-<wire x1="31.5" y1="41.5" x2="28.69" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="C6"/>
+<wire x1="29.5" y1="39.5" x2="28.69" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO13">
 <contactref element="GPIO" pad="21"/>
-<contactref element="FPGA" pad="A9"/>
-<wire x1="32.5" y1="41.5" x2="33.77" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="A8"/>
+<wire x1="31.5" y1="41.5" x2="33.77" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO15">
 <contactref element="GPIO" pad="8"/>
-<contactref element="FPGA" pad="C5"/>
-<wire x1="28.5" y1="39.5" x2="15.99" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="D5"/>
+<wire x1="28.5" y1="38.5" x2="15.99" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO16">
 <contactref element="GPIO" pad="10"/>
-<contactref element="FPGA" pad="B6"/>
-<wire x1="29.5" y1="40.5" x2="18.53" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="C5"/>
+<wire x1="28.5" y1="39.5" x2="18.53" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO01">
 <contactref element="GPIO" pad="12"/>
-<contactref element="FPGA" pad="C7"/>
-<wire x1="30.5" y1="39.5" x2="21.07" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="A6"/>
+<wire x1="29.5" y1="41.5" x2="21.07" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO04">
 <contactref element="GPIO" pad="16"/>
-<contactref element="FPGA" pad="B8"/>
-<wire x1="31.5" y1="40.5" x2="26.15" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="D6"/>
+<wire x1="29.5" y1="38.5" x2="26.15" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO10">
 <contactref element="GPIO" pad="24"/>
@@ -2101,62 +2100,70 @@ design rules under a new name.</description>
 </signal>
 <signal name="GPIO11">
 <contactref element="GPIO" pad="26"/>
-<contactref element="FPGA" pad="C8"/>
-<wire x1="31.5" y1="39.5" x2="38.85" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="D8"/>
+<wire x1="31.5" y1="38.5" x2="38.85" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ID_SC">
 <contactref element="GPIO" pad="28"/>
-<contactref element="FPGA" pad="A11"/>
-<wire x1="34.5" y1="41.5" x2="41.39" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="C11"/>
+<wire x1="34.5" y1="39.5" x2="41.39" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3RESET">
 <contactref element="FPGA" pad="E4"/>
 </signal>
-<signal name="N$15">
-<contactref element="FPGA" pad="A14"/>
-</signal>
 <signal name="GPIO06">
-<contactref element="FPGA" pad="B10"/>
 <contactref element="GPIO" pad="22"/>
-<wire x1="33.5" y1="40.5" x2="33.77" y2="53.77" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$23">
-<contactref element="FPGA" pad="B14"/>
+<contactref element="FPGA" pad="C9"/>
+<wire x1="32.5" y1="39.5" x2="33.77" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO21">
 <contactref element="GPIO" pad="29"/>
-<contactref element="FPGA" pad="B12"/>
-<wire x1="35.5" y1="40.5" x2="43.93" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="A11"/>
+<wire x1="34.5" y1="41.5" x2="43.93" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO22">
 <contactref element="GPIO" pad="31"/>
-<contactref element="FPGA" pad="A12"/>
-<wire x1="35.5" y1="41.5" x2="46.47" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="B12"/>
+<wire x1="35.5" y1="40.5" x2="46.47" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO23">
 <contactref element="GPIO" pad="33"/>
-<contactref element="FPGA" pad="A13"/>
-<wire x1="36.5" y1="41.5" x2="49.01" y2="51.23" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="C13"/>
+<wire x1="36.5" y1="39.5" x2="49.01" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO24">
 <contactref element="GPIO" pad="35"/>
+<contactref element="FPGA" pad="A12"/>
+<wire x1="35.5" y1="41.5" x2="51.55" y2="51.23" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO25">
 <contactref element="GPIO" pad="37"/>
 </signal>
 <signal name="GPIO26">
 <contactref element="GPIO" pad="32"/>
-<contactref element="FPGA" pad="C13"/>
-<wire x1="36.5" y1="39.5" x2="46.47" y2="53.77" width="0" layer="19" extent="1-1"/>
+<contactref element="FPGA" pad="D9"/>
+<wire x1="32.5" y1="38.5" x2="46.47" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO27">
 <contactref element="GPIO" pad="36"/>
+<contactref element="FPGA" pad="A13"/>
+<wire x1="36.5" y1="41.5" x2="51.55" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO28">
 <contactref element="GPIO" pad="38"/>
+<contactref element="FPGA" pad="A14"/>
+<wire x1="37.5" y1="41.5" x2="54.09" y2="53.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPIO29">
 <contactref element="GPIO" pad="40"/>
+<contactref element="FPGA" pad="B14"/>
+<wire x1="37.5" y1="40.5" x2="56.63" y2="53.77" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$14">
+<contactref element="FPGA" pad="B10"/>
+</signal>
+<signal name="N$15">
+<contactref element="FPGA" pad="A9"/>
 </signal>
 </signals>
 </board>
