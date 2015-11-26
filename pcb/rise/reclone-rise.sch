@@ -763,14 +763,13 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-19.685" y1="-2.54" x2="-20.32" y2="-1.905" width="0.2032" layer="21"/>
 <wire x1="-17.78" y1="-1.905" x2="-17.145" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="-15.875" y1="-2.54" x2="-17.145" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-22.86" y1="-1.905" x2="-23.495" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-22.86" y1="-1.905" x2="-22.86" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="-20.32" y1="-1.905" x2="-20.955" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="-20.955" y1="-2.54" x2="-22.225" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="-22.225" y1="-2.54" x2="-22.86" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="-25.4" y1="-0.635" x2="-25.4" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="-24.765" y1="0" x2="-25.4" y2="-0.635" width="0.2032" layer="21"/>
-<wire x1="-25.4" y1="-1.905" x2="-24.765" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-23.495" y1="-2.54" x2="-24.765" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-25.4" y1="0" x2="-25.4" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-24.765" y1="0" x2="-25.4" y2="0" width="0.2032" layer="21"/>
+<wire x1="-22.86" y1="-2.54" x2="-25.4" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="7.62" y1="-1.905" x2="6.985" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="6.985" y1="-2.54" x2="5.715" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="5.715" y1="-2.54" x2="5.08" y2="-1.905" width="0.2032" layer="21"/>
@@ -789,7 +788,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-4.445" y1="-2.54" x2="-5.08" y2="-1.905" width="0.2032" layer="21"/>
 <wire x1="-7.62" y1="-1.905" x2="-6.985" y2="-2.54" width="0.2032" layer="21"/>
 <wire x1="-5.715" y1="-2.54" x2="-6.985" y2="-2.54" width="0.2032" layer="21"/>
-<pad name="1" x="-24.13" y="-1.27" drill="1.016" diameter="1.651" rot="R90"/>
+<pad name="1" x="-24.13" y="-1.27" drill="1.016" diameter="1.651" shape="square" rot="R90"/>
 <pad name="3" x="-21.59" y="-1.27" drill="1.016" diameter="1.651" rot="R90"/>
 <pad name="5" x="-19.05" y="-1.27" drill="1.016" diameter="1.651" rot="R90"/>
 <pad name="7" x="-16.51" y="-1.27" drill="1.016" diameter="1.651" rot="R90"/>
@@ -3535,6 +3534,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="MICRO-SD" library="reclone-rise" deviceset="USD-SOCKET" device=""/>
 <part name="EUI-48" library="reclone-rise" deviceset="24AA02E48" device=""/>
 <part name="CFG" library="reclone-rise" deviceset="93LC46B" device=""/>
+<part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3596,6 +3596,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="MICRO-SD" gate="G$1" x="-114.3" y="33.02"/>
 <instance part="EUI-48" gate="G$1" x="-114.3" y="86.36"/>
 <instance part="CFG" gate="G$1" x="-114.3" y="111.76"/>
+<instance part="SUPPLY4" gate="GND" x="256.54" y="218.44" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -4271,6 +4272,11 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="124.46" y1="-7.62" x2="124.46" y2="-10.16" width="0.1524" layer="91"/>
 <pinref part="GADGETEER-AIOPXY" gate="G$1" pin="10"/>
 </segment>
+<segment>
+<pinref part="SUPPLY4" gate="GND" pin="GND"/>
+<pinref part="FPGA" gate="B0" pin="IO_L1P_HSWAPEN_0"/>
+<wire x1="254" y1="218.44" x2="246.38" y2="218.44" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
@@ -4290,67 +4296,100 @@ In this library the device names are the same as the pin names of the symbols, t
 <pinref part="GADGETEER-AIOPXY" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="GPIO02" class="0">
+<net name="GPIO08" class="0">
 <segment>
 <wire x1="284.48" y1="190.5" x2="281.94" y2="190.5" width="0.1524" layer="91"/>
 <label x="274.32" y="190.5" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="3"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L1N_VREF_0"/>
+<wire x1="246.38" y1="215.9" x2="248.92" y2="215.9" width="0.1524" layer="91"/>
+<label x="248.92" y="215.9" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO03" class="0">
+<net name="GPIO09" class="0">
 <segment>
 <wire x1="284.48" y1="187.96" x2="281.94" y2="187.96" width="0.1524" layer="91"/>
 <label x="274.32" y="187.96" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="5"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L2P_0"/>
+<wire x1="246.38" y1="213.36" x2="248.92" y2="213.36" width="0.1524" layer="91"/>
+<label x="248.92" y="213.36" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO04" class="0">
+<net name="GPIO07" class="0">
 <segment>
 <wire x1="284.48" y1="185.42" x2="281.94" y2="185.42" width="0.1524" layer="91"/>
 <label x="274.32" y="185.42" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="7"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L2N_0"/>
+<wire x1="246.38" y1="210.82" x2="248.92" y2="210.82" width="0.1524" layer="91"/>
+<label x="248.92" y="210.82" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO17" class="0">
+<net name="GPIO00" class="0">
 <segment>
 <wire x1="284.48" y1="180.34" x2="281.94" y2="180.34" width="0.1524" layer="91"/>
 <label x="274.32" y="180.34" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="11"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L4N_0"/>
+<wire x1="246.38" y1="200.66" x2="248.92" y2="200.66" width="0.1524" layer="91"/>
+<label x="248.92" y="200.66" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO27" class="0">
+<net name="GPIO02" class="0">
 <segment>
 <wire x1="281.94" y1="177.8" x2="284.48" y2="177.8" width="0.1524" layer="91"/>
 <label x="274.32" y="177.8" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="13"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L6N_0"/>
+<wire x1="246.38" y1="190.5" x2="248.92" y2="190.5" width="0.1524" layer="91"/>
+<label x="248.92" y="190.5" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO22" class="0">
+<net name="GPIO03" class="0">
 <segment>
 <wire x1="284.48" y1="175.26" x2="281.94" y2="175.26" width="0.1524" layer="91"/>
 <label x="274.32" y="175.26" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="15"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L7N_0"/>
+<wire x1="246.38" y1="185.42" x2="248.92" y2="185.42" width="0.1524" layer="91"/>
+<label x="248.92" y="185.42" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO10" class="0">
+<net name="GPIO12" class="0">
 <segment>
 <wire x1="284.48" y1="170.18" x2="281.94" y2="170.18" width="0.1524" layer="91"/>
 <label x="274.32" y="170.18" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="19"/>
 </segment>
-</net>
-<net name="GPIO09" class="0">
 <segment>
-<wire x1="284.48" y1="167.64" x2="281.94" y2="167.64" width="0.1524" layer="91"/>
-<label x="274.32" y="167.64" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="21"/>
+<pinref part="FPGA" gate="B0" pin="IO_L34P_GCLK19_0"/>
+<wire x1="246.38" y1="177.8" x2="248.92" y2="177.8" width="0.1524" layer="91"/>
+<label x="248.92" y="177.8" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GPIO11" class="0">
+<net name="GPIO14" class="0">
 <segment>
 <wire x1="284.48" y1="165.1" x2="281.94" y2="165.1" width="0.1524" layer="91"/>
 <label x="274.32" y="165.1" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="23"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L35N_GCLK16_0"/>
+<wire x1="246.38" y1="170.18" x2="248.92" y2="170.18" width="0.1524" layer="91"/>
+<label x="248.92" y="170.18" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ID_SD" class="0">
@@ -4359,96 +4398,106 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="274.32" y="160.02" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="27"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L39P_0"/>
+<wire x1="246.38" y1="152.4" x2="248.92" y2="152.4" width="0.1524" layer="91"/>
+<label x="248.92" y="152.4" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="GPIO05" class="0">
-<segment>
-<wire x1="284.48" y1="157.48" x2="281.94" y2="157.48" width="0.1524" layer="91"/>
-<label x="274.32" y="157.48" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="29"/>
-</segment>
-</net>
-<net name="GPIO06" class="0">
-<segment>
-<wire x1="284.48" y1="154.94" x2="281.94" y2="154.94" width="0.1524" layer="91"/>
-<label x="274.32" y="154.94" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="31"/>
-</segment>
-</net>
-<net name="GPIO13" class="0">
-<segment>
-<wire x1="284.48" y1="152.4" x2="281.94" y2="152.4" width="0.1524" layer="91"/>
-<label x="274.32" y="152.4" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="33"/>
-</segment>
-</net>
-<net name="GPIO19" class="0">
-<segment>
-<wire x1="284.48" y1="149.86" x2="281.94" y2="149.86" width="0.1524" layer="91"/>
-<label x="274.32" y="149.86" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="35"/>
-</segment>
-</net>
-<net name="GPIO26" class="0">
-<segment>
-<wire x1="284.48" y1="147.32" x2="281.94" y2="147.32" width="0.1524" layer="91"/>
-<label x="274.32" y="147.32" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="37"/>
-</segment>
-</net>
-<net name="GPIO14" class="0">
-<segment>
-<wire x1="299.72" y1="185.42" x2="302.26" y2="185.42" width="0.1524" layer="91"/>
-<label x="302.26" y="185.42" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="8"/>
-</segment>
-</net>
-<net name="GPIO15" class="0">
-<segment>
-<wire x1="299.72" y1="182.88" x2="302.26" y2="182.88" width="0.1524" layer="91"/>
-<label x="302.26" y="182.88" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="10"/>
-</segment>
-</net>
-<net name="GPIO18" class="0">
-<segment>
-<wire x1="299.72" y1="180.34" x2="302.26" y2="180.34" width="0.1524" layer="91"/>
-<label x="302.26" y="180.34" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="12"/>
-</segment>
-</net>
-<net name="GPIO23" class="0">
-<segment>
-<wire x1="299.72" y1="175.26" x2="302.26" y2="175.26" width="0.1524" layer="91"/>
-<label x="302.26" y="175.26" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="16"/>
-</segment>
-</net>
-<net name="GPIO24" class="0">
 <segment>
 <wire x1="299.72" y1="172.72" x2="302.26" y2="172.72" width="0.1524" layer="91"/>
 <label x="302.26" y="172.72" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="18"/>
 </segment>
-</net>
-<net name="GPIO25" class="0">
 <segment>
-<wire x1="299.72" y1="167.64" x2="302.26" y2="167.64" width="0.1524" layer="91"/>
-<label x="302.26" y="167.64" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="22"/>
+<pinref part="FPGA" gate="B0" pin="IO_L33N_0"/>
+<wire x1="246.38" y1="180.34" x2="248.92" y2="180.34" width="0.1524" layer="91"/>
+<label x="248.92" y="180.34" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GPIO08" class="0">
+<net name="GPIO13" class="0">
+<segment>
+<wire x1="284.48" y1="167.64" x2="281.94" y2="167.64" width="0.1524" layer="91"/>
+<label x="274.32" y="167.64" size="1.778" layer="95"/>
+<pinref part="GPIO" gate="G$1" pin="21"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L34N_GCLK18_0"/>
+<wire x1="246.38" y1="175.26" x2="248.92" y2="175.26" width="0.1524" layer="91"/>
+<label x="248.92" y="175.26" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO15" class="0">
+<segment>
+<wire x1="299.72" y1="185.42" x2="302.26" y2="185.42" width="0.1524" layer="91"/>
+<label x="302.26" y="185.42" size="1.778" layer="95"/>
+<pinref part="GPIO" gate="G$1" pin="8"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L3N_0"/>
+<wire x1="246.38" y1="205.74" x2="248.92" y2="205.74" width="0.1524" layer="91"/>
+<label x="248.92" y="205.74" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO16" class="0">
+<segment>
+<wire x1="299.72" y1="182.88" x2="302.26" y2="182.88" width="0.1524" layer="91"/>
+<label x="302.26" y="182.88" size="1.778" layer="95"/>
+<pinref part="GPIO" gate="G$1" pin="10"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L4P_0"/>
+<wire x1="246.38" y1="203.2" x2="248.92" y2="203.2" width="0.1524" layer="91"/>
+<label x="248.92" y="203.2" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO01" class="0">
+<segment>
+<wire x1="299.72" y1="180.34" x2="302.26" y2="180.34" width="0.1524" layer="91"/>
+<label x="302.26" y="180.34" size="1.778" layer="95"/>
+<pinref part="GPIO" gate="G$1" pin="12"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L6P_0"/>
+<wire x1="246.38" y1="193.04" x2="248.92" y2="193.04" width="0.1524" layer="91"/>
+<label x="248.92" y="193.04" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO04" class="0">
+<segment>
+<wire x1="299.72" y1="175.26" x2="302.26" y2="175.26" width="0.1524" layer="91"/>
+<label x="302.26" y="175.26" size="1.778" layer="95"/>
+<pinref part="GPIO" gate="G$1" pin="16"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L33P_0"/>
+<wire x1="246.38" y1="182.88" x2="248.92" y2="182.88" width="0.1524" layer="91"/>
+<label x="248.92" y="182.88" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO10" class="0">
 <segment>
 <wire x1="299.72" y1="165.1" x2="302.26" y2="165.1" width="0.1524" layer="91"/>
 <label x="302.26" y="165.1" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="24"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L37N_GCLK12_0"/>
+<wire x1="246.38" y1="160.02" x2="248.92" y2="160.02" width="0.1524" layer="91"/>
+<label x="248.92" y="160.02" size="1.778" layer="95"/>
+</segment>
 </net>
-<net name="GPIO07" class="0">
+<net name="GPIO11" class="0">
 <segment>
 <wire x1="299.72" y1="162.56" x2="302.26" y2="162.56" width="0.1524" layer="91"/>
 <label x="302.26" y="162.56" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="26"/>
+</segment>
+<segment>
+<pinref part="FPGA" gate="B0" pin="IO_L38N_VREF_0"/>
+<wire x1="246.38" y1="154.94" x2="248.92" y2="154.94" width="0.1524" layer="91"/>
+<label x="248.92" y="154.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ID_SC" class="0">
@@ -4457,33 +4506,10 @@ In this library the device names are the same as the pin names of the symbols, t
 <label x="302.26" y="160.02" size="1.778" layer="95"/>
 <pinref part="GPIO" gate="G$1" pin="28"/>
 </segment>
-</net>
-<net name="GPIO12" class="0">
 <segment>
-<wire x1="299.72" y1="154.94" x2="302.26" y2="154.94" width="0.1524" layer="91"/>
-<label x="302.26" y="154.94" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="32"/>
-</segment>
-</net>
-<net name="GPIO20" class="0">
-<segment>
-<wire x1="299.72" y1="147.32" x2="302.26" y2="147.32" width="0.1524" layer="91"/>
-<label x="302.26" y="147.32" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="38"/>
-</segment>
-</net>
-<net name="GPIO21" class="0">
-<segment>
-<wire x1="299.72" y1="144.78" x2="302.26" y2="144.78" width="0.1524" layer="91"/>
-<label x="302.26" y="144.78" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="40"/>
-</segment>
-</net>
-<net name="GPIO16" class="0">
-<segment>
-<wire x1="299.72" y1="149.86" x2="302.26" y2="149.86" width="0.1524" layer="91"/>
-<label x="302.26" y="149.86" size="1.778" layer="95"/>
-<pinref part="GPIO" gate="G$1" pin="36"/>
+<pinref part="FPGA" gate="B0" pin="IO_L39N_0"/>
+<wire x1="246.38" y1="149.86" x2="248.92" y2="149.86" width="0.1524" layer="91"/>
+<label x="248.92" y="149.86" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GADG_AIN1" class="0">
@@ -4673,160 +4699,113 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="55.88" y1="81.28" x2="48.26" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$7" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L1N_VREF_0"/>
-<wire x1="246.38" y1="215.9" x2="248.92" y2="215.9" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$8" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L2N_0"/>
-<wire x1="246.38" y1="210.82" x2="248.92" y2="210.82" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$9" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L4N_0"/>
-<wire x1="246.38" y1="200.66" x2="248.92" y2="200.66" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$10" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L6N_0"/>
-<wire x1="246.38" y1="190.5" x2="248.92" y2="190.5" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$11" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L33N_0"/>
-<wire x1="246.38" y1="180.34" x2="248.92" y2="180.34" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$12" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L34N_GCLK18_0"/>
-<wire x1="246.38" y1="175.26" x2="248.92" y2="175.26" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$13" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L62N_VREF_0"/>
-<wire x1="246.38" y1="139.7" x2="248.92" y2="139.7" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$14" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L63N_SCP6_0"/>
-<wire x1="246.38" y1="134.62" x2="248.92" y2="134.62" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$15" class="0">
 <segment>
 <pinref part="FPGA" gate="B0" pin="IO_L65N_SCP2_0"/>
 <wire x1="246.38" y1="124.46" x2="248.92" y2="124.46" width="0.1524" layer="91"/>
+<label x="248.92" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$16" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L39N_0"/>
-<wire x1="246.38" y1="149.86" x2="248.92" y2="149.86" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$17" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L35N_GCLK16_0"/>
-<wire x1="246.38" y1="170.18" x2="248.92" y2="170.18" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$18" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L2P_0"/>
-<wire x1="246.38" y1="213.36" x2="248.92" y2="213.36" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$19" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L4P_0"/>
-<wire x1="246.38" y1="203.2" x2="248.92" y2="203.2" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$20" class="0">
-<segment>
-<pinref part="FPGA" gate="B0" pin="IO_L33P_0"/>
-<wire x1="246.38" y1="182.88" x2="248.92" y2="182.88" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$21" class="0">
+<net name="GPIO06" class="0">
 <segment>
 <pinref part="FPGA" gate="B0" pin="IO_L35P_GCLK17_0"/>
 <wire x1="246.38" y1="172.72" x2="248.92" y2="172.72" width="0.1524" layer="91"/>
+<label x="248.92" y="172.72" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="N$22" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L62P_0"/>
-<wire x1="246.38" y1="142.24" x2="248.92" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="299.72" y1="167.64" x2="302.26" y2="167.64" width="0.1524" layer="91"/>
+<label x="302.26" y="167.64" size="1.778" layer="95"/>
+<pinref part="GPIO" gate="G$1" pin="22"/>
 </segment>
 </net>
 <net name="N$23" class="0">
 <segment>
 <pinref part="FPGA" gate="B0" pin="IO_L65P_SCP3_0"/>
 <wire x1="246.38" y1="127" x2="248.92" y2="127" width="0.1524" layer="91"/>
+<label x="248.92" y="127" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$24" class="0">
+<net name="GPIO21" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L1P_HSWAPEN_0"/>
-<wire x1="246.38" y1="218.44" x2="248.92" y2="218.44" width="0.1524" layer="91"/>
+<pinref part="GPIO" gate="G$1" pin="29"/>
+<wire x1="284.48" y1="157.48" x2="281.94" y2="157.48" width="0.1524" layer="91"/>
+<label x="274.32" y="157.48" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="N$25" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L3N_0"/>
-<wire x1="246.38" y1="205.74" x2="248.92" y2="205.74" width="0.1524" layer="91"/>
+<pinref part="FPGA" gate="B0" pin="IO_L62P_0"/>
+<wire x1="246.38" y1="142.24" x2="248.92" y2="142.24" width="0.1524" layer="91"/>
+<label x="248.92" y="142.24" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$26" class="0">
+<net name="GPIO22" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L6P_0"/>
-<wire x1="246.38" y1="193.04" x2="248.92" y2="193.04" width="0.1524" layer="91"/>
+<pinref part="GPIO" gate="G$1" pin="31"/>
+<wire x1="284.48" y1="154.94" x2="281.94" y2="154.94" width="0.1524" layer="91"/>
+<label x="274.32" y="154.94" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="N$27" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L7N_0"/>
-<wire x1="246.38" y1="185.42" x2="248.92" y2="185.42" width="0.1524" layer="91"/>
+<pinref part="FPGA" gate="B0" pin="IO_L62N_VREF_0"/>
+<wire x1="246.38" y1="139.7" x2="248.92" y2="139.7" width="0.1524" layer="91"/>
+<label x="248.92" y="139.7" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$28" class="0">
+<net name="GPIO23" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L34P_GCLK19_0"/>
-<wire x1="246.38" y1="177.8" x2="248.92" y2="177.8" width="0.1524" layer="91"/>
+<pinref part="GPIO" gate="G$1" pin="33"/>
+<wire x1="284.48" y1="152.4" x2="281.94" y2="152.4" width="0.1524" layer="91"/>
+<label x="274.32" y="152.4" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="N$29" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L37N_GCLK12_0"/>
-<wire x1="246.38" y1="160.02" x2="248.92" y2="160.02" width="0.1524" layer="91"/>
+<pinref part="FPGA" gate="B0" pin="IO_L63N_SCP6_0"/>
+<wire x1="246.38" y1="134.62" x2="248.92" y2="134.62" width="0.1524" layer="91"/>
+<label x="248.92" y="134.62" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$30" class="0">
+<net name="GPIO24" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L38N_VREF_0"/>
-<wire x1="246.38" y1="154.94" x2="248.92" y2="154.94" width="0.1524" layer="91"/>
+<pinref part="GPIO" gate="G$1" pin="35"/>
+<wire x1="284.48" y1="149.86" x2="281.94" y2="149.86" width="0.1524" layer="91"/>
+<label x="274.32" y="149.86" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$31" class="0">
+<net name="GPIO25" class="0">
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L39P_0"/>
-<wire x1="246.38" y1="152.4" x2="248.92" y2="152.4" width="0.1524" layer="91"/>
+<pinref part="GPIO" gate="G$1" pin="37"/>
+<wire x1="284.48" y1="147.32" x2="281.94" y2="147.32" width="0.1524" layer="91"/>
+<label x="274.32" y="147.32" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$32" class="0">
+<net name="GPIO26" class="0">
+<segment>
+<pinref part="GPIO" gate="G$1" pin="32"/>
+<wire x1="299.72" y1="154.94" x2="302.26" y2="154.94" width="0.1524" layer="91"/>
+<label x="302.26" y="154.94" size="1.778" layer="95"/>
+</segment>
 <segment>
 <pinref part="FPGA" gate="B0" pin="IO_L63P_SCP7_0"/>
 <wire x1="246.38" y1="137.16" x2="248.92" y2="137.16" width="0.1524" layer="91"/>
+<label x="248.92" y="137.16" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO27" class="0">
+<segment>
+<pinref part="GPIO" gate="G$1" pin="36"/>
+<wire x1="299.72" y1="149.86" x2="302.26" y2="149.86" width="0.1524" layer="91"/>
+<label x="302.26" y="149.86" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO28" class="0">
+<segment>
+<pinref part="GPIO" gate="G$1" pin="38"/>
+<wire x1="299.72" y1="147.32" x2="302.26" y2="147.32" width="0.1524" layer="91"/>
+<label x="302.26" y="147.32" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GPIO29" class="0">
+<segment>
+<pinref part="GPIO" gate="G$1" pin="40"/>
+<wire x1="299.72" y1="144.78" x2="302.26" y2="144.78" width="0.1524" layer="91"/>
+<label x="302.26" y="144.78" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
