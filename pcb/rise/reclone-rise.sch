@@ -557,55 +557,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-6.15" y="-9.62" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <text x="-8.784" y="7.058" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 </package>
-<package name="FPC15-1.0">
-<smd name="1" x="-7" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@1" x="-7" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@2" x="-6" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@3" x="-5" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@4" x="-4" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@5" x="-3" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@6" x="-2" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@7" x="-1" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@8" x="0" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@9" x="1" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@10" x="2" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@11" x="3" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@12" x="4" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@13" x="5" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@14" x="6" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<smd name="NC@15" x="7" y="-1.925" dx="1.65" dy="0.6" layer="1" rot="R90"/>
-<wire x1="-10.8" y1="1.8" x2="-10" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-10" y1="1.8" x2="-9" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-9" y1="1.8" x2="-8.1" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-8.1" y1="1.8" x2="8.1" y2="1.8" width="0.127" layer="21"/>
-<wire x1="8.1" y1="1.8" x2="10.8" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-10.8" y1="1.8" x2="-10.8" y2="-1.55" width="0.127" layer="21"/>
-<wire x1="-10.8" y1="-1.55" x2="-10.55" y2="-1.8" width="0.127" layer="21" curve="90"/>
-<wire x1="-10.55" y1="-1.8" x2="10.55" y2="-1.8" width="0.127" layer="21"/>
-<wire x1="10.55" y1="-1.8" x2="10.8" y2="-1.55" width="0.127" layer="21" curve="90"/>
-<wire x1="10.8" y1="-1.55" x2="10.8" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-10" y1="1.8" x2="-9.5" y2="1.3" width="0.127" layer="21"/>
-<wire x1="-9.5" y1="1.3" x2="-9" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-8.1" y1="1.8" x2="-8.1" y2="-0.05" width="0.127" layer="21"/>
-<wire x1="8.1" y1="1.8" x2="8.1" y2="-0.05" width="0.127" layer="21"/>
-<wire x1="-8.1" y1="-0.05" x2="8.1" y2="-0.05" width="0.127" layer="21"/>
-<smd name="2" x="-6" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="3" x="-5" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="4" x="-4" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="5" x="-3" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="6" x="-2" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="7" x="-1" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="8" x="0" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="9" x="1" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="10" x="2" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="11" x="3" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="12" x="4" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="13" x="5" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="14" x="6" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<smd name="15" x="7" y="1.825" dx="1.85" dy="0.6" layer="1" rot="R90"/>
-<text x="11.4" y="-1.8" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="top-left">&gt;NAME</text>
-<text x="12.6" y="-1.8" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
-</package>
 <package name="MAGJACK">
 <wire x1="-7.62" y1="21.095" x2="7.52" y2="21.095" width="0.2032" layer="21"/>
 <wire x1="-7.62" y1="5.895" x2="7.62" y2="5.895" width="0.2032" layer="21"/>
@@ -1712,48 +1663,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-10.16" y="8.128" size="1.778" layer="95">&gt;NAME</text>
 <text x="-10.16" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
-<symbol name="RPI_DSI">
-<wire x1="0" y1="20.32" x2="0" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="0" y1="-20.32" x2="7.62" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="0" y1="20.32" x2="7.62" y2="20.32" width="0.254" layer="94"/>
-<pin name="GND@1" x="-2.54" y="17.78" length="short"/>
-<pin name="DSI1_DN1" x="-2.54" y="15.24" length="short"/>
-<pin name="DSI1_DP1" x="-2.54" y="12.7" length="short"/>
-<pin name="GND@4" x="-2.54" y="10.16" length="short"/>
-<pin name="DSI1_CN" x="-2.54" y="7.62" length="short"/>
-<pin name="DSI1_CP" x="-2.54" y="5.08" length="short"/>
-<pin name="GND@7" x="-2.54" y="2.54" length="short"/>
-<pin name="DSI1_DN0" x="-2.54" y="0" length="short"/>
-<pin name="DSI1_DP0" x="-2.54" y="-2.54" length="short"/>
-<pin name="GND@10" x="-2.54" y="-5.08" length="short"/>
-<pin name="NC@11" x="-2.54" y="-7.62" length="short"/>
-<pin name="NC@12" x="-2.54" y="-10.16" length="short"/>
-<pin name="GND@13" x="-2.54" y="-12.7" length="short"/>
-<pin name="+3V3@14" x="-2.54" y="-15.24" length="short"/>
-<pin name="+3V3@15" x="-2.54" y="-17.78" length="short"/>
-<text x="0" y="-22.86" size="1.27" layer="95">&gt;NAME</text>
-</symbol>
-<symbol name="RPI_CSI">
-<pin name="CAM1_CN" x="-2.54" y="0" length="short"/>
-<pin name="GND@7" x="-2.54" y="2.54" length="short"/>
-<pin name="CAM1_DP1" x="-2.54" y="5.08" length="short"/>
-<pin name="CAM1_DN1" x="-2.54" y="7.62" length="short"/>
-<pin name="GND@4" x="-2.54" y="10.16" length="short"/>
-<pin name="CAM1_DP0" x="-2.54" y="12.7" length="short"/>
-<pin name="CAM1_DN0" x="-2.54" y="15.24" length="short"/>
-<pin name="GND@1" x="-2.54" y="17.78" length="short"/>
-<pin name="CAM1_CP" x="-2.54" y="-2.54" length="short"/>
-<pin name="GND@10" x="-2.54" y="-5.08" length="short"/>
-<pin name="CAM_GPIO" x="-2.54" y="-7.62" length="short"/>
-<pin name="CAM_CLK" x="-2.54" y="-10.16" length="short"/>
-<pin name="CAM_SCL" x="-2.54" y="-12.7" length="short"/>
-<pin name="CAM_SDA" x="-2.54" y="-15.24" length="short"/>
-<pin name="+3V3" x="-2.54" y="-17.78" length="short"/>
-<wire x1="0" y1="20.32" x2="0" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="0" y1="-20.32" x2="7.62" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="7.62" y1="20.32" x2="0" y2="20.32" width="0.254" layer="94"/>
-<text x="0" y="-22.86" size="1.27" layer="95">&gt;NAME</text>
-</symbol>
 <symbol name="MAGJACK">
 <wire x1="-12.7" y1="-15.24" x2="12.7" y2="-15.24" width="0.254" layer="94"/>
 <wire x1="12.7" y1="-15.24" x2="12.7" y2="-12.7" width="0.254" layer="94"/>
@@ -2753,64 +2662,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="DSI">
-<gates>
-<gate name="G$1" symbol="RPI_DSI" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="FPC15-1.0">
-<connects>
-<connect gate="G$1" pin="+3V3@14" pad="14"/>
-<connect gate="G$1" pin="+3V3@15" pad="15"/>
-<connect gate="G$1" pin="DSI1_CN" pad="5"/>
-<connect gate="G$1" pin="DSI1_CP" pad="6"/>
-<connect gate="G$1" pin="DSI1_DN0" pad="8"/>
-<connect gate="G$1" pin="DSI1_DN1" pad="2"/>
-<connect gate="G$1" pin="DSI1_DP0" pad="9"/>
-<connect gate="G$1" pin="DSI1_DP1" pad="3"/>
-<connect gate="G$1" pin="GND@1" pad="1"/>
-<connect gate="G$1" pin="GND@10" pad="10"/>
-<connect gate="G$1" pin="GND@13" pad="13"/>
-<connect gate="G$1" pin="GND@4" pad="4"/>
-<connect gate="G$1" pin="GND@7" pad="7"/>
-<connect gate="G$1" pin="NC@11" pad="11"/>
-<connect gate="G$1" pin="NC@12" pad="12"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="CSI">
-<gates>
-<gate name="G$1" symbol="RPI_CSI" x="5.08" y="0"/>
-</gates>
-<devices>
-<device name="" package="FPC15-1.0">
-<connects>
-<connect gate="G$1" pin="+3V3" pad="15"/>
-<connect gate="G$1" pin="CAM1_CN" pad="8"/>
-<connect gate="G$1" pin="CAM1_CP" pad="9"/>
-<connect gate="G$1" pin="CAM1_DN0" pad="2"/>
-<connect gate="G$1" pin="CAM1_DN1" pad="5"/>
-<connect gate="G$1" pin="CAM1_DP0" pad="3"/>
-<connect gate="G$1" pin="CAM1_DP1" pad="6"/>
-<connect gate="G$1" pin="CAM_CLK" pad="12"/>
-<connect gate="G$1" pin="CAM_GPIO" pad="11"/>
-<connect gate="G$1" pin="CAM_SCL" pad="13"/>
-<connect gate="G$1" pin="CAM_SDA" pad="14"/>
-<connect gate="G$1" pin="GND@1" pad="1"/>
-<connect gate="G$1" pin="GND@10" pad="10"/>
-<connect gate="G$1" pin="GND@4" pad="4"/>
-<connect gate="G$1" pin="GND@7" pad="7"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="MAGJACK">
 <gates>
 <gate name="G$1" symbol="MAGJACK" x="0" y="0"/>
@@ -3515,16 +3366,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="P+2" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
-<part name="DISPLAY" library="reclone-rise" deviceset="DSI" device="">
-<attribute name="DIGIKEY#" value="WM11008CT-ND"/>
-<attribute name="MANF" value="Molex"/>
-<attribute name="MANF#" value="0526101572"/>
-</part>
-<part name="CAMERA" library="reclone-rise" deviceset="CSI" device="">
-<attribute name="DIGIKEY#" value="WM11008CT-ND"/>
-<attribute name="MANF" value="Molex"/>
-<attribute name="MANF#" value="0526101572"/>
-</part>
 <part name="ETHERNET" library="reclone-rise" deviceset="MAGJACK" device=""/>
 <part name="USB-TO-SERIAL" library="reclone-rise" deviceset="FT2232H" device=""/>
 <part name="GADGETEER-AIOPXY" library="reclone-rise" deviceset="SHF105" device=""/>
@@ -3570,16 +3411,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="MCU" gate="G$7" x="-208.28" y="-81.28"/>
 <instance part="MCU" gate="G$2" x="-210.82" y="-58.42"/>
 <instance part="MCU" gate="G$5" x="38.1" y="76.2"/>
-<instance part="DISPLAY" gate="G$1" x="-170.18" y="208.28">
-<attribute name="DIGIKEY#" x="-170.18" y="208.28" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="-170.18" y="208.28" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="-170.18" y="208.28" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="CAMERA" gate="G$1" x="-134.62" y="208.28">
-<attribute name="DIGIKEY#" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="-134.62" y="208.28" size="1.778" layer="96" display="off"/>
-</instance>
 <instance part="ETHERNET" gate="G$1" x="-40.64" y="99.06"/>
 <instance part="USB-TO-SERIAL" gate="G$1" x="60.96" y="185.42"/>
 <instance part="GADGETEER-AIOPXY" gate="G$1" x="111.76" y="-2.54"/>

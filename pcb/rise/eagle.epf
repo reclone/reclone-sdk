@@ -7,6 +7,8 @@ Desktop="Desktop"
 
 [Globals]
 AutoSaveProject=1
+UsedLibrary="C:/EAGLE-7.5.0/lbr/supply1.lbr"
+UsedLibrary="C:/EAGLE-7.5.0/lbr/supply2.lbr"
 UsedLibrary="lbr/cadsoft/xilinx_devices_V6.lbr"
 UsedLibrary="lbr/sparkfun/SparkFun-Connectors.lbr"
 UsedLibrary="lbr/adafruit/adafruit.lbr"
@@ -17,10 +19,10 @@ UsedLibrary="lbr/scout119/Gadgeteer.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="0 0 943 1001"
+Loc="0 0 680 695"
 State=2
 Number=0
 
 [Desktop]
-Screen="3840 1080"
+Screen="1366 768"
 Window="Win_1"
