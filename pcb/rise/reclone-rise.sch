@@ -928,29 +928,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="18.415" y1="-2.54" x2="17.78" y2="-1.905" width="0.2032" layer="21"/>
 <wire x1="22.225" y1="-2.54" x2="22.86" y2="-1.905" width="0.2032" layer="21"/>
 </package>
-<package name="AUDIO-JACK-3.5MM-SMD">
-<wire x1="-3.72" y1="-3" x2="2.58" y2="-3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="-0.635" x2="6.88" y2="-3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="-3" x2="5.58" y2="-3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="2.2098" x2="6.88" y2="3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="3" x2="-1.92" y2="3" width="0.254" layer="21"/>
-<wire x1="-7.12" y1="3" x2="-7.62" y2="3" width="0.254" layer="51"/>
-<wire x1="-7.62" y1="3" x2="-7.62" y2="-2.5" width="0.254" layer="51"/>
-<wire x1="-7.62" y1="-2.5" x2="-7.62" y2="-3" width="0.254" layer="51"/>
-<wire x1="-7.62" y1="-3" x2="-6.62" y2="-3" width="0.254" layer="51"/>
-<wire x1="-7.7724" y1="2.5" x2="-10.12" y2="2.5" width="0.254" layer="51"/>
-<wire x1="-10.12" y1="2.5" x2="-10.12" y2="-2.5" width="0.254" layer="51"/>
-<wire x1="-10.12" y1="-2.5" x2="-7.62" y2="-2.5" width="0.254" layer="51"/>
-<smd name="SLEEVE" x="-5.22" y="-3.45" dx="2" dy="2.5" layer="1"/>
-<smd name="TIP" x="4.08" y="-3.45" dx="2" dy="2.5" layer="1"/>
-<smd name="RING" x="-3.32" y="3.45" dx="2" dy="2.5" layer="1"/>
-<smd name="TSH" x="8.13" y="0.75" dx="2" dy="2.5" layer="1" rot="R90"/>
-<smd name="RSH" x="-6.12" y="3.45" dx="1.2" dy="2.5" layer="1" rot="R180"/>
-<hole x="-4.12" y="0" drill="2"/>
-<hole x="2.88" y="0" drill="2"/>
-<text x="-3.81" y="-4.445" size="0.8" layer="25" font="vector" ratio="19">&gt;Name</text>
-<text x="-1.27" y="1.27" size="0.8" layer="27" font="vector" ratio="19">&gt;Value</text>
-</package>
 <package name="FT256">
 <wire x1="-8.5" y1="8.5" x2="-8.5" y2="-8.5" width="0.254" layer="21"/>
 <wire x1="-8.5" y1="-8.5" x2="8.5" y2="-8.5" width="0.254" layer="21"/>
@@ -1272,6 +1249,28 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-1.8" y="-1.4" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
 <text x="1.8" y="-1.4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
 <smd name="6" x="-0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
+</package>
+<package name="AV-JACK-3.5MM-4COND-SMD">
+<wire x1="4.9" y1="-3" x2="11" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="-1.135" x2="15.5" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="-3" x2="14.6" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="2.6098" x2="15.5" y2="3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="3" x2="6.9" y2="3" width="0.254" layer="21"/>
+<wire x1="0" y1="3" x2="0" y2="-1.9" width="0.254" layer="21"/>
+<wire x1="0" y1="2.5" x2="-1.5" y2="2.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="2.5" x2="-1.5" y2="-2.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="-2.5" x2="-0.4" y2="-2.5" width="0.254" layer="51"/>
+<smd name="SLEEVE" x="0.8" y="-3.5" dx="1.6" dy="2.4" layer="1"/>
+<smd name="TIP" x="12.8" y="-3.5" dx="2.8" dy="2.4" layer="1"/>
+<smd name="RING1" x="5.3" y="3.5" dx="2.2" dy="2.4" layer="1"/>
+<smd name="TIP-SWITCH" x="16.7" y="0.75" dx="2.8" dy="2.4" layer="1" rot="R90"/>
+<smd name="NP@6" x="2.5" y="3.5" dx="2" dy="2.4" layer="1" rot="R180"/>
+<hole x="4.5" y="0" drill="1.7"/>
+<hole x="11.5" y="0" drill="1.7"/>
+<text x="5.3" y="-4.5" size="0.8" layer="25" font="vector" ratio="19">&gt;Name</text>
+<text x="7" y="3.405" size="0.8" layer="27" font="vector" ratio="19">&gt;Value</text>
+<smd name="RING2" x="3.4" y="-3.5" dx="2.2" dy="2.4" layer="1"/>
+<wire x1="0" y1="3" x2="1" y2="3" width="0.254" layer="21"/>
 </package>
 </packages>
 <symbols>
@@ -1894,23 +1893,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-1.27" y1="-20.32" x2="-2.54" y2="-20.32" width="0.6096" layer="94"/>
 <wire x1="-1.27" y1="-22.86" x2="-2.54" y2="-22.86" width="0.6096" layer="94"/>
 </symbol>
-<symbol name="AUDIO-JACK">
-<wire x1="-1.27" y1="-2.54" x2="0" y2="-1.27" width="0.1524" layer="94"/>
-<wire x1="0" y1="-1.27" x2="1.27" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="0" x2="-1.27" y2="0" width="0.1524" layer="94"/>
-<wire x1="-1.27" y1="0" x2="-2.54" y2="-1.27" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-1.27" x2="-3.81" y2="0" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="2.54" x2="-5.08" y2="2.54" width="0.1524" layer="94"/>
-<text x="-5.08" y="3.048" size="1.778" layer="95">&gt;NAME</text>
-<text x="-5.08" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
-<text x="2.286" y="-2.286" size="1.016" layer="94" ratio="15">L</text>
-<text x="2.286" y="0.254" size="1.016" layer="94" ratio="15">R</text>
-<rectangle x1="-7.62" y1="-0.762" x2="-2.54" y2="0.762" layer="94" rot="R90"/>
-<pin name="RIGHT" x="5.08" y="0" visible="off" length="short" rot="R180"/>
-<pin name="LEFT" x="5.08" y="-2.54" visible="off" length="short" rot="R180"/>
-<pin name="SLEEVE" x="5.08" y="2.54" visible="off" length="short" rot="R180"/>
-</symbol>
 <symbol name="XC6SLX16FTG256_0">
 <wire x1="-10.16" y1="58.42" x2="0" y2="58.42" width="0.254" layer="94"/>
 <wire x1="0" y1="58.42" x2="0" y2="-58.42" width="0.254" layer="94"/>
@@ -2271,6 +2253,38 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-5.08" y="-8.636" size="1.27" layer="96" align="top-left">&gt;VALUE</text>
 <pin name="DO" x="12.7" y="-5.08" length="middle" rot="R180"/>
 <pin name="CS" x="12.7" y="2.54" length="middle" rot="R180"/>
+</symbol>
+<symbol name="AV-JACK-4COND">
+<wire x1="3.81" y1="-5.08" x2="5.08" y2="-3.81" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="-3.81" x2="6.35" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="6.35" y1="-5.08" x2="6.858" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="6.858" y1="-5.08" x2="7.62" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="7.62" y1="0" x2="5.08" y2="0" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="0" x2="3.81" y2="-1.27" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="-1.27" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="7.62" y1="5.08" x2="0" y2="5.08" width="0.1524" layer="94"/>
+<text x="0" y="6.604" size="1.778" layer="95">&gt;NAME</text>
+<text x="0" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
+<text x="8.89" y="0.254" size="1.016" layer="94" ratio="15" align="bottom-right">R</text>
+<pin name="R" x="10.16" y="0" visible="off" length="short" rot="R180"/>
+<pin name="L" x="10.16" y="-5.08" visible="off" length="short" rot="R180"/>
+<pin name="VID" x="10.16" y="5.08" visible="off" length="short" rot="R180"/>
+<wire x1="6.858" y1="-2.54" x2="6.858" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="6.858" y1="-3.048" x2="7.366" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="7.366" y1="-3.048" x2="6.858" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="6.858" y1="-5.08" x2="6.35" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="6.35" y1="-3.048" x2="6.858" y2="-3.048" width="0.1524" layer="94"/>
+<pin name="SW" x="10.16" y="-2.54" visible="off" length="short" rot="R180"/>
+<wire x1="7.62" y1="-2.54" x2="6.858" y2="-2.54" width="0.1524" layer="94"/>
+<text x="8.89" y="-2.286" size="1.016" layer="94" ratio="15" align="bottom-right">SW</text>
+<text x="8.89" y="-4.826" size="1.016" layer="94" ratio="15" align="bottom-right">L</text>
+<pin name="GND" x="10.16" y="2.54" visible="off" length="short" rot="R180"/>
+<wire x1="7.62" y1="2.54" x2="3.81" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="2.54" x2="2.54" y2="1.27" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="1.27" x2="1.27" y2="2.54" width="0.1524" layer="94"/>
+<text x="8.89" y="2.794" size="1.016" layer="94" ratio="15" align="bottom-right">GND</text>
+<text x="8.89" y="5.334" size="1.016" layer="94" ratio="15" align="bottom-right">VID</text>
+<rectangle x1="-0.762" y1="-5.08" x2="0.762" y2="5.08" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -2844,23 +2858,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="AUDIO-JACK">
-<gates>
-<gate name="G$1" symbol="AUDIO-JACK" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="AUDIO-JACK-3.5MM-SMD">
-<connects>
-<connect gate="G$1" pin="LEFT" pad="TIP"/>
-<connect gate="G$1" pin="RIGHT" pad="RING"/>
-<connect gate="G$1" pin="SLEEVE" pad="SLEEVE"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="XC6SLX16FTG256">
 <gates>
 <gate name="B0" symbol="XC6SLX16FTG256_0" x="-154.94" y="-5.08"/>
@@ -3202,6 +3199,25 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="AV-JACK-4COND">
+<gates>
+<gate name="G$1" symbol="AV-JACK-4COND" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AV-JACK-3.5MM-4COND-SMD">
+<connects>
+<connect gate="G$1" pin="GND" pad="RING2"/>
+<connect gate="G$1" pin="L" pad="TIP"/>
+<connect gate="G$1" pin="R" pad="RING1"/>
+<connect gate="G$1" pin="SW" pad="TIP-SWITCH"/>
+<connect gate="G$1" pin="VID" pad="SLEEVE"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 <library name="supply1">
@@ -3370,12 +3386,12 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="USB-TO-SERIAL" library="reclone-rise" deviceset="FT2232H" device=""/>
 <part name="GADGETEER-AIOPXY" library="reclone-rise" deviceset="SHF105" device=""/>
 <part name="GPIO" library="reclone-rise" deviceset="M2X20" device=""/>
-<part name="AUDIO-OUT" library="reclone-rise" deviceset="AUDIO-JACK" device=""/>
 <part name="FPGA" library="reclone-rise" deviceset="XC6SLX16FTG256" device=""/>
 <part name="MICRO-SD" library="reclone-rise" deviceset="USD-SOCKET" device=""/>
 <part name="EUI-48" library="reclone-rise" deviceset="24AA02E48" device=""/>
 <part name="CFG" library="reclone-rise" deviceset="93LC46B" device=""/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
+<part name="AV-OUT" library="reclone-rise" deviceset="AV-JACK-4COND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3415,7 +3431,6 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="USB-TO-SERIAL" gate="G$1" x="60.96" y="185.42"/>
 <instance part="GADGETEER-AIOPXY" gate="G$1" x="111.76" y="-2.54"/>
 <instance part="GPIO" gate="G$1" x="292.1" y="167.64"/>
-<instance part="AUDIO-OUT" gate="G$1" x="-7.62" y="160.02"/>
 <instance part="FPGA" gate="B0" x="241.3" y="175.26"/>
 <instance part="FPGA" gate="B1" x="-88.9" y="-93.98"/>
 <instance part="FPGA" gate="B2" x="-17.78" y="-88.9"/>
@@ -3428,6 +3443,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <instance part="EUI-48" gate="G$1" x="-114.3" y="86.36"/>
 <instance part="CFG" gate="G$1" x="-114.3" y="111.76"/>
 <instance part="SUPPLY4" gate="GND" x="256.54" y="218.44" rot="R90"/>
+<instance part="AV-OUT" gate="G$1" x="-22.86" y="144.78"/>
 </instances>
 <busses>
 </busses>

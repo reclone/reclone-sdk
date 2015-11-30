@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -1854,6 +1854,28 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="1.8" y="-1.4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
 <smd name="6" x="-0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
 </package>
+<package name="AV-JACK-3.5MM-4COND-SMD">
+<wire x1="4.9" y1="-3" x2="11" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="-1.135" x2="15.5" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="-3" x2="14.6" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="2.6098" x2="15.5" y2="3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="3" x2="6.9" y2="3" width="0.254" layer="21"/>
+<wire x1="0" y1="3" x2="0" y2="-1.9" width="0.254" layer="21"/>
+<wire x1="0" y1="2.5" x2="-1.5" y2="2.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="2.5" x2="-1.5" y2="-2.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="-2.5" x2="-0.4" y2="-2.5" width="0.254" layer="51"/>
+<smd name="SLEEVE" x="0.8" y="-3.5" dx="1.6" dy="2.4" layer="1"/>
+<smd name="TIP" x="12.8" y="-3.5" dx="2.8" dy="2.4" layer="1"/>
+<smd name="RING1" x="5.3" y="3.5" dx="2.2" dy="2.4" layer="1"/>
+<smd name="TIP-SWITCH" x="16.7" y="0.75" dx="2.8" dy="2.4" layer="1" rot="R90"/>
+<smd name="NP@6" x="2.5" y="3.5" dx="2" dy="2.4" layer="1" rot="R180"/>
+<hole x="4.5" y="0" drill="1.7"/>
+<hole x="11.5" y="0" drill="1.7"/>
+<text x="5.3" y="-4.5" size="0.8" layer="25" font="vector" ratio="19">&gt;Name</text>
+<text x="7" y="3.405" size="0.8" layer="27" font="vector" ratio="19">&gt;Value</text>
+<smd name="RING2" x="3.4" y="-3.5" dx="2.2" dy="2.4" layer="1"/>
+<wire x1="0" y1="3" x2="1" y2="3" width="0.254" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="DP83848C">
@@ -3026,6 +3048,38 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="DO" x="12.7" y="-5.08" length="middle" rot="R180"/>
 <pin name="CS" x="12.7" y="2.54" length="middle" rot="R180"/>
 </symbol>
+<symbol name="AV-JACK-4COND">
+<wire x1="3.81" y1="-5.08" x2="5.08" y2="-3.81" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="-3.81" x2="6.35" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="6.35" y1="-5.08" x2="6.858" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="6.858" y1="-5.08" x2="7.62" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="7.62" y1="0" x2="5.08" y2="0" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="0" x2="3.81" y2="-1.27" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="-1.27" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="7.62" y1="5.08" x2="0" y2="5.08" width="0.1524" layer="94"/>
+<text x="0" y="6.604" size="1.778" layer="95">&gt;NAME</text>
+<text x="0" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
+<text x="8.89" y="0.254" size="1.016" layer="94" ratio="15" align="bottom-right">R</text>
+<pin name="R" x="10.16" y="0" visible="off" length="short" rot="R180"/>
+<pin name="L" x="10.16" y="-5.08" visible="off" length="short" rot="R180"/>
+<pin name="VID" x="10.16" y="5.08" visible="off" length="short" rot="R180"/>
+<wire x1="6.858" y1="-2.54" x2="6.858" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="6.858" y1="-3.048" x2="7.366" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="7.366" y1="-3.048" x2="6.858" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="6.858" y1="-5.08" x2="6.35" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="6.35" y1="-3.048" x2="6.858" y2="-3.048" width="0.1524" layer="94"/>
+<pin name="SW" x="10.16" y="-2.54" visible="off" length="short" rot="R180"/>
+<wire x1="7.62" y1="-2.54" x2="6.858" y2="-2.54" width="0.1524" layer="94"/>
+<text x="8.89" y="-2.286" size="1.016" layer="94" ratio="15" align="bottom-right">SW</text>
+<text x="8.89" y="-4.826" size="1.016" layer="94" ratio="15" align="bottom-right">L</text>
+<pin name="GND" x="10.16" y="2.54" visible="off" length="short" rot="R180"/>
+<wire x1="7.62" y1="2.54" x2="3.81" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="2.54" x2="2.54" y2="1.27" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="1.27" x2="1.27" y2="2.54" width="0.1524" layer="94"/>
+<text x="8.89" y="2.794" size="1.016" layer="94" ratio="15" align="bottom-right">GND</text>
+<text x="8.89" y="5.334" size="1.016" layer="94" ratio="15" align="bottom-right">VID</text>
+<rectangle x1="-0.762" y1="-5.08" x2="0.762" y2="5.08" layer="94"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="DP83848C">
@@ -4075,6 +4129,25 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="DO" pad="1"/>
 <connect gate="G$1" pin="VCC" pad="6"/>
 <connect gate="G$1" pin="VSS" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AV-JACK-4COND">
+<gates>
+<gate name="G$1" symbol="AV-JACK-4COND" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AV-JACK-3.5MM-4COND-SMD">
+<connects>
+<connect gate="G$1" pin="GND" pad="RING2"/>
+<connect gate="G$1" pin="L" pad="TIP"/>
+<connect gate="G$1" pin="R" pad="RING1"/>
+<connect gate="G$1" pin="SW" pad="TIP-SWITCH"/>
+<connect gate="G$1" pin="VID" pad="SLEEVE"/>
 </connects>
 <technologies>
 <technology name=""/>

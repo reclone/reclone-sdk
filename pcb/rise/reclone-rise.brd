@@ -942,29 +942,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="18.415" y1="-2.54" x2="17.78" y2="-1.905" width="0.2032" layer="21"/>
 <wire x1="22.225" y1="-2.54" x2="22.86" y2="-1.905" width="0.2032" layer="21"/>
 </package>
-<package name="AUDIO-JACK-3.5MM-SMD">
-<wire x1="-3.72" y1="-3" x2="2.58" y2="-3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="-0.635" x2="6.88" y2="-3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="-3" x2="5.58" y2="-3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="2.2098" x2="6.88" y2="3" width="0.254" layer="21"/>
-<wire x1="6.88" y1="3" x2="-1.92" y2="3" width="0.254" layer="21"/>
-<wire x1="-7.12" y1="3" x2="-7.62" y2="3" width="0.254" layer="51"/>
-<wire x1="-7.62" y1="3" x2="-7.62" y2="-2.5" width="0.254" layer="51"/>
-<wire x1="-7.62" y1="-2.5" x2="-7.62" y2="-3" width="0.254" layer="51"/>
-<wire x1="-7.62" y1="-3" x2="-6.62" y2="-3" width="0.254" layer="51"/>
-<wire x1="-7.7724" y1="2.5" x2="-10.12" y2="2.5" width="0.254" layer="51"/>
-<wire x1="-10.12" y1="2.5" x2="-10.12" y2="-2.5" width="0.254" layer="51"/>
-<wire x1="-10.12" y1="-2.5" x2="-7.62" y2="-2.5" width="0.254" layer="51"/>
-<smd name="SLEEVE" x="-5.22" y="-3.45" dx="2" dy="2.5" layer="1"/>
-<smd name="TIP" x="4.08" y="-3.45" dx="2" dy="2.5" layer="1"/>
-<smd name="RING" x="-3.32" y="3.45" dx="2" dy="2.5" layer="1"/>
-<smd name="TSH" x="8.13" y="0.75" dx="2" dy="2.5" layer="1" rot="R90"/>
-<smd name="RSH" x="-6.12" y="3.45" dx="1.2" dy="2.5" layer="1" rot="R180"/>
-<hole x="-4.12" y="0" drill="2"/>
-<hole x="2.88" y="0" drill="2"/>
-<text x="-3.81" y="-4.445" size="0.8" layer="25" font="vector" ratio="19">&gt;Name</text>
-<text x="-1.27" y="1.27" size="0.8" layer="27" font="vector" ratio="19">&gt;Value</text>
-</package>
 <package name="FT256">
 <wire x1="-8.5" y1="8.5" x2="-8.5" y2="-8.5" width="0.254" layer="21"/>
 <wire x1="-8.5" y1="-8.5" x2="8.5" y2="-8.5" width="0.254" layer="21"/>
@@ -1287,6 +1264,28 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="1.8" y="-1.4" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-left">&gt;VALUE</text>
 <smd name="6" x="-0.95" y="1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
 </package>
+<package name="AV-JACK-3.5MM-4COND-SMD">
+<wire x1="4.9" y1="-3" x2="11" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="-1.135" x2="15.5" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="-3" x2="14.6" y2="-3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="2.6098" x2="15.5" y2="3" width="0.254" layer="21"/>
+<wire x1="15.5" y1="3" x2="6.9" y2="3" width="0.254" layer="21"/>
+<wire x1="0" y1="3" x2="0" y2="-1.9" width="0.254" layer="21"/>
+<wire x1="0" y1="2.5" x2="-1.5" y2="2.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="2.5" x2="-1.5" y2="-2.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="-2.5" x2="-0.4" y2="-2.5" width="0.254" layer="51"/>
+<smd name="SLEEVE" x="0.8" y="-3.5" dx="1.6" dy="2.4" layer="1"/>
+<smd name="TIP" x="12.8" y="-3.5" dx="2.8" dy="2.4" layer="1"/>
+<smd name="RING1" x="5.3" y="3.5" dx="2.2" dy="2.4" layer="1"/>
+<smd name="TIP-SWITCH" x="16.7" y="0.75" dx="2.8" dy="2.4" layer="1" rot="R90"/>
+<smd name="NP@6" x="2.5" y="3.5" dx="2" dy="2.4" layer="1" rot="R180"/>
+<hole x="4.5" y="0" drill="1.7"/>
+<hole x="11.5" y="0" drill="1.7"/>
+<text x="5.3" y="-4.5" size="0.8" layer="25" font="vector" ratio="19">&gt;Name</text>
+<text x="7" y="3.405" size="0.8" layer="27" font="vector" ratio="19">&gt;Value</text>
+<smd name="RING2" x="3.4" y="-3.5" dx="2.2" dy="2.4" layer="1"/>
+<wire x1="0" y1="3" x2="1" y2="3" width="0.254" layer="21"/>
+</package>
 </packages>
 </library>
 </libraries>
@@ -1480,7 +1479,7 @@ design rules under a new name.</description>
 <elements>
 <element name="USB" library="reclone-rise" package="USB-A-2H" value="USB_A_2H" x="69" y="29" locked="yes" rot="R180"/>
 <element name="DDC_CEC" library="reclone-rise" package="TSSOP10" value="PCA9527" x="32" y="17" rot="R90"/>
-<element name="ETH_PHY" library="reclone-rise" package="LQFP-48" value="DP83848C" x="59" y="22"/>
+<element name="ETH_PHY" library="reclone-rise" package="LQFP-48" value="DP83848C" x="60" y="22"/>
 <element name="DVI-D" library="reclone-rise" package="TMDS_A_SMT" value="TMDS_A" x="32" y="3.7" locked="yes" rot="R270">
 <attribute name="MANF" value="FCI" x="32" y="3.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY#" value="609-4614-1-ND" x="32" y="3.7" size="1.778" layer="27" rot="R270" display="off"/>
@@ -1501,11 +1500,11 @@ design rules under a new name.</description>
 <element name="USB-TO-SERIAL" library="reclone-rise" package="TQFP64-12X12" value="FT2232H" x="12.5" y="17.5"/>
 <element name="GADGETEER-AIOPXY" library="reclone-rise" package="SHF105DSM" value="SHF105" x="76.5" y="47" locked="yes"/>
 <element name="GPIO" library="reclone-rise" package="2X20" value="M2X20" x="32.5" y="52.5" locked="yes"/>
-<element name="AUDIO-OUT" library="reclone-rise" package="AUDIO-JACK-3.5MM-SMD" value="AUDIO-JACK" x="53.5" y="7.8" locked="yes" rot="R90"/>
 <element name="FPGA" library="reclone-rise" package="FT256" value="XC6SLX16FTG256" x="32" y="34"/>
 <element name="MICRO-SD" library="reclone-rise" package="MICRO-SD-SOCKET-PP" value="USD-SOCKET" x="0" y="28" locked="yes" rot="MR270"/>
 <element name="EUI-48" library="reclone-rise" package="SOT-23-5" value="24AA02E48" x="67" y="53" rot="R90"/>
 <element name="CFG" library="reclone-rise" package="SOT-23-6" value="93LC46B" x="19" y="4" rot="R270"/>
+<element name="AV-OUT" library="reclone-rise" package="AV-JACK-3.5MM-4COND-SMD" value="AV-JACK-4COND" x="53.5" y="1" rot="R90"/>
 </elements>
 <signals>
 <signal name="GND">
