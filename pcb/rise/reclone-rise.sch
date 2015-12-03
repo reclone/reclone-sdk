@@ -5153,6 +5153,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="S2" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="SMD"/>
 <part name="P+3" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY12" library="supply2" deviceset="GND" device=""/>
+<part name="P+4" library="supply1" deviceset="+5V" device=""/>
+<part name="SUPPLY13" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5213,6 +5215,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="SUPPLY11" gate="GND" x="0" y="205.74"/>
 <instance part="Y1" gate="G$1" x="20.32" y="213.36" rot="R90"/>
 <instance part="S2" gate="G$1" x="-124.46" y="193.04"/>
+<instance part="P+4" gate="1" x="60.96" y="99.06"/>
+<instance part="SUPPLY13" gate="GND" x="63.5" y="68.58"/>
 </instances>
 <busses>
 </busses>
@@ -5239,6 +5243,16 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="121.92" y1="2.54" x2="124.46" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="2.54" x2="124.46" y2="5.08" width="0.1524" layer="91"/>
 <pinref part="GADGETEER-AIOPXY" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="USB" gate="USB_A_2H" pin="VBUS2"/>
+<wire x1="60.96" y1="81.28" x2="66.04" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="P+4" gate="1" pin="+5V"/>
+<wire x1="60.96" y1="81.28" x2="60.96" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="USB" gate="USB_A_2H" pin="VBUS1"/>
+<wire x1="60.96" y1="93.98" x2="60.96" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="93.98" x2="60.96" y2="93.98" width="0.1524" layer="91"/>
+<junction x="60.96" y="93.98"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -5320,6 +5334,16 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="0" y1="210.82" x2="0" y2="208.28" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="0" y1="208.28" x2="7.62" y2="208.28" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="USB" gate="USB_A_2H" pin="GND1"/>
+<pinref part="SUPPLY13" gate="GND" pin="GND"/>
+<wire x1="66.04" y1="86.36" x2="63.5" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="86.36" x2="63.5" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="USB" gate="USB_A_2H" pin="GND2"/>
+<wire x1="63.5" y1="73.66" x2="63.5" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="73.66" x2="63.5" y2="73.66" width="0.1524" layer="91"/>
+<junction x="63.5" y="73.66"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
