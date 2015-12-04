@@ -6164,13 +6164,6 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <wire x1="93.98" y1="149.86" x2="99.06" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="149.86" x2="99.06" y2="152.4" width="0.1524" layer="91"/>
 <junction x="99.06" y="152.4"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ACBUS4"/>
-<wire x1="99.06" y1="152.4" x2="99.06" y2="198.12" width="0.1524" layer="91"/>
-<wire x1="99.06" y1="198.12" x2="93.98" y2="198.12" width="0.1524" layer="91"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ACBUS3"/>
-<wire x1="99.06" y1="198.12" x2="99.06" y2="200.66" width="0.1524" layer="91"/>
-<wire x1="99.06" y1="200.66" x2="93.98" y2="200.66" width="0.1524" layer="91"/>
-<junction x="99.06" y="198.12"/>
 </segment>
 </net>
 <net name="N$22" class="0">

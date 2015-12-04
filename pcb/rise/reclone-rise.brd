@@ -2440,10 +2440,6 @@ design rules under a new name.</description>
 <contactref element="USB-TO-SERIAL" pad="54"/>
 <contactref element="R14" pad="1"/>
 <contactref element="USB-TO-SERIAL" pad="55"/>
-<contactref element="USB-TO-SERIAL" pad="30"/>
-<contactref element="USB-TO-SERIAL" pad="29"/>
-<wire x1="20.5001" y1="21.7469" x2="20.5001" y2="22.247" width="0" layer="19" extent="1-1"/>
-<wire x1="8.4999" y1="20.7501" x2="20.5001" y2="21.7469" width="0" layer="19" extent="1-1"/>
 <wire x1="8.4999" y1="20.25" x2="8.4999" y2="20.7501" width="0" layer="19" extent="1-1"/>
 <wire x1="16" y1="6.15" x2="8.4999" y2="20.25" width="0" layer="19" extent="1-1"/>
 </signal>
