@@ -168,25 +168,6 @@
 <pad name="VBUS2" x="-1.37" y="3.55" drill="0.9144" rot="R270"/>
 <text x="1" y="5" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-right">&gt;VALUE</text>
 </package>
-<package name="TSSOP10">
-<wire x1="-1.5" y1="1.5" x2="-1.5" y2="-1.5" width="0.127" layer="21"/>
-<wire x1="-1.5" y1="-1.5" x2="1.5" y2="-1.5" width="0.127" layer="21"/>
-<wire x1="1.5" y1="-1.5" x2="1.5" y2="1.5" width="0.127" layer="21"/>
-<wire x1="1.5" y1="1.5" x2="-1.5" y2="1.5" width="0.127" layer="21"/>
-<smd name="1" x="-2.1" y="1" dx="0.7" dy="0.3" layer="1"/>
-<smd name="2" x="-2.1" y="0.5" dx="0.7" dy="0.3" layer="1"/>
-<smd name="3" x="-2.1" y="0" dx="0.7" dy="0.3" layer="1"/>
-<smd name="4" x="-2.1" y="-0.5" dx="0.7" dy="0.3" layer="1"/>
-<smd name="5" x="-2.1" y="-1" dx="0.7" dy="0.3" layer="1"/>
-<smd name="10" x="2.1" y="1" dx="0.7" dy="0.3" layer="1"/>
-<smd name="9" x="2.1" y="0.5" dx="0.7" dy="0.3" layer="1"/>
-<smd name="8" x="2.1" y="0" dx="0.7" dy="0.3" layer="1"/>
-<smd name="7" x="2.1" y="-0.5" dx="0.7" dy="0.3" layer="1"/>
-<smd name="6" x="2.1" y="-1" dx="0.7" dy="0.3" layer="1"/>
-<text x="-1.5" y="1.7" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
-<text x="-1.5" y="-2.5" size="0.8" layer="27" font="vector" ratio="19">&gt;VALUE</text>
-<circle x="-1" y="1" radius="0.25" width="0.05" layer="21"/>
-</package>
 <package name="LQFP-48">
 <wire x1="-3.1" y1="-3.4" x2="3.1" y2="-3.4" width="0.2032" layer="21"/>
 <wire x1="3.4" y1="-3.1" x2="3.4" y2="3.1" width="0.2032" layer="21"/>
@@ -1293,24 +1274,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="0" y="20.32" size="1.27" layer="95">&gt;NAME</text>
 <text x="0" y="18.288" size="1.27" layer="96">&gt;VALUE</text>
 </symbol>
-<symbol name="PCA9527">
-<wire x1="-10.16" y1="7.62" x2="-10.16" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="7.62" y1="-7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
-<wire x1="7.62" y1="7.62" x2="-10.16" y2="7.62" width="0.254" layer="94"/>
-<pin name="VCCA" x="-15.24" y="5.08" length="middle"/>
-<pin name="SCLA" x="-15.24" y="2.54" length="middle"/>
-<pin name="SDAA" x="-15.24" y="0" length="middle"/>
-<pin name="CECA" x="-15.24" y="-2.54" length="middle"/>
-<pin name="GND@5" x="-15.24" y="-5.08" length="middle"/>
-<pin name="EN" x="12.7" y="-5.08" length="middle" rot="R180"/>
-<pin name="CECB" x="12.7" y="-2.54" length="middle" rot="R180"/>
-<pin name="SDAB" x="12.7" y="0" length="middle" rot="R180"/>
-<pin name="SCLB" x="12.7" y="2.54" length="middle" rot="R180"/>
-<pin name="VCCB" x="12.7" y="5.08" length="middle" rot="R180"/>
-<text x="-10.16" y="8.382" size="1.27" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-9.398" size="1.27" layer="96">&gt;VALUE</text>
-</symbol>
 <symbol name="DP83848C">
 <wire x1="-27.94" y1="-27.94" x2="-27.94" y2="25.4" width="0.254" layer="97"/>
 <wire x1="-27.94" y1="25.4" x2="27.94" y2="25.4" width="0.254" layer="97"/>
@@ -1368,15 +1331,15 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="PWR_DOWN/INT" x="-30.48" y="-12.7" length="short"/>
 </symbol>
 <symbol name="TMDS_A">
-<wire x1="-10.16" y1="-25.4" x2="-10.16" y2="22.86" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-27.94" x2="-10.16" y2="22.86" width="0.254" layer="94"/>
 <wire x1="-10.16" y1="22.86" x2="12.7" y2="22.86" width="0.254" layer="94"/>
-<wire x1="12.7" y1="22.86" x2="12.7" y2="-25.4" width="0.254" layer="94"/>
-<wire x1="12.7" y1="-25.4" x2="-10.16" y2="-25.4" width="0.254" layer="94"/>
-<pin name="GND" x="-15.24" y="-22.86" length="middle"/>
-<pin name="TMDS_CLK_SHLD" x="-15.24" y="-20.32" length="middle"/>
-<pin name="TMDS_D0_SHLD" x="-15.24" y="-17.78" length="middle"/>
-<pin name="TMDS_D1_SHLD" x="-15.24" y="-15.24" length="middle"/>
-<pin name="TMDS_D2_SHLD" x="-15.24" y="-12.7" length="middle"/>
+<wire x1="12.7" y1="22.86" x2="12.7" y2="-27.94" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-27.94" x2="-10.16" y2="-27.94" width="0.254" layer="94"/>
+<pin name="GND" x="-15.24" y="-25.4" length="middle"/>
+<pin name="TMDS_CLK_SHLD" x="-15.24" y="-22.86" length="middle"/>
+<pin name="TMDS_D0_SHLD" x="-15.24" y="-20.32" length="middle"/>
+<pin name="TMDS_D1_SHLD" x="-15.24" y="-17.78" length="middle"/>
+<pin name="TMDS_D2_SHLD" x="-15.24" y="-15.24" length="middle"/>
 <pin name="+5V" x="-15.24" y="20.32" length="middle"/>
 <pin name="TMDS_D2P" x="-15.24" y="17.78" length="middle"/>
 <pin name="TMDS_D2N" x="-15.24" y="15.24" length="middle"/>
@@ -1391,7 +1354,12 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="DDC_DATA" x="-15.24" y="-7.62" length="middle"/>
 <pin name="DETECT" x="-15.24" y="-10.16" length="middle"/>
 <text x="-10.16" y="23.622" size="1.778" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-27.94" size="1.778" layer="96">&gt;VALUE</text>
+<text x="-10.16" y="-30.48" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="RES" x="-15.24" y="-12.7" length="middle"/>
+<pin name="SH1" x="17.78" y="20.32" length="middle" rot="R180"/>
+<pin name="SH2" x="17.78" y="17.78" length="middle" rot="R180"/>
+<pin name="SH3" x="17.78" y="15.24" length="middle" rot="R180"/>
+<pin name="SH4" x="17.78" y="12.7" length="middle" rot="R180"/>
 </symbol>
 <symbol name="DDR2_128MX16">
 <wire x1="-27.94" y1="38.1" x2="-27.94" y2="-35.56" width="0.254" layer="94"/>
@@ -2319,30 +2287,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="PCA9527">
-<gates>
-<gate name="G$1" symbol="PCA9527" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="TSSOP10">
-<connects>
-<connect gate="G$1" pin="CECA" pad="4"/>
-<connect gate="G$1" pin="CECB" pad="7"/>
-<connect gate="G$1" pin="EN" pad="6"/>
-<connect gate="G$1" pin="GND@5" pad="5"/>
-<connect gate="G$1" pin="SCLA" pad="2"/>
-<connect gate="G$1" pin="SCLB" pad="9"/>
-<connect gate="G$1" pin="SDAA" pad="3"/>
-<connect gate="G$1" pin="SDAB" pad="8"/>
-<connect gate="G$1" pin="VCCA" pad="1"/>
-<connect gate="G$1" pin="VCCB" pad="10"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="DP83848C">
 <gates>
 <gate name="G$1" symbol="DP83848C" x="0" y="0"/>
@@ -2418,6 +2362,11 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="DDC_DATA" pad="P16"/>
 <connect gate="G$1" pin="DETECT" pad="P19"/>
 <connect gate="G$1" pin="GND" pad="P17"/>
+<connect gate="G$1" pin="RES" pad="P14"/>
+<connect gate="G$1" pin="SH1" pad="SH1"/>
+<connect gate="G$1" pin="SH2" pad="SH2"/>
+<connect gate="G$1" pin="SH3" pad="SH3"/>
+<connect gate="G$1" pin="SH4" pad="SH4"/>
 <connect gate="G$1" pin="TMDS_CLKN" pad="P12"/>
 <connect gate="G$1" pin="TMDS_CLKP" pad="P10"/>
 <connect gate="G$1" pin="TMDS_CLK_SHLD" pad="P11"/>
@@ -5418,7 +5367,6 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 </classes>
 <parts>
 <part name="USB" library="reclone-rise" deviceset="USB_A_2H" device=""/>
-<part name="DDC_CEC" library="reclone-rise" deviceset="PCA9527" device=""/>
 <part name="ETH_PHY" library="reclone-rise" deviceset="DP83848C" device=""/>
 <part name="DVI-D" library="reclone-rise" deviceset="TMDS_A" device="">
 <attribute name="DIGIKEY#" value="609-4614-1-ND"/>
@@ -5500,6 +5448,14 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <part name="+3V11" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY16" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY17" library="supply2" deviceset="GND" device=""/>
+<part name="R13" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
+<part name="R16" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K"/>
+<part name="SUPPLY18" library="supply2" deviceset="GND" device=""/>
+<part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u1"/>
+<part name="R17" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2"/>
+<part name="R18" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2"/>
+<part name="P+5" library="supply1" deviceset="+5V" device=""/>
+<part name="P+6" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6340,15 +6296,22 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <instance part="FPGA" gate="B0" x="48.26" y="259.08"/>
 <instance part="SUPPLY4" gate="GND" x="63.5" y="302.26" rot="R90"/>
 <instance part="AV-OUT" gate="G$1" x="228.6" y="137.16" rot="R180"/>
-<instance part="DDC_CEC" gate="G$1" x="274.32" y="106.68"/>
 <instance part="DVI-D" gate="G$1" x="276.86" y="68.58">
 <attribute name="MANF" x="276.86" y="68.58" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY#" x="276.86" y="68.58" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="276.86" y="68.58" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="P+3" gate="1" x="259.08" y="91.44"/>
+<instance part="P+3" gate="1" x="261.62" y="93.98"/>
 <instance part="SUPPLY12" gate="GND" x="261.62" y="40.64"/>
 <instance part="SUPPLY17" gate="GND" x="180.34" y="43.18"/>
+<instance part="R13" gate="G$1" x="254" y="53.34" rot="R90"/>
+<instance part="R16" gate="G$1" x="294.64" y="73.66" rot="R90"/>
+<instance part="SUPPLY18" gate="GND" x="294.64" y="63.5"/>
+<instance part="C7" gate="G$1" x="302.26" y="71.12"/>
+<instance part="R17" gate="G$1" x="241.3" y="68.58" rot="R90"/>
+<instance part="R18" gate="G$1" x="233.68" y="68.58" rot="R90"/>
+<instance part="P+5" gate="1" x="241.3" y="78.74"/>
+<instance part="P+6" gate="1" x="233.68" y="78.74"/>
 </instances>
 <busses>
 </busses>
@@ -6997,7 +6960,17 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <segment>
 <pinref part="DVI-D" gate="G$1" pin="+5V"/>
 <pinref part="P+3" gate="1" pin="+5V"/>
-<wire x1="259.08" y1="88.9" x2="261.62" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="91.44" x2="261.62" y2="88.9" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R17" gate="G$1" pin="2"/>
+<pinref part="P+5" gate="1" pin="+5V"/>
+<wire x1="241.3" y1="76.2" x2="241.3" y2="73.66" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R18" gate="G$1" pin="2"/>
+<pinref part="P+6" gate="1" pin="+5V"/>
+<wire x1="233.68" y1="76.2" x2="233.68" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7044,19 +7017,20 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <segment>
 <pinref part="SUPPLY12" gate="GND" pin="GND"/>
 <pinref part="DVI-D" gate="G$1" pin="TMDS_D2_SHLD"/>
-<wire x1="261.62" y1="43.18" x2="261.62" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="DVI-D" gate="G$1" pin="TMDS_D1_SHLD"/>
-<junction x="261.62" y="53.34"/>
+<junction x="261.62" y="50.8"/>
+<wire x1="261.62" y1="43.18" x2="261.62" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="261.62" y1="45.72" x2="261.62" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="261.62" y1="48.26" x2="261.62" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="261.62" y1="50.8" x2="261.62" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="261.62" y1="53.34" x2="261.62" y2="55.88" width="0.1524" layer="91"/>
 <pinref part="DVI-D" gate="G$1" pin="TMDS_D0_SHLD"/>
-<junction x="261.62" y="50.8"/>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_CLK_SHLD"/>
 <junction x="261.62" y="48.26"/>
-<pinref part="DVI-D" gate="G$1" pin="GND"/>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_CLK_SHLD"/>
 <junction x="261.62" y="45.72"/>
+<pinref part="DVI-D" gate="G$1" pin="GND"/>
+<junction x="261.62" y="43.18"/>
+<pinref part="R13" gate="G$1" pin="1"/>
+<wire x1="254" y1="48.26" x2="261.62" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY17" gate="GND" pin="GND"/>
@@ -7137,6 +7111,14 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <pinref part="FPGA" gate="BGND" pin="GND@1"/>
 <junction x="180.34" y="109.22"/>
 <wire x1="180.34" y1="109.22" x2="180.34" y2="111.76" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY18" gate="GND" pin="GND"/>
+<pinref part="R16" gate="G$1" pin="1"/>
+<wire x1="294.64" y1="66.04" x2="294.64" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="C7" gate="G$1" pin="2"/>
+<wire x1="294.64" y1="68.58" x2="302.26" y2="68.58" width="0.1524" layer="91"/>
+<junction x="294.64" y="68.58"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -7494,6 +7476,103 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <pinref part="FPGA" gate="B0" pin="IO_L34N_GCLK18_0"/>
 <wire x1="53.34" y1="259.08" x2="55.88" y2="259.08" width="0.1524" layer="91"/>
 <label x="55.88" y="259.08" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$23" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="DETECT"/>
+<pinref part="R13" gate="G$1" pin="2"/>
+<wire x1="261.62" y1="58.42" x2="254" y2="58.42" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$25" class="0">
+<segment>
+<pinref part="R16" gate="G$1" pin="2"/>
+<pinref part="DVI-D" gate="G$1" pin="SH1"/>
+<wire x1="294.64" y1="78.74" x2="294.64" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="DVI-D" gate="G$1" pin="SH2"/>
+<junction x="294.64" y="86.36"/>
+<wire x1="294.64" y1="81.28" x2="294.64" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="294.64" y1="83.82" x2="294.64" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="294.64" y1="86.36" x2="294.64" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="DVI-D" gate="G$1" pin="SH3"/>
+<junction x="294.64" y="83.82"/>
+<pinref part="DVI-D" gate="G$1" pin="SH4"/>
+<junction x="294.64" y="81.28"/>
+<pinref part="C7" gate="G$1" pin="1"/>
+<wire x1="302.26" y1="76.2" x2="302.26" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="302.26" y1="81.28" x2="294.64" y2="81.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$26" class="0">
+<segment>
+<pinref part="R17" gate="G$1" pin="1"/>
+<pinref part="DVI-D" gate="G$1" pin="DDC_CLK"/>
+<wire x1="241.3" y1="63.5" x2="261.62" y2="63.5" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$27" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="DDC_DATA"/>
+<pinref part="R18" gate="G$1" pin="1"/>
+<wire x1="261.62" y1="60.96" x2="233.68" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="60.96" x2="233.68" y2="63.5" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="TMDS_D2P" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_D2P"/>
+<wire x1="261.62" y1="86.36" x2="259.08" y2="86.36" width="0.1524" layer="91"/>
+<label x="246.38" y="86.36" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_D2N" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_D2N"/>
+<wire x1="261.62" y1="83.82" x2="259.08" y2="83.82" width="0.1524" layer="91"/>
+<label x="246.38" y="83.82" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_D1P" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_D1P"/>
+<wire x1="261.62" y1="81.28" x2="259.08" y2="81.28" width="0.1524" layer="91"/>
+<label x="246.38" y="81.28" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_D1N" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_D1N"/>
+<wire x1="261.62" y1="78.74" x2="259.08" y2="78.74" width="0.1524" layer="91"/>
+<label x="246.38" y="78.74" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_D0P" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_D0P"/>
+<wire x1="261.62" y1="76.2" x2="259.08" y2="76.2" width="0.1524" layer="91"/>
+<label x="246.38" y="76.2" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_D0N" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_D0N"/>
+<wire x1="261.62" y1="73.66" x2="259.08" y2="73.66" width="0.1524" layer="91"/>
+<label x="246.38" y="73.66" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_CLKP" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_CLKP"/>
+<wire x1="261.62" y1="71.12" x2="259.08" y2="71.12" width="0.1524" layer="91"/>
+<label x="246.38" y="71.12" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TMDS_CLKN" class="0">
+<segment>
+<pinref part="DVI-D" gate="G$1" pin="TMDS_CLKN"/>
+<wire x1="261.62" y1="68.58" x2="259.08" y2="68.58" width="0.1524" layer="91"/>
+<label x="246.38" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
