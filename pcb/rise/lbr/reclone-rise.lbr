@@ -2505,76 +2505,76 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="SHIELD@1" x="-17.78" y="-12.7" length="middle"/>
 </symbol>
 <symbol name="FT2232H">
-<wire x1="30.48" y1="53.34" x2="30.48" y2="-50.8" width="0.254" layer="94"/>
-<wire x1="30.48" y1="-50.8" x2="-17.78" y2="-50.8" width="0.254" layer="94"/>
-<wire x1="-17.78" y1="-50.8" x2="-17.78" y2="53.34" width="0.254" layer="94"/>
-<wire x1="-17.78" y1="53.34" x2="30.48" y2="53.34" width="0.254" layer="94"/>
-<text x="0" y="7.62" size="1.524" layer="95">&gt;name</text>
-<text x="0" y="5.08" size="1.524" layer="96">&gt;value</text>
-<pin name="D+" x="-20.32" y="2.54" length="short"/>
-<pin name="D-" x="-20.32" y="7.62" length="short"/>
+<wire x1="22.86" y1="53.34" x2="22.86" y2="-50.8" width="0.254" layer="94"/>
+<wire x1="22.86" y1="-50.8" x2="-20.32" y2="-50.8" width="0.254" layer="94"/>
+<wire x1="-20.32" y1="-50.8" x2="-20.32" y2="53.34" width="0.254" layer="94"/>
+<wire x1="-20.32" y1="53.34" x2="22.86" y2="53.34" width="0.254" layer="94"/>
+<text x="-7.62" y="7.62" size="1.524" layer="95">&gt;name</text>
+<text x="-7.62" y="5.08" size="1.524" layer="96">&gt;value</text>
+<pin name="D+" x="-22.86" y="2.54" length="short"/>
+<pin name="D-" x="-22.86" y="5.08" length="short"/>
 <pin name="AGND" x="-15.24" y="-53.34" length="short" direction="pwr" rot="R90"/>
 <pin name="GND@1" x="-10.16" y="-53.34" length="short" direction="pwr" rot="R90"/>
-<pin name="VPHY" x="-7.62" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VCORE@1" x="0" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VREGIN" x="-20.32" y="43.18" length="short" direction="in"/>
-<pin name="REF" x="-20.32" y="-17.78" length="short" direction="in"/>
-<pin name="-RESET" x="-20.32" y="-10.16" length="short" direction="in"/>
-<pin name="XTIN" x="-20.32" y="27.94" length="short" direction="in"/>
-<pin name="XTOUT" x="-20.32" y="17.78" length="short" direction="out"/>
-<pin name="VCCIO@2" x="10.16" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VCCIO@1" x="12.7" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VPHY" x="-15.24" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VCORE@1" x="-7.62" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VREGIN" x="-22.86" y="43.18" length="short" direction="in"/>
+<pin name="REF" x="-22.86" y="-17.78" length="short" direction="in"/>
+<pin name="-RESET" x="-22.86" y="-10.16" length="short" direction="in"/>
+<pin name="XTIN" x="-22.86" y="27.94" length="short" direction="in"/>
+<pin name="XTOUT" x="-22.86" y="17.78" length="short" direction="out"/>
+<pin name="VCCIO@2" x="2.54" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VCCIO@1" x="5.08" y="55.88" length="short" direction="pwr" rot="R270"/>
 <pin name="GND@2" x="-7.62" y="-53.34" length="short" direction="pwr" rot="R90"/>
 <pin name="GND@3" x="-5.08" y="-53.34" length="short" direction="pwr" rot="R90"/>
 <pin name="GND@4" x="-2.54" y="-53.34" length="short" direction="pwr" rot="R90"/>
-<pin name="VREGOUT" x="-20.32" y="38.1" length="short" direction="out"/>
-<pin name="EEDATA" x="-20.32" y="-33.02" length="short" direction="in"/>
-<pin name="EECS" x="-20.32" y="-27.94" length="short" direction="out"/>
-<pin name="EESK" x="-20.32" y="-30.48" length="short" direction="out"/>
-<pin name="-PWREN" x="33.02" y="50.8" length="short" direction="out" rot="R180"/>
-<pin name="ADBUS0" x="33.02" y="45.72" length="short" rot="R180"/>
-<pin name="ADBUS1" x="33.02" y="43.18" length="short" rot="R180"/>
-<pin name="ADBUS2" x="33.02" y="40.64" length="short" rot="R180"/>
-<pin name="ADBUS3" x="33.02" y="38.1" length="short" rot="R180"/>
-<pin name="ADBUS4" x="33.02" y="35.56" length="short" rot="R180"/>
-<pin name="ADBUS5" x="33.02" y="33.02" length="short" rot="R180"/>
-<pin name="ADBUS6" x="33.02" y="30.48" length="short" rot="R180"/>
-<pin name="ADBUS7" x="33.02" y="27.94" length="short" rot="R180"/>
-<pin name="ACBUS0" x="33.02" y="22.86" length="short" rot="R180"/>
-<pin name="ACBUS1" x="33.02" y="20.32" length="short" rot="R180"/>
-<pin name="ACBUS2" x="33.02" y="17.78" length="short" rot="R180"/>
-<pin name="ACBUS3" x="33.02" y="15.24" length="short" rot="R180"/>
-<pin name="BDBUS0" x="33.02" y="-2.54" length="short" rot="R180"/>
-<pin name="BDBUS1" x="33.02" y="-5.08" length="short" rot="R180"/>
-<pin name="BDBUS2" x="33.02" y="-7.62" length="short" rot="R180"/>
-<pin name="BDBUS3" x="33.02" y="-10.16" length="short" rot="R180"/>
-<pin name="BDBUS4" x="33.02" y="-12.7" length="short" rot="R180"/>
-<pin name="BDBUS5" x="33.02" y="-15.24" length="short" rot="R180"/>
-<pin name="BDBUS6" x="33.02" y="-17.78" length="short" rot="R180"/>
-<pin name="BDBUS7" x="33.02" y="-20.32" length="short" rot="R180"/>
-<pin name="BCBUS0" x="33.02" y="-25.4" length="short" rot="R180"/>
-<pin name="BCBUS1" x="33.02" y="-27.94" length="short" rot="R180"/>
-<pin name="BCBUS2" x="33.02" y="-30.48" length="short" rot="R180"/>
-<pin name="BCBUS3" x="33.02" y="-33.02" length="short" rot="R180"/>
-<pin name="ACBUS4" x="33.02" y="12.7" length="short" rot="R180"/>
-<pin name="ACBUS5" x="33.02" y="10.16" length="short" rot="R180"/>
-<pin name="ACBUS6" x="33.02" y="7.62" length="short" rot="R180"/>
-<pin name="ACBUS7" x="33.02" y="5.08" length="short" rot="R180"/>
-<pin name="BCBUS4" x="33.02" y="-35.56" length="short" rot="R180"/>
-<pin name="BCBUS5" x="33.02" y="-38.1" length="short" rot="R180"/>
-<pin name="BCBUS6" x="33.02" y="-40.64" length="short" rot="R180"/>
-<pin name="PWRSAVE/BCBUS7" x="33.02" y="-43.18" length="short" rot="R180"/>
+<pin name="VREGOUT" x="-22.86" y="38.1" length="short" direction="out"/>
+<pin name="EEDATA" x="-22.86" y="-33.02" length="short" direction="in"/>
+<pin name="EECS" x="-22.86" y="-27.94" length="short" direction="out"/>
+<pin name="EESK" x="-22.86" y="-30.48" length="short" direction="out"/>
+<pin name="-PWREN" x="25.4" y="50.8" length="short" direction="out" rot="R180"/>
+<pin name="ADBUS0" x="25.4" y="45.72" length="short" rot="R180"/>
+<pin name="ADBUS1" x="25.4" y="43.18" length="short" rot="R180"/>
+<pin name="ADBUS2" x="25.4" y="40.64" length="short" rot="R180"/>
+<pin name="ADBUS3" x="25.4" y="38.1" length="short" rot="R180"/>
+<pin name="ADBUS4" x="25.4" y="35.56" length="short" rot="R180"/>
+<pin name="ADBUS5" x="25.4" y="33.02" length="short" rot="R180"/>
+<pin name="ADBUS6" x="25.4" y="30.48" length="short" rot="R180"/>
+<pin name="ADBUS7" x="25.4" y="27.94" length="short" rot="R180"/>
+<pin name="ACBUS0" x="25.4" y="22.86" length="short" rot="R180"/>
+<pin name="ACBUS1" x="25.4" y="20.32" length="short" rot="R180"/>
+<pin name="ACBUS2" x="25.4" y="17.78" length="short" rot="R180"/>
+<pin name="ACBUS3" x="25.4" y="15.24" length="short" rot="R180"/>
+<pin name="BDBUS0" x="25.4" y="-2.54" length="short" rot="R180"/>
+<pin name="BDBUS1" x="25.4" y="-5.08" length="short" rot="R180"/>
+<pin name="BDBUS2" x="25.4" y="-7.62" length="short" rot="R180"/>
+<pin name="BDBUS3" x="25.4" y="-10.16" length="short" rot="R180"/>
+<pin name="BDBUS4" x="25.4" y="-12.7" length="short" rot="R180"/>
+<pin name="BDBUS5" x="25.4" y="-15.24" length="short" rot="R180"/>
+<pin name="BDBUS6" x="25.4" y="-17.78" length="short" rot="R180"/>
+<pin name="BDBUS7" x="25.4" y="-20.32" length="short" rot="R180"/>
+<pin name="BCBUS0" x="25.4" y="-25.4" length="short" rot="R180"/>
+<pin name="BCBUS1" x="25.4" y="-27.94" length="short" rot="R180"/>
+<pin name="BCBUS2" x="25.4" y="-30.48" length="short" rot="R180"/>
+<pin name="BCBUS3" x="25.4" y="-33.02" length="short" rot="R180"/>
+<pin name="ACBUS4" x="25.4" y="12.7" length="short" rot="R180"/>
+<pin name="ACBUS5" x="25.4" y="10.16" length="short" rot="R180"/>
+<pin name="ACBUS6" x="25.4" y="7.62" length="short" rot="R180"/>
+<pin name="ACBUS7" x="25.4" y="5.08" length="short" rot="R180"/>
+<pin name="BCBUS4" x="25.4" y="-35.56" length="short" rot="R180"/>
+<pin name="BCBUS5" x="25.4" y="-38.1" length="short" rot="R180"/>
+<pin name="BCBUS6" x="25.4" y="-40.64" length="short" rot="R180"/>
+<pin name="PWRSAVE/BCBUS7" x="25.4" y="-43.18" length="short" rot="R180"/>
 <pin name="GND@5" x="0" y="-53.34" length="short" direction="pwr" rot="R90"/>
 <pin name="GND@6" x="2.54" y="-53.34" length="short" direction="pwr" rot="R90"/>
 <pin name="GND@7" x="5.08" y="-53.34" length="short" direction="pwr" rot="R90"/>
 <pin name="GND@8" x="7.62" y="-53.34" length="short" direction="pwr" rot="R90"/>
-<pin name="VPLL" x="-5.08" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VCCIO@3" x="15.24" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VCCIO@4" x="17.78" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VCORE@2" x="2.54" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="VCORE@3" x="5.08" y="55.88" length="short" direction="pwr" rot="R270"/>
-<pin name="TEST" x="-20.32" y="-38.1" length="short" direction="in"/>
-<pin name="-SUSPEND" x="33.02" y="-48.26" length="short" direction="out" rot="R180"/>
+<pin name="VPLL" x="-12.7" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VCCIO@3" x="7.62" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VCCIO@4" x="10.16" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VCORE@2" x="-5.08" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="VCORE@3" x="-2.54" y="55.88" length="short" direction="pwr" rot="R270"/>
+<pin name="TEST" x="-22.86" y="-40.64" length="short" direction="in"/>
+<pin name="-SUSPEND" x="25.4" y="-48.26" length="short" direction="out" rot="R180"/>
 </symbol>
 <symbol name="SHF105">
 <wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
