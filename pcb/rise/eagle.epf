@@ -26,10 +26,10 @@ UsedLibrary="lbr/sparkfun/SparkFun-DiscreteSemi.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="0 0 1919 1017"
+Loc="0 0 1365 727"
 State=1
 Number=0
 
 [Desktop]
-Screen="3840 1080"
+Screen="1366 768"
 Window="Win_1"
