@@ -1803,7 +1803,7 @@ design rules under a new name.</description>
 <element name="R58" library="SparkFun-Passives" package="0603-RES" value="165" x="-23" y="-197"/>
 <element name="R59" library="SparkFun-Passives" package="0603-RES" value="165" x="-23" y="-200"/>
 <element name="R60" library="SparkFun-Passives" package="0603-RES" value="330" x="-23" y="-203"/>
-<element name="C16" library="SparkFun-Passives" package="0603-CAP" value="1000p" x="-23" y="-209"/>
+<element name="C16" library="SparkFun-Passives" package="0603-CAP" value="27p" x="-23" y="-209"/>
 </elements>
 <signals>
 <signal name="GND">

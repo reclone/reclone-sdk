@@ -7624,7 +7624,7 @@ Production Part - 8199
 <part name="R59" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="165"/>
 <part name="R60" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="330"/>
 <part name="SUPPLY35" library="supply2" deviceset="GND" device=""/>
-<part name="C16" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="1000p"/>
+<part name="C16" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
 <part name="SUPPLY36" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
