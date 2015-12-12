@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -2279,20 +2279,20 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="LDQS#" x="30.48" y="-12.7" length="short" rot="R180"/>
 <pin name="UDQS" x="30.48" y="-15.24" length="short" rot="R180"/>
 <pin name="UDQS#" x="30.48" y="-17.78" length="short" rot="R180"/>
-<pin name="VDD@A1" x="-20.32" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@A9" x="-17.78" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@C1" x="-15.24" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@C3" x="-12.7" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@C7" x="-10.16" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@C9" x="-7.62" y="40.64" length="short" rot="R270"/>
-<pin name="VDD@E1" x="-5.08" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@E9" x="-2.54" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@G1" x="0" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@G3" x="2.54" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@G7" x="5.08" y="40.64" length="short" rot="R270"/>
-<pin name="VDDQ@G9" x="7.62" y="40.64" length="short" rot="R270"/>
-<pin name="VDDL@J1" x="10.16" y="40.64" length="short" rot="R270"/>
-<pin name="VREF" x="12.7" y="40.64" length="short" rot="R270"/>
+<pin name="VDD@A1" x="-17.78" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@A9" x="-15.24" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C1" x="-12.7" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C3" x="-10.16" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C7" x="-7.62" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@C9" x="-5.08" y="40.64" length="short" rot="R270"/>
+<pin name="VDD@E1" x="-2.54" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@E9" x="0" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G1" x="2.54" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G3" x="5.08" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G7" x="7.62" y="40.64" length="short" rot="R270"/>
+<pin name="VDDQ@G9" x="10.16" y="40.64" length="short" rot="R270"/>
+<pin name="VDDL@J1" x="12.7" y="40.64" length="short" rot="R270"/>
+<pin name="VREF" x="-20.32" y="40.64" length="short" rot="R270"/>
 <pin name="VDD@J9" x="15.24" y="40.64" length="short" rot="R270"/>
 <pin name="VDD@M9" x="17.78" y="40.64" length="short" rot="R270"/>
 <pin name="VDD@R1" x="20.32" y="40.64" length="short" rot="R270"/>
