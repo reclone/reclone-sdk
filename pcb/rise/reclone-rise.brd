@@ -1818,7 +1818,7 @@ design rules under a new name.</description>
 <element name="R58" library="SparkFun-Passives" package="0603-RES" value="165" x="-23" y="-197"/>
 <element name="R59" library="SparkFun-Passives" package="0603-RES" value="165" x="-23" y="-200"/>
 <element name="R60" library="SparkFun-Passives" package="0603-RES" value="330" x="-23" y="-203"/>
-<element name="C16" library="SparkFun-Passives" package="0603-CAP" value="27p" x="-23" y="-209"/>
+<element name="C16" library="SparkFun-Passives" package="0603-CAP" value="27p" x="44" y="1.5"/>
 <element name="R61" library="SparkFun-Passives" package="0603-RES" value="2K2" x="-23" y="-212"/>
 <element name="R62" library="SparkFun-Passives" package="0603-RES" value="2K2" x="-23" y="-215"/>
 <element name="OSC1" library="SparkFun-FreqCtrl" package="CRYSTAL-OSC-SMD-5X3" value="OSCILLATOR5X3-50MHz" x="49" y="26.6"/>
@@ -1963,8 +1963,7 @@ design rules under a new name.</description>
 <contactref element="C16" pad="1"/>
 <contactref element="R62" pad="1"/>
 <contactref element="OSC1" pad="2"/>
-<wire x1="-23.85" y1="-209" x2="-23.85" y2="-215" width="0" layer="19" extent="1-1"/>
-<wire x1="-22.15" y1="-203" x2="-23.85" y2="-209" width="0" layer="19" extent="1-1"/>
+<wire x1="-22.15" y1="-203" x2="-23.85" y2="-215" width="0" layer="19" extent="1-1"/>
 <wire x1="-23.85" y1="-173" x2="-22.15" y2="-203" width="0" layer="19" extent="1-1"/>
 <wire x1="-23.85" y1="-170" x2="-23.85" y2="-173" width="0" layer="19" extent="1-1"/>
 <wire x1="-21.85" y1="-160" x2="-23.85" y2="-170" width="0" layer="19" extent="1-1"/>
@@ -3275,18 +3274,22 @@ design rules under a new name.</description>
 </signal>
 <signal name="AUDIO_L">
 <contactref element="R16" pad="1"/>
+<contactref element="FPGA" pad="N12"/>
+<wire x1="35.5" y1="29.5" x2="-23.85" y2="-164" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AUDIO_R">
 <contactref element="R50" pad="1"/>
+<contactref element="FPGA" pad="P12"/>
+<wire x1="35.5" y1="28.5" x2="-23.85" y2="-167" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$79">
 <contactref element="R51" pad="2"/>
 <contactref element="AV-OUT" pad="SLEEVE"/>
 <contactref element="C16" pad="2"/>
 <contactref element="R56" pad="2"/>
-<wire x1="-22.15" y1="-191" x2="-22.15" y2="-209" width="0" layer="19" extent="1-1"/>
 <wire x1="-22.15" y1="-176" x2="-22.15" y2="-191" width="0" layer="19" extent="1-1"/>
-<wire x1="57" y1="1.8" x2="-22.15" y2="-176" width="0" layer="19" extent="1-1"/>
+<wire x1="44.85" y1="1.5" x2="-22.15" y2="-176" width="0" layer="19" extent="1-1"/>
+<wire x1="57" y1="1.8" x2="44.85" y2="1.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$80">
 <contactref element="R56" pad="1"/>
@@ -3318,18 +3321,28 @@ design rules under a new name.</description>
 </signal>
 <signal name="VIDEO_D4">
 <contactref element="R51" pad="1"/>
+<contactref element="FPGA" pad="T11"/>
+<wire x1="34.5" y1="26.5" x2="-23.85" y2="-176" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VIDEO_D3">
 <contactref element="R52" pad="1"/>
+<contactref element="FPGA" pad="M12"/>
+<wire x1="35.5" y1="30.5" x2="-23.85" y2="-179" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VIDEO_D2">
 <contactref element="R53" pad="1"/>
+<contactref element="FPGA" pad="T10"/>
+<wire x1="33.5" y1="26.5" x2="-23.85" y2="-182" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VIDEO_D1">
 <contactref element="R54" pad="1"/>
+<contactref element="FPGA" pad="N11"/>
+<wire x1="34.5" y1="29.5" x2="-23.85" y2="-185" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VIDEO_D0">
 <contactref element="R55" pad="1"/>
+<contactref element="FPGA" pad="P11"/>
+<wire x1="34.5" y1="28.5" x2="-23.85" y2="-188" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DDR2_VREF">
 <contactref element="RAM" pad="J2"/>
@@ -3455,11 +3468,110 @@ design rules under a new name.</description>
 <signal name="FSMC_D0">
 <contactref element="MCU" pad="61"/>
 </signal>
+<signal name="N$84">
+<contactref element="FPGA" pad="B15"/>
+</signal>
+<signal name="N$85">
+<contactref element="FPGA" pad="B16"/>
+</signal>
 <signal name="N$86">
-<contactref element="FPGA" pad="T8"/>
+<contactref element="FPGA" pad="D16"/>
 </signal>
 <signal name="N$87">
-<contactref element="FPGA" pad="P8"/>
+<contactref element="FPGA" pad="C15"/>
+</signal>
+<signal name="N$88">
+<contactref element="FPGA" pad="C16"/>
+</signal>
+<signal name="N$89">
+<contactref element="FPGA" pad="E15"/>
+</signal>
+<signal name="N$90">
+<contactref element="FPGA" pad="E16"/>
+</signal>
+<signal name="N$91">
+<contactref element="FPGA" pad="F15"/>
+</signal>
+<signal name="N$92">
+<contactref element="FPGA" pad="F16"/>
+</signal>
+<signal name="N$93">
+<contactref element="FPGA" pad="G16"/>
+</signal>
+<signal name="N$94">
+<contactref element="FPGA" pad="H15"/>
+</signal>
+<signal name="N$95">
+<contactref element="FPGA" pad="H16"/>
+</signal>
+<signal name="N$96">
+<contactref element="FPGA" pad="J16"/>
+</signal>
+<signal name="N$97">
+<contactref element="FPGA" pad="K15"/>
+</signal>
+<signal name="N$98">
+<contactref element="FPGA" pad="K16"/>
+</signal>
+<signal name="N$99">
+<contactref element="FPGA" pad="N16"/>
+</signal>
+<signal name="N$100">
+<contactref element="FPGA" pad="M15"/>
+</signal>
+<signal name="N$101">
+<contactref element="FPGA" pad="M16"/>
+</signal>
+<signal name="N$102">
+<contactref element="FPGA" pad="L16"/>
+</signal>
+<signal name="N$103">
+<contactref element="FPGA" pad="P15"/>
+</signal>
+<signal name="N$104">
+<contactref element="FPGA" pad="P16"/>
+</signal>
+<signal name="N$105">
+<contactref element="FPGA" pad="R15"/>
+</signal>
+<signal name="N$106">
+<contactref element="FPGA" pad="R16"/>
+</signal>
+<signal name="N$107">
+<contactref element="FPGA" pad="T15"/>
+</signal>
+<signal name="N$108">
+<contactref element="FPGA" pad="D14"/>
+</signal>
+<signal name="N$109">
+<contactref element="FPGA" pad="F14"/>
+</signal>
+<signal name="N$110">
+<contactref element="FPGA" pad="G14"/>
+</signal>
+<signal name="N$111">
+<contactref element="FPGA" pad="N14"/>
+</signal>
+<signal name="N$112">
+<contactref element="FPGA" pad="J14"/>
+</signal>
+<signal name="N$113">
+<contactref element="FPGA" pad="K14"/>
+</signal>
+<signal name="N$114">
+<contactref element="FPGA" pad="H14"/>
+</signal>
+<signal name="N$115">
+<contactref element="FPGA" pad="L14"/>
+</signal>
+<signal name="N$116">
+<contactref element="FPGA" pad="R14"/>
+</signal>
+<signal name="N$117">
+<contactref element="FPGA" pad="T14"/>
+</signal>
+<signal name="N$118">
+<contactref element="FPGA" pad="M14"/>
 </signal>
 </signals>
 </board>
