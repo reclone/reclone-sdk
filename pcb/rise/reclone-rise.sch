@@ -8319,6 +8319,8 @@ Production Part - 8199
 <wire x1="22.86" y1="129.54" x2="22.86" y2="132.08" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="129.54" x2="22.86" y2="129.54" width="0.1524" layer="91"/>
 <junction x="22.86" y="129.54"/>
+<pinref part="L2" gate="G$1" pin="1"/>
+<pinref part="L3" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="VREF+"/>
