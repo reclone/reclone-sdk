@@ -9060,7 +9060,7 @@ Production Part - 8199
 <wire x1="248.92" y1="162.56" x2="254" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="FPGA_CLK_32M" class="0">
+<net name="FPGA_CLK_42M" class="0">
 <segment>
 <pinref part="MCU" gate="G$8" pin="MCO1"/>
 <wire x1="243.84" y1="144.78" x2="254" y2="144.78" width="0.1524" layer="91"/>
@@ -11314,6 +11314,11 @@ Production Part - 8199
 <wire x1="99.06" y1="241.3" x2="101.6" y2="241.3" width="0.1524" layer="91"/>
 <label x="101.6" y="241.3" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="FPGA" gate="B1" pin="IO_L41N_GCLK8_M1CASN_1"/>
+<wire x1="99.06" y1="76.2" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
+<label x="101.6" y="76.2" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="FSMC_NWAIT" class="0">
 <segment>
@@ -11466,9 +11471,9 @@ Production Part - 8199
 <label x="101.6" y="208.28" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L41N_GCLK8_M1CASN_1"/>
-<wire x1="99.06" y1="76.2" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
-<label x="101.6" y="76.2" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L50P_M1UDQS_1"/>
+<wire x1="99.06" y1="33.02" x2="104.14" y2="33.02" width="0.1524" layer="91"/>
+<label x="101.6" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_D13" class="0">
@@ -11478,9 +11483,9 @@ Production Part - 8199
 <label x="101.6" y="205.74" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L43P_GCLK5_M1DQ4_1"/>
-<wire x1="99.06" y1="68.58" x2="104.14" y2="68.58" width="0.1524" layer="91"/>
-<label x="101.6" y="68.58" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L51P_M1DQ12_1"/>
+<wire x1="99.06" y1="27.94" x2="104.14" y2="27.94" width="0.1524" layer="91"/>
+<label x="101.6" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_D12" class="0">
@@ -11490,9 +11495,9 @@ Production Part - 8199
 <label x="101.6" y="203.2" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L43N_GCLK4_M1DQ5_1"/>
-<wire x1="99.06" y1="66.04" x2="104.14" y2="66.04" width="0.1524" layer="91"/>
-<label x="101.6" y="66.04" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L50N_M1UDQSN_1"/>
+<wire x1="99.06" y1="30.48" x2="104.14" y2="30.48" width="0.1524" layer="91"/>
+<label x="101.6" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_D11" class="0">
@@ -11639,32 +11644,25 @@ Production Part - 8199
 <label x="101.6" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$107" class="0">
-<segment>
-<pinref part="FPGA" gate="B1" pin="IO_L50N_M1UDQSN_1"/>
-<wire x1="99.06" y1="30.48" x2="104.14" y2="30.48" width="0.1524" layer="91"/>
-<label x="101.6" y="30.48" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$116" class="0">
-<segment>
-<pinref part="FPGA" gate="B1" pin="IO_L50P_M1UDQS_1"/>
-<wire x1="99.06" y1="33.02" x2="104.14" y2="33.02" width="0.1524" layer="91"/>
-<label x="101.6" y="33.02" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$117" class="0">
-<segment>
-<pinref part="FPGA" gate="B1" pin="IO_L51P_M1DQ12_1"/>
-<wire x1="99.06" y1="27.94" x2="104.14" y2="27.94" width="0.1524" layer="91"/>
-<label x="101.6" y="27.94" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="N$118" class="0">
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L74N_DOUT_BUSY_1"/>
 <wire x1="99.06" y1="10.16" x2="104.14" y2="10.16" width="0.1524" layer="91"/>
 <label x="101.6" y="10.16" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CLK_50M" class="0">
+<segment>
+<pinref part="FPGA" gate="B1" pin="IO_L43N_GCLK4_M1DQ5_1"/>
+<wire x1="99.06" y1="66.04" x2="104.14" y2="66.04" width="0.1524" layer="91"/>
+<label x="101.6" y="66.04" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_CLK_42M" class="0">
+<segment>
+<pinref part="FPGA" gate="B1" pin="IO_L43P_GCLK5_M1DQ4_1"/>
+<wire x1="99.06" y1="68.58" x2="104.14" y2="68.58" width="0.1524" layer="91"/>
+<label x="101.6" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
