@@ -7068,7 +7068,7 @@ Production Part - 8199
 </classes>
 <parts>
 <part name="USB" library="reclone-rise" deviceset="USB_A_2H" device=""/>
-<part name="DVI-D" library="reclone-rise" deviceset="TMDS_A" device="">
+<part name="TMDS-OUT" library="reclone-rise" deviceset="TMDS_A" device="">
 <attribute name="DIGIKEY#" value="609-4614-1-ND"/>
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10029449-111RLF"/>
@@ -7159,7 +7159,7 @@ Production Part - 8199
 <part name="+3V13" library="supply1" deviceset="+3V3" device=""/>
 <part name="FRAME1" library="frames" deviceset="A3L-LOC" device=""/>
 <part name="FRAME2" library="frames" deviceset="A3L-LOC" device=""/>
-<part name="U$1" library="reclone-rise" deviceset="DP83848C" device=""/>
+<part name="ETH_MAC" library="reclone-rise" deviceset="DP83848C" device=""/>
 <part name="R20" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2"/>
 <part name="+3V14" library="supply1" deviceset="+3V3" device=""/>
 <part name="R21" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2"/>
@@ -7399,7 +7399,7 @@ Production Part - 8199
 <instance part="+3V12" gate="G$1" x="251.46" y="170.18"/>
 <instance part="+3V13" gate="G$1" x="340.36" y="190.5"/>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
-<instance part="U$1" gate="G$1" x="254" y="58.42"/>
+<instance part="ETH_MAC" gate="G$1" x="254" y="58.42"/>
 <instance part="MCU" gate="G$3" x="208.28" y="48.26"/>
 <instance part="R20" gate="G$1" x="223.52" y="66.04" rot="R270"/>
 <instance part="+3V14" gate="G$1" x="223.52" y="76.2"/>
@@ -7813,17 +7813,17 @@ Production Part - 8199
 <pinref part="SUPPLY21" gate="GND" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="DGND"/>
+<pinref part="ETH_MAC" gate="G$1" pin="DGND"/>
 <pinref part="SUPPLY22" gate="GND" pin="GND"/>
-<pinref part="U$1" gate="G$1" pin="AGND1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="AGND1"/>
 <wire x1="261.62" y1="27.94" x2="264.16" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="AGND2"/>
+<pinref part="ETH_MAC" gate="G$1" pin="AGND2"/>
 <junction x="264.16" y="27.94"/>
 <wire x1="264.16" y1="27.94" x2="266.7" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="IOGND"/>
+<pinref part="ETH_MAC" gate="G$1" pin="IOGND"/>
 <junction x="266.7" y="27.94"/>
 <wire x1="266.7" y1="27.94" x2="269.24" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="IOGND2"/>
+<pinref part="ETH_MAC" gate="G$1" pin="IOGND2"/>
 <junction x="269.24" y="27.94"/>
 <wire x1="269.24" y1="27.94" x2="271.78" y2="27.94" width="0.1524" layer="91"/>
 <junction x="271.78" y="27.94"/>
@@ -8238,13 +8238,13 @@ Production Part - 8199
 <wire x1="378.46" y1="58.42" x2="378.46" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="IOVDD33(2)"/>
-<pinref part="U$1" gate="G$1" pin="AVDD33"/>
+<pinref part="ETH_MAC" gate="G$1" pin="IOVDD33(2)"/>
+<pinref part="ETH_MAC" gate="G$1" pin="AVDD33"/>
 <wire x1="259.08" y1="86.36" x2="261.62" y2="86.36" width="0.1524" layer="91"/>
 <pinref part="+3V18" gate="G$1" pin="+3V3"/>
 <wire x1="261.62" y1="86.36" x2="264.16" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="264.16" y1="86.36" x2="269.24" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="IOVDD33(1)"/>
+<pinref part="ETH_MAC" gate="G$1" pin="IOVDD33(1)"/>
 <junction x="261.62" y="86.36"/>
 <junction x="264.16" y="86.36"/>
 </segment>
@@ -8797,13 +8797,13 @@ Production Part - 8199
 <segment>
 <wire x1="287.02" y1="60.96" x2="284.48" y2="60.96" width="0.1524" layer="91"/>
 <label x="284.48" y="60.96" size="1.778" layer="95"/>
-<pinref part="U$1" gate="G$1" pin="CLK_OUT"/>
+<pinref part="ETH_MAC" gate="G$1" pin="CLK_OUT"/>
 </segment>
 </net>
 <net name="N$30" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="ETH_NRST"/>
-<pinref part="U$1" gate="G$1" pin="RESET_N"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RESET_N"/>
 <wire x1="213.36" y1="35.56" x2="218.44" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="35.56" x2="218.44" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="33.02" x2="228.6" y2="33.02" width="0.1524" layer="91"/>
@@ -8813,55 +8813,55 @@ Production Part - 8199
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_INT"/>
 <wire x1="213.36" y1="38.1" x2="228.6" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="PWR_DOWN/INT"/>
+<pinref part="ETH_MAC" gate="G$1" pin="PWR_DOWN/INT"/>
 </segment>
 </net>
 <net name="N$32" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_TXD1"/>
 <wire x1="213.36" y1="40.64" x2="228.6" y2="40.64" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="TXD_1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TXD_1"/>
 </segment>
 </net>
 <net name="N$33" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_TXD0"/>
-<pinref part="U$1" gate="G$1" pin="TXD_0"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TXD_0"/>
 <wire x1="213.36" y1="43.18" x2="228.6" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$34" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_TX_EN"/>
-<pinref part="U$1" gate="G$1" pin="TX_EN"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TX_EN"/>
 <wire x1="213.36" y1="45.72" x2="228.6" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$35" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_RXD1"/>
-<pinref part="U$1" gate="G$1" pin="RXD_1/PHYAD1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RXD_1/PHYAD1"/>
 <wire x1="213.36" y1="48.26" x2="228.6" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$36" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_RXD0"/>
-<pinref part="U$1" gate="G$1" pin="RXD_0/PHYAD1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RXD_0/PHYAD1"/>
 <wire x1="213.36" y1="50.8" x2="228.6" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$38" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_MDIO"/>
-<pinref part="U$1" gate="G$1" pin="MDIO"/>
+<pinref part="ETH_MAC" gate="G$1" pin="MDIO"/>
 <wire x1="213.36" y1="55.88" x2="228.6" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$39" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="MII_MDC"/>
-<pinref part="U$1" gate="G$1" pin="MDC"/>
+<pinref part="ETH_MAC" gate="G$1" pin="MDC"/>
 <wire x1="213.36" y1="58.42" x2="228.6" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -8870,7 +8870,7 @@ Production Part - 8199
 <pinref part="MCU" gate="G$3" pin="RMII_REF_CLK"/>
 <wire x1="213.36" y1="60.96" x2="218.44" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="60.96" x2="218.44" y2="88.9" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="X1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="X1"/>
 <wire x1="218.44" y1="88.9" x2="233.68" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="233.68" y1="88.9" x2="241.3" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="241.3" y1="88.9" x2="241.3" y2="86.36" width="0.1524" layer="91"/>
@@ -8883,27 +8883,27 @@ Production Part - 8199
 <net name="N$37" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="RMII_CRSDV"/>
-<pinref part="U$1" gate="G$1" pin="CRS/CRS_DV/LED_CFG"/>
+<pinref part="ETH_MAC" gate="G$1" pin="CRS/CRS_DV/LED_CFG"/>
 <wire x1="213.36" y1="53.34" x2="228.6" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$41" class="0">
 <segment>
 <pinref part="R20" gate="G$1" pin="2"/>
-<pinref part="U$1" gate="G$1" pin="RX_DV/MII_MODE"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RX_DV/MII_MODE"/>
 <wire x1="223.52" y1="60.96" x2="228.6" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$42" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="TXD_2"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TXD_2"/>
 <pinref part="R21" gate="G$1" pin="1"/>
 <wire x1="254" y1="27.94" x2="254" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$43" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="TXD_3"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TXD_3"/>
 <wire x1="256.54" y1="27.94" x2="256.54" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="256.54" y1="25.4" x2="261.62" y2="25.4" width="0.1524" layer="91"/>
 <pinref part="R22" gate="G$1" pin="1"/>
@@ -8911,7 +8911,7 @@ Production Part - 8199
 </net>
 <net name="N$44" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="RBIAS"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RBIAS"/>
 <wire x1="251.46" y1="27.94" x2="251.46" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="251.46" y1="25.4" x2="246.38" y2="25.4" width="0.1524" layer="91"/>
 <pinref part="R23" gate="G$1" pin="1"/>
@@ -8919,21 +8919,21 @@ Production Part - 8199
 </net>
 <net name="N$45" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="RSRVD_PU1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RSRVD_PU1"/>
 <pinref part="R24" gate="G$1" pin="2"/>
 <wire x1="284.48" y1="81.28" x2="289.56" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$46" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="RSRVD_PU2"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RSRVD_PU2"/>
 <pinref part="R25" gate="G$1" pin="2"/>
 <wire x1="284.48" y1="78.74" x2="297.18" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="LED_LINK" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="LED_LINK/AN0"/>
+<pinref part="ETH_MAC" gate="G$1" pin="LED_LINK/AN0"/>
 <wire x1="284.48" y1="55.88" x2="297.18" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="297.18" y1="55.88" x2="297.18" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="R28" gate="G$1" pin="1"/>
@@ -8948,7 +8948,7 @@ Production Part - 8199
 </net>
 <net name="LED_ACT" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="LED_ACT/COL/AN_EN"/>
+<pinref part="ETH_MAC" gate="G$1" pin="LED_ACT/COL/AN_EN"/>
 <pinref part="R27" gate="G$1" pin="1"/>
 <wire x1="284.48" y1="50.8" x2="299.72" y2="50.8" width="0.1524" layer="91"/>
 <label x="284.48" y="50.8" size="1.778" layer="95"/>
@@ -8961,7 +8961,7 @@ Production Part - 8199
 </net>
 <net name="N$47" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="TD+"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TD+"/>
 <wire x1="284.48" y1="45.72" x2="314.96" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="314.96" y1="45.72" x2="314.96" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="ETHERNET" gate="G$1" pin="TD+"/>
@@ -8973,7 +8973,7 @@ Production Part - 8199
 </net>
 <net name="N$49" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="TD-"/>
+<pinref part="ETH_MAC" gate="G$1" pin="TD-"/>
 <wire x1="284.48" y1="43.18" x2="317.5" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="317.5" y1="43.18" x2="317.5" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="ETHERNET" gate="G$1" pin="TD-"/>
@@ -8985,7 +8985,7 @@ Production Part - 8199
 </net>
 <net name="N$50" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="RD+"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RD+"/>
 <wire x1="284.48" y1="38.1" x2="322.58" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="322.58" y1="38.1" x2="322.58" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="ETHERNET" gate="G$1" pin="RD+"/>
@@ -8997,7 +8997,7 @@ Production Part - 8199
 </net>
 <net name="N$51" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="RD-"/>
+<pinref part="ETH_MAC" gate="G$1" pin="RD-"/>
 <wire x1="284.48" y1="35.56" x2="325.12" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="325.12" y1="35.56" x2="325.12" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="ETHERNET" gate="G$1" pin="RD-"/>
@@ -9021,13 +9021,13 @@ Production Part - 8199
 </net>
 <net name="N$55" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="PFBOUT"/>
+<pinref part="ETH_MAC" gate="G$1" pin="PFBOUT"/>
 <wire x1="248.92" y1="86.36" x2="248.92" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="248.92" y1="88.9" x2="251.46" y2="88.9" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="PFBIN2"/>
+<pinref part="ETH_MAC" gate="G$1" pin="PFBIN2"/>
 <wire x1="251.46" y1="88.9" x2="254" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="254" y1="88.9" x2="254" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="PFBIN1"/>
+<pinref part="ETH_MAC" gate="G$1" pin="PFBIN1"/>
 <wire x1="251.46" y1="86.36" x2="251.46" y2="88.9" width="0.1524" layer="91"/>
 <junction x="251.46" y="88.9"/>
 <wire x1="243.84" y1="93.98" x2="243.84" y2="88.9" width="0.1524" layer="91"/>
@@ -9438,7 +9438,7 @@ Production Part - 8199
 <instance part="FPGA" gate="B0" x="33.02" y="73.66"/>
 <instance part="SUPPLY4" gate="GND" x="48.26" y="116.84" rot="R90"/>
 <instance part="AV-OUT" gate="G$1" x="203.2" y="182.88" rot="R180"/>
-<instance part="DVI-D" gate="G$1" x="172.72" y="228.6">
+<instance part="TMDS-OUT" gate="G$1" x="172.72" y="228.6">
 <attribute name="MANF" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY#" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
@@ -10222,18 +10222,18 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="SUPPLY12" gate="GND" pin="GND"/>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D2_SHLD"/>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D1_SHLD"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D2_SHLD"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D1_SHLD"/>
 <junction x="157.48" y="210.82"/>
 <wire x1="157.48" y1="203.2" x2="157.48" y2="205.74" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="205.74" x2="157.48" y2="208.28" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="208.28" x2="157.48" y2="210.82" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="210.82" x2="157.48" y2="213.36" width="0.1524" layer="91"/>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D0_SHLD"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D0_SHLD"/>
 <junction x="157.48" y="208.28"/>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_CLK_SHLD"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_CLK_SHLD"/>
 <junction x="157.48" y="205.74"/>
-<pinref part="DVI-D" gate="G$1" pin="GND"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="GND"/>
 <junction x="157.48" y="203.2"/>
 <pinref part="R13" gate="G$1" pin="1"/>
 <wire x1="149.86" y1="208.28" x2="157.48" y2="208.28" width="0.1524" layer="91"/>
@@ -10319,16 +10319,16 @@ Production Part - 8199
 <wire x1="378.46" y1="241.3" x2="378.46" y2="243.84" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="SH1"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="SH1"/>
 <wire x1="190.5" y1="238.76" x2="190.5" y2="241.3" width="0.1524" layer="91"/>
-<pinref part="DVI-D" gate="G$1" pin="SH2"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="SH2"/>
 <junction x="190.5" y="246.38"/>
 <wire x1="190.5" y1="241.3" x2="190.5" y2="243.84" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="243.84" x2="190.5" y2="246.38" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="246.38" x2="190.5" y2="248.92" width="0.1524" layer="91"/>
-<pinref part="DVI-D" gate="G$1" pin="SH3"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="SH3"/>
 <junction x="190.5" y="243.84"/>
-<pinref part="DVI-D" gate="G$1" pin="SH4"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="SH4"/>
 <junction x="190.5" y="241.3"/>
 <pinref part="SUPPLY18" gate="GND" pin="GND"/>
 </segment>
@@ -10846,7 +10846,7 @@ Production Part - 8199
 </net>
 <net name="N$23" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="DETECT"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="DETECT"/>
 <pinref part="R13" gate="G$1" pin="2"/>
 <wire x1="157.48" y1="218.44" x2="149.86" y2="218.44" width="0.1524" layer="91"/>
 </segment>
@@ -10854,13 +10854,13 @@ Production Part - 8199
 <net name="N$26" class="0">
 <segment>
 <pinref part="R17" gate="G$1" pin="1"/>
-<pinref part="DVI-D" gate="G$1" pin="DDC_CLK"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="DDC_CLK"/>
 <wire x1="137.16" y1="223.52" x2="157.48" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$27" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="DDC_DATA"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="DDC_DATA"/>
 <pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="157.48" y1="220.98" x2="129.54" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="220.98" x2="129.54" y2="223.52" width="0.1524" layer="91"/>
@@ -10868,7 +10868,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_D2P" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D2P"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D2P"/>
 <wire x1="157.48" y1="246.38" x2="154.94" y2="246.38" width="0.1524" layer="91"/>
 <label x="142.24" y="246.38" size="1.778" layer="95"/>
 </segment>
@@ -10880,7 +10880,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_D2N" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D2N"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D2N"/>
 <wire x1="157.48" y1="243.84" x2="154.94" y2="243.84" width="0.1524" layer="91"/>
 <label x="142.24" y="243.84" size="1.778" layer="95"/>
 </segment>
@@ -10892,7 +10892,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_D1P" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D1P"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D1P"/>
 <wire x1="157.48" y1="241.3" x2="154.94" y2="241.3" width="0.1524" layer="91"/>
 <label x="142.24" y="241.3" size="1.778" layer="95"/>
 </segment>
@@ -10904,7 +10904,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_D1N" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D1N"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D1N"/>
 <wire x1="157.48" y1="238.76" x2="154.94" y2="238.76" width="0.1524" layer="91"/>
 <label x="142.24" y="238.76" size="1.778" layer="95"/>
 </segment>
@@ -10916,7 +10916,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_D0P" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D0P"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D0P"/>
 <wire x1="157.48" y1="236.22" x2="154.94" y2="236.22" width="0.1524" layer="91"/>
 <label x="142.24" y="236.22" size="1.778" layer="95"/>
 </segment>
@@ -10928,7 +10928,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_D0N" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_D0N"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_D0N"/>
 <wire x1="157.48" y1="233.68" x2="154.94" y2="233.68" width="0.1524" layer="91"/>
 <label x="142.24" y="233.68" size="1.778" layer="95"/>
 </segment>
@@ -10940,7 +10940,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_CLKP" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_CLKP"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_CLKP"/>
 <wire x1="157.48" y1="231.14" x2="154.94" y2="231.14" width="0.1524" layer="91"/>
 <label x="142.24" y="231.14" size="1.778" layer="95"/>
 </segment>
@@ -10952,7 +10952,7 @@ Production Part - 8199
 </net>
 <net name="TMDS_CLKN" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="TMDS_CLKN"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="TMDS_CLKN"/>
 <wire x1="157.48" y1="228.6" x2="154.94" y2="228.6" width="0.1524" layer="91"/>
 <label x="142.24" y="228.6" size="1.778" layer="95"/>
 </segment>
@@ -10964,7 +10964,7 @@ Production Part - 8199
 </net>
 <net name="N$28" class="0">
 <segment>
-<pinref part="DVI-D" gate="G$1" pin="+5V"/>
+<pinref part="TMDS-OUT" gate="G$1" pin="+5V"/>
 <pinref part="R19" gate="G$1" pin="1"/>
 <wire x1="154.94" y1="248.92" x2="157.48" y2="248.92" width="0.1524" layer="91"/>
 </segment>
