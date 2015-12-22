@@ -7091,7 +7091,7 @@ Production Part - 8199
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
 <part name="ETHERNET" library="reclone-rise" deviceset="MAGJACK" device=""/>
 <part name="USB-TO-SERIAL" library="reclone-rise" deviceset="FT2232H" device=""/>
-<part name="GADGETEER-AIOPXY" library="reclone-rise" deviceset="SHF105" device=""/>
+<part name="AIOPXY" library="reclone-rise" deviceset="SHF105" device=""/>
 <part name="GPIO" library="reclone-rise" deviceset="M2X20" device=""/>
 <part name="FPGA" library="reclone-rise" deviceset="XC6SLX16FTG256" device=""/>
 <part name="MICRO-SD" library="reclone-rise" deviceset="USD-SOCKET" device="">
@@ -7344,7 +7344,7 @@ Production Part - 8199
 <instance part="MCU" gate="G$5" x="325.12" y="121.92"/>
 <instance part="ETHERNET" gate="G$1" x="350.52" y="48.26"/>
 <instance part="USB-TO-SERIAL" gate="G$1" x="81.28" y="63.5"/>
-<instance part="GADGETEER-AIOPXY" gate="G$1" x="350.52" y="180.34"/>
+<instance part="AIOPXY" gate="G$1" x="350.52" y="180.34"/>
 <instance part="MICRO-SD" gate="G$1" x="294.64" y="218.44">
 <attribute name="DIGIKEY#" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
@@ -7586,7 +7586,7 @@ Production Part - 8199
 <segment>
 <pinref part="P+2" gate="1" pin="+5V"/>
 <wire x1="360.68" y1="185.42" x2="360.68" y2="187.96" width="0.1524" layer="91"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="2"/>
+<pinref part="AIOPXY" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="USB" gate="USB_A_2H" pin="VBUS2"/>
@@ -7665,7 +7665,7 @@ Production Part - 8199
 <net name="GND" class="0">
 <segment>
 <pinref part="SUPPLY3" gate="GND" pin="GND"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="10"/>
+<pinref part="AIOPXY" gate="G$1" pin="10"/>
 </segment>
 <segment>
 <pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@8"/>
@@ -8173,7 +8173,7 @@ Production Part - 8199
 <wire x1="251.46" y1="165.1" x2="251.46" y2="167.64" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="1"/>
+<pinref part="AIOPXY" gate="G$1" pin="1"/>
 <pinref part="+3V13" gate="G$1" pin="+3V3"/>
 <wire x1="340.36" y1="185.42" x2="340.36" y2="187.96" width="0.1524" layer="91"/>
 </segment>
@@ -8354,7 +8354,7 @@ Production Part - 8199
 <segment>
 <wire x1="360.68" y1="182.88" x2="363.22" y2="182.88" width="0.1524" layer="91"/>
 <label x="360.68" y="182.88" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="4"/>
+<pinref part="AIOPXY" gate="G$1" pin="4"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC123_IN3"/>
@@ -8366,7 +8366,7 @@ Production Part - 8199
 <segment>
 <wire x1="360.68" y1="180.34" x2="363.22" y2="180.34" width="0.1524" layer="91"/>
 <label x="360.68" y="180.34" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="6"/>
+<pinref part="AIOPXY" gate="G$1" pin="6"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC12_IN9"/>
@@ -8377,7 +8377,7 @@ Production Part - 8199
 <net name="GADG_SDA" class="0">
 <segment>
 <label x="327.66" y="172.72" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="8"/>
+<pinref part="AIOPXY" gate="G$1" pin="8"/>
 <pinref part="MCU" gate="G$9" pin="I2C1_SDA/CAN1_TX"/>
 <wire x1="365.76" y1="167.64" x2="365.76" y2="177.8" width="0.1524" layer="91"/>
 <wire x1="365.76" y1="177.8" x2="360.68" y2="177.8" width="0.1524" layer="91"/>
@@ -8392,7 +8392,7 @@ Production Part - 8199
 <segment>
 <wire x1="340.36" y1="182.88" x2="337.82" y2="182.88" width="0.1524" layer="91"/>
 <label x="327.66" y="182.88" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="3"/>
+<pinref part="AIOPXY" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC123_IN0/WKUP"/>
@@ -8404,7 +8404,7 @@ Production Part - 8199
 <segment>
 <wire x1="340.36" y1="180.34" x2="337.82" y2="180.34" width="0.1524" layer="91"/>
 <label x="327.66" y="180.34" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="5"/>
+<pinref part="AIOPXY" gate="G$1" pin="5"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="ADC12_IN4/DAC_OUT1"/>
@@ -8416,7 +8416,7 @@ Production Part - 8199
 <segment>
 <wire x1="340.36" y1="177.8" x2="337.82" y2="177.8" width="0.1524" layer="91"/>
 <label x="327.66" y="177.8" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="7"/>
+<pinref part="AIOPXY" gate="G$1" pin="7"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$10" pin="TIM4_CH1"/>
@@ -8427,7 +8427,7 @@ Production Part - 8199
 <net name="GADG_SCL" class="0">
 <segment>
 <label x="327.66" y="175.26" size="1.778" layer="95"/>
-<pinref part="GADGETEER-AIOPXY" gate="G$1" pin="9"/>
+<pinref part="AIOPXY" gate="G$1" pin="9"/>
 <pinref part="MCU" gate="G$9" pin="I2C1_SCL/CAN1_RX"/>
 <pinref part="R10" gate="G$1" pin="2"/>
 <junction x="322.58" y="175.26"/>
@@ -9270,7 +9270,7 @@ Production Part - 8199
 <wire x1="198.12" y1="205.74" x2="218.44" y2="205.74" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$25" class="0">
+<net name="BOOT1" class="0">
 <segment>
 <pinref part="MCU" gate="G$1" pin="BOOT1"/>
 <pinref part="R36" gate="G$1" pin="2"/>
