@@ -7099,7 +7099,7 @@ Production Part - 8199
 <attribute name="MANF" value="Amphenol"/>
 <attribute name="MANF#" value="101-00660-68-6"/>
 </part>
-<part name="EUI-48" library="reclone-rise" deviceset="24AA02E48" device=""/>
+<part name="EUI48" library="reclone-rise" deviceset="24AA02E48" device=""/>
 <part name="CFG" library="reclone-rise" deviceset="93LC46B" device=""/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 <part name="AV-OUT" library="reclone-rise" deviceset="AV-JACK-4COND" device=""/>
@@ -7350,7 +7350,7 @@ Production Part - 8199
 <attribute name="MANF" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="EUI-48" gate="G$1" x="264.16" y="162.56"/>
+<instance part="EUI48" gate="G$1" x="264.16" y="162.56"/>
 <instance part="CFG" gate="G$1" x="20.32" y="33.02"/>
 <instance part="+3V3" gate="G$1" x="83.82" y="127"/>
 <instance part="SUPPLY1" gate="GND" x="86.36" y="7.62"/>
@@ -7796,7 +7796,7 @@ Production Part - 8199
 <wire x1="160.02" y1="86.36" x2="162.56" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="EUI-48" gate="G$1" pin="VSS"/>
+<pinref part="EUI48" gate="G$1" pin="VSS"/>
 <pinref part="SUPPLY7" gate="GND" pin="GND"/>
 <wire x1="254" y1="157.48" x2="254" y2="154.94" width="0.1524" layer="91"/>
 </segment>
@@ -8167,7 +8167,7 @@ Production Part - 8199
 <wire x1="134.62" y1="106.68" x2="134.62" y2="109.22" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="EUI-48" gate="G$1" pin="VCC"/>
+<pinref part="EUI48" gate="G$1" pin="VCC"/>
 <pinref part="+3V12" gate="G$1" pin="+3V3"/>
 <wire x1="254" y1="165.1" x2="251.46" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="251.46" y1="165.1" x2="251.46" y2="167.64" width="0.1524" layer="91"/>
@@ -8793,13 +8793,6 @@ Production Part - 8199
 <wire x1="180.34" y1="78.74" x2="160.02" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="FPGA_CLK_50M" class="0">
-<segment>
-<wire x1="287.02" y1="60.96" x2="284.48" y2="60.96" width="0.1524" layer="91"/>
-<label x="284.48" y="60.96" size="1.778" layer="95"/>
-<pinref part="ETH_MAC" gate="G$1" pin="CLK_OUT"/>
-</segment>
-</net>
 <net name="N$30" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="ETH_NRST"/>
@@ -8865,7 +8858,7 @@ Production Part - 8199
 <wire x1="213.36" y1="58.42" x2="228.6" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$40" class="0">
+<net name="RMII_CLK_50M" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="RMII_REF_CLK"/>
 <wire x1="213.36" y1="60.96" x2="218.44" y2="60.96" width="0.1524" layer="91"/>
@@ -8878,6 +8871,7 @@ Production Part - 8199
 <wire x1="228.6" y1="104.14" x2="233.68" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="233.68" y1="104.14" x2="233.68" y2="88.9" width="0.1524" layer="91"/>
 <junction x="233.68" y="88.9"/>
+<label x="223.52" y="104.14" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$37" class="0">
@@ -9044,7 +9038,7 @@ Production Part - 8199
 </net>
 <net name="N$48" class="0">
 <segment>
-<pinref part="EUI-48" gate="G$1" pin="SDA"/>
+<pinref part="EUI48" gate="G$1" pin="SDA"/>
 <pinref part="MCU" gate="G$8" pin="OSC32_IN"/>
 <wire x1="254" y1="160.02" x2="251.46" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="251.46" y1="160.02" x2="251.46" y2="149.86" width="0.1524" layer="91"/>
@@ -9056,7 +9050,7 @@ Production Part - 8199
 <pinref part="MCU" gate="G$8" pin="OSC32_OUT"/>
 <wire x1="243.84" y1="147.32" x2="248.92" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="248.92" y1="147.32" x2="248.92" y2="162.56" width="0.1524" layer="91"/>
-<pinref part="EUI-48" gate="G$1" pin="SCL"/>
+<pinref part="EUI48" gate="G$1" pin="SCL"/>
 <wire x1="248.92" y1="162.56" x2="254" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -9287,18 +9281,11 @@ Production Part - 8199
 <pinref part="F1" gate="F1" pin="1"/>
 </segment>
 </net>
-<net name="N$60" class="0">
+<net name="ACT_LED" class="0">
 <segment>
 <pinref part="MCU" gate="G$7" pin="SPI2_SCK"/>
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="160.02" y1="20.32" x2="182.88" y2="20.32" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$74" class="0">
-<segment>
-<pinref part="R9" gate="G$1" pin="2"/>
-<pinref part="ACT" gate="G$1" pin="A"/>
-<wire x1="193.04" y1="20.32" x2="198.12" y2="20.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$75" class="0">
@@ -9415,6 +9402,13 @@ Production Part - 8199
 <pinref part="MICRO-SD" gate="G$1" pin="DAT0"/>
 <pinref part="R40" gate="G$1" pin="2"/>
 <wire x1="287.02" y1="220.98" x2="284.48" y2="220.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$60" class="0">
+<segment>
+<pinref part="R9" gate="G$1" pin="2"/>
+<pinref part="ACT" gate="G$1" pin="A"/>
+<wire x1="193.04" y1="20.32" x2="198.12" y2="20.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -11651,7 +11645,7 @@ Production Part - 8199
 <label x="101.6" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="FPGA_CLK_50M" class="0">
+<net name="RMII_CLK_50M" class="0">
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L43N_GCLK4_M1DQ5_1"/>
 <wire x1="99.06" y1="66.04" x2="104.14" y2="66.04" width="0.1524" layer="91"/>
