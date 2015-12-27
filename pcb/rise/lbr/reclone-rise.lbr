@@ -1955,21 +1955,21 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <symbol name="STM32F407_PWR">
 <wire x1="-5.08" y1="17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
 <wire x1="0" y1="17.78" x2="0" y2="-22.86" width="0.254" layer="94"/>
-<pin name="VBAT" x="5.08" y="10.16" length="middle" rot="R180"/>
+<pin name="VBAT" x="5.08" y="-5.08" length="middle" rot="R180"/>
 <pin name="VSS@10" x="5.08" y="-12.7" length="middle" rot="R180"/>
-<pin name="VDD@11" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="VDD@19" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="VDD@28" x="5.08" y="2.54" length="middle" rot="R180"/>
+<pin name="VDD@11" x="5.08" y="10.16" length="middle" rot="R180"/>
+<pin name="VDD@19" x="5.08" y="7.62" length="middle" rot="R180"/>
+<pin name="VDD@28" x="5.08" y="5.08" length="middle" rot="R180"/>
 <pin name="VSS@27" x="5.08" y="-15.24" length="middle" rot="R180"/>
-<pin name="VDD@50" x="5.08" y="0" length="middle" rot="R180"/>
+<pin name="VDD@50" x="5.08" y="2.54" length="middle" rot="R180"/>
 <pin name="VCAP_1" x="5.08" y="-10.16" length="middle" rot="R180"/>
 <pin name="VCAP_2" x="5.08" y="-7.62" length="middle" rot="R180"/>
 <wire x1="0" y1="-22.86" x2="-5.08" y2="-22.86" width="0.254" layer="94"/>
 <text x="-12.7" y="18.288" size="1.778" layer="95">&gt;NAME</text>
 <text x="-12.7" y="-25.4" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="VDD@75" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="VDD@75" x="5.08" y="0" length="middle" rot="R180"/>
 <pin name="VSS@74" x="5.08" y="-17.78" length="middle" rot="R180"/>
-<pin name="VDD@100" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="VDD@100" x="5.08" y="-2.54" length="middle" rot="R180"/>
 <pin name="VSS@99" x="5.08" y="-20.32" length="middle" rot="R180"/>
 <pin name="BOOT0" x="5.08" y="15.24" length="middle" rot="R180"/>
 <pin name="BOOT1" x="5.08" y="12.7" length="middle" rot="R180"/>
