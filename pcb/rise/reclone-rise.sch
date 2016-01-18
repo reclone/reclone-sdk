@@ -8004,6 +8004,10 @@ Production Part - 8199
 <part name="C58" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="6p8"/>
 <part name="C59" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="6p8"/>
 <part name="SUPPLY7" library="supply2" deviceset="GND" device=""/>
+<part name="R37" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="22"/>
+<part name="R38" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="22"/>
+<part name="R39" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="22"/>
+<part name="R40" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="22"/>
 </parts>
 <sheets>
 <sheet>
@@ -8024,7 +8028,7 @@ Production Part - 8199
 <instance part="MCU" gate="G$10" x="353.06" y="233.68"/>
 <instance part="MCU" gate="G$9" x="317.5" y="175.26"/>
 <instance part="MCU" gate="G$7" x="154.94" y="22.86"/>
-<instance part="MCU" gate="G$5" x="325.12" y="121.92"/>
+<instance part="MCU" gate="G$5" x="309.88" y="121.92"/>
 <instance part="ETHERNET" gate="G$1" x="350.52" y="48.26"/>
 <instance part="USB-TO-SERIAL" gate="G$1" x="81.28" y="63.5"/>
 <instance part="AIOPXY" gate="G$1" x="350.52" y="180.34"/>
@@ -8209,6 +8213,22 @@ Production Part - 8199
 <instance part="C58" gate="G$1" x="254" y="152.4" rot="R270"/>
 <instance part="C59" gate="G$1" x="254" y="160.02" rot="R270"/>
 <instance part="SUPPLY7" gate="GND" x="261.62" y="149.86"/>
+<instance part="R37" gate="G$1" x="330.2" y="134.62" smashed="yes">
+<attribute name="NAME" x="324.358" y="132.5626" size="1.778" layer="95"/>
+<attribute name="VALUE" x="332.486" y="134.874" size="1.778" layer="96"/>
+</instance>
+<instance part="R38" gate="G$1" x="330.2" y="132.08" smashed="yes">
+<attribute name="NAME" x="324.358" y="130.0226" size="1.778" layer="95"/>
+<attribute name="VALUE" x="332.486" y="132.334" size="1.778" layer="96"/>
+</instance>
+<instance part="R39" gate="G$1" x="330.2" y="127" smashed="yes">
+<attribute name="NAME" x="324.358" y="124.9426" size="1.778" layer="95"/>
+<attribute name="VALUE" x="332.486" y="127.254" size="1.778" layer="96"/>
+</instance>
+<instance part="R40" gate="G$1" x="330.2" y="124.46" smashed="yes">
+<attribute name="NAME" x="324.358" y="122.4026" size="1.778" layer="95"/>
+<attribute name="VALUE" x="332.486" y="124.714" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -9079,27 +9099,13 @@ Production Part - 8199
 <label x="162.56" y="22.86" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$3" class="0">
-<segment>
-<pinref part="MCU" gate="G$5" pin="USB_FS_DP"/>
-<pinref part="USB" gate="USB_A_2H" pin="DP1"/>
-<wire x1="335.28" y1="134.62" x2="347.98" y2="134.62" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$4" class="0">
-<segment>
-<pinref part="MCU" gate="G$5" pin="USB_FS_DM"/>
-<wire x1="335.28" y1="132.08" x2="347.98" y2="132.08" width="0.1524" layer="91"/>
-<pinref part="USB" gate="USB_A_2H" pin="DM1"/>
-</segment>
-</net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="MCU" gate="G$5" pin="USB_HS_DM"/>
-<wire x1="335.28" y1="124.46" x2="337.82" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="337.82" y1="124.46" x2="337.82" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="DM2"/>
 <wire x1="337.82" y1="119.38" x2="347.98" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="R40" gate="G$1" pin="2"/>
+<wire x1="335.28" y1="124.46" x2="337.82" y2="124.46" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$6" class="0">
@@ -9107,8 +9113,8 @@ Production Part - 8199
 <pinref part="USB" gate="USB_A_2H" pin="DP2"/>
 <wire x1="347.98" y1="121.92" x2="340.36" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="340.36" y1="121.92" x2="340.36" y2="127" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$5" pin="USB_HS_DP"/>
-<wire x1="340.36" y1="127" x2="335.28" y2="127" width="0.1524" layer="91"/>
+<pinref part="R39" gate="G$1" pin="2"/>
+<wire x1="335.28" y1="127" x2="340.36" y2="127" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+5V/3" class="0">
@@ -9958,6 +9964,48 @@ Production Part - 8199
 <pinref part="MCU" gate="G$8" pin="OSC32_IN"/>
 <wire x1="243.84" y1="149.86" x2="243.84" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="243.84" y1="160.02" x2="248.92" y2="160.02" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="MCU" gate="G$5" pin="USB_FS_DP"/>
+<pinref part="R37" gate="G$1" pin="1"/>
+<wire x1="320.04" y1="134.62" x2="325.12" y2="134.62" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="MCU" gate="G$5" pin="USB_FS_DM"/>
+<pinref part="R38" gate="G$1" pin="1"/>
+<wire x1="320.04" y1="132.08" x2="325.12" y2="132.08" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="MCU" gate="G$5" pin="USB_HS_DP"/>
+<pinref part="R39" gate="G$1" pin="1"/>
+<wire x1="320.04" y1="127" x2="325.12" y2="127" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="MCU" gate="G$5" pin="USB_HS_DM"/>
+<pinref part="R40" gate="G$1" pin="1"/>
+<wire x1="320.04" y1="124.46" x2="325.12" y2="124.46" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$54" class="0">
+<segment>
+<pinref part="R37" gate="G$1" pin="2"/>
+<pinref part="USB" gate="USB_A_2H" pin="DP1"/>
+<wire x1="335.28" y1="134.62" x2="347.98" y2="134.62" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$62" class="0">
+<segment>
+<pinref part="USB" gate="USB_A_2H" pin="DM1"/>
+<pinref part="R38" gate="G$1" pin="2"/>
+<wire x1="347.98" y1="132.08" x2="335.28" y2="132.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
