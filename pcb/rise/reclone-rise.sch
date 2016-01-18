@@ -7976,8 +7976,6 @@ Production Part - 8199
 <part name="C31" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47"/>
 <part name="C32" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47"/>
 <part name="C33" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47"/>
-<part name="C34" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47"/>
-<part name="C35" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47"/>
 <part name="C36" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
 <part name="C37" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
 <part name="C38" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
@@ -8183,8 +8181,6 @@ Production Part - 8199
 <instance part="C31" gate="G$1" x="147.32" y="157.48" rot="R180"/>
 <instance part="C32" gate="G$1" x="154.94" y="157.48" rot="R180"/>
 <instance part="C33" gate="G$1" x="162.56" y="157.48" rot="R180"/>
-<instance part="C34" gate="G$1" x="170.18" y="157.48" rot="R180"/>
-<instance part="C35" gate="G$1" x="177.8" y="157.48" rot="R180"/>
 <instance part="C36" gate="G$1" x="86.36" y="180.34" rot="R180"/>
 <instance part="C37" gate="G$1" x="93.98" y="180.34" rot="R180"/>
 <instance part="C38" gate="G$1" x="101.6" y="180.34" rot="R180"/>
@@ -8645,12 +8641,9 @@ Production Part - 8199
 <junction x="40.64" y="152.4"/>
 <pinref part="C22" gate="G$1" pin="1"/>
 <wire x1="40.64" y1="152.4" x2="78.74" y2="152.4" width="0.1524" layer="91"/>
-<pinref part="C35" gate="G$1" pin="1"/>
-<wire x1="177.8" y1="152.4" x2="170.18" y2="152.4" width="0.1524" layer="91"/>
 <junction x="78.74" y="152.4"/>
 <pinref part="C23" gate="G$1" pin="1"/>
 <junction x="86.36" y="152.4"/>
-<wire x1="170.18" y1="152.4" x2="162.56" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="162.56" y1="152.4" x2="154.94" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="152.4" x2="147.32" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="152.4" x2="139.7" y2="152.4" width="0.1524" layer="91"/>
@@ -8681,9 +8674,6 @@ Production Part - 8199
 <pinref part="C32" gate="G$1" pin="1"/>
 <junction x="154.94" y="152.4"/>
 <pinref part="C33" gate="G$1" pin="1"/>
-<junction x="162.56" y="152.4"/>
-<pinref part="C34" gate="G$1" pin="1"/>
-<junction x="170.18" y="152.4"/>
 </segment>
 <segment>
 <pinref part="C57" gate="G$1" pin="1"/>
@@ -8935,7 +8925,6 @@ Production Part - 8199
 <pinref part="C22" gate="G$1" pin="2"/>
 <wire x1="78.74" y1="160.02" x2="78.74" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="162.56" x2="73.66" y2="162.56" width="0.1524" layer="91"/>
-<pinref part="C35" gate="G$1" pin="2"/>
 <wire x1="78.74" y1="160.02" x2="86.36" y2="160.02" width="0.1524" layer="91"/>
 <junction x="78.74" y="160.02"/>
 <pinref part="C23" gate="G$1" pin="2"/>
@@ -8969,11 +8958,6 @@ Production Part - 8199
 <junction x="154.94" y="160.02"/>
 <wire x1="154.94" y1="160.02" x2="162.56" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="C33" gate="G$1" pin="2"/>
-<junction x="162.56" y="160.02"/>
-<wire x1="162.56" y1="160.02" x2="170.18" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="C34" gate="G$1" pin="2"/>
-<junction x="170.18" y="160.02"/>
-<wire x1="170.18" y1="160.02" x2="177.8" y2="160.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GADG_AIN1" class="0">
