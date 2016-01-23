@@ -8316,7 +8316,7 @@ Production Part - 8199
 <part name="P+2" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
 <part name="ETHERNET" library="reclone-rise" deviceset="MAGJACK" device=""/>
-<part name="USB-TO-SERIAL" library="reclone-rise" deviceset="FT2232H" device=""/>
+<part name="USBSER" library="reclone-rise" deviceset="FT2232H" device=""/>
 <part name="AIOPXY" library="reclone-rise" deviceset="SHF105" device=""/>
 <part name="GPIO" library="reclone-rise" deviceset="M2X20" device=""/>
 <part name="FPGA" library="reclone-rise" deviceset="XC6SLX16FTG256" device=""/>
@@ -8562,7 +8562,7 @@ Production Part - 8199
 <instance part="MCU" gate="G$7" x="154.94" y="22.86"/>
 <instance part="MCU" gate="G$5" x="309.88" y="121.92"/>
 <instance part="ETHERNET" gate="G$1" x="350.52" y="48.26"/>
-<instance part="USB-TO-SERIAL" gate="G$1" x="81.28" y="63.5"/>
+<instance part="USBSER" gate="G$1" x="81.28" y="63.5"/>
 <instance part="AIOPXY" gate="G$1" x="350.52" y="180.34"/>
 <instance part="MICRO-SD" gate="G$1" x="294.64" y="218.44">
 <attribute name="DIGIKEY#" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
@@ -8851,9 +8851,9 @@ Production Part - 8199
 <pinref part="AIOPXY" gate="G$1" pin="10"/>
 </segment>
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@8"/>
+<pinref part="USBSER" gate="G$1" pin="GND@8"/>
 <pinref part="SUPPLY1" gate="GND" pin="GND"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="TEST"/>
+<pinref part="USBSER" gate="G$1" pin="TEST"/>
 <wire x1="86.36" y1="10.16" x2="83.82" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="10.16" x2="81.28" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="10.16" x2="78.74" y2="10.16" width="0.1524" layer="91"/>
@@ -8863,21 +8863,21 @@ Production Part - 8199
 <wire x1="71.12" y1="10.16" x2="66.04" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="10.16" x2="58.42" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="10.16" x2="58.42" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="AGND"/>
+<pinref part="USBSER" gate="G$1" pin="AGND"/>
 <junction x="66.04" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@1"/>
+<pinref part="USBSER" gate="G$1" pin="GND@1"/>
 <junction x="71.12" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@2"/>
+<pinref part="USBSER" gate="G$1" pin="GND@2"/>
 <junction x="73.66" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@3"/>
+<pinref part="USBSER" gate="G$1" pin="GND@3"/>
 <junction x="76.2" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@4"/>
+<pinref part="USBSER" gate="G$1" pin="GND@4"/>
 <junction x="78.74" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@5"/>
+<pinref part="USBSER" gate="G$1" pin="GND@5"/>
 <junction x="81.28" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@6"/>
+<pinref part="USBSER" gate="G$1" pin="GND@6"/>
 <junction x="83.82" y="10.16"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="GND@7"/>
+<pinref part="USBSER" gate="G$1" pin="GND@7"/>
 <junction x="86.36" y="10.16"/>
 <junction x="88.9" y="10.16"/>
 <wire x1="86.36" y1="10.16" x2="88.9" y2="10.16" width="0.1524" layer="91"/>
@@ -9251,16 +9251,16 @@ Production Part - 8199
 <pinref part="R10" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCCIO@4"/>
+<pinref part="USBSER" gate="G$1" pin="VCCIO@4"/>
 <wire x1="86.36" y1="121.92" x2="88.9" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="121.92" x2="91.44" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="91.44" y1="121.92" x2="91.44" y2="119.38" width="0.1524" layer="91"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCCIO@3"/>
+<pinref part="USBSER" gate="G$1" pin="VCCIO@3"/>
 <wire x1="88.9" y1="119.38" x2="88.9" y2="121.92" width="0.1524" layer="91"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCCIO@1"/>
+<pinref part="USBSER" gate="G$1" pin="VCCIO@1"/>
 <wire x1="86.36" y1="119.38" x2="86.36" y2="121.92" width="0.1524" layer="91"/>
 <junction x="88.9" y="121.92"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCCIO@2"/>
+<pinref part="USBSER" gate="G$1" pin="VCCIO@2"/>
 <wire x1="83.82" y1="119.38" x2="83.82" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="121.92" x2="86.36" y2="121.92" width="0.1524" layer="91"/>
 <pinref part="+3V3" gate="G$1" pin="+3V3"/>
@@ -9651,14 +9651,14 @@ Production Part - 8199
 </net>
 <net name="+5V/3" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCORE@1"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCORE@2"/>
+<pinref part="USBSER" gate="G$1" pin="VCORE@1"/>
+<pinref part="USBSER" gate="G$1" pin="VCORE@2"/>
 <wire x1="76.2" y1="119.38" x2="76.2" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="121.92" x2="73.66" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="121.92" x2="73.66" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="+1V8" gate="G$1" pin="+5V/3"/>
 <junction x="73.66" y="121.92"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VCORE@3"/>
+<pinref part="USBSER" gate="G$1" pin="VCORE@3"/>
 <wire x1="78.74" y1="119.38" x2="78.74" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="121.92" x2="76.2" y2="121.92" width="0.1524" layer="91"/>
 <junction x="76.2" y="121.92"/>
@@ -9710,7 +9710,7 @@ Production Part - 8199
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <pinref part="R2" gate="G$1" pin="2"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="PWRSAVE/BCBUS7"/>
+<pinref part="USBSER" gate="G$1" pin="PWRSAVE/BCBUS7"/>
 <wire x1="106.68" y1="20.32" x2="111.76" y2="20.32" width="0.1524" layer="91"/>
 <junction x="111.76" y="20.32"/>
 <wire x1="111.76" y1="20.32" x2="116.84" y2="20.32" width="0.1524" layer="91"/>
@@ -9731,13 +9731,13 @@ Production Part - 8199
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="REF"/>
+<pinref part="USBSER" gate="G$1" pin="REF"/>
 <pinref part="R3" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="-RESET"/>
+<pinref part="USBSER" gate="G$1" pin="-RESET"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 </segment>
 </net>
@@ -9753,7 +9753,7 @@ Production Part - 8199
 <net name="N$11" class="0">
 <segment>
 <pinref part="CFG" gate="G$1" pin="DI"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="EEDATA"/>
+<pinref part="USBSER" gate="G$1" pin="EEDATA"/>
 <wire x1="33.02" y1="30.48" x2="55.88" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="30.48" x2="58.42" y2="30.48" width="0.1524" layer="91"/>
@@ -9764,7 +9764,7 @@ Production Part - 8199
 <net name="N$12" class="0">
 <segment>
 <pinref part="CFG" gate="G$1" pin="CLK"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="EESK"/>
+<pinref part="USBSER" gate="G$1" pin="EESK"/>
 <wire x1="33.02" y1="33.02" x2="40.64" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="40.64" y1="33.02" x2="58.42" y2="33.02" width="0.1524" layer="91"/>
@@ -9774,7 +9774,7 @@ Production Part - 8199
 <net name="N$13" class="0">
 <segment>
 <pinref part="CFG" gate="G$1" pin="CS"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="EECS"/>
+<pinref part="USBSER" gate="G$1" pin="EECS"/>
 <wire x1="33.02" y1="35.56" x2="58.42" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="2"/>
 <junction x="33.02" y="35.56"/>
@@ -9782,7 +9782,7 @@ Production Part - 8199
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VPHY"/>
+<pinref part="USBSER" gate="G$1" pin="VPHY"/>
 <wire x1="38.1" y1="121.92" x2="45.72" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="45.72" y1="121.92" x2="66.04" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="121.92" x2="66.04" y2="119.38" width="0.1524" layer="91"/>
@@ -9795,7 +9795,7 @@ Production Part - 8199
 </net>
 <net name="N$17" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="VPLL"/>
+<pinref part="USBSER" gate="G$1" pin="VPLL"/>
 <wire x1="45.72" y1="129.54" x2="53.34" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="129.54" x2="60.96" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="129.54" x2="68.58" y2="129.54" width="0.1524" layer="91"/>
@@ -9812,7 +9812,7 @@ Production Part - 8199
 <net name="N$19" class="0">
 <segment>
 <pinref part="C6" gate="G$1" pin="2"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="XTOUT"/>
+<pinref part="USBSER" gate="G$1" pin="XTOUT"/>
 <wire x1="53.34" y1="81.28" x2="55.88" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="81.28" x2="58.42" y2="81.28" width="0.1524" layer="91"/>
@@ -9823,7 +9823,7 @@ Production Part - 8199
 <net name="N$20" class="0">
 <segment>
 <pinref part="C5" gate="G$1" pin="1"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="XTIN"/>
+<pinref part="USBSER" gate="G$1" pin="XTIN"/>
 <wire x1="40.64" y1="91.44" x2="55.88" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="2"/>
 <wire x1="55.88" y1="91.44" x2="58.42" y2="91.44" width="0.1524" layer="91"/>
@@ -9831,12 +9831,12 @@ Production Part - 8199
 <junction x="55.88" y="91.44"/>
 </segment>
 </net>
-<net name="N$24" class="0">
+<net name="TXRX_LED" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="BCBUS3"/>
+<pinref part="USBSER" gate="G$1" pin="BCBUS3"/>
 <wire x1="106.68" y1="30.48" x2="111.76" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="R14" gate="G$1" pin="1"/>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="BCBUS4"/>
+<pinref part="USBSER" gate="G$1" pin="BCBUS4"/>
 <wire x1="106.68" y1="27.94" x2="111.76" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="111.76" y1="27.94" x2="111.76" y2="30.48" width="0.1524" layer="91"/>
 <junction x="111.76" y="30.48"/>
@@ -9850,7 +9850,7 @@ Production Part - 8199
 </net>
 <net name="JTAG_FPGA_TDO" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ADBUS2"/>
+<pinref part="USBSER" gate="G$1" pin="ADBUS2"/>
 <wire x1="106.68" y1="104.14" x2="109.22" y2="104.14" width="0.1524" layer="91"/>
 <label x="109.22" y="104.14" size="1.778" layer="95"/>
 </segment>
@@ -9862,7 +9862,7 @@ Production Part - 8199
 </net>
 <net name="JTAG_TMS" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ADBUS3"/>
+<pinref part="USBSER" gate="G$1" pin="ADBUS3"/>
 <wire x1="106.68" y1="101.6" x2="109.22" y2="101.6" width="0.1524" layer="91"/>
 <label x="109.22" y="101.6" size="1.778" layer="95"/>
 </segment>
@@ -9879,7 +9879,7 @@ Production Part - 8199
 </net>
 <net name="JTAG_MCU_TDI" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ADBUS1"/>
+<pinref part="USBSER" gate="G$1" pin="ADBUS1"/>
 <wire x1="106.68" y1="106.68" x2="109.22" y2="106.68" width="0.1524" layer="91"/>
 <label x="109.22" y="106.68" size="1.778" layer="95"/>
 </segment>
@@ -9891,7 +9891,7 @@ Production Part - 8199
 </net>
 <net name="JTAG_TCK" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ADBUS0"/>
+<pinref part="USBSER" gate="G$1" pin="ADBUS0"/>
 <wire x1="106.68" y1="109.22" x2="109.22" y2="109.22" width="0.1524" layer="91"/>
 <label x="109.22" y="109.22" size="1.778" layer="95"/>
 </segment>
@@ -9913,14 +9913,14 @@ Production Part - 8199
 <label x="162.56" y="101.6" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ADBUS4"/>
+<pinref part="USBSER" gate="G$1" pin="ADBUS4"/>
 <wire x1="106.68" y1="99.06" x2="109.22" y2="99.06" width="0.1524" layer="91"/>
 <label x="109.22" y="99.06" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="/RESET" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="ADBUS6"/>
+<pinref part="USBSER" gate="G$1" pin="ADBUS6"/>
 <pinref part="MCU" gate="G$6" pin="NRST"/>
 <wire x1="160.02" y1="99.06" x2="162.56" y2="99.06" width="0.1524" layer="91"/>
 <label x="109.22" y="93.98" size="1.778" layer="95"/>
@@ -10228,7 +10228,7 @@ Production Part - 8199
 <label x="162.56" y="55.88" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="BDBUS1"/>
+<pinref part="USBSER" gate="G$1" pin="BDBUS1"/>
 <wire x1="106.68" y1="58.42" x2="109.22" y2="58.42" width="0.1524" layer="91"/>
 <label x="109.22" y="58.42" size="1.778" layer="95"/>
 </segment>
@@ -10240,7 +10240,7 @@ Production Part - 8199
 <label x="162.56" y="53.34" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="BDBUS0"/>
+<pinref part="USBSER" gate="G$1" pin="BDBUS0"/>
 <wire x1="106.68" y1="60.96" x2="109.22" y2="60.96" width="0.1524" layer="91"/>
 <label x="109.22" y="60.96" size="1.778" layer="95"/>
 </segment>
@@ -10439,7 +10439,7 @@ Production Part - 8199
 </net>
 <net name="USB_DEVICE_DM" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="D-"/>
+<pinref part="USBSER" gate="G$1" pin="D-"/>
 <wire x1="58.42" y1="68.58" x2="53.34" y2="68.58" width="0.1524" layer="91"/>
 <label x="38.1" y="68.58" size="1.778" layer="95"/>
 </segment>
@@ -10451,7 +10451,7 @@ Production Part - 8199
 </net>
 <net name="USB_DEVICE_DP" class="0">
 <segment>
-<pinref part="USB-TO-SERIAL" gate="G$1" pin="D+"/>
+<pinref part="USBSER" gate="G$1" pin="D+"/>
 <wire x1="58.42" y1="66.04" x2="53.34" y2="66.04" width="0.1524" layer="91"/>
 <label x="38.1" y="66.04" size="1.778" layer="95"/>
 </segment>
