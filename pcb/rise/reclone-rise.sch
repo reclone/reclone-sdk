@@ -10614,7 +10614,7 @@ Production Part - 8199
 <attribute name="NAME" x="167.64" y="164.3126" size="1.778" layer="95"/>
 <attribute name="VALUE" x="177.546" y="165.354" size="1.778" layer="96"/>
 </instance>
-<instance part="SUPPLY34" gate="GND" x="170.18" y="177.8"/>
+<instance part="SUPPLY34" gate="GND" x="175.26" y="177.8"/>
 <instance part="R57" gate="G$1" x="175.26" y="160.02" smashed="yes">
 <attribute name="NAME" x="167.64" y="159.2326" size="1.778" layer="95"/>
 <attribute name="VALUE" x="177.546" y="160.274" size="1.778" layer="96"/>
@@ -11509,16 +11509,16 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="AV-OUT" gate="G$1" pin="GND"/>
-<wire x1="165.1" y1="172.72" x2="165.1" y2="180.34" width="0.1524" layer="91"/>
-<wire x1="165.1" y1="180.34" x2="170.18" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="172.72" x2="170.18" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="180.34" x2="175.26" y2="180.34" width="0.1524" layer="91"/>
 <pinref part="C15" gate="G$1" pin="1"/>
-<wire x1="170.18" y1="180.34" x2="193.04" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="180.34" x2="193.04" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="152.4" y1="172.72" x2="160.02" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="C14" gate="G$1" pin="1"/>
 <junction x="160.02" y="172.72"/>
-<wire x1="160.02" y1="172.72" x2="165.1" y2="172.72" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="172.72" x2="170.18" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="SUPPLY34" gate="GND" pin="GND"/>
-<junction x="170.18" y="180.34"/>
+<junction x="175.26" y="180.34"/>
 </segment>
 <segment>
 <pinref part="R60" gate="G$1" pin="2"/>
@@ -12195,9 +12195,9 @@ Production Part - 8199
 <label x="129.54" y="187.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B2" pin="IO_L12P_D1_MISO2_2"/>
-<wire x1="160.02" y1="96.52" x2="165.1" y2="96.52" width="0.1524" layer="91"/>
-<label x="162.56" y="96.52" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B2" pin="IO_L2P_CMPCLK_2"/>
+<wire x1="160.02" y1="106.68" x2="165.1" y2="106.68" width="0.1524" layer="91"/>
+<label x="162.56" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="AUDIO_R" class="0">
@@ -12207,9 +12207,9 @@ Production Part - 8199
 <label x="129.54" y="182.88" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B2" pin="IO_L12N_D2_MISO3_2"/>
-<wire x1="160.02" y1="93.98" x2="165.1" y2="93.98" width="0.1524" layer="91"/>
-<label x="162.56" y="93.98" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B2" pin="IO_L12P_D1_MISO2_2"/>
+<wire x1="160.02" y1="96.52" x2="165.1" y2="96.52" width="0.1524" layer="91"/>
+<label x="162.56" y="96.52" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$79" class="0">
@@ -12283,9 +12283,9 @@ Production Part - 8199
 <label x="129.54" y="167.64" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B2" pin="IO_L1N_M0_CMPMISO_2"/>
-<wire x1="160.02" y1="109.22" x2="165.1" y2="109.22" width="0.1524" layer="91"/>
-<label x="162.56" y="109.22" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B2" pin="IO_L3N_MOSI_CSI_B_MISO0_2"/>
+<wire x1="160.02" y1="99.06" x2="165.1" y2="99.06" width="0.1524" layer="91"/>
+<label x="162.56" y="99.06" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VIDEO_D3" class="0">
@@ -12295,9 +12295,9 @@ Production Part - 8199
 <label x="129.54" y="162.56" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B2" pin="IO_L2P_CMPCLK_2"/>
-<wire x1="160.02" y1="106.68" x2="165.1" y2="106.68" width="0.1524" layer="91"/>
-<label x="162.56" y="106.68" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B2" pin="IO_L1N_M0_CMPMISO_2"/>
+<wire x1="160.02" y1="109.22" x2="165.1" y2="109.22" width="0.1524" layer="91"/>
+<label x="162.56" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VIDEO_D2" class="0">
@@ -12307,9 +12307,9 @@ Production Part - 8199
 <label x="129.54" y="157.48" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B2" pin="IO_L3N_MOSI_CSI_B_MISO0_2"/>
-<wire x1="160.02" y1="99.06" x2="165.1" y2="99.06" width="0.1524" layer="91"/>
-<label x="162.56" y="99.06" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B2" pin="IO_L13N_D10_2"/>
+<wire x1="160.02" y1="88.9" x2="165.1" y2="88.9" width="0.1524" layer="91"/>
+<label x="162.56" y="88.9" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VIDEO_D1" class="0">
@@ -12331,9 +12331,9 @@ Production Part - 8199
 <label x="129.54" y="147.32" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B2" pin="IO_L13N_D10_2"/>
-<wire x1="160.02" y1="88.9" x2="165.1" y2="88.9" width="0.1524" layer="91"/>
-<label x="162.56" y="88.9" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B2" pin="IO_L12N_D2_MISO3_2"/>
+<wire x1="160.02" y1="93.98" x2="165.1" y2="93.98" width="0.1524" layer="91"/>
+<label x="162.56" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DDR2_VREF" class="0">
