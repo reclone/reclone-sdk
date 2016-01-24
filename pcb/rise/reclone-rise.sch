@@ -8543,6 +8543,7 @@ Production Part - 8199
 </parts>
 <sheets>
 <sheet>
+<description>MCU, Power, uSD, Ethernet, USB, JTAG, Serial, RTC</description>
 <plain>
 </plain>
 <instances>
@@ -10543,6 +10544,7 @@ Production Part - 8199
 </nets>
 </sheet>
 <sheet>
+<description>FPGA, GPIO, DDR2, Audio, Video</description>
 <plain>
 </plain>
 <instances>
