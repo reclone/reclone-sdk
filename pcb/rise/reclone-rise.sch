@@ -9650,7 +9650,7 @@ Production Part - 8199
 <wire x1="335.28" y1="127" x2="340.36" y2="127" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="+5V/3" class="0">
+<net name="AABB" class="0">
 <segment>
 <pinref part="USBSER" gate="G$1" pin="VCORE@1"/>
 <pinref part="USBSER" gate="G$1" pin="VCORE@2"/>
@@ -12096,7 +12096,7 @@ Production Part - 8199
 <wire x1="154.94" y1="248.92" x2="157.48" y2="248.92" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="+5V/3" class="0">
+<net name="AABB" class="0">
 <segment>
 <pinref part="FPGA" gate="B3" pin="VCCO_3@4"/>
 <pinref part="FPGA" gate="B3" pin="VCCO_3@0"/>
