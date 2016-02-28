@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -3184,6 +3184,21 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="10.16" y="5.588" size="1.27" layer="96" align="bottom-right">&gt;VALUE</text>
 <text x="-10.16" y="5.588" size="1.27" layer="95">&gt;NAME</text>
 </symbol>
+<symbol name="ESP-01">
+<wire x1="-10.16" y1="5.08" x2="-10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-7.62" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-7.62" x2="10.16" y2="5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="5.08" x2="-10.16" y2="5.08" width="0.254" layer="94"/>
+<pin name="RXD" x="-12.7" y="2.54" length="short"/>
+<pin name="GPIO0" x="-12.7" y="0" length="short"/>
+<pin name="GPIO2" x="-12.7" y="-2.54" length="short"/>
+<pin name="GND" x="-12.7" y="-5.08" length="short"/>
+<pin name="VCC" x="12.7" y="2.54" length="short" rot="R180"/>
+<pin name="RST" x="12.7" y="0" length="short" rot="R180"/>
+<pin name="CH_PD" x="12.7" y="-2.54" length="short" rot="R180"/>
+<pin name="TXD" x="12.7" y="-5.08" length="short" rot="R180"/>
+<text x="-10.16" y="5.842" size="1.27" layer="95">&gt;NAME</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="DP83848C">
@@ -4296,6 +4311,28 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="VREG" pin="SW" pad="5"/>
 <connect gate="VREG" pin="VIN" pad="1"/>
 <connect gate="VREG" pin="VOUT" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="ESP-01">
+<gates>
+<gate name="G$1" symbol="ESP-01" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="ESP-01">
+<connects>
+<connect gate="G$1" pin="CH_PD" pad="CH_PD"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="GPIO0" pad="GPIO0"/>
+<connect gate="G$1" pin="GPIO2" pad="GPIO2"/>
+<connect gate="G$1" pin="RST" pad="RST"/>
+<connect gate="G$1" pin="RXD" pad="RXD"/>
+<connect gate="G$1" pin="TXD" pad="TXD"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
