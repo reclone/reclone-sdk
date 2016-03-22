@@ -10398,9 +10398,6 @@ Production Part - 8199
 <wire x1="254" y1="215.9" x2="269.24" y2="215.9" width="0.1524" layer="91"/>
 <wire x1="269.24" y1="215.9" x2="269.24" y2="231.14" width="0.1524" layer="91"/>
 <pinref part="R46" gate="G$1" pin="1"/>
-<pinref part="MICRO-SD" gate="G$1" pin="CMD"/>
-<wire x1="287.02" y1="215.9" x2="269.24" y2="215.9" width="0.1524" layer="91"/>
-<junction x="269.24" y="215.9"/>
 </segment>
 </net>
 <net name="N$69" class="0">
@@ -10410,9 +10407,6 @@ Production Part - 8199
 <wire x1="256.54" y1="228.6" x2="256.54" y2="243.84" width="0.1524" layer="91"/>
 <wire x1="256.54" y1="243.84" x2="269.24" y2="243.84" width="0.1524" layer="91"/>
 <pinref part="R41" gate="G$1" pin="1"/>
-<pinref part="MICRO-SD" gate="G$1" pin="CD/DAT3"/>
-<wire x1="287.02" y1="228.6" x2="256.54" y2="228.6" width="0.1524" layer="91"/>
-<junction x="256.54" y="228.6"/>
 </segment>
 </net>
 <net name="N$70" class="0">
@@ -10422,9 +10416,6 @@ Production Part - 8199
 <wire x1="259.08" y1="226.06" x2="259.08" y2="241.3" width="0.1524" layer="91"/>
 <wire x1="259.08" y1="241.3" x2="269.24" y2="241.3" width="0.1524" layer="91"/>
 <pinref part="R42" gate="G$1" pin="1"/>
-<pinref part="MICRO-SD" gate="G$1" pin="DAT2"/>
-<wire x1="287.02" y1="226.06" x2="259.08" y2="226.06" width="0.1524" layer="91"/>
-<junction x="259.08" y="226.06"/>
 </segment>
 </net>
 <net name="N$71" class="0">
@@ -10434,9 +10425,6 @@ Production Part - 8199
 <wire x1="261.62" y1="223.52" x2="261.62" y2="238.76" width="0.1524" layer="91"/>
 <wire x1="261.62" y1="238.76" x2="269.24" y2="238.76" width="0.1524" layer="91"/>
 <pinref part="R43" gate="G$1" pin="1"/>
-<pinref part="MICRO-SD" gate="G$1" pin="DAT1"/>
-<wire x1="287.02" y1="223.52" x2="261.62" y2="223.52" width="0.1524" layer="91"/>
-<junction x="261.62" y="223.52"/>
 </segment>
 </net>
 <net name="N$72" class="0">
@@ -10446,9 +10434,6 @@ Production Part - 8199
 <wire x1="264.16" y1="220.98" x2="264.16" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="264.16" y1="236.22" x2="269.24" y2="236.22" width="0.1524" layer="91"/>
 <pinref part="R44" gate="G$1" pin="1"/>
-<pinref part="MICRO-SD" gate="G$1" pin="DAT0"/>
-<wire x1="287.02" y1="220.98" x2="264.16" y2="220.98" width="0.1524" layer="91"/>
-<junction x="264.16" y="220.98"/>
 </segment>
 </net>
 <net name="N$73" class="0">
@@ -10458,9 +10443,6 @@ Production Part - 8199
 <wire x1="266.7" y1="218.44" x2="266.7" y2="233.68" width="0.1524" layer="91"/>
 <wire x1="266.7" y1="233.68" x2="269.24" y2="233.68" width="0.1524" layer="91"/>
 <pinref part="R45" gate="G$1" pin="1"/>
-<pinref part="MICRO-SD" gate="G$1" pin="CLK"/>
-<wire x1="287.02" y1="218.44" x2="266.7" y2="218.44" width="0.1524" layer="91"/>
-<junction x="266.7" y="218.44"/>
 </segment>
 </net>
 <net name="N$67" class="0">
