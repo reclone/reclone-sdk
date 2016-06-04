@@ -1265,60 +1265,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-1.6" y="-1.1" size="0.8" layer="27" font="vector" ratio="19" align="top-left">&gt;VALUE</text>
 <text x="-1.6" y="1.1" size="0.8" layer="27" font="vector" ratio="19">&gt;NAME</text>
 </package>
-<package name="ESP-01">
-<wire x1="2.54" y1="-1.905" x2="1.905" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="1.905" y1="-2.54" x2="0.635" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="0.635" y1="-2.54" x2="0" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="-1.905" x2="2.54" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="5.08" y1="-2.54" x2="2.54" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-2.54" y1="-1.905" x2="-2.54" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="0" y1="-1.905" x2="-0.635" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-0.635" y1="-2.54" x2="-1.905" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-1.905" y1="-2.54" x2="-2.54" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="-5.08" y1="1.905" x2="-5.08" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-2.54" y1="-2.54" x2="-5.08" y2="-2.54" width="0.2032" layer="21"/>
-<pad name="RXD" x="-3.81" y="-1.27" drill="1.016" diameter="1.651" shape="square" rot="R90"/>
-<pad name="GPIO0" x="-1.27" y="-1.27" drill="1.016" diameter="1.651" rot="R90"/>
-<pad name="GPIO2" x="1.27" y="-1.27" drill="1.016" diameter="1.651" rot="R90"/>
-<pad name="GND" x="3.81" y="-1.27" drill="1.016" diameter="1.651" shape="square" rot="R90"/>
-<text x="-5.08" y="-4.064" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
-<rectangle x1="3.556" y1="-1.524" x2="4.064" y2="-1.016" layer="51"/>
-<rectangle x1="1.016" y1="-1.524" x2="1.524" y2="-1.016" layer="51"/>
-<rectangle x1="-1.524" y1="-1.524" x2="-1.016" y2="-1.016" layer="51"/>
-<rectangle x1="-4.064" y1="-1.524" x2="-3.556" y2="-1.016" layer="51"/>
-<wire x1="3.175" y1="2.54" x2="4.445" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="4.445" y1="2.54" x2="5.08" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="0" y1="1.905" x2="0.635" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="0.635" y1="2.54" x2="1.905" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="1.905" y1="2.54" x2="2.54" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="3.175" y1="2.54" x2="2.54" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="-4.445" y1="2.54" x2="-3.175" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="-3.175" y1="2.54" x2="-2.54" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="-2.54" y1="1.905" x2="-1.905" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="-1.905" y1="2.54" x2="-0.635" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="-0.635" y1="2.54" x2="0" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="-4.445" y1="2.54" x2="-5.08" y2="1.905" width="0.2032" layer="21"/>
-<pad name="TXD" x="3.81" y="1.27" drill="1.016" diameter="1.651" rot="R270"/>
-<pad name="CH_PD" x="1.27" y="1.27" drill="1.016" diameter="1.651" rot="R270"/>
-<pad name="RST" x="-1.27" y="1.27" drill="1.016" diameter="1.651" rot="R270"/>
-<pad name="VCC" x="-3.81" y="1.27" drill="1.016" diameter="1.651" rot="R270"/>
-<rectangle x1="-4.064" y1="1.016" x2="-3.556" y2="1.524" layer="51" rot="R180"/>
-<rectangle x1="-1.524" y1="1.016" x2="-1.016" y2="1.524" layer="51" rot="R180"/>
-<rectangle x1="1.016" y1="1.016" x2="1.524" y2="1.524" layer="51" rot="R180"/>
-<rectangle x1="3.556" y1="1.016" x2="4.064" y2="1.524" layer="51" rot="R180"/>
-<wire x1="-2.54" y1="1.905" x2="-2.54" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="0" y1="1.905" x2="0" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="1.905" x2="2.54" y2="-1.905" width="0.2032" layer="21"/>
-<wire x1="5.08" y1="1.905" x2="5.08" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-7.25" y1="3" x2="-6.5" y2="3" width="0.127" layer="51"/>
-<wire x1="6.5" y1="3" x2="7.25" y2="3" width="0.127" layer="51"/>
-<wire x1="-7.25" y1="3" x2="-7.25" y2="2.25" width="0.127" layer="51"/>
-<wire x1="7.25" y1="3" x2="7.25" y2="2.25" width="0.127" layer="51"/>
-<wire x1="-7.25" y1="-21.75" x2="-7.25" y2="-21" width="0.127" layer="51"/>
-<wire x1="-7.25" y1="-21.75" x2="-6.5" y2="-21.75" width="0.127" layer="51"/>
-<wire x1="7.25" y1="-21" x2="7.25" y2="-21.75" width="0.127" layer="51"/>
-<wire x1="7.25" y1="-21.75" x2="6.5" y2="-21.75" width="0.127" layer="51"/>
-</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -2341,21 +2287,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="10.16" y="5.588" size="1.27" layer="96" align="bottom-right">&gt;VALUE</text>
 <text x="-10.16" y="5.588" size="1.27" layer="95">&gt;NAME</text>
 </symbol>
-<symbol name="ESP-01">
-<wire x1="-10.16" y1="5.08" x2="-10.16" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="-7.62" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="10.16" y1="-7.62" x2="10.16" y2="5.08" width="0.254" layer="94"/>
-<wire x1="10.16" y1="5.08" x2="-10.16" y2="5.08" width="0.254" layer="94"/>
-<pin name="RXD" x="-12.7" y="2.54" length="short"/>
-<pin name="GPIO0" x="-12.7" y="0" length="short"/>
-<pin name="GPIO2" x="-12.7" y="-2.54" length="short"/>
-<pin name="GND" x="-12.7" y="-5.08" length="short"/>
-<pin name="VCC" x="12.7" y="2.54" length="short" rot="R180"/>
-<pin name="RST" x="12.7" y="0" length="short" rot="R180"/>
-<pin name="CH_PD" x="12.7" y="-2.54" length="short" rot="R180"/>
-<pin name="TXD" x="12.7" y="-5.08" length="short" rot="R180"/>
-<text x="-10.16" y="5.842" size="1.27" layer="95">&gt;NAME</text>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -3283,28 +3214,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="VREG" pin="SW" pad="5"/>
 <connect gate="VREG" pin="VIN" pad="1"/>
 <connect gate="VREG" pin="VOUT" pad="4"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="ESP-01">
-<gates>
-<gate name="G$1" symbol="ESP-01" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="ESP-01">
-<connects>
-<connect gate="G$1" pin="CH_PD" pad="CH_PD"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="GPIO0" pad="GPIO0"/>
-<connect gate="G$1" pin="GPIO2" pad="GPIO2"/>
-<connect gate="G$1" pin="RST" pad="RST"/>
-<connect gate="G$1" pin="RXD" pad="RXD"/>
-<connect gate="G$1" pin="TXD" pad="TXD"/>
-<connect gate="G$1" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8638,7 +8547,6 @@ Production Part - 8199
 <part name="R45" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
 <part name="R46" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
 <part name="R47" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
-<part name="ESP-01" library="reclone-rise" deviceset="ESP-01" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8889,7 +8797,6 @@ Production Part - 8199
 <attribute name="NAME" x="265.938" y="198.6026" size="1.778" layer="95"/>
 <attribute name="VALUE" x="274.066" y="200.914" size="1.778" layer="96"/>
 </instance>
-<instance part="ESP-01" gate="G$1" x="195.58" y="154.94"/>
 </instances>
 <busses>
 </busses>
