@@ -8216,7 +8216,7 @@ Production Part - 8199
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0" drill="0">
+<class number="0" name="default" width="0.1524" drill="0.3048">
 </class>
 </classes>
 <parts>
@@ -10859,13 +10859,6 @@ to within 0.5mm</text>
 <label x="289.56" y="187.96" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M3UDM" class="0">
-<segment>
-<wire x1="271.78" y1="83.82" x2="276.86" y2="83.82" width="0.1524" layer="91"/>
-<label x="274.32" y="83.82" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L42P_GCLK25_TRDY2_M3UDM_3"/>
-</segment>
-</net>
 <net name="M3DQ5" class="0">
 <segment>
 <wire x1="271.78" y1="86.36" x2="276.86" y2="86.36" width="0.1524" layer="91"/>
@@ -10914,30 +10907,6 @@ to within 0.5mm</text>
 <label x="289.56" y="218.44" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M3LDQSN" class="0">
-<segment>
-<wire x1="271.78" y1="96.52" x2="276.86" y2="96.52" width="0.1524" layer="91"/>
-<label x="274.32" y="96.52" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L39N_M3LDQSN_3"/>
-</segment>
-<segment>
-<pinref part="RAM" gate="G$1" pin="DQS#"/>
-<wire x1="287.02" y1="190.5" x2="292.1" y2="190.5" width="0.1524" layer="91"/>
-<label x="289.56" y="190.5" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="M3LDQS" class="0">
-<segment>
-<wire x1="271.78" y1="99.06" x2="276.86" y2="99.06" width="0.1524" layer="91"/>
-<label x="274.32" y="99.06" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L39P_M3LDQS_3"/>
-</segment>
-<segment>
-<pinref part="RAM" gate="G$1" pin="DQS"/>
-<wire x1="287.02" y1="193.04" x2="292.1" y2="193.04" width="0.1524" layer="91"/>
-<label x="289.56" y="193.04" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="M3DQ3" class="0">
 <segment>
 <wire x1="271.78" y1="101.6" x2="276.86" y2="101.6" width="0.1524" layer="91"/>
@@ -10984,76 +10953,6 @@ to within 0.5mm</text>
 <pinref part="RAM" gate="G$1" pin="DQ6"/>
 <wire x1="287.02" y1="213.36" x2="292.1" y2="213.36" width="0.1524" layer="91"/>
 <label x="289.56" y="213.36" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="M3DQ9" class="0">
-<segment>
-<wire x1="271.78" y1="111.76" x2="276.86" y2="111.76" width="0.1524" layer="91"/>
-<label x="274.32" y="111.76" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L36N_M3DQ9_3"/>
-</segment>
-</net>
-<net name="M3DQ8" class="0">
-<segment>
-<wire x1="271.78" y1="114.3" x2="276.86" y2="114.3" width="0.1524" layer="91"/>
-<label x="274.32" y="114.3" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L36P_M3DQ8_3"/>
-</segment>
-</net>
-<net name="M3DQ11" class="0">
-<segment>
-<wire x1="271.78" y1="116.84" x2="276.86" y2="116.84" width="0.1524" layer="91"/>
-<label x="274.32" y="116.84" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L35N_M3DQ11_3"/>
-</segment>
-</net>
-<net name="M3DQ10" class="0">
-<segment>
-<wire x1="271.78" y1="119.38" x2="276.86" y2="119.38" width="0.1524" layer="91"/>
-<label x="274.32" y="119.38" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L35P_M3DQ10_3"/>
-</segment>
-</net>
-<net name="M3UDQSN" class="0">
-<segment>
-<wire x1="271.78" y1="121.92" x2="276.86" y2="121.92" width="0.1524" layer="91"/>
-<label x="274.32" y="121.92" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L34N_M3UDQSN_3"/>
-</segment>
-</net>
-<net name="M3UDQS" class="0">
-<segment>
-<wire x1="271.78" y1="124.46" x2="276.86" y2="124.46" width="0.1524" layer="91"/>
-<label x="274.32" y="124.46" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L34P_M3UDQS_3"/>
-</segment>
-</net>
-<net name="M3DQ13" class="0">
-<segment>
-<wire x1="271.78" y1="127" x2="276.86" y2="127" width="0.1524" layer="91"/>
-<label x="274.32" y="127" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L33N_M3DQ13_3"/>
-</segment>
-</net>
-<net name="M3DQ12" class="0">
-<segment>
-<wire x1="271.78" y1="129.54" x2="276.86" y2="129.54" width="0.1524" layer="91"/>
-<label x="274.32" y="129.54" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L33P_M3DQ12_3"/>
-</segment>
-</net>
-<net name="M3DQ15" class="0">
-<segment>
-<wire x1="271.78" y1="132.08" x2="276.86" y2="132.08" width="0.1524" layer="91"/>
-<label x="274.32" y="132.08" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L32N_M3DQ15_3"/>
-</segment>
-</net>
-<net name="M3DQ14" class="0">
-<segment>
-<wire x1="271.78" y1="134.62" x2="276.86" y2="134.62" width="0.1524" layer="91"/>
-<label x="274.32" y="134.62" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L32P_M3DQ14_3"/>
 </segment>
 </net>
 <net name="M3A15" class="0">
@@ -12556,6 +12455,30 @@ to within 0.5mm</text>
 <junction x="274.32" y="246.38"/>
 <wire x1="274.32" y1="246.38" x2="276.86" y2="246.38" width="0.1524" layer="91"/>
 <junction x="276.86" y="246.38"/>
+</segment>
+</net>
+<net name="M3LDQS_P" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="DQS"/>
+<wire x1="287.02" y1="193.04" x2="292.1" y2="193.04" width="0.1524" layer="91"/>
+<label x="289.56" y="193.04" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="271.78" y1="99.06" x2="276.86" y2="99.06" width="0.1524" layer="91"/>
+<label x="274.32" y="99.06" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B3" pin="IO_L39P_M3LDQS_3"/>
+</segment>
+</net>
+<net name="M3LDQS_N" class="0">
+<segment>
+<wire x1="271.78" y1="96.52" x2="276.86" y2="96.52" width="0.1524" layer="91"/>
+<label x="274.32" y="96.52" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B3" pin="IO_L39N_M3LDQSN_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="DQS#"/>
+<wire x1="287.02" y1="190.5" x2="292.1" y2="190.5" width="0.1524" layer="91"/>
+<label x="289.56" y="190.5" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
