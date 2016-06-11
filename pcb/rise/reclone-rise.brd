@@ -2235,35 +2235,60 @@ design rules under a new name.</description>
 <wire x1="16" y1="31.4" x2="16.2" y2="31.6" width="0.1524" layer="1"/>
 <wire x1="16.2" y1="31.6" x2="16.8" y2="31.6" width="0.1524" layer="1"/>
 <via x="23" y="33.05" extent="1-16" drill="0.3048" shape="octagon"/>
-<wire x1="17.2" y1="32" x2="16.8" y2="31.6" width="0.1524" layer="16"/>
-<wire x1="17.2" y1="32" x2="22.2" y2="32" width="0.1524" layer="16"/>
 <wire x1="28.5" y1="32.5" x2="28" y2="33" width="0.1524" layer="1"/>
 <wire x1="28" y1="33" x2="23.05" y2="33" width="0.1524" layer="1"/>
 <wire x1="23.05" y1="33" x2="23" y2="33.05" width="0.1524" layer="1"/>
-<wire x1="22.2" y1="32" x2="23" y2="32.8" width="0.1524" layer="16"/>
-<wire x1="23" y1="32.8" x2="23" y2="33.05" width="0.1524" layer="16"/>
+<wire x1="22.6" y1="32" x2="22.6" y2="32.65" width="0.1524" layer="16"/>
+<wire x1="22.6" y1="32.65" x2="23" y2="33.05" width="0.1524" layer="16"/>
+<wire x1="16.8" y1="31.6" x2="17.4" y2="31.6" width="0.1524" layer="16"/>
+<wire x1="17.4" y1="31.6" x2="17.6" y2="31.8" width="0.1524" layer="16" curve="90"/>
+<wire x1="17.6" y1="31.8" x2="18.2" y2="32" width="0.1524" layer="16" curve="-143.129995"/>
+<wire x1="18.2" y1="32" x2="18.8" y2="32" width="0.1524" layer="16" curve="106.260205"/>
+<wire x1="18.8" y1="32" x2="19.4" y2="32" width="0.1524" layer="16" curve="-106.260969"/>
+<wire x1="19.4" y1="32" x2="20" y2="32" width="0.1524" layer="16" curve="106.261733"/>
+<wire x1="20" y1="32" x2="20.6" y2="32" width="0.1524" layer="16" curve="-106.262497"/>
+<wire x1="20.6" y1="32" x2="21.2" y2="32" width="0.1524" layer="16" curve="106.26307"/>
+<wire x1="21.2" y1="32" x2="21.8" y2="32" width="0.1524" layer="16" curve="-106.263643"/>
+<wire x1="21.8" y1="32" x2="22.6" y2="32" width="0.1524" layer="16" curve="134.337099"/>
 </signal>
 <signal name="M3DQ7">
 <contactref element="FPGA" pad="G1"/>
 <contactref element="RAM" pad="D3"/>
-<wire x1="27.5" y1="31.5" x2="25.7" y2="31.5" width="0.1524" layer="1"/>
-<wire x1="25.7" y1="31.5" x2="25.6" y2="31.4" width="0.1524" layer="1"/>
 <via x="18.2" y="31.2" extent="1-16" drill="0.3048" shape="octagon"/>
-<via x="24.2" y="31.2" extent="1-16" drill="0.3048" shape="octagon"/>
+<via x="25" y="31.5" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="18.2" y1="31.2" x2="18.4" y2="31" width="0.1524" layer="16" curve="90"/>
-<wire x1="18.4" y1="31" x2="24" y2="31" width="0.1524" layer="16"/>
-<wire x1="24" y1="31" x2="24.2" y2="31.2" width="0.1524" layer="16" curve="90"/>
+<wire x1="18.4" y1="31" x2="24.4" y2="31" width="0.1524" layer="16"/>
+<wire x1="24.4" y1="31" x2="25" y2="31.5" width="0.1524" layer="16" curve="90"/>
 <wire x1="19.2" y1="31.4" x2="18.4" y2="31.4" width="0.1524" layer="1"/>
 <wire x1="18.4" y1="31.4" x2="18.2" y2="31.2" width="0.1524" layer="1" curve="90"/>
-<wire x1="25.6" y1="31.4" x2="24.4" y2="31.4" width="0.1524" layer="1"/>
-<wire x1="24.4" y1="31.4" x2="24.2" y2="31.2" width="0.1524" layer="1"/>
+<wire x1="25" y1="31.5" x2="27.5" y2="31.5" width="0.1524" layer="1"/>
 </signal>
 <signal name="M3DQ6">
 <contactref element="FPGA" pad="G3"/>
 <contactref element="RAM" pad="D1"/>
-<wire x1="29.5" y1="31.5" x2="29" y2="32" width="0.1524" layer="1"/>
 <wire x1="20.8" y1="31.4" x2="21.4" y2="32" width="0.1524" layer="1"/>
-<wire x1="21.4" y1="32" x2="29" y2="32" width="0.1524" layer="1"/>
+<wire x1="21.4" y1="32" x2="21.6" y2="32" width="0.1524" layer="1"/>
+<wire x1="21.6" y1="32" x2="21.8" y2="31.8" width="0.1524" layer="1" curve="-90"/>
+<wire x1="21.8" y1="31.8" x2="21.8" y2="31" width="0.1524" layer="1"/>
+<wire x1="21.8" y1="31" x2="22.2" y2="30.6" width="0.1524" layer="1" curve="90"/>
+<wire x1="22.2" y1="30.6" x2="22.6" y2="31" width="0.1524" layer="1" curve="90"/>
+<wire x1="23.8" y1="30.6" x2="24.2" y2="31" width="0.1524" layer="1" curve="90"/>
+<wire x1="24.2" y1="31" x2="24.2" y2="31.8" width="0.1524" layer="1"/>
+<wire x1="24.2" y1="31.8" x2="24.6" y2="32.2" width="0.1524" layer="1" curve="-90"/>
+<wire x1="24.6" y1="32.2" x2="25.4" y2="32.2" width="0.1524" layer="1"/>
+<wire x1="25.4" y1="32.2" x2="25.8" y2="32" width="0.1524" layer="1" curve="-53.130102"/>
+<wire x1="25.8" y1="32" x2="26.4" y2="32" width="0.1524" layer="1" curve="106.260205"/>
+<wire x1="26.4" y1="32" x2="27" y2="32" width="0.1524" layer="1" curve="-106.260969"/>
+<wire x1="27" y1="32" x2="29" y2="32" width="0.1524" layer="1"/>
+<wire x1="29" y1="32" x2="29.5" y2="31.5" width="0.1524" layer="1"/>
+<wire x1="23.4" y1="32" x2="23.6" y2="31.8" width="0.1524" layer="1" curve="-90"/>
+<wire x1="22.6" y1="31" x2="22.6" y2="31.6" width="0.1524" layer="1"/>
+<wire x1="22.6" y1="31.6" x2="23" y2="32" width="0.1524" layer="1" curve="-90"/>
+<wire x1="23" y1="32" x2="23.4" y2="32" width="0.1524" layer="1"/>
+<wire x1="23.6" y1="31.8" x2="23.6" y2="31.6" width="0.1524" layer="1"/>
+<wire x1="23.6" y1="31.6" x2="23.4" y2="31.2" width="0.1524" layer="1" curve="-90"/>
+<wire x1="23.4" y1="31.2" x2="23.2" y2="31" width="0.1524" layer="1" curve="90"/>
+<wire x1="23.2" y1="31" x2="23.8" y2="30.6" width="0.1524" layer="1" curve="112.619738"/>
 </signal>
 <signal name="M3DQ3">
 <contactref element="FPGA" pad="J1"/>
@@ -2283,9 +2308,9 @@ design rules under a new name.</description>
 <contactref element="RAM" pad="C2"/>
 <wire x1="20" y1="30.6" x2="20.4" y2="31" width="0.1524" layer="1"/>
 <wire x1="20.4" y1="31" x2="21.2" y2="31" width="0.1524" layer="1"/>
-<wire x1="21.2" y1="31" x2="22" y2="30.2" width="0.1524" layer="1"/>
-<wire x1="22" y1="30.2" x2="24" y2="30.2" width="0.1524" layer="1"/>
-<wire x1="24" y1="30.2" x2="24.4" y2="29.8" width="0.1524" layer="1"/>
+<wire x1="21.2" y1="31" x2="22.2" y2="30" width="0.1524" layer="1"/>
+<wire x1="22.2" y1="30" x2="24.2" y2="30" width="0.1524" layer="1"/>
+<wire x1="24.2" y1="30" x2="24.4" y2="29.8" width="0.1524" layer="1"/>
 <wire x1="24.4" y1="29.8" x2="25.8" y2="29.8" width="0.1524" layer="1"/>
 <wire x1="25.8" y1="29.8" x2="26" y2="30" width="0.1524" layer="1"/>
 <wire x1="26" y1="30" x2="29" y2="30" width="0.1524" layer="1"/>
@@ -2309,31 +2334,40 @@ design rules under a new name.</description>
 <signal name="M3DQ0">
 <contactref element="FPGA" pad="K2"/>
 <contactref element="RAM" pad="B1"/>
-<wire x1="20.8" y1="29.8" x2="21.4" y2="29.2" width="0.1524" layer="1"/>
-<wire x1="21.4" y1="29.2" x2="21.4" y2="29" width="0.1524" layer="1"/>
 <wire x1="28.5" y1="28.5" x2="28" y2="29" width="0.1524" layer="1"/>
 <wire x1="28" y1="29" x2="27.2" y2="29" width="0.1524" layer="1"/>
-<wire x1="21.4" y1="29" x2="21.6" y2="28.8" width="0.1524" layer="1" curve="90"/>
-<wire x1="21.6" y1="28.8" x2="21.8" y2="29" width="0.1524" layer="1" curve="90"/>
-<wire x1="21.8" y1="29" x2="21.8" y2="29.6" width="0.1524" layer="1"/>
-<wire x1="21.8" y1="29.6" x2="22" y2="29.8" width="0.1524" layer="1" curve="-90"/>
-<wire x1="22" y1="29.8" x2="22.2" y2="29.6" width="0.1524" layer="1" curve="-90"/>
-<wire x1="22.2" y1="29.6" x2="22.2" y2="29" width="0.1524" layer="1"/>
-<wire x1="22.2" y1="29" x2="22.4" y2="28.8" width="0.1524" layer="1" curve="90"/>
-<wire x1="22.4" y1="28.8" x2="22.6" y2="29" width="0.1524" layer="1" curve="90"/>
-<wire x1="22.6" y1="29" x2="22.6" y2="29.6" width="0.1524" layer="1"/>
-<wire x1="22.6" y1="29.6" x2="22.8" y2="29.8" width="0.1524" layer="1" curve="-90"/>
-<wire x1="22.8" y1="29.8" x2="23" y2="29.6" width="0.1524" layer="1" curve="-90"/>
-<wire x1="23" y1="29.6" x2="23" y2="29" width="0.1524" layer="1"/>
-<wire x1="23" y1="29" x2="23.2" y2="28.8" width="0.1524" layer="1" curve="90"/>
-<wire x1="23.2" y1="28.8" x2="23.4" y2="29" width="0.1524" layer="1" curve="90"/>
-<wire x1="23.4" y1="29" x2="23.4" y2="29.6" width="0.1524" layer="1"/>
-<wire x1="23.4" y1="29.6" x2="23.6" y2="29.8" width="0.1524" layer="1" curve="-90"/>
-<wire x1="23.6" y1="29.8" x2="23.8" y2="29.6" width="0.1524" layer="1" curve="-90"/>
-<wire x1="23.8" y1="29.6" x2="23.8" y2="29" width="0.1524" layer="1"/>
-<wire x1="23.8" y1="29" x2="24" y2="28.8" width="0.1524" layer="1" curve="90"/>
 <wire x1="27" y1="28.8" x2="27.2" y2="29" width="0.1524" layer="1"/>
-<wire x1="27" y1="28.8" x2="24" y2="28.8" width="0.1524" layer="1"/>
+<wire x1="21.4" y1="29.2" x2="21.4" y2="28.8" width="0.1524" layer="1"/>
+<wire x1="21.4" y1="28.8" x2="21.6" y2="28.6" width="0.1524" layer="1" curve="90"/>
+<wire x1="21.6" y1="28.6" x2="21.8" y2="28.6" width="0.1524" layer="1"/>
+<wire x1="21.8" y1="28.6" x2="22" y2="28.8" width="0.1524" layer="1" curve="90"/>
+<wire x1="22" y1="28.8" x2="22" y2="29.4" width="0.1524" layer="1"/>
+<wire x1="22" y1="29.4" x2="22.2" y2="29.6" width="0.1524" layer="1" curve="-90"/>
+<wire x1="22.2" y1="29.6" x2="22.4" y2="29.6" width="0.1524" layer="1"/>
+<wire x1="22.4" y1="29.6" x2="22.6" y2="29.4" width="0.1524" layer="1" curve="-90"/>
+<wire x1="22.6" y1="29.4" x2="22.6" y2="28.6" width="0.1524" layer="1"/>
+<wire x1="22.6" y1="28.6" x2="22.8" y2="28.4" width="0.1524" layer="1" curve="90"/>
+<wire x1="22.8" y1="28.4" x2="23" y2="28.4" width="0.1524" layer="1"/>
+<wire x1="23" y1="28.4" x2="23.2" y2="28.6" width="0.1524" layer="1" curve="90"/>
+<wire x1="23.2" y1="28.6" x2="23.2" y2="29.4" width="0.1524" layer="1"/>
+<wire x1="23.2" y1="29.4" x2="23.4" y2="29.6" width="0.1524" layer="1" curve="-90"/>
+<wire x1="23.4" y1="29.6" x2="23.6" y2="29.6" width="0.1524" layer="1"/>
+<wire x1="23.6" y1="29.6" x2="23.8" y2="29.4" width="0.1524" layer="1" curve="-90"/>
+<wire x1="23.8" y1="29.4" x2="23.8" y2="28.6" width="0.1524" layer="1"/>
+<wire x1="23.8" y1="28.6" x2="24" y2="28.4" width="0.1524" layer="1" curve="90"/>
+<wire x1="24" y1="28.4" x2="24.2" y2="28.4" width="0.1524" layer="1"/>
+<wire x1="24.2" y1="28.4" x2="24.4" y2="28.6" width="0.1524" layer="1" curve="90"/>
+<wire x1="24.4" y1="28.6" x2="24.4" y2="29.2" width="0.1524" layer="1"/>
+<wire x1="24.4" y1="29.2" x2="24.6" y2="29.4" width="0.1524" layer="1" curve="-90"/>
+<wire x1="24.6" y1="29.4" x2="24.8" y2="29.4" width="0.1524" layer="1"/>
+<wire x1="24.8" y1="29.4" x2="25" y2="29.2" width="0.1524" layer="1" curve="-90"/>
+<wire x1="25" y1="29.2" x2="25" y2="28.6" width="0.1524" layer="1"/>
+<wire x1="25" y1="28.6" x2="25.2" y2="28.4" width="0.1524" layer="1" curve="90"/>
+<wire x1="25.2" y1="28.4" x2="25.4" y2="28.4" width="0.1524" layer="1"/>
+<wire x1="25.4" y1="28.4" x2="25.6" y2="28.6" width="0.1524" layer="1" curve="90"/>
+<wire x1="25.6" y1="28.6" x2="25.8" y2="28.8" width="0.1524" layer="1" curve="-90"/>
+<wire x1="25.8" y1="28.8" x2="27" y2="28.8" width="0.1524" layer="1"/>
+<wire x1="21.4" y1="29.2" x2="20.8" y2="29.8" width="0.1524" layer="1" curve="90"/>
 </signal>
 <signal name="M3A15">
 <contactref element="FPGA" pad="B3"/>
@@ -4249,28 +4283,37 @@ design rules under a new name.</description>
 <wire x1="16" y1="29.8" x2="16" y2="29.75" width="0.1524" layer="1"/>
 <wire x1="16" y1="29.75" x2="16.15" y2="29.6" width="0.1524" layer="1"/>
 <wire x1="16.15" y1="29.6" x2="16.8" y2="29.6" width="0.1524" layer="1"/>
-<wire x1="16.8" y1="29.6" x2="17.8" y2="30.6" width="0.1524" layer="16"/>
-<wire x1="17.8" y1="30.6" x2="24.4" y2="30.6" width="0.1524" layer="16"/>
+<wire x1="18" y1="30.6" x2="24.8" y2="30.6" width="0.1524" layer="16"/>
 <wire x1="28" y1="31" x2="26.05" y2="31" width="0.1524" layer="1"/>
 <wire x1="26.05" y1="31" x2="26" y2="30.95" width="0.1524" layer="1"/>
-<wire x1="24.4" y1="30.6" x2="24.75" y2="30.95" width="0.1524" layer="16"/>
-<wire x1="24.75" y1="30.95" x2="26" y2="30.95" width="0.1524" layer="16"/>
+<wire x1="24.8" y1="30.6" x2="25.15" y2="30.95" width="0.1524" layer="16"/>
+<wire x1="25.15" y1="30.95" x2="26" y2="30.95" width="0.1524" layer="16"/>
+<wire x1="17" y1="30.2" x2="17.2" y2="30" width="0.1524" layer="16" curve="-90"/>
+<wire x1="17.2" y1="30" x2="17" y2="29.6" width="0.1524" layer="16" curve="-90"/>
+<wire x1="17" y1="29.6" x2="16.8" y2="29.6" width="0.1524" layer="16"/>
+<wire x1="18" y1="30.6" x2="17.4" y2="30.8" width="0.1524" layer="16" curve="-90"/>
+<wire x1="17.4" y1="30.8" x2="17" y2="30.2" width="0.1524" layer="16" curve="180"/>
 </signal>
 <signal name="M3LDQS_N">
 <contactref element="FPGA" pad="H1"/>
 <contactref element="RAM" pad="A8"/>
 <via x="15.4" y="28.35" extent="1-16" drill="0.3048" shape="octagon"/>
-<via x="25" y="30.4" extent="1-16" drill="0.3048" shape="octagon"/>
+<via x="25.4" y="30.4" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="15.2" y1="29" x2="15.2" y2="28.55" width="0.1524" layer="1"/>
 <wire x1="15.2" y1="28.55" x2="15.4" y2="28.35" width="0.1524" layer="1"/>
-<wire x1="15.4" y1="28.35" x2="16.35" y2="28.35" width="0.1524" layer="16"/>
-<wire x1="16.35" y1="28.35" x2="17.4" y2="29.4" width="0.1524" layer="16"/>
-<wire x1="17.4" y1="29.4" x2="17.4" y2="29.6" width="0.1524" layer="16"/>
-<wire x1="17.4" y1="29.6" x2="18" y2="30.2" width="0.1524" layer="16"/>
-<wire x1="18" y1="30.2" x2="24.8" y2="30.2" width="0.1524" layer="16"/>
+<wire x1="17.6" y1="29.8" x2="18" y2="30.2" width="0.1524" layer="16"/>
+<wire x1="18" y1="30.2" x2="25.2" y2="30.2" width="0.1524" layer="16"/>
 <wire x1="27.5" y1="30.5" x2="27.4" y2="30.4" width="0.1524" layer="1"/>
-<wire x1="27.4" y1="30.4" x2="25" y2="30.4" width="0.1524" layer="1"/>
-<wire x1="24.8" y1="30.2" x2="25" y2="30.4" width="0.1524" layer="16"/>
+<wire x1="27.4" y1="30.4" x2="25.4" y2="30.4" width="0.1524" layer="1"/>
+<wire x1="25.2" y1="30.2" x2="25.4" y2="30.4" width="0.1524" layer="16"/>
+<wire x1="15.4" y1="28.35" x2="15.75" y2="28.35" width="0.1524" layer="16"/>
+<wire x1="15.75" y1="28.35" x2="16" y2="28.6" width="0.1524" layer="16" curve="90"/>
+<wire x1="16" y1="28.6" x2="16.2" y2="28.8" width="0.1524" layer="16" curve="-90"/>
+<wire x1="16.2" y1="28.8" x2="16.4" y2="28.8" width="0.1524" layer="16"/>
+<wire x1="16.4" y1="28.8" x2="16.6" y2="28.6" width="0.1524" layer="16" curve="-90"/>
+<wire x1="16.6" y1="28.6" x2="16.8" y2="28.4" width="0.1524" layer="16" curve="90"/>
+<wire x1="16.8" y1="28.4" x2="17.6" y2="29.2" width="0.1524" layer="16" curve="90"/>
+<wire x1="17.6" y1="29.2" x2="17.6" y2="29.8" width="0.1524" layer="16"/>
 </signal>
 </signals>
 </board>
