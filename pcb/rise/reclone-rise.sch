@@ -10524,15 +10524,16 @@ Production Part - 8199
 <plain>
 <text x="287.02" y="233.68" size="1.778" layer="91">Any of the data bits
 can be swapped</text>
-<text x="287.02" y="198.12" size="1.778" layer="91">Byte lane shall be 
-length matched
+<text x="287.02" y="198.12" size="1.778" layer="91">Match byte lane
 to within 0.5mm</text>
 <text x="287.02" y="177.8" size="1.778" layer="91">Match DQS and DQS#
 within 0.254mm</text>
-<text x="218.44" y="203.2" size="1.778" layer="91">Address/Command
+<text x="254" y="220.98" size="1.778" layer="91">Address/Command
 group shall be 
 length matched
 to within 2.54mm</text>
+<text x="254" y="187.96" size="1.778" layer="91">Match CK and CK#
+within 0.254mm</text>
 </plain>
 <instances>
 <instance part="FPGA" gate="B1" x="93.98" y="83.82"/>
