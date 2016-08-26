@@ -10528,10 +10528,9 @@ can be swapped</text>
 to within 0.5mm</text>
 <text x="287.02" y="177.8" size="1.778" layer="91">Match DQS and DQS#
 within 0.254mm</text>
-<text x="254" y="220.98" size="1.778" layer="91">Address/Command
-group shall be 
-length matched
-to within 2.54mm</text>
+<text x="254" y="220.98" size="1.778" layer="91">Match all DDR2 traces
+to within 2.54mm
+of CK and CK#</text>
 <text x="254" y="187.96" size="1.778" layer="91">Match CK and CK#
 within 0.254mm</text>
 </plain>
