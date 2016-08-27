@@ -10691,12 +10691,22 @@ within 0.254mm</text>
 <label x="274.32" y="53.34" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L48P_M3BA0_3"/>
 </segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="BA0"/>
+<wire x1="243.84" y1="195.58" x2="238.76" y2="195.58" width="0.1524" layer="91"/>
+<label x="233.68" y="195.58" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M3BA1" class="0">
 <segment>
 <wire x1="271.78" y1="50.8" x2="276.86" y2="50.8" width="0.1524" layer="91"/>
 <label x="274.32" y="50.8" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L48N_M3BA1_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="BA1"/>
+<wire x1="243.84" y1="198.12" x2="238.76" y2="198.12" width="0.1524" layer="91"/>
+<label x="233.68" y="198.12" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M3A7" class="0">
@@ -10719,12 +10729,22 @@ within 0.254mm</text>
 <label x="274.32" y="43.18" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L50P_M3WE_3"/>
 </segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="WE#"/>
+<wire x1="243.84" y1="175.26" x2="238.76" y2="175.26" width="0.1524" layer="91"/>
+<label x="233.68" y="175.26" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M3BA2" class="0">
 <segment>
 <wire x1="271.78" y1="40.64" x2="276.86" y2="40.64" width="0.1524" layer="91"/>
 <label x="274.32" y="40.64" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L50N_M3BA2_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="BA2"/>
+<wire x1="243.84" y1="200.66" x2="238.76" y2="200.66" width="0.1524" layer="91"/>
+<label x="233.68" y="200.66" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M3A10" class="0">
@@ -10760,6 +10780,11 @@ within 0.254mm</text>
 <wire x1="271.78" y1="27.94" x2="276.86" y2="27.94" width="0.1524" layer="91"/>
 <label x="274.32" y="27.94" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L53P_M3CKE_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="CKE"/>
+<wire x1="243.84" y1="187.96" x2="238.76" y2="187.96" width="0.1524" layer="91"/>
+<label x="233.68" y="187.96" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M3A12" class="0">
@@ -10803,6 +10828,11 @@ within 0.254mm</text>
 <label x="274.32" y="60.96" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L46N_M3CLKN_3"/>
 </segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="CK#"/>
+<wire x1="243.84" y1="190.5" x2="238.76" y2="190.5" width="0.1524" layer="91"/>
+<label x="233.68" y="190.5" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M3CLK" class="0">
 <segment>
@@ -10810,12 +10840,22 @@ within 0.254mm</text>
 <label x="274.32" y="63.5" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L46P_M3CLK_3"/>
 </segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="CK"/>
+<wire x1="243.84" y1="193.04" x2="238.76" y2="193.04" width="0.1524" layer="91"/>
+<label x="233.68" y="193.04" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M3ODT" class="0">
 <segment>
 <wire x1="271.78" y1="66.04" x2="276.86" y2="66.04" width="0.1524" layer="91"/>
 <label x="274.32" y="66.04" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L45N_M3ODT_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="ODT"/>
+<wire x1="243.84" y1="182.88" x2="238.76" y2="182.88" width="0.1524" layer="91"/>
+<label x="233.68" y="182.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M3A3" class="0">
@@ -10845,12 +10885,22 @@ within 0.254mm</text>
 <label x="274.32" y="76.2" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L43N_GCLK22_IRDY2_M3CASN_3"/>
 </segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="CAS#"/>
+<wire x1="243.84" y1="177.8" x2="238.76" y2="177.8" width="0.1524" layer="91"/>
+<label x="233.68" y="177.8" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="M3RASN" class="0">
 <segment>
 <wire x1="271.78" y1="78.74" x2="276.86" y2="78.74" width="0.1524" layer="91"/>
 <label x="274.32" y="78.74" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L43P_GCLK23_M3RASN_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="RAS#"/>
+<wire x1="243.84" y1="180.34" x2="238.76" y2="180.34" width="0.1524" layer="91"/>
+<label x="233.68" y="180.34" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="M3LDM" class="0">
@@ -10973,6 +11023,11 @@ within 0.254mm</text>
 <wire x1="271.78" y1="144.78" x2="276.86" y2="144.78" width="0.1524" layer="91"/>
 <label x="274.32" y="144.78" size="1.778" layer="95"/>
 <pinref part="FPGA" gate="B3" pin="IO_L1P_3"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="CS#"/>
+<wire x1="243.84" y1="185.42" x2="238.76" y2="185.42" width="0.1524" layer="91"/>
+<label x="233.68" y="185.42" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+5V" class="0">
