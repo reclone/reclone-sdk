@@ -12035,6 +12035,11 @@ within 0.254mm</text>
 <wire x1="271.78" y1="10.16" x2="276.86" y2="10.16" width="0.1524" layer="91"/>
 <label x="274.32" y="10.16" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="VREF"/>
+<wire x1="281.94" y1="246.38" x2="287.02" y2="246.38" width="0.1524" layer="91"/>
+<label x="284.48" y="246.38" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="+5V/4" class="0">
 <segment>
@@ -12540,6 +12545,104 @@ within 0.254mm</text>
 <pinref part="RAM" gate="G$1" pin="DQS#"/>
 <wire x1="287.02" y1="190.5" x2="292.1" y2="190.5" width="0.1524" layer="91"/>
 <label x="289.56" y="190.5" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$24" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A0"/>
+<wire x1="243.84" y1="241.3" x2="238.76" y2="241.3" width="0.1524" layer="91"/>
+<label x="236.22" y="241.3" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$63" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A1"/>
+<wire x1="243.84" y1="238.76" x2="238.76" y2="238.76" width="0.1524" layer="91"/>
+<label x="236.22" y="238.76" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$64" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A2"/>
+<wire x1="243.84" y1="236.22" x2="238.76" y2="236.22" width="0.1524" layer="91"/>
+<label x="236.22" y="236.22" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$68" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A3"/>
+<wire x1="243.84" y1="233.68" x2="238.76" y2="233.68" width="0.1524" layer="91"/>
+<label x="236.22" y="233.68" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$74" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A4"/>
+<wire x1="243.84" y1="231.14" x2="238.76" y2="231.14" width="0.1524" layer="91"/>
+<label x="236.22" y="231.14" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$84" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A5"/>
+<wire x1="243.84" y1="228.6" x2="238.76" y2="228.6" width="0.1524" layer="91"/>
+<label x="236.22" y="228.6" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$85" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A6"/>
+<wire x1="243.84" y1="226.06" x2="238.76" y2="226.06" width="0.1524" layer="91"/>
+<label x="236.22" y="226.06" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$86" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A7"/>
+<wire x1="243.84" y1="223.52" x2="238.76" y2="223.52" width="0.1524" layer="91"/>
+<label x="236.22" y="223.52" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$87" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A8"/>
+<wire x1="243.84" y1="220.98" x2="238.76" y2="220.98" width="0.1524" layer="91"/>
+<label x="236.22" y="220.98" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$88" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A9"/>
+<wire x1="243.84" y1="218.44" x2="238.76" y2="218.44" width="0.1524" layer="91"/>
+<label x="236.22" y="218.44" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$89" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A10"/>
+<wire x1="243.84" y1="215.9" x2="238.76" y2="215.9" width="0.1524" layer="91"/>
+<label x="236.22" y="215.9" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$90" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A11"/>
+<wire x1="243.84" y1="213.36" x2="238.76" y2="213.36" width="0.1524" layer="91"/>
+<label x="236.22" y="213.36" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$91" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A12"/>
+<wire x1="243.84" y1="210.82" x2="238.76" y2="210.82" width="0.1524" layer="91"/>
+<label x="236.22" y="210.82" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$92" class="0">
+<segment>
+<pinref part="RAM" gate="G$1" pin="A13"/>
+<wire x1="243.84" y1="208.28" x2="238.76" y2="208.28" width="0.1524" layer="91"/>
+<label x="236.22" y="208.28" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
