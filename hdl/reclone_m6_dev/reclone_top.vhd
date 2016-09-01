@@ -21,13 +21,21 @@ entity reclone_top is
 end reclone_top;
 
 architecture Behavioral of reclone_top is
-   signal count : unsigned(29 downto 0) := (others => '0');
+   signal count50 : unsigned(25 downto 0) := (others => '0');
+   signal count32 : unsigned(25 downto 0) := (others => '0');
 begin
 
-   process(clk50) begin
-      if rising_edge(clk50) then
-         count <= count+1;
-         leds  <= STD_LOGIC_VECTOR(count(count'high downto count'high-7));      
+   process(Clk50) begin
+      if rising_edge(Clk50) then
+         count50 <= count50 + 1;
+         LEDs(3 downto 0)  <= STD_LOGIC_VECTOR(count50(count50'high downto count50'high-3));      
+      end if;
+   end process;
+   
+   process(Clk32) begin
+      if rising_edge(Clk32) then
+         count32 <= count32 + 1;
+         LEDs(7 downto 4)  <= STD_LOGIC_VECTOR(count32(count32'high downto count32'high-3));      
       end if;
    end process;
 

@@ -1,0 +1,1 @@
+xc3sprog.exe -c ftdi reclone_top.bit
