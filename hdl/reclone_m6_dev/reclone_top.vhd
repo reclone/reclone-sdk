@@ -103,15 +103,15 @@ begin
       end if;
    end process;
    
-   process(Clk32) begin
-      if rising_edge(Clk32) then
+   process(pixel_clock_t) begin
+      if rising_edge(pixel_clock_t) then
          count32 <= count32 + 1;
          LEDs(7 downto 4)  <= STD_LOGIC_VECTOR(count32(count32'high downto count32'high-3));      
       end if;
    end process;
 
 Inst_clocking: clocking PORT MAP(
-      clk32m          => clk32,
+      clk32m          => Clk32,
       pixel_clock     => pixel_clock_t,
       data_load_clock => data_load_clock_t,
       ioclock         => ioclock_t,
