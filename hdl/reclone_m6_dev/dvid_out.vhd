@@ -54,6 +54,27 @@ architecture Behavioral of dvid_out is
          prog_empty : OUT STD_LOGIC
       );
    END COMPONENT;
+   
+   COMPONENT aFifo
+    generic (
+        DATA_WIDTH :integer := 8;
+        ADDR_WIDTH :integer := 4
+    );
+    port (
+        -- Reading port.
+        Data_out    :out std_logic_vector (DATA_WIDTH-1 downto 0);
+        Empty_out   :out std_logic;
+        ReadEn_in   :in  std_logic;
+        RClk        :in  std_logic;
+        -- Writing port.
+        Data_in     :in  std_logic_vector (DATA_WIDTH-1 downto 0);
+        Full_out    :out std_logic;
+        WriteEn_in  :in  std_logic;
+        WClk        :in  std_logic;
+	 
+        Clear_in:in  std_logic
+    );
+   END COMPONENT;
 
 	COMPONENT output_serialiser
 	PORT(
@@ -87,18 +108,38 @@ begin
    -- Then to a small FIFO
    fifo_in <= encoded_red & encoded_green & encoded_blue;
    
-out_fifo: tmds_out_fifo
+--out_fifo: tmds_out_fifo
+--  PORT MAP (
+--    wr_clk => pixel_clock,
+--    din    => fifo_in,
+--    wr_en  => '1',
+--    full   => open,
+--    
+--    rd_clk     => data_load_clock,
+--    rd_en      => rd_enable,
+--    dout       => fifo_out,
+--    empty      => open,
+--    prog_empty => not_ready_yet
+--  );
+  
+out_fifo: aFifo
+  GENERIC MAP (
+    DATA_WIDTH => 30,
+    ADDR_WIDTH => 4
+  )
   PORT MAP (
-    wr_clk => pixel_clock,
-    din    => fifo_in,
-    wr_en  => '1',
-    full   => open,
-    
-    rd_clk     => data_load_clock,
-    rd_en      => rd_enable,
-    dout       => fifo_out,
-    empty      => open,
-    prog_empty => not_ready_yet
+    -- Reading port.
+    Data_out    => fifo_out,
+    Empty_out   => not_ready_yet,
+    ReadEn_in   => rd_enable,
+    RClk        => data_load_clock,
+    -- Writing port.
+    Data_in     => fifo_in,
+    Full_out    => open,
+    WriteEn_in  => '1',
+    WClk        => pixel_clock,
+	 
+    Clear_in    => '0'
   );
    
    -- Now at a x2 clock, send the data from the fifo to the serialisers
