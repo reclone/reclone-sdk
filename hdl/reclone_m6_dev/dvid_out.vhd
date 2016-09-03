@@ -76,13 +76,13 @@ architecture Behavioral of dvid_out is
     );
    END COMPONENT;
 
-	COMPONENT output_serialiser
+	COMPONENT OutputSerializer5Bit
 	PORT(
-		clk_load   : IN  std_logic;
-		clk_output : IN  std_logic;
-      strobe     : IN  std_logic;
-		ser_data   : IN  std_logic_vector(4 downto 0);          
-		ser_output : OUT std_logic
+		LoadClk   : IN  std_logic;
+		OutputClk : IN  std_logic;
+      Strobe     : IN  std_logic;
+		SerData   : IN  std_logic_vector(4 downto 0);          
+		SerOutput : OUT std_logic
 		);
 	END COMPONENT;
 
@@ -164,9 +164,9 @@ process(data_load_clock)
       end if;
    end process;
 
-output_serialiser_r: output_serialiser PORT MAP(clk_load => data_load_clock, clk_output => ioclock, strobe => serdes_strobe, ser_data => ser_in_red,   ser_output => red_s);
-output_serialiser_g: output_serialiser PORT MAP(clk_load => data_load_clock, clk_output => ioclock, strobe => serdes_strobe, ser_data => ser_in_green, ser_output => green_s);
-output_serialiser_b: output_serialiser PORT MAP(clk_load => data_load_clock, clk_output => ioclock, strobe => serdes_strobe, ser_data => ser_in_blue,  ser_output => blue_s);
-output_serialiser_c: output_serialiser PORT MAP(clk_load => data_load_clock, clk_output => ioclock, strobe => serdes_strobe, ser_data => ser_in_clock, ser_output => clock_s);
+output_serialiser_r: OutputSerializer5Bit port map(LoadClk => data_load_clock, OutputClk => ioclock, Strobe => serdes_strobe, SerData => ser_in_red,   SerOutput => red_s);
+output_serialiser_g: OutputSerializer5Bit port map(LoadClk => data_load_clock, OutputClk => ioclock, Strobe => serdes_strobe, SerData => ser_in_green, SerOutput => green_s);
+output_serialiser_b: OutputSerializer5Bit port map(LoadClk => data_load_clock, OutputClk => ioclock, Strobe => serdes_strobe, SerData => ser_in_blue,  SerOutput => blue_s);
+output_serialiser_c: OutputSerializer5Bit port map(LoadClk => data_load_clock, OutputClk => ioclock, Strobe => serdes_strobe, SerData => ser_in_clock, SerOutput => clock_s);
    
 end Behavioral;
