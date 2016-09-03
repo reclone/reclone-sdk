@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------
--- Module Name:   AsyncFifo - Behavioral
+-- Module Name:   MultiRateFifo - Behavioral
 -- Description:   Implements a first in, first out (FIFO) buffer with separate
 --                read and write clocks.  It's a common and necessary memory
 --                structure for getting data across clock boundaries.
@@ -23,7 +23,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
-entity AsyncFifo is
+entity MultiRateFifo is
 
    generic
    (
@@ -49,7 +49,7 @@ entity AsyncFifo is
     
 end entity;
 
-architecture Behavioral of AsyncFifo is
+architecture Behavioral of MultiRateFifo is
 
    constant FIFO_DEPTH :integer := 2**ADDR_WIDTH;
 

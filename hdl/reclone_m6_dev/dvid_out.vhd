@@ -55,7 +55,7 @@ architecture Behavioral of dvid_out is
       );
    END COMPONENT;
    
-   COMPONENT AsyncFifo
+   COMPONENT MultiRateFifo
     generic (
         DATA_WIDTH :integer := 8;
         ADDR_WIDTH :integer := 4
@@ -122,7 +122,7 @@ begin
 --    prog_empty => not_ready_yet
 --  );
   
-out_fifo: AsyncFifo
+out_fifo: MultiRateFifo
   GENERIC MAP (
     DATA_WIDTH => 30,
     ADDR_WIDTH => 4
