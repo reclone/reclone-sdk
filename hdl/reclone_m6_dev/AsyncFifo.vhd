@@ -61,9 +61,8 @@ architecture Behavioral of AsyncFifo is
    signal equal_addresses       : std_logic;
    signal next_write_address_en : std_logic;
    signal next_read_address_en  : std_logic;
-   signal set_status            : std_logic;
-   signal rst_status            : std_logic;
-   signal status                : std_logic;
+   signal going_empty           : std_logic;
+   signal going_full            : std_logic;
    signal preset_full           : std_logic;
    signal preset_empty          : std_logic;
    signal empty_out             : std_logic;
@@ -88,20 +87,44 @@ begin
    --Data ports logic:
    --(Uses a dual-port RAM).
    --'Data_out' logic:
-   process (ReadClk) begin
+   process (ReadClk)
+      variable going_empty_bit0 : std_logic;
+      variable going_empty_bit1 : std_logic;
+   begin
       if (rising_edge(ReadClk)) then
          if (ReadEn = '1' and empty_out = '0') then
             DataOut <= Mem(conv_integer(next_word_to_read));
          end if;
+         
+         going_empty_bit0 := next_word_to_write(ADDR_WIDTH-2) xor  next_word_to_read(ADDR_WIDTH-1);
+         going_empty_bit1 := next_word_to_write(ADDR_WIDTH-1) xnor next_word_to_read(ADDR_WIDTH-2);
+         if (going_empty_bit0 = '1' and going_empty_bit1 = '1') then
+            going_empty <= '1'; -- Write counter is one quadrant ahead of read counter
+         elsif (going_full = '1') then
+            going_empty <= '0';
+         end if;
+
       end if;
    end process;
             
    --'Data_in' logic:
-   process (WriteClk) begin
+   process (WriteClk)
+      variable going_full_bit0 : std_logic;
+      variable going_full_bit1 : std_logic;
+   begin
       if (rising_edge(WriteClk)) then
          if (WriteEn = '1' and full_out = '0') then
             Mem(conv_integer(next_word_to_write)) <= DataIn;
          end if;
+         
+         going_full_bit0 := next_word_to_write(ADDR_WIDTH-2) xnor next_word_to_read(ADDR_WIDTH-1);
+         going_full_bit1 := next_word_to_write(ADDR_WIDTH-1) xor  next_word_to_read(ADDR_WIDTH-2);
+         if (going_full_bit0 = '1' and going_full_bit1 = '1') then
+            going_full <= '1'; -- Write counter is one quadrant behind read counter
+         elsif (going_empty = '1') then
+            going_full <= '0';
+         end if;
+         
       end if;
    end process;
 
@@ -132,33 +155,8 @@ begin
    --'EqualAddresses' logic:
    equal_addresses <= '1' when (next_word_to_write = next_word_to_read) else '0';
 
-   --'Quadrant selectors' logic:
-   process (next_word_to_write, next_word_to_read)
-      variable set_status_bit0 :std_logic;
-      variable set_status_bit1 :std_logic;
-      variable rst_status_bit0 :std_logic;
-      variable rst_status_bit1 :std_logic;
-   begin
-      set_status_bit0 := next_word_to_write(ADDR_WIDTH-2) xnor next_word_to_read(ADDR_WIDTH-1);
-      set_status_bit1 := next_word_to_write(ADDR_WIDTH-1) xor  next_word_to_read(ADDR_WIDTH-2);
-      set_status <= set_status_bit0 and set_status_bit1;
-
-      rst_status_bit0 := next_word_to_write(ADDR_WIDTH-2) xor  next_word_to_read(ADDR_WIDTH-1);
-      rst_status_bit1 := next_word_to_write(ADDR_WIDTH-1) xnor next_word_to_read(ADDR_WIDTH-2);
-      rst_status      <= rst_status_bit0 and rst_status_bit1;
-   end process;
-
-   --'Status' latch logic:
-   process (set_status, rst_status, Clear) begin--D Latch w/ Asynchronous Clear & Preset.
-      if (rst_status = '1' or Clear = '1') then
-         status <= '0';  --Going 'Empty'.
-      elsif (set_status = '1') then
-         status <= '1';  --Going 'Full'.
-      end if;
-   end process;
-
    --'Full_out' logic for the writing port:
-   preset_full <= status and equal_addresses;  --'Full' Fifo.
+   preset_full <= going_full and equal_addresses;  --'Full' Fifo.
 
    process (WriteClk, preset_full) begin --D Flip-Flop w/ Asynchronous Preset.
       if (preset_full = '1') then
@@ -171,7 +169,7 @@ begin
    Full <= full_out;
 
    --'Empty_out' logic for the reading port:
-   preset_empty <= not status and equal_addresses;  --'Empty' Fifo.
+   preset_empty <= going_empty and equal_addresses;  --'Empty' Fifo.
 
    process (ReadClk, preset_empty) begin --D Flip-Flop w/ Asynchronous Preset.
       if (preset_empty = '1') then
