@@ -8,15 +8,7 @@
 --
 -- Company:       Reclone Gaming
 -- Engineer:      angrylemur
--- License:       BSD 3-clause.  See https://opensource.org/licenses/BSD-3-Clause
--- Credit:        Derived from "Asynchronous FIFO (w/ 2 asynchronous clocks)"
---                by Deepak Kumar Tala and Alexander H Pham.
---                http://www.asic-world.com/examples/vhdl/asyn_fifo.html
---                This implementation is based on the article 
---                 'Asynchronous FIFO in Virtex-II FPGAs'
---                written by Peter Alfke.  This TechXclusive 
---                article can be downloaded from the Xilinx website.
---
+-- License:       https://opensource.org/licenses/BSD-2-Clause
 ----------------------------------------------------------------------------------
 
 library ieee;
@@ -33,12 +25,11 @@ entity MultiRateFifo is
    
    port
    (
-       -- Reading port.
        DataOut : out std_logic_vector (DATA_WIDTH-1 downto 0);
        Empty   : out std_logic;
        ReadEn  : in  std_logic;
        ReadClk : in  std_logic;
-       -- Writing port.
+
        DataIn  : in  std_logic_vector (DATA_WIDTH-1 downto 0);
        Full    : out std_logic;
        WriteEn : in  std_logic;
@@ -84,9 +75,8 @@ architecture Behavioral of MultiRateFifo is
    end component;
    
 begin
-   --Data ports logic:
-   --(Uses a dual-port RAM).
-   --'Data_out' logic:
+
+   
    process (ReadClk)
       variable going_empty_bit0 : std_logic;
       variable going_empty_bit1 : std_logic;
@@ -107,7 +97,6 @@ begin
       end if;
    end process;
             
-   --'Data_in' logic:
    process (WriteClk)
       variable going_full_bit0 : std_logic;
       variable going_full_bit1 : std_logic;
@@ -120,7 +109,7 @@ begin
          going_full_bit0 := next_word_to_write(ADDR_WIDTH-2) xnor next_word_to_read(ADDR_WIDTH-1);
          going_full_bit1 := next_word_to_write(ADDR_WIDTH-1) xor  next_word_to_read(ADDR_WIDTH-2);
          if (going_full_bit0 = '1' and going_full_bit1 = '1') then
-            going_full <= '1'; -- Write counter is one quadrant behind read counter
+            going_full <= '1';
          elsif (going_empty = '1') then
             going_full <= '0';
          end if;
@@ -128,12 +117,9 @@ begin
       end if;
    end process;
 
-   --Fifo addresses support logic: 
-   --'Next Addresses' enable logic:
    next_write_address_en <= WriteEn and (not full_out);
    next_read_address_en  <= ReadEn  and (not empty_out);
 
-   --Addreses (Gray counters) logic:
    GrayCounter_pWr : GrayCounter
    port map
    (
@@ -152,13 +138,11 @@ begin
       Clk       => ReadClk
    );
 
-   --'EqualAddresses' logic:
    equal_addresses <= '1' when (next_word_to_write = next_word_to_read) else '0';
 
-   --'Full_out' logic for the writing port:
-   preset_full <= going_full and equal_addresses;  --'Full' Fifo.
+   preset_full <= going_full and equal_addresses;
 
-   process (WriteClk, preset_full) begin --D Flip-Flop w/ Asynchronous Preset.
+   process (WriteClk, preset_full) begin
       if (preset_full = '1') then
          full_out <= '1';
       elsif (rising_edge(WriteClk)) then
@@ -168,10 +152,9 @@ begin
 
    Full <= full_out;
 
-   --'Empty_out' logic for the reading port:
-   preset_empty <= going_empty and equal_addresses;  --'Empty' Fifo.
+   preset_empty <= going_empty and equal_addresses;
 
-   process (ReadClk, preset_empty) begin --D Flip-Flop w/ Asynchronous Preset.
+   process (ReadClk, preset_empty) begin
       if (preset_empty = '1') then
          empty_out <= '1';
       elsif (rising_edge(ReadClk)) then
@@ -182,3 +165,27 @@ begin
    Empty <= empty_out;
 
 end architecture;
+
+----------------------------------------------------------------------------------
+-- License:       Copyright (c) 2016, Reclone Gaming
+--                All rights reserved.
+--                Redistribution and use in source and binary forms, with or without
+--                modification, are permitted provided that the following conditions are met:
+--                1. Redistributions of source code must retain the above copyright notice,
+--                   this list of conditions and the following disclaimer.
+--                2. Redistributions in binary form must reproduce the above copyright notice,
+--                   this list of conditions and the following disclaimer in the documentation
+--                   and/or other materials provided with the distribution.
+--                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+--                AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+--                IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+--                ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+--                LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+--                CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+--                SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+--                INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+--                CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+--                ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+--                POSSIBILITY OF SUCH DAMAGE.
+--                https://opensource.org/licenses/BSD-2-Clause
+----------------------------------------------------------------------------------

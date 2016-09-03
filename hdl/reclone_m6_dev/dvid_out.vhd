@@ -31,13 +31,13 @@ entity dvid_out is
 end dvid_out;
 
 architecture Behavioral of dvid_out is
-   COMPONENT TMDS_encoder
+   COMPONENT TmdsEncoder
    PORT(
-         clk     : IN  std_logic;
-         data    : IN  std_logic_vector(7 downto 0);
-         c       : IN  std_logic_vector(1 downto 0);
-         blank   : IN  std_logic;          
-         encoded : OUT std_logic_vector(9 downto 0)
+         Clk     : IN  std_logic;
+         Data    : IN  std_logic_vector(7 downto 0);
+         Ctrl    : IN  std_logic_vector(1 downto 0);
+         Blank   : IN  std_logic;          
+         Encoded : OUT std_logic_vector(9 downto 0)
       );
    END COMPONENT;
 
@@ -101,9 +101,9 @@ architecture Behavioral of dvid_out is
 begin   
    -- Send the pixels to the encoder
    c_blue <= vsync & hsync;
-   TMDS_encoder_red:   TMDS_encoder PORT MAP(clk => pixel_clock, data => red_p,   c => c_red,   blank => blank, encoded => encoded_red);
-   TMDS_encoder_green: TMDS_encoder PORT MAP(clk => pixel_clock, data => green_p, c => c_green, blank => blank, encoded => encoded_green);
-   TMDS_encoder_blue:  TMDS_encoder PORT MAP(clk => pixel_clock, data => blue_p,  c => c_blue,  blank => blank, encoded => encoded_blue);
+   TMDS_encoder_red:   TmdsEncoder PORT MAP(Clk => pixel_clock, Data => red_p,   Ctrl => c_red,   Blank => blank, Encoded => encoded_red);
+   TMDS_encoder_green: TmdsEncoder PORT MAP(Clk => pixel_clock, Data => green_p, Ctrl => c_green, Blank => blank, Encoded => encoded_green);
+   TMDS_encoder_blue:  TmdsEncoder PORT MAP(Clk => pixel_clock, Data => blue_p,  Ctrl => c_blue,  Blank => blank, Encoded => encoded_blue);
 
    -- Then to a small FIFO
    fifo_in <= encoded_red & encoded_green & encoded_blue;
