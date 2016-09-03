@@ -55,24 +55,24 @@ architecture Behavioral of dvid_out is
       );
    END COMPONENT;
    
-   COMPONENT aFifo
+   COMPONENT AsyncFifo
     generic (
         DATA_WIDTH :integer := 8;
         ADDR_WIDTH :integer := 4
     );
     port (
         -- Reading port.
-        Data_out    :out std_logic_vector (DATA_WIDTH-1 downto 0);
-        Empty_out   :out std_logic;
-        ReadEn_in   :in  std_logic;
-        RClk        :in  std_logic;
+        DataOut     :out std_logic_vector (DATA_WIDTH-1 downto 0);
+        Empty       :out std_logic;
+        ReadEn      :in  std_logic;
+        ReadClk     :in  std_logic;
         -- Writing port.
-        Data_in     :in  std_logic_vector (DATA_WIDTH-1 downto 0);
-        Full_out    :out std_logic;
-        WriteEn_in  :in  std_logic;
-        WClk        :in  std_logic;
+        DataIn      :in  std_logic_vector (DATA_WIDTH-1 downto 0);
+        Full        :out std_logic;
+        WriteEn     :in  std_logic;
+        WriteClk    :in  std_logic;
 	 
-        Clear_in:in  std_logic
+        Clear       :in  std_logic
     );
    END COMPONENT;
 
@@ -122,24 +122,24 @@ begin
 --    prog_empty => not_ready_yet
 --  );
   
-out_fifo: aFifo
+out_fifo: AsyncFifo
   GENERIC MAP (
     DATA_WIDTH => 30,
     ADDR_WIDTH => 4
   )
   PORT MAP (
     -- Reading port.
-    Data_out    => fifo_out,
-    Empty_out   => not_ready_yet,
-    ReadEn_in   => rd_enable,
-    RClk        => data_load_clock,
+    DataOut    => fifo_out,
+    Empty      => not_ready_yet,
+    ReadEn     => rd_enable,
+    ReadClk    => data_load_clock,
     -- Writing port.
-    Data_in     => fifo_in,
-    Full_out    => open,
-    WriteEn_in  => '1',
-    WClk        => pixel_clock,
+    DataIn     => fifo_in,
+    Full       => open,
+    WriteEn    => '1',
+    WriteClk   => pixel_clock,
 	 
-    Clear_in    => '0'
+    Clear      => '0'
   );
    
    -- Now at a x2 clock, send the data from the fifo to the serialisers
