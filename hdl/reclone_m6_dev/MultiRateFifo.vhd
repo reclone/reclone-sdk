@@ -4,7 +4,10 @@
 --                read and write clocks.  It's a common and necessary memory
 --                structure for getting data across clock boundaries.
 --                Internally, it uses a dual-port RAM and Gray counters to store
---                the data words and keep track of full/empty status.
+--                the data words and keep track of read and write indexes.
+--                Full and empty status are determined by setting flags for
+--                "going empty" and "going full", then checking for the read and
+--                write indexes to be equal.
 --
 -- Company:       Reclone Gaming
 -- Engineer:      angrylemur
@@ -109,7 +112,7 @@ begin
          going_full_bit0 := next_word_to_write(ADDR_WIDTH-2) xnor next_word_to_read(ADDR_WIDTH-1);
          going_full_bit1 := next_word_to_write(ADDR_WIDTH-1) xor  next_word_to_read(ADDR_WIDTH-2);
          if (going_full_bit0 = '1' and going_full_bit1 = '1') then
-            going_full <= '1';
+            going_full <= '1'; -- Write counter is one quadrant behind read counter
          elsif (going_empty = '1') then
             going_full <= '0';
          end if;

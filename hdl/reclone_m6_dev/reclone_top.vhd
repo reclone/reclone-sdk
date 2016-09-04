@@ -73,22 +73,22 @@ architecture Behavioral of reclone_top is
       );
    END COMPONENT;
 
-   COMPONENT dvid_out
+   COMPONENT DvidSer
    PORT(
-      pixel_clock     : IN std_logic;
-      data_load_clock : IN std_logic;
-      ioclock         : IN std_logic;
-      serdes_strobe   : IN std_logic;
-      red_p : IN std_logic_vector(7 downto 0);
-      green_p : IN std_logic_vector(7 downto 0);
-      blue_p : IN std_logic_vector(7 downto 0);
-      blank : IN std_logic;
-      hsync : IN std_logic;
-      vsync : IN std_logic;          
-      red_s : OUT std_logic;
-      green_s : OUT std_logic;
-      blue_s : OUT std_logic;
-      clock_s : OUT std_logic
+      PixelClock     : IN std_logic;
+      DataLoadClock : IN std_logic;
+      IOClock         : IN std_logic;
+      SerStrobe   : IN std_logic;
+      RedPix : IN std_logic_vector(7 downto 0);
+      GreenPix : IN std_logic_vector(7 downto 0);
+      BluePix : IN std_logic_vector(7 downto 0);
+      Blank : IN std_logic;
+      HSync : IN std_logic;
+      VSync : IN std_logic;          
+      RedSer : OUT std_logic;
+      GreenSer : OUT std_logic;
+      BlueSer : OUT std_logic;
+      ClockSer : OUT std_logic
       );
    END COMPONENT;
 
@@ -132,23 +132,23 @@ i_vga_gen: vga_gen PORT MAP(
 
       
 
-i_dvid_out: dvid_out PORT MAP(
-      pixel_clock     => pixel_clock_t,
-      data_load_clock => data_load_clock_t,
-      ioclock         => ioclock_t,
-      serdes_strobe   => serdes_strobe_t,
+i_dvid_out: DvidSer PORT MAP(
+      PixelClock     => pixel_clock_t,
+      DataLoadClock => data_load_clock_t,
+      IOClock         => ioclock_t,
+      SerStrobe   => serdes_strobe_t,
 
-      red_p           => red_t,
-      green_p         => green_t,
-      blue_p          => blue_t,
-      blank           => blank_t,
-      hsync           => hsync_t,
-      vsync           => vsync_t,
+      RedPix           => red_t,
+      GreenPix         => green_t,
+      BluePix          => blue_t,
+      Blank           => blank_t,
+      HSync           => hsync_t,
+      VSync           => vsync_t,
       
-      red_s           => tmds_out_red_t,
-      green_s         => tmds_out_green_t,
-      blue_s          => tmds_out_blue_t,
-      clock_s         => tmds_out_clock_t
+      RedSer           => tmds_out_red_t,
+      GreenSer         => tmds_out_green_t,
+      BlueSer          => tmds_out_blue_t,
+      ClockSer         => tmds_out_clock_t
    );
    
   
