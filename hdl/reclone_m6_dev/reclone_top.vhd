@@ -32,7 +32,16 @@ architecture Behavioral of reclone_top is
    signal ioclock_t         : std_logic;
    signal serdes_strobe_t   : std_logic;
    
-   signal red_mux   : std_logic_vector(7 downto 0);
+   signal red_val   : std_logic_vector(7 downto 0);
+   signal green_val   : std_logic_vector(7 downto 0);
+   signal blue_val   : std_logic_vector(7 downto 0);
+   
+   signal h_pos : std_logic_vector(11 downto 0);
+   signal h_res : std_logic_vector(11 downto 0);
+   signal h_max : std_logic_vector(11 downto 0);
+   signal v_pos : std_logic_vector(11 downto 0);
+   signal v_res : std_logic_vector(11 downto 0);
+   signal v_max : std_logic_vector(11 downto 0);
 
 
    COMPONENT clocking
@@ -42,25 +51,6 @@ architecture Behavioral of reclone_top is
       data_load_clock : OUT std_logic;
       ioclock         : OUT std_logic;
       serdes_strobe   : OUT std_logic
-      );
-   END COMPONENT;
-
-   COMPONENT DvidSer
-   PORT(
-      PixelClock     : IN std_logic;
-      DataLoadClock : IN std_logic;
-      IOClock         : IN std_logic;
-      SerStrobe   : IN std_logic;
-      RedPix : IN std_logic_vector(7 downto 0);
-      GreenPix : IN std_logic_vector(7 downto 0);
-      BluePix : IN std_logic_vector(7 downto 0);
-      Blank : IN std_logic;
-      HSync : IN std_logic;
-      VSync : IN std_logic;          
-      RedSer : OUT std_logic;
-      GreenSer : OUT std_logic;
-      BlueSer : OUT std_logic;
-      ClockSer : OUT std_logic
       );
    END COMPONENT;
 
@@ -93,6 +83,20 @@ architecture Behavioral of reclone_top is
    );
    end component;
    
+   component FrameRender
+    Port ( RedPix : out  STD_LOGIC_VECTOR (7 downto 0);
+           GreenPix : out  STD_LOGIC_VECTOR (7 downto 0);
+           BluePix : out  STD_LOGIC_VECTOR (7 downto 0);
+           PixelClock : in  STD_LOGIC;
+           HPos : in  STD_LOGIC_VECTOR (11 downto 0);
+           HRes : in  STD_LOGIC_VECTOR (11 downto 0);
+           HMax : in  STD_LOGIC_VECTOR (11 downto 0);
+           VPos : in  STD_LOGIC_VECTOR (11 downto 0);
+           VRes : in  STD_LOGIC_VECTOR (11 downto 0);
+           VMax : in  STD_LOGIC_VECTOR (11 downto 0));
+   
+   end component;
+   
 begin
 
    process(Clk50) begin
@@ -117,6 +121,7 @@ Inst_clocking: clocking PORT MAP(
       serdes_strobe   => serdes_strobe_t
    );
 
+
    
    Inst_DvidGen : DvidGen port map
    (
@@ -124,15 +129,15 @@ Inst_clocking: clocking PORT MAP(
       PixelClockX2 => data_load_clock_t,
       PixelClockX10 => ioclock_t,
       SerStrobe => serdes_strobe_t,
-      RedPix => (others => '0'),
-      GreenPix => (others => '0'),
-      BluePix => std_logic_vector(to_unsigned(255, 8)),
-      HPos => open,
-      HRes => open,
-      HMax => open,
-      VPos => open,
-      VRes => open,
-      VMax => open,
+      RedPix => red_val,
+      GreenPix => green_val,
+      BluePix => blue_val,
+      HPos => h_pos,
+      HRes => h_res,
+      HMax => h_max,
+      VPos => v_pos,
+      VRes => v_res,
+      VMax => v_max,
 
       TmdsBlueP => TMDS_Out_P(0),
       TmdsBlueN => TMDS_Out_N(0),
@@ -144,6 +149,19 @@ Inst_clocking: clocking PORT MAP(
       TmdsClockN => TMDS_Out_N(3)
    );
 
+   renderer : FrameRender port map
+   (
+      RedPix => red_val,
+      GreenPix => green_val,
+      BluePix => blue_val,
+      PixelClock => pixel_clock_t,
+      HPos => h_pos,
+      HRes => h_res,
+      HMax => h_max,
+      VPos => v_pos,
+      VRes => v_res,
+      VMax => v_max
+   );
 
 end Behavioral;
 

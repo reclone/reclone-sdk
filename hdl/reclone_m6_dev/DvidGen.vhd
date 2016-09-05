@@ -95,25 +95,13 @@ begin
    HPos <= std_logic_vector(to_unsigned(h_count, HPos'length));
    HRes <= std_logic_vector(to_unsigned(h_res, HRes'length));
    HMax <= std_logic_vector(to_unsigned(h_max, HMax'length));
-   VPos <= std_logic_vector(to_unsigned(V_count, VPos'length));
-   VRes <= std_logic_vector(to_unsigned(V_res, VRes'length));
-   VMax <= std_logic_vector(to_unsigned(V_max, VMax'length));
+   VPos <= std_logic_vector(to_unsigned(v_count, VPos'length));
+   VRes <= std_logic_vector(to_unsigned(v_res, VRes'length));
+   VMax <= std_logic_vector(to_unsigned(v_max, VMax'length));
 
    process (PixelClock) begin
       if rising_edge(PixelClock) then
       
-         -- Increment the scan location
-         if h_count = h_max then
-            h_count <= 0;
-            if v_count = v_max then
-               v_count <= 0;
-            else
-               v_count <= v_count+1;
-            end if;
-         else
-            h_count <= h_count+1;
-         end if;
-         
          if (h_count >= h_res or v_count >= v_res) then
          
             -- In a blanking region; set color to black
@@ -146,6 +134,18 @@ begin
             green_level <= GreenPix;
             blue_level <= BluePix;
             
+         end if;
+         
+         -- Increment the scan location
+         if h_count = h_max then
+            h_count <= 0;
+            if v_count = v_max then
+               v_count <= 0;
+            else
+               v_count <= v_count+1;
+            end if;
+         else
+            h_count <= h_count+1;
          end if;
          
       end if;
