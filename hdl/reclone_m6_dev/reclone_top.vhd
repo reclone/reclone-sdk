@@ -12,9 +12,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-Library UNISIM;
-use UNISIM.vcomponents.all;
-
 entity reclone_top is
     Port (
             Clk50       : in  STD_LOGIC;
@@ -37,31 +34,6 @@ architecture Behavioral of reclone_top is
    
    signal red_mux   : std_logic_vector(7 downto 0);
 
-   signal red_t   : std_logic_vector(7 downto 0);
-   signal green_t : std_logic_vector(7 downto 0);
-   signal blue_t  : std_logic_vector(7 downto 0);
-   signal blank_t : std_logic;
-   signal hsync_t : std_logic;
-   signal vsync_t : std_logic;
-
-   signal tmds_out_red_t   : std_logic;
-   signal tmds_out_green_t : std_logic;
-   signal tmds_out_blue_t  : std_logic;
-   signal tmds_out_clock_t : std_logic;
-   
-     COMPONENT vga_gen
-   PORT(
-      clk75 : IN std_logic;          
-      red   : OUT std_logic_vector(7 downto 0);
-      green : OUT std_logic_vector(7 downto 0);
-      blue  : OUT std_logic_vector(7 downto 0);
-      blank : OUT std_logic;
-      hsync : OUT std_logic;
-      vsync : OUT std_logic;
-      pattern  : in STD_LOGIC_VECTOR (3 downto 0)
-
-      );
-   END COMPONENT;
 
    COMPONENT clocking
    PORT(
@@ -92,7 +64,34 @@ architecture Behavioral of reclone_top is
       );
    END COMPONENT;
 
-
+   component DvidGen
+   port
+   (
+      PixelClock     : in  std_logic;
+      PixelClockX2   : in  std_logic;
+      PixelClockX10  : in  std_logic;
+      SerStrobe      : in  std_logic;
+      RedPix         : in  std_logic_vector (7 downto 0);
+      GreenPix       : in  std_logic_vector (7 downto 0);
+      BluePix        : in  std_logic_vector (7 downto 0);
+      
+      HPos        : out std_logic_vector (11 downto 0);
+      HRes        : out std_logic_vector (11 downto 0);
+      HMax        : out std_logic_vector (11 downto 0);
+      VPos        : out std_logic_vector (11 downto 0);
+      VRes        : out std_logic_vector (11 downto 0);
+      VMax        : out std_logic_vector (11 downto 0);
+      
+      TmdsRedP    : out std_logic;
+      TmdsRedN    : out std_logic;
+      TmdsGreenP  : out std_logic;
+      TmdsGreenN  : out std_logic;
+      TmdsBlueP   : out std_logic;
+      TmdsBlueN   : out std_logic;
+      TmdsClockP  : out std_logic;
+      TmdsClockN  : out std_logic
+   );
+   end component;
    
 begin
 
@@ -119,43 +118,31 @@ Inst_clocking: clocking PORT MAP(
    );
 
    
-i_vga_gen: vga_gen PORT MAP(
-      clk75 => pixel_clock_t,
-      red   => green_t,
-      green => red_t,
-      blue  => blue_t,
-      blank => blank_t,
-      hsync => hsync_t,
-      vsync => vsync_t,
-      pattern => Switches
+   Inst_DvidGen : DvidGen port map
+   (
+      PixelClock => pixel_clock_t,
+      PixelClockX2 => data_load_clock_t,
+      PixelClockX10 => ioclock_t,
+      SerStrobe => serdes_strobe_t,
+      RedPix => (others => '0'),
+      GreenPix => std_logic_vector(to_unsigned(255, 8)),
+      BluePix => (others => '0'),
+      HPos => open,
+      HRes => open,
+      HMax => open,
+      VPos => open,
+      VRes => open,
+      VMax => open,
+      TmdsBlueP => TMDS_Out_P(0),
+      TmdsBlueN => TMDS_Out_N(0),
+      TmdsRedP => TMDS_Out_P(1),
+      TmdsRedN => TMDS_Out_N(1),
+      TmdsGreenP => TMDS_Out_P(2),
+      TmdsGreenN => TMDS_Out_N(2),
+      TmdsClockP => TMDS_Out_P(3),
+      TmdsClockN => TMDS_Out_N(3)
    );
 
-      
-
-i_dvid_out: DvidSer PORT MAP(
-      PixelClock     => pixel_clock_t,
-      DataLoadClock => data_load_clock_t,
-      IOClock         => ioclock_t,
-      SerStrobe   => serdes_strobe_t,
-
-      RedPix           => red_t,
-      GreenPix         => green_t,
-      BluePix          => blue_t,
-      Blank           => blank_t,
-      HSync           => hsync_t,
-      VSync           => vsync_t,
-      
-      RedSer           => tmds_out_red_t,
-      GreenSer         => tmds_out_green_t,
-      BlueSer          => tmds_out_blue_t,
-      ClockSer         => tmds_out_clock_t
-   );
-   
-  
-OBUFDS_blue  : OBUFDS port map ( O  => tmds_out_p(0), OB => tmds_out_n(0), I  => tmds_out_blue_t);
-OBUFDS_red   : OBUFDS port map ( O  => tmds_out_p(1), OB => tmds_out_n(1), I  => tmds_out_green_t);
-OBUFDS_green : OBUFDS port map ( O  => tmds_out_p(2), OB => tmds_out_n(2), I  => tmds_out_red_t);
-OBUFDS_clock : OBUFDS port map ( O  => tmds_out_p(3), OB => tmds_out_n(3), I  => tmds_out_clock_t);
 
 end Behavioral;
 

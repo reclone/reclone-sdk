@@ -2,7 +2,7 @@
 -- Module Name:   DvidSer - Behavioral
 -- Description:   Serializes VGA signals into DVI-D bitstreams.
 --                Timing inputs are:
---                 - The pixel clock (74.125MHz or 74.25MHz for 720p, 1080i, 1080p30)
+--                 - The pixel clock (74.175MHz or 74.25MHz for 720p, 1080i, 1080p30)
 --                 - The data load clock (pixel clock x2)
 --                 - The I/O clock (pixel clock x10)
 --                 - The serializer strobe (twice per pixel clock to load serializers)
@@ -59,34 +59,34 @@ architecture Behavioral of DvidSer is
    end component;
 
    component MultiRateFifo
-   generic
-   (
-      DATA_WIDTH :integer := 8;
-      ADDR_WIDTH :integer := 4
-   );
-   port
-   (
-      DataOut     :out std_logic_vector (DATA_WIDTH-1 downto 0);
-      Empty       :out std_logic;
-      ReadEn      :in  std_logic;
-      ReadClk     :in  std_logic;
-      DataIn      :in  std_logic_vector (DATA_WIDTH-1 downto 0);
-      Full        :out std_logic;
-      WriteEn     :in  std_logic;
-      WriteClk    :in  std_logic;
-      Clear       :in  std_logic
-   );
+      generic
+      (
+         DATA_WIDTH :integer := 8;
+         ADDR_WIDTH :integer := 4
+      );
+      port
+      (
+         DataOut     :out std_logic_vector (DATA_WIDTH-1 downto 0);
+         Empty       :out std_logic;
+         ReadEn      :in  std_logic;
+         ReadClk     :in  std_logic;
+         DataIn      :in  std_logic_vector (DATA_WIDTH-1 downto 0);
+         Full        :out std_logic;
+         WriteEn     :in  std_logic;
+         WriteClk    :in  std_logic;
+         Clear       :in  std_logic
+      );
    end component;
 
    component OutputSerializer5Bit
-   port
-   (
-      LoadClk     : in  std_logic;
-      OutputClk   : in  std_logic;
-      Strobe      : in  std_logic;
-      SerData     : in  std_logic_vector(4 downto 0);
-      SerOutput   : out std_logic
-   );
+      port
+      (
+         LoadClk     : in  std_logic;
+         OutputClk   : in  std_logic;
+         Strobe      : in  std_logic;
+         SerData     : in  std_logic_vector(4 downto 0);
+         SerOutput   : out std_logic
+      );
    end component;
 
    signal encoded_red, encoded_green, encoded_blue : std_logic_vector(9 downto 0);
