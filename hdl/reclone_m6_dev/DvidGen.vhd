@@ -71,16 +71,16 @@ architecture Behavioral of DvidGen is
    signal tmds_out_clock   : std_logic;
    
    -- Timing may be configurable in the future
-   signal h_count          : natural := 0;
-   signal h_res            : natural := 1280;
-   signal h_sync_start     : natural := 1280+72;
-   signal h_sync_end       : natural := 1280+80;
-   signal h_max            : natural := 1647;
-   signal v_count          : natural := 0;
-   signal v_res            : natural := 720;
-   signal v_sync_start     : natural := 720+3;
-   signal v_sync_end       : natural := 720+5;
-   signal v_max            : natural := 749;
+   signal h_count          : unsigned(11 downto 0) := to_unsigned(0, 12);
+   constant h_res          : unsigned(11 downto 0) := to_unsigned(1280, 12);
+   constant h_sync_start   : unsigned(11 downto 0) := to_unsigned(1280+72, 12);
+   constant h_sync_end     : unsigned(11 downto 0) := to_unsigned(1280+80, 12);
+   constant h_max          : unsigned(11 downto 0) := to_unsigned(1647, 12);
+   signal v_count          : unsigned(11 downto 0) := to_unsigned(0, 12);
+   constant v_res          : unsigned(11 downto 0) := to_unsigned(720, 12);
+   constant v_sync_start   : unsigned(11 downto 0) := to_unsigned(720+3, 12);
+   constant v_sync_end     : unsigned(11 downto 0) := to_unsigned(720+5, 12);
+   constant v_max          : unsigned(11 downto 0) := to_unsigned(749, 12);
    
    signal blank            : std_logic;
    signal hsync            : std_logic;
@@ -92,12 +92,12 @@ architecture Behavioral of DvidGen is
 
 begin
 
-   HPos <= std_logic_vector(to_unsigned(h_count, HPos'length));
-   HRes <= std_logic_vector(to_unsigned(h_res, HRes'length));
-   HMax <= std_logic_vector(to_unsigned(h_max, HMax'length));
-   VPos <= std_logic_vector(to_unsigned(v_count, VPos'length));
-   VRes <= std_logic_vector(to_unsigned(v_res, VRes'length));
-   VMax <= std_logic_vector(to_unsigned(v_max, VMax'length));
+   HPos <= std_logic_vector(h_count);
+   HRes <= std_logic_vector(h_res);
+   HMax <= std_logic_vector(h_max);
+   VPos <= std_logic_vector(v_count);
+   VRes <= std_logic_vector(v_res);
+   VMax <= std_logic_vector(v_max);
 
    process (PixelClock) begin
       if rising_edge(PixelClock) then
@@ -138,9 +138,9 @@ begin
          
          -- Increment the scan location
          if h_count = h_max then
-            h_count <= 0;
+            h_count <= to_unsigned(0, h_count'length);
             if v_count = v_max then
-               v_count <= 0;
+               v_count <= to_unsigned(0, v_count'length);
             else
                v_count <= v_count+1;
             end if;
