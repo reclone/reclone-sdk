@@ -39,10 +39,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -65,7 +62,9 @@ end TextRenderer;
 architecture Behavioral of TextRenderer is
 
 begin
-
+   RedPix <= std_logic_vector(to_unsigned(0, RedPix'length));
+   GreenPix <= std_logic_vector(to_unsigned(128, RedPix'length));
+   BluePix <= std_logic_vector(to_unsigned(255, RedPix'length));
 
 end Behavioral;
 

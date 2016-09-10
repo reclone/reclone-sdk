@@ -83,7 +83,7 @@ architecture Behavioral of reclone_top is
    );
    end component;
    
-   component FrameRender
+   component TextRenderer
     Port ( RedPix : out  STD_LOGIC_VECTOR (7 downto 0);
            GreenPix : out  STD_LOGIC_VECTOR (7 downto 0);
            BluePix : out  STD_LOGIC_VECTOR (7 downto 0);
@@ -149,7 +149,7 @@ Inst_clocking: clocking PORT MAP(
       TmdsClockN => TMDS_Out_N(3)
    );
 
-   renderer : FrameRender port map
+   renderer : TextRenderer port map
    (
       RedPix => red_val,
       GreenPix => green_val,
