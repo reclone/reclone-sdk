@@ -24,9 +24,28 @@ begin
    h_pos <= to_integer(unsigned(HPos));
    v_pos <= to_integer(unsigned(VPos));
 
-   RedPix <= std_logic_vector(to_unsigned(255, 8)) when (h_pos = 0 or h_pos = 40 or h_pos = 1279 or h_pos = 1240) else (others => '0');
-   GreenPix <= std_logic_vector(to_unsigned(255, 8)) when (v_pos = 0 or v_pos = 20 or h_pos = 1279 or h_pos = 1240) else (others => '0');
-   BluePix <= std_logic_vector(to_unsigned(255, 8)) when (v_pos = 719 or v_pos = 700) else (others => '0');
+   process (PixelClock) begin
+      if rising_edge(PixelClock) then
+         if (h_pos = 0 or h_pos = 40 or h_pos = 1279 or h_pos = 1240) then
+            RedPix <= std_logic_vector(to_unsigned(255, 8));
+         else
+            RedPix <= (others => '0');
+         end if;
+         
+         if (v_pos = 0 or v_pos = 20 or h_pos = 1279 or h_pos = 1240) then
+            GreenPix <= std_logic_vector(to_unsigned(255, 8));
+         else
+            GreenPix <= (others => '0');
+         end if;
+         
+         if (v_pos = 719 or v_pos = 700) then
+            BluePix <= std_logic_vector(to_unsigned(255, 8));
+         else
+            BluePix <= (others => '0');
+         end if;
+      end if;
 
+   end process;
+   
 end Behavioral;
 

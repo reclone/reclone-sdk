@@ -72,11 +72,13 @@ architecture Behavioral of DvidGen is
    
    -- Timing may be configurable in the future
    signal h_count          : unsigned(11 downto 0) := to_unsigned(0, 12);
+   signal h_next           : unsigned(11 downto 0) := to_unsigned(1, 12);
    constant h_res          : unsigned(11 downto 0) := to_unsigned(1280, 12);
    constant h_sync_start   : unsigned(11 downto 0) := to_unsigned(1280+72, 12);
    constant h_sync_end     : unsigned(11 downto 0) := to_unsigned(1280+80, 12);
    constant h_max          : unsigned(11 downto 0) := to_unsigned(1647, 12);
-   signal v_count          : unsigned(11 downto 0) := to_unsigned(0, 12);
+   signal v_count          : unsigned(11 downto 0) := to_unsigned(720, 12);
+   signal v_next           : unsigned(11 downto 0) := to_unsigned(720, 12);
    constant v_res          : unsigned(11 downto 0) := to_unsigned(720, 12);
    constant v_sync_start   : unsigned(11 downto 0) := to_unsigned(720+3, 12);
    constant v_sync_end     : unsigned(11 downto 0) := to_unsigned(720+5, 12);
@@ -92,10 +94,10 @@ architecture Behavioral of DvidGen is
 
 begin
 
-   HPos <= std_logic_vector(h_count);
+   HPos <= std_logic_vector(h_next);
    HRes <= std_logic_vector(h_res);
    HMax <= std_logic_vector(h_max);
-   VPos <= std_logic_vector(v_count);
+   VPos <= std_logic_vector(v_next);
    VRes <= std_logic_vector(v_res);
    VMax <= std_logic_vector(v_max);
 
@@ -136,16 +138,22 @@ begin
             
          end if;
          
-         -- Increment the scan location
-         if h_count = h_max then
-            h_count <= to_unsigned(0, h_count'length);
-            if v_count = v_max then
-               v_count <= to_unsigned(0, v_count'length);
+         -- Update the current scan location
+         h_count <= h_next;
+         v_count <= v_next;
+         
+         -- Increment the next scan location
+         -- to keep HPos and VPos one pixel ahead of the scan
+         -- to give the renderer one pixel clock to prepare pixel data
+         if h_next = h_max then
+            h_next <= to_unsigned(0, h_next'length);
+            if v_next = v_max then
+               v_next <= to_unsigned(0, v_next'length);
             else
-               v_count <= v_count+1;
+               v_next <= v_next + 1;
             end if;
          else
-            h_count <= h_count+1;
+            h_next <= h_next + 1;
          end if;
          
       end if;
