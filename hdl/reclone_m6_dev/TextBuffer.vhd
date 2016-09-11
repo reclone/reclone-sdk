@@ -66,7 +66,7 @@ architecture Behavioral of TextBuffer is
 begin
 
    process (ClkA) begin
-      if (ClkA'event and ClkA = '1' ) then
+      if (ClkA'event and ClkA = '1') then
          if (WriteEnable = '1') then
             RAM(to_integer(unsigned(AddrA))) <= DataInA;
          end if;

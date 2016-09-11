@@ -99,17 +99,36 @@ architecture Behavioral of TextRenderer is
    );
    end component;
    
+   component GlyphRom
+   port
+   (
+      Clock    : in  std_logic;
+      Enable   : in  std_logic;
+      Address  : in  std_logic_vector(11 downto 0);
+      Data     : out std_logic_vector(7 downto 0)
+   );
+   end component;
 
-   
+   signal hpos_latched : std_logic_vector(11 downto 0);
+   signal vpos_latched : std_logic_vector(11 downto 0);
    signal character_data : std_logic_vector(15 downto 0) := "0000000000000000";
    signal character_addr : std_logic_vector(11 downto 0) := "000000000000";
    signal char_blink : std_logic;
-   signal bgcolor : std_logic_vector(2 downto 0);
-   signal fgcolor : std_logic_vector(3 downto 0);
+   signal bgcolor : std_logic_vector(23 downto 0);
+   signal fgcolor : std_logic_vector(23 downto 0);
    signal code_point : std_logic_vector(7 downto 0);
+   signal glyph_row : std_logic_vector(7 downto 0);
+   signal use_foreground_color : std_logic;
    signal rgb : std_logic_vector(23 downto 0);
    
 begin
+
+   process (PixelClock) begin
+      if (PixelClock'event and PixelClock = '1') then
+         hpos_latched <= HPos;
+         vpos_latched <= VPos;
+      end if;   
+   end process;
 
    character_addr <= VPos(8 downto 4) & HPos(9 downto 3);
 
@@ -125,15 +144,27 @@ begin
       DataOutB => character_data
    );
    
+   character_rom : GlyphRom port map
+   (
+      Clock => PixelClock,
+      Enable => '1',
+      Address => code_point & vpos_latched(3 downto 0),
+      Data => glyph_row
+   );
+   
    char_blink <= character_data(15);
-   bgcolor <= character_data(14 downto 12);
-   fgcolor <= character_data(11 downto 8);
+   bgcolor <= text_colors(to_integer(unsigned(character_data(14 downto 12))));
+   fgcolor <= text_colors(to_integer(unsigned(character_data(11 downto 8))));
    code_point <= character_data(7 downto 0);
-   rgb <= text_colors(to_integer(unsigned(bgcolor)));
+   
+   use_foreground_color <= glyph_row(7 - to_integer(unsigned(hpos_latched(2 downto 0))));
+   
+   rgb <= fgcolor when (use_foreground_color = '1') else bgcolor;
 
    RedPix <= rgb(23 downto 16);
    GreenPix <= rgb(15 downto 8);
    BluePix <= rgb(7 downto 0);
+   
 end Behavioral;
 
 ----------------------------------------------------------------------------------
@@ -159,4 +190,5 @@ end Behavioral;
 --                POSSIBILITY OF SUCH DAMAGE.
 --                https://opensource.org/licenses/BSD-2-Clause
 ----------------------------------------------------------------------------------
+
 
