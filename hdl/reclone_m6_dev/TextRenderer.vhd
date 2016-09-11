@@ -61,11 +61,79 @@ end TextRenderer;
 
 architecture Behavioral of TextRenderer is
 
-begin
-   RedPix <= std_logic_vector(to_unsigned(0, RedPix'length));
-   GreenPix <= std_logic_vector(to_unsigned(128, RedPix'length));
-   BluePix <= std_logic_vector(to_unsigned(255, RedPix'length));
+   type palette_type is array (0 to 15) of std_logic_vector (23 downto 0);
 
+   constant character_columns : natural := 128;
+   constant character_rows : natural := 32;
+   constant text_colors : palette_type :=
+   (
+      x"000000",  --black
+      x"0000A8",  --blue
+      x"00A800",  --green
+      x"00A8A8",  --cyan
+      x"A80000",  --red
+      x"A800A8",  --magenta
+      x"A8A800",  --brown
+      x"D0D0D0",  --white
+      x"A8A8A8",  --dark gray
+      x"0000FF",  --bright blue
+      x"00FF00",  --bright green
+      x"00FFFF",  --bright cyan
+      x"FF0000",  --bright red
+      x"FF00FF",  --bright magenta
+      x"FFFF00",  --yellow
+      x"FFFFFF"   --bright white
+   );
+   
+   component TextBuffer
+   port
+   (
+      ClkA        : in  std_logic;
+      WriteEnable : in  std_logic;
+      AddrA       : in  std_logic_vector(11 downto 0);
+      DataInA     : in  std_logic_vector(15 downto 0);
+      DataOutA    : out std_logic_vector(15 downto 0);
+      ClkB        : in  std_logic;
+      AddrB       : in  std_logic_vector(11 downto 0);
+      DataOutB    : out std_logic_vector(15 downto 0)
+   );
+   end component;
+   
+
+   
+   signal character_data : std_logic_vector(15 downto 0) := "0000000000000000";
+   signal character_addr : std_logic_vector(11 downto 0) := "000000000000";
+   signal char_blink : std_logic;
+   signal bgcolor : std_logic_vector(2 downto 0);
+   signal fgcolor : std_logic_vector(3 downto 0);
+   signal code_point : std_logic_vector(7 downto 0);
+   signal rgb : std_logic_vector(23 downto 0);
+   
+begin
+
+   character_addr <= VPos(8 downto 4) & HPos(9 downto 3);
+
+   text_buffer : TextBuffer port map
+   (
+      ClkA => '0',
+      WriteEnable => '0',
+      AddrA => "000000000000",
+      DataInA => "0000000000000000",
+      DataOutA => open,
+      ClkB => PixelClock,
+      AddrB => character_addr,
+      DataOutB => character_data
+   );
+   
+   char_blink <= character_data(15);
+   bgcolor <= character_data(14 downto 12);
+   fgcolor <= character_data(11 downto 8);
+   code_point <= character_data(7 downto 0);
+   rgb <= text_colors(to_integer(unsigned(bgcolor)));
+
+   RedPix <= rgb(23 downto 16);
+   GreenPix <= rgb(15 downto 8);
+   BluePix <= rgb(7 downto 0);
 end Behavioral;
 
 ----------------------------------------------------------------------------------
@@ -91,3 +159,4 @@ end Behavioral;
 --                POSSIBILITY OF SUCH DAMAGE.
 --                https://opensource.org/licenses/BSD-2-Clause
 ----------------------------------------------------------------------------------
+
