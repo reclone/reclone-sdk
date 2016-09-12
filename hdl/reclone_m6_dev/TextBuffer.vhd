@@ -60,7 +60,7 @@ architecture Behavioral of TextBuffer is
    end function;
 
    
-   signal RAM : ram_type := InitRamFromFile("TextBuffer.init");
+   signal RAM : ram_type := InitRamFromFile("TextBuffer.txt");
    signal read_addr_a : std_logic_vector(11 downto 0);
    signal read_addr_b : std_logic_vector(11 downto 0);
 begin

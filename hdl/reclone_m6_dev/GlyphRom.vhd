@@ -53,7 +53,7 @@ architecture Behavioral of GlyphRom is
       return ROM;
    end function;
    
-   signal rom : rom_type := InitRomFromFile("GlyphRom.init");
+   signal rom : rom_type := InitRomFromFile("GlyphRom.txt");
 begin
 
    process (Clock) begin
