@@ -130,7 +130,7 @@ begin
       end if;   
    end process;
 
-   character_addr <= VPos(8 downto 4) & HPos(9 downto 3);
+   character_addr <= VPos(9 downto 5) & HPos(10 downto 4);
 
    text_buffer : TextBuffer port map
    (
@@ -148,7 +148,7 @@ begin
    (
       Clock => PixelClock,
       Enable => '1',
-      Address => code_point & vpos_latched(3 downto 0),
+      Address => code_point & vpos_latched(4 downto 1),
       Data => glyph_row
    );
    
@@ -157,7 +157,7 @@ begin
    fgcolor <= text_colors(to_integer(unsigned(character_data(11 downto 8))));
    code_point <= character_data(7 downto 0);
    
-   use_foreground_color <= glyph_row(7 - to_integer(unsigned(hpos_latched(2 downto 0))));
+   use_foreground_color <= glyph_row(7 - to_integer(unsigned(hpos_latched(3 downto 1))));
    
    rgb <= fgcolor when (use_foreground_color = '1') else bgcolor;
 
