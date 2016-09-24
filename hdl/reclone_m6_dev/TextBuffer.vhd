@@ -31,12 +31,20 @@ use std.textio.all;
 entity TextBuffer is
    port
    (
-      ClkA        : in  std_logic;
-      WriteEnable : in  std_logic;
-      AddrA       : in  std_logic_vector(11 downto 0);
-      DataInA     : in  std_logic_vector(15 downto 0);
-      DataOutA    : out std_logic_vector(15 downto 0);
+      -- Wishbone slave interface
+      RST_I       : in  std_logic;
+      CLK_I       : in  std_logic;
+      ADR_I       : in  std_logic_vector(11 downto 0);
+      DAT_I       : in  std_logic_vector(15 downto 0);
+      DAT_O       : out std_logic_vector(15 downto 0);
+      WE_I        : in  std_logic;
+      SEL_I       : in  std_logic;
+      STB_I       : in  std_logic;
+      ACK_O       : out std_logic;
+      CYC_I       : in  std_logic;
+      STALL_O     : out std_logic;
       
+      -- Read-only interface for text renderer
       ClkB        : in  std_logic;
       AddrB       : in  std_logic_vector(11 downto 0);
       DataOutB    : out std_logic_vector(15 downto 0)
@@ -61,28 +69,40 @@ architecture Behavioral of TextBuffer is
 
    
    signal RAM : ram_type := InitRamFromFile("TextBuffer.txt");
-   signal read_addr_a : std_logic_vector(11 downto 0);
-   signal read_addr_b : std_logic_vector(11 downto 0);
+   signal ack_out : std_logic := '0';
+   signal dat_a_out : std_logic_vector(15 downto 0) := (others => '0');
+   signal dat_b_out : std_logic_vector(15 downto 0) := (others => '0');
 begin
 
-   process (ClkA) begin
-      if (ClkA'event and ClkA = '1') then
-         if (WriteEnable = '1') then
-            RAM(to_integer(unsigned(AddrA))) <= DataInA;
+   process (CLK_I) begin
+      if rising_edge(CLK_I) then
+         if (RST_I = '1') then
+            ack_out <= '0';
+         else
+            if (SEL_I = '1' and CYC_I = '1' and STB_I = '1') then
+               if (WE_I = '1') then
+                  RAM(to_integer(unsigned(ADR_I))) <= DAT_I;
+               else
+                  dat_a_out <= RAM(to_integer(unsigned(ADR_I)));
+               end if;
+               ack_out <= '1';
+            else
+               ack_out <= '0';
+            end if;
          end if;
-         read_addr_a <= AddrA;
       end if;
    end process;
    
-   DataOutA <= RAM(to_integer(unsigned(read_addr_a)));
+   DAT_O <= dat_a_out;
+   STALL_O <= '0';
    
    process (ClkB) begin
-      if (ClkB'event and ClkB= '1' ) then
-         read_addr_b <= AddrB;
+      if rising_edge(ClkB) then
+         dat_b_out <= RAM(to_integer(unsigned(AddrB)));
       end if;
    end process;
    
-   DataOutB <= RAM(to_integer(unsigned(read_addr_b)));
+   DataOutB <= dat_b_out;
 
 end Behavioral;
 

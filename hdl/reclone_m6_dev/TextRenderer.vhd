@@ -88,11 +88,20 @@ architecture Behavioral of TextRenderer is
    component TextBuffer
    port
    (
-      ClkA        : in  std_logic;
-      WriteEnable : in  std_logic;
-      AddrA       : in  std_logic_vector(11 downto 0);
-      DataInA     : in  std_logic_vector(15 downto 0);
-      DataOutA    : out std_logic_vector(15 downto 0);
+      -- Wishbone slave interface
+      RST_I       : in  std_logic;
+      CLK_I       : in  std_logic;
+      ADR_I       : in  std_logic_vector(11 downto 0);
+      DAT_I       : in  std_logic_vector(15 downto 0);
+      DAT_O       : out std_logic_vector(15 downto 0);
+      WE_I        : in  std_logic;
+      SEL_I       : in  std_logic;
+      STB_I       : in  std_logic;
+      ACK_O       : out std_logic;
+      CYC_I       : in  std_logic;
+      STALL_O     : out std_logic;
+      
+      -- Read-only interface for text renderer
       ClkB        : in  std_logic;
       AddrB       : in  std_logic_vector(11 downto 0);
       DataOutB    : out std_logic_vector(15 downto 0)
@@ -134,11 +143,17 @@ begin
 
    text_buffer : TextBuffer port map
    (
-      ClkA => '0',
-      WriteEnable => '0',
-      AddrA => "000000000000",
-      DataInA => "0000000000000000",
-      DataOutA => open,
+      RST_I => '0',
+      CLK_I => '0',
+      WE_I => '0',
+      ADR_I => "000000000000",
+      DAT_I => "0000000000000000",
+      DAT_O => open,
+      SEL_I => '0',
+      STB_I => '0',
+      ACK_O => open,
+      CYC_I => '0',
+      STALL_O  => open,
       ClkB => PixelClock,
       AddrB => character_addr,
       DataOutB => character_data
