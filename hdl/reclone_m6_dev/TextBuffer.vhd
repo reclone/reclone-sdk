@@ -95,6 +95,7 @@ begin
    
    DAT_O <= dat_a_out;
    STALL_O <= '0';
+   ACK_O <= ack_out;
    
    process (ClkB) begin
       if rising_edge(ClkB) then

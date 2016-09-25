@@ -1,7 +1,13 @@
 ----------------------------------------------------------------------------------
 -- Module Name:   TextRenderer - Behavioral
--- Description:   Generates pixel color data based on a text buffer RAM and a
---                Code Page 437 (a.k.a. ANSI) 8x16 character ROM.
+-- Description:   Generates pixel color data based on a 128x32 text buffer RAM
+--                and a IBM PC Code Page 437 (a.k.a. ANSI) MCGA 8x16 character ROM.
+--
+--                The renderer is designed for 1280x720 screen resolution.  When
+--                the characters are scaled by 200% to 16x32, the screen can show
+--                80 columns by 22.5 rows of text.  The 22 visible rows are shifted
+--                down by 8 pixels so that they are centered vertically on the screen.
+--                The top and bottom quarter-rows can be used for special bordering.
 --
 --                Each character in the text buffer is 16 bits wide:
 --                 15     8 7      0
@@ -51,12 +57,12 @@ entity TextRenderer is
            GreenPix : out  STD_LOGIC_VECTOR (7 downto 0);
            BluePix : out  STD_LOGIC_VECTOR (7 downto 0);
            PixelClock : in  STD_LOGIC;
-           HPos : in  STD_LOGIC_VECTOR (11 downto 0);
-           HRes : in  STD_LOGIC_VECTOR (11 downto 0);
-           HMax : in  STD_LOGIC_VECTOR (11 downto 0);
-           VPos : in  STD_LOGIC_VECTOR (11 downto 0);
-           VRes : in  STD_LOGIC_VECTOR (11 downto 0);
-           VMax : in  STD_LOGIC_VECTOR (11 downto 0));
+           HPos : in  STD_LOGIC_VECTOR (11 downto 0); -- Next horizontal pixel position
+           HRes : in  STD_LOGIC_VECTOR (11 downto 0); -- Horizontal visible resolution
+           HMax : in  STD_LOGIC_VECTOR (11 downto 0); -- Max horizontal count
+           VPos : in  STD_LOGIC_VECTOR (11 downto 0); -- Next vertical pixel position
+           VRes : in  STD_LOGIC_VECTOR (11 downto 0); -- Vertical visible resolution
+           VMax : in  STD_LOGIC_VECTOR (11 downto 0));-- Max vertical count
 end TextRenderer;
 
 architecture Behavioral of TextRenderer is
