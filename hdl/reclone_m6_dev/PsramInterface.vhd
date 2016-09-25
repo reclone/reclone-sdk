@@ -44,14 +44,14 @@ entity PsramInterface is
       -- Wishbone Master interface
       RST_I       : in  std_logic;
       CLK_I       : in  std_logic;
-      ADR_O       : out std_logic_vector(23 downto 0);
+      ADR_O       : out std_logic_vector(23 downto 0) := (others => '0');
       DAT_I       : in  std_logic_vector(15 downto 0);
-      DAT_O       : out std_logic_vector(15 downto 0);
-      WE_O        : out std_logic;
-      STB_O       : out std_logic;
+      DAT_O       : out std_logic_vector(15 downto 0) := (others => '0');
+      WE_O        : out std_logic := '0';
+      STB_O       : out std_logic := '0';
       STALL_I     : in std_logic;
       ACK_I       : in  std_logic;
-      CYC_O       : out std_logic
+      CYC_O       : out std_logic := '0'
    );
 end PsramInterface;
 
@@ -60,7 +60,6 @@ architecture Behavioral of PsramInterface is
 
    signal psram_state      : psram_state_enum := PSRAM_ADDR;
    signal data_out         : std_logic_vector(15 downto 0);
-   signal address_latched  : std_logic_vector(23 downto 0);
 begin
 
    AddrData <= data_out when NOutputEn = '0' else (others => 'Z');
@@ -75,7 +74,7 @@ begin
                when PSRAM_ADDR =>
                   -- When AddrValid is low, get the address
                   if NAddrValid = '0' then
-                     address_latched <= Address & AddrData;
+                     ADR_O <= Address & AddrData;
                      psram_state <= PSRAM_DATA;
                   end if;
                   
@@ -85,6 +84,7 @@ begin
                      NWait <= '0';
                      STB_O <= '1';
                      CYC_O <= '1';
+                     WE_O <= '0';
                      psram_state <= PSRAM_STALL;
                   elsif (NAddrValid = '1' and NWriteEn = '0') then
                      -- Write
@@ -92,6 +92,7 @@ begin
                      NWait <= '0';
                      STB_O <= '1';
                      CYC_O <= '1';
+                     WE_O <= '1';
                      psram_state <= PSRAM_STALL;
                   end if;
                
@@ -99,9 +100,13 @@ begin
                   -- Wait for the slave to not be stalled
                   if (STALL_I = '0' and ACK_I = '1') then
                      STB_O <= '0';
+                     WE_O <= '0';
+                     CYC_O <= '0';
+                     NWait <= '1';
                      psram_state <= PSRAM_COMPLETE;                  
                   elsif STALL_I = '0' then
                      STB_O <= '0';
+                     WE_O <= '0';
                      psram_state <= PSRAM_ACK;
                   end if;
                   
@@ -135,6 +140,7 @@ begin
             psram_state <= PSRAM_ADDR;
             STB_O <= '0';
             CYC_O <= '0';
+            WE_O <= '0';
          end if;
 
       end if;
