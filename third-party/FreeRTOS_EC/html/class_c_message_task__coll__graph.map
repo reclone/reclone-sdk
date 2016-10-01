@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$class_a_managed_task.html" title="AManagedTask" alt="" coords="5,195,117,224"/>
+<area shape="rect" id="node4" href="$class_c_task.html" title="CTask" alt="" coords="165,85,224,115"/>
+<area shape="rect" id="node6" href="$class_i_free_r_t_o_s_obj.html" title="IFreeRTOSObj" alt="" coords="193,5,300,35"/>
+<area shape="rect" id="node11" href="$class_c_queue.html" title="CQueue" alt="" coords="293,139,363,168"/>
+<area shape="rect" id="node9" href="$class_i_message_task_delegate.html" title="IMessageTaskDelegate" alt="" coords="420,195,577,224"/>
+</map>
