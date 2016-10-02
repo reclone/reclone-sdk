@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_a_sync_object.html" title="ASyncObject" alt="" coords="307,83,405,112"/>
+<area shape="rect" id="node13" href="$class_a_timer.html" title="ATimer" alt="" coords="429,83,491,112"/>
+<area shape="rect" id="node15" href="$class_c_queue.html" title="CQueue" alt="" coords="515,83,584,112"/>
+<area shape="rect" id="node17" href="$class_c_task.html" title="CTask" alt="" coords="608,83,667,112"/>
+<area shape="rect" id="node5" href="$class_c_binary_semaphore.html" title="CBinarySemaphore" alt="" coords="5,160,139,189"/>
+<area shape="rect" id="node7" href="$class_c_counting_semaphore.html" title="CCountingSemaphore" alt="" coords="163,160,309,189"/>
+<area shape="rect" id="node9" href="$class_c_mutex.html" title="CMutex" alt="" coords="333,160,400,189"/>
+<area shape="rect" id="node11" href="$class_c_recursive_mutex.html" title="CRecursiveMutex" alt="" coords="424,160,547,189"/>
+<area shape="rect" id="node19" href="$class_a_managed_task.html" title="AManagedTask" alt="" coords="581,160,693,189"/>
+<area shape="rect" id="node21" href="$class_c_message_task.html" title="CMessageTask" alt="" coords="581,237,693,267"/>
+</map>
