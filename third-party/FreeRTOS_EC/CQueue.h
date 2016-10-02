@@ -141,7 +141,7 @@ public:
 	/**
 	 * \sa <a href="http://www.freertos.org/vQueueAddToRegistry.html">vQueueAddToRegistry</a> FreeRTOS API function.
 	 */
-	inline void AddToRegistry(signed portCHAR *pcQueueName);
+	inline void AddToRegistry(portCHAR *pcQueueName);
 
 };
 
@@ -214,7 +214,7 @@ portBASE_TYPE CQueue::ReceiveFromISR(void *pvBuffer, portBASE_TYPE *pxTaskWoken)
 }
 
 inline
-void CQueue::AddToRegistry(signed portCHAR *pcQueueName) {
+void CQueue::AddToRegistry(portCHAR *pcQueueName) {
 #if (configQUEUE_REGISTRY_SIZE > 0)
 	assert(IsValid());
 

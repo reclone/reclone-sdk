@@ -36,7 +36,7 @@ portBASE_TYPE CTask::Create(pdTASK_CODE pvTaskCode, const portCHAR * const pcNam
 {
 	portBASE_TYPE res;
 	xTaskHandle handle;
-	res = xTaskCreate(pvTaskCode, (const signed char*)pcName, usStackDepth, pvParameters, uxPriority, &handle);
+	res = xTaskCreate(pvTaskCode, (const char*)pcName, usStackDepth, pvParameters, uxPriority, &handle);
 	if (res == pdTRUE)
 		Attach(handle);
 

@@ -30,7 +30,7 @@ void ATimer::Callback(xTimerHandle xTimer) {
 	static_cast<ATimer *>(pvTimerGetTimerID(xTimer))->OnExpired();
 }
 
-ATimer &ATimer::Create(const signed char *pcTimerName, portTickType xTimerPeriod, unsigned portBASE_TYPE uxAutoReload){//, void * pvTimerID, tmrTIMER_CALLBACK pxCallbackFunction) {
+ATimer &ATimer::Create(const char *pcTimerName, portTickType xTimerPeriod, unsigned portBASE_TYPE uxAutoReload){//, void * pvTimerID, tmrTIMER_CALLBACK pxCallbackFunction) {
 	assert(!IsValid());
 
 	xTimerHandle handle;

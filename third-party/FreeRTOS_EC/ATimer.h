@@ -71,7 +71,7 @@ public:
 	 *
 	 * \sa <a href="http://www.freertos.org/FreeRTOS-timers-xTimerCreate.html">xTimerCreate</a> FreeRTOS API function.
 	 */
-	ATimer &Create(const signed char *pcTimerName, portTickType xTimerPeriod, unsigned portBASE_TYPE uxAutoReload);
+	ATimer &Create(const char *pcTimerName, portTickType xTimerPeriod, unsigned portBASE_TYPE uxAutoReload);
 
 	/**
 	 * Application defined callback called when the timer expire.

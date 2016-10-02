@@ -242,7 +242,7 @@ unsigned portBASE_TYPE CTask::GetNumberOfTasks() {
 inline
 void CTask::GetTaskList(portCHAR *pcWriteBuffer) {
 #if ( configUSE_TRACE_FACILITY == 1 )
-	vTaskList((signed portCHAR*)pcWriteBuffer);
+	vTaskList(pcWriteBuffer);
 #endif
 }
 
