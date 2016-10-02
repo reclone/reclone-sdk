@@ -3,6 +3,7 @@
 	<name>BlinkyExample</name>
 	<comment></comment>
 	<projects>
+		<project>STM32CubeF4</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
