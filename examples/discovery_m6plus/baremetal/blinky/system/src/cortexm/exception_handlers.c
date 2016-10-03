@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 #include "cortexm/ExceptionHandlers.h"
-#include "cmsis_device.h"
+#include "cmsis/cmsis_device.h"
 #include "arm/semihosting.h"
 #include "diag/Trace.h"
 #include <string.h>

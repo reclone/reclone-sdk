@@ -6,7 +6,7 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-#include "cmsis_device.h"
+#include "cmsis/cmsis_device.h"
 
 // ----------------------------------------------------------------------------
 
