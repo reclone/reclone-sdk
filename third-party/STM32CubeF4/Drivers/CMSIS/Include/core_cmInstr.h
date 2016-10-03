@@ -531,7 +531,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
 __attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
 {
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
-  return (short)__builtin_bswap16(value);
+  return (short)__builtin_bswap16((int16_t)value);
 #else
   uint32_t result;
 
