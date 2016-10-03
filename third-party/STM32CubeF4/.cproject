@@ -7,6 +7,10 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Inc"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/CMSIS/Include"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Inc"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/STM32CubeF4/Debug"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="STM32CubeF4" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
@@ -54,18 +58,30 @@
 							<builder buildPath="${workspace_loc:/STM32CubeF4}/Debug" id="ilg.gnuarmeclipse.managedbuild.cross.builder.1020129696" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="ilg.gnuarmeclipse.managedbuild.cross.builder"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.103179682" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.106812839" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.586716527" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include}&quot;"/>
+								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.606250215" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.853912563" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.93689193" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;../Drivers/STM32F4xx_HAL_Driver/Inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../Drivers/CMSIS/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../Drivers/CMSIS/Device/ST/STM32F4xx/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../Drivers/STM32F4xx_HAL_Driver/Config&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include}&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1208999393" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.136744724" name="Cross ARM C++ Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler">
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.compiler.include.paths.1594005489" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include}&quot;"/>
+								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.input.1226756670" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.231681760" name="Cross ARM C Linker" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker">

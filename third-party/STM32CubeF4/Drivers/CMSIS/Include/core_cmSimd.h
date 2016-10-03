@@ -659,7 +659,7 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __QSUB(uint32_t op1,
 
 __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {
- int32_t result;
+ uint32_t result;
 
  __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
  return(result);
