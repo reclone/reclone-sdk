@@ -48,6 +48,11 @@ PROVIDE ( _Heap_Limit = __stack - __Main_Stack_Size ) ;
  */
 ENTRY(_start)
 
+/*
+ * This declares __isr_vectors undefined, to allow the vector table
+ * to be placed inside a static library.
+ */
+EXTERN(__isr_vectors)
 
 /* Sections Definitions */
 
