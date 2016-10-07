@@ -3,8 +3,10 @@
 	<name>BlinkyRTOS</name>
 	<comment></comment>
 	<projects>
-		<project>STM32CubeF4</project>
 		<project>Discovery_m6plus_BSP</project>
+		<project>FreeRTOS</project>
+		<project>FreeRTOS_EC</project>
+		<project>STM32CubeF4</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
