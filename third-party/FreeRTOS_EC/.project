@@ -3,6 +3,7 @@
 	<name>FreeRTOS_EC</name>
 	<comment></comment>
 	<projects>
+		<project>FreeRTOS</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
