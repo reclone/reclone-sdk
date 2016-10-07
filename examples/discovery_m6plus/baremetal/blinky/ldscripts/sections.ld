@@ -53,6 +53,11 @@ ENTRY(_start)
  * to be placed inside a static library.
  */
 EXTERN(__isr_vectors)
+EXTERN(_sbrk)
+EXTERN(_exit)
+EXTERN(abort)
+EXTERN(__assert_func)
+EXTERN(assert_failed)
 
 /* Sections Definitions */
 
