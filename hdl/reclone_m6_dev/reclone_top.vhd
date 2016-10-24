@@ -19,7 +19,14 @@ entity reclone_top is
             LEDs        : out STD_LOGIC_VECTOR(7 downto 0);
             TMDS_Out_P  : out STD_LOGIC_VECTOR(3 downto 0);
             TMDS_Out_N  : out STD_LOGIC_VECTOR(3 downto 0);
-            Switches    : in  STD_LOGIC_VECTOR(3 downto 0)
+            Switches    : in  STD_LOGIC_VECTOR(3 downto 0);
+            --FSMC_D      : in  STD_LOGIC_VECTOR(15 downto 15);
+            --FSMC_A      : in  STD_LOGIC_VECTOR(22 downto 22)
+            FSMC_NOE    : in  STD_LOGIC;
+            FSMC_NWE    : in  STD_LOGIC;
+            FSMC_NWAIT  : in  STD_LOGIC;
+            FSMC_NE1_NCE2: in STD_LOGIC;
+            FSMC_NL     : in  STD_LOGIC
          );
 end reclone_top;
 
@@ -99,17 +106,24 @@ architecture Behavioral of reclone_top is
    
 begin
 
+   LEDs(0) <= FSMC_NOE;
+   LEDs(1) <= FSMC_NWE;
+   LEDs(2) <= FSMC_NWAIT;
+   LEDs(3) <= FSMC_NE1_NCE2;
+   LEDs(4) <= FSMC_NL;
+   LEDs(5) <= '0';
+
    process(Clk50) begin
       if rising_edge(Clk50) then
          count50 <= count50 + 1;
-         LEDs(3 downto 0)  <= STD_LOGIC_VECTOR(count50(count50'high downto count50'high-3));      
+         LEDs(6)  <= count50(count50'high);      
       end if;
    end process;
    
    process(pixel_clock_t) begin
       if rising_edge(pixel_clock_t) then
          count32 <= count32 + 1;
-         LEDs(7 downto 4)  <= STD_LOGIC_VECTOR(count32(count32'high downto count32'high-3));      
+         LEDs(7)  <= count32(count32'high);      
       end if;
    end process;
 
