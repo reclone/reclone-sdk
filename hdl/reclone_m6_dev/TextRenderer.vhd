@@ -62,7 +62,10 @@ entity TextRenderer is
            HMax : in  STD_LOGIC_VECTOR (11 downto 0); -- Max horizontal count
            VPos : in  STD_LOGIC_VECTOR (11 downto 0); -- Next vertical pixel position
            VRes : in  STD_LOGIC_VECTOR (11 downto 0); -- Vertical visible resolution
-           VMax : in  STD_LOGIC_VECTOR (11 downto 0));-- Max vertical count
+           VMax : in  STD_LOGIC_VECTOR (11 downto 0);-- Max vertical count
+           TextBufAddr : out std_logic_vector(11 downto 0); -- Address output for the text buffer RAM
+           TextBufData : in std_logic_vector(15 downto 0) -- Data input for the text buffer RAM
+         );
 end TextRenderer;
 
 architecture Behavioral of TextRenderer is
@@ -91,29 +94,6 @@ architecture Behavioral of TextRenderer is
       x"FFFFFF"   --bright white
    );
    
-   component TextBuffer
-   port
-   (
-      -- Wishbone slave interface
-      RST_I       : in  std_logic;
-      CLK_I       : in  std_logic;
-      ADR_I       : in  std_logic_vector(11 downto 0);
-      DAT_I       : in  std_logic_vector(15 downto 0);
-      DAT_O       : out std_logic_vector(15 downto 0);
-      WE_I        : in  std_logic;
-      SEL_I       : in  std_logic;
-      STB_I       : in  std_logic;
-      ACK_O       : out std_logic;
-      CYC_I       : in  std_logic;
-      STALL_O     : out std_logic;
-      
-      -- Read-only interface for text renderer
-      ClkB        : in  std_logic;
-      AddrB       : in  std_logic_vector(11 downto 0);
-      DataOutB    : out std_logic_vector(15 downto 0)
-   );
-   end component;
-   
    component GlyphRom
    port
    (
@@ -126,8 +106,6 @@ architecture Behavioral of TextRenderer is
 
    signal hpos_latched : std_logic_vector(11 downto 0);
    signal vpos_latched : std_logic_vector(11 downto 0);
-   signal character_data : std_logic_vector(15 downto 0) := "0000000000000000";
-   signal character_addr : std_logic_vector(11 downto 0) := "000000000000";
    signal char_blink : std_logic;
    signal bgcolor : std_logic_vector(23 downto 0);
    signal fgcolor : std_logic_vector(23 downto 0);
@@ -145,26 +123,8 @@ begin
       end if;   
    end process;
 
-   character_addr <= VPos(9 downto 5) & HPos(10 downto 4);
+   TextBufAddr <= VPos(9 downto 5) & HPos(10 downto 4);
 
-   text_buffer : TextBuffer port map
-   (
-      RST_I => '0',
-      CLK_I => '0',
-      WE_I => '0',
-      ADR_I => "000000000000",
-      DAT_I => "0000000000000000",
-      DAT_O => open,
-      SEL_I => '0',
-      STB_I => '0',
-      ACK_O => open,
-      CYC_I => '0',
-      STALL_O  => open,
-      ClkB => PixelClock,
-      AddrB => character_addr,
-      DataOutB => character_data
-   );
-   
    character_rom : GlyphRom port map
    (
       Clock => PixelClock,
@@ -173,10 +133,10 @@ begin
       Data => glyph_row
    );
    
-   char_blink <= character_data(15);
-   bgcolor <= text_colors(to_integer(unsigned(character_data(14 downto 12))));
-   fgcolor <= text_colors(to_integer(unsigned(character_data(11 downto 8))));
-   code_point <= character_data(7 downto 0);
+   char_blink <= TextBufData(15);
+   bgcolor <= text_colors(to_integer(unsigned(TextBufData(14 downto 12))));
+   fgcolor <= text_colors(to_integer(unsigned(TextBufData(11 downto 8))));
+   code_point <= TextBufData(7 downto 0);
    
    use_foreground_color <= glyph_row(7 - to_integer(unsigned(hpos_latched(3 downto 1))));
    
