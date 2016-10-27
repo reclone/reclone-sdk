@@ -14,7 +14,7 @@ public:
    virtual ~FsmcTask() = default;
 
 private:
-
+   unsigned int counter = 0;
 
 };
 
