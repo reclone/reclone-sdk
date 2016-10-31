@@ -66,6 +66,8 @@ architecture Behavioral of reclone_top is
    signal textbuf_cyc_o : std_logic := '0';
 
    signal fsmc_addr : std_logic_vector(23 downto 16);
+   
+   signal fsmc_dbg : std_logic_vector(4 downto 0);
 
    COMPONENT clocking
    PORT(
@@ -145,7 +147,10 @@ architecture Behavioral of reclone_top is
       STB_O       : out std_logic := '0';
       STALL_I     : in std_logic;
       ACK_I       : in  std_logic;
-      CYC_O       : out std_logic := '0'
+      CYC_O       : out std_logic := '0';
+      
+      -- LEDs for debug
+      dbg         : out std_logic_vector(4 downto 0)
    );
    end component;
    
@@ -174,11 +179,7 @@ architecture Behavioral of reclone_top is
    
 begin
 
-   LEDs(0) <= FSMC_NOE;
-   LEDs(1) <= FSMC_NWE;
-   LEDs(2) <= FSMC_NWAIT;
-   LEDs(3) <= FSMC_NE1_NCE2;
-   LEDs(4) <= FSMC_NL;
+   LEDs(4 downto 0) <= fsmc_dbg;
    LEDs(5) <= '0';
 
    process(Clk50) begin
@@ -285,7 +286,8 @@ Inst_clocking: clocking PORT MAP(
       NOutputEn => FSMC_NOE,
       NWriteEn => FSMC_NWE,
       NChipSel => FSMC_NE1_NCE2,
-      NAddrValid => FSMC_NL
+      NAddrValid => FSMC_NL,
+      dbg => fsmc_dbg
    );
 
 end Behavioral;

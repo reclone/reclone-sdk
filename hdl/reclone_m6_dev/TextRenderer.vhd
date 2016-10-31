@@ -113,6 +113,7 @@ architecture Behavioral of TextRenderer is
    signal glyph_row : std_logic_vector(7 downto 0);
    signal use_foreground_color : std_logic;
    signal rgb : std_logic_vector(23 downto 0);
+   signal glyph_rom_addr : std_logic_vector(11 downto 0);
    
 begin
 
@@ -125,11 +126,13 @@ begin
 
    TextBufAddr <= VPos(9 downto 5) & HPos(10 downto 4);
 
+   glyph_rom_addr <= code_point & vpos_latched(4 downto 1);
+
    character_rom : GlyphRom port map
    (
       Clock => PixelClock,
       Enable => '1',
-      Address => code_point & vpos_latched(4 downto 1),
+      Address => glyph_rom_addr,
       Data => glyph_row
    );
    

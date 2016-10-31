@@ -51,7 +51,10 @@ entity PsramInterface is
       STB_O       : out std_logic := '0';
       STALL_I     : in std_logic;
       ACK_I       : in  std_logic;
-      CYC_O       : out std_logic := '0'
+      CYC_O       : out std_logic := '0';
+      
+      -- LEDs for debug
+      dbg         : out std_logic_vector(4 downto 0)
    );
 end PsramInterface;
 
@@ -60,22 +63,26 @@ architecture Behavioral of PsramInterface is
 
    signal psram_state      : psram_state_enum := PSRAM_ADDR;
    signal data_out         : std_logic_vector(15 downto 0);
+   signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
 begin
 
    AddrData <= data_out when NOutputEn = '0' else (others => 'Z');
+   
+   dbg <= dbg_out;
 
    process (CLK_I) is
    begin
       if rising_edge(CLK_I) then
          if NChipSel = '0' then
             -- Chip select is low (active)
-         
+            dbg_out(0) <= '1';
             case psram_state is
                when PSRAM_ADDR =>
                   -- When AddrValid is low, get the address
                   if NAddrValid = '0' then
                      ADR_O <= Address & AddrData;
                      psram_state <= PSRAM_DATA;
+                     dbg_out(1) <= '1';
                   end if;
                   
                when PSRAM_DATA =>
@@ -85,6 +92,7 @@ begin
                      STB_O <= '1';
                      CYC_O <= '1';
                      WE_O <= '0';
+                     dbg_out(2) <= '1';
                      psram_state <= PSRAM_STALL;
                   elsif (NAddrValid = '1' and NWriteEn = '0') then
                      -- Write
@@ -103,10 +111,12 @@ begin
                      WE_O <= '0';
                      CYC_O <= '0';
                      NWait <= '1';
+                     dbg_out(4) <= '1';
                      psram_state <= PSRAM_COMPLETE;                  
                   elsif STALL_I = '0' then
                      STB_O <= '0';
                      WE_O <= '0';
+                     dbg_out(3) <= '1';
                      psram_state <= PSRAM_ACK;
                   end if;
                   
@@ -126,6 +136,7 @@ begin
                   end if;
                
                when PSRAM_COMPLETE =>
+                  
                   -- Wait for NOutputEn and NWriteEn to de-assert
                   if (NOutputEn = '1' and NWriteEn = '1') then
                      psram_state <= PSRAM_ADDR;
