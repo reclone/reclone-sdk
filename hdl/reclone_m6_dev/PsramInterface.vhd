@@ -59,7 +59,7 @@ entity PsramInterface is
 end PsramInterface;
 
 architecture Behavioral of PsramInterface is
-   type psram_state_enum is (PSRAM_ADDR, PSRAM_DATA, PSRAM_STALL, PSRAM_ACK, PSRAM_COMPLETE);
+   type psram_state_enum is (PSRAM_ADDR, PSRAM_DATA, PSRAM_WRITE, PSRAM_STALL, PSRAM_ACK, PSRAM_COMPLETE);
 
    signal psram_state      : psram_state_enum := PSRAM_ADDR;
    signal data_out         : std_logic_vector(15 downto 0);
@@ -98,14 +98,18 @@ begin
                      dbg_out <= "00011";
                      psram_state <= PSRAM_STALL;
                   elsif (NAddrValid = '1' and NWriteEn = '0') then
-                     -- Write
-                     DAT_O <= AddrData;
-                     NWait <= '0';
-                     STB_O <= '1';
-                     CYC_O <= '1';
-                     WE_O <= '1';
-                     psram_state <= PSRAM_STALL;
+                     -- Write next cycle, when AddressHoldTime expires
+                     psram_state <= PSRAM_WRITE;
                   end if;
+               
+               when PSRAM_WRITE =>
+                  -- We should now be in the DataSetup period
+                  DAT_O <= AddrData;
+                  NWait <= '0';
+                  STB_O <= '1';
+                  CYC_O <= '1';
+                  WE_O <= '1';
+                  psram_state <= PSRAM_STALL;
                
                when PSRAM_STALL =>
                   -- Wait for the slave to not be stalled
