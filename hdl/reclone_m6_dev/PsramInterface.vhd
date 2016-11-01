@@ -63,11 +63,12 @@ architecture Behavioral of PsramInterface is
 
    signal psram_state      : psram_state_enum := PSRAM_ADDR;
    signal data_out         : std_logic_vector(15 downto 0);
+   signal addr_out         : std_logic_vector(23 downto 0);
    signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
 begin
 
-   AddrData <= data_out when NOutputEn = '0' else (others => 'Z');
-   
+   AddrData <= data_out when (NOutputEn = '0' and NAddrValid = '1' and NChipSel = '0') else (others => 'Z');
+   ADR_O <= addr_out;
    dbg <= dbg_out;
 
    process (CLK_I) is
@@ -75,24 +76,26 @@ begin
       if rising_edge(CLK_I) then
          if NChipSel = '0' then
             -- Chip select is low (active)
-            dbg_out(0) <= '1';
             case psram_state is
                when PSRAM_ADDR =>
                   -- When AddrValid is low, get the address
                   if NAddrValid = '0' then
-                     ADR_O <= Address & AddrData;
+                     addr_out <= Address & AddrData;
                      psram_state <= PSRAM_DATA;
-                     dbg_out(1) <= '1';
+                     dbg_out <= "00001";
                   end if;
                   
                when PSRAM_DATA =>
-                  if (NAddrValid = '1' and NOutputEn = '0') then
+                  if NAddrValid = '0' and NOutputEn = '1' then
+                     -- Continue to latch the address
+                     addr_out <= Address & AddrData;
+                  elsif (NAddrValid = '1' and NOutputEn = '0') then
                      -- Read
                      NWait <= '0';
                      STB_O <= '1';
                      CYC_O <= '1';
                      WE_O <= '0';
-                     dbg_out(2) <= '1';
+                     dbg_out <= "00011";
                      psram_state <= PSRAM_STALL;
                   elsif (NAddrValid = '1' and NWriteEn = '0') then
                      -- Write
@@ -109,7 +112,7 @@ begin
                   if STALL_I = '0' then
                      STB_O <= '0';
                      WE_O <= '0';
-                     dbg_out(3) <= '1';
+                     dbg_out <= "00111";
                      psram_state <= PSRAM_ACK;
                   end if;
                   
@@ -120,7 +123,7 @@ begin
                      data_out <= DAT_I;
                      NWait <= '1';
                      CYC_O <= '0';
-                     dbg_out(4) <= '1';
+                     dbg_out <= "01111";
                      psram_state <= PSRAM_COMPLETE;
                   end if;
                
@@ -141,6 +144,7 @@ begin
             STB_O <= '0';
             CYC_O <= '0';
             WE_O <= '0';
+            --dbg_out <= "11111";
          end if;
 
       end if;
