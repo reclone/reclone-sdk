@@ -10,13 +10,13 @@ FsmcTask::FsmcTask()
 
 void FsmcTask::Run()
 {
-   volatile uint16_t * chr_addr = (volatile uint16_t *)0x60000008;
+   volatile uint16_t * chr_addr = (volatile uint16_t *)0x60000000;
 
    while (true)
    {
       trace_printf("Read number %u: %u\n", counter++, *chr_addr);
-      //(*chr_addr)++;
-      Delay(1000);
+      chr_addr++;
+      Delay(250);
    }
 
 }
@@ -76,12 +76,13 @@ bool FsmcTask::HardwareInit()
    FSMC_NORSRAM_Init(FSMC_NORSRAM_DEVICE, &fsmc_init);
 
    // Flexible Static Memory Controller timing parameters
-   fsmc_timing.AccessMode = FSMC_ACCESS_MODE_A; // don't care
-   fsmc_timing.AddressHoldTime = 15;
+   fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
+   fsmc_timing.AddressHoldTime = 1;
    fsmc_timing.AddressSetupTime = 15;
    fsmc_timing.BusTurnAroundDuration = 1;
    fsmc_timing.CLKDivision = 2; // don't care
    fsmc_timing.DataLatency = 0; // don't care
+   fsmc_timing.DataSetupTime = 15;
 
    FSMC_NORSRAM_DeInit(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_EXTENDED_DEVICE, FSMC_NORSRAM_BANK1);
    FSMC_NORSRAM_Timing_Init(FSMC_NORSRAM_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1);
