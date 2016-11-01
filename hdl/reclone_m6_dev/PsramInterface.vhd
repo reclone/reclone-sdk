@@ -106,14 +106,7 @@ begin
                
                when PSRAM_STALL =>
                   -- Wait for the slave to not be stalled
-                  if (STALL_I = '0' and ACK_I = '1') then
-                     STB_O <= '0';
-                     WE_O <= '0';
-                     CYC_O <= '0';
-                     NWait <= '1';
-                     dbg_out(4) <= '1';
-                     psram_state <= PSRAM_COMPLETE;                  
-                  elsif STALL_I = '0' then
+                  if STALL_I = '0' then
                      STB_O <= '0';
                      WE_O <= '0';
                      dbg_out(3) <= '1';
@@ -122,16 +115,12 @@ begin
                   
                when PSRAM_ACK =>
                   -- Wait for the slave to ACK
-                  if (ACK_I = '1' and NOutputEn = '0') then
-                     -- Read is complete
+                  if (ACK_I = '1') then
+                     -- Read or write is complete
                      data_out <= DAT_I;
                      NWait <= '1';
                      CYC_O <= '0';
-                     psram_state <= PSRAM_COMPLETE;
-                  elsif (ACK_I = '1' and NWriteEn = '0') then
-                     -- Write is complete
-                     NWait <= '1';
-                     CYC_O <= '0';
+                     dbg_out(4) <= '1';
                      psram_state <= PSRAM_COMPLETE;
                   end if;
                
