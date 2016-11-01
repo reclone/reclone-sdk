@@ -79,6 +79,7 @@ begin
          if (RST_I = '1') then
             ack_out <= '0';
          else
+            --TODO: Make sure this is a well-behaved Wishbone slave
             if (SEL_I = '1' and CYC_I = '1' and STB_I = '1') then
                if (WE_I = '1') then
                   RAM(to_integer(unsigned(ADR_I))) <= DAT_I;
@@ -86,7 +87,7 @@ begin
                   dat_a_out <= RAM(to_integer(unsigned(ADR_I)));
                end if;
                ack_out <= '1';
-            else
+            elsif (CYC_I = '0' or SEL_I = '0') then
                ack_out <= '0';
             end if;
          end if;

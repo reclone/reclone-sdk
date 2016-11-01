@@ -251,7 +251,7 @@ Inst_clocking: clocking PORT MAP(
    text_buffer : TextBuffer port map
    (
       RST_I => '0',
-      CLK_I => pixel_clock_t,
+      CLK_I => data_load_clock_t,
       WE_I => textbuf_we_o,
       ADR_I => textbuf_adr_o(11 downto 0),
       DAT_I => textbuf_dat_o,
@@ -272,7 +272,7 @@ Inst_clocking: clocking PORT MAP(
    psramif : PsramInterface port map
    (
       RST_I => '0',
-      CLK_I => pixel_clock_t,
+      CLK_I => data_load_clock_t,
       ADR_O => textbuf_adr_o,
       DAT_I => textbuf_dat_i,
       DAT_O => textbuf_dat_o,

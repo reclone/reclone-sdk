@@ -127,7 +127,7 @@ begin
                      data_out <= DAT_I;
                      NWait <= '1';
                      CYC_O <= '0';
-                     dbg_out <= "01111";
+                     dbg_out <= "11111";
                      psram_state <= PSRAM_COMPLETE;
                   end if;
                
