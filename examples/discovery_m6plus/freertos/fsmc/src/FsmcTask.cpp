@@ -10,12 +10,13 @@ FsmcTask::FsmcTask()
 
 void FsmcTask::Run()
 {
-   volatile uint16_t * chr_addr = (volatile uint16_t *)0x60000000;
+   volatile uint16_t * chr_addr = (volatile uint16_t *)0x60000220;
 
    while (true)
    {
-      trace_printf("Read number %u: %u\n", counter++, *chr_addr);
-      chr_addr++;
+      uint16_t chr_data = *chr_addr;
+      trace_printf("Read number %u: %u\n", counter++, chr_data);
+      //(*chr_addr) = chr_data + (uint16_t)1;
       Delay(250);
    }
 
@@ -73,21 +74,22 @@ bool FsmcTask::HardwareInit()
    fsmc_init.WrapMode = FSMC_WRAP_MODE_DISABLE;
    fsmc_init.WriteBurst = FSMC_WRITE_BURST_DISABLE;
    fsmc_init.WriteOperation = FSMC_WRITE_OPERATION_ENABLE;
+   FSMC_NORSRAM_DeInit(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_EXTENDED_DEVICE, FSMC_NORSRAM_BANK1);
    FSMC_NORSRAM_Init(FSMC_NORSRAM_DEVICE, &fsmc_init);
 
    // Flexible Static Memory Controller timing parameters
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
-   fsmc_timing.AddressHoldTime = 4;
+   fsmc_timing.AddressHoldTime = 1;
    fsmc_timing.AddressSetupTime = 15;
    fsmc_timing.BusTurnAroundDuration = 4;
    fsmc_timing.CLKDivision = 2; // don't care
    fsmc_timing.DataLatency = 0; // don't care
-   fsmc_timing.DataSetupTime = 15;
+   fsmc_timing.DataSetupTime = 64;
 
-   FSMC_NORSRAM_DeInit(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_EXTENDED_DEVICE, FSMC_NORSRAM_BANK1);
    FSMC_NORSRAM_Timing_Init(FSMC_NORSRAM_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1);
    FSMC_NORSRAM_Extended_Timing_Init(FSMC_NORSRAM_EXTENDED_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1, FSMC_EXTENDED_MODE_DISABLE);
    FSMC_NORSRAM_WriteOperation_Enable(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_BANK1);
+   __FSMC_NORSRAM_ENABLE(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_BANK1);
 
    return true;
 }
