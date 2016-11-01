@@ -77,9 +77,9 @@ bool FsmcTask::HardwareInit()
 
    // Flexible Static Memory Controller timing parameters
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
-   fsmc_timing.AddressHoldTime = 1;
+   fsmc_timing.AddressHoldTime = 4;
    fsmc_timing.AddressSetupTime = 15;
-   fsmc_timing.BusTurnAroundDuration = 1;
+   fsmc_timing.BusTurnAroundDuration = 4;
    fsmc_timing.CLKDivision = 2; // don't care
    fsmc_timing.DataLatency = 0; // don't care
    fsmc_timing.DataSetupTime = 15;
