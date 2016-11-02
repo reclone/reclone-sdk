@@ -3,6 +3,8 @@
 #include "diag/Trace.h"
 #include "stm32f4xx_hal.h"
 
+typedef uint32_t memtest_t;
+
 FsmcTask::FsmcTask()
 {
 
@@ -10,15 +12,18 @@ FsmcTask::FsmcTask()
 
 void FsmcTask::Run()
 {
-   volatile uint32_t * chr_addr = (volatile uint32_t *)0x60000220;
+   volatile memtest_t * chr_addr = (volatile memtest_t *)0x60000220;
 
    while (true)
    {
-      uint32_t chr_data = *chr_addr;
-      trace_printf("Read number %u: %u\n", counter++, chr_data);
-      (*chr_addr) = chr_data + 1U;
+      memtest_t chr_data = *chr_addr;
+      if (chr_data != 1437226410)
+      {
+         trace_printf("Fault number %u: %u\n", counter++, chr_data);
+      }
+      //(*chr_addr) = chr_data + (memtest_t)1U;
       //chr_addr++;
-      Delay(250);
+      Delay(10);
    }
 
 }
@@ -82,8 +87,8 @@ bool FsmcTask::HardwareInit()
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
    fsmc_timing.AddressHoldTime = 1; // don't care
    fsmc_timing.AddressSetupTime = 15; // don't care
-   fsmc_timing.BusTurnAroundDuration = 1;
-   fsmc_timing.CLKDivision = 2; // maximum speed!
+   fsmc_timing.BusTurnAroundDuration = 4;
+   fsmc_timing.CLKDivision = 2; // decent speed!
    fsmc_timing.DataLatency = 0; // zero for PSRAM
    fsmc_timing.DataSetupTime = 255; // don't care
 
