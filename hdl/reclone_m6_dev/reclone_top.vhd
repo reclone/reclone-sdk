@@ -27,7 +27,10 @@ entity reclone_top is
             FSMC_NWE    : in  STD_LOGIC;
             FSMC_NWAIT  : in  STD_LOGIC;
             FSMC_NE1_NCE2: in STD_LOGIC;
-            FSMC_NL     : in  STD_LOGIC
+            FSMC_NL     : in  STD_LOGIC;
+            FSMC_CLK    : in  STD_LOGIC;
+            FSMC_NBL1   : in  STD_LOGIC;
+            FSMC_NBL0   : in  STD_LOGIC
          );
 end reclone_top;
 
@@ -128,26 +131,29 @@ architecture Behavioral of reclone_top is
    component PsramInterface
    port
    (
-      -- FSMC PSRAM interface with STM32F4
-      Address     : in     std_logic_vector(23 downto 16);
-      AddrData    : inout  std_logic_vector(15 downto 0);
-      NOutputEn   : in     std_logic;
-      NWriteEn    : in     std_logic;
-      NChipSel    : in     std_logic;
-      NAddrValid  : in     std_logic;
-      NWait       : out    std_logic;
+      -- FSMC Synchronous PSRAM interface with STM32F4
+      FSMC_CLK    : in     std_logic;
+      FSMC_A      : in     std_logic_vector(23 downto 16);
+      FSMC_D      : inout  std_logic_vector(15 downto 0);
+      FSMC_NOE    : in     std_logic;
+      FSMC_NWE    : in     std_logic;
+      FSMC_NE     : in     std_logic;
+      FSMC_NL     : in     std_logic;
+      FSMC_NBL1   : in     std_logic;
+      FSMC_NBL0   : in     std_logic;
+      FSMC_NWAIT  : out    std_logic;
       
       -- Wishbone Master interface
       RST_I       : in  std_logic;
       CLK_I       : in  std_logic;
-      ADR_O       : out std_logic_vector(23 downto 0) := (others => '0');
+      ADR_O       : out std_logic_vector(23 downto 0);
       DAT_I       : in  std_logic_vector(15 downto 0);
-      DAT_O       : out std_logic_vector(15 downto 0) := (others => '0');
-      WE_O        : out std_logic := '0';
-      STB_O       : out std_logic := '0';
+      DAT_O       : out std_logic_vector(15 downto 0);
+      WE_O        : out std_logic;
+      STB_O       : out std_logic;
       STALL_I     : in std_logic;
       ACK_I       : in  std_logic;
-      CYC_O       : out std_logic := '0';
+      CYC_O       : out std_logic;
       
       -- LEDs for debug
       dbg         : out std_logic_vector(4 downto 0)
@@ -251,7 +257,7 @@ Inst_clocking: clocking PORT MAP(
    text_buffer : TextBuffer port map
    (
       RST_I => '0',
-      CLK_I => data_load_clock_t,
+      CLK_I => pixel_clock_t,
       WE_I => textbuf_we_o,
       ADR_I => textbuf_adr_o(11 downto 0),
       DAT_I => textbuf_dat_o,
@@ -281,12 +287,15 @@ Inst_clocking: clocking PORT MAP(
       STALL_I => textbuf_stall_i,
       ACK_I => textbuf_ack_i,
       CYC_O => textbuf_cyc_o,
-      Address => fsmc_addr(23 downto 16),
-      AddrData => FSMC_D(15 downto 0),
-      NOutputEn => FSMC_NOE,
-      NWriteEn => FSMC_NWE,
-      NChipSel => FSMC_NE1_NCE2,
-      NAddrValid => FSMC_NL,
+      FSMC_A => fsmc_addr(23 downto 16),
+      FSMC_D => FSMC_D(15 downto 0),
+      FSMC_NOE => FSMC_NOE,
+      FSMC_NWE => FSMC_NWE,
+      FSMC_NE => FSMC_NE1_NCE2,
+      FSMC_NL => FSMC_NL,
+      FSMC_CLK => FSMC_CLK,
+      FSMC_NBL1 => FSMC_NBL1,
+      FSMC_NBL0 => FSMC_NBL0,
       dbg => fsmc_dbg
    );
 

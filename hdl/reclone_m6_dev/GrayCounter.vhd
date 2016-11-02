@@ -47,8 +47,8 @@ begin
          elsif ( Enable = '1' ) then
             binary_count <= binary_count + 1;
             GrayCount <= ( binary_count( COUNTER_WIDTH - 1 ) & 
-                           binary_count( COUNTER_WIDTH - 2 downto 0 ) xor 
-                           binary_count( COUNTER_WIDTH - 1 downto 1 ) );
+                           (binary_count( COUNTER_WIDTH - 2 downto 0 ) xor 
+                           binary_count( COUNTER_WIDTH - 1 downto 1 ) ) );
          end if;
       end if;
    end process;

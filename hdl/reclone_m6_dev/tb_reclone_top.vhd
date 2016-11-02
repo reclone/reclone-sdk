@@ -63,11 +63,11 @@ ARCHITECTURE behavior OF tb_reclone_top IS
    signal Clk32 : std_logic := '0';
    signal Switches : std_logic_vector(3 downto 0) := (others => '0');
    signal FSMC_A : std_logic_vector(22 downto 16) := (others => '0');
-   signal FSMC_NOE : std_logic := '0';
-   signal FSMC_NWE : std_logic := '0';
-   signal FSMC_NWAIT : std_logic := '0';
-   signal FSMC_NE1_NCE2 : std_logic := '0';
-   signal FSMC_NL : std_logic := '0';
+   signal FSMC_NOE : std_logic := '1';
+   signal FSMC_NWE : std_logic := '1';
+   signal FSMC_NWAIT : std_logic := '1';
+   signal FSMC_NE1_NCE2 : std_logic := '1';
+   signal FSMC_NL : std_logic := '1';
 
 	--BiDirs
    signal FSMC_D : std_logic_vector(15 downto 0);
@@ -127,6 +127,21 @@ BEGIN
       wait for Clk50_period*10;
 
       -- insert stimulus here 
+      
+      FSMC_NE1_NCE2 <= '0';
+      FSMC_D <= (others => '0');
+      wait for Clk50_period;
+      FSMC_NL <= '0';
+      wait for Clk50_period * 4;
+      FSMC_NL <= '1';
+      wait for Clk50_period * 4;
+      FSMC_D <= (others => 'Z');
+      FSMC_NOE <= '0';
+      wait for Clk50_period * 4;
+      FSMC_NOE <= '1';
+      wait for Clk50_period * 4;
+      FSMC_NE1_NCE2 <= '1';
+      
 
       wait;
    end process;

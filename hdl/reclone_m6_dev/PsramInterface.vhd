@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -32,26 +32,29 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity PsramInterface is
    port
    (
-      -- FSMC PSRAM interface with STM32F4
-      Address     : in     std_logic_vector(23 downto 16);
-      AddrData    : inout  std_logic_vector(15 downto 0);
-      NOutputEn   : in     std_logic;
-      NWriteEn    : in     std_logic;
-      NChipSel    : in     std_logic;
-      NAddrValid  : in     std_logic;
-      NWait       : out    std_logic;
+      -- FSMC Synchronous PSRAM interface with STM32F4
+      FSMC_CLK    : in     std_logic;
+      FSMC_A      : in     std_logic_vector(23 downto 16);
+      FSMC_D      : inout  std_logic_vector(15 downto 0);
+      FSMC_NOE    : in     std_logic;
+      FSMC_NWE    : in     std_logic;
+      FSMC_NE     : in     std_logic;
+      FSMC_NL     : in     std_logic;
+      FSMC_NBL1   : in     std_logic;
+      FSMC_NBL0   : in     std_logic;
+      FSMC_NWAIT  : out    std_logic;
       
       -- Wishbone Master interface
       RST_I       : in  std_logic;
       CLK_I       : in  std_logic;
-      ADR_O       : out std_logic_vector(23 downto 0) := (others => '0');
+      ADR_O       : out std_logic_vector(23 downto 0);
       DAT_I       : in  std_logic_vector(15 downto 0);
-      DAT_O       : out std_logic_vector(15 downto 0) := (others => '0');
-      WE_O        : out std_logic := '0';
-      STB_O       : out std_logic := '0';
+      DAT_O       : out std_logic_vector(15 downto 0);
+      WE_O        : out std_logic;
+      STB_O       : out std_logic;
       STALL_I     : in std_logic;
       ACK_I       : in  std_logic;
-      CYC_O       : out std_logic := '0';
+      CYC_O       : out std_logic;
       
       -- LEDs for debug
       dbg         : out std_logic_vector(4 downto 0)
@@ -63,98 +66,92 @@ architecture Behavioral of PsramInterface is
 
    signal psram_state      : psram_state_enum := PSRAM_ADDR;
    signal data_out         : std_logic_vector(15 downto 0);
-   signal addr_out         : std_logic_vector(23 downto 0);
+   signal write_addr       : std_logic_vector(23 downto 0);
+   signal read_addr        : std_logic_vector(23 downto 0);
    signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
+   signal phase_count      : integer range 0 to 63 := 0;
+   
+   signal mem_data         : std_logic_vector(15 downto 0) := "0101010110101010";
 begin
 
-   AddrData <= data_out when (NOutputEn = '0' and NAddrValid = '1' and NChipSel = '0') else (others => 'Z');
-   ADR_O <= addr_out;
+   FSMC_D <= data_out when (FSMC_NOE = '0' and FSMC_NE = '0') else (others => 'Z');
+   --ADR_O <= addr_out;
    dbg <= dbg_out;
-
-   process (CLK_I) is
+   
+      
+   
+   -- FSMC Write process
+   process (FSMC_CLK) is
    begin
-      if rising_edge(CLK_I) then
-         if NChipSel = '0' then
-            -- Chip select is low (active)
-            case psram_state is
-               when PSRAM_ADDR =>
-                  -- When AddrValid is low, get the address
-                  if NAddrValid = '0' then
-                     addr_out <= Address & AddrData;
-                     psram_state <= PSRAM_DATA;
-                     dbg_out <= "00001";
-                  end if;
-                  
-               when PSRAM_DATA =>
-                  if NAddrValid = '0' and NOutputEn = '1' then
-                     -- Continue to latch the address
-                     addr_out <= Address & AddrData;
-                  elsif (NAddrValid = '1' and NOutputEn = '0') then
-                     -- Read
-                     NWait <= '0';
-                     STB_O <= '1';
-                     CYC_O <= '1';
-                     WE_O <= '0';
-                     dbg_out <= "00011";
-                     psram_state <= PSRAM_STALL;
-                  elsif (NAddrValid = '1' and NWriteEn = '0') then
-                     -- Write next cycle, when AddressHoldTime expires
-                     psram_state <= PSRAM_WRITE;
-                  end if;
-               
-               when PSRAM_WRITE =>
-                  -- We should now be in the DataSetup period
-                  DAT_O <= AddrData;
-                  NWait <= '0';
-                  STB_O <= '1';
-                  CYC_O <= '1';
-                  WE_O <= '1';
-                  psram_state <= PSRAM_STALL;
-               
-               when PSRAM_STALL =>
-                  -- Wait for the slave to not be stalled
-                  if STALL_I = '0' then
-                     STB_O <= '0';
-                     WE_O <= '0';
-                     dbg_out <= "00111";
-                     psram_state <= PSRAM_ACK;
-                  end if;
-                  
-               when PSRAM_ACK =>
-                  -- Wait for the slave to ACK
-                  if (ACK_I = '1') then
-                     -- Read or write is complete
-                     data_out <= DAT_I;
-                     NWait <= '1';
-                     CYC_O <= '0';
-                     dbg_out <= "11111";
-                     psram_state <= PSRAM_COMPLETE;
-                  end if;
-               
-               when PSRAM_COMPLETE =>
-                  
-                  -- Wait for NOutputEn and NWriteEn to de-assert
-                  if (NOutputEn = '1' and NWriteEn = '1') then
-                     psram_state <= PSRAM_ADDR;
-                  end if;
-            end case;
-
-
-         else
-            -- Chip select is high (inactive)
-            -- Reset the state machine
-            NWait <= '1';
-            psram_state <= PSRAM_ADDR;
-            STB_O <= '0';
-            CYC_O <= '0';
-            WE_O <= '0';
-            --dbg_out <= "11111";
+   
+      -- On rising edge of FSMC clock
+      if rising_edge(FSMC_CLK) then
+      
+         -- If chip select is active
+         if (FSMC_NE = '0') then
+            
+            if (FSMC_NL = '0') then
+               -- Reset phase count and latch the write address
+               phase_count <= 0;
+               write_addr <= FSMC_A & FSMC_D;
+            else
+               -- Increment number of FSMC cycles since address latch
+               phase_count <= phase_count + 1;
+            end if;
+            
+            if (FSMC_NL = '1' and FSMC_NWE = '0' and phase_count > 1) then
+               -- Time to write stuff
+               if (FSMC_NBL1 = '0') then
+                  -- Write high byte
+                  mem_data(15 downto 8) <= FSMC_D(15 downto 8);
+               end if;
+               if (FSMC_NBL0 = '0') then
+                  -- Write low byte
+                  mem_data(7 downto 0) <= FSMC_D(7 downto 0);
+               end if;
+            end if;
+            
+            -- Auto-increment the address for burst transfers
+            write_addr <= std_logic_vector(unsigned(write_addr) + 1);
          end if;
-
+         
       end if;
       
    end process;
+   
+   
+   
+   -- FSMC Read process
+   process (FSMC_CLK) is
+   begin
+      -- On falling edge of FSMC clock
+      if falling_edge(FSMC_CLK) then
+         
+         -- If in the zeroth phase (determined by rising edge)
+         if (phase_count = 0) then
+            -- Latch the read address
+            read_addr <= FSMC_A & FSMC_D;
+         elsif (FSMC_NE = '0') then
+            data_out <= mem_data;
+         
+            if (FSMC_NOE = '0') then
+               read_addr <= std_logic_vector(unsigned(read_addr) + 1);
+            end if;
+         end if;
+            
+      end if;
+   end process;
 
+   
+   
+   -- Wishbone Master process
+   process (CLK_I) is
+   begin
+      -- On rising edge of Wishbone clock
+      if rising_edge(CLK_I) then
+         --TODO: actually read/write with the slave
+      end if;
+   end process;
 
    
 end Behavioral;
