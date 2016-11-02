@@ -19,7 +19,7 @@ void FsmcTask::Run()
       (*chr_addr) =(memtest_t)counter;
       volatile memtest_t chr_data = *chr_addr;
 
-      if (chr_data != counter)
+      if (chr_data != (memtest_t)counter)
       {
          trace_printf("Fault number %u: %u\n", counter, chr_data);
       }
