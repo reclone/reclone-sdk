@@ -3,7 +3,7 @@
 #include "diag/Trace.h"
 #include "stm32f4xx_hal.h"
 
-typedef uint32_t memtest_t;
+typedef uint16_t memtest_t;
 
 FsmcTask::FsmcTask()
 {
@@ -16,12 +16,14 @@ void FsmcTask::Run()
 
    while (true)
    {
-      memtest_t chr_data = *chr_addr;
-      if (chr_data != 1437226410)
+      (*chr_addr) =(memtest_t)counter;
+      volatile memtest_t chr_data = *chr_addr;
+
+      if (chr_data != counter)
       {
-         trace_printf("Fault number %u: %u\n", counter++, chr_data);
+         trace_printf("Fault number %u: %u\n", counter, chr_data);
       }
-      //(*chr_addr) = chr_data + (memtest_t)1U;
+      counter++;
       //chr_addr++;
       Delay(10);
    }
@@ -88,7 +90,7 @@ bool FsmcTask::HardwareInit()
    fsmc_timing.AddressHoldTime = 1; // don't care
    fsmc_timing.AddressSetupTime = 15; // don't care
    fsmc_timing.BusTurnAroundDuration = 4;
-   fsmc_timing.CLKDivision = 2; // decent speed!
+   fsmc_timing.CLKDivision = 6; // decent speed!
    fsmc_timing.DataLatency = 0; // zero for PSRAM
    fsmc_timing.DataSetupTime = 255; // don't care
 
