@@ -10,13 +10,14 @@ FsmcTask::FsmcTask()
 
 void FsmcTask::Run()
 {
-   volatile uint16_t * chr_addr = (volatile uint16_t *)0x60000220;
+   volatile uint32_t * chr_addr = (volatile uint32_t *)0x60000220;
 
    while (true)
    {
-      uint16_t chr_data = *chr_addr;
+      uint32_t chr_data = *chr_addr;
       trace_printf("Read number %u: %u\n", counter++, chr_data);
-      //(*chr_addr) = chr_data + (uint16_t)1;
+      (*chr_addr) = chr_data + 1U;
+      //chr_addr++;
       Delay(250);
    }
 
@@ -47,47 +48,47 @@ bool FsmcTask::HardwareInit()
    HAL_GPIO_Init(GPIOB, &gpio_init);
 
    // GPIOD
-   gpio_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_4 | GPIO_PIN_5 |
-                   GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 |
-                   GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 |
-                   GPIO_PIN_14 | GPIO_PIN_15;
+   gpio_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_3 | GPIO_PIN_4 |
+                   GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 |
+                   GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 |
+                   GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
    HAL_GPIO_Init(GPIOD, &gpio_init);
 
    // GPIOE
-   gpio_init.Pin = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 |
-                   GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 |
-                   GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 |
-                   GPIO_PIN_15;
+   gpio_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_3 | GPIO_PIN_4 |
+                   GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 |
+                   GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 |
+                   GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
    HAL_GPIO_Init(GPIOE, &gpio_init);
 
    // Flexible Static Memory Controller configuration
    fsmc_init.AsynchronousWait = FSMC_ASYNCHRONOUS_WAIT_DISABLE;
-   fsmc_init.BurstAccessMode = FSMC_BURST_ACCESS_MODE_DISABLE;
+   fsmc_init.BurstAccessMode = FSMC_BURST_ACCESS_MODE_ENABLE;
    fsmc_init.DataAddressMux = FSMC_DATA_ADDRESS_MUX_ENABLE;
    fsmc_init.ExtendedMode = FSMC_EXTENDED_MODE_DISABLE;
    fsmc_init.MemoryDataWidth = FSMC_NORSRAM_MEM_BUS_WIDTH_16;
-   fsmc_init.MemoryType = FSMC_MEMORY_TYPE_NOR;
+   fsmc_init.MemoryType = FSMC_MEMORY_TYPE_PSRAM;
    fsmc_init.NSBank = FSMC_NORSRAM_BANK1;
    fsmc_init.WaitSignal = FSMC_WAIT_SIGNAL_DISABLE;
-   fsmc_init.WaitSignalActive = FSMC_WAIT_TIMING_DURING_WS;
+   fsmc_init.WaitSignalActive = FSMC_WAIT_TIMING_BEFORE_WS;
    fsmc_init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_LOW;
    fsmc_init.WrapMode = FSMC_WRAP_MODE_DISABLE;
-   fsmc_init.WriteBurst = FSMC_WRITE_BURST_DISABLE;
+   fsmc_init.WriteBurst = FSMC_WRITE_BURST_ENABLE;
    fsmc_init.WriteOperation = FSMC_WRITE_OPERATION_ENABLE;
    FSMC_NORSRAM_DeInit(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_EXTENDED_DEVICE, FSMC_NORSRAM_BANK1);
    FSMC_NORSRAM_Init(FSMC_NORSRAM_DEVICE, &fsmc_init);
 
    // Flexible Static Memory Controller timing parameters
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
-   fsmc_timing.AddressHoldTime = 1;
-   fsmc_timing.AddressSetupTime = 15;
-   fsmc_timing.BusTurnAroundDuration = 4;
-   fsmc_timing.CLKDivision = 2; // don't care
-   fsmc_timing.DataLatency = 0; // don't care
-   fsmc_timing.DataSetupTime = 64;
+   fsmc_timing.AddressHoldTime = 1; // don't care
+   fsmc_timing.AddressSetupTime = 15; // don't care
+   fsmc_timing.BusTurnAroundDuration = 1;
+   fsmc_timing.CLKDivision = 2; // maximum speed!
+   fsmc_timing.DataLatency = 0; // zero for PSRAM
+   fsmc_timing.DataSetupTime = 255; // don't care
 
    FSMC_NORSRAM_Timing_Init(FSMC_NORSRAM_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1);
-   FSMC_NORSRAM_Extended_Timing_Init(FSMC_NORSRAM_EXTENDED_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1, FSMC_EXTENDED_MODE_DISABLE);
+   //FSMC_NORSRAM_Extended_Timing_Init(FSMC_NORSRAM_EXTENDED_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1, FSMC_EXTENDED_MODE_DISABLE);
    FSMC_NORSRAM_WriteOperation_Enable(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_BANK1);
    __FSMC_NORSRAM_ENABLE(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_BANK1);
 
