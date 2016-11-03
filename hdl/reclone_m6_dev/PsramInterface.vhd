@@ -63,6 +63,7 @@ end PsramInterface;
 
 architecture Behavioral of PsramInterface is
    type psram_state_enum is (PSRAM_ADDR, PSRAM_DATA, PSRAM_WRITE, PSRAM_STALL, PSRAM_ACK, PSRAM_COMPLETE);
+   type ram_type is array (0 to 7) of std_logic_vector (15 downto 0);
 
    signal psram_state      : psram_state_enum := PSRAM_ADDR;
    signal data_out         : std_logic_vector(15 downto 0);
@@ -71,9 +72,19 @@ architecture Behavioral of PsramInterface is
    signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
    signal phase_count      : integer range 0 to 63 := 0;
    
-   signal mem_data         : std_logic_vector(15 downto 0) := "0101010110101010";
+   signal mem_data         : ram_type :=
+   (
+      "1111000011110000",
+      "0000111100001111",
+      "1100110011001100",
+      "0011001100110011",
+      "1010101010101010",
+      "0101010101010101",
+      "1111111100000000",
+      "0000000011111111"
+   );
 begin
-
+   FSMC_NWAIT <= '1';
    FSMC_D <= data_out when (FSMC_NOE = '0' and FSMC_NE = '0') else (others => 'Z');
    --ADR_O <= addr_out;
    dbg <= dbg_out;
@@ -103,16 +114,20 @@ begin
                -- Time to write stuff
                if (FSMC_NBL1 = '0') then
                   -- Write high byte
-                  mem_data(15 downto 8) <= FSMC_D(15 downto 8);
+                  mem_data(to_integer(unsigned(write_addr)))(15 downto 8) <= FSMC_D(15 downto 8);
                end if;
                if (FSMC_NBL0 = '0') then
                   -- Write low byte
-                  mem_data(7 downto 0) <= FSMC_D(7 downto 0);
+                  mem_data(to_integer(unsigned(write_addr)))(7 downto 0) <= FSMC_D(7 downto 0);
                end if;
+               -- Write whole word for now
+               --mem_data(to_integer(unsigned(write_addr))) <= FSMC_D;
+               
+               -- Auto-increment the address for burst transfers
+               write_addr <= std_logic_vector(unsigned(write_addr) + 1);
             end if;
             
-            -- Auto-increment the address for burst transfers
-            write_addr <= std_logic_vector(unsigned(write_addr) + 1);
+
          end if;
          
       end if;
@@ -132,10 +147,10 @@ begin
             -- Latch the read address
             read_addr <= FSMC_A & FSMC_D;
          elsif (FSMC_NE = '0') then
-            data_out <= mem_data;
+            data_out <= mem_data(to_integer(unsigned(read_addr)));
          
             if (FSMC_NOE = '0') then
-               read_addr <= std_logic_vector(unsigned(read_addr) + 1);
+               --read_addr <= std_logic_vector(unsigned(read_addr) + 1);
             end if;
          end if;
             

@@ -25,7 +25,7 @@ entity reclone_top is
             FSMC_A      : in  STD_LOGIC_VECTOR(22 downto 16);
             FSMC_NOE    : in  STD_LOGIC;
             FSMC_NWE    : in  STD_LOGIC;
-            FSMC_NWAIT  : in  STD_LOGIC;
+            FSMC_NWAIT  : out  STD_LOGIC;
             FSMC_NE1_NCE2: in STD_LOGIC;
             FSMC_NL     : in  STD_LOGIC;
             FSMC_CLK    : in  STD_LOGIC;
@@ -296,6 +296,7 @@ Inst_clocking: clocking PORT MAP(
       FSMC_CLK => FSMC_CLK,
       FSMC_NBL1 => FSMC_NBL1,
       FSMC_NBL0 => FSMC_NBL0,
+      FSMC_NWAIT => FSMC_NWAIT,
       dbg => fsmc_dbg
    );
 
