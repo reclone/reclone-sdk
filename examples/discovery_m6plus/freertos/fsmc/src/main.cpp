@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 //   orangeBlinky->Create("OrangeBlinky", configMINIMAL_STACK_SIZE, 2);
 //   redBlinky->Create("RedBlinky", configMINIMAL_STACK_SIZE, 2);
 //   testBlinky->Create("TestBlinky", configMINIMAL_STACK_SIZE, 2);
-   testFsmc->Create("TestFSMC", configMINIMAL_STACK_SIZE, 2);
+   testFsmc->Create("TestFSMC", 400, 2);
 
    CFreeRTOS::InitHardwareForManagedTasks();
 

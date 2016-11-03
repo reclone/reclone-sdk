@@ -12,20 +12,29 @@ FsmcTask::FsmcTask()
 
 void FsmcTask::Run()
 {
-   volatile memtest_t * chr_addr = (volatile memtest_t *)0x60000220;
+   volatile uint16_t * short_addr = (volatile uint16_t *)0x60000000;
+   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000000;
 
    while (true)
    {
-      (*chr_addr) =(memtest_t)counter;
-      volatile memtest_t chr_data = *chr_addr;
+      //short_addr[0] = 0;
+      //short_addr[0] = 0xDEAD; //(uint16_t)counter;
+      //short_addr[1] = 0xBEEF;
+      //short_addr[4] = (uint16_t)counter;
+      //short_addr[6] = 0xB00B;
+      //word_addr[0] = word_addr[0] ^ 0xDEADBEEF;
 
-      if (chr_data != (memtest_t)counter)
+
+      //if (chr_data != (memtest_t)counter)
       {
-         trace_printf("Fault number %u: %u\n", counter, chr_data);
+         trace_printf("Fault number %u: %04x %04x %04x %04x %04x %04x %04x %04x %08x\n", counter,
+               short_addr[0], short_addr[1], short_addr[2], short_addr[3],
+               short_addr[4], short_addr[5], short_addr[6], short_addr[7],
+               *word_addr);
       }
       counter++;
       //chr_addr++;
-      Delay(10);
+      Delay(1000);
    }
 
 }
@@ -56,7 +65,7 @@ bool FsmcTask::HardwareInit()
 
    // GPIOD
    gpio_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_3 | GPIO_PIN_4 |
-                   GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 |
+                   GPIO_PIN_5 | /*GPIO_PIN_6 |*/ GPIO_PIN_7 | GPIO_PIN_8 |
                    GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 |
                    GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
    HAL_GPIO_Init(GPIOD, &gpio_init);
@@ -78,7 +87,7 @@ bool FsmcTask::HardwareInit()
    fsmc_init.NSBank = FSMC_NORSRAM_BANK1;
    fsmc_init.WaitSignal = FSMC_WAIT_SIGNAL_DISABLE;
    fsmc_init.WaitSignalActive = FSMC_WAIT_TIMING_BEFORE_WS;
-   fsmc_init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_LOW;
+   fsmc_init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_HIGH;
    fsmc_init.WrapMode = FSMC_WRAP_MODE_DISABLE;
    fsmc_init.WriteBurst = FSMC_WRITE_BURST_ENABLE;
    fsmc_init.WriteOperation = FSMC_WRITE_OPERATION_ENABLE;
@@ -89,8 +98,8 @@ bool FsmcTask::HardwareInit()
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
    fsmc_timing.AddressHoldTime = 1; // don't care
    fsmc_timing.AddressSetupTime = 15; // don't care
-   fsmc_timing.BusTurnAroundDuration = 4;
-   fsmc_timing.CLKDivision = 6; // decent speed!
+   fsmc_timing.BusTurnAroundDuration = 0;
+   fsmc_timing.CLKDivision = 10; // decent speed!
    fsmc_timing.DataLatency = 0; // zero for PSRAM
    fsmc_timing.DataSetupTime = 255; // don't care
 
