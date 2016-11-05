@@ -70,18 +70,18 @@ architecture Behavioral of PsramInterface is
    signal write_addr       : std_logic_vector(23 downto 0);
    signal read_addr        : std_logic_vector(23 downto 0);
    signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
-   signal phase_count      : integer range 0 to 63 := 0;
+   signal phase_count      : integer range 0 to 31 := 0;
    
    signal mem_data         : ram_type :=
    (
       "1111000011110000",
       "0000111100001111",
-      "1100110011001100",
-      "0011001100110011",
+      "0011001111001100",
+      "1100110000110011",
       "1010101010101010",
       "0101010101010101",
-      "1111111100000000",
-      "0000000011111111"
+      "1111111101001000",
+      "0010100011111111"
    );
 begin
    FSMC_NWAIT <= '1';
@@ -105,9 +105,11 @@ begin
                -- Reset phase count and latch the write address
                phase_count <= 0;
                write_addr <= FSMC_A & FSMC_D;
+               dbg_out <= FSMC_D(4 downto 0);
             else
                -- Increment number of FSMC cycles since address latch
                phase_count <= phase_count + 1;
+               --dbg_out <= std_logic_vector(to_unsigned(phase_count, 5));
             end if;
             
             if (FSMC_NL = '1' and FSMC_NWE = '0' and phase_count > 1) then
@@ -147,10 +149,10 @@ begin
             -- Latch the read address
             read_addr <= FSMC_A & FSMC_D;
          elsif (FSMC_NE = '0') then
-            data_out <= mem_data(to_integer(unsigned(read_addr)));
+            data_out <= mem_data(to_integer(unsigned(read_addr(2 downto 0))));
          
-            if (FSMC_NOE = '0') then
-               --read_addr <= std_logic_vector(unsigned(read_addr) + 1);
+            if (FSMC_NOE = '0' and phase_count > 0) then
+               read_addr <= std_logic_vector(unsigned(read_addr) + 1);
             end if;
          end if;
             
