@@ -106,6 +106,7 @@ architecture Behavioral of TextRenderer is
 
    signal hpos_latched : std_logic_vector(11 downto 0);
    signal vpos_latched : std_logic_vector(11 downto 0);
+   signal vpos_shifted : std_logic_vector(11 downto 0);
    signal char_blink : std_logic;
    signal bgcolor : std_logic_vector(23 downto 0);
    signal fgcolor : std_logic_vector(23 downto 0);
@@ -117,14 +118,16 @@ architecture Behavioral of TextRenderer is
    
 begin
 
+   vpos_shifted <= std_logic_vector(unsigned(VPos) - 8);
+
    process (PixelClock) begin
       if (PixelClock'event and PixelClock = '1') then
          hpos_latched <= HPos;
-         vpos_latched <= VPos;
+         vpos_latched <= vpos_shifted;
       end if;   
    end process;
 
-   TextBufAddr <= VPos(9 downto 5) & HPos(10 downto 4);
+   TextBufAddr <= vpos_shifted(9 downto 5) & HPos(10 downto 4);
 
    glyph_rom_addr <= code_point & vpos_latched(4 downto 1);
 
