@@ -142,17 +142,20 @@ begin
       Data => glyph_row
    );
    
+   -- Decode the character data retrieved from the text buffer
    char_blink <= TextBufData(15);
    bgcolor <= text_colors(to_integer(unsigned(TextBufData(14 downto 12))));
    fgcolor <= text_colors(to_integer(unsigned(TextBufData(11 downto 8))));
    code_point <= TextBufData(7 downto 0);
    
+   -- Determine whether to display the foreground color or
+   -- background color at this pixel
    use_foreground_color <= '1' when
       (glyph_row(7 - to_integer(unsigned(hpos_latched(3 downto 1)))) = '1'
        and (char_blink = '0' or blink_timer(24) = '1') ) else '0';
-   
    rgb <= fgcolor when (use_foreground_color = '1') else bgcolor;
 
+   -- Output RGB values for the determined color
    RedPix <= rgb(23 downto 16);
    GreenPix <= rgb(15 downto 8);
    BluePix <= rgb(7 downto 0);
