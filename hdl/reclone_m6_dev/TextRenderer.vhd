@@ -47,11 +47,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity TextRenderer is
     port ( RedPix : out  STD_LOGIC_VECTOR (7 downto 0);
            GreenPix : out  STD_LOGIC_VECTOR (7 downto 0);
@@ -62,7 +57,7 @@ entity TextRenderer is
            HMax : in  STD_LOGIC_VECTOR (11 downto 0); -- Max horizontal count
            VPos : in  STD_LOGIC_VECTOR (11 downto 0); -- Next vertical pixel position
            VRes : in  STD_LOGIC_VECTOR (11 downto 0); -- Vertical visible resolution
-           VMax : in  STD_LOGIC_VECTOR (11 downto 0);-- Max vertical count
+           VMax : in  STD_LOGIC_VECTOR (11 downto 0); -- Max vertical count
            TextBufAddr : out std_logic_vector(11 downto 0); -- Address output for the text buffer RAM
            TextBufData : in std_logic_vector(15 downto 0) -- Data input for the text buffer RAM
          );
@@ -108,6 +103,7 @@ architecture Behavioral of TextRenderer is
    signal vpos_latched : std_logic_vector(11 downto 0);
    signal vpos_shifted : std_logic_vector(11 downto 0);
    signal char_blink : std_logic;
+   signal blink_timer : unsigned(24 downto 0) := (others => '0');
    signal bgcolor : std_logic_vector(23 downto 0);
    signal fgcolor : std_logic_vector(23 downto 0);
    signal code_point : std_logic_vector(7 downto 0);
@@ -118,19 +114,26 @@ architecture Behavioral of TextRenderer is
    
 begin
 
+   -- Shift down 8 pixels to center 22 rows vertically onscreen
    vpos_shifted <= std_logic_vector(unsigned(VPos) - 8);
+   
+   -- Calculate the text buffer address from the pixel position
+   TextBufAddr <= vpos_shifted(9 downto 5) & HPos(10 downto 4);
 
+   -- Latch the pixel positions on rising edge of the pixel clock
    process (PixelClock) begin
-      if (PixelClock'event and PixelClock = '1') then
+      if rising_edge(PixelClock) then
          hpos_latched <= HPos;
          vpos_latched <= vpos_shifted;
+         blink_timer <= blink_timer + 1;
       end if;   
    end process;
 
-   TextBufAddr <= vpos_shifted(9 downto 5) & HPos(10 downto 4);
-
+   -- Calculate the glyph ROM address from the character code point
+   -- and the vertical pixel position
    glyph_rom_addr <= code_point & vpos_latched(4 downto 1);
 
+   -- Get the pixel data for the current row in the character
    character_rom : GlyphRom port map
    (
       Clock => PixelClock,
@@ -144,7 +147,9 @@ begin
    fgcolor <= text_colors(to_integer(unsigned(TextBufData(11 downto 8))));
    code_point <= TextBufData(7 downto 0);
    
-   use_foreground_color <= glyph_row(7 - to_integer(unsigned(hpos_latched(3 downto 1))));
+   use_foreground_color <= '1' when
+      (glyph_row(7 - to_integer(unsigned(hpos_latched(3 downto 1)))) = '1'
+       and (char_blink = '0' or blink_timer(24) = '1') ) else '0';
    
    rgb <= fgcolor when (use_foreground_color = '1') else bgcolor;
 
