@@ -13,7 +13,7 @@ FsmcTask::FsmcTask()
 void FsmcTask::Run()
 {
    volatile uint16_t * short_addr = (volatile uint16_t *)0x60000000;
-   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000002;
+   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000003;
 
    while (true)
    {
@@ -36,6 +36,7 @@ void FsmcTask::Run()
 //               *word_addr);
 //         trace_printf("Fault number %u: %04x\n", counter, short_addr[6]);
       }
+      short_addr[2] = static_cast<uint16_t>(counter);
       counter++;
       //chr_addr++;
       Delay(1000);
