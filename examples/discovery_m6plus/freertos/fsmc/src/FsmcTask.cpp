@@ -13,7 +13,7 @@ FsmcTask::FsmcTask()
 void FsmcTask::Run()
 {
    volatile uint16_t * short_addr = (volatile uint16_t *)0x60000000;
-   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000000;
+   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000008;
 
    while (true)
    {
@@ -23,14 +23,18 @@ void FsmcTask::Run()
       //short_addr[4] = (uint16_t)counter;
       //short_addr[6] = 0xB00B;
       //word_addr[0] = word_addr[0] ^ 0xDEADBEEF;
-
+      //volatile uint16_t short0 = short_addr[4];
 
       //if (chr_data != (memtest_t)counter)
       {
-         trace_printf("Fault number %u: %04x %04x %04x %04x %04x %04x %04x %04x %08x\n", counter,
-               short_addr[0], short_addr[1], short_addr[2], short_addr[3],
+//         trace_printf("Fault number %u: %04x %04x %04x %04x %04x %04x %04x %04x %08x\n", counter,
+//               short_addr[0], short_addr[1], short_addr[2], short_addr[3],
+//               short_addr[4], short_addr[5], short_addr[6], short_addr[7],
+//               *word_addr);
+         trace_printf("Fault number %u: %04x %04x %04x %04x %08x\n", counter,
                short_addr[4], short_addr[5], short_addr[6], short_addr[7],
                *word_addr);
+//         trace_printf("Fault number %u: %04x\n", counter, short_addr[4]);
       }
       counter++;
       //chr_addr++;
@@ -97,11 +101,11 @@ bool FsmcTask::HardwareInit()
    // Flexible Static Memory Controller timing parameters
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
    fsmc_timing.AddressHoldTime = 1; // don't care
-   fsmc_timing.AddressSetupTime = 15; // don't care
+   fsmc_timing.AddressSetupTime = 0; // don't care
    fsmc_timing.BusTurnAroundDuration = 0;
    fsmc_timing.CLKDivision = 10; // decent speed!
-   fsmc_timing.DataLatency = 0; // zero for PSRAM
-   fsmc_timing.DataSetupTime = 255; // don't care
+   fsmc_timing.DataLatency = 2; // 2 for PSRAM
+   fsmc_timing.DataSetupTime = 1; // don't care
 
    FSMC_NORSRAM_Timing_Init(FSMC_NORSRAM_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1);
    //FSMC_NORSRAM_Extended_Timing_Init(FSMC_NORSRAM_EXTENDED_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1, FSMC_EXTENDED_MODE_DISABLE);
