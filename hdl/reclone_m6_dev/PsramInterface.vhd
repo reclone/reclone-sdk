@@ -19,15 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity PsramInterface is
    port
@@ -40,19 +33,18 @@ entity PsramInterface is
       FSMC_NWE    : in     std_logic;
       FSMC_NE     : in     std_logic;
       FSMC_NL     : in     std_logic;
-      FSMC_NBL1   : in     std_logic;
-      FSMC_NBL0   : in     std_logic;
+      FSMC_NBL    : in     std_logic_vector(1 downto 0);
       FSMC_NWAIT  : out    std_logic;
       
       -- Wishbone Master interface
       RST_I       : in  std_logic;
       CLK_I       : in  std_logic;
-      ADR_O       : out std_logic_vector(23 downto 0);
+      ADR_O       : out std_logic_vector(31 downto 1);
       DAT_I       : in  std_logic_vector(15 downto 0);
       DAT_O       : out std_logic_vector(15 downto 0);
       WE_O        : out std_logic;
       STB_O       : out std_logic;
-      STALL_I     : in std_logic;
+      SEL_O       : out std_logic_vector(1 downto 0);
       ACK_I       : in  std_logic;
       CYC_O       : out std_logic;
       
@@ -62,10 +54,10 @@ entity PsramInterface is
 end PsramInterface;
 
 architecture Behavioral of PsramInterface is
-   type psram_state_enum is (PSRAM_ADDR, PSRAM_DATA, PSRAM_WRITE, PSRAM_STALL, PSRAM_ACK, PSRAM_COMPLETE);
+   type psram_state_enum is (PSRAM_IDLE, PSRAM_READ, PSRAM_WRITE, PSRAM_COMPLETE);
    type ram_type is array (0 to 7) of std_logic_vector (7 downto 0);
 
-   signal psram_state      : psram_state_enum := PSRAM_ADDR;
+   signal psram_state      : psram_state_enum := PSRAM_IDLE;
    signal data_out         : std_logic_vector(15 downto 0) := (others => '0');
    signal write_addr       : std_logic_vector(23 downto 0);
    signal write_addr_next  : std_logic_vector(23 downto 0);
@@ -106,7 +98,7 @@ begin
       
    
    -- FSMC Latch and Write process (rising edge)
-   process (FSMC_CLK, FSMC_NE, FSMC_NBL0, FSMC_NBL1, FSMC_NL, FSMC_NWE, writes_allowed) is
+   process (FSMC_CLK, FSMC_NE) is
    begin
    
       -- On rising edge of FSMC clock, enabled
@@ -124,13 +116,13 @@ begin
                dbg_out(1) <= '1';
                
                -- Time to write stuff
-               if (FSMC_NBL1 = '0') then
+               if (FSMC_NBL(1) = '0') then
                   -- Write high byte
                   mem_data_h(to_integer(unsigned(write_addr(2 downto 0)))) <= FSMC_D(15 downto 8);
                   dbg_out(2) <= '1';
                end if;
                   
-               if (FSMC_NBL0 = '0') then
+               if (FSMC_NBL(0) = '0') then
                   -- Write low byte
                   mem_data_l(to_integer(unsigned(write_addr(2 downto 0)))) <= FSMC_D(7 downto 0);
                   dbg_out(3) <= '1';
@@ -154,7 +146,7 @@ begin
    
    
    -- FSMC Read process (falling edge)
-   process (FSMC_CLK, FSMC_NE, FSMC_NOE, phase_count) is
+   process (FSMC_CLK, FSMC_NE) is
    begin
       -- On falling edge of FSMC clock, enabled
       if (falling_edge(FSMC_CLK) and FSMC_NE = '0') then
@@ -174,6 +166,7 @@ begin
             end if;
          end if;
          
+         -- Update write address and allowed flag (done here to ensure hold times)
          if (phase_count > 1) then
             writes_allowed <= '1';
          else
@@ -190,7 +183,20 @@ begin
    begin
       -- On rising edge of Wishbone clock
       if rising_edge(CLK_I) then
-         --TODO: actually read/write with the slave
+         case (psram_state) is
+            when PSRAM_IDLE =>
+               -- Wait for a read or write to be requested
+               
+            when PSRAM_READ =>
+               -- A read has been requested; wait for it to finish
+            
+            when PSRAM_WRITE =>
+               -- A write has been requested; wait for it to finish
+               
+            when PSRAM_COMPLETE =>
+               -- Completion has been indicated; wait for it to be acknowledged
+               
+         end case;
       end if;
    end process;
 

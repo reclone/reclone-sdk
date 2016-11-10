@@ -29,8 +29,7 @@ entity reclone_top is
             FSMC_NE1_NCE2: in STD_LOGIC;
             FSMC_NL     : in  STD_LOGIC;
             FSMC_CLK    : in  STD_LOGIC;
-            FSMC_NBL1   : in  STD_LOGIC;
-            FSMC_NBL0   : in  STD_LOGIC
+            FSMC_NBL    : in  STD_LOGIC_VECTOR(1 downto 0)
          );
 end reclone_top;
 
@@ -59,12 +58,12 @@ architecture Behavioral of reclone_top is
    
    signal textbuf_rst_i : std_logic;
    signal textbuf_clk_i : std_logic;
-   signal textbuf_adr_o : std_logic_vector(23 downto 0) := (others => '0');
+   signal textbuf_adr_o : std_logic_vector(31 downto 1) := (others => '0');
    signal textbuf_dat_i : std_logic_vector(15 downto 0);
    signal textbuf_dat_o : std_logic_vector(15 downto 0) := (others => '0');
    signal textbuf_we_o  : std_logic := '0';
    signal textbuf_stb_o : std_logic := '0';
-   signal textbuf_stall_i : std_logic;
+   signal textbuf_sel_o : std_logic_vector(1 downto 0);
    signal textbuf_ack_i : std_logic;
    signal textbuf_cyc_o : std_logic := '0';
 
@@ -139,19 +138,18 @@ architecture Behavioral of reclone_top is
       FSMC_NWE    : in     std_logic;
       FSMC_NE     : in     std_logic;
       FSMC_NL     : in     std_logic;
-      FSMC_NBL1   : in     std_logic;
-      FSMC_NBL0   : in     std_logic;
+      FSMC_NBL    : in     std_logic_vector(1 downto 0);
       FSMC_NWAIT  : out    std_logic;
       
       -- Wishbone Master interface
       RST_I       : in  std_logic;
       CLK_I       : in  std_logic;
-      ADR_O       : out std_logic_vector(23 downto 0);
+      ADR_O       : out std_logic_vector(31 downto 1);
       DAT_I       : in  std_logic_vector(15 downto 0);
       DAT_O       : out std_logic_vector(15 downto 0);
       WE_O        : out std_logic;
       STB_O       : out std_logic;
-      STALL_I     : in std_logic;
+      SEL_O       : out std_logic_vector(1 downto 0);
       ACK_I       : in  std_logic;
       CYC_O       : out std_logic;
       
@@ -170,11 +168,10 @@ architecture Behavioral of reclone_top is
       DAT_I       : in  std_logic_vector(15 downto 0);
       DAT_O       : out std_logic_vector(15 downto 0);
       WE_I        : in  std_logic;
-      SEL_I       : in  std_logic;
+      SEL_I       : in  std_logic_vector(1 downto 0);
       STB_I       : in  std_logic;
       ACK_O       : out std_logic;
       CYC_I       : in  std_logic;
-      STALL_O     : out std_logic;
       
       -- Read-only interface for text renderer
       ClkB        : in  std_logic;
@@ -259,14 +256,13 @@ Inst_clocking: clocking PORT MAP(
       RST_I => '0',
       CLK_I => pixel_clock_t,
       WE_I => textbuf_we_o,
-      ADR_I => textbuf_adr_o(11 downto 0),
+      ADR_I => textbuf_adr_o(12 downto 1),
       DAT_I => textbuf_dat_o,
       DAT_O => textbuf_dat_i,
-      SEL_I => '1',
+      SEL_I => textbuf_sel_o,
       STB_I => textbuf_stb_o,
       ACK_O => textbuf_ack_i,
       CYC_I => textbuf_cyc_o,
-      STALL_O  => textbuf_stall_i,
       ClkB => pixel_clock_t,
       AddrB => character_addr,
       DataOutB => character_data
@@ -284,9 +280,9 @@ Inst_clocking: clocking PORT MAP(
       DAT_O => textbuf_dat_o,
       WE_O => textbuf_we_o,
       STB_O => textbuf_stb_o,
-      STALL_I => textbuf_stall_i,
       ACK_I => textbuf_ack_i,
       CYC_O => textbuf_cyc_o,
+      SEL_O => textbuf_sel_o,
       FSMC_A => fsmc_addr(23 downto 16),
       FSMC_D => FSMC_D(15 downto 0),
       FSMC_NOE => FSMC_NOE,
@@ -294,8 +290,7 @@ Inst_clocking: clocking PORT MAP(
       FSMC_NE => FSMC_NE1_NCE2,
       FSMC_NL => FSMC_NL,
       FSMC_CLK => FSMC_CLK,
-      FSMC_NBL1 => FSMC_NBL1,
-      FSMC_NBL0 => FSMC_NBL0,
+      FSMC_NBL => FSMC_NBL,
       FSMC_NWAIT => FSMC_NWAIT,
       dbg => fsmc_dbg
    );
