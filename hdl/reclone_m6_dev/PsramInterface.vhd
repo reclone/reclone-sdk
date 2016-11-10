@@ -60,12 +60,9 @@ architecture Behavioral of PsramInterface is
    signal psram_state      : psram_state_enum := PSRAM_IDLE;
    signal data_out         : std_logic_vector(15 downto 0) := (others => '0');
    signal write_addr       : std_logic_vector(23 downto 0);
-   signal write_addr_next  : std_logic_vector(23 downto 0);
    signal read_addr        : std_logic_vector(23 downto 0);
-   signal read_addr_next   : std_logic_vector(23 downto 0);
    signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
    signal phase_count      : unsigned(4 downto 0) := "00000";
-   signal writes_allowed   : std_logic := '0';
    
    signal mem_data_h       : ram_type :=
    (
@@ -107,12 +104,12 @@ begin
          if (FSMC_NL = '0') then
             -- Reset phase count and latch the read and write addresses
             phase_count <= "00000";
-            write_addr_next <= FSMC_A & FSMC_D;
-            read_addr <= FSMC_A & FSMC_D;
+            write_addr <= FSMC_A & FSMC_D;
+            
             --dbg_out <= FSMC_D(4 downto 0);
          else
          
-            if (FSMC_NWE = '0' and writes_allowed = '1') then
+            if (FSMC_NWE = '0' and phase_count > 1) then
                dbg_out(1) <= '1';
                
                -- Time to write stuff
@@ -129,14 +126,12 @@ begin
                end if;
 
                -- Auto-increment the address for burst transfers
-               write_addr_next <= std_logic_vector(unsigned(write_addr) + 1);
+               write_addr <= std_logic_vector(unsigned(write_addr) + 1);
             end if;
          
             -- Increment number of FSMC cycles since address latch
             phase_count <= phase_count + 1;
-            -- Update the read address
-            read_addr <= read_addr_next;
-            --dbg_out <= std_logic_vector(phase_count);
+
          end if;
             
       end if;
@@ -153,8 +148,8 @@ begin
          
          -- If in the zeroth phase (determined by rising edge)
          if (phase_count = 0) then
-            -- Init the "next" read address (latched on rising edge)
-            read_addr_next <= read_addr;
+            -- Latch the read address
+            read_addr <= FSMC_A & FSMC_D;
          else
             -- Output the data at the current read_addr
             data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(read_addr(2 downto 0))));
@@ -162,17 +157,10 @@ begin
          
             if (FSMC_NOE = '0') then
                -- Auto-increment the read address to support burst transfers
-               read_addr_next <= std_logic_vector(unsigned(read_addr) + 1);
+               read_addr <= std_logic_vector(unsigned(read_addr) + 1);
             end if;
          end if;
-         
-         -- Update write address and allowed flag (done here to ensure hold times)
-         if (phase_count > 1) then
-            writes_allowed <= '1';
-         else
-            writes_allowed <= '0';
-         end if;
-         write_addr <= write_addr_next;
+
       end if;
    end process;
 
