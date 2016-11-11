@@ -236,7 +236,7 @@ begin
                   if (ACK_I = '1') then
 
                      -- Latch the read data
-                     data_out <= "0101010110101010";
+                     data_out <= DAT_I;
                      STB_O <= '0';
                      CYC_O <= '0';
                      psram_state <= PSRAM_COMPLETE;
