@@ -13,7 +13,7 @@ FsmcTask::FsmcTask()
 void FsmcTask::Run()
 {
    volatile uint16_t * short_addr = (volatile uint16_t *)0x60000000;
-   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000003;
+   volatile uint32_t * word_addr = (volatile uint32_t *)0x60000002;
 
    while (true)
    {
@@ -36,7 +36,7 @@ void FsmcTask::Run()
 //               *word_addr);
 //         trace_printf("Fault number %u: %04x\n", counter, short_addr[6]);
       }
-      short_addr[2] = static_cast<uint16_t>(counter);
+      //short_addr[2] = static_cast<uint16_t>(counter);
       counter++;
       //chr_addr++;
       Delay(1000);
@@ -84,32 +84,32 @@ bool FsmcTask::HardwareInit()
 
    // Flexible Static Memory Controller configuration
    fsmc_init.AsynchronousWait = FSMC_ASYNCHRONOUS_WAIT_DISABLE;
-   fsmc_init.BurstAccessMode = FSMC_BURST_ACCESS_MODE_ENABLE;
+   fsmc_init.BurstAccessMode = FSMC_BURST_ACCESS_MODE_DISABLE;
    fsmc_init.DataAddressMux = FSMC_DATA_ADDRESS_MUX_ENABLE;
    fsmc_init.ExtendedMode = FSMC_EXTENDED_MODE_DISABLE;
    fsmc_init.MemoryDataWidth = FSMC_NORSRAM_MEM_BUS_WIDTH_16;
-   fsmc_init.MemoryType = FSMC_MEMORY_TYPE_PSRAM;
+   fsmc_init.MemoryType = FSMC_MEMORY_TYPE_NOR;
    fsmc_init.NSBank = FSMC_NORSRAM_BANK1;
    fsmc_init.WaitSignal = FSMC_WAIT_SIGNAL_DISABLE;
    fsmc_init.WaitSignalActive = FSMC_WAIT_TIMING_BEFORE_WS;
-   fsmc_init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_HIGH;
+   fsmc_init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_LOW;
    fsmc_init.WrapMode = FSMC_WRAP_MODE_DISABLE;
-   fsmc_init.WriteBurst = FSMC_WRITE_BURST_ENABLE;
+   fsmc_init.WriteBurst = FSMC_WRITE_BURST_DISABLE;
    fsmc_init.WriteOperation = FSMC_WRITE_OPERATION_ENABLE;
    FSMC_NORSRAM_DeInit(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_EXTENDED_DEVICE, FSMC_NORSRAM_BANK1);
    FSMC_NORSRAM_Init(FSMC_NORSRAM_DEVICE, &fsmc_init);
 
    // Flexible Static Memory Controller timing parameters
-   fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D; // don't care
-   fsmc_timing.AddressHoldTime = 1; // don't care
-   fsmc_timing.AddressSetupTime = 0; // don't care
-   fsmc_timing.BusTurnAroundDuration = 0;
-   fsmc_timing.CLKDivision = 3; // decent speed!
-   fsmc_timing.DataLatency = 2; // 2 for PSRAM
-   fsmc_timing.DataSetupTime = 1; // don't care
+   fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D;
+   fsmc_timing.AddressHoldTime = 15;
+   fsmc_timing.AddressSetupTime = 15;
+   fsmc_timing.BusTurnAroundDuration = 1;
+   fsmc_timing.CLKDivision = 6;
+   fsmc_timing.DataLatency = 2; // 2 for synchronous PSRAM
+   fsmc_timing.DataSetupTime = 15;
 
    FSMC_NORSRAM_Timing_Init(FSMC_NORSRAM_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1);
-   //FSMC_NORSRAM_Extended_Timing_Init(FSMC_NORSRAM_EXTENDED_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1, FSMC_EXTENDED_MODE_DISABLE);
+   FSMC_NORSRAM_Extended_Timing_Init(FSMC_NORSRAM_EXTENDED_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1, FSMC_EXTENDED_MODE_DISABLE);
    FSMC_NORSRAM_WriteOperation_Enable(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_BANK1);
    __FSMC_NORSRAM_ENABLE(FSMC_NORSRAM_DEVICE, FSMC_NORSRAM_BANK1);
 
