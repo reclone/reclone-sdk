@@ -28,8 +28,8 @@ void FsmcTask::Run()
       //if (chr_data != (memtest_t)counter)
       {
          trace_printf("Fault number %u: %04x %04x %04x %04x %04x %04x %04x %04x %08x\n", counter,
-               short_addr[0], short_addr[1], short_addr[2], short_addr[3],
-               short_addr[4], short_addr[5], short_addr[6], short_addr[7],
+               short_addr[7], short_addr[6], short_addr[5], short_addr[4],
+               short_addr[3], short_addr[2], short_addr[1], short_addr[0],
                *word_addr);
 //         trace_printf("Fault number %u: %04x %04x %04x %04x %08x\n", counter,
 //               short_addr[4], short_addr[5], short_addr[6], short_addr[7],
