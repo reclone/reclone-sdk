@@ -69,7 +69,7 @@ architecture Behavioral of reclone_top is
 
    signal fsmc_addr : std_logic_vector(23 downto 16);
    
-   signal fsmc_dbg : std_logic_vector(4 downto 0);
+   signal fsmc_dbg : std_logic_vector(5 downto 0);
 
    COMPONENT clocking
    PORT(
@@ -154,7 +154,7 @@ architecture Behavioral of reclone_top is
       CYC_O       : out std_logic;
       
       -- LEDs for debug
-      dbg         : out std_logic_vector(4 downto 0)
+      dbg         : out std_logic_vector(5 downto 0)
    );
    end component;
    
@@ -182,8 +182,7 @@ architecture Behavioral of reclone_top is
    
 begin
 
-   LEDs(4 downto 0) <= fsmc_dbg;
-   LEDs(5) <= '0';
+   LEDs(5 downto 0) <= fsmc_dbg;
 
    process(Clk50) begin
       if rising_edge(Clk50) then
