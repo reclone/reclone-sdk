@@ -92,7 +92,7 @@ begin
                      RAM_L(to_integer(unsigned(ADR_I))) <= DAT_I(7 downto 0);
                   end if;
                   if (SEL_I(1) = '1') then
-                     RAM_H(to_integer(unsigned(ADR_I))) <= DAT_I(7 downto 0);
+                     RAM_H(to_integer(unsigned(ADR_I))) <= DAT_I(15 downto 8);
                   end if;
                else
                   dat_a_out <= RAM_H(to_integer(unsigned(ADR_I))) & RAM_L(to_integer(unsigned(ADR_I)));

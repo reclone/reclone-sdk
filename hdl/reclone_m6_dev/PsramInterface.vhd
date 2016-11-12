@@ -63,7 +63,6 @@ architecture Behavioral of PsramInterface is
    signal read_addr        : std_logic_vector(23 downto 0);
    signal dbg_out          : std_logic_vector(4 downto 0) := (others => '0');
    signal phase_count      : unsigned(4 downto 0) := "00000";
-   signal nwait_out        : std_logic := '0';
    
    signal mem_data_h       : ram_type :=
    (
@@ -88,13 +87,11 @@ architecture Behavioral of PsramInterface is
       7 => "11111111"
    );
 begin
-
+   FSMC_NWAIT <= '1';
    FSMC_D <= data_out when (FSMC_NOE = '0') else (others => 'Z');
    --ADR_O <= addr_out;
    dbg <= dbg_out;
    
-   FSMC_NWAIT <= nwait_out;
-   dbg_out(4) <= nwait_out;
       
    
    -- FSMC Latch and Write process (rising edge)
@@ -103,7 +100,7 @@ begin
    
       -- On rising edge of FSMC clock, enabled
       if (rising_edge(FSMC_CLK) and FSMC_NE = '0') then
-         --dbg_out(0) <= '1';
+         dbg_out(0) <= '1';
          if (FSMC_NL = '0') then
             -- Reset phase count and latch the read and write addresses
             phase_count <= "00000";
@@ -113,20 +110,20 @@ begin
          else
          
             if (FSMC_NWE = '0' and phase_count > 1) then
-               --dbg_out(1) <= '1';
+               dbg_out(1) <= '1';
                
---               -- Time to write stuff
---               if (FSMC_NBL(1) = '0') then
---                  -- Write high byte
---                  mem_data_h(to_integer(unsigned(write_addr(2 downto 0)))) <= FSMC_D(15 downto 8);
---                  dbg_out(2) <= '1';
---               end if;
---                  
---               if (FSMC_NBL(0) = '0') then
---                  -- Write low byte
---                  mem_data_l(to_integer(unsigned(write_addr(2 downto 0)))) <= FSMC_D(7 downto 0);
---                  dbg_out(3) <= '1';
---               end if;
+               -- Time to write stuff
+               if (FSMC_NBL(1) = '0') then
+                  -- Write high byte
+                  mem_data_h(to_integer(unsigned(write_addr(2 downto 0)))) <= FSMC_D(15 downto 8);
+                  dbg_out(2) <= '1';
+               end if;
+                  
+               if (FSMC_NBL(0) = '0') then
+                  -- Write low byte
+                  mem_data_l(to_integer(unsigned(write_addr(2 downto 0)))) <= FSMC_D(7 downto 0);
+                  dbg_out(3) <= '1';
+               end if;
 
                -- Auto-increment the address for burst transfers
                write_addr <= std_logic_vector(unsigned(write_addr) + 1);
@@ -146,38 +143,21 @@ begin
    -- FSMC Read process (falling edge)
    process (FSMC_CLK, FSMC_NE) is
    begin
-      if (FSMC_NE = '1') then
-         -- Asynchronous reset of NWAIT
-         nwait_out <= '0';
-         dbg_out(3 downto 0) <= "0000";
-      
       -- On falling edge of FSMC clock, enabled
-      elsif (falling_edge(FSMC_CLK) and FSMC_NE = '0') then
+      if (falling_edge(FSMC_CLK) and FSMC_NE = '0') then
          
          -- If in the zeroth phase (determined by rising edge)
          if (phase_count = 0) then
             -- Latch the read address
             read_addr <= FSMC_A & FSMC_D;
-            nwait_out <= '0';
-            dbg_out(3 downto 0) <= "0001";
          else
             -- Output the data at the current read_addr
---            data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(read_addr(2 downto 0))));
---            data_out(7 downto 0) <= mem_data_l(to_integer(unsigned(read_addr(2 downto 0))));
+            data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(read_addr(2 downto 0))));
+            data_out(7 downto 0) <= mem_data_l(to_integer(unsigned(read_addr(2 downto 0))));
          
             if (FSMC_NOE = '0') then
-               if (nwait_out = '0') then
-                  -- Start the read on the Wishbone bus
-                  nwait_out <= '1';
-                  dbg_out(3 downto 0) <= "0010";
-               elsif (psram_state = PSRAM_COMPLETE) then
-                  -- Read is finished; de-assert NWAIT
-                  nwait_out <= '0';
-                  dbg_out(3 downto 0) <= "0011";
-                  -- Auto-increment the read address to support burst transfers
-                  read_addr <= std_logic_vector(unsigned(read_addr) + 1);
-               end if;
-
+               -- Auto-increment the read address to support burst transfers
+               read_addr <= std_logic_vector(unsigned(read_addr) + 1);
             end if;
          end if;
 
@@ -191,77 +171,20 @@ begin
    begin
       -- On rising edge of Wishbone clock
       if rising_edge(CLK_I) then
-         if (RST_I = '1') then
-            -- Reset all wishbone outputs and states
-            ADR_O <= (others => '0');
-            DAT_O <= (others => '0');
-            SEL_O <= (others => '0');
-            WE_O <= '0';
-            STB_O <= '0';
-            CYC_O <= '0';
-         else
-            case (psram_state) is
-               when PSRAM_IDLE =>
-                  -- Wait for a read or write to be requested
-                  -- (Look for assertion of NWAIT)
-                  if (nwait_out = '1') then
-                     -- Start the read or write
-                     if (FSMC_NOE = '0') then
-                        
-                        -- Read
-                        WE_O <= '0';
-                        SEL_O <= (others => '1');
-                        ADR_O(31 downto 25) <= (others => '0');
-                        ADR_O(24 downto 1) <= read_addr(23 downto 0);
-                        DAT_O <= (others => '0');
-                        STB_O <= '1';
-                        CYC_O <= '1';
-                        psram_state <= PSRAM_READ;
-                     elsif (FSMC_NWE = '0') then
-                        -- Write
-                        WE_O <= '1';
-                        SEL_O(1) <= not FSMC_NBL(1);
-                        SEL_O(0) <= not FSMC_NBL(0);
-                        ADR_O(31 downto 25) <= (others => '0');
-                        ADR_O(24 downto 1) <= write_addr(23 downto 0);
-                        DAT_O <= FSMC_D;
-                        STB_O <= '1';
-                        CYC_O <= '1';
-                        psram_state <= PSRAM_WRITE;
-                     end if;
-                  end if;
-                  
-               when PSRAM_READ =>
-                  -- A read has been requested; wait for it to finish
-                  if (ACK_I = '1') then
-
-                     -- Latch the read data
-                     data_out <= DAT_I;
-                     STB_O <= '0';
-                     CYC_O <= '0';
-                     psram_state <= PSRAM_COMPLETE;
-                  end if;
+         case (psram_state) is
+            when PSRAM_IDLE =>
+               -- Wait for a read or write to be requested
                
-               when PSRAM_WRITE =>
-                  -- A write has been requested; wait for it to finish
-                  if (ACK_I = '1') then 
-                     -- Done writing; nothing to latch
-                     STB_O <= '0';
-                     CYC_O <= '0';
-                     WE_O <= '0';
-                     psram_state <= PSRAM_COMPLETE;
-                  end if;
-                  
-               when PSRAM_COMPLETE =>
-                  -- Completion has been indicated; wait for it to be acknowledged
-                  -- (Look for de-assertion of NWAIT)
-                  if (nwait_out = '0') then
-                     -- Go back to idle
-                     psram_state <= PSRAM_IDLE;
-                  end if;
-                  
-            end case;
-         end if;
+            when PSRAM_READ =>
+               -- A read has been requested; wait for it to finish
+            
+            when PSRAM_WRITE =>
+               -- A write has been requested; wait for it to finish
+               
+            when PSRAM_COMPLETE =>
+               -- Completion has been indicated; wait for it to be acknowledged
+               
+         end case;
       end if;
    end process;
 
