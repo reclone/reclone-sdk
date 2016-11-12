@@ -39,7 +39,7 @@ void FsmcTask::Run()
       //short_addr[2] = static_cast<uint16_t>(counter);
       counter++;
       //chr_addr++;
-      Delay(1000);
+      Delay(200);
    }
 
 }
@@ -60,7 +60,7 @@ bool FsmcTask::HardwareInit()
 
    // Set the following pins for high speed, alternate function push/pull, FSMC
    gpio_init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-   gpio_init.Pull = GPIO_PULLUP;
+   gpio_init.Pull = GPIO_NOPULL;
    gpio_init.Alternate = GPIO_AF12_FSMC;
    gpio_init.Mode = GPIO_MODE_AF_PP;
 
@@ -101,11 +101,11 @@ bool FsmcTask::HardwareInit()
 
    // Flexible Static Memory Controller timing parameters
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D;
-   fsmc_timing.AddressHoldTime = 15;
-   fsmc_timing.AddressSetupTime = 15;
+   fsmc_timing.AddressHoldTime = 1;
+   fsmc_timing.AddressSetupTime = 7;
    fsmc_timing.BusTurnAroundDuration = 1;
    fsmc_timing.CLKDivision = 3;
-   fsmc_timing.DataLatency = 2; // 2 for synchronous PSRAM
+   fsmc_timing.DataLatency = 2;
    fsmc_timing.DataSetupTime = 15;
 
    FSMC_NORSRAM_Timing_Init(FSMC_NORSRAM_DEVICE, &fsmc_timing, FSMC_NORSRAM_BANK1);
