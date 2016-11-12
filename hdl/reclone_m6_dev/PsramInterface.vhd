@@ -28,7 +28,7 @@ entity PsramInterface is
       -- FSMC Asynchronous PSRAM interface with STM32F4
       FSMC_CLK    : in     std_logic;
       FSMC_A      : in     std_logic_vector(23 downto 16);
-      FSMC_D      : inout  std_logic_vector(15 downto 0);
+      FSMC_D      : inout  std_logic_vector(15 downto 0) := (others => 'Z');
       FSMC_NOE    : in     std_logic;
       FSMC_NWE    : in     std_logic;
       FSMC_NE     : in     std_logic;
@@ -54,7 +54,7 @@ entity PsramInterface is
 end PsramInterface;
 
 architecture Behavioral of PsramInterface is
-   type psram_state_enum is (PSRAM_IDLE, PSRAM_LATCHED, PSRAM_COMPLETE);
+   type psram_state_enum is (PSRAM_IDLE, PSRAM_READ, PSRAM_COMPLETE);
    type ram_type is array (0 to 7) of std_logic_vector (7 downto 0);
 
    signal psram_state      : psram_state_enum := PSRAM_IDLE;
@@ -84,22 +84,17 @@ architecture Behavioral of PsramInterface is
       7 => "11111111"
    );
 begin
-   FSMC_D <= data_out when (FSMC_NOE = '0') else (others => 'Z');
-   
-   process (FSMC_NL, FSMC_A, FSMC_D)
-   begin
-
-   end process;
-   
    
    process (CLK_I) is
    begin
       -- On rising edge of Wishbone clock
       if rising_edge(CLK_I) then
+
          if (RST_I = '1') then
             -- Synchronous reset
             data_out <= (others => '0');
             FSMC_NWAIT <= '1';
+            FSMC_D <= (others => 'Z');
             dbg <= (others => '0');
             ADR_O <= (others => '0');
             DAT_O <= (others => '0');
@@ -111,37 +106,53 @@ begin
          else
             if (FSMC_NE = '0') then
                -- Chip select is active
-               -- Run state machine
---               case psram_state is
---                  when PSRAM_IDLE =>
---                     if (FSMC_NL = '0') then
---                        latched_addr <= FSMC_A & FSMC_D;
---                        dbg(5 downto 3) <= FSMC_D(2 downto 0);
---                        psram_state <= PSRAM_LATCHED;
---                     end if;
---                  when PSRAM_LATCHED =>
---                     if (FSMC_NL = '0') then
---                        latched_addr <= FSMC_A & FSMC_D;
---                     elsif (FSMC_NOE = '0') then
---                        data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(latched_addr(2 downto 0))));
---                        data_out(7 downto 0) <= mem_data_l(to_integer(unsigned(latched_addr(2 downto 0))));
---                        dbg(2 downto 0) <= latched_addr(2 downto 0);
---                        psram_state <= PSRAM_COMPLETE;
---                     end if;
---                  when PSRAM_COMPLETE =>
---                     if (FSMC_NOE = '1' and FSMC_NWE = '1') then
---                        psram_state <= PSRAM_IDLE;
---                     end if;
---               end case;
+               
+               -- Latch the address
                if (FSMC_NL = '0') then
                   latched_addr <= FSMC_A & FSMC_D;
+                  dbg(5 downto 3) <= FSMC_D(2 downto 0);
                end if;
                
                if (FSMC_NOE = '0') then
-                  data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(latched_addr(2 downto 0))));
-                  data_out(7 downto 0) <= mem_data_l(to_integer(unsigned(latched_addr(2 downto 0))));
-                  dbg(2 downto 0) <= latched_addr(2 downto 0);
+                  FSMC_D <= data_out;
+               else
+                  FSMC_D <= (others => 'Z');
                end if;
+
+               -- Run state machine
+               case psram_state is
+                  when PSRAM_IDLE =>
+                     if (FSMC_NL = '1' and FSMC_NOE = '0') then
+                        dbg(2 downto 0) <= latched_addr(2 downto 0);
+                        WE_O <= '0';
+                        STB_O <= '1';
+                        SEL_O <= "11";
+                        CYC_O <= '1';
+                        ADR_O <= "0000000" & latched_addr;
+                        FSMC_NWAIT <= '0';
+                        psram_state <= PSRAM_READ;
+                     end if;
+                  when PSRAM_READ =>
+                     if (ACK_I = '1') then
+                        data_out <= DAT_I;
+                        STB_O <= '0';
+                        SEL_O <= "00";
+                        CYC_O <= '0';
+                        FSMC_NWAIT <= '1';
+                        psram_state <= PSRAM_COMPLETE;
+                     end if;
+                  when PSRAM_COMPLETE =>
+                     if (FSMC_NOE = '1' and FSMC_NWE = '1') then
+                        psram_state <= PSRAM_IDLE;
+                     end if;
+               end case;
+
+               
+--               if (FSMC_NOE = '0') then
+--                  data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(latched_addr(2 downto 0))));
+--                  data_out(7 downto 0) <= mem_data_l(to_integer(unsigned(latched_addr(2 downto 0))));
+--                  dbg(2 downto 0) <= latched_addr(2 downto 0);
+--               end if;
                
             else
                -- Chip select is inactive
@@ -152,6 +163,7 @@ begin
                SEL_O <= "00";
                CYC_O <= '0';
                psram_state <= PSRAM_IDLE;
+               FSMC_D <= (others => 'Z');
             end if;
          end if;
       end if;
