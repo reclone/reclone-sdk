@@ -119,34 +119,27 @@ begin
                   FSMC_D <= (others => 'Z');
                end if;
 
-               -- Run state machine
-               case psram_state is
-                  when PSRAM_IDLE =>
-                     if (FSMC_NL = '1' and FSMC_NOE = '0') then
-                        dbg(2 downto 0) <= latched_addr(2 downto 0);
-                        WE_O <= '0';
-                        STB_O <= '1';
-                        SEL_O <= "11";
-                        CYC_O <= '1';
-                        ADR_O <= "0000000" & latched_addr;
-                        FSMC_NWAIT <= '0';
-                        psram_state <= PSRAM_READ;
-                     end if;
-                  when PSRAM_READ =>
-                     if (ACK_I = '1') then
-                        data_out <= DAT_I;
-                        STB_O <= '0';
-                        SEL_O <= "00";
-                        CYC_O <= '0';
-                        FSMC_NWAIT <= '1';
-                        psram_state <= PSRAM_COMPLETE;
-                     end if;
-                  when PSRAM_COMPLETE =>
-                     if (FSMC_NOE = '1' and FSMC_NWE = '1') then
-                        psram_state <= PSRAM_IDLE;
-                     end if;
-               end case;
-
+               if (FSMC_NL = '1' and FSMC_NOE = '0') then
+                  if (ACK_I = '1') then
+                     FSMC_NWAIT <= '1';
+                  else
+                     FSMC_NWAIT <= '0';
+                  end if;
+                  dbg(2 downto 0) <= latched_addr(2 downto 0);
+                  WE_O <= '0';
+                  STB_O <= '1';
+                  SEL_O <= "11";
+                  CYC_O <= '1';
+                  ADR_O <= "0000000" & latched_addr;
+                  data_out <= DAT_I;
+               else
+                  STB_O <= '0';
+                  SEL_O <= "00";
+                  CYC_O <= '0';
+                  FSMC_NWAIT <= '1';
+               end if;
+               
+               
                
 --               if (FSMC_NOE = '0') then
 --                  data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(latched_addr(2 downto 0))));
