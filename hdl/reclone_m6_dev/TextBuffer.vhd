@@ -23,11 +23,6 @@ use IEEE.STD_LOGIC_TEXTIO.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use std.textio.all;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity TextBuffer is
    port
    (
@@ -72,49 +67,58 @@ architecture Behavioral of TextBuffer is
       return RAM;
    end function;
 
-   
    signal RAM_H : ram_type := InitRamFromFile("TextBuffer.txt", '1');
    signal RAM_L : ram_type := InitRamFromFile("TextBuffer.txt", '0');
    signal ack_out : std_logic := '0';
    signal dat_a_out : std_logic_vector(15 downto 0) := (others => '0');
    signal dat_b_out : std_logic_vector(15 downto 0) := (others => '0');
+   
 begin
-
+   
+   DAT_O <= dat_a_out;
+   ACK_O <= ack_out when (CYC_I = '1' and STB_I = '1') else '0';
+   DataOutB <= dat_b_out;
+   
+   -- Wishbone slave process
    process (CLK_I) begin
       if rising_edge(CLK_I) then
+         -- Always read on the rising edge (needed to infer Block RAM)
+         dat_a_out <= RAM_H(to_integer(unsigned(ADR_I))) & RAM_L(to_integer(unsigned(ADR_I)));
+         
+         -- A simple, well-behaved Wishbone slave
          if (RST_I = '1') then
+            -- Synchronous reset
             ack_out <= '0';
          else
-            --TODO: Make sure this is a well-behaved Wishbone slave
             if (CYC_I = '1' and STB_I = '1') then
+               -- In a bus cycle
                if (WE_I = '1') then
+                  -- Write enable is active
                   if (SEL_I(0) = '1') then
+                     -- Write low byte
                      RAM_L(to_integer(unsigned(ADR_I))) <= DAT_I(7 downto 0);
                   end if;
                   if (SEL_I(1) = '1') then
+                     -- Write high byte
                      RAM_H(to_integer(unsigned(ADR_I))) <= DAT_I(15 downto 8);
                   end if;
-               else
-                  dat_a_out <= RAM_H(to_integer(unsigned(ADR_I))) & RAM_L(to_integer(unsigned(ADR_I)));
                end if;
+               -- Tell bus master that we're done reading or writing
                ack_out <= '1';
             elsif (CYC_I = '0' or STB_I = '0') then
+               -- We're not done reading or writing
                ack_out <= '0';
             end if;
          end if;
       end if;
    end process;
-   
-   DAT_O <= dat_a_out;
-   ACK_O <= ack_out when (CYC_I = '1' and STB_I = '1') else '0';
-   
+
+   -- Text renderer port process
    process (ClkB) begin
       if rising_edge(ClkB) then
          dat_b_out <= RAM_H(to_integer(unsigned(AddrB))) & RAM_L(to_integer(unsigned(AddrB)));
       end if;
    end process;
-   
-   DataOutB <= dat_b_out;
 
 end Behavioral;
 

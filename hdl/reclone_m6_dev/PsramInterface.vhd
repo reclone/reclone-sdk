@@ -119,19 +119,30 @@ begin
                   FSMC_D <= (others => 'Z');
                end if;
 
-               if (FSMC_NL = '1' and FSMC_NOE = '0') then
+               if (FSMC_NL = '1') then
+                
+                  CYC_O <= '1';
+                  STB_O <= '1';
+                  ADR_O <= "0000000" & latched_addr;
+                  dbg(2 downto 0) <= latched_addr(2 downto 0);
+                  data_out <= DAT_I;
+                                          
+                  if (FSMC_NWE = '0') then
+                     WE_O <= '1';
+                     SEL_O(1) <= not FSMC_NBL(1);
+                     SEL_O(0) <= not FSMC_NBL(0);
+                     DAT_O <= FSMC_D;
+                  else
+                     WE_O <= '0';
+                     SEL_O <= "11";
+                  end if;
+                  
                   if (ACK_I = '1') then
                      FSMC_NWAIT <= '1';
                   else
                      FSMC_NWAIT <= '0';
-                  end if;
-                  dbg(2 downto 0) <= latched_addr(2 downto 0);
-                  WE_O <= '0';
-                  STB_O <= '1';
-                  SEL_O <= "11";
-                  CYC_O <= '1';
-                  ADR_O <= "0000000" & latched_addr;
-                  data_out <= DAT_I;
+                  end if;  
+
                else
                   STB_O <= '0';
                   SEL_O <= "00";
@@ -140,12 +151,6 @@ begin
                end if;
                
                
-               
---               if (FSMC_NOE = '0') then
---                  data_out(15 downto 8) <= mem_data_h(to_integer(unsigned(latched_addr(2 downto 0))));
---                  data_out(7 downto 0) <= mem_data_l(to_integer(unsigned(latched_addr(2 downto 0))));
---                  dbg(2 downto 0) <= latched_addr(2 downto 0);
---               end if;
                
             else
                -- Chip select is inactive
