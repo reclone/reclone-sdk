@@ -60,6 +60,7 @@ architecture Behavioral of PsramInterface is
    signal psram_state      : psram_state_enum := PSRAM_IDLE;
    signal data_out         : std_logic_vector(15 downto 0) := (others => '0');
    signal latched_addr     : std_logic_vector(23 downto 0);
+   signal latched_nbl      : std_logic_vector(1 downto 0);
    
    signal mem_data_h       : ram_type :=
    (
@@ -110,6 +111,7 @@ begin
                -- Latch the address
                if (FSMC_NL = '0') then
                   latched_addr <= FSMC_A & FSMC_D;
+                  latched_nbl <= FSMC_NBL;
                   dbg(5 downto 3) <= FSMC_D(2 downto 0);
                end if;
                
@@ -126,15 +128,15 @@ begin
                   ADR_O <= "0000000" & latched_addr;
                   dbg(2 downto 0) <= latched_addr(2 downto 0);
                   data_out <= DAT_I;
+                  SEL_O(1) <= not latched_nbl(1);
+                  SEL_O(0) <= not latched_nbl(0);
                                           
                   if (FSMC_NWE = '0') then
                      WE_O <= '1';
-                     SEL_O(1) <= not FSMC_NBL(1);
-                     SEL_O(0) <= not FSMC_NBL(0);
+                     dbg(4 downto 3) <= latched_nbl;
                      DAT_O <= FSMC_D;
                   else
                      WE_O <= '0';
-                     SEL_O <= "11";
                   end if;
                   
                   if (ACK_I = '1') then
