@@ -12,6 +12,7 @@ FsmcTask::FsmcTask()
 
 void FsmcTask::Run()
 {
+   volatile uint8_t * byte_addr = (volatile uint8_t *)0x60000000;
    volatile uint16_t * short_addr = (volatile uint16_t *)0x60000000;
    volatile uint32_t * word_addr = (volatile uint32_t *)0x60000003;
 
@@ -37,6 +38,7 @@ void FsmcTask::Run()
 //         trace_printf("Fault number %u: %04x\n", counter, short_addr[6]);
       }
       //short_addr[2] = static_cast<uint16_t>(counter);
+      byte_addr[7] = static_cast<uint8_t>(counter);
       counter++;
       //chr_addr++;
       Delay(200);
@@ -88,7 +90,7 @@ bool FsmcTask::HardwareInit()
    fsmc_init.DataAddressMux = FSMC_DATA_ADDRESS_MUX_ENABLE;
    fsmc_init.ExtendedMode = FSMC_EXTENDED_MODE_DISABLE;
    fsmc_init.MemoryDataWidth = FSMC_NORSRAM_MEM_BUS_WIDTH_16;
-   fsmc_init.MemoryType = FSMC_MEMORY_TYPE_NOR;
+   fsmc_init.MemoryType = FSMC_MEMORY_TYPE_PSRAM;
    fsmc_init.NSBank = FSMC_NORSRAM_BANK1;
    fsmc_init.WaitSignal = FSMC_WAIT_SIGNAL_DISABLE;
    fsmc_init.WaitSignalActive = FSMC_WAIT_TIMING_DURING_WS;
@@ -101,7 +103,7 @@ bool FsmcTask::HardwareInit()
 
    // Flexible Static Memory Controller timing parameters
    fsmc_timing.AccessMode = FSMC_ACCESS_MODE_D;
-   fsmc_timing.AddressHoldTime = 1;
+   fsmc_timing.AddressHoldTime = 4;
    fsmc_timing.AddressSetupTime = 7;
    fsmc_timing.BusTurnAroundDuration = 1;
    fsmc_timing.CLKDivision = 3;
