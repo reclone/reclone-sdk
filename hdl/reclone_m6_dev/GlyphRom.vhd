@@ -46,14 +46,14 @@ architecture Behavioral of GlyphRom is
       variable RomFileLine : line;
       variable ROM : rom_type;
    begin
-      for I in rom_type'range loop
+      for I in 0 to 3583 loop
          readline (RomFile, RomFileLine);
          read(RomFileLine, ROM(I));
       end loop;
       return ROM;
    end function;
    
-   signal rom : rom_type := InitRomFromFile("GlyphRom.txt");
+   signal rom : rom_type := InitRomFromFile("GlyphRom_8x14.txt");
 begin
 
    process (Clock) begin

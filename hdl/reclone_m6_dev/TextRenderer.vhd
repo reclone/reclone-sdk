@@ -1,13 +1,13 @@
 ----------------------------------------------------------------------------------
 -- Module Name:   TextRenderer - Behavioral
 -- Description:   Generates pixel color data based on a 128x32 text buffer RAM
---                and a IBM PC Code Page 437 (a.k.a. ANSI) MCGA 8x16 character ROM.
+--                and a IBM PC Code Page 437 (a.k.a. ANSI) EGA 8x14 character ROM.
 --
 --                The renderer is designed for 1280x720 screen resolution.  When
---                the characters are scaled by 200% to 16x32, the screen can show
---                80 columns by 22.5 rows of text.  The 22 visible rows are shifted
---                down by 8 pixels so that they are centered vertically on the screen.
---                The top and bottom quarter-rows can be used for special bordering.
+--                the characters are scaled by 200% to 16x28, the screen can show
+--                80 columns by 25.7 rows of text.  The 25 visible rows are shifted
+--                down by 10 pixels so that they are centered vertically on the screen.
+--                The top and bottom part-rows can be used for special bordering.
 --
 --                Each character in the text buffer is 16 bits wide:
 --                 15     8 7      0
@@ -21,9 +21,9 @@
 --                With 16 bits per character, the RAM is
 --                128*32*16=65536 bits, or exactly 4 16Kb Spartan-6 Block RAMs.
 --
---                The character ROM stores an 8x16 pixel monochrome glyph for each
+--                The character ROM stores an 8x14 pixel monochrome glyph for each
 --                of the 256 characters in Code Page 437.  The ROM is
---                256*8*16=32768 bits, or exactly 2 16Kb Spartan-6 Block RAMs.
+--                256*8*14=28672 bits, using 2 16Kb Spartan-6 Block RAMs.
 --
 --                On each rising edge of the PixelClock, the next pixel location
 --                is available on HPos and VPos.  Based on that location, the
@@ -102,6 +102,7 @@ architecture Behavioral of TextRenderer is
    signal hpos_latched : std_logic_vector(11 downto 0);
    signal vpos_latched : std_logic_vector(11 downto 0);
    signal vpos_shifted : std_logic_vector(11 downto 0);
+   signal row_location : std_logic_vector(19 downto 0);
    signal char_blink : std_logic;
    signal blink_timer : unsigned(24 downto 0) := (others => '0');
    signal bgcolor : std_logic_vector(23 downto 0);
@@ -114,11 +115,16 @@ architecture Behavioral of TextRenderer is
    
 begin
 
-   -- Shift down 8 pixels to center 22 rows vertically onscreen
-   vpos_shifted <= std_logic_vector(unsigned(VPos) - 8);
+   -- Shift down 10 pixels to center 25 rows vertically onscreen
+   vpos_shifted <= std_logic_vector(unsigned(VPos) - 10);
+   
+   -- Divide vpos by 28 to determine row location
+   -- (1/28) * (2^12) = 146
+   -- So (x/28) ~= (x*146)>>12
+   row_location <= std_logic_vector(unsigned(vpos_shifted) * to_unsigned(146, 8));
    
    -- Calculate the text buffer address from the pixel position
-   TextBufAddr <= vpos_shifted(9 downto 5) & HPos(10 downto 4);
+   TextBufAddr <= row_location(16 downto 12) & HPos(10 downto 4);
 
    -- Latch the pixel positions on rising edge of the pixel clock
    process (PixelClock) begin
@@ -130,8 +136,9 @@ begin
    end process;
 
    -- Calculate the glyph ROM address from the character code point
-   -- and the vertical pixel position
-   glyph_rom_addr <= code_point & vpos_latched(4 downto 1);
+   -- and the vertical pixel position.
+   glyph_rom_addr <= std_logic_vector((unsigned(code_point) * to_unsigned(14, 4)) 
+                     + ((unsigned(vpos_latched) mod 28) srl 1));
 
    -- Get the pixel data for the current row in the character
    character_rom : GlyphRom port map
@@ -163,7 +170,7 @@ begin
 end Behavioral;
 
 ----------------------------------------------------------------------------------
--- License:       Copyright (c) 2016, Reclone Gaming
+-- License:       Copyright (c) 2016, Reclone Labs
 --                All rights reserved.
 --                Redistribution and use in source and binary forms, with or without
 --                modification, are permitted provided that the following conditions are met:
