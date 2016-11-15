@@ -58,6 +58,8 @@ EXTERN(_exit)
 EXTERN(abort)
 EXTERN(__assert_func)
 EXTERN(assert_failed)
+EXTERN(HAL_RCC_OscConfig)
+EXTERN(HAL_RCC_ClockConfig)
 
 /* Sections Definitions */
 
