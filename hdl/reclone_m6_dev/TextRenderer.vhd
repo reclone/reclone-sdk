@@ -102,7 +102,7 @@ architecture Behavioral of TextRenderer is
    signal hpos_latched : std_logic_vector(11 downto 0);
    signal vpos_latched : std_logic_vector(11 downto 0);
    signal vpos_shifted : std_logic_vector(11 downto 0);
-   signal row_location : std_logic_vector(19 downto 0);
+   signal row_location : std_logic_vector(23 downto 0);
    signal char_blink : std_logic;
    signal blink_timer : unsigned(24 downto 0) := (others => '0');
    signal bgcolor : std_logic_vector(23 downto 0);
@@ -119,12 +119,12 @@ begin
    vpos_shifted <= std_logic_vector(unsigned(VPos) - 10);
    
    -- Divide vpos by 28 to determine row location
-   -- (1/28) * (2^12) = 146
-   -- So (x/28) ~= (x*146)>>12
-   row_location <= std_logic_vector(unsigned(vpos_shifted) * to_unsigned(146, 8));
+   -- (1/28) * (2^16) = 2341
+   -- So (x/28) ~= (x*2341)>>16
+   row_location <= std_logic_vector(unsigned(vpos_shifted) * to_unsigned(2341, 12));
    
    -- Calculate the text buffer address from the pixel position
-   TextBufAddr <= row_location(16 downto 12) & HPos(10 downto 4);
+   TextBufAddr <= row_location(20 downto 16) & HPos(10 downto 4);
 
    -- Latch the pixel positions on rising edge of the pixel clock
    process (PixelClock) begin
