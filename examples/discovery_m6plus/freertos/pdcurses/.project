@@ -8,6 +8,7 @@
 		<project>FreeRTOS_EC</project>
 		<project>PDCurses</project>
 		<project>STM32CubeF4</project>
+		<project>PDCursesPort</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -3,6 +3,7 @@
 	<name>PDCursesPort</name>
 	<comment></comment>
 	<projects>
+		<project>PDCurses</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
