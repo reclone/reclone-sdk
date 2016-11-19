@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>FsmcBareMetal</name>
+	<name>PDCursesExample</name>
 	<comment></comment>
 	<projects>
-		<project>STM32CubeF4</project>
 		<project>Discovery_m6plus_BSP</project>
+		<project>FreeRTOS</project>
+		<project>FreeRTOS_EC</project>
+		<project>PDCurses</project>
+		<project>STM32CubeF4</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
