@@ -5,8 +5,8 @@
 --
 --                The renderer is designed for 1280x720 screen resolution.  When
 --                the characters are scaled by 200% to 16x28, the screen can show
---                80 columns by 25.7 rows of text.  The 25 visible rows are shifted
---                down by 10 pixels so that they are centered vertically on the screen.
+--                80 columns by 25.7 rows of text.  The visible rows are shifted
+--                up by 18 pixels so that 25 are centered vertically on the screen.
 --                The top and bottom part-rows can be used for special bordering.
 --
 --                Each character in the text buffer is 16 bits wide:
@@ -115,8 +115,8 @@ architecture Behavioral of TextRenderer is
    
 begin
 
-   -- Shift down 10 pixels to center 25 rows vertically onscreen
-   vpos_shifted <= std_logic_vector(unsigned(VPos) - 10);
+   -- Shift up 18 pixels to center the next 25 rows vertically onscreen
+   vpos_shifted <= std_logic_vector(unsigned(VPos) + 18);
    
    -- Divide vpos by 28 to determine row location
    -- (1/28) * (2^16) = 2341
