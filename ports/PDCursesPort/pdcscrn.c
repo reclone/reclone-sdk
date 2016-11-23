@@ -1,11 +1,14 @@
 #include "pdcrtos.h"
 
+static SCREEN pdc_screen;
+
+
 /*
  * Returns TRUE if init_color() and color_content() give meaningful results, FALSE otherwise. Called from can_change_color().
  */
 bool PDC_can_change_color(void)
 {
-
+   return TRUE;
 }
 
 /*
@@ -135,7 +138,20 @@ void PDC_scr_free(void)
  */
 int PDC_scr_open(int argc, char **argv)
 {
+   // Initialize SP
+   SP = &pdc_screen;
+   memset(&pdc_screen, 0, sizeof(pdc_screen));
+   SP->lines = PDC_get_rows();
+   SP->cols = PDC_get_columns();
+   SP->mouse_wait = PDC_CLICK_PERIOD;
+   SP->orig_attr = FALSE;
+   SP->mono = FALSE;
+   SP->audible = TRUE;
+   SP->_restore = 0;
+   SP->_preserve = FALSE;
 
+
+   return OK;
 }
 
 

@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 //  blinky->Create("Blinky", configMINIMAL_STACK_SIZE, 2);
 
   TestCursesApp * capp = new TestCursesApp();
-  capp->Create("CursesApp", configMINIMAL_STACK_SIZE, 2);
+  capp->Create("CursesApp", 2048, 2);
 
   CFreeRTOS::InitHardwareForManagedTasks();
 
