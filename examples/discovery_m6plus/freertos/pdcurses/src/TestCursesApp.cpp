@@ -83,13 +83,15 @@ void TestCursesApp::Run()
    if (has_colors())
    {
       start_color();
-      init_pair(1, COLOR_WHITE, COLOR_RED);
-      attron(COLOR_PAIR(1));
+      init_pair(1, COLOR_WHITE, COLOR_BLACK);
+      attron(COLOR_PAIR(1) | A_BOLD);
       printw("Hello World !!!\n"); /* Print Hello World      */
+      attroff(A_BLINK | A_BOLD);
+      init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+      attron(COLOR_PAIR(2));
       printw("This is PDCurses running on a microcontroller\n");
       printw(" with text being displayed on HDMI, at 720p, with an FPGA :)\n");
-      attroff(COLOR_PAIR(1));
-
+      attroff(COLOR_PAIR(2) | A_BOLD);
    }
    refresh();        /* Print it on to the real screen */
    //getch();       /* Wait for user input */

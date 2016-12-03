@@ -164,7 +164,7 @@ int PDC_scr_open(int argc, char **argv)
    SP->audible = TRUE;
    SP->_restore = 0;
    SP->_preserve = FALSE;
-
+   SP->orig_cursor = 0x0200;
 
    return OK;
 }

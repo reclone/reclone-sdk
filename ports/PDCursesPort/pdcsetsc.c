@@ -9,7 +9,35 @@
  */
 int PDC_curs_set(int visibility)
 {
+   PDCREGS regs;
+   int ret_vis, start, end;
 
+   PDC_LOG(("PDC_curs_set() - called: visibility=%d\n", visibility));
+
+   ret_vis = SP->visibility;
+   SP->visibility = visibility;
+
+   switch (visibility)
+   {
+      case 0:  /* invisible */
+         start = 32;
+         end = 0;  /* was 32 */
+         break;
+      case 2:  /* highly visible */
+         start = 0;   /* full-height block */
+         end = 7;
+         break;
+      default:  /* normal visibility */
+         start = (SP->orig_cursor >> 8) & 0xff;
+         end = SP->orig_cursor & 0xff;
+         break;
+   }
+
+   // Write the new start and end lines to the text renderer
+   // (start << 8) | end;
+
+   // Return the old visibility setting
+   return ret_vis;
 }
 
 
