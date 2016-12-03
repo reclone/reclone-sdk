@@ -80,9 +80,17 @@ bool TestCursesApp::HardwareInit()
 void TestCursesApp::Run()
 {
    initscr();        /* Start curses mode         */
-   printw("Hello World !!!\n"); /* Print Hello World      */
-   printw("This is PDCurses running on a microcontroller\n");
-   printw(" with text being displayed on HDMI, at 720p, with an FPGA :)\n");
+   if (has_colors())
+   {
+      start_color();
+      init_pair(1, COLOR_WHITE, COLOR_RED);
+      attron(COLOR_PAIR(1));
+      printw("Hello World !!!\n"); /* Print Hello World      */
+      printw("This is PDCurses running on a microcontroller\n");
+      printw(" with text being displayed on HDMI, at 720p, with an FPGA :)\n");
+      attroff(COLOR_PAIR(1));
+
+   }
    refresh();        /* Print it on to the real screen */
    //getch();       /* Wait for user input */
    //endwin();         /* End curses mode        */

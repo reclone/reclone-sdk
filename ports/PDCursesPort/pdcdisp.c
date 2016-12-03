@@ -78,7 +78,7 @@ void PDC_transform_line(int lineno, int x, int len, const chtype *srcp)
       // Low byte (bits 7-0) is the character code
       uint16_t dest_char = (uint16_t)(ch & 0xFF);
       // Get background color and foreground color
-      uint8_t bg = pdc_atrtab[ch >> PDC_COLOR_SHIFT] & 0xF0;
+      uint8_t bg = (pdc_atrtab[ch >> PDC_COLOR_SHIFT] & 0xF0) >> 4;
       uint8_t fg = pdc_atrtab[ch >> PDC_COLOR_SHIFT] & 0x0F;
       // Init attribute byte
       uint8_t att = fg | (bg << 4);
