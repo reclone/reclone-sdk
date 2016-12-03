@@ -1,14 +1,17 @@
+#include <string.h>
 #include "pdcrtos.h"
+
 
 static SCREEN pdc_screen;
 
+unsigned char pdc_atrtab[PDC_COLOR_PAIRS];
 
 /*
  * Returns TRUE if init_color() and color_content() give meaningful results, FALSE otherwise. Called from can_change_color().
  */
 bool PDC_can_change_color(void)
 {
-   return TRUE;
+   return FALSE;
 }
 
 /*
@@ -17,7 +20,7 @@ bool PDC_can_change_color(void)
  */
 int PDC_color_content(short color, short *red, short *green, short *blue)
 {
-
+   return ERR;
 }
 
 /*
@@ -26,7 +29,7 @@ int PDC_color_content(short color, short *red, short *green, short *blue)
  */
 int PDC_init_color(short color, short red, short green, short blue)
 {
-
+   return ERR;
 }
 
 /*
@@ -38,7 +41,10 @@ int PDC_init_color(short color, short red, short green, short blue)
  */
 void PDC_init_pair(short pair, short fg, short bg)
 {
-
+   if (pair < sizeof(pdc_atrtab))
+   {
+      pdc_atrtab[pair] = (fg & 0xF) | ((bg & 0xF) << 4);
+   }
 }
 
 /*
@@ -47,7 +53,15 @@ void PDC_init_pair(short pair, short fg, short bg)
  */
 int PDC_pair_content(short pair, short *fg, short *bg)
 {
+   int retval = ERR;
 
+   if (pair < sizeof(pdc_atrtab) && fg != NULL && bg != NULL)
+   {
+      *fg = pdc_atrtab[pair] & 0xF;
+      *bg = (pdc_atrtab[pair] >> 4) & 0xF;
+   }
+
+   return retval;
 }
 
 /*
@@ -80,7 +94,7 @@ void PDC_reset_shell_mode(void)
  */
 int PDC_resize_screen(int nlines, int ncols)
 {
-
+   return ERR;
 }
 
 /*
@@ -141,6 +155,7 @@ int PDC_scr_open(int argc, char **argv)
    // Initialize SP
    SP = &pdc_screen;
    memset(&pdc_screen, 0, sizeof(pdc_screen));
+   memset(&pdc_atrtab, 0, sizeof(pdc_atrtab));
    SP->lines = PDC_get_rows();
    SP->cols = PDC_get_columns();
    SP->mouse_wait = PDC_CLICK_PERIOD;

@@ -80,7 +80,9 @@ bool TestCursesApp::HardwareInit()
 void TestCursesApp::Run()
 {
    initscr();        /* Start curses mode         */
-   printw("Hello World !!!"); /* Print Hello World      */
+   printw("Hello World !!!\n"); /* Print Hello World      */
+   printw("This is PDCurses running on a microcontroller\n");
+   printw(" with text being displayed on HDMI, at 720p, with an FPGA :)\n");
    refresh();        /* Print it on to the real screen */
    //getch();       /* Wait for user input */
    //endwin();         /* End curses mode        */
