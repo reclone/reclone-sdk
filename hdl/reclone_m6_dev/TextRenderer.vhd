@@ -72,20 +72,20 @@ architecture Behavioral of TextRenderer is
    constant text_colors : palette_type :=
    (
       x"000000",  --black
-      x"0000A8",  --blue
-      x"00A800",  --green
-      x"00A8A8",  --cyan
-      x"A80000",  --red
-      x"A800A8",  --magenta
-      x"A8A800",  --brown
-      x"D0D0D0",  --white
-      x"A8A8A8",  --dark gray
+      x"000080",  --blue
+      x"008000",  --green
+      x"008080",  --cyan
+      x"800000",  --red
+      x"800080",  --magenta
+      x"808000",  --yellow
+      x"808080",  --white
+      x"404040",  --dark gray
       x"0000FF",  --bright blue
       x"00FF00",  --bright green
       x"00FFFF",  --bright cyan
       x"FF0000",  --bright red
       x"FF00FF",  --bright magenta
-      x"FFFF00",  --yellow
+      x"FFFF00",  --bright yellow
       x"FFFFFF"   --bright white
    );
    
