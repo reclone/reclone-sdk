@@ -9,7 +9,6 @@
  */
 int PDC_curs_set(int visibility)
 {
-   PDCREGS regs;
    int ret_vis, start, end;
 
    PDC_LOG(("PDC_curs_set() - called: visibility=%d\n", visibility));
