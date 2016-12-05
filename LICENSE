@@ -1,4 +1,62 @@
-Copyright (c) 2015, Reclone Gaming
+The Reclone SDK contains open-source software from third parties.
+Reclone Labs has gathered those works in compliance with each respective
+open-source license.
+
+Notable third-party software packages include:
+
+*  FatFs - Generic FAT File System Module
+   third-party/FatFS
+   http://elm-chan.org/fsw/ff/en/appnote.html#license
+   Basically equivalent to the BSD 1-Clause license
+
+*  FreeRTOS
+   third-party/FreeRTOS
+   http://www.freertos.org/license.txt
+   Note: GPLv2 with exception clauses allowing you to make a combined work
+   including FreeRTOS, without releasing the combined work as GPL.
+
+*  FreeRTOS Extension Classes
+   third-party/FreeRTOS_EC
+   https://opensource.org/licenses/LGPL-3.0
+   If you statically link with an LGPL library and do not release your derived work
+   as GPL or LGPL, LGPL requires that you at least release the work in object 
+   code form so that it can be re-linked to a new version of the LGPL'd library.
+   Do not use FreeRTOS EC if you are not comfortable with that stipulation.
+
+*  lwIP
+   third-party/lwIP
+   http://lwip.wikia.com/wiki/License
+   Basically equivalent to the BSD 3-Clause license
+   
+*  PDCurses
+   third-party/PDCurses
+   http://pdcurses.sourceforge.net/
+   Public Domain
+   
+*  STM32CubeF4
+   third-party/STM32CubeF4
+   http://www.st.com/software_license_agreement_liberty_v2
+   Note: "4. This software, including modifications and/or derivative works of 
+   this software, must execute solely and exclusively on microcontroller or 
+   microprocessor devices manufactured by or for STMicroelectronics."
+   This is enforced through the use of static libraries.  The STM32CubeF4 
+   static library shall not be included in binaries meant to run on a
+   competitor's processor or microcontroller.
+
+When in doubt about the copyright and license status of specific source code 
+and other materials in the Reclone SDK, please see "license", "readme", and
+other similar files in the subdirectories of the SDK, or contact the original 
+author(s) of that code or material.
+
+---
+
+Original content in the Reclone SDK has been developed and copyrighted
+by Reclone Labs and is licensed under the BSD 2-Clause License.  
+A copy of this license is available at 
+ <https://opensource.org/licenses/BSD-2-Clause>
+and is provided below:
+
+Copyright (c) 2015-2016, Reclone Labs (reclonelabs.com)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
