@@ -31,7 +31,7 @@ void __attribute__((weak)) vApplicationStackOverflowHook( void *pxTask, signed c
 
 void __attribute__((weak)) vApplicationTickHook()
 {
-
+   HAL_IncTick();
 }
 
 void __attribute__((weak)) vApplicationIdleHook()
