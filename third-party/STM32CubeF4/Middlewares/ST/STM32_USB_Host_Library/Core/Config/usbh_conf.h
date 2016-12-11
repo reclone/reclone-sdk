@@ -43,7 +43,7 @@
 #define USBH_KEEP_CFG_DESCRIPTOR              1
 #define USBH_MAX_SIZE_CONFIGURATION           0x200
 #define USBH_MAX_DATA_BUFFER                  0x200
-#define USBH_DEBUG_LEVEL                      0
+#define USBH_DEBUG_LEVEL                      3
 #define USBH_USE_OS                           0
     
 /** @defgroup USBH_Exported_Macros
@@ -58,6 +58,7 @@
     
  /* DEBUG macros */  
 #if (USBH_DEBUG_LEVEL > 0)
+extern int trace_printf(const char* format, ...);
 #define  USBH_UsrLog(...)   trace_printf(__VA_ARGS__);\
                             trace_printf("\n");
 #else
