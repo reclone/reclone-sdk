@@ -442,4 +442,14 @@ void USBH_Delay(uint32_t Delay)
   HAL_Delay(Delay);  
 }
 
+/**
+  * @brief  This function handles USB-On-The-Go FS global interrupt requests.
+  * @param  None
+  * @retval None
+  */
+void OTG_FS_IRQHandler(void)
+{
+  HAL_HCD_IRQHandler(&hhcd);
+}
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
