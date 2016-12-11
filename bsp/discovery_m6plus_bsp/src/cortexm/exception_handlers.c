@@ -327,6 +327,13 @@ HardFault_Handler (void)
       " ite eq          \n"
       " mrseq r0,msp    \n"
       " mrsne r0,psp    \n"
+
+      // Next two lines are a neat little hack to get GDB to show stack frame
+      // for the fault, and then breakpoint the debugger.  Thanks to peet8989:
+      // https://www.element14.com/community/thread/54959/l/gdb-assisted-debugging-of-hard-faults?displayFullThread=true
+      " mov sp, r0      \n"
+      " bkpt #1         \n"
+
       " mov r1,lr       \n"
       " ldr r2,=HardFault_Handler_C \n"
       " bx r2"
