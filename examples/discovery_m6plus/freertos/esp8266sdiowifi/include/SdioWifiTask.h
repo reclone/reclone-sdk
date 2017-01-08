@@ -20,7 +20,8 @@ private:
          SDIO_FLAG_CMDREND  | SDIO_FLAG_CMDSENT  | SDIO_FLAG_DATAEND  |\
          SDIO_FLAG_DBCKEND));
 
-   HAL_SD_ErrorTypedef CmdError();
+   HAL_SD_ErrorTypedef Cmd0Error();
+   HAL_SD_ErrorTypedef Cmd5Resp4Error();
 };
 
 

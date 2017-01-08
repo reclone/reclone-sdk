@@ -74,7 +74,7 @@ void SdioWifiTask::Run()
    cmd.WaitForInterrupt = SDIO_WAIT_NO;
    cmd.CPSM = SDIO_CPSM_ENABLE;
    SDIO_SendCommand(SDIO, &cmd);
-   sdio_err = CmdError();
+   sdio_err = Cmd0Error();
    if (sdio_err != SD_OK)
    {
       trace_puts("SD_CMD_GO_IDLE_STATE timeout!");
@@ -83,7 +83,44 @@ void SdioWifiTask::Run()
    {
       trace_puts("SD_CMD_GO_IDLE_STATE sent!");
 
-      // Continue initializing card
+      // Send CMD5 with argument 0 to get IO OCR
+      cmd.Argument = 0;
+      cmd.CmdIndex = SD_CMD_SDIO_SEN_OP_COND;
+      cmd.Response = SDIO_RESPONSE_SHORT;
+      cmd.WaitForInterrupt = SDIO_WAIT_NO;
+      cmd.CPSM = SDIO_CPSM_ENABLE;
+      SDIO_SendCommand(SDIO, &cmd);
+      sdio_err = Cmd5Resp4Error();
+      if (sdio_err != SD_OK)
+      {
+         trace_puts("SD_CMD_SDIO_SEN_OP_COND failed!");
+      }
+      else
+      {
+         uint32_t resp4 = SDIO_GetResponse(SDIO_RESP1);
+         trace_printf("SD_CMD_SDIO_SEN_OP_COND succeeded! Response: %8x, NumIO: %u, Mem: %u\n", resp4, (resp4 >> 28) & 7, (resp4 >> 27) & 1);
+
+         // Send CMD5 with argument 0x10000 to say that we support 3.2V-3.3V
+         cmd.Argument = 0x10000;
+         cmd.CmdIndex = SD_CMD_SDIO_SEN_OP_COND;
+         cmd.Response = SDIO_RESPONSE_SHORT;
+         cmd.WaitForInterrupt = SDIO_WAIT_NO;
+         cmd.CPSM = SDIO_CPSM_ENABLE;
+         SDIO_SendCommand(SDIO, &cmd);
+         sdio_err = Cmd5Resp4Error();
+
+         if (sdio_err != SD_OK)
+         {
+            trace_puts("SD_CMD_SDIO_SEN_OP_COND failed!");
+         }
+         else
+         {
+            resp4 = SDIO_GetResponse(SDIO_RESP1);
+            trace_printf("SD_CMD_SDIO_SEN_OP_COND succeeded for 3.2-3.3V! Response: %8x, Ready: \n", resp4);
+
+
+         }
+      }
    }
 
    while (true)
@@ -103,6 +140,13 @@ bool SdioWifiTask::HardwareInit()
    __HAL_RCC_GPIOB_CLK_ENABLE();
    __HAL_RCC_GPIOC_CLK_ENABLE();
    __HAL_RCC_GPIOD_CLK_ENABLE();
+
+   // CH_PD pin that gets toggled to reset the chip
+   gpio_init.Speed = GPIO_SPEED_FREQ_LOW;
+   gpio_init.Pull = GPIO_PULLUP;
+   gpio_init.Mode = GPIO_MODE_OUTPUT_PP;
+   gpio_init.Pin = GPIO_PIN_15;
+   HAL_GPIO_Init(GPIOB, &gpio_init);
 
    // Set the following pins for high speed, pull up, alternate function push/pull, SDIO
    gpio_init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -138,17 +182,44 @@ bool SdioWifiTask::HardwareInit()
    return true;
 }
 
-HAL_SD_ErrorTypedef SdioWifiTask::CmdError()
+HAL_SD_ErrorTypedef SdioWifiTask::Cmd0Error()
 {
    HAL_SD_ErrorTypedef sdio_err = SD_OK;
    uint32_t timer = 0;
 
    while ((timer < SDIO_CMD0TIMEOUT) && (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDSENT) == RESET))
    {
+      __NOP();
       ++timer;
    }
 
    if (timer >= SDIO_CMD0TIMEOUT)
+   {
+      sdio_err = SD_CMD_RSP_TIMEOUT;
+   }
+   else
+   {
+      __SDIO_CLEAR_FLAG(SDIO, SDIO_STATIC_FLAGS);
+   }
+
+   return sdio_err;
+}
+
+HAL_SD_ErrorTypedef SdioWifiTask::Cmd5Resp4Error()
+{
+   HAL_SD_ErrorTypedef sdio_err = SD_OK;
+   uint32_t timer = 0;
+
+   while ((timer < SDIO_CMD0TIMEOUT) &&
+            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == RESET) &&
+            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDREND) == RESET) &&
+            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == RESET))
+   {
+      __NOP();
+      ++timer;
+   }
+
+   if (timer >= SDIO_CMD0TIMEOUT || __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == SET)
    {
       sdio_err = SD_CMD_RSP_TIMEOUT;
    }
