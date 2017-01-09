@@ -22,6 +22,8 @@ private:
 
    HAL_SD_ErrorTypedef Cmd0Error();
    HAL_SD_ErrorTypedef Cmd5Resp4Error();
+   HAL_SD_ErrorTypedef Cmd3Resp6Error(uint16_t & rca);
+   HAL_SD_ErrorTypedef Cmd7Resp1bError();
 };
 
 
