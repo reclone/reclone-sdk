@@ -165,6 +165,19 @@ void SdioWifiTask::Run()
                cmd.CPSM = SDIO_CPSM_ENABLE;
                SDIO_SendCommand(SDIO, &cmd);
                sdio_err = Cmd7Resp1bError();
+               if (sdio_err == SD_OK)
+               {
+                  // Use the IO_RW_DIRECT command (CMD52) to read some bytes
+                  // Address 0: CCCR/SDIO Revision
+                  // Normal response is 0x00001032 - SDIO v2.00, CCCR/FBR v1.20
+                  cmd.Argument = 0;
+                  cmd.CmdIndex = 52;
+                  cmd.Response = SDIO_RESPONSE_SHORT;
+                  cmd.WaitForInterrupt = SDIO_WAIT_NO;
+                  cmd.CPSM = SDIO_CPSM_ENABLE;
+                  SDIO_SendCommand(SDIO, &cmd);
+                  sdio_err = Cmd52Resp5Error();
+               }
             }
 
 
@@ -356,6 +369,37 @@ HAL_SD_ErrorTypedef SdioWifiTask::Cmd7Resp1bError()
          // Error flags occurred; I'm lazy so let's call this a nondescript error
          sdio_err = SD_ERROR;
       }
+   }
+
+   return sdio_err;
+}
+
+HAL_SD_ErrorTypedef SdioWifiTask::Cmd52Resp5Error()
+{
+   HAL_SD_ErrorTypedef sdio_err = SD_OK;
+   uint32_t timer = 0;
+   uint32_t card_status = 0;
+
+   while ((timer < SDIO_CMD0TIMEOUT) &&
+            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == RESET) &&
+            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDREND) == RESET) &&
+            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == RESET))
+   {
+      __NOP();
+      ++timer;
+   }
+
+   if (timer >= SDIO_CMD0TIMEOUT || __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == SET)
+   {
+      sdio_err = SD_CMD_RSP_TIMEOUT;
+   }
+   else
+   {
+      __SDIO_CLEAR_FLAG(SDIO, SDIO_STATIC_FLAGS);
+
+      card_status = SDIO_GetResponse(SDIO_RESP1);
+      trace_printf("CMD52 R5 response is: 0x%08x\n", card_status);
+
    }
 
    return sdio_err;
