@@ -3,6 +3,7 @@
 	<name>Esp8266LwipPort</name>
 	<comment></comment>
 	<projects>
+		<project>FreeRTOS</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
