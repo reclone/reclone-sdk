@@ -18,7 +18,11 @@
 extern "C" {
 #endif
 
+#include "stm32f4xx.h"
+#include <stdbool.h>
+
 void ESP_SDIO_InitHardware(void);
+bool ESP_SDIO_ResetToCmdState(void);
 
 #ifdef __cplusplus
 } //extern "C"

@@ -16,23 +16,29 @@
 #include "esp_wifi_task.h"
 #include "esp_sdio_if.h"
 
+static TaskHandle_t ESP_WiFi_Task_Handle = NULL;
+
 static void ESP_WiFi_Task(void *);
 
 void ESP_WiFi_Init(const uint16_t usStackDepth, UBaseType_t uxPriority)
 {
-   BaseType_t xReturned;
-   TaskHandle_t xHandle = NULL;
+   // Initialize SDIO peripheral
+   ESP_SDIO_InitHardware();
 
-   // Create the task
-   (void)xTaskCreate(ESP_WiFi_Task, "ESP_WiFi_Task", usStackDepth, NULL, uxPriority, &xHandle);
+   // Create the RTOS task
+   (void)xTaskCreate(ESP_WiFi_Task, "ESP_WiFi_Task", usStackDepth, NULL, uxPriority, &ESP_WiFi_Task_Handle);
 
-   (void)xReturned;  //Unused
-   (void)xHandle;    //Unused
 }
 
 static void ESP_WiFi_Task(void * pvParameters)
 {
    (void)pvParameters;  //Unused
+
+   if (ESP_SDIO_ResetToCmdState())
+   {
+      vTaskDelay(1);
+
+   }
 
    while (1)
    {
