@@ -1,6 +1,6 @@
 
-#ifndef __PDCRECLONE_H
-#define __PDCRECLONE_H
+#ifndef __PDCRTOS_H
+#define __PDCRTOS_H
 
 #include <stdint.h>
 #include <curspriv.h>
