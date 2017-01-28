@@ -4,6 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>Discovery_m6plus_BSP</project>
+		<project>Esp8266LwipPort</project>
 		<project>FreeRTOS</project>
 		<project>FreeRTOS_EC</project>
 		<project>STM32CubeF4</project>

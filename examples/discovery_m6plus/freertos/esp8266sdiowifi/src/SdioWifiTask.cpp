@@ -60,6 +60,8 @@ SdioWifiTask::SdioWifiTask()
 void SdioWifiTask::Run()
 {
    SDIO_CmdInitTypeDef cmd;
+   SDIO_DataInitTypeDef dat;
+
    HAL_SD_ErrorTypedef sdio_err;
 
    // Reset the WiFi card by sending a low enable pulse for 500ms
@@ -177,6 +179,11 @@ void SdioWifiTask::Run()
                   cmd.CPSM = SDIO_CPSM_ENABLE;
                   SDIO_SendCommand(SDIO, &cmd);
                   sdio_err = Cmd52Resp5Error();
+
+                  // Read all of the Card Common Control Registers (CCCR)
+                  dat.DPSM = SDIO_DPSM_ENABLE;
+                  dat.DataBlockSize = 16; //not used
+                  dat.DataLength = 4;
                }
             }
 

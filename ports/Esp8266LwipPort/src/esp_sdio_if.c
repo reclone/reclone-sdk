@@ -6,7 +6,7 @@
  *  via STM32F4Cube, sending SDIO commands, and interpreting the results.
  *
  *  \copyright Copyright 2017 Reclone Labs.  All rights reserved.
- *             This file is released under the BSD 2-Clause license:
+ *             This file is open source under the BSD 2-Clause license:
  *             https://opensource.org/licenses/BSD-2-Clause
  */
 
@@ -150,70 +150,100 @@ bool ESP_SDIO_ResetToCmdState(void)
    return reset_result;
 }
 
-
-
-HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void)
+HAL_SD_ErrorTypedef ESP_SDIO_SendCommand(uint32_t cmdIndex, uint32_t arg, uint32_t respType, bool expectCrcFail)
 {
    SDIO_CmdInitTypeDef cmd;
    HAL_SD_ErrorTypedef sdio_err = SD_OK;
    uint32_t timer = 0;
+   bool expectNoResp = (respType == SDIO_RESPONSE_NO);
 
-   cmd.Argument = 0;
-   cmd.CmdIndex = SD_CMD_GO_IDLE_STATE;
-   cmd.Response = SDIO_RESPONSE_NO;
+   cmd.Argument = arg;
+   cmd.CmdIndex = cmdIndex;
+   cmd.Response = respType;
    cmd.WaitForInterrupt = SDIO_WAIT_NO;
    cmd.CPSM = SDIO_CPSM_ENABLE;
    SDIO_SendCommand(SDIO, &cmd);
 
-   while ((timer < CMD_TIMEOUT_LOOPS) && (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDSENT) == RESET))
+   if (expectNoResp)
    {
-      __NOP();
-      ++timer;
-   }
-
-   if (timer >= CMD_TIMEOUT_LOOPS)
-   {
-      sdio_err = SD_CMD_RSP_TIMEOUT;
+      // We don't expect a response.  Just busy-loop until the command is sent.
+      while ((timer < CMD_TIMEOUT_LOOPS) && (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDSENT) == RESET))
+      {
+         __NOP();
+         ++timer;
+      }
    }
    else
    {
+      // We do expect a response.  Busy-loop until a timeout, CRC failure, or response received.
+      while ((timer < CMD_TIMEOUT_LOOPS) &&
+         (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == RESET) &&
+         (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDREND) == RESET) &&
+         (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == RESET))
+      {
+         __NOP();
+         ++timer;
+      }
+   }
+
+   if (timer >= CMD_TIMEOUT_LOOPS || (!expectNoResp && __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == SET))
+   {
+      sdio_err = SD_CMD_RSP_TIMEOUT;
+   }
+   else if (!expectNoResp && !expectCrcFail && __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == SET)
+   {
+      sdio_err = SD_CMD_CRC_FAIL;
+   }
+   else
+   {
+      // Reset SDIO flags
       __SDIO_CLEAR_FLAG(SDIO, SDIO_STATIC_FLAGS);
+
+      // Command completed successfully.  We can now parse the response from SDIO_GetResponse().
    }
 
    return sdio_err;
 }
 
+void ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
+{
+
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t address, uint32_t numBytes, uint32_t * destBuffer)
+{
+   HAL_SD_ErrorTypedef sdio_err = SD_OK;
+
+   // Set up DMA
+
+   // Send command
+
+   // taskYIELD() or vTaskDelay()
+
+   // Wait for DMA to complete
+
+   // Check SD status
+
+   return sdio_err;
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void)
+{
+   return ESP_SDIO_SendCommand(SD_CMD_GO_IDLE_STATE, 0, SDIO_RESPONSE_NO, false);
+}
+
 HAL_SD_ErrorTypedef ESP_SDIO_IoSendOpCond(uint32_t arg, bool * out_iordy)
 {
-   SDIO_CmdInitTypeDef cmd;
-   HAL_SD_ErrorTypedef sdio_err = SD_OK;
-   uint32_t timer = 0;
+   // We expect CRC to fail on CMD5
+   HAL_SD_ErrorTypedef sdio_err = ESP_SDIO_SendCommand(SD_CMD_SDIO_SEN_OP_COND, arg, SDIO_RESPONSE_SHORT, true);
 
-   cmd.Argument = arg;
-   cmd.CmdIndex = SD_CMD_SDIO_SEN_OP_COND;
-   cmd.Response = SDIO_RESPONSE_SHORT;
-   cmd.WaitForInterrupt = SDIO_WAIT_NO;
-   cmd.CPSM = SDIO_CPSM_ENABLE;
-   SDIO_SendCommand(SDIO, &cmd);
-
-   while ((timer < CMD_TIMEOUT_LOOPS) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == RESET) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDREND) == RESET) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == RESET))
+   if (SD_OK == sdio_err)
    {
-      __NOP();
-      ++timer;
-   }
-
-   if (timer >= CMD_TIMEOUT_LOOPS || __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == SET)
-   {
-      sdio_err = SD_CMD_RSP_TIMEOUT;
+      *out_iordy = (((SDIO_GetResponse(SDIO_RESP1) >> 31) & 1) != 0);
    }
    else
    {
-      __SDIO_CLEAR_FLAG(SDIO, SDIO_STATIC_FLAGS);
-
-      *out_iordy = (((SDIO_GetResponse(SDIO_RESP1) >> 31) & 1) != 0);
+      *out_iordy = false;
    }
 
    return sdio_err;
@@ -221,34 +251,15 @@ HAL_SD_ErrorTypedef ESP_SDIO_IoSendOpCond(uint32_t arg, bool * out_iordy)
 
 HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint16_t * new_rca)
 {
-   SDIO_CmdInitTypeDef cmd;
-   HAL_SD_ErrorTypedef sdio_err = SD_OK;
-   uint32_t timer = 0;
+   HAL_SD_ErrorTypedef sdio_err = ESP_SDIO_SendCommand(SD_CMD_SET_REL_ADDR, 0, SDIO_RESPONSE_SHORT, false);
 
-   cmd.Argument = 0;
-   cmd.CmdIndex = SD_CMD_SET_REL_ADDR;
-   cmd.Response = SDIO_RESPONSE_SHORT;
-   cmd.WaitForInterrupt = SDIO_WAIT_NO;
-   cmd.CPSM = SDIO_CPSM_ENABLE;
-   SDIO_SendCommand(SDIO, &cmd);
-
-   while ((timer < CMD_TIMEOUT_LOOPS) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == RESET) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDREND) == RESET) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == RESET))
+   if (SD_OK == sdio_err)
    {
-      __NOP();
-      ++timer;
-   }
-
-   if (timer >= CMD_TIMEOUT_LOOPS || __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == SET)
-   {
-      sdio_err = SD_CMD_RSP_TIMEOUT;
+      *new_rca = (SDIO_GetResponse(SDIO_RESP1) >> 16) & 0xFFFF;
    }
    else
    {
-      __SDIO_CLEAR_FLAG(SDIO, SDIO_STATIC_FLAGS);
-      *new_rca = (SDIO_GetResponse(SDIO_RESP1) >> 16) & 0xFFFF;
+      *new_rca = 0;
    }
 
    return sdio_err;
@@ -256,36 +267,11 @@ HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint16_t * new_rca)
 
 HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint16_t rca)
 {
-   SDIO_CmdInitTypeDef cmd;
-   HAL_SD_ErrorTypedef sdio_err = SD_OK;
-   uint32_t timer = 0;
+   HAL_SD_ErrorTypedef sdio_err = ESP_SDIO_SendCommand(SD_CMD_SEL_DESEL_CARD, ((uint32_t)rca) << 16, SDIO_RESPONSE_SHORT, false);
 
-   cmd.Argument = ((uint32_t)rca) << 16;
-   cmd.CmdIndex = SD_CMD_SEL_DESEL_CARD;
-   cmd.Response = SDIO_RESPONSE_SHORT;
-   cmd.WaitForInterrupt = SDIO_WAIT_NO;
-   cmd.CPSM = SDIO_CPSM_ENABLE;
-   SDIO_SendCommand(SDIO, &cmd);
-
-   while ((timer < CMD_TIMEOUT_LOOPS) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CCRCFAIL) == RESET) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CMDREND) == RESET) &&
-            (__SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == RESET))
+   if (SD_OK == sdio_err)
    {
-      __NOP();
-      ++timer;
-   }
-
-   if (timer >= CMD_TIMEOUT_LOOPS || __SDIO_GET_FLAG(SDIO, SDIO_FLAG_CTIMEOUT) == SET)
-   {
-      sdio_err = SD_CMD_RSP_TIMEOUT;
-   }
-   else
-   {
-      __SDIO_CLEAR_FLAG(SDIO, SDIO_STATIC_FLAGS);
-
       uint32_t card_status = SDIO_GetResponse(SDIO_RESP1);
-
       // SDIO cards will always reply with CURRENT_STATE==0xF (bits 12:9)
       if (card_status != 0x00001e00)
       {

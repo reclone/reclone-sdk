@@ -5,6 +5,7 @@
 #include "CFreeRTOS.h"
 #include "BlinkyTask.h"
 #include "SdioWifiTask.h"
+#include "esp_wifi_task.h"
 
 int main(int argc, char* argv[])
 {
@@ -18,9 +19,9 @@ int main(int argc, char* argv[])
 
   BlinkyTask * blinky = new BlinkyTask(3, 12, 500);
   blinky->Create("Blinky", configMINIMAL_STACK_SIZE, 2);
-  SdioWifiTask * wifi = new SdioWifiTask();
-  wifi->Create("SdioWifi", 2000, 3);
-
+  //SdioWifiTask * wifi = new SdioWifiTask();
+  //wifi->Create("SdioWifi", 2000, 3);
+  ESP_WiFi_Init(2000, 3);
 
   CFreeRTOS::InitHardwareForManagedTasks();
 

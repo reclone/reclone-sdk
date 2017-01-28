@@ -73,6 +73,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Discovery_m6plus_BSP}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Discovery_m6plus_BSP/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../include&quot;"/>
@@ -102,6 +103,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Discovery_m6plus_BSP}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Discovery_m6plus_BSP/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../include&quot;"/>
@@ -134,6 +136,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32CubeF4}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Discovery_m6plus_BSP}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Discovery_m6plus_BSP/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../include&quot;"/>
@@ -253,6 +256,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Inc"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/STM32F4xx_HAL_Driver/Config"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="includePath" name="/STM32CubeF4/Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/STM32CubeF4"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/STM32CubeF4/Debug"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="STM32CubeF4" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
