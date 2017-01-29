@@ -41,7 +41,7 @@ static void ESP_WiFi_Task(void * pvParameters)
       vTaskDelay(1);
       if (ESP_SDIO_GetCCCR())
       {
-    	  vTaskDelay(1);
+         vTaskDelay(1);
       }
 
    }

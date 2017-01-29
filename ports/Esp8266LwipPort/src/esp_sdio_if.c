@@ -14,9 +14,10 @@
 #include "esp_sdio_if.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 #define SDIO_DMA_STREAM       DMA2_Stream3
-#define SDIO_DMA_CHANNEL      DMA_Channel_4
+#define SDIO_DMA_CHANNEL      DMA_CHANNEL_4
 #define SDIO_DMA_FLAG_FEIF    DMA_FLAG_FEIF3
 #define SDIO_DMA_FLAG_DMEIF   DMA_FLAG_DMEIF3
 #define SDIO_DMA_FLAG_TEIF    DMA_FLAG_TEIF3
@@ -39,17 +40,21 @@ static const uint32_t SDIO_STATIC_FLAGS =
 static SD_HandleTypeDef SDIO_Handle;
 static DMA_HandleTypeDef DMA_Rx_Handle;
 static DMA_HandleTypeDef DMA_Tx_Handle;
-
-static uint16_t Relative_Card_Address;
+static SemaphoreHandle_t DMA_Complete_Semaphore;
 
 static uint32_t Card_Common_Control_Registers[0x14 / 4];
 
 void ESP_SDIO_ToggleReset(void);
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void);
 HAL_SD_ErrorTypedef ESP_SDIO_IoSendOpCond(uint32_t arg, bool * out_iordy);
-HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint16_t * new_rca);
-HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint16_t rca);
+HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint32_t * new_rca);
+HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint32_t rca);
 
+
+void SDIO_DMA_IRQHANDLER(DMA_HandleTypeDef * hdma)
+{
+   HAL_DMA_IRQHandler(hdma);
+}
 
 void ESP_SDIO_InitHardware(void)
 {
@@ -104,42 +109,23 @@ void ESP_SDIO_InitHardware(void)
    // Enable DMA2 clock
    __HAL_RCC_DMA2_CLK_ENABLE();
 
-   DMA_Rx_Handle.Instance = SDIO_DMA_STREAM;
-   DMA_Rx_Handle.Init.Channel = SDIO_DMA_CHANNEL;
-   DMA_Rx_Handle.Init.Direction = DMA_PERIPH_TO_MEMORY;
-   DMA_Rx_Handle.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
-   DMA_Rx_Handle.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-   DMA_Rx_Handle.Init.MemBurst = DMA_MBURST_INC4;
-   DMA_Rx_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-   DMA_Rx_Handle.Init.MemInc = DMA_MINC_ENABLE;
-   DMA_Rx_Handle.Init.Mode = DMA_NORMAL;
-   DMA_Rx_Handle.Init.PeriphBurst = DMA_PBURST_INC4;
-   DMA_Rx_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-   DMA_Rx_Handle.Init.PeriphInc = DMA_PINC_DISABLE;
-   DMA_Rx_Handle.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-   DMA_Rx_Handle.Parent = SDIO_Handle;
+   // Init DMA state variables
    DMA_Rx_Handle.State = HAL_DMA_STATE_RESET;
-   DMA_Rx_Handle.ErrorCode = 0;
+   DMA_Rx_Handle.ErrorCode = HAL_DMA_ERROR_NONE;
    DMA_Rx_Handle.Lock = HAL_UNLOCKED;
-
-   DMA_Tx_Handle.Instance = SDIO_DMA_STREAM;
-   DMA_Tx_Handle.Init.Channel = SDIO_DMA_CHANNEL;
-   DMA_Tx_Handle.Init.Direction = DMA_MEMORY_TO_PERIPH;
-   DMA_Tx_Handle.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
-   DMA_Tx_Handle.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-   DMA_Tx_Handle.Init.MemBurst = DMA_MBURST_INC4;
-   DMA_Tx_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-   DMA_Tx_Handle.Init.MemInc = DMA_MINC_ENABLE;
-   DMA_Tx_Handle.Init.Mode = DMA_NORMAL;
-   DMA_Tx_Handle.Init.PeriphBurst = DMA_PBURST_INC4;
-   DMA_Tx_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-   DMA_Tx_Handle.Init.PeriphInc = DMA_PINC_DISABLE;
-   DMA_Tx_Handle.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-   DMA_Tx_Handle.Parent = SDIO_Handle;
    DMA_Tx_Handle.State = HAL_DMA_STATE_RESET;
-   DMA_Tx_Handle.ErrorCode = 0;
+   DMA_Tx_Handle.ErrorCode = HAL_DMA_ERROR_NONE;
    DMA_Tx_Handle.Lock = HAL_UNLOCKED;
 
+   // Enable DMA interrupts (higher priority than SDIO interrupts)
+   HAL_NVIC_SetPriority(SDIO_DMA_IRQn, 2, 0);
+   HAL_NVIC_EnableIRQ(SDIO_DMA_IRQn);
+
+   // Enable SDIO interrupts (lower priority than DMA)
+   HAL_NVIC_SetPriority(SDIO_IRQn, 3, 0);
+   HAL_NVIC_EnableIRQ(SDIO_IRQn);
+
+   DMA_Complete_Semaphore = xSemaphoreCreateBinary();
 }
 
 void ESP_SDIO_ToggleReset(void)
@@ -182,10 +168,10 @@ bool ESP_SDIO_ResetToCmdState(void)
 
          if (retry_result == SD_OK && iordy && retries < MAX_CMD5_RETRIES)
          {
-            Relative_Card_Address = 0;
+            SDIO_Handle.RCA = 0;
             retries = 0;
             retry_result = SD_OK;
-            while (SD_OK == retry_result && 0 == Relative_Card_Address && retries < MAX_CMD3_RETRIES)
+            while (SD_OK == retry_result && 0 == SDIO_Handle.RCA && retries < MAX_CMD3_RETRIES)
             {
                retry_result = ESP_SDIO_SendRelativeAddress(&(SDIO_Handle.RCA));
                ++retries;
@@ -263,8 +249,21 @@ HAL_SD_ErrorTypedef ESP_SDIO_SendCommand(uint32_t cmdIndex, uint32_t arg, uint32
    return sdio_err;
 }
 
-void ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
+static void ESP_SDIO_DMA_XferCallback(DMA_HandleTypeDef * hdma)
 {
+   static BaseType_t xHigherPriorityTaskWoken = false;
+
+   // "Give" to the semaphore to indicate the transfer is complete
+   xSemaphoreGiveFromISR(DMA_Complete_Semaphore, &xHigherPriorityTaskWoken);
+
+   // If a higher priority task has been awoken for this semaphore, then yield
+   portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+}
+
+bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
+{
+   bool success = false;
+
    __SDIO_ENABLE_IT(SDIO, SDIO_IT_DCRCFAIL | SDIO_IT_DTIMEOUT | SDIO_IT_DATAEND | SDIO_IT_RXOVERR | SDIO_IT_STBITERR);
    __SDIO_DMA_ENABLE();
 
@@ -282,66 +281,65 @@ void ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
    DMA_Rx_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
    DMA_Rx_Handle.Init.PeriphInc = DMA_PINC_DISABLE;
    DMA_Rx_Handle.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-   DMA_Rx_Handle.Parent = SDIO_Handle;
+   DMA_Rx_Handle.Parent = (void *)&SDIO_Handle;
+   DMA_Rx_Handle.XferCpltCallback = ESP_SDIO_DMA_XferCallback;
+   DMA_Rx_Handle.XferErrorCallback = ESP_SDIO_DMA_XferCallback;
+   DMA_Rx_Handle.XferHalfCpltCallback = NULL;
+   DMA_Rx_Handle.XferM1CpltCallback = NULL;
 
+   if (HAL_OK == HAL_DMA_DeInit(&DMA_Rx_Handle))
+   {
+      if (HAL_OK == HAL_DMA_Init(&DMA_Rx_Handle))
+      {
+         if (HAL_OK == HAL_DMA_Start_IT(&DMA_Rx_Handle, (uint32_t)&SDIO->FIFO, (uint32_t)destBuffer, bufferSize/4))
+         {
+            success = true;
+         }
+      }
+   }
 
-   //DMA_Rx_Handle.Init. TODO
-
-   HAL_DMA_DeInit(&DMA_Rx_Handle);
-   HAL_DMA_Init(&DMA_Rx_Handle);
-
-
-   HAL_DMA_Start_IT(&DMA_Rx_Handle, (uint32_t)&SDIO->FIFO, (uint32_t)destBuffer, bufferSize/4);
-
-
-
-   /* From SD card example
-    * DMA_ClearFlag(SD_SDIO_DMA_STREAM, SD_SDIO_DMA_FLAG_FEIF | SD_SDIO_DMA_FLAG_DMEIF | SD_SDIO_DMA_FLAG_TEIF | SD_SDIO_DMA_FLAG_HTIF | SD_SDIO_DMA_FLAG_TCIF);
-
-
-   DMA_Cmd(SD_SDIO_DMA_STREAM, DISABLE);
-
-
-   DMA_DeInit(SD_SDIO_DMA_STREAM);
-
-   SDDMA_InitStructure.DMA_Channel = SD_SDIO_DMA_CHANNEL;
-   SDDMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) SDIO_FIFO_ADDRESS;
-   SDDMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) BufferDST;
-   SDDMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
-   SDDMA_InitStructure.DMA_BufferSize = 1;
-   SDDMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-   SDDMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-   SDDMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
-   SDDMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
-   SDDMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-   SDDMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
-   SDDMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable;
-   SDDMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
-   SDDMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_INC4;
-   SDDMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_INC4; */
-   //DMA_Init (SD_SDIO_DMA_STREAM, &SDDMA_InitStructure);
-   /*DMA_ITConfig (SD_SDIO_DMA_STREAM, DMA_IT_TC, ENABLE);
-   DMA_FlowControllerConfig (SD_SDIO_DMA_STREAM, DMA_FlowCtrl_Peripheral);
-
-
-   DMA_Cmd(SD_SDIO_DMA_STREAM, ENABLE); */
-
+   return success;
 }
 
-HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes, uint32_t address)
+HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
+      bool write, uint32_t func, bool blockMode, bool incrAddr, uint32_t address, uint32_t count)
+{
+   uint32_t arg = (write ? 0x80000000 : 0) | ((func & 7) << 28) | (blockMode ? 0x8000000 : 0) |
+                  (incrAddr ? 0x4000000 : 0) | ((address & 0x1FFFF) << 9) | (count & 0x1FF);
+   HAL_SD_ErrorTypedef sdio_err =
+         ESP_SDIO_SendCommand(SD_CMD_SDIO_RW_EXTENDED, arg, SDIO_RESPONSE_SHORT, false);
+
+   if (SD_OK == sdio_err)
+   {
+      uint32_t errFlags = (SDIO_GetResponse(SDIO_RESP1) >> 8) & 0xCF;
+      if (errFlags != 0)
+      {
+         sdio_err = SD_ERROR;
+      }
+   }
+
+   return sdio_err;
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes, uint32_t address, uint32_t func)
 {
    HAL_SD_ErrorTypedef sdio_err = SD_OK;
 
    // Set up DMA
-   ESP_SDIO_DMA_RxConfig(destBuffer, numBytes);
+   if (numBytes < 512 && ESP_SDIO_DMA_RxConfig(destBuffer, numBytes))
+   {
+      // Send command
+      ESP_SDIO_ReadWriteExtended(false, func, false, true, address, numBytes);
 
-   // Send command
+      // Wait for DMA to complete (indefinitely)
+      xSemaphoreTake(DMA_Complete_Semaphore, portMAX_DELAY);
 
-   // taskYIELD() or vTaskDelay()
-
-   // Wait for DMA to complete
-
-   // Check SD status
+      // Check SD status
+   }
+   else
+   {
+      sdio_err = SD_INVALID_PARAMETER;
+   }
 
    return sdio_err;
 }
@@ -349,7 +347,7 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
 bool ESP_SDIO_GetCCCR(void)
 {
    return (SD_OK == ESP_SDIO_ReadBytes(
-         Card_Common_Control_Registers, sizeof(Card_Common_Control_Registers), 0));
+         Card_Common_Control_Registers, sizeof(Card_Common_Control_Registers), 0, 0));
 }
 
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void)
@@ -374,7 +372,7 @@ HAL_SD_ErrorTypedef ESP_SDIO_IoSendOpCond(uint32_t arg, bool * out_iordy)
    return sdio_err;
 }
 
-HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint16_t * new_rca)
+HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint32_t * new_rca)
 {
    HAL_SD_ErrorTypedef sdio_err = ESP_SDIO_SendCommand(SD_CMD_SET_REL_ADDR, 0, SDIO_RESPONSE_SHORT, false);
 
@@ -390,7 +388,7 @@ HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint16_t * new_rca)
    return sdio_err;
 }
 
-HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint16_t rca)
+HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint32_t rca)
 {
    HAL_SD_ErrorTypedef sdio_err = ESP_SDIO_SendCommand(SD_CMD_SEL_DESEL_CARD, ((uint32_t)rca) << 16, SDIO_RESPONSE_SHORT, false);
 
