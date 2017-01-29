@@ -18,6 +18,8 @@
 
 static TaskHandle_t ESP_WiFi_Task_Handle = NULL;
 
+
+
 static void ESP_WiFi_Task(void *);
 
 void ESP_WiFi_Init(const uint16_t usStackDepth, UBaseType_t uxPriority)
@@ -37,6 +39,10 @@ static void ESP_WiFi_Task(void * pvParameters)
    if (ESP_SDIO_ResetToCmdState())
    {
       vTaskDelay(1);
+      if (ESP_SDIO_GetCCCR())
+      {
+    	  vTaskDelay(1);
+      }
 
    }
 

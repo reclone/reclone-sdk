@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include "diag/Trace.h"
 #include "stm32f4xx_hal.h"
@@ -7,30 +6,32 @@
 #include "SdioWifiTask.h"
 #include "esp_wifi_task.h"
 
-int main(int argc, char* argv[])
+int
+main (int argc, char* argv[])
 {
-  // Send a greeting to the trace device (skipped on Release).
-  trace_puts("Hello ARM World!");
+   // Send a greeting to the trace device (skipped on Release).
+   trace_puts ("Hello ARM World!");
 
-  // At this stage the system clock should have already been configured
-  // at high speed.
-  trace_printf("System clock: %uHz\n", SystemCoreClock);
+   // At this stage the system clock should have already been configured
+   // at high speed.
+   trace_printf ("System clock: %uHz\n", SystemCoreClock);
 
+   BlinkyTask * blinky = new BlinkyTask (3, 12, 500);
+   blinky->Create ("Blinky", configMINIMAL_STACK_SIZE, 2);
+   //SdioWifiTask * wifi = new SdioWifiTask();
+   //wifi->Create("SdioWifi", 2000, 3);
+   ESP_WiFi_Init (2000, 3);
 
-  BlinkyTask * blinky = new BlinkyTask(3, 12, 500);
-  blinky->Create("Blinky", configMINIMAL_STACK_SIZE, 2);
-  //SdioWifiTask * wifi = new SdioWifiTask();
-  //wifi->Create("SdioWifi", 2000, 3);
-  ESP_WiFi_Init(2000, 3);
+   CFreeRTOS::InitHardwareForManagedTasks ();
 
-  CFreeRTOS::InitHardwareForManagedTasks();
+   CFreeRTOS::StartScheduler ();
 
-  CFreeRTOS::StartScheduler();
+   // Infinite loop
+   while (1)
+      {
+      }
 
-  // Infinite loop
-  while (1) { }
-
-  // If that stops, well then... I guess we're screwed
-  return 0;
+   // If that stops, well then... I guess we're screwed
+   return 0;
 }
 

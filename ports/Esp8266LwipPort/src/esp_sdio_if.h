@@ -23,6 +23,7 @@ extern "C" {
 
 void ESP_SDIO_InitHardware(void);
 bool ESP_SDIO_ResetToCmdState(void);
+bool ESP_SDIO_GetCCCR(void);
 
 #ifdef __cplusplus
 } //extern "C"
