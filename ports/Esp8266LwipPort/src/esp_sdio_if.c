@@ -49,11 +49,19 @@ HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void);
 HAL_SD_ErrorTypedef ESP_SDIO_IoSendOpCond(uint32_t arg, bool * out_iordy);
 HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint32_t * new_rca);
 HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint32_t rca);
+HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteDirect(
+      bool write, uint32_t func, bool raw, uint32_t address, uint8_t * data);
 
 
-void SDIO_DMA_IRQHANDLER(DMA_HandleTypeDef * hdma)
+void SDIO_DMA_IRQHANDLER()
 {
-   HAL_DMA_IRQHandler(hdma);
+   HAL_DMA_IRQHandler(&DMA_Rx_Handle);
+   //FIXME
+}
+
+void SDIO_IRQHandler(void)
+{
+
 }
 
 void ESP_SDIO_InitHardware(void)
@@ -117,12 +125,9 @@ void ESP_SDIO_InitHardware(void)
    DMA_Tx_Handle.ErrorCode = HAL_DMA_ERROR_NONE;
    DMA_Tx_Handle.Lock = HAL_UNLOCKED;
 
-   // Enable DMA interrupts (higher priority than SDIO interrupts)
-   HAL_NVIC_SetPriority(SDIO_DMA_IRQn, 2, 0);
+   HAL_NVIC_SetPriority(SDIO_DMA_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY, 0);
    HAL_NVIC_EnableIRQ(SDIO_DMA_IRQn);
-
-   // Enable SDIO interrupts (lower priority than DMA)
-   HAL_NVIC_SetPriority(SDIO_IRQn, 3, 0);
+   HAL_NVIC_SetPriority(SDIO_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY, 0);
    HAL_NVIC_EnableIRQ(SDIO_IRQn);
 
    DMA_Complete_Semaphore = xSemaphoreCreateBinary();
@@ -180,10 +185,42 @@ bool ESP_SDIO_ResetToCmdState(void)
 
             if (SD_OK == retry_result && 0 != SDIO_Handle.RCA && retries < MAX_CMD3_RETRIES)
             {
+               vTaskDelay(1);
                // In Standby state with a valid relative card address
                if (SD_OK == ESP_SDIO_SelectCard(SDIO_Handle.RCA))
                {
-                  reset_result = true;
+                  vTaskDelay(1);
+                  // Enable 4-bit bus and 24 MHz clock speed
+                  uint8_t bus_interface_control = 0x02;
+                  if (SD_OK == ESP_SDIO_ReadWriteDirect(true, 0, false, 0x07, &bus_interface_control))
+                  {
+                     SDIO_Handle.Instance = SDIO;
+                     SDIO_Handle.Init.BusWide = SDIO_BUS_WIDE_4B;
+                     SDIO_Handle.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
+                     SDIO_Handle.Init.ClockDiv = SDIO_TRANSFER_CLK_DIV;
+                     SDIO_Handle.Init.ClockEdge = SDIO_CLOCK_EDGE_RISING;
+                     SDIO_Handle.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
+                     SDIO_Handle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+                     SDIO_Init(SDIO, SDIO_Handle.Init);
+                     vTaskDelay(1);
+
+                     // Enable high speed in High Speed register
+//                     uint8_t high_speed = 2;
+//                     if (SD_OK == ESP_SDIO_ReadWriteDirect(true, 0, true, 0x13, &high_speed) && (high_speed & 3) == 3)
+//                     {
+//                        SDIO_Handle.Init.ClockBypass = SDIO_CLOCK_BYPASS_ENABLE;
+//                        SDIO_Init(SDIO, SDIO_Handle.Init);
+//                        vTaskDelay(1);
+//                     }
+
+                     uint8_t power_control = 2;
+                     // Enable high current in Power Control register
+                     if (SD_OK == ESP_SDIO_ReadWriteDirect(true, 0, true, 0x12, &power_control) && (power_control & 3) == 3)
+                     {
+                        reset_result = true;
+                     }
+
+                  }
                }
 
             }
@@ -306,15 +343,46 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
 {
    uint32_t arg = (write ? 0x80000000 : 0) | ((func & 7) << 28) | (blockMode ? 0x8000000 : 0) |
                   (incrAddr ? 0x4000000 : 0) | ((address & 0x1FFFF) << 9) | (count & 0x1FF);
+
+
+   // FIXME: set up SDIO for data transfer SDIO_DataInitTypeDef
+
+
    HAL_SD_ErrorTypedef sdio_err =
          ESP_SDIO_SendCommand(SD_CMD_SDIO_RW_EXTENDED, arg, SDIO_RESPONSE_SHORT, false);
 
    if (SD_OK == sdio_err)
    {
+      uint32_t resp = SDIO_GetResponse(SDIO_RESP1);
       uint32_t errFlags = (SDIO_GetResponse(SDIO_RESP1) >> 8) & 0xCF;
       if (errFlags != 0)
       {
          sdio_err = SD_ERROR;
+      }
+   }
+
+   return sdio_err;
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteDirect(
+      bool write, uint32_t func, bool raw, uint32_t address, uint8_t * data)
+{
+   uint32_t arg = (write ? 0x80000000 : 0) | ((func & 7) << 28) | (raw ? 0x8000000 : 0) |
+                  ((address & 0x1FFFF) << 9) | (*data & 0xFF);
+   HAL_SD_ErrorTypedef sdio_err =
+         ESP_SDIO_SendCommand(SD_CMD_SDIO_RW_DIRECT, arg, SDIO_RESPONSE_SHORT, false);
+
+   if (SD_OK == sdio_err)
+   {
+      uint32_t resp = SDIO_GetResponse(SDIO_RESP1);
+      uint32_t errFlags = (resp >> 8) & 0xCF;
+      if (errFlags != 0)
+      {
+         sdio_err = SD_ERROR;
+      }
+      else if (!write || raw)
+      {
+         *data = (uint8_t)(resp & 0xFF);
       }
    }
 
