@@ -723,7 +723,7 @@ typedef struct
   *            @arg SDIO_IT_CEATAEND: CE-ATA command completion signal received for CMD61 interrupt
   * @retval The new state of SDIO_IT (SET or RESET).
   */
-#define __SDIO_GET_IT  (__INSTANCE__, __INTERRUPT__)   (((__INSTANCE__)->STA &(__INTERRUPT__)) == (__INTERRUPT__))
+#define __SDIO_GET_IT(__INSTANCE__, __INTERRUPT__)   (((__INSTANCE__)->STA &(__INTERRUPT__)) == (__INTERRUPT__))
 
 /**
   * @brief  Clears the SDIO's interrupt pending bits.
