@@ -464,10 +464,10 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
    return sdio_err;
 }
 
-bool ESP_SDIO_GetCCCR(void)
+bool ESP_SDIO_GetCCCR(CCCR_Registers_T * cccr_reg)
 {
    return (SD_OK == ESP_SDIO_ReadBytes(
-         Card_Common_Control_Registers, sizeof(Card_Common_Control_Registers), 0, 0));
+         cccr_reg->Word, sizeof(CCCR_Registers_T), 0, 0));
 }
 
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void)

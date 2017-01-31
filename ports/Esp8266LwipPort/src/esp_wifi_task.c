@@ -17,7 +17,7 @@
 #include "esp_sdio_if.h"
 
 static TaskHandle_t ESP_WiFi_Task_Handle = NULL;
-
+static CCCR_Registers_T CCCR;
 
 
 static void ESP_WiFi_Task(void *);
@@ -39,7 +39,7 @@ static void ESP_WiFi_Task(void * pvParameters)
    if (ESP_SDIO_ResetToCmdState())
    {
       vTaskDelay(1);
-      if (ESP_SDIO_GetCCCR())
+      if (ESP_SDIO_GetCCCR(&CCCR))
       {
          vTaskDelay(1);
       }
