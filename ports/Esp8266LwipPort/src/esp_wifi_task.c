@@ -39,6 +39,8 @@ static void ESP_WiFi_Task(void * pvParameters)
    if (ESP_SDIO_ResetToCmdState())
    {
       vTaskDelay(1);
+      CCCR.Word[3] = 0xFFFFFFFF;
+      CCCR.Word[4] = 0xFFFFFFFF;
       if (ESP_SDIO_GetCCCR(&CCCR))
       {
          vTaskDelay(1);

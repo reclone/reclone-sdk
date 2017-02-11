@@ -57,25 +57,14 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteDirect(
 
 void SDIO_DMA_IRQHANDLER()
 {
-   static BaseType_t xHigherPriorityTaskWoken = false;
-
    HAL_DMA_IRQHandler(&DMA_Handle);
-
-   // "Give" to the semaphore to indicate the transfer is complete
-   xSemaphoreGiveFromISR(Xfer_Complete_Semaphore, &xHigherPriorityTaskWoken);
-
-   // If a higher priority task has been awoken for this semaphore, then yield
-   portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 }
 
 void SDIO_IRQHandler(void)
 {
-   if (__SDIO_GET_IT(SDIO, SDIO_IT_DATAEND))
-   {
-      SDIO_Handle.SdTransferErr = SD_OK;
-      __SDIO_CLEAR_IT(SDIO, SDIO_IT_DATAEND);
-   }
-   else if (__SDIO_GET_IT(SDIO, SDIO_IT_DCRCFAIL))
+   static BaseType_t xHigherPriorityTaskWoken = false;
+
+   if (__SDIO_GET_IT(SDIO, SDIO_IT_DCRCFAIL))
    {
       SDIO_Handle.SdTransferErr = SD_DATA_CRC_FAIL;
       __SDIO_CLEAR_IT(SDIO, SDIO_IT_DCRCFAIL);
@@ -100,12 +89,21 @@ void SDIO_IRQHandler(void)
       SDIO_Handle.SdTransferErr = SD_START_BIT_ERR;
       __SDIO_CLEAR_IT(SDIO, SDIO_IT_STBITERR);
    }
+   else if (__SDIO_GET_IT(SDIO, SDIO_IT_DATAEND))
+   {
+      SDIO_Handle.SdTransferErr = SD_OK;
+      __SDIO_CLEAR_IT(SDIO, SDIO_IT_DATAEND);
+   }
 
    __SDIO_DISABLE_IT(SDIO,
          SDIO_IT_DCRCFAIL | SDIO_IT_DTIMEOUT | SDIO_IT_DATAEND | SDIO_IT_TXFIFOHE |
          SDIO_IT_RXFIFOHF | SDIO_IT_TXUNDERR | SDIO_IT_RXOVERR | SDIO_IT_STBITERR);
 
+   // "Give" to the semaphore to indicate the transfer is complete
+   xSemaphoreGiveFromISR(Xfer_Complete_Semaphore, &xHigherPriorityTaskWoken);
 
+   // If a higher priority task has been awoken for this semaphore, then yield
+   portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 }
 
 void ESP_SDIO_InitHardware(void)
@@ -169,7 +167,7 @@ void ESP_SDIO_InitHardware(void)
    // Init interrupts for DMA and SDIO
    HAL_NVIC_SetPriority(SDIO_DMA_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
    HAL_NVIC_EnableIRQ(SDIO_DMA_IRQn);
-   HAL_NVIC_SetPriority(SDIO_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
+   HAL_NVIC_SetPriority(SDIO_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY+1, 0);
    HAL_NVIC_EnableIRQ(SDIO_IRQn);
 
    // Binary semaphore used to notify of DMA completion
@@ -329,11 +327,6 @@ HAL_SD_ErrorTypedef ESP_SDIO_SendCommand(uint32_t cmdIndex, uint32_t arg, uint32
    return sdio_err;
 }
 
-static void ESP_SDIO_XferCallback()
-{
-
-}
-
 bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
 {
    bool success = false;
@@ -390,7 +383,8 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
    }
    else
    {
-      data_init.DataLength = count;
+      //HACK: idk why this needs to be +1.  If it's just "count" it cuts off the last word
+      data_init.DataLength = count + 1;
    }
    data_init.DataTimeOut = SDIO_DATA_TIMEOUT;
    data_init.TransferDir = write ? SDIO_TRANSFER_DIR_TO_CARD : SDIO_TRANSFER_DIR_TO_SDIO;
