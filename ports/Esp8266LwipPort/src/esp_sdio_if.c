@@ -26,7 +26,7 @@
 #define SDIO_DMA_IRQn         DMA2_Stream3_IRQn
 #define SDIO_DMA_IRQHANDLER   DMA2_Stream3_IRQHandler
 
-#define SDIO_DONGLE_CLK_DIV ((uint8_t)0x2)
+#define SDIO_DONGLE_CLK_DIV ((uint8_t)0x4)
 
 
 static const uint32_t CMD_TIMEOUT_LOOPS = 0x10000;
@@ -359,14 +359,11 @@ bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
    DMA_Handle.XferHalfCpltCallback = NULL;
    DMA_Handle.XferM1CpltCallback = NULL;
 
-   //if (HAL_OK == HAL_DMA_DeInit(&DMA_Handle))
+   if (HAL_OK == HAL_DMA_Init(&DMA_Handle))
    {
-      if (HAL_OK == HAL_DMA_Init(&DMA_Handle))
+      if (HAL_OK == HAL_DMA_Start_IT(&DMA_Handle, (uint32_t)&SDIO->FIFO, (uint32_t)destBuffer, bufferSize/4))
       {
-         if (HAL_OK == HAL_DMA_Start_IT(&DMA_Handle, (uint32_t)&SDIO->FIFO, (uint32_t)destBuffer, bufferSize/4))
-         {
-            success = true;
-         }
+         success = true;
       }
    }
 
@@ -452,8 +449,8 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
          // Wait for DMA to complete (indefinitely)
          xSemaphoreTake(Xfer_Complete_Semaphore, portMAX_DELAY);
 
-         // Close/abort the DMA transfer
-         __HAL_DMA_DISABLE(&DMA_Handle);
+         // Cleanly close/abort/disable the DMA transfer
+         HAL_DMA_Abort(&DMA_Handle);
 
          // Check SD status
          sdio_err = SDIO_Handle.SdTransferErr;
