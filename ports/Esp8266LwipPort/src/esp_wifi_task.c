@@ -18,6 +18,7 @@
 
 static TaskHandle_t ESP_WiFi_Task_Handle = NULL;
 static CCCR_Registers_T CCCR;
+static FBR_Registers_T FBR1;
 
 
 static void ESP_WiFi_Task(void *);
@@ -39,10 +40,23 @@ static void ESP_WiFi_Task(void * pvParameters)
    if (ESP_SDIO_ResetToCmdState())
    {
       vTaskDelay(1);
-      CCCR.Word[3] = 0xFFFFFFFF;
-      CCCR.Word[4] = 0xFFFFFFFF;
       if (ESP_SDIO_GetCCCR(&CCCR))
       {
+         vTaskDelay(1);
+         if (ESP_SDIO_GetFBR(&FBR1, 1))
+         {
+            // GOOD
+            vTaskDelay(1);
+         }
+         else
+         {
+            //FAIL
+            vTaskDelay(1);
+         }
+      }
+      else
+      {
+         //FAIL
          vTaskDelay(1);
       }
 

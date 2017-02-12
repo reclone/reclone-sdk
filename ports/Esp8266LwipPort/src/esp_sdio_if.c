@@ -26,6 +26,8 @@
 #define SDIO_DMA_IRQn         DMA2_Stream3_IRQn
 #define SDIO_DMA_IRQHANDLER   DMA2_Stream3_IRQHandler
 
+#define SDIO_DONGLE_CLK_DIV ((uint8_t)0x2)
+
 
 static const uint32_t CMD_TIMEOUT_LOOPS = 0x10000;
 static GPIO_TypeDef * const RESET_PORT = GPIOB;
@@ -57,13 +59,22 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteDirect(
 
 void SDIO_DMA_IRQHANDLER()
 {
+   static BaseType_t xHigherPriorityTaskWoken = false;
+
    HAL_DMA_IRQHandler(&DMA_Handle);
+
+   if (HAL_DMA_STATE_READY_MEM0 == DMA_Handle.State)
+   {
+      // "Give" to the semaphore to indicate the transfer is complete
+      xSemaphoreGiveFromISR(Xfer_Complete_Semaphore, &xHigherPriorityTaskWoken);
+   }
+
+   // If a higher priority task has been awoken for this semaphore, then yield
+   portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 }
 
 void SDIO_IRQHandler(void)
 {
-   static BaseType_t xHigherPriorityTaskWoken = false;
-
    if (__SDIO_GET_IT(SDIO, SDIO_IT_DCRCFAIL))
    {
       SDIO_Handle.SdTransferErr = SD_DATA_CRC_FAIL;
@@ -98,12 +109,6 @@ void SDIO_IRQHandler(void)
    __SDIO_DISABLE_IT(SDIO,
          SDIO_IT_DCRCFAIL | SDIO_IT_DTIMEOUT | SDIO_IT_DATAEND | SDIO_IT_TXFIFOHE |
          SDIO_IT_RXFIFOHF | SDIO_IT_TXUNDERR | SDIO_IT_RXOVERR | SDIO_IT_STBITERR);
-
-   // "Give" to the semaphore to indicate the transfer is complete
-   xSemaphoreGiveFromISR(Xfer_Complete_Semaphore, &xHigherPriorityTaskWoken);
-
-   // If a higher priority task has been awoken for this semaphore, then yield
-   portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 }
 
 void ESP_SDIO_InitHardware(void)
@@ -123,7 +128,7 @@ void ESP_SDIO_InitHardware(void)
    HAL_GPIO_Init(RESET_PORT, &gpio_init);
 
    // Set the following pins for high speed, pull up, alternate function push/pull, SDIO
-   gpio_init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+   gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
    gpio_init.Pull = GPIO_PULLUP;
    gpio_init.Alternate = GPIO_AF12_SDIO;
    gpio_init.Mode = GPIO_MODE_AF_PP;
@@ -238,7 +243,7 @@ bool ESP_SDIO_ResetToCmdState(void)
                      SDIO_Handle.Instance = SDIO;
                      SDIO_Handle.Init.BusWide = SDIO_BUS_WIDE_4B;
                      SDIO_Handle.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
-                     SDIO_Handle.Init.ClockDiv = SDIO_TRANSFER_CLK_DIV;
+                     SDIO_Handle.Init.ClockDiv = SDIO_DONGLE_CLK_DIV;
                      SDIO_Handle.Init.ClockEdge = SDIO_CLOCK_EDGE_RISING;
                      SDIO_Handle.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
                      SDIO_Handle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
@@ -343,7 +348,7 @@ bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
    DMA_Handle.Init.MemBurst = DMA_MBURST_INC4;
    DMA_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
    DMA_Handle.Init.MemInc = DMA_MINC_ENABLE;
-   DMA_Handle.Init.Mode = DMA_NORMAL;
+   DMA_Handle.Init.Mode = DMA_SxCR_PFCTRL;
    DMA_Handle.Init.PeriphBurst = DMA_PBURST_INC4;
    DMA_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
    DMA_Handle.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -354,7 +359,7 @@ bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
    DMA_Handle.XferHalfCpltCallback = NULL;
    DMA_Handle.XferM1CpltCallback = NULL;
 
-   if (HAL_OK == HAL_DMA_DeInit(&DMA_Handle))
+   //if (HAL_OK == HAL_DMA_DeInit(&DMA_Handle))
    {
       if (HAL_OK == HAL_DMA_Init(&DMA_Handle))
       {
@@ -384,7 +389,7 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
    else
    {
       //HACK: idk why this needs to be +1.  If it's just "count" it cuts off the last word
-      data_init.DataLength = count + 1;
+      data_init.DataLength = count;
    }
    data_init.DataTimeOut = SDIO_DATA_TIMEOUT;
    data_init.TransferDir = write ? SDIO_TRANSFER_DIR_TO_CARD : SDIO_TRANSFER_DIR_TO_SDIO;
@@ -437,7 +442,8 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
    HAL_SD_ErrorTypedef sdio_err = SD_OK;
 
    // Set up DMA
-   if (numBytes < 512 && ESP_SDIO_DMA_RxConfig(destBuffer, numBytes))
+   // TODO: support block transfer for sizes >= 512
+   if (numBytes < SDIO_DATA_BLOCK_SIZE && ESP_SDIO_DMA_RxConfig(destBuffer, numBytes))
    {
       // Send command
       sdio_err = ESP_SDIO_ReadWriteExtended(false, func, false, true, address, numBytes);
@@ -446,8 +452,15 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
          // Wait for DMA to complete (indefinitely)
          xSemaphoreTake(Xfer_Complete_Semaphore, portMAX_DELAY);
 
+         // Close/abort the DMA transfer
+         __HAL_DMA_DISABLE(&DMA_Handle);
+
          // Check SD status
          sdio_err = SDIO_Handle.SdTransferErr;
+      }
+      else
+      {
+         sdio_err = SD_ERROR;
       }
    }
    else
@@ -462,6 +475,19 @@ bool ESP_SDIO_GetCCCR(CCCR_Registers_T * cccr_reg)
 {
    return (SD_OK == ESP_SDIO_ReadBytes(
          cccr_reg->Word, sizeof(CCCR_Registers_T), 0, 0));
+}
+
+bool ESP_SDIO_GetFBR(FBR_Registers_T * fbr_reg, uint32_t func)
+{
+   bool retval = false;
+
+   if (func >= 1 && func <= 7)
+   {
+      retval = (SD_OK == ESP_SDIO_ReadBytes(
+            fbr_reg->Word, sizeof(FBR_Registers_T), 0x100 * func, 0));
+   }
+
+   return retval;
 }
 
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void)

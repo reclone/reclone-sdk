@@ -14,7 +14,7 @@
 typedef union CCCR_Registers_U
 {
    uint32_t Word[0x14 / 4];
-   struct Reg_S
+   struct
    {
       uint32_t CccrRev : 4;
       uint32_t SdioRev : 4;
@@ -103,4 +103,23 @@ typedef union CCCR_Registers_U
    } Reg;
 } CCCR_Registers_T;
 
+typedef union FBR_Registers_U
+{
+   uint32_t Word[0x14 / 4];
+   struct
+   {
+      uint32_t StdIfaceCode : 4;
+      uint32_t rfu1 : 2;
+      bool SupportsCSA : 1;
+      bool EnableCSA : 1;
+      uint32_t ExtStdIfaceCode : 8;
+      bool SPS : 1;
+      bool EPS : 1;
+      uint32_t rfu2 : 14;
+      uint32_t PointerCIS : 24;
+      uint32_t PointerCSA : 24;
+      uint32_t DataAccessWindowCSA : 8;
+      uint32_t IOBlockSize : 16;
+   } Reg;
+} FBR_Registers_T;
 #endif
