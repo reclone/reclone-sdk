@@ -26,6 +26,7 @@
 #define SDIO_DMA_IRQn         DMA2_Stream3_IRQn
 #define SDIO_DMA_IRQHANDLER   DMA2_Stream3_IRQHandler
 
+// A somewhat low clock speed in case long crappy dongle wires are used
 #define SDIO_DONGLE_CLK_DIV ((uint8_t)0x4)
 
 
@@ -46,7 +47,6 @@ static SD_HandleTypeDef SDIO_Handle;
 static DMA_HandleTypeDef DMA_Handle;
 static SemaphoreHandle_t Xfer_Complete_Semaphore;
 
-static uint32_t Card_Common_Control_Registers[0x14 / 4];
 
 void ESP_SDIO_ToggleReset(void);
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void);
@@ -263,7 +263,13 @@ bool ESP_SDIO_ResetToCmdState(void)
                      // Enable high current in Power Control register
                      if (SD_OK == ESP_SDIO_ReadWriteDirect(true, 0, true, 0x12, &power_control) && (power_control & 3) == 3)
                      {
-                        reset_result = true;
+                        vTaskDelay(1);
+                        // Enable function 1
+                        uint8_t io_enable = 2;
+                        if (SD_OK == ESP_SDIO_ReadWriteDirect(true, 0, true, 0x02, &io_enable) && (io_enable & 2) == 2)
+                        {
+                           reset_result = true;
+                        }
                      }
 
                   }
@@ -434,6 +440,56 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteDirect(
    return sdio_err;
 }
 
+HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteShort(
+      bool write, uint32_t func, bool raw, uint32_t address, uint16_t * data)
+{
+   HAL_SD_ErrorTypedef status;
+   uint8_t byte0 = *data & 0xFF;
+   uint8_t byte1 = (*data >> 8) & 0xFF;
+
+   status = ESP_SDIO_ReadWriteDirect(write, func, raw, address, &byte0);
+   if (SD_OK == status)
+   {
+      status = ESP_SDIO_ReadWriteDirect(write, func, raw, address + 1, &byte1);
+      if (SD_OK == status)
+      {
+         *data = (uint16_t)byte0 + ((uint16_t)byte1 << 8);
+      }
+   }
+
+   return status;
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteWord(
+      bool write, uint32_t func, bool raw, uint32_t address, uint32_t * data)
+{
+   HAL_SD_ErrorTypedef status;
+   uint8_t byte0 = (uint8_t)(*data & 0xFF);
+   uint8_t byte1 = (uint8_t)((*data >> 8) & 0xFF);
+   uint8_t byte2 = (uint8_t)((*data >> 16) & 0xFF);
+   uint8_t byte3 = (uint8_t)((*data >> 24) & 0xFF);
+
+   status = ESP_SDIO_ReadWriteDirect(write, func, raw, address, &byte0);
+   if (SD_OK == status)
+   {
+      status = ESP_SDIO_ReadWriteDirect(write, func, raw, address + 1, &byte1);
+      if (SD_OK == status)
+      {
+         status = ESP_SDIO_ReadWriteDirect(write, func, raw, address + 2, &byte2);
+         if (SD_OK == status)
+         {
+            status = ESP_SDIO_ReadWriteDirect(write, func, raw, address + 3, &byte3);
+            if (SD_OK == status)
+            {
+               *data = (uint32_t)byte0 + ((uint32_t)byte1 << 8) + ((uint32_t)byte2 << 16) + ((uint32_t)byte3 << 24);
+            }
+         }
+      }
+   }
+
+   return status;
+}
+
 HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes, uint32_t address, uint32_t func)
 {
    HAL_SD_ErrorTypedef sdio_err = SD_OK;
@@ -541,4 +597,24 @@ HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint32_t rca)
    }
 
    return sdio_err;
+}
+
+bool ESP_SDIO_ProgramFirmware(void)
+{
+   bool success = false;
+   uint8_t readbyte;
+   uint16_t target_id;
+   CCCR_Registers_T cccr;
+
+   // Check CCCR for readiness - 4 bit bus and function 1 enabled
+   if (ESP_SDIO_GetCCCR(&cccr) && cccr.Reg.IOR1 && cccr.Reg.IOE1 && 2 == cccr.Reg.BusWidth)
+   {
+      // Get Target ID.  ESP-12F should have target_id=0x600; hard-code to expect that for now
+      if (SD_OK == ESP_SDIO_ReadWriteShort(false, 1, false, 0x7C, &target_id) && 0x600 == target_id)
+      {
+         success = true;
+      }
+   }
+
+   return success;
 }

@@ -45,8 +45,19 @@ static void ESP_WiFi_Task(void * pvParameters)
          vTaskDelay(1);
          if (ESP_SDIO_GetFBR(&FBR1, 1))
          {
-            // GOOD
             vTaskDelay(1);
+            if (ESP_SDIO_ProgramFirmware())
+            {
+               // GOOD TO GO
+               vTaskDelay(1);
+            }
+            else
+            {
+               // Failed programming firmware
+               vTaskDelay(1);
+            }
+
+            // check_target_id
          }
          else
          {

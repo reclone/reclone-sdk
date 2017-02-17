@@ -115,7 +115,8 @@ typedef union FBR_Registers_U
       uint32_t ExtStdIfaceCode : 8;
       bool SPS : 1;
       bool EPS : 1;
-      uint32_t rfu2 : 14;
+      uint32_t rfu2 : 22;
+      uint32_t rfu3 : 32;
       uint32_t PointerCIS : 24;
       uint32_t PointerCSA : 24;
       uint32_t DataAccessWindowCSA : 8;
