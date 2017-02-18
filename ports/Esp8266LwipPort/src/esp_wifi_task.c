@@ -37,6 +37,8 @@ static void ESP_WiFi_Task(void * pvParameters)
 {
    (void)pvParameters;  //Unused
 
+   ESP_SDIO_ToggleReset();
+
    if (ESP_SDIO_ResetToCmdState())
    {
       vTaskDelay(1);

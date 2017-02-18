@@ -123,4 +123,20 @@ typedef union FBR_Registers_U
       uint32_t IOBlockSize : 16;
    } Reg;
 } FBR_Registers_T;
+
+struct ESP_Firmware_Header_S
+{
+   uint8_t Magic;
+   uint8_t Blocks;
+   uint8_t Padding[2];
+   uint32_t EntryAddr;
+};
+
+struct ESP_Block_Header_S
+{
+   uint32_t LoadAddr;
+   uint32_t DataLength;
+};
+
+
 #endif

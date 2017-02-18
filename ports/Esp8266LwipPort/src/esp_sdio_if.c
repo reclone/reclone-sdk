@@ -43,12 +43,17 @@ static const uint32_t SDIO_STATIC_FLAGS =
       SDIO_FLAG_CMDREND  | SDIO_FLAG_CMDSENT  | SDIO_FLAG_DATAEND  |
       SDIO_FLAG_DBCKEND;
 
+#define u8 const uint8_t
+#include "eagle_fw1.h"
+#include "eagle_fw2.h"
+#undef u8
+
+
 static SD_HandleTypeDef SDIO_Handle;
 static DMA_HandleTypeDef DMA_Handle;
 static SemaphoreHandle_t Xfer_Complete_Semaphore;
 
 
-void ESP_SDIO_ToggleReset(void);
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void);
 HAL_SD_ErrorTypedef ESP_SDIO_IoSendOpCond(uint32_t arg, bool * out_iordy);
 HAL_SD_ErrorTypedef ESP_SDIO_SendRelativeAddress(uint32_t * new_rca);
@@ -197,7 +202,6 @@ bool ESP_SDIO_ResetToCmdState(void)
    uint32_t retries;
    uint16_t rca = 0;
 
-   ESP_SDIO_ToggleReset();
    if (SD_OK == ESP_SDIO_GoIdleState())
    {
       // In Idle state
@@ -599,18 +603,50 @@ HAL_SD_ErrorTypedef ESP_SDIO_SelectCard(uint32_t rca)
    return sdio_err;
 }
 
+bool ESP_SDIO_VerifyTargetID(void)
+{
+   uint16_t target_id;
+   // Get Target ID.  ESP-12F should have target_id=0x600; hard-code to expect that for now
+   return (SD_OK == ESP_SDIO_ReadWriteShort(false, 1, false, 0x7C, &target_id) && 0x600 == target_id);
+}
+
+bool ESP_SDIO_BootFirmwareBlob(uint8_t const * blob)
+{
+   bool success = true;
+   struct ESP_Firmware_Header_S * fw_hdr = (struct ESP_Firmware_Header_S *)blob;
+   struct ESP_Block_Header_S * blk_hdr;
+   uint32_t offset = sizeof(struct ESP_Firmware_Header_S);
+
+   // Program and verify each firmware block
+   for (uint32_t blocknum = 0; blocknum < fw_hdr->Blocks; ++blocknum)
+   {
+      blk_hdr = (struct ESP_Block_Header_S *)&(blob[offset]);
+      offset += sizeof(struct ESP_Block_Header_S);
+
+
+
+      offset += blk_hdr->DataLength;
+   }
+
+   return success;
+}
+
 bool ESP_SDIO_ProgramFirmware(void)
 {
    bool success = false;
-   uint8_t readbyte;
-   uint16_t target_id;
    CCCR_Registers_T cccr;
 
+   // We assume that ESP_SDIO_ResetToCmdState() was already called once
    // Check CCCR for readiness - 4 bit bus and function 1 enabled
    if (ESP_SDIO_GetCCCR(&cccr) && cccr.Reg.IOR1 && cccr.Reg.IOE1 && 2 == cccr.Reg.BusWidth)
    {
-      // Get Target ID.  ESP-12F should have target_id=0x600; hard-code to expect that for now
-      if (SD_OK == ESP_SDIO_ReadWriteShort(false, 1, false, 0x7C, &target_id) && 0x600 == target_id)
+      if (ESP_SDIO_VerifyTargetID() &&
+          ESP_SDIO_BootFirmwareBlob(eagle_fw1) //&&
+          //ESP_SDIO_ResetToCmdState() &&
+          //ESP_SDIO_VerifyTargetID() &&
+          //ESP_SDIO_BootFirmwareBlob(eagle_fw2) &&
+          //ESP_SDIO_ResetToCmdState()
+          )
       {
          success = true;
       }

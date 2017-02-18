@@ -25,6 +25,7 @@ extern "C" {
 
 void ESP_SDIO_InitHardware(void);
 bool ESP_SDIO_ResetToCmdState(void);
+void ESP_SDIO_ToggleReset(void);
 bool ESP_SDIO_GetCCCR(CCCR_Registers_T * cccr_reg);
 bool ESP_SDIO_GetFBR(FBR_Registers_T * fbr_reg, uint32_t func);
 bool ESP_SDIO_ProgramFirmware(void);
