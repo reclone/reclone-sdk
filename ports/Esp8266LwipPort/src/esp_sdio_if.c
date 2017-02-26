@@ -158,6 +158,9 @@ void ESP_SDIO_InitHardware(void)
    SDIO_Handle.hdmatx = &DMA_Handle;
    SDIO_Init(SDIO, SDIO_Handle.Init);
 
+   // Enable SDIO I/O card mode
+   SDIO->DCTRL |= SDIO_DCTRL_SDIOEN;
+
    __HAL_RCC_SDIO_CLK_ENABLE();
 
    // Turn on SDIO
