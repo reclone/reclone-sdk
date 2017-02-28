@@ -138,5 +138,39 @@ struct ESP_Block_Header_S
    uint32_t DataLength;
 };
 
+struct ESP_SIP_Tx_Data_Info_S
+{
+   uint8_t Tid;
+   uint8_t Ac;
+   uint8_t P2P : 1;
+   uint8_t EncFlag: 7;
+   uint8_t HwKid;
+};
+
+struct ESP_SIP_Header_S
+{
+   uint8_t Fc[2];
+   uint16_t Length;
+   union
+   {
+      uint32_t RecycledCredits;
+      uint32_t CmdId;
+      struct ESP_SIP_Tx_Data_Info_S TxInfo;
+   } Param;
+   uint32_t Sequence;
+};
+
+struct ESP_SIP_Control_Pkt_S
+{
+   struct ESP_SIP_Header_S Header;
+   uint8_t CmdBuf[244];
+};
+
+struct ESP_SIP_WriteMemory_S
+{
+   uint32_t Address;
+   uint32_t Length;
+};
+
 
 #endif

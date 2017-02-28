@@ -10,11 +10,14 @@
  *             https://opensource.org/licenses/BSD-2-Clause
  */
 
-
+#include <string.h>
 #include "esp_sdio_if.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
+
+
+#define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
 
 #define SDIO_DMA_STREAM       DMA2_Stream3
 #define SDIO_DMA_CHANNEL      DMA_CHANNEL_4
@@ -28,6 +31,48 @@
 
 // A somewhat low clock speed in case long crappy dongle wires are used
 #define SDIO_DONGLE_CLK_DIV ((uint8_t)0x4)
+
+#define SIP_BOOT_BUF_SIZE 256
+
+enum ESP_SIP_Command_E
+{
+   SIP_CMD_GET_VER = 0,
+   SIP_CMD_WRITE_MEMORY,
+   SIP_CMD_READ_MEMORY,
+   SIP_CMD_WRITE_REG,   // ROM code
+   SIP_CMD_READ_REG,
+   SIP_CMD_BOOTUP,      // ROM code
+   SIP_CMD_COPYBACK,
+   SIP_CMD_INIT,
+   SIP_CMD_SCAN,
+   SIP_CMD_SETKEY,
+   SIP_CMD_CONFIG,
+   SIP_CMD_BSS_INFO_UPDATE,
+   SIP_CMD_LOOPBACK,    // ROM code
+   SIP_CMD_SET_WMM_PARAM,
+   SIP_CMD_AMPDU_ACTION,
+   SIP_CMD_HB_REQ,
+   SIP_CMD_RESET_MAC,
+   SIP_CMD_PRE_DOWN,
+   SIP_CMD_SLEEP,
+   SIP_CMD_WAKEUP,
+   SIP_CMD_DEBUG,
+   SIP_CMD_GET_FW_VER,
+   SIP_CMD_SETVIF,
+   SIP_CMD_SETSTA,
+   SIP_CMD_PS,
+   SIP_CMD_ATE,
+   SIP_CMD_SUSPEND,
+   SIP_CMD_RECALC_CREDIT,
+   SIP_CMD_MAX
+};
+
+enum ESP_SIP_Pkt_Type_E
+{
+   SIP_CTRL = 0,
+   SIP_DATA,
+   SIP_DATA_AMPDU
+};
 
 
 static const uint32_t CMD_TIMEOUT_LOOPS = 0x10000;
@@ -43,6 +88,8 @@ static const uint32_t SDIO_STATIC_FLAGS =
       SDIO_FLAG_CMDREND  | SDIO_FLAG_CMDSENT  | SDIO_FLAG_DATAEND  |
       SDIO_FLAG_DBCKEND;
 
+
+
 #define u8 const uint8_t
 #include "eagle_fw1.h"
 #include "eagle_fw2.h"
@@ -52,6 +99,9 @@ static const uint32_t SDIO_STATIC_FLAGS =
 static SD_HandleTypeDef SDIO_Handle;
 static DMA_HandleTypeDef DMA_Handle;
 static SemaphoreHandle_t Xfer_Complete_Semaphore;
+
+struct ESP_SIP_Control_Pkt_S SIP_Ctrl;
+static uint32_t Tx_Seq;
 
 
 HAL_SD_ErrorTypedef ESP_SDIO_GoIdleState(void);
@@ -185,6 +235,9 @@ void ESP_SDIO_InitHardware(void)
 
    // Binary semaphore used to notify of DMA completion
    Xfer_Complete_Semaphore = xSemaphoreCreateBinary();
+
+   // Transmit sequence number
+   Tx_Seq = 0;
 }
 
 void ESP_SDIO_ToggleReset(void)
@@ -383,6 +436,8 @@ bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
    return success;
 }
 
+#error Implement ESP_SDIO_DMA_TxConfig
+
 HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
       bool write, uint32_t func, bool blockMode, bool incrAddr, uint32_t address, uint32_t count)
 {
@@ -531,6 +586,40 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
    return sdio_err;
 }
 
+HAL_SD_ErrorTypedef ESP_SDIO_WriteBytes(uint32_t const * srcBuffer, uint32_t numBytes, uint32_t address, uint32_t func)
+{
+   HAL_SD_ErrorTypedef sdio_err = SD_OK;
+
+   // Set up DMA
+   // TODO: support block transfer for sizes >= 512
+   if (numBytes < SDIO_DATA_BLOCK_SIZE && ESP_SDIO_DMA_TxConfig(srcBuffer, numBytes))
+   {
+      // Send command
+      sdio_err = ESP_SDIO_ReadWriteExtended(true, func, false, true, address, numBytes);
+      if (SD_OK == sdio_err)
+      {
+         // Wait for DMA to complete (indefinitely)
+         xSemaphoreTake(Xfer_Complete_Semaphore, portMAX_DELAY);
+
+         // Cleanly close/abort/disable the DMA transfer
+         HAL_DMA_Abort(&DMA_Handle);
+
+         // Check SD status
+         sdio_err = SDIO_Handle.SdTransferErr;
+      }
+      else
+      {
+         sdio_err = SD_ERROR;
+      }
+   }
+   else
+   {
+      sdio_err = SD_INVALID_PARAMETER;
+   }
+
+   return sdio_err;
+}
+
 bool ESP_SDIO_GetCCCR(CCCR_Registers_T * cccr_reg)
 {
    return (SD_OK == ESP_SDIO_ReadBytes(
@@ -613,6 +702,57 @@ bool ESP_SDIO_VerifyTargetID(void)
    return (SD_OK == ESP_SDIO_ReadWriteShort(false, 1, false, 0x7C, &target_id) && 0x600 == target_id);
 }
 
+bool ESP_SDIO_SIP_SendCommand(void const * command_data, uint32_t length)
+{
+   //TODO
+}
+
+bool ESP_SDIO_SIP_WriteMemory(uint32_t address, uint8_t const * buffer, uint32_t length)
+{
+   bool success = true;
+   uint32_t remain_bytes = length;
+
+   while (success && remain_bytes > 0)
+   {
+      const uint8_t * fw_cur_pos = &buffer[length - remain_bytes];
+      uint32_t load_addr = address + (length - remain_bytes);
+      const uint32_t hdr_size = sizeof(struct ESP_SIP_Header_S) +
+            sizeof(struct ESP_SIP_WriteMemory_S);
+      uint32_t buf_size;
+      struct ESP_SIP_WriteMemory_S * cmd;
+
+      if (remain_bytes < (SIP_BOOT_BUF_SIZE - hdr_size))
+      {
+         buf_size = ROUND_UP(remain_bytes, 4);
+         memset(SIP_Ctrl.CmdBuf, 0, sizeof(SIP_Ctrl.CmdBuf));
+         remain_bytes = 0;
+      }
+      else
+      {
+         buf_size = SIP_BOOT_BUF_SIZE - hdr_size;
+         remain_bytes -= buf_size;
+      }
+
+      SIP_Ctrl.Header.Fc[0] = SIP_CTRL;
+      SIP_Ctrl.Header.Fc[1] = 0;
+      SIP_Ctrl.Header.Length = buf_size + hdr_size;
+      SIP_Ctrl.Header.Param.CmdId = SIP_CMD_WRITE_MEMORY;
+      SIP_Ctrl.Header.Sequence = Tx_Seq++;
+      cmd = (struct ESP_SIP_WriteMemory_S *)SIP_Ctrl.CmdBuf;
+      cmd->Address = load_addr;
+      cmd->Length = buf_size;
+      memcpy(SIP_Ctrl.CmdBuf + sizeof(struct ESP_SIP_WriteMemory_S), fw_cur_pos, buf_size);
+      success = ESP_SDIO_SIP_SendCommand(&SIP_Ctrl, SIP_Ctrl.Header.Length);
+   }
+
+   return success;
+}
+
+bool ESP_SDIO_SIP_BootUp(uint32_t address)
+{
+
+}
+
 bool ESP_SDIO_BootFirmwareBlob(uint8_t const * blob)
 {
    bool success = true;
@@ -620,15 +760,22 @@ bool ESP_SDIO_BootFirmwareBlob(uint8_t const * blob)
    struct ESP_Block_Header_S * blk_hdr;
    uint32_t offset = sizeof(struct ESP_Firmware_Header_S);
 
-   // Program and verify each firmware block
+   // Program each firmware block
    for (uint32_t blocknum = 0; blocknum < fw_hdr->Blocks; ++blocknum)
    {
       blk_hdr = (struct ESP_Block_Header_S *)&(blob[offset]);
       offset += sizeof(struct ESP_Block_Header_S);
-
-
-
+      success = ESP_SDIO_SIP_WriteMemory(blk_hdr->LoadAddr, &(blob[offset]), blk_hdr->DataLength);
+      if (!success)
+      {
+         break;
+      }
       offset += blk_hdr->DataLength;
+   }
+
+   if (success)
+   {
+      success = ESP_SDIO_SIP_BootUp(fw_hdr->EntryAddr);
    }
 
    return success;
