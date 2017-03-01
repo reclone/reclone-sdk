@@ -118,8 +118,13 @@ void SDIO_DMA_IRQHANDLER()
 
    HAL_DMA_IRQHandler(&DMA_Handle);
 
-   if (HAL_DMA_STATE_READY_MEM0 == DMA_Handle.State)
+   if (HAL_DMA_STATE_READY_MEM0 == DMA_Handle.State || HAL_DMA_STATE_ERROR == DMA_Handle.State)
    {
+      if (HAL_DMA_STATE_ERROR == DMA_Handle.State)
+      {
+         SDIO_Handle.SdTransferErr = SD_ERROR;
+      }
+
       // "Give" to the semaphore to indicate the transfer is complete
       xSemaphoreGiveFromISR(Xfer_Complete_Semaphore, &xHigherPriorityTaskWoken);
    }
@@ -436,12 +441,48 @@ bool ESP_SDIO_DMA_RxConfig(uint32_t * destBuffer, uint32_t bufferSize)
    return success;
 }
 
-#error Implement ESP_SDIO_DMA_TxConfig
-
-HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
-      bool write, uint32_t func, bool blockMode, bool incrAddr, uint32_t address, uint32_t count)
+bool ESP_SDIO_DMA_TxConfig(uint32_t const * srcBuffer, uint32_t bufferSize)
 {
-   uint32_t arg = (write ? 0x80000000 : 0) | ((func & 7) << 28) | (blockMode ? 0x8000000 : 0) |
+   bool success = false;
+
+   __SDIO_ENABLE_IT(SDIO, SDIO_IT_DCRCFAIL | SDIO_IT_DTIMEOUT | SDIO_IT_DATAEND | SDIO_IT_TXUNDERR | SDIO_IT_STBITERR);
+   __SDIO_DMA_ENABLE();
+
+   // Set DMA parameters
+   DMA_Handle.Instance = SDIO_DMA_STREAM;
+   DMA_Handle.Init.Channel = SDIO_DMA_CHANNEL;
+   DMA_Handle.Init.Direction = DMA_MEMORY_TO_PERIPH;
+   DMA_Handle.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
+   DMA_Handle.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_HALFFULL;
+   DMA_Handle.Init.MemBurst = DMA_MBURST_SINGLE;
+   DMA_Handle.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+   DMA_Handle.Init.MemInc = DMA_MINC_ENABLE;
+   DMA_Handle.Init.Mode = DMA_SxCR_PFCTRL;
+   DMA_Handle.Init.PeriphBurst = DMA_PBURST_INC4;
+   DMA_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+   DMA_Handle.Init.PeriphInc = DMA_PINC_DISABLE;
+   DMA_Handle.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+   DMA_Handle.Parent = (void *)&SDIO_Handle;
+   DMA_Handle.XferCpltCallback = NULL;
+   DMA_Handle.XferErrorCallback = NULL;
+   DMA_Handle.XferHalfCpltCallback = NULL;
+   DMA_Handle.XferM1CpltCallback = NULL;
+
+   if (HAL_OK == HAL_DMA_Init(&DMA_Handle))
+   {
+      if (HAL_OK == HAL_DMA_Start_IT(&DMA_Handle, (uint32_t)srcBuffer, (uint32_t)&SDIO->FIFO, bufferSize/4))
+      {
+         success = true;
+      }
+   }
+
+   return success;
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_ReadExtended(
+      uint32_t func, bool blockMode, bool incrAddr, uint32_t address, uint32_t count)
+{
+   uint32_t arg = ((func & 7) << 28) | (blockMode ? 0x8000000 : 0) |
                   (incrAddr ? 0x4000000 : 0) | ((address & 0x1FFFF) << 9) | (count & 0x1FF);
    SDIO_DataInitTypeDef data_init;
 
@@ -453,11 +494,10 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
    }
    else
    {
-      //HACK: idk why this needs to be +1.  If it's just "count" it cuts off the last word
       data_init.DataLength = count;
    }
    data_init.DataTimeOut = SDIO_DATA_TIMEOUT;
-   data_init.TransferDir = write ? SDIO_TRANSFER_DIR_TO_CARD : SDIO_TRANSFER_DIR_TO_SDIO;
+   data_init.TransferDir = SDIO_TRANSFER_DIR_TO_SDIO;
    data_init.TransferMode = blockMode ? SDIO_TRANSFER_MODE_BLOCK : SDIO_TRANSFER_MODE_STREAM;
    SDIO_DataConfig(SDIO, &data_init);
 
@@ -471,6 +511,46 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadWriteExtended(
       if (errFlags != 0)
       {
          sdio_err = SD_ERROR;
+      }
+   }
+
+   return sdio_err;
+}
+
+HAL_SD_ErrorTypedef ESP_SDIO_WriteExtended(
+      uint32_t func, bool blockMode, bool incrAddr, uint32_t address, uint32_t count)
+{
+   uint32_t arg = 0x80000000/*write*/ | ((func & 7) << 28) | (blockMode ? 0x8000000 : 0) |
+                  (incrAddr ? 0x4000000 : 0) | ((address & 0x1FFFF) << 9) | (count & 0x1FF);
+   SDIO_DataInitTypeDef data_init;
+
+   HAL_SD_ErrorTypedef sdio_err =
+         ESP_SDIO_SendCommand(SD_CMD_SDIO_RW_EXTENDED, arg, SDIO_RESPONSE_SHORT, false);
+
+   if (SD_OK == sdio_err)
+   {
+      uint32_t resp = SDIO_GetResponse(SDIO_RESP1);
+      uint32_t errFlags = (SDIO_GetResponse(SDIO_RESP1) >> 8) & 0xCF;
+      if (errFlags != 0)
+      {
+         sdio_err = SD_ERROR;
+      }
+      else
+      {
+         data_init.DPSM = SDIO_DPSM_ENABLE;
+         data_init.DataBlockSize = SDIO_DATA_BLOCK_SIZE;
+         if (blockMode)
+         {
+            data_init.DataLength = SDIO_DATA_BLOCK_SIZE * count;
+         }
+         else
+         {
+            data_init.DataLength = count;
+         }
+         data_init.DataTimeOut = SDIO_DATA_TIMEOUT;
+         data_init.TransferDir = SDIO_TRANSFER_DIR_TO_CARD;
+         data_init.TransferMode = blockMode ? SDIO_TRANSFER_MODE_BLOCK : SDIO_TRANSFER_MODE_STREAM;
+         SDIO_DataConfig(SDIO, &data_init);
       }
    }
 
@@ -561,7 +641,7 @@ HAL_SD_ErrorTypedef ESP_SDIO_ReadBytes(uint32_t * destBuffer, uint32_t numBytes,
    if (numBytes < SDIO_DATA_BLOCK_SIZE && ESP_SDIO_DMA_RxConfig(destBuffer, numBytes))
    {
       // Send command
-      sdio_err = ESP_SDIO_ReadWriteExtended(false, func, false, true, address, numBytes);
+      sdio_err = ESP_SDIO_ReadExtended(func, false, true, address, numBytes);
       if (SD_OK == sdio_err)
       {
          // Wait for DMA to complete (indefinitely)
@@ -590,22 +670,28 @@ HAL_SD_ErrorTypedef ESP_SDIO_WriteBytes(uint32_t const * srcBuffer, uint32_t num
 {
    HAL_SD_ErrorTypedef sdio_err = SD_OK;
 
-   // Set up DMA
    // TODO: support block transfer for sizes >= 512
-   if (numBytes < SDIO_DATA_BLOCK_SIZE && ESP_SDIO_DMA_TxConfig(srcBuffer, numBytes))
+   if (numBytes < SDIO_DATA_BLOCK_SIZE)
    {
       // Send command
-      sdio_err = ESP_SDIO_ReadWriteExtended(true, func, false, true, address, numBytes);
+      sdio_err = ESP_SDIO_WriteExtended(func, false, true, address, numBytes);
       if (SD_OK == sdio_err)
       {
-         // Wait for DMA to complete (indefinitely)
-         xSemaphoreTake(Xfer_Complete_Semaphore, portMAX_DELAY);
+         if (ESP_SDIO_DMA_TxConfig(srcBuffer, numBytes))
+         {
+            // Wait for DMA to complete (indefinitely)
+            xSemaphoreTake(Xfer_Complete_Semaphore, portMAX_DELAY);
 
-         // Cleanly close/abort/disable the DMA transfer
-         HAL_DMA_Abort(&DMA_Handle);
+            // Cleanly close/abort/disable the DMA transfer
+            HAL_DMA_Abort(&DMA_Handle);
 
-         // Check SD status
-         sdio_err = SDIO_Handle.SdTransferErr;
+            // Check SD status
+            sdio_err = SDIO_Handle.SdTransferErr;
+         }
+         else
+         {
+            sdio_err = SD_ERROR;
+         }
       }
       else
       {
@@ -704,7 +790,10 @@ bool ESP_SDIO_VerifyTargetID(void)
 
 bool ESP_SDIO_SIP_SendCommand(void const * command_data, uint32_t length)
 {
-   //TODO
+   const uint32_t SLC_WINDOW_END_ADDRESS = 0x20000 - 0x800;
+   uint32_t addr = SLC_WINDOW_END_ADDRESS - length;
+
+   return (SD_OK == ESP_SDIO_WriteBytes((uint32_t const *)command_data, length, addr, 1));
 }
 
 bool ESP_SDIO_SIP_WriteMemory(uint32_t address, uint8_t const * buffer, uint32_t length)
