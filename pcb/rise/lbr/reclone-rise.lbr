@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -2196,13 +2196,13 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-5.08" y1="-10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
 <wire x1="0" y1="-10.16" x2="0" y2="10.16" width="0.254" layer="94"/>
 <wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
-<pin name="SDIO_CMD" x="5.08" y="-5.08" length="middle" rot="R180"/>
-<pin name="SDIO_CLK" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="SDIO_CMD" x="5.08" y="2.54" length="middle" rot="R180"/>
+<pin name="SDIO_CLK" x="5.08" y="5.08" length="middle" rot="R180"/>
 <pin name="SDIO_D0" x="5.08" y="0" length="middle" rot="R180"/>
-<pin name="SDIO_D1" x="5.08" y="2.54" length="middle" rot="R180"/>
-<pin name="SDIO_D2" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="SDIO_D3" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="SDIO_NCD" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<pin name="SDIO_D1" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="SDIO_D2" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="SDIO_D3" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<pin name="SDIO_EN" x="5.08" y="7.62" length="middle" rot="R180"/>
 </symbol>
 <symbol name="STM32F407_USB">
 <wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
@@ -3378,26 +3378,26 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="12.7" y1="17.78" x2="-12.7" y2="17.78" width="0.254" layer="94"/>
 <wire x1="-12.7" y1="17.78" x2="-12.7" y2="-20.32" width="0.254" layer="94"/>
 <wire x1="-12.7" y1="-20.32" x2="12.7" y2="-20.32" width="0.254" layer="94"/>
-<pin name="SD_CLK" x="-17.78" y="15.24" length="middle"/>
-<pin name="SD_CMD" x="-17.78" y="12.7" length="middle"/>
-<pin name="SD_D0" x="-17.78" y="10.16" length="middle"/>
-<pin name="SD_D1" x="-17.78" y="7.62" length="middle"/>
-<pin name="SD_D2" x="-17.78" y="5.08" length="middle"/>
-<pin name="SD_D3" x="-17.78" y="2.54" length="middle"/>
-<pin name="TXD0" x="-17.78" y="-2.54" length="middle"/>
-<pin name="RXD0" x="-17.78" y="-5.08" length="middle"/>
-<pin name="IO0" x="17.78" y="7.62" length="middle" rot="R180"/>
+<pin name="SD_CLK" x="-17.78" y="12.7" length="middle"/>
+<pin name="SD_CMD" x="-17.78" y="10.16" length="middle"/>
+<pin name="SD_D0" x="-17.78" y="7.62" length="middle"/>
+<pin name="SD_D1" x="-17.78" y="5.08" length="middle"/>
+<pin name="SD_D2" x="-17.78" y="2.54" length="middle"/>
+<pin name="SD_D3" x="-17.78" y="0" length="middle"/>
+<pin name="TXD0" x="17.78" y="5.08" length="middle" rot="R180"/>
+<pin name="RXD0" x="17.78" y="2.54" length="middle" rot="R180"/>
+<pin name="IO0" x="17.78" y="-2.54" length="middle" rot="R180"/>
 <wire x1="12.7" y1="17.78" x2="12.7" y2="-20.32" width="0.254" layer="94"/>
-<pin name="RST_N" x="-17.78" y="-15.24" length="middle"/>
-<pin name="EN" x="-17.78" y="-17.78" length="middle"/>
-<pin name="ADC" x="-17.78" y="-10.16" length="middle"/>
-<pin name="IO2" x="17.78" y="5.08" length="middle" rot="R180"/>
-<pin name="IO4" x="17.78" y="2.54" length="middle" rot="R180"/>
-<pin name="IO5" x="17.78" y="0" length="middle" rot="R180"/>
-<pin name="IO12" x="17.78" y="-2.54" length="middle" rot="R180"/>
-<pin name="IO13" x="17.78" y="-5.08" length="middle" rot="R180"/>
-<pin name="IO14" x="17.78" y="-7.62" length="middle" rot="R180"/>
-<pin name="IO15" x="17.78" y="-10.16" length="middle" rot="R180"/>
+<pin name="RST_N" x="-17.78" y="-7.62" length="middle"/>
+<pin name="CHIP_EN" x="-17.78" y="15.24" length="middle"/>
+<pin name="ADC" x="17.78" y="10.16" length="middle" rot="R180"/>
+<pin name="IO2" x="17.78" y="-10.16" length="middle" rot="R180"/>
+<pin name="IO4" x="17.78" y="-7.62" length="middle" rot="R180"/>
+<pin name="IO5" x="17.78" y="-5.08" length="middle" rot="R180"/>
+<pin name="MTDI" x="-17.78" y="-12.7" length="middle"/>
+<pin name="MTCK" x="-17.78" y="-15.24" length="middle"/>
+<pin name="MTMS" x="-17.78" y="-17.78" length="middle"/>
+<pin name="IO15/MTDO" x="-17.78" y="-10.16" length="middle"/>
 <pin name="IO16" x="17.78" y="-12.7" length="middle" rot="R180"/>
 <pin name="VCC" x="17.78" y="15.24" length="middle" rot="R180"/>
 <pin name="GND" x="17.78" y="-17.78" length="middle" rot="R180"/>
@@ -3561,7 +3561,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$4" pin="SDIO_D1" pad="66"/>
 <connect gate="G$4" pin="SDIO_D2" pad="78"/>
 <connect gate="G$4" pin="SDIO_D3" pad="79"/>
-<connect gate="G$4" pin="SDIO_NCD" pad="7"/>
+<connect gate="G$4" pin="SDIO_EN" pad="7"/>
 <connect gate="G$5" pin="USB_FS_DM" pad="70"/>
 <connect gate="G$5" pin="USB_FS_DP" pad="71"/>
 <connect gate="G$5" pin="USB_HS_DM" pad="53"/>
@@ -4627,17 +4627,17 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <device name="" package="ESP-12F">
 <connects>
 <connect gate="G$1" pin="ADC" pad="2"/>
-<connect gate="G$1" pin="EN" pad="3"/>
+<connect gate="G$1" pin="CHIP_EN" pad="3"/>
 <connect gate="G$1" pin="GND" pad="15"/>
 <connect gate="G$1" pin="IO0" pad="18"/>
-<connect gate="G$1" pin="IO12" pad="6"/>
-<connect gate="G$1" pin="IO13" pad="7"/>
-<connect gate="G$1" pin="IO14" pad="5"/>
-<connect gate="G$1" pin="IO15" pad="16"/>
+<connect gate="G$1" pin="IO15/MTDO" pad="16"/>
 <connect gate="G$1" pin="IO16" pad="4"/>
 <connect gate="G$1" pin="IO2" pad="17"/>
 <connect gate="G$1" pin="IO4" pad="19"/>
 <connect gate="G$1" pin="IO5" pad="20"/>
+<connect gate="G$1" pin="MTCK" pad="7"/>
+<connect gate="G$1" pin="MTDI" pad="6"/>
+<connect gate="G$1" pin="MTMS" pad="5"/>
 <connect gate="G$1" pin="RST_N" pad="1"/>
 <connect gate="G$1" pin="RXD0" pad="21"/>
 <connect gate="G$1" pin="SD_CLK" pad="14"/>
