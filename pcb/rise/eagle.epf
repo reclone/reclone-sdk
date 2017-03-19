@@ -23,12 +23,11 @@ UsedLibrary="lbr/sparkfun/SparkFun-FreqCtrl.lbr"
 UsedLibrary="lbr/sparkfun/SparkFun-Electromechanical.lbr"
 UsedLibrary="lbr/sparkfun/SparkFun-LED.lbr"
 UsedLibrary="lbr/sparkfun/SparkFun-DiscreteSemi.lbr"
-UsedLibrary="lbr/mikroe/mikrobus_lib.lbr"
 
 [Win_1]
 Type="Control Panel"
 Loc="289 113 1650 806"
-State=0
+State=2
 Number=0
 
 [Desktop]
