@@ -10439,9 +10439,9 @@ within 0.254mm</text>
 <pinref part="GPIO" gate="G$1" pin="3"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L1N_VREF_0"/>
-<wire x1="38.1" y1="114.3" x2="40.64" y2="114.3" width="0.1524" layer="91"/>
-<label x="40.64" y="114.3" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B0" pin="IO_L3N_0"/>
+<wire x1="38.1" y1="104.14" x2="40.64" y2="104.14" width="0.1524" layer="91"/>
+<label x="40.64" y="104.14" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPIO09" class="0">
@@ -10451,9 +10451,9 @@ within 0.254mm</text>
 <pinref part="GPIO" gate="G$1" pin="5"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L2P_0"/>
-<wire x1="38.1" y1="111.76" x2="40.64" y2="111.76" width="0.1524" layer="91"/>
-<label x="40.64" y="111.76" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B0" pin="IO_L3P_0"/>
+<wire x1="38.1" y1="106.68" x2="40.64" y2="106.68" width="0.1524" layer="91"/>
+<label x="40.64" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPIO07" class="0">
@@ -10463,9 +10463,9 @@ within 0.254mm</text>
 <pinref part="GPIO" gate="G$1" pin="7"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L3N_0"/>
-<wire x1="38.1" y1="104.14" x2="40.64" y2="104.14" width="0.1524" layer="91"/>
-<label x="40.64" y="104.14" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B0" pin="IO_L1N_VREF_0"/>
+<wire x1="38.1" y1="114.3" x2="40.64" y2="114.3" width="0.1524" layer="91"/>
+<label x="40.64" y="114.3" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPIO00" class="0">
@@ -10571,9 +10571,9 @@ within 0.254mm</text>
 <pinref part="GPIO" gate="G$1" pin="8"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L3P_0"/>
-<wire x1="38.1" y1="106.68" x2="40.64" y2="106.68" width="0.1524" layer="91"/>
-<label x="40.64" y="106.68" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B0" pin="IO_L2P_0"/>
+<wire x1="38.1" y1="111.76" x2="40.64" y2="111.76" width="0.1524" layer="91"/>
+<label x="40.64" y="111.76" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPIO16" class="0">
