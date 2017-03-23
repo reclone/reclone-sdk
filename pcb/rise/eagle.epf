@@ -26,7 +26,7 @@ UsedLibrary="lbr/sparkfun/SparkFun-DiscreteSemi.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="289 113 1650 806"
+Loc="473 156 1834 849"
 State=2
 Number=0
 
