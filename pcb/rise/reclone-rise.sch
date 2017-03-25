@@ -1096,6 +1096,30 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-9.5" y="-17" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
 <text x="-9.5" y="-1" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 </package>
+<package name="RGB_LED_1204_RTANG">
+<smd name="3" x="0" y="1.5" dx="1" dy="0.8" layer="1" rot="R90"/>
+<smd name="4" x="0" y="-1.5" dx="1" dy="0.8" layer="1" rot="R90"/>
+<smd name="2" x="0.325" y="0.4" dx="0.65" dy="0.5" layer="1"/>
+<smd name="1" x="0.325" y="-0.4" dx="0.65" dy="0.5" layer="1"/>
+<wire x1="-0.4" y1="-1" x2="-0.4" y2="1" width="0.05" layer="21" curve="-180"/>
+<text x="2" y="-2" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
+</package>
+<package name="PB_TACT_RTANG">
+<pad name="SW_B" x="2.25" y="0" drill="1"/>
+<pad name="SW_A" x="-2.25" y="0" drill="1"/>
+<pad name="MNT_B" x="3.5" y="2.5" drill="1.3"/>
+<pad name="MNT_A" x="-3.5" y="2.5" drill="1.3"/>
+<wire x1="-3.5" y1="4" x2="3.5" y2="4" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="1" x2="-3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="-2.5" x2="-1.75" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="-2.5" x2="1.75" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="1.75" y1="-2.5" x2="3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="3.5" y1="-2.5" x2="3.5" y2="1" width="0.127" layer="21"/>
+<wire x1="1.75" y1="-2.5" x2="1.75" y2="-8.35" width="0.127" layer="21"/>
+<wire x1="1.75" y1="-8.35" x2="-1.75" y2="-8.35" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="-8.35" x2="-1.75" y2="-2.5" width="0.127" layer="21"/>
+<text x="-3" y="5" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -1992,6 +2016,50 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="PC5" x="5.08" y="-15.24" length="middle" rot="R180"/>
 <pin name="PA3" x="5.08" y="15.24" length="middle" rot="R180"/>
 </symbol>
+<symbol name="RGB_LED_COMMON_ANODE">
+<wire x1="0" y1="-2.54" x2="2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="2.54" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="0" x2="0" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="0" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.54" x2="2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="7.62" y2="0" width="0.254" layer="94"/>
+<wire x1="7.62" y1="0" x2="10.16" y2="0" width="0.254" layer="94"/>
+<wire x1="10.16" y1="0" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-2.54" x2="5.08" y2="0" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-2.54" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-2.54" x2="10.16" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="0" x2="-7.62" y2="0" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="0" x2="-10.16" y2="0" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="0" x2="-7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="-5.08" y2="0" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-2.54" x2="-7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="-5.08" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="0" x2="-7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="2.54" x2="0" y2="2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="2.54" x2="7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="2.54" x2="7.62" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="-7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.54" x2="0" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-2.54" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
+<pin name="ANODE" x="0" y="7.62" visible="off" length="short" rot="R270"/>
+<pin name="B" x="-7.62" y="-7.62" visible="off" length="short" rot="R90"/>
+<pin name="G" x="0" y="-7.62" visible="off" length="short" rot="R90"/>
+<pin name="R" x="7.62" y="-7.62" visible="off" length="short" rot="R90"/>
+<text x="-10.16" y="-5.08" size="1.27" layer="94">B</text>
+<text x="-2.54" y="-5.08" size="1.27" layer="94">G</text>
+<text x="5.08" y="-5.08" size="1.27" layer="94">R</text>
+<wire x1="0" y1="2.54" x2="0" y2="5.08" width="0.254" layer="94"/>
+</symbol>
+<symbol name="SPST_NO">
+<pin name="B" x="5.08" y="0" visible="off" length="point" rot="R180"/>
+<pin name="A" x="-5.08" y="0" visible="off" length="point"/>
+<wire x1="-5.08" y1="0" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="1.27" y2="1.524" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="1.27" y2="0" width="0.254" layer="94"/>
+<text x="-5.08" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -2818,6 +2886,40 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="SD_D3" pad="12"/>
 <connect gate="G$1" pin="TXD0" pad="22"/>
 <connect gate="G$1" pin="VCC" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="OVSRRGBCC3">
+<gates>
+<gate name="G$1" symbol="RGB_LED_COMMON_ANODE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="RGB_LED_1204_RTANG">
+<connects>
+<connect gate="G$1" pin="ANODE" pad="4"/>
+<connect gate="G$1" pin="B" pad="3"/>
+<connect gate="G$1" pin="G" pad="2"/>
+<connect gate="G$1" pin="R" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="TL1105SF250Q">
+<gates>
+<gate name="G$1" symbol="SPST_NO" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="PB_TACT_RTANG">
+<connects>
+<connect gate="G$1" pin="A" pad="SW_A"/>
+<connect gate="G$1" pin="B" pad="SW_B"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -7283,7 +7385,7 @@ Production Part - 8199
 </part>
 <part name="CFG" library="reclone-rise" deviceset="93LC46B" device=""/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
-<part name="AV-OUT" library="reclone-rise" deviceset="AV-JACK-4COND" device=""/>
+<part name="A/V" library="reclone-rise" deviceset="AV-JACK-4COND" device=""/>
 <part name="+3V3" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY1" library="supply2" deviceset="GND" device=""/>
 <part name="R1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7"/>
@@ -7467,6 +7569,14 @@ Production Part - 8199
 <part name="+3V13" library="supply1" deviceset="+3V3" device=""/>
 <part name="R21" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7"/>
 <part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
+<part name="RGB" library="reclone-rise" deviceset="OVSRRGBCC3" device=""/>
+<part name="+3V14" library="supply1" deviceset="+3V3" device=""/>
+<part name="R23" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="160"/>
+<part name="R24" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="43"/>
+<part name="R25" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="39"/>
+<part name="USER" library="reclone-rise" deviceset="TL1105SF250Q" device=""/>
+<part name="R27" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7"/>
+<part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7486,10 +7596,10 @@ Production Part - 8199
 <instance part="MCU" gate="G$7" x="154.94" y="22.86"/>
 <instance part="MCU" gate="G$5" x="309.88" y="121.92"/>
 <instance part="USBSER" gate="G$1" x="81.28" y="63.5"/>
-<instance part="MICRO-SD" gate="G$1" x="294.64" y="218.44">
-<attribute name="DIGIKEY#" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="294.64" y="218.44" size="1.778" layer="96" display="off"/>
+<instance part="MICRO-SD" gate="G$1" x="269.24" y="210.82">
+<attribute name="DIGIKEY#" x="269.24" y="210.82" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="269.24" y="210.82" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="269.24" y="210.82" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="CFG" gate="G$1" x="20.32" y="33.02"/>
 <instance part="+3V3" gate="G$1" x="83.82" y="127"/>
@@ -7543,8 +7653,8 @@ Production Part - 8199
 <instance part="R35" gate="G$1" x="213.36" y="233.68" rot="R90"/>
 <instance part="R36" gate="G$1" x="213.36" y="220.98" rot="R90"/>
 <instance part="+3V22" gate="G$1" x="213.36" y="243.84"/>
-<instance part="SUPPLY28" gate="GND" x="284.48" y="195.58"/>
-<instance part="+3V23" gate="G$1" x="287.02" y="248.92"/>
+<instance part="SUPPLY28" gate="GND" x="259.08" y="187.96"/>
+<instance part="+3V23" gate="G$1" x="261.62" y="241.3"/>
 <instance part="SUPPLY29" gate="GND" x="25.4" y="226.06"/>
 <instance part="C7" gate="G$1" x="205.74" y="200.66" rot="R180"/>
 <instance part="C13" gate="G$1" x="213.36" y="203.2" rot="R180"/>
@@ -7553,12 +7663,12 @@ Production Part - 8199
 <instance part="SUPPLY26" gate="GND" x="198.12" y="233.68"/>
 <instance part="SUPPLY27" gate="GND" x="213.36" y="213.36"/>
 <instance part="P+7" gate="1" x="116.84" y="246.38"/>
-<instance part="ACT" gate="G$1" x="259.08" y="210.82"/>
-<instance part="R9" gate="G$1" x="256.54" y="218.44" smashed="yes">
-<attribute name="NAME" x="250.952" y="218.6686" size="1.778" layer="95"/>
-<attribute name="VALUE" x="258.826" y="218.694" size="1.778" layer="96"/>
+<instance part="ACT" gate="G$1" x="233.68" y="96.52" rot="R90"/>
+<instance part="R9" gate="G$1" x="223.52" y="96.52" smashed="yes">
+<attribute name="NAME" x="217.932" y="96.7486" size="1.778" layer="95"/>
+<attribute name="VALUE" x="225.806" y="96.774" size="1.778" layer="96"/>
 </instance>
-<instance part="SUPPLY30" gate="GND" x="259.08" y="200.66"/>
+<instance part="SUPPLY30" gate="GND" x="241.3" y="93.98"/>
 <instance part="SUPPLY31" gate="GND" x="134.62" y="220.98"/>
 <instance part="F1" gate="F1" x="86.36" y="236.22"/>
 <instance part="L1" gate="G$1" x="106.68" y="236.22" rot="R90"/>
@@ -7664,7 +7774,27 @@ Production Part - 8199
 <instance part="+3V13" gate="G$1" x="185.42" y="91.44"/>
 <instance part="R21" gate="G$1" x="129.54" y="111.76" rot="R270"/>
 <instance part="MCU" gate="G$3" x="208.28" y="104.14"/>
-<instance part="R22" gate="G$1" x="276.86" y="233.68" rot="R270"/>
+<instance part="R22" gate="G$1" x="251.46" y="226.06" rot="R270"/>
+<instance part="RGB" gate="G$1" x="345.44" y="233.68" rot="R90"/>
+<instance part="+3V14" gate="G$1" x="335.28" y="241.3"/>
+<instance part="R23" gate="G$1" x="360.68" y="241.3" smashed="yes">
+<attribute name="NAME" x="355.092" y="241.5286" size="1.778" layer="95"/>
+<attribute name="VALUE" x="362.966" y="241.554" size="1.778" layer="96"/>
+</instance>
+<instance part="R24" gate="G$1" x="360.68" y="233.68" smashed="yes">
+<attribute name="NAME" x="355.092" y="233.9086" size="1.778" layer="95"/>
+<attribute name="VALUE" x="362.966" y="233.934" size="1.778" layer="96"/>
+</instance>
+<instance part="R25" gate="G$1" x="360.68" y="226.06" smashed="yes">
+<attribute name="NAME" x="355.092" y="226.2886" size="1.778" layer="95"/>
+<attribute name="VALUE" x="362.966" y="226.314" size="1.778" layer="96"/>
+</instance>
+<instance part="USER" gate="G$1" x="327.66" y="233.68"/>
+<instance part="R27" gate="G$1" x="314.96" y="228.6" smashed="yes" rot="R270">
+<attribute name="NAME" x="312.9026" y="234.442" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="315.214" y="226.314" size="1.778" layer="96" rot="R270"/>
+</instance>
+<instance part="SUPPLY20" gate="GND" x="314.96" y="218.44"/>
 </instances>
 <busses>
 </busses>
@@ -7884,21 +8014,21 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="SUPPLY28" gate="GND" pin="GND"/>
-<wire x1="284.48" y1="198.12" x2="284.48" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="190.5" x2="259.08" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="MICRO-SD" gate="G$1" pin="VSS"/>
-<wire x1="284.48" y1="203.2" x2="284.48" y2="205.74" width="0.1524" layer="91"/>
-<wire x1="284.48" y1="205.74" x2="284.48" y2="208.28" width="0.1524" layer="91"/>
-<wire x1="284.48" y1="208.28" x2="284.48" y2="213.36" width="0.1524" layer="91"/>
-<wire x1="284.48" y1="213.36" x2="287.02" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="195.58" x2="259.08" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="198.12" x2="259.08" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="200.66" x2="259.08" y2="205.74" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="205.74" x2="261.62" y2="205.74" width="0.1524" layer="91"/>
 <pinref part="MICRO-SD" gate="G$1" pin="SHIELD@1"/>
-<wire x1="287.02" y1="208.28" x2="284.48" y2="208.28" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="200.66" x2="259.08" y2="200.66" width="0.1524" layer="91"/>
 <pinref part="MICRO-SD" gate="G$1" pin="SHIELD@3"/>
-<wire x1="287.02" y1="203.2" x2="284.48" y2="203.2" width="0.1524" layer="91"/>
-<junction x="284.48" y="208.28"/>
-<junction x="284.48" y="203.2"/>
+<wire x1="261.62" y1="195.58" x2="259.08" y2="195.58" width="0.1524" layer="91"/>
+<junction x="259.08" y="200.66"/>
+<junction x="259.08" y="195.58"/>
 <pinref part="MICRO-SD" gate="G$1" pin="SHIELD@2"/>
-<wire x1="287.02" y1="205.74" x2="284.48" y2="205.74" width="0.1524" layer="91"/>
-<junction x="284.48" y="205.74"/>
+<wire x1="261.62" y1="198.12" x2="259.08" y2="198.12" width="0.1524" layer="91"/>
+<junction x="259.08" y="198.12"/>
 </segment>
 <segment>
 <pinref part="SUPPLY29" gate="GND" pin="GND"/>
@@ -7931,7 +8061,7 @@ Production Part - 8199
 <segment>
 <pinref part="ACT" gate="G$1" pin="C"/>
 <pinref part="SUPPLY30" gate="GND" pin="GND"/>
-<wire x1="259.08" y1="205.74" x2="259.08" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="96.52" x2="241.3" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY31" gate="GND" pin="GND"/>
@@ -8082,6 +8212,11 @@ Production Part - 8199
 <pinref part="SUPPLY19" gate="GND" pin="GND"/>
 <wire x1="190.5" y1="109.22" x2="193.04" y2="109.22" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="R27" gate="G$1" pin="2"/>
+<pinref part="SUPPLY20" gate="GND" pin="GND"/>
+<wire x1="314.96" y1="223.52" x2="314.96" y2="220.98" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
@@ -8183,11 +8318,11 @@ Production Part - 8199
 <segment>
 <pinref part="+3V23" gate="G$1" pin="+3V3"/>
 <pinref part="MICRO-SD" gate="G$1" pin="VDD"/>
-<wire x1="287.02" y1="246.38" x2="287.02" y2="238.76" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="238.76" x2="261.62" y2="231.14" width="0.1524" layer="91"/>
 <pinref part="R22" gate="G$1" pin="1"/>
-<wire x1="287.02" y1="238.76" x2="287.02" y2="231.14" width="0.1524" layer="91"/>
-<wire x1="276.86" y1="238.76" x2="287.02" y2="238.76" width="0.1524" layer="91"/>
-<junction x="287.02" y="238.76"/>
+<wire x1="261.62" y1="231.14" x2="261.62" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="251.46" y1="231.14" x2="261.62" y2="231.14" width="0.1524" layer="91"/>
+<junction x="261.62" y="231.14"/>
 </segment>
 <segment>
 <pinref part="+3V22" gate="G$1" pin="+3V3"/>
@@ -8260,6 +8395,15 @@ Production Part - 8199
 <pinref part="R20" gate="G$1" pin="2"/>
 <pinref part="+3V13" gate="G$1" pin="+3V3"/>
 <wire x1="185.42" y1="86.36" x2="185.42" y2="88.9" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="USER" gate="G$1" pin="B"/>
+<pinref part="RGB" gate="G$1" pin="ANODE"/>
+<wire x1="332.74" y1="233.68" x2="335.28" y2="233.68" width="0.1524" layer="91"/>
+<pinref part="+3V14" gate="G$1" pin="+3V3"/>
+<wire x1="335.28" y1="233.68" x2="337.82" y2="233.68" width="0.1524" layer="91"/>
+<wire x1="335.28" y1="238.76" x2="335.28" y2="233.68" width="0.1524" layer="91"/>
+<junction x="335.28" y="233.68"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_CLK" class="0">
@@ -8701,8 +8845,8 @@ Production Part - 8199
 <net name="SD_CD" class="0">
 <segment>
 <pinref part="MICRO-SD" gate="G$1" pin="NCD"/>
-<wire x1="274.32" y1="200.66" x2="287.02" y2="200.66" width="0.1524" layer="91"/>
-<label x="274.32" y="200.66" size="1.778" layer="95"/>
+<wire x1="248.92" y1="193.04" x2="261.62" y2="193.04" width="0.1524" layer="91"/>
+<label x="248.92" y="193.04" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$3" pin="PC4"/>
@@ -8830,10 +8974,10 @@ Production Part - 8199
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="ACT" gate="G$1" pin="A"/>
-<wire x1="261.62" y1="218.44" x2="259.08" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="96.52" x2="231.14" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$25" class="0">
+<net name="VBAT" class="0">
 <segment>
 <pinref part="MCU" gate="G$1" pin="VBAT"/>
 <pinref part="BAT" gate="G$1" pin="+"/>
@@ -8943,49 +9087,49 @@ Production Part - 8199
 <label x="109.22" y="104.14" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$24" class="0">
+<net name="ESP_CH_EN" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_EN"/>
 <pinref part="WIFI" gate="G$1" pin="CHIP_EN"/>
 <wire x1="213.36" y1="66.04" x2="231.14" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$30" class="0">
+<net name="SDIO_CLK" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_CLK"/>
 <pinref part="WIFI" gate="G$1" pin="SD_CLK"/>
 <wire x1="213.36" y1="63.5" x2="231.14" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$31" class="0">
+<net name="SDIO_CMD" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_CMD"/>
 <pinref part="WIFI" gate="G$1" pin="SD_CMD"/>
 <wire x1="213.36" y1="60.96" x2="231.14" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$32" class="0">
+<net name="SDIO_D0" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D0"/>
 <pinref part="WIFI" gate="G$1" pin="SD_D0"/>
 <wire x1="213.36" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$33" class="0">
+<net name="SDIO_D1" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D1"/>
 <pinref part="WIFI" gate="G$1" pin="SD_D1"/>
 <wire x1="213.36" y1="55.88" x2="231.14" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$34" class="0">
+<net name="SDIO_D2" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D2"/>
 <pinref part="WIFI" gate="G$1" pin="SD_D2"/>
 <wire x1="213.36" y1="53.34" x2="231.14" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$35" class="0">
+<net name="SDIO_D3" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D3"/>
 <pinref part="WIFI" gate="G$1" pin="SD_D3"/>
@@ -8997,6 +9141,12 @@ Production Part - 8199
 <pinref part="MCU" gate="G$8" pin="WKUP"/>
 <wire x1="231.14" y1="152.4" x2="238.76" y2="152.4" width="0.1524" layer="91"/>
 <label x="233.68" y="152.4" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R27" gate="G$1" pin="1"/>
+<pinref part="USER" gate="G$1" pin="A"/>
+<wire x1="314.96" y1="233.68" x2="322.58" y2="233.68" width="0.1524" layer="91"/>
+<label x="314.96" y="233.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ESP8266_DBG" class="0">
@@ -9033,8 +9183,9 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="MICRO-SD" gate="G$1" pin="CS/DAT3"/>
-<wire x1="287.02" y1="228.6" x2="276.86" y2="228.6" width="0.1524" layer="91"/>
-<label x="279.4" y="228.6" size="1.778" layer="95"/>
+<wire x1="261.62" y1="220.98" x2="251.46" y2="220.98" width="0.1524" layer="91"/>
+<label x="254" y="220.98" size="1.778" layer="95"/>
+<pinref part="R22" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="SD_DI" class="0">
@@ -9045,8 +9196,8 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="MICRO-SD" gate="G$1" pin="DI/CMD"/>
-<wire x1="287.02" y1="215.9" x2="281.94" y2="215.9" width="0.1524" layer="91"/>
-<label x="279.4" y="215.9" size="1.778" layer="95"/>
+<wire x1="261.62" y1="208.28" x2="256.54" y2="208.28" width="0.1524" layer="91"/>
+<label x="254" y="208.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SD_DO" class="0">
@@ -9057,8 +9208,8 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="MICRO-SD" gate="G$1" pin="DO/DAT0"/>
-<wire x1="287.02" y1="220.98" x2="281.94" y2="220.98" width="0.1524" layer="91"/>
-<label x="279.4" y="220.98" size="1.778" layer="95"/>
+<wire x1="261.62" y1="213.36" x2="256.54" y2="213.36" width="0.1524" layer="91"/>
+<label x="254" y="213.36" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SD_CLK" class="0">
@@ -9069,8 +9220,8 @@ Production Part - 8199
 </segment>
 <segment>
 <pinref part="MICRO-SD" gate="G$1" pin="CLK"/>
-<wire x1="287.02" y1="218.44" x2="281.94" y2="218.44" width="0.1524" layer="91"/>
-<label x="279.4" y="218.44" size="1.778" layer="95"/>
+<wire x1="261.62" y1="210.82" x2="256.54" y2="210.82" width="0.1524" layer="91"/>
+<label x="254" y="210.82" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_INT" class="0">
@@ -9086,12 +9237,22 @@ Production Part - 8199
 <wire x1="213.36" y1="109.22" x2="215.9" y2="109.22" width="0.1524" layer="91"/>
 <label x="215.9" y="109.22" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="R25" gate="G$1" pin="2"/>
+<wire x1="365.76" y1="226.06" x2="370.84" y2="226.06" width="0.1524" layer="91"/>
+<label x="368.3" y="226.06" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="LED_G" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="PB8"/>
 <wire x1="213.36" y1="106.68" x2="215.9" y2="106.68" width="0.1524" layer="91"/>
 <label x="215.9" y="106.68" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R24" gate="G$1" pin="2"/>
+<wire x1="365.76" y1="233.68" x2="370.84" y2="233.68" width="0.1524" layer="91"/>
+<label x="368.3" y="233.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="LED_R" class="0">
@@ -9100,12 +9261,45 @@ Production Part - 8199
 <wire x1="213.36" y1="104.14" x2="215.9" y2="104.14" width="0.1524" layer="91"/>
 <label x="215.9" y="104.14" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="R23" gate="G$1" pin="2"/>
+<wire x1="365.76" y1="241.3" x2="370.84" y2="241.3" width="0.1524" layer="91"/>
+<label x="368.3" y="241.3" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="WIFI_INT" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="PB5"/>
 <wire x1="213.36" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
 <label x="215.9" y="111.76" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_ACT" class="0">
+<segment>
+<pinref part="MCU" gate="G$3" pin="PC0"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="213.36" y1="96.52" x2="218.44" y2="96.52" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$25" class="0">
+<segment>
+<pinref part="RGB" gate="G$1" pin="R"/>
+<pinref part="R23" gate="G$1" pin="1"/>
+<wire x1="353.06" y1="241.3" x2="355.6" y2="241.3" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$36" class="0">
+<segment>
+<pinref part="RGB" gate="G$1" pin="G"/>
+<pinref part="R24" gate="G$1" pin="1"/>
+<wire x1="353.06" y1="233.68" x2="355.6" y2="233.68" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$37" class="0">
+<segment>
+<pinref part="RGB" gate="G$1" pin="B"/>
+<pinref part="R25" gate="G$1" pin="1"/>
+<wire x1="353.06" y1="226.06" x2="355.6" y2="226.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -9139,7 +9333,7 @@ within 0.254mm</text>
 <instance part="GPIO" gate="G$1" x="40.64" y="208.28"/>
 <instance part="FPGA" gate="B0" x="33.02" y="73.66"/>
 <instance part="SUPPLY4" gate="GND" x="48.26" y="116.84" rot="R90"/>
-<instance part="AV-OUT" gate="G$1" x="203.2" y="182.88" rot="R180"/>
+<instance part="A/V" gate="G$1" x="203.2" y="182.88" rot="R180"/>
 <instance part="DVI" gate="G$1" x="172.72" y="228.6">
 <attribute name="MANF" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY#" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
@@ -9872,7 +10066,7 @@ within 0.254mm</text>
 <pinref part="SUPPLY18" gate="GND" pin="GND"/>
 </segment>
 <segment>
-<pinref part="AV-OUT" gate="G$1" pin="GND"/>
+<pinref part="A/V" gate="G$1" pin="GND"/>
 <wire x1="170.18" y1="172.72" x2="170.18" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="180.34" x2="175.26" y2="180.34" width="0.1524" layer="91"/>
 <pinref part="C15" gate="G$1" pin="1"/>
@@ -10559,7 +10753,7 @@ within 0.254mm</text>
 </net>
 <net name="N$79" class="0">
 <segment>
-<pinref part="AV-OUT" gate="G$1" pin="VID"/>
+<pinref part="A/V" gate="G$1" pin="VID"/>
 <pinref part="C16" gate="G$1" pin="2"/>
 <wire x1="190.5" y1="177.8" x2="193.04" y2="177.8" width="0.1524" layer="91"/>
 <pinref part="R56" gate="G$1" pin="1"/>
@@ -11138,13 +11332,13 @@ within 0.254mm</text>
 <net name="N$65" class="0">
 <segment>
 <pinref part="C34" gate="G$1" pin="-"/>
-<pinref part="AV-OUT" gate="G$1" pin="R"/>
+<pinref part="A/V" gate="G$1" pin="R"/>
 <wire x1="170.18" y1="182.88" x2="193.04" y2="182.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$66" class="0">
 <segment>
-<pinref part="AV-OUT" gate="G$1" pin="L"/>
+<pinref part="A/V" gate="G$1" pin="L"/>
 <pinref part="C35" gate="G$1" pin="-"/>
 <wire x1="193.04" y1="187.96" x2="180.34" y2="187.96" width="0.1524" layer="91"/>
 </segment>
@@ -11206,6 +11400,13 @@ within 0.254mm</text>
 <pinref part="RAM" gate="G$1" pin="DQS#"/>
 <wire x1="287.02" y1="190.5" x2="292.1" y2="190.5" width="0.1524" layer="91"/>
 <label x="289.56" y="190.5" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$38" class="0">
+<segment>
+<pinref part="FPGA" gate="B2" pin="IO_L29N_GCLK2_2"/>
+<wire x1="160.02" y1="68.58" x2="165.1" y2="68.58" width="0.1524" layer="91"/>
+<label x="162.56" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
