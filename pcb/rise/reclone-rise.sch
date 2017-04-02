@@ -10948,9 +10948,9 @@ within 0.254mm</text>
 <label x="101.6" y="251.46" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L34N_A12_M1BA2_1"/>
-<wire x1="99.06" y1="111.76" x2="104.14" y2="111.76" width="0.1524" layer="91"/>
-<label x="101.6" y="111.76" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L32N_A16_M1A9_1"/>
+<wire x1="99.06" y1="121.92" x2="104.14" y2="121.92" width="0.1524" layer="91"/>
+<label x="101.6" y="121.92" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_NL" class="0">
@@ -10960,9 +10960,9 @@ within 0.254mm</text>
 <label x="101.6" y="248.92" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L35P_A11_M1A7_1"/>
-<wire x1="99.06" y1="109.22" x2="104.14" y2="109.22" width="0.1524" layer="91"/>
-<label x="101.6" y="109.22" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L34N_A12_M1BA2_1"/>
+<wire x1="99.06" y1="111.76" x2="104.14" y2="111.76" width="0.1524" layer="91"/>
+<label x="101.6" y="111.76" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_NBL0" class="0">
@@ -10972,9 +10972,9 @@ within 0.254mm</text>
 <label x="101.6" y="246.38" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L31P_A19_M1CKE_1"/>
-<wire x1="99.06" y1="129.54" x2="104.14" y2="129.54" width="0.1524" layer="91"/>
-<label x="101.6" y="129.54" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L34P_A13_M1WE_1"/>
+<wire x1="99.06" y1="114.3" x2="104.14" y2="114.3" width="0.1524" layer="91"/>
+<label x="101.6" y="114.3" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_NBL1" class="0">
@@ -11008,9 +11008,9 @@ within 0.254mm</text>
 <label x="101.6" y="238.76" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L32N_A16_M1A9_1"/>
-<wire x1="99.06" y1="121.92" x2="104.14" y2="121.92" width="0.1524" layer="91"/>
-<label x="101.6" y="121.92" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L35P_A11_M1A7_1"/>
+<wire x1="99.06" y1="109.22" x2="104.14" y2="109.22" width="0.1524" layer="91"/>
+<label x="101.6" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_NWE" class="0">
@@ -11020,9 +11020,9 @@ within 0.254mm</text>
 <label x="101.6" y="236.22" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L33P_A15_M1A10_1"/>
-<wire x1="99.06" y1="119.38" x2="104.14" y2="119.38" width="0.1524" layer="91"/>
-<label x="101.6" y="119.38" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L35N_A10_M1A2_1"/>
+<wire x1="99.06" y1="106.68" x2="104.14" y2="106.68" width="0.1524" layer="91"/>
+<label x="101.6" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_NOE" class="0">
@@ -11032,9 +11032,9 @@ within 0.254mm</text>
 <label x="101.6" y="233.68" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L33N_A14_M1A4_1"/>
-<wire x1="99.06" y1="116.84" x2="104.14" y2="116.84" width="0.1524" layer="91"/>
-<label x="101.6" y="116.84" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L36P_A9_M1BA0_1"/>
+<wire x1="99.06" y1="104.14" x2="104.14" y2="104.14" width="0.1524" layer="91"/>
+<label x="101.6" y="104.14" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_A23" class="0">
@@ -11044,9 +11044,9 @@ within 0.254mm</text>
 <label x="101.6" y="231.14" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L34P_A13_M1WE_1"/>
-<wire x1="99.06" y1="114.3" x2="104.14" y2="114.3" width="0.1524" layer="91"/>
-<label x="101.6" y="114.3" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L31P_A19_M1CKE_1"/>
+<wire x1="99.06" y1="129.54" x2="104.14" y2="129.54" width="0.1524" layer="91"/>
+<label x="101.6" y="129.54" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_A22" class="0">
@@ -11080,9 +11080,9 @@ within 0.254mm</text>
 <label x="101.6" y="223.52" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L35N_A10_M1A2_1"/>
-<wire x1="99.06" y1="106.68" x2="104.14" y2="106.68" width="0.1524" layer="91"/>
-<label x="101.6" y="106.68" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L33P_A15_M1A10_1"/>
+<wire x1="99.06" y1="119.38" x2="104.14" y2="119.38" width="0.1524" layer="91"/>
+<label x="101.6" y="119.38" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_A19" class="0">
@@ -11092,9 +11092,9 @@ within 0.254mm</text>
 <label x="101.6" y="220.98" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B1" pin="IO_L36P_A9_M1BA0_1"/>
-<wire x1="99.06" y1="104.14" x2="104.14" y2="104.14" width="0.1524" layer="91"/>
-<label x="101.6" y="104.14" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B1" pin="IO_L33N_A14_M1A4_1"/>
+<wire x1="99.06" y1="116.84" x2="104.14" y2="116.84" width="0.1524" layer="91"/>
+<label x="101.6" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FSMC_A18" class="0">
