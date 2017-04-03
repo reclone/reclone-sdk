@@ -11325,13 +11325,6 @@ within 0.254mm</text>
 <label x="101.6" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$118" class="0">
-<segment>
-<pinref part="FPGA" gate="B1" pin="IO_L74N_DOUT_BUSY_1"/>
-<wire x1="99.06" y1="10.16" x2="104.14" y2="10.16" width="0.1524" layer="91"/>
-<label x="101.6" y="10.16" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="MCO1_CLK" class="0">
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L43N_GCLK4_M1DQ5_1"/>
@@ -11410,13 +11403,6 @@ within 0.254mm</text>
 <pinref part="RAM" gate="G$1" pin="DQS#"/>
 <wire x1="287.02" y1="190.5" x2="292.1" y2="190.5" width="0.1524" layer="91"/>
 <label x="289.56" y="190.5" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$38" class="0">
-<segment>
-<pinref part="FPGA" gate="B2" pin="IO_L29N_GCLK2_2"/>
-<wire x1="160.02" y1="68.58" x2="165.1" y2="68.58" width="0.1524" layer="91"/>
-<label x="162.56" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
