@@ -26,8 +26,8 @@ UsedLibrary="lbr/sparkfun/SparkFun-DiscreteSemi.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="0 0 1919 1016"
-State=1
+Loc="450 94 1716 899"
+State=2
 Number=0
 
 [Desktop]

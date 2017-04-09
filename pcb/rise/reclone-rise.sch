@@ -9238,13 +9238,6 @@ Production Part - 8199
 <label x="254" y="210.82" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="FPGA_INT" class="0">
-<segment>
-<pinref part="MCU" gate="G$3" pin="PB0"/>
-<wire x1="213.36" y1="116.84" x2="215.9" y2="116.84" width="0.1524" layer="91"/>
-<label x="215.9" y="116.84" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="LED_B" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="PB6"/>
@@ -9324,6 +9317,13 @@ Production Part - 8199
 <wire x1="223.52" y1="160.02" x2="223.52" y2="144.78" width="0.1524" layer="91"/>
 <pinref part="OSC10M" gate="G$1" pin="OUT"/>
 <wire x1="223.52" y1="144.78" x2="220.98" y2="144.78" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="FPGA_INT" class="0">
+<segment>
+<pinref part="MCU" gate="G$3" pin="PB13"/>
+<wire x1="213.36" y1="99.06" x2="215.9" y2="99.06" width="0.1524" layer="91"/>
+<label x="215.9" y="99.06" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
@@ -11403,6 +11403,13 @@ within 0.254mm</text>
 <pinref part="RAM" gate="G$1" pin="DQS#"/>
 <wire x1="287.02" y1="190.5" x2="292.1" y2="190.5" width="0.1524" layer="91"/>
 <label x="289.56" y="190.5" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="FPGA_INT" class="0">
+<segment>
+<pinref part="FPGA" gate="B1" pin="IO_L74N_DOUT_BUSY_1"/>
+<wire x1="99.06" y1="10.16" x2="104.14" y2="10.16" width="0.1524" layer="91"/>
+<label x="101.6" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
