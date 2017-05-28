@@ -25,19 +25,13 @@ UsedLibrary="lbr/sparkfun/SparkFun-LED.lbr"
 UsedLibrary="lbr/sparkfun/SparkFun-DiscreteSemi.lbr"
 
 [Win_1]
-Type="Control Panel"
-Loc="450 94 1716 899"
-State=0
-Number=0
-
-[Win_2]
-Type="Schematic Editor"
-Loc="-8 -31 591 368"
-State=0
+Type="Library Editor"
+Loc="507 163 1106 562"
+State=2
 Number=1
-File="reclone-rise.sch"
-View="-8.27116 -5.73116 395.413 265.873"
-WireWidths=" 0 0.3048 0.6096 0.8128 1.016 1.27 1.4224 1.6764 1.778 1.9304 2.1844 2.54 3.81 6.4516 0.4064 0.1524"
+File="lbr/reclone-rise.lbr"
+View="-21.248 -11.1078 14.1387 18.9709"
+WireWidths=" 0 0.3048 0.6096 0.8128 1.016 1.27 1.4224 1.6764 1.778 1.9304 2.1844 2.54 3.81 6.4516 0.4064 0.254"
 PadDiameters=" 0.254 0.3048 0.4064 0.6096 0.8128 1.016 1.27 1.4224 1.6764 1.778 1.9304 2.1844 2.54 3.81 6.4516 0"
 PadDrills=" 0.5 0.6 0.7 0.9 1 1.1 1.2 1.3 1.4 1.5 1.6 2 2.2 2.8 3.2 0.8"
 ViaDiameters=" 0.254 0.3048 0.4064 0.6096 0.8128 1.016 1.27 1.4224 1.6764 1.778 1.9304 2.1844 2.54 3.81 6.4516 0"
@@ -53,7 +47,7 @@ DimensionExtLengths=" 1.27 2.54 1 2 3 0"
 DimensionExtOffsets=" 1.27 2.54 1 2 3 0"
 SmdSizes=" 0.3048 0.1524 0.4064 0.2032 0.6096 0.3048 0.8128 0.4064 1.016 0.508 1.27 0.6604 1.4224 0.7112 1.6764 0.8128 1.778 0.9144 1.9304 0.9652 2.1844 1.0668 2.54 1.27 3.81 1.9304 5.08 2.54 6.4516 3.2512 1.27 0.635"
 WireBend=0
-WireBendSet=31
+WireBendSet=0
 WireCap=1
 MiterStyle=0
 PadShape=0
@@ -74,8 +68,13 @@ SwapLevel=0
 ArcDirection=0
 AddLevel=2
 PadsSameType=0
-Layer=91
-Sheet="1"
+Layer=94
+
+[Win_2]
+Type="Control Panel"
+Loc="-8 -8 1911 1008"
+State=1
+Number=0
 
 [Desktop]
 Screen="3200 1080"
