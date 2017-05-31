@@ -7688,7 +7688,7 @@ Production Part - 8199
 <instance part="MCU" gate="G$4" x="208.28" y="58.42"/>
 <instance part="MCU" gate="G$11" x="154.94" y="50.8"/>
 <instance part="MCU" gate="G$8" x="203.2" y="157.48"/>
-<instance part="R35" gate="G$1" x="213.36" y="233.68" rot="R90"/>
+<instance part="R35" gate="G$1" x="213.36" y="233.68" rot="R270"/>
 <instance part="R36" gate="G$1" x="213.36" y="220.98" rot="R90"/>
 <instance part="+3V22" gate="G$1" x="213.36" y="243.84"/>
 <instance part="SUPPLY28" gate="GND" x="259.08" y="187.96"/>
@@ -7808,7 +7808,7 @@ Production Part - 8199
 <attribute name="VALUE" x="185.166" y="83.566" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="+3V13" gate="G$1" x="185.42" y="91.44"/>
-<instance part="R21" gate="G$1" x="129.54" y="111.76" rot="R270"/>
+<instance part="R21" gate="G$1" x="129.54" y="111.76" rot="MR90"/>
 <instance part="MCU" gate="G$3" x="208.28" y="104.14"/>
 <instance part="R22" gate="G$1" x="251.46" y="226.06" rot="R270"/>
 <instance part="RGB" gate="G$1" x="345.44" y="233.68" rot="R90"/>
@@ -8349,7 +8349,7 @@ Production Part - 8199
 <pinref part="R15" gate="G$1" pin="1"/>
 <pinref part="+3V11" gate="G$1" pin="+3V3"/>
 <wire x1="137.16" y1="106.68" x2="137.16" y2="116.84" width="0.1524" layer="91"/>
-<pinref part="R21" gate="G$1" pin="1"/>
+<pinref part="R21" gate="G$1" pin="2"/>
 <wire x1="137.16" y1="116.84" x2="137.16" y2="119.38" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="116.84" x2="137.16" y2="116.84" width="0.1524" layer="91"/>
 <junction x="137.16" y="116.84"/>
@@ -8366,7 +8366,7 @@ Production Part - 8199
 <segment>
 <pinref part="+3V22" gate="G$1" pin="+3V3"/>
 <wire x1="213.36" y1="238.76" x2="213.36" y2="241.3" width="0.1524" layer="91"/>
-<pinref part="R35" gate="G$1" pin="2"/>
+<pinref part="R35" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="L6" gate="G$1" pin="2"/>
@@ -8744,7 +8744,7 @@ Production Part - 8199
 <segment>
 <pinref part="USBSER" gate="G$1" pin="ADBUS1"/>
 <label x="109.22" y="106.68" size="1.778" layer="95"/>
-<pinref part="R21" gate="G$1" pin="2"/>
+<pinref part="R21" gate="G$1" pin="1"/>
 <wire x1="106.68" y1="106.68" x2="129.54" y2="106.68" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -8849,7 +8849,7 @@ Production Part - 8199
 </net>
 <net name="BOOT0" class="0">
 <segment>
-<pinref part="R35" gate="G$1" pin="1"/>
+<pinref part="R35" gate="G$1" pin="2"/>
 <pinref part="MCU" gate="G$1" pin="BOOT0"/>
 <wire x1="213.36" y1="228.6" x2="203.2" y2="228.6" width="0.1524" layer="91"/>
 <pinref part="BOOT" gate="G$1" pin="2"/>
@@ -9682,13 +9682,6 @@ within 0.254mm</text>
 <label x="236.22" y="208.28" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M3A14" class="0">
-<segment>
-<wire x1="271.78" y1="15.24" x2="276.86" y2="15.24" width="0.1524" layer="91"/>
-<label x="274.32" y="15.24" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L55N_M3A14_3"/>
-</segment>
-</net>
 <net name="M3CLKN" class="0">
 <segment>
 <wire x1="271.78" y1="60.96" x2="276.86" y2="60.96" width="0.1524" layer="91"/>
@@ -9891,13 +9884,6 @@ within 0.254mm</text>
 <pinref part="RAM" gate="G$1" pin="DQ6"/>
 <wire x1="287.02" y1="213.36" x2="292.1" y2="213.36" width="0.1524" layer="91"/>
 <label x="289.56" y="213.36" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="M3A15" class="0">
-<segment>
-<wire x1="271.78" y1="12.7" x2="276.86" y2="12.7" width="0.1524" layer="91"/>
-<label x="274.32" y="12.7" size="1.778" layer="95"/>
-<pinref part="FPGA" gate="B3" pin="IO_L83P_3"/>
 </segment>
 </net>
 <net name="M3CSN" class="0">
