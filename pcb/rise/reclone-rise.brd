@@ -1572,20 +1572,22 @@ design rules under a new name.</description>
 <attribute name="MANF" value="FCI" x="32" y="3.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY#" value="609-4614-1-ND" x="32" y="3.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANF#" value="10029449-111RLF" x="32" y="3.7" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="38" y="9" size="0.8" layer="25" font="vector" ratio="19"/>
+<attribute name="NAME" x="37.7" y="9" size="0.8" layer="25" font="vector" ratio="19"/>
 <attribute name="VALUE" x="38" y="10.2" size="0.8" layer="27" font="vector" ratio="19" align="bottom-right"/>
 </element>
-<element name="DEBUG" library="reclone-rise" package="USB-MICRO-B-SMD" value="USB-MICRO-B-SMD" x="10.6" y="0" locked="yes">
+<element name="DEBUG" library="reclone-rise" package="USB-MICRO-B-SMD" value="USB-MICRO-B-SMD" x="10.6" y="0" locked="yes" smashed="yes">
 <attribute name="DIGIKEY#" value="609-4618-1-ND" x="10.6" y="0" size="1.778" layer="27" display="off"/>
 <attribute name="MANF" value="FCI" x="10.6" y="0" size="1.778" layer="27" display="off"/>
 <attribute name="MANF#" value="10118194-0001LF" x="10.6" y="0" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="7" y="5.3" size="0.8" layer="25" font="vector" ratio="19"/>
+<attribute name="VALUE" x="7.6" y="6.8" size="0.8" layer="27" font="vector" ratio="19"/>
 </element>
 <element name="MCU" library="reclone-rise" package="LQFP-100" value="STM32F407VGT6" x="57.4" y="36.4" locked="yes" rot="R180">
 <attribute name="MANF" value="STMicroelectronics" x="57.4" y="36.4" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANF#" value="STM32F407VGT6" x="57.4" y="36.4" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DIGIKEY#" value="497-11605-ND" x="57.4" y="36.4" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="USBSER" library="reclone-rise" package="TQFP64-12X12" value="FT2232H" x="13.7" y="16.5" locked="yes" smashed="yes">
+<element name="USB-SERIAL" library="reclone-rise" package="TQFP64-12X12" value="FT2232H" x="13.7" y="16.5" locked="yes" smashed="yes">
 <attribute name="NAME" x="8.3" y="24.4" size="0.8" layer="25" font="vector" ratio="19" align="top-left"/>
 <attribute name="VALUE" x="6.2" y="20.5" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right"/>
 </element>
@@ -1600,7 +1602,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="0.6" y="14" size="0.8" layer="25" font="vector" ratio="19" rot="R270"/>
 <attribute name="VALUE" x="1.2" y="14.2" size="0.8" layer="27" font="vector" ratio="19" rot="R270" align="top-left"/>
 </element>
-<element name="A/V" library="reclone-rise" package="AV-JACK-3.5MM-4COND-SMD" value="AV-JACK-4COND" x="53.5" y="1" locked="yes" rot="R90"/>
+<element name="A/V" library="reclone-rise" package="AV-JACK-3.5MM-4COND-SMD" value="AV-JACK-4COND" x="53.5" y="1" locked="yes" smashed="yes" rot="R90">
+<attribute name="NAME" x="54.6" y="17" size="0.8" layer="25" font="vector" ratio="19"/>
+<attribute name="VALUE" x="50.095" y="8" size="0.8" layer="27" font="vector" ratio="19" rot="R90"/>
+</element>
 <element name="R1" library="SparkFun-Passives" package="0603-RES" value="4K7" x="2.975" y="17.8" rot="R180"/>
 <element name="R2" library="SparkFun-Passives" package="0603-RES" value="10K" x="7.4" y="22.5" rot="R270"/>
 <element name="R3" library="SparkFun-Passives" package="0603-RES" value="12K" x="14.325" y="6.6" rot="R270"/>
@@ -1630,7 +1635,7 @@ design rules under a new name.</description>
 <element name="C7" library="SparkFun-Passives" package="0603-CAP" value="2u2" x="49.225" y="28.45" rot="R90"/>
 <element name="C13" library="SparkFun-Passives" package="0603-CAP" value="2u2" x="63.2" y="26.975" rot="R180"/>
 <element name="BOOT" library="SparkFun-Connectors" package="1X02" value="" x="70" y="48.35" locked="yes" smashed="yes" rot="R270">
-<attribute name="NAME" x="67.4288" y="49.2962" size="0.8" layer="25" font="vector" ratio="19" rot="R270"/>
+<attribute name="NAME" x="68.7038" y="49.9288" size="0.8" layer="25" font="vector" ratio="19"/>
 <attribute name="VALUE" x="66.825" y="49.62" size="1.27" layer="27" rot="R270"/>
 </element>
 <element name="BUSPWR" library="SparkFun-Connectors" package="1X02" value="" x="2" y="20" smashed="yes">
@@ -1681,12 +1686,12 @@ design rules under a new name.</description>
 <element name="C23" library="SparkFun-Passives" package="0603-CAP" value="4u7" x="29.6" y="48.8" rot="R180"/>
 <element name="C24" library="SparkFun-Passives" package="0603-CAP" value="4u7" x="69.8" y="51.6" rot="R270"/>
 <element name="C25" library="SparkFun-Passives" package="0603-CAP" value="4u7" x="49.8" y="20.2" rot="R180"/>
-<element name="C26" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="56.025" y="19.825"/>
+<element name="C26" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="54.025" y="19.825"/>
 <element name="C27" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="24.8" y="21.2" rot="R90"/>
 <element name="C28" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="65.4" y="44.6"/>
 <element name="C29" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="28" y="19.6"/>
 <element name="C30" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="46.8" y="19.2" rot="R180"/>
-<element name="C31" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="55.9" y="17.5"/>
+<element name="C31" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="57.9" y="21.5"/>
 <element name="C32" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="6.675" y="7.6" rot="R180"/>
 <element name="C33" library="SparkFun-Passives" package="0603-CAP" value="0u47" x="35.2" y="44.2" rot="R270"/>
 <element name="C36" library="SparkFun-Passives" package="0603-CAP" value="4u7" x="14.4" y="40.8"/>
@@ -1749,14 +1754,14 @@ design rules under a new name.</description>
 </elements>
 <signals>
 <signal name="GND">
-<contactref element="USBSER" pad="1"/>
-<contactref element="USBSER" pad="5"/>
-<contactref element="USBSER" pad="11"/>
-<contactref element="USBSER" pad="15"/>
-<contactref element="USBSER" pad="25"/>
-<contactref element="USBSER" pad="35"/>
-<contactref element="USBSER" pad="47"/>
-<contactref element="USBSER" pad="51"/>
+<contactref element="USB-SERIAL" pad="1"/>
+<contactref element="USB-SERIAL" pad="5"/>
+<contactref element="USB-SERIAL" pad="11"/>
+<contactref element="USB-SERIAL" pad="15"/>
+<contactref element="USB-SERIAL" pad="25"/>
+<contactref element="USB-SERIAL" pad="35"/>
+<contactref element="USB-SERIAL" pad="47"/>
+<contactref element="USB-SERIAL" pad="51"/>
 <contactref element="GPIO" pad="9"/>
 <contactref element="GPIO" pad="25"/>
 <contactref element="GPIO" pad="39"/>
@@ -1802,8 +1807,8 @@ design rules under a new name.</description>
 <vertex x="3" y="55" curve="90"/>
 </polygon>
 <contactref element="FPGA" pad="C4"/>
-<contactref element="USBSER" pad="13"/>
-<contactref element="USBSER" pad="10"/>
+<contactref element="USB-SERIAL" pad="13"/>
+<contactref element="USB-SERIAL" pad="10"/>
 <contactref element="R2" pad="1"/>
 <contactref element="R3" pad="2"/>
 <contactref element="CFG" pad="2"/>
@@ -2016,8 +2021,7 @@ design rules under a new name.</description>
 <wire x1="38.5" y1="30.5" x2="39" y2="31" width="0.1524" layer="1"/>
 <wire x1="39" y1="31" x2="41" y2="31" width="0.1524" layer="1"/>
 <wire x1="41" y1="31" x2="41.5" y2="31.5" width="0.1524" layer="1"/>
-<via x="43" y="22" extent="1-16" drill="0.3048" shape="octagon"/>
-<wire x1="43" y1="22" x2="42.5" y2="22.5" width="0.1524" layer="1"/>
+<via x="43.1" y="22.4" extent="1-16" drill="0.3048" shape="octagon"/>
 <via x="41" y="27" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="39.5" y1="25.5" x2="40.5" y2="24.5" width="0.1524" layer="1"/>
 <via x="34" y="26" extent="1-16" drill="0.3048" shape="octagon"/>
@@ -2134,6 +2138,10 @@ design rules under a new name.</description>
 <wire x1="20.8" y1="35.4" x2="21.2" y2="35.4" width="0.1524" layer="1"/>
 <wire x1="21.2" y1="35.4" x2="21.3" y2="35.5" width="0.1524" layer="1"/>
 <wire x1="60.55" y1="7.3" x2="60.55" y2="9.4" width="0.1524" layer="1"/>
+<via x="50.2" y="27.6" extent="1-16" drill="0.3048" shape="octagon"/>
+<wire x1="49.225" y1="27.6" x2="50.2" y2="27.6" width="0.1524" layer="1"/>
+<wire x1="42.5" y1="22.5" x2="43" y2="22.5" width="0.1524" layer="1"/>
+<wire x1="43" y1="22.5" x2="43.1" y2="22.4" width="0.1524" layer="1"/>
 <wire x1="67.2" y1="50.35" x2="69.8" y2="52.45" width="0" layer="19" extent="1-1"/>
 <wire x1="70" y1="48.35" x2="67.2" y2="50.35" width="0" layer="19" extent="1-1"/>
 <wire x1="18.55" y1="25.35" x2="18.9" y2="27" width="0" layer="19" extent="1-1"/>
@@ -2162,6 +2170,8 @@ design rules under a new name.</description>
 <wire x1="11.9" y1="46.7" x2="15.2" y2="48.2" width="0" layer="19" extent="1-1"/>
 <wire x1="47.65" y1="19.2" x2="47.75" y2="14.875" width="0" layer="19" extent="1-1"/>
 <wire x1="50.65" y1="20.2" x2="47.65" y2="19.2" width="0" layer="19" extent="1-1"/>
+<wire x1="53.175" y1="19.825" x2="50.65" y2="20.2" width="0" layer="19" extent="1-1"/>
+<wire x1="57.05" y1="21.5" x2="53.175" y2="19.825" width="0" layer="19" extent="1-1"/>
 <wire x1="35.45" y1="48.2" x2="38.85" y2="51.23" width="0" layer="19" extent="1-1"/>
 <wire x1="35.2" y1="45.05" x2="35.45" y2="48.2" width="0" layer="19" extent="1-1"/>
 <wire x1="32.8" y1="44.85" x2="35.2" y2="45.05" width="0" layer="19" extent="1-1"/>
@@ -2169,11 +2179,8 @@ design rules under a new name.</description>
 <wire x1="30.75" y1="42.2" x2="30.85" y2="45" width="0" layer="19" extent="1-1"/>
 <wire x1="33.75" y1="41.4" x2="30.75" y2="42.2" width="0" layer="19" extent="1-1"/>
 <wire x1="30.45" y1="48.8" x2="30.85" y2="45" width="0" layer="19" extent="1-1"/>
-<wire x1="55.175" y1="19.825" x2="50.65" y2="20.2" width="0" layer="19" extent="1-1"/>
-<wire x1="55.05" y1="17.5" x2="55.175" y2="19.825" width="0" layer="19" extent="1-1"/>
 <wire x1="64.55" y1="44.6" x2="59.375" y2="43" width="0" layer="19" extent="1-1"/>
 <wire x1="65.15" y1="41.9" x2="64.55" y2="44.6" width="0" layer="19" extent="1-1"/>
-<wire x1="49.225" y1="27.6" x2="50.65" y2="20.2" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="M3A0">
 <contactref element="FPGA" pad="K5"/>
@@ -2966,10 +2973,10 @@ design rules under a new name.</description>
 <signal name="+3V3">
 <contactref element="GPIO" pad="1"/>
 <contactref element="GPIO" pad="17"/>
-<contactref element="USBSER" pad="56"/>
-<contactref element="USBSER" pad="42"/>
-<contactref element="USBSER" pad="20"/>
-<contactref element="USBSER" pad="31"/>
+<contactref element="USB-SERIAL" pad="56"/>
+<contactref element="USB-SERIAL" pad="42"/>
+<contactref element="USB-SERIAL" pad="20"/>
+<contactref element="USB-SERIAL" pad="31"/>
 <contactref element="R4" pad="2"/>
 <contactref element="CFG" pad="6"/>
 <contactref element="R6" pad="1"/>
@@ -3190,8 +3197,8 @@ design rules under a new name.</description>
 <wire x1="35.2" y1="43.35" x2="35.5" y2="36.5" width="0" layer="19" extent="1-1"/>
 <wire x1="45.95" y1="19.2" x2="40" y2="23" width="0" layer="19" extent="1-1"/>
 <wire x1="48.95" y1="20.2" x2="45.95" y2="19.2" width="0" layer="19" extent="1-1"/>
-<wire x1="56.75" y1="17.5" x2="63.65" y2="15.625" width="0" layer="19" extent="1-1"/>
-<wire x1="56.875" y1="19.825" x2="56.75" y2="17.5" width="0" layer="19" extent="1-1"/>
+<wire x1="54.875" y1="19.825" x2="48.95" y2="20.2" width="0" layer="19" extent="1-1"/>
+<wire x1="58.75" y1="21.5" x2="54.875" y2="19.825" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="FPGA_CONFIG_CLK">
 <contactref element="FPGA" pad="R11"/>
@@ -3200,14 +3207,11 @@ design rules under a new name.</description>
 <wire x1="49.65" y1="31.9" x2="49.025" y2="31.9" width="0.1524" layer="1"/>
 <wire x1="49.025" y1="31.9" x2="48.375" y2="31.25" width="0.1524" layer="1"/>
 <via x="37" y="23" extent="1-16" drill="0.3048" shape="octagon"/>
-<wire x1="46.5" y1="23.5" x2="46.5" y2="25.625" width="0.1524" layer="15"/>
-<wire x1="46.5" y1="23.5" x2="44" y2="21" width="0.1524" layer="15"/>
-<wire x1="44" y1="21" x2="38.75" y2="21" width="0.1524" layer="15"/>
-<wire x1="38.75" y1="21" x2="37" y2="22.75" width="0.1524" layer="15"/>
-<wire x1="37" y1="22.75" x2="37" y2="23" width="0.1524" layer="15"/>
 <wire x1="37.5" y1="23.5" x2="37" y2="23" width="0.1524" layer="1"/>
 <wire x1="48.375" y1="31.25" x2="48.375" y2="27.5" width="0.1524" layer="1"/>
 <wire x1="48.375" y1="27.5" x2="46.5" y2="25.625" width="0.1524" layer="1"/>
+<wire x1="46.5" y1="25.625" x2="39.625" y2="25.625" width="0.1524" layer="15"/>
+<wire x1="39.625" y1="25.625" x2="37" y2="23" width="0.1524" layer="15"/>
 </signal>
 <signal name="FPGA_CONFIG_DONE">
 <contactref element="FPGA" pad="P13"/>
@@ -3752,9 +3756,9 @@ design rules under a new name.</description>
 <wire x1="57.9" y1="44.975" x2="57.625" y2="45.25" width="0.1524" layer="1"/>
 </signal>
 <signal name="+1V8">
-<contactref element="USBSER" pad="12"/>
-<contactref element="USBSER" pad="37"/>
-<contactref element="USBSER" pad="64"/>
+<contactref element="USB-SERIAL" pad="12"/>
+<contactref element="USB-SERIAL" pad="37"/>
+<contactref element="USB-SERIAL" pad="64"/>
 <contactref element="FPGA" pad="N2"/>
 <contactref element="FPGA" pad="D2"/>
 <contactref element="FPGA" pad="K4"/>
@@ -3876,7 +3880,7 @@ design rules under a new name.</description>
 <signal name="N$7">
 <contactref element="R1" pad="1"/>
 <contactref element="R2" pad="2"/>
-<contactref element="USBSER" pad="59"/>
+<contactref element="USB-SERIAL" pad="59"/>
 <wire x1="3.825" y1="17.8" x2="3.95" y2="17.65" width="0.2" layer="1"/>
 <wire x1="3.95" y1="17.65" x2="4.8" y2="16.8" width="0.2" layer="1"/>
 <wire x1="4.8" y1="16.8" x2="4.8" y2="16.225" width="0.2" layer="1"/>
@@ -3906,7 +3910,7 @@ design rules under a new name.</description>
 <wire x1="2.125" y1="19.875" x2="2" y2="20" width="0.2" layer="1"/>
 </signal>
 <signal name="N$8">
-<contactref element="USBSER" pad="6"/>
+<contactref element="USB-SERIAL" pad="6"/>
 <contactref element="R3" pad="1"/>
 <via x="12.5" y="11.8" extent="1-16" drill="0.305" shape="octagon"/>
 <via x="14.1" y="8.6" extent="1-16" drill="0.305" shape="octagon"/>
@@ -3918,7 +3922,7 @@ design rules under a new name.</description>
 <wire x1="14.1" y1="10.2" x2="12.5" y2="11.8" width="0.2" layer="16"/>
 </signal>
 <signal name="N$9">
-<contactref element="USBSER" pad="14"/>
+<contactref element="USB-SERIAL" pad="14"/>
 <contactref element="R4" pad="1"/>
 <wire x1="16.4501" y1="10.4999" x2="16.4501" y2="9.3499" width="0.2" layer="1"/>
 <wire x1="16.4501" y1="9.3499" x2="16.6" y2="9.2" width="0.2" layer="1"/>
@@ -3937,7 +3941,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$11">
 <contactref element="CFG" pad="3"/>
-<contactref element="USBSER" pad="61"/>
+<contactref element="USB-SERIAL" pad="61"/>
 <contactref element="R5" pad="1"/>
 <wire x1="2.05" y1="14.2" x2="2.05" y2="13.55" width="0.2" layer="1"/>
 <wire x1="2.05" y1="13.55" x2="2.4" y2="13.2" width="0.2" layer="1"/>
@@ -3949,7 +3953,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$12">
 <contactref element="CFG" pad="4"/>
-<contactref element="USBSER" pad="62"/>
+<contactref element="USB-SERIAL" pad="62"/>
 <contactref element="R7" pad="2"/>
 <wire x1="2.05" y1="11.4" x2="2.05" y2="11.85" width="0.2" layer="1"/>
 <wire x1="2.05" y1="11.85" x2="3" y2="12.8" width="0.2" layer="1"/>
@@ -3964,7 +3968,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$13">
 <contactref element="CFG" pad="5"/>
-<contactref element="USBSER" pad="63"/>
+<contactref element="USB-SERIAL" pad="63"/>
 <contactref element="R6" pad="2"/>
 <wire x1="3" y1="11.4" x2="3" y2="9.65" width="0.2" layer="1"/>
 <wire x1="3" y1="9.65" x2="2.7" y2="9.725" width="0.2" layer="1"/>
@@ -3975,7 +3979,7 @@ design rules under a new name.</description>
 <wire x1="5.85" y1="13.25" x2="7.6999" y2="13.25" width="0.2" layer="1"/>
 </signal>
 <signal name="N$18">
-<contactref element="USBSER" pad="4"/>
+<contactref element="USB-SERIAL" pad="4"/>
 <contactref element="C1" pad="1"/>
 <contactref element="C3" pad="1"/>
 <contactref element="L2" pad="2"/>
@@ -3986,7 +3990,7 @@ design rules under a new name.</description>
 <wire x1="11.4499" y1="8.6749" x2="11.425" y2="8.65" width="0.1524" layer="1"/>
 </signal>
 <signal name="N$17">
-<contactref element="USBSER" pad="9"/>
+<contactref element="USB-SERIAL" pad="9"/>
 <contactref element="C4" pad="1"/>
 <contactref element="C2" pad="1"/>
 <contactref element="L3" pad="2"/>
@@ -4002,7 +4006,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$19">
 <contactref element="C6" pad="2"/>
-<contactref element="USBSER" pad="3"/>
+<contactref element="USB-SERIAL" pad="3"/>
 <contactref element="Y1" pad="1"/>
 <wire x1="24.8" y1="11.7" x2="18.1" y2="11.7" width="0.2" layer="1"/>
 <wire x1="18.1" y1="11.7" x2="16.2" y2="13.6" width="0.2" layer="1"/>
@@ -4016,7 +4020,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$20">
 <contactref element="C5" pad="1"/>
-<contactref element="USBSER" pad="2"/>
+<contactref element="USB-SERIAL" pad="2"/>
 <contactref element="Y1" pad="3"/>
 <wire x1="23.45" y1="13.45" x2="22.225" y2="12.225" width="0.2" layer="1"/>
 <wire x1="22.225" y1="12.225" x2="18.175" y2="12.225" width="0.2" layer="1"/>
@@ -4028,9 +4032,9 @@ design rules under a new name.</description>
 <wire x1="23.45" y1="14.9" x2="23.45" y2="13.45" width="0.2" layer="1"/>
 </signal>
 <signal name="TXRX_LED">
-<contactref element="USBSER" pad="54"/>
+<contactref element="USB-SERIAL" pad="54"/>
 <contactref element="R14" pad="1"/>
-<contactref element="USBSER" pad="55"/>
+<contactref element="USB-SERIAL" pad="55"/>
 <wire x1="7.6999" y1="17.7501" x2="7.6999" y2="17.25" width="0.2" layer="1"/>
 <via x="9" y="17.6" extent="1-16" drill="0.305" shape="octagon"/>
 <via x="14.8" y="4.6" extent="1-16" drill="0.305" shape="octagon"/>
@@ -4070,7 +4074,7 @@ design rules under a new name.</description>
 <wire x1="66.825" y1="20.125" x2="68.375" y2="20.125" width="0.1524" layer="15"/>
 </signal>
 <signal name="JTAG_TMS">
-<contactref element="USBSER" pad="19"/>
+<contactref element="USB-SERIAL" pad="19"/>
 <contactref element="MCU" pad="72"/>
 <contactref element="FPGA" pad="A15"/>
 <contactref element="WIFI" pad="5"/>
@@ -4116,7 +4120,7 @@ design rules under a new name.</description>
 <wire x1="61.95" y1="11.05" x2="61.4" y2="10.5" width="0.1524" layer="1"/>
 </signal>
 <signal name="JTAG_MCU_TDI">
-<contactref element="USBSER" pad="17"/>
+<contactref element="USB-SERIAL" pad="17"/>
 <contactref element="MCU" pad="77"/>
 <contactref element="R21" pad="1"/>
 <via x="21.375" y="13.25" extent="1-16" drill="0.3048" shape="octagon"/>
@@ -4140,7 +4144,7 @@ design rules under a new name.</description>
 <wire x1="61.8" y1="13.55" x2="61.8" y2="14.5" width="0.1524" layer="1"/>
 </signal>
 <signal name="JTAG_TCK">
-<contactref element="USBSER" pad="16"/>
+<contactref element="USB-SERIAL" pad="16"/>
 <contactref element="MCU" pad="76"/>
 <contactref element="FPGA" pad="C14"/>
 <contactref element="WIFI" pad="7"/>
@@ -4176,7 +4180,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="JTAG_TRST">
 <contactref element="MCU" pad="90"/>
-<contactref element="USBSER" pad="21"/>
+<contactref element="USB-SERIAL" pad="21"/>
 <via x="68.25" y="37.375" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="68.25" y1="37.375" x2="68.375" y2="37.5" width="0.1524" layer="16"/>
 <wire x1="68.375" y1="37.5" x2="78" y2="37.5" width="0.1524" layer="16"/>
@@ -4197,7 +4201,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="/RESET">
 <contactref element="MCU" pad="14"/>
-<contactref element="USBSER" pad="23"/>
+<contactref element="USB-SERIAL" pad="23"/>
 <contactref element="R15" pad="2"/>
 <contactref element="WIFI" pad="1"/>
 <via x="81.875" y="19.375" extent="1-16" drill="0.3048" shape="octagon"/>
@@ -4268,7 +4272,15 @@ design rules under a new name.</description>
 <contactref element="FPGA" pad="T9"/>
 <wire x1="35.5" y1="22.5" x2="35.5" y2="20.9" width="0.1524" layer="1"/>
 <wire x1="35.5" y1="20.9" x2="36.1" y2="20.3" width="0.1524" layer="1"/>
-<wire x1="36.1" y1="20.3" x2="36.1" y2="10.4" width="0.1524" layer="1"/>
+<wire x1="36.1" y1="20.3" x2="36.1" y2="19.35870625" width="0.1524" layer="1"/>
+<wire x1="36.1" y1="19.35870625" x2="35.8333" y2="19.09200625" width="0.1524" layer="1" curve="-90"/>
+<wire x1="35.8333" y1="19.09200625" x2="35.6791875" y2="19.09200625" width="0.1524" layer="1"/>
+<wire x1="35.6791875" y1="19.09200625" x2="35.4124875" y2="18.82530625" width="0.1524" layer="1" curve="90"/>
+<wire x1="35.4124875" y1="18.82530625" x2="35.4124875" y2="18.5334" width="0.1524" layer="1"/>
+<wire x1="35.4124875" y1="18.5334" x2="35.6791875" y2="18.2667" width="0.1524" layer="1" curve="90"/>
+<wire x1="35.6791875" y1="18.2667" x2="35.8333" y2="18.2667" width="0.1524" layer="1"/>
+<wire x1="35.8333" y1="18.2667" x2="36.1" y2="18" width="0.1524" layer="1" curve="-90"/>
+<wire x1="36.1" y1="18" x2="36.1" y2="10.4" width="0.1524" layer="1"/>
 <wire x1="36.1" y1="10.4" x2="35.5" y2="9.8" width="0.1524" layer="1"/>
 <wire x1="35.5" y1="9.8" x2="35.5" y2="8.46" width="0.1524" layer="1"/>
 </signal>
@@ -4285,7 +4297,15 @@ design rules under a new name.</description>
 <contactref element="FPGA" pad="T7"/>
 <wire x1="33.5" y1="22.5" x2="33.5" y2="20.9" width="0.1524" layer="1"/>
 <wire x1="33.5" y1="20.9" x2="34.6" y2="19.8" width="0.1524" layer="1"/>
-<wire x1="34.6" y1="19.8" x2="34.6" y2="10.4" width="0.1524" layer="1"/>
+<wire x1="34.6" y1="19.8" x2="34.6" y2="17.042153125" width="0.1524" layer="1"/>
+<wire x1="34.6" y1="17.042153125" x2="34.3333" y2="16.775453125" width="0.1524" layer="1" curve="-90"/>
+<wire x1="34.3333" y1="16.775453125" x2="34.179184375" y2="16.775453125" width="0.1524" layer="1"/>
+<wire x1="34.179184375" y1="16.775453125" x2="33.912484375" y2="16.508753125" width="0.1524" layer="1" curve="90"/>
+<wire x1="33.912484375" y1="16.508753125" x2="33.912484375" y2="16.2334" width="0.1524" layer="1"/>
+<wire x1="33.912484375" y1="16.2334" x2="34.179184375" y2="15.9667" width="0.1524" layer="1" curve="90"/>
+<wire x1="34.179184375" y1="15.9667" x2="34.3333" y2="15.9667" width="0.1524" layer="1"/>
+<wire x1="34.3333" y1="15.9667" x2="34.6" y2="15.7" width="0.1524" layer="1" curve="-90"/>
+<wire x1="34.6" y1="15.7" x2="34.6" y2="10.4" width="0.1524" layer="1"/>
 <wire x1="34.6" y1="10.4" x2="34" y2="9.8" width="0.1524" layer="1"/>
 <wire x1="34" y1="9.8" x2="34" y2="8.46" width="0.1524" layer="1"/>
 </signal>
@@ -4301,7 +4321,15 @@ design rules under a new name.</description>
 <contactref element="DVI" pad="P9"/>
 <contactref element="FPGA" pad="T5"/>
 <wire x1="31.5" y1="22.5" x2="31.5" y2="20.7" width="0.1524" layer="1"/>
-<wire x1="31.5" y1="20.7" x2="33.1" y2="19.1" width="0.1524" layer="1"/>
+<wire x1="31.5" y1="20.7" x2="31.82580625" y2="20.37419375" width="0.1524" layer="1"/>
+<wire x1="31.82580625" y1="20.37419375" x2="31.82580625" y2="19.997021875" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.82580625" y1="19.997021875" x2="31.71683125" y2="19.888046875" width="0.1524" layer="1"/>
+<wire x1="31.71683125" y1="19.888046875" x2="31.71683125" y2="19.510875" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.71683125" y1="19.510875" x2="31.93668125" y2="19.291025" width="0.1524" layer="1"/>
+<wire x1="31.93668125" y1="19.291025" x2="32.213853125" y2="19.291025" width="0.1524" layer="1" curve="90"/>
+<wire x1="32.213853125" y1="19.291025" x2="32.322828125" y2="19.4" width="0.1524" layer="1"/>
+<wire x1="32.322828125" y1="19.4" x2="32.8" y2="19.4" width="0.1524" layer="1" curve="-90"/>
+<wire x1="32.8" y1="19.4" x2="33.1" y2="19.1" width="0.1524" layer="1"/>
 <wire x1="33.1" y1="19.1" x2="33.1" y2="10.4" width="0.1524" layer="1"/>
 <wire x1="33.1" y1="10.4" x2="32.5" y2="9.8" width="0.1524" layer="1"/>
 <wire x1="32.5" y1="9.8" x2="32.5" y2="8.46" width="0.1524" layer="1"/>
@@ -4310,18 +4338,42 @@ design rules under a new name.</description>
 <contactref element="DVI" pad="P10"/>
 <contactref element="FPGA" pad="P4"/>
 <wire x1="30.5" y1="24.5" x2="31" y2="24" width="0.1524" layer="1"/>
-<wire x1="31" y1="24" x2="31" y2="19.8" width="0.1524" layer="1"/>
-<wire x1="31" y1="19.8" x2="32" y2="18.8" width="0.1524" layer="1"/>
-<wire x1="32" y1="18.8" x2="32" y2="8.46" width="0.1524" layer="1"/>
+<wire x1="31" y1="24" x2="31" y2="19.2" width="0.1524" layer="1"/>
+<wire x1="31" y1="19.2" x2="32" y2="18.2" width="0.1524" layer="1"/>
+<wire x1="32" y1="8.46" x2="32" y2="18.2" width="0.1524" layer="1"/>
 </signal>
 <signal name="TMDS_CLKN">
 <contactref element="DVI" pad="P12"/>
 <contactref element="FPGA" pad="T4"/>
-<wire x1="30.5" y1="19.7" x2="30.5" y2="22.5" width="0.1524" layer="1"/>
-<wire x1="30.5" y1="19.7" x2="31.6" y2="18.6" width="0.1524" layer="1"/>
-<wire x1="31.6" y1="18.6" x2="31.6" y2="10.4" width="0.1524" layer="1"/>
+<wire x1="30.5" y1="19.1" x2="30.5" y2="22.5" width="0.1524" layer="1"/>
+<wire x1="30.5" y1="19.1" x2="31.6" y2="18" width="0.1524" layer="1"/>
 <wire x1="31.6" y1="10.4" x2="31" y2="9.8" width="0.1524" layer="1"/>
 <wire x1="31" y1="9.8" x2="31" y2="8.46" width="0.1524" layer="1"/>
+<wire x1="31.6" y1="18" x2="31.6" y2="17.646153125" width="0.1524" layer="1"/>
+<wire x1="31.6" y1="17.646153125" x2="31.3333" y2="17.379453125" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.3333" y1="17.379453125" x2="31.3182375" y2="17.379453125" width="0.1524" layer="1"/>
+<wire x1="31.3182375" y1="17.379453125" x2="31.0515375" y2="17.112753125" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.0515375" y1="17.112753125" x2="31.0515375" y2="16.423603125" width="0.1524" layer="1"/>
+<wire x1="31.0515375" y1="16.423603125" x2="31.3182375" y2="16.156903125" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.3182375" y1="16.156903125" x2="31.3333" y2="16.156903125" width="0.1524" layer="1"/>
+<wire x1="31.3333" y1="16.156903125" x2="31.6" y2="15.890203125" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.6" y1="15.890203125" x2="31.6" y2="15.201053125" width="0.1524" layer="1"/>
+<wire x1="31.6" y1="15.201053125" x2="31.3333" y2="14.934353125" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.3333" y1="14.934353125" x2="31.3182375" y2="14.934353125" width="0.1524" layer="1"/>
+<wire x1="31.3182375" y1="14.934353125" x2="31.0515375" y2="14.667653125" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.0515375" y1="14.667653125" x2="31.0515375" y2="13.9785" width="0.1524" layer="1"/>
+<wire x1="31.0515375" y1="13.9785" x2="31.3182375" y2="13.7118" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.3182375" y1="13.7118" x2="31.3333" y2="13.7118" width="0.1524" layer="1"/>
+<wire x1="31.3333" y1="13.7118" x2="31.6" y2="13.4451" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.6" y1="13.4451" x2="31.6" y2="12.75595" width="0.1524" layer="1"/>
+<wire x1="31.6" y1="12.75595" x2="31.3333" y2="12.48925" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.3333" y1="12.48925" x2="31.3182375" y2="12.48925" width="0.1524" layer="1"/>
+<wire x1="31.3182375" y1="12.48925" x2="31.0515375" y2="12.22255" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.0515375" y1="12.22255" x2="31.0515375" y2="11.5334" width="0.1524" layer="1"/>
+<wire x1="31.0515375" y1="11.5334" x2="31.3182375" y2="11.2667" width="0.1524" layer="1" curve="90"/>
+<wire x1="31.3182375" y1="11.2667" x2="31.3333" y2="11.2667" width="0.1524" layer="1"/>
+<wire x1="31.3333" y1="11.2667" x2="31.6" y2="11" width="0.1524" layer="1" curve="-90"/>
+<wire x1="31.6" y1="11" x2="31.6" y2="10.4" width="0.1524" layer="1"/>
 </signal>
 <signal name="N$28">
 <contactref element="DVI" pad="P18"/>
@@ -4362,7 +4414,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="CONSOLE_TXD">
 <contactref element="MCU" pad="68"/>
-<contactref element="USBSER" pad="39"/>
+<contactref element="USB-SERIAL" pad="39"/>
 <via x="59.875" y="29.75" extent="1-16" drill="0.3048" shape="octagon"/>
 <via x="13.875" y="19.5" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="14.4499" y1="22.5001" x2="14.4499" y2="20.0749" width="0.1524" layer="1"/>
@@ -4378,7 +4430,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="CONSOLE_RXD">
 <contactref element="MCU" pad="69"/>
-<contactref element="USBSER" pad="38"/>
+<contactref element="USB-SERIAL" pad="38"/>
 <via x="60.75" y="29.75" extent="1-16" drill="0.3048" shape="octagon"/>
 <via x="13.875" y="18.625" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="14.95" y1="22.5001" x2="14.95" y2="19.7" width="0.1524" layer="1"/>
@@ -4890,15 +4942,13 @@ design rules under a new name.</description>
 <signal name="FSMC_A18">
 <contactref element="MCU" pad="60"/>
 <contactref element="FPGA" pad="R14"/>
-<via x="56.125" y="29.75" extent="1-16" drill="0.3048" shape="octagon"/>
+<via x="55.625" y="29.75" extent="1-16" drill="0.3048" shape="octagon"/>
 <via x="41" y="23" extent="1-16" drill="0.3048" shape="octagon"/>
 <wire x1="40.5" y1="23.5" x2="41" y2="23" width="0.1524" layer="1"/>
-<wire x1="53.625" y1="22.625" x2="56.125" y2="25.125" width="0.1524" layer="16"/>
-<wire x1="56.125" y1="25.125" x2="56.125" y2="29.75" width="0.1524" layer="16"/>
-<wire x1="55.9" y1="28.65" x2="55.9" y2="29.525" width="0.1524" layer="1"/>
-<wire x1="55.9" y1="29.525" x2="56.125" y2="29.75" width="0.1524" layer="1"/>
-<wire x1="53.625" y1="22.625" x2="41.375" y2="22.625" width="0.1524" layer="16"/>
-<wire x1="41.375" y1="22.625" x2="41" y2="23" width="0.1524" layer="16"/>
+<wire x1="55.9" y1="28.65" x2="55.9" y2="29.475" width="0.1524" layer="1"/>
+<wire x1="55.9" y1="29.475" x2="55.625" y2="29.75" width="0.1524" layer="1"/>
+<wire x1="41" y1="23" x2="48.875" y2="23" width="0.1524" layer="16"/>
+<wire x1="48.875" y1="23" x2="55.625" y2="29.75" width="0.1524" layer="16"/>
 </signal>
 <signal name="FSMC_A17">
 <contactref element="MCU" pad="59"/>
@@ -5056,17 +5106,17 @@ design rules under a new name.</description>
 <signal name="FSMC_D1">
 <contactref element="MCU" pad="62"/>
 <contactref element="FPGA" pad="T14"/>
-<wire x1="40.5" y1="22.5" x2="42" y2="21" width="0.1524" layer="1"/>
-<wire x1="42" y1="21" x2="53.75" y2="21" width="0.1524" layer="1"/>
-<wire x1="53.75" y1="21" x2="56.9" y2="24.15" width="0.1524" layer="1"/>
+<wire x1="40.5" y1="22.5" x2="41.6" y2="21.4" width="0.1524" layer="1"/>
+<wire x1="41.6" y1="21.4" x2="54.15" y2="21.4" width="0.1524" layer="1"/>
+<wire x1="54.15" y1="21.4" x2="56.9" y2="24.15" width="0.1524" layer="1"/>
 <wire x1="56.9" y1="24.15" x2="56.9" y2="28.65" width="0.1524" layer="1"/>
 </signal>
 <signal name="FSMC_D0">
 <contactref element="MCU" pad="61"/>
 <contactref element="FPGA" pad="T15"/>
-<wire x1="41.5" y1="22.5" x2="42.625" y2="21.375" width="0.1524" layer="1"/>
-<wire x1="42.625" y1="21.375" x2="53.5" y2="21.375" width="0.1524" layer="1"/>
-<wire x1="53.5" y1="21.375" x2="56.4" y2="24.275" width="0.1524" layer="1"/>
+<wire x1="41.5" y1="22.5" x2="42.225" y2="21.775" width="0.1524" layer="1"/>
+<wire x1="42.225" y1="21.775" x2="53.9" y2="21.775" width="0.1524" layer="1"/>
+<wire x1="53.9" y1="21.775" x2="56.4" y2="24.275" width="0.1524" layer="1"/>
 <wire x1="56.4" y1="24.275" x2="56.4" y2="28.65" width="0.1524" layer="1"/>
 </signal>
 <signal name="N$119">
@@ -5088,7 +5138,7 @@ design rules under a new name.</description>
 <wire x1="9" y1="45.85" x2="7.7" y2="45.85" width="0.4064" layer="1"/>
 </signal>
 <signal name="USB_DEVICE_DM">
-<contactref element="USBSER" pad="7"/>
+<contactref element="USB-SERIAL" pad="7"/>
 <contactref element="DEBUG" pad="2"/>
 <wire x1="9.95" y1="4.15" x2="9.95" y2="4.95" width="0.2" layer="1"/>
 <wire x1="12.95" y1="6.95" x2="12.95" y2="10.4999" width="0.2" layer="1"/>
@@ -5097,7 +5147,7 @@ design rules under a new name.</description>
 <wire x1="11.8" y1="5.8" x2="12.95" y2="6.95" width="0.2" layer="1"/>
 </signal>
 <signal name="USB_DEVICE_DP">
-<contactref element="USBSER" pad="8"/>
+<contactref element="USB-SERIAL" pad="8"/>
 <contactref element="DEBUG" pad="3"/>
 <wire x1="10.6" y1="4.15" x2="10.6" y2="5" width="0.2" layer="1"/>
 <wire x1="13.4499" y1="6.8499" x2="13.4499" y2="10.4999" width="0.2" layer="1"/>
@@ -5300,7 +5350,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="JTAG_ESP_TDO">
 <contactref element="WIFI" pad="16"/>
-<contactref element="USBSER" pad="18"/>
+<contactref element="USB-SERIAL" pad="18"/>
 <contactref element="R10" pad="2"/>
 <via x="69.5" y="8.375" extent="1-16" drill="0.3048" shape="octagon"/>
 <via x="18.125" y="13.25" extent="1-16" drill="0.3048" shape="octagon"/>
