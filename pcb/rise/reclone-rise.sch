@@ -7483,7 +7483,7 @@ Production Part - 8199
 <part name="+3V20" library="supply1" deviceset="+3V3" device=""/>
 <part name="+3V21" library="supply1" deviceset="+3V3" device=""/>
 <part name="R35" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K"/>
-<part name="R36" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K"/>
+<part name="R36" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
 <part name="+3V22" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY28" library="supply2" deviceset="GND" device=""/>
 <part name="+3V23" library="supply1" deviceset="+3V3" device=""/>
@@ -9253,18 +9253,6 @@ Production Part - 8199
 <label x="368.3" y="241.3" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="WIFI_INT_WAKE" class="0">
-<segment>
-<pinref part="MCU" gate="G$3" pin="PB5"/>
-<wire x1="213.36" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
-<label x="215.9" y="111.76" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="WIFI" gate="G$1" pin="IO16"/>
-<wire x1="266.7" y1="38.1" x2="269.24" y2="38.1" width="0.1524" layer="91"/>
-<label x="269.24" y="38.1" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="LED_ACT" class="0">
 <segment>
 <pinref part="MCU" gate="G$3" pin="PC0"/>
@@ -9341,6 +9329,18 @@ Production Part - 8199
 <wire x1="86.36" y1="205.74" x2="78.74" y2="205.74" width="0.1524" layer="91"/>
 <pinref part="U$3" gate="G$1" pin="+1V2"/>
 <wire x1="73.66" y1="210.82" x2="73.66" y2="208.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="WIFI_INT" class="0">
+<segment>
+<pinref part="WIFI" gate="G$1" pin="IO16"/>
+<wire x1="266.7" y1="38.1" x2="269.24" y2="38.1" width="0.1524" layer="91"/>
+<label x="269.24" y="38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="MCU" gate="G$3" pin="PB5"/>
+<wire x1="213.36" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
+<label x="215.9" y="111.76" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
@@ -10563,9 +10563,9 @@ within 0.254mm</text>
 <label x="22.86" y="187.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L66N_SCP0_0"/>
-<wire x1="38.1" y1="17.78" x2="40.64" y2="17.78" width="0.1524" layer="91"/>
-<label x="40.64" y="17.78" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B0" pin="IO_L63P_SCP7_0"/>
+<wire x1="38.1" y1="35.56" x2="40.64" y2="35.56" width="0.1524" layer="91"/>
+<label x="40.64" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPIO26" class="0">
@@ -10611,9 +10611,9 @@ within 0.254mm</text>
 <label x="50.8" y="185.42" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="FPGA" gate="B0" pin="IO_L63P_SCP7_0"/>
-<wire x1="38.1" y1="35.56" x2="40.64" y2="35.56" width="0.1524" layer="91"/>
-<label x="40.64" y="35.56" size="1.778" layer="95"/>
+<pinref part="FPGA" gate="B0" pin="IO_L66N_SCP0_0"/>
+<wire x1="38.1" y1="17.78" x2="40.64" y2="17.78" width="0.1524" layer="91"/>
+<label x="40.64" y="17.78" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CLK_10M" class="0">
