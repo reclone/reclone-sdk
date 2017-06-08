@@ -7500,9 +7500,9 @@ Production Part - 8199
 <part name="SUPPLY30" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY31" library="supply2" deviceset="GND" device=""/>
 <part name="F1" library="reclone-rise" deviceset="POLYFUSE" device=""/>
-<part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603"/>
-<part name="L2" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603"/>
-<part name="L3" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603"/>
+<part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
+<part name="L2" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
+<part name="L3" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
 <part name="D1" library="SparkFun-DiscreteSemi" deviceset="DIODE-ZENER" device="5.6V" value="5.6V"/>
 <part name="SUPPLY32" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY33" library="supply2" deviceset="GND" device=""/>
@@ -7538,9 +7538,9 @@ Production Part - 8199
 <part name="SUPPLY40" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY41" library="supply2" deviceset="GND" device=""/>
 <part name="+3V27" library="supply1" deviceset="+3V3" device=""/>
-<part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603"/>
-<part name="L5" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603"/>
-<part name="L6" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603"/>
+<part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="2u2"/>
+<part name="L5" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="2u2"/>
+<part name="L6" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="4u7"/>
 <part name="C17" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="10u"/>
 <part name="C18" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="10u"/>
 <part name="C19" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="10u"/>
