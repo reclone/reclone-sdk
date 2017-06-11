@@ -7429,7 +7429,11 @@ Production Part - 8199
 <attribute name="MANF" value="Sullins Connector Solutions"/>
 <attribute name="MANF#" value="PREC020DAAN-RC"/>
 </part>
-<part name="FPGA" library="reclone-rise" deviceset="XC6SLX16FTG256" device=""/>
+<part name="FPGA" library="reclone-rise" deviceset="XC6SLX16FTG256" device="">
+<attribute name="DIGIKEY#" value="122-1672-ND"/>
+<attribute name="MANF" value="Xilinx Inc."/>
+<attribute name="MANF#" value="XC6SLX16-2FTG256C"/>
+</part>
 <part name="MICRO-SD" library="reclone-rise" deviceset="USD-SOCKET" device="">
 <attribute name="DIGIKEY#" value="101-00660-68-6-1-ND"/>
 <attribute name="MANF" value="Amphenol"/>
@@ -7503,8 +7507,16 @@ Production Part - 8199
 <part name="SUPPLY29" library="supply2" deviceset="GND" device=""/>
 <part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="2u2"/>
 <part name="C13" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="2u2"/>
-<part name="BOOT" library="SparkFun-Connectors" deviceset="M02" device="PTH" value="1X2"/>
-<part name="BUSPWR" library="SparkFun-Connectors" deviceset="M02" device="PTH" value="1X2"/>
+<part name="BOOT" library="SparkFun-Connectors" deviceset="M02" device="PTH" value="1X2">
+<attribute name="DIGIKEY#" value="952-1770-ND"/>
+<attribute name="MANF" value="Harwin Inc."/>
+<attribute name="MANF#" value="M20-9770246"/>
+</part>
+<part name="BUSPWR" library="SparkFun-Connectors" deviceset="M02" device="PTH" value="1X2">
+<attribute name="DIGIKEY#" value="952-1770-ND"/>
+<attribute name="MANF" value="Harwin Inc."/>
+<attribute name="MANF#" value="M20-9770246"/>
+</part>
 <part name="SUPPLY26" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY27" library="supply2" deviceset="GND" device=""/>
 <part name="P+7" library="supply1" deviceset="+5V" device=""/>
@@ -7512,7 +7524,11 @@ Production Part - 8199
 <part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="160"/>
 <part name="SUPPLY30" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY31" library="supply2" deviceset="GND" device=""/>
-<part name="F1" library="reclone-rise" deviceset="POLYFUSE" device=""/>
+<part name="F1" library="reclone-rise" deviceset="POLYFUSE" device="">
+<attribute name="DIGIKEY#" value="MF-NSMF150-2CT-ND"/>
+<attribute name="MANF" value="Bourns Inc."/>
+<attribute name="MANF#" value="MF-NSMF150-2"/>
+</part>
 <part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
 <part name="L2" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
 <part name="L3" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
@@ -7541,9 +7557,21 @@ Production Part - 8199
 <part name="R62" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2"/>
 <part name="SUPPLY37" library="supply2" deviceset="GND" device=""/>
 <part name="+3V26" library="supply1" deviceset="+3V3" device=""/>
-<part name="REG12" library="reclone-rise" deviceset="PAM2305" device="" value="PAM2305AAB120"/>
-<part name="REG18" library="reclone-rise" deviceset="PAM2305" device="" value="PAM2305AAB180"/>
-<part name="REG33" library="reclone-rise" deviceset="PAM2305" device="" value="PAM2305AAB330"/>
+<part name="REG12" library="reclone-rise" deviceset="PAM2305" device="" value="PAM2305AAB120">
+<attribute name="DIGIKEY#" value="PAM2305AAB120DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="PAM2305AAB120"/>
+</part>
+<part name="REG18" library="reclone-rise" deviceset="PAM2305" device="" value="ADP2108AUJZ-1.8-R7">
+<attribute name="DIGIKEY#" value="ADP2108AUJZ-1.8-R7CT-ND"/>
+<attribute name="MANF" value="Analog Devices Inc."/>
+<attribute name="MANF#" value="ADP2108AUJZ-1.8-R7"/>
+</part>
+<part name="REG33" library="reclone-rise" deviceset="PAM2305" device="" value="PAM2305AAB330">
+<attribute name="DIGIKEY#" value="PAM2305AAB330DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="PAM2305AAB330"/>
+</part>
 <part name="P+8" library="supply1" deviceset="+5V" device=""/>
 <part name="P+9" library="supply1" deviceset="+5V" device=""/>
 <part name="P+10" library="supply1" deviceset="+5V" device=""/>
@@ -7551,8 +7579,8 @@ Production Part - 8199
 <part name="SUPPLY40" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY41" library="supply2" deviceset="GND" device=""/>
 <part name="+3V27" library="supply1" deviceset="+3V3" device=""/>
-<part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="4u7"/>
-<part name="L5" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="4u7"/>
+<part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="2u2"/>
+<part name="L5" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="1u"/>
 <part name="L6" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="4u7"/>
 <part name="C17" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
 <part name="C18" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
@@ -7587,7 +7615,11 @@ Production Part - 8199
 <part name="C53" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
 <part name="C54" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
 <part name="C55" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7"/>
-<part name="BAT" library="SparkFun-Electromechanical" deviceset="BATTERY" device="12MM" value="3V"/>
+<part name="BAT" library="SparkFun-Electromechanical" deviceset="BATTERY" device="12MM" value="3V">
+<attribute name="DIGIKEY#" value="BK-885-ND"/>
+<attribute name="MANF" value="MPD (Memory Protection Devices)"/>
+<attribute name="MANF#" value="BK-885"/>
+</part>
 <part name="Y4" library="SparkFun-FreqCtrl" deviceset="CRYSTAL" device="EPSONMC146" value="32K768"/>
 <part name="C58" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="6p8"/>
 <part name="C59" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="6p8"/>
@@ -7616,12 +7648,20 @@ Production Part - 8199
 <part name="+3V13" library="supply1" deviceset="+3V3" device=""/>
 <part name="R21" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7"/>
 <part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K"/>
-<part name="RGB" library="reclone-rise" deviceset="OVSRRGBCC3" device=""/>
+<part name="RGB" library="reclone-rise" deviceset="OVSRRGBCC3" device="">
+<attribute name="DIGIKEY#" value="365-1410-1-ND"/>
+<attribute name="MANF" value="TT Electronics/Optek Technology"/>
+<attribute name="MANF#" value="OVSRRGBCC3"/>
+</part>
 <part name="+3V14" library="supply1" deviceset="+3V3" device=""/>
 <part name="R23" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="160"/>
 <part name="R24" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="43"/>
 <part name="R25" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="39"/>
-<part name="USER" library="reclone-rise" deviceset="TL1105SF250Q" device=""/>
+<part name="USER" library="reclone-rise" deviceset="TL1105SF250Q" device="">
+<attribute name="DIGIKEY#" value="EG1840-ND"/>
+<attribute name="MANF" value="E-Switch"/>
+<attribute name="MANF#" value="TL1105SF250Q"/>
+</part>
 <part name="R27" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7"/>
 <part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
 <part name="OSC10M" library="reclone-rise" deviceset="OSC_ENABLED_SMD" device="" value="10M">
@@ -7734,8 +7774,16 @@ Production Part - 8199
 <instance part="SUPPLY29" gate="GND" x="25.4" y="226.06"/>
 <instance part="C7" gate="G$1" x="205.74" y="200.66" rot="R180"/>
 <instance part="C13" gate="G$1" x="213.36" y="203.2" rot="R180"/>
-<instance part="BOOT" gate="G$1" x="200.66" y="243.84" rot="R270"/>
-<instance part="BUSPWR" gate="G$1" x="71.12" y="243.84" rot="R270"/>
+<instance part="BOOT" gate="G$1" x="200.66" y="243.84" rot="R270">
+<attribute name="MANF" x="200.66" y="243.84" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY#" x="200.66" y="243.84" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="200.66" y="243.84" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="BUSPWR" gate="G$1" x="71.12" y="243.84" rot="R270">
+<attribute name="DIGIKEY#" x="71.12" y="243.84" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="71.12" y="243.84" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="71.12" y="243.84" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="SUPPLY26" gate="GND" x="198.12" y="233.68"/>
 <instance part="SUPPLY27" gate="GND" x="213.36" y="213.36"/>
 <instance part="P+7" gate="1" x="116.84" y="246.38"/>
@@ -7746,15 +7794,31 @@ Production Part - 8199
 </instance>
 <instance part="SUPPLY30" gate="GND" x="241.3" y="93.98"/>
 <instance part="SUPPLY31" gate="GND" x="129.54" y="220.98"/>
-<instance part="F1" gate="F1" x="86.36" y="236.22"/>
+<instance part="F1" gate="F1" x="86.36" y="236.22">
+<attribute name="DIGIKEY#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="L1" gate="G$1" x="106.68" y="236.22" rot="R90"/>
 <instance part="L2" gate="G$1" x="30.48" y="121.92" rot="R90"/>
 <instance part="L3" gate="G$1" x="38.1" y="129.54" rot="R90"/>
 <instance part="D1" gate="G$1" x="96.52" y="228.6" rot="R90"/>
 <instance part="SUPPLY32" gate="GND" x="96.52" y="220.98"/>
-<instance part="REG12" gate="VREG" x="40.64" y="205.74"/>
-<instance part="REG18" gate="VREG" x="40.64" y="182.88"/>
-<instance part="REG33" gate="VREG" x="40.64" y="160.02"/>
+<instance part="REG12" gate="VREG" x="40.64" y="205.74">
+<attribute name="DIGIKEY#" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="REG18" gate="VREG" x="40.64" y="182.88">
+<attribute name="DIGIKEY#" x="40.64" y="182.88" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="40.64" y="182.88" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="40.64" y="182.88" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="REG33" gate="VREG" x="40.64" y="160.02">
+<attribute name="DIGIKEY#" x="40.64" y="160.02" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="40.64" y="160.02" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="40.64" y="160.02" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+8" gate="1" x="25.4" y="213.36"/>
 <instance part="P+9" gate="1" x="25.4" y="190.5"/>
 <instance part="P+10" gate="1" x="25.4" y="167.64"/>
@@ -7798,7 +7862,11 @@ Production Part - 8199
 <instance part="C53" gate="G$1" x="149.86" y="231.14" rot="R180"/>
 <instance part="C54" gate="G$1" x="116.84" y="180.34" rot="R180"/>
 <instance part="C55" gate="G$1" x="157.48" y="231.14" rot="R180"/>
-<instance part="BAT" gate="G$1" x="223.52" y="203.2" rot="R270"/>
+<instance part="BAT" gate="G$1" x="223.52" y="203.2" rot="R270">
+<attribute name="DIGIKEY#" x="223.52" y="203.2" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="223.52" y="203.2" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="223.52" y="203.2" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="Y4" gate="G$1" x="231.14" y="175.26" rot="R90"/>
 <instance part="C58" gate="G$1" x="236.22" y="172.72" rot="R270"/>
 <instance part="C59" gate="G$1" x="236.22" y="180.34" rot="R270"/>
@@ -7845,7 +7913,11 @@ Production Part - 8199
 <instance part="R21" gate="G$1" x="129.54" y="111.76" rot="MR90"/>
 <instance part="MCU" gate="G$3" x="208.28" y="104.14"/>
 <instance part="R22" gate="G$1" x="251.46" y="226.06" rot="R270"/>
-<instance part="RGB" gate="G$1" x="345.44" y="233.68" rot="R90"/>
+<instance part="RGB" gate="G$1" x="345.44" y="233.68" rot="R90">
+<attribute name="DIGIKEY#" x="345.44" y="233.68" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF" x="345.44" y="233.68" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="345.44" y="233.68" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 <instance part="+3V14" gate="G$1" x="335.28" y="241.3"/>
 <instance part="R23" gate="G$1" x="360.68" y="241.3" smashed="yes">
 <attribute name="NAME" x="355.092" y="241.5286" size="1.778" layer="95"/>
@@ -7859,7 +7931,11 @@ Production Part - 8199
 <attribute name="NAME" x="355.092" y="226.2886" size="1.778" layer="95"/>
 <attribute name="VALUE" x="362.966" y="226.314" size="1.778" layer="96"/>
 </instance>
-<instance part="USER" gate="G$1" x="327.66" y="233.68"/>
+<instance part="USER" gate="G$1" x="327.66" y="233.68">
+<attribute name="DIGIKEY#" x="327.66" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="327.66" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="327.66" y="233.68" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="R27" gate="G$1" x="314.96" y="228.6" smashed="yes" rot="R270">
 <attribute name="NAME" x="312.9026" y="234.442" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="315.214" y="226.314" size="1.778" layer="96" rot="R270"/>
@@ -9392,7 +9468,11 @@ within 0.254mm</text>
 <attribute name="MANF" x="40.64" y="208.28" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="40.64" y="208.28" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="FPGA" gate="B0" x="33.02" y="73.66"/>
+<instance part="FPGA" gate="B0" x="33.02" y="73.66">
+<attribute name="DIGIKEY#" x="33.02" y="73.66" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="33.02" y="73.66" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="33.02" y="73.66" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="SUPPLY4" gate="GND" x="48.26" y="116.84" rot="R90"/>
 <instance part="A/V" gate="G$1" x="203.2" y="182.88" rot="R180">
 <attribute name="DIGIKEY#" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>

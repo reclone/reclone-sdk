@@ -5013,7 +5013,11 @@ design rules under a new name.</description>
 <attribute name="MANF" value="Sullins Connector Solutions" x="32.5" y="52.5" size="1.778" layer="27" display="off"/>
 <attribute name="MANF#" value="PREC020DAAN-RC" x="32.5" y="52.5" size="1.778" layer="27" display="off"/>
 </element>
-<element name="FPGA" library="reclone-rise" package="FT256" value="XC6SLX16FTG256" x="35" y="30" locked="yes"/>
+<element name="FPGA" library="reclone-rise" package="FT256" value="XC6SLX16FTG256" x="35" y="30" locked="yes">
+<attribute name="DIGIKEY#" value="122-1672-ND" x="35" y="30" size="1.778" layer="27" display="off"/>
+<attribute name="MANF" value="Xilinx Inc." x="35" y="30" size="1.778" layer="27" display="off"/>
+<attribute name="MANF#" value="XC6SLX16-2FTG256C" x="35" y="30" size="1.778" layer="27" display="off"/>
+</element>
 <element name="MICRO-SD" library="reclone-rise" package="MICRO-SD-SOCKET-PP" value="USD-SOCKET" x="0" y="28" locked="yes" rot="MR270">
 <attribute name="DIGIKEY#" value="101-00660-68-6-1-ND" x="0" y="28" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MANF" value="Amphenol" x="0" y="28" size="1.778" layer="28" rot="MR270" display="off"/>
@@ -5062,14 +5066,24 @@ design rules under a new name.</description>
 <element name="BOOT" library="SparkFun-Connectors" package="1X02" value="1X2" x="70" y="48.35" locked="yes" smashed="yes" rot="R270">
 <attribute name="NAME" x="68.7038" y="49.9288" size="0.8" layer="25" font="vector" ratio="19"/>
 <attribute name="VALUE" x="66.825" y="49.62" size="1.27" layer="27" rot="R270"/>
+<attribute name="MANF" value="Harwin Inc." x="70" y="48.35" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY#" value="952-1770-ND" x="70" y="48.35" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MANF#" value="M20-9770246" x="70" y="48.35" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="BUSPWR" library="SparkFun-Connectors" package="1X02" value="1X2" x="2" y="20" smashed="yes">
 <attribute name="NAME" x="0.6538" y="21.6288" size="0.8" layer="25" font="vector" ratio="19"/>
 <attribute name="VALUE" x="0.73" y="16.825" size="1.27" layer="27"/>
+<attribute name="DIGIKEY#" value="952-1770-ND" x="2" y="20" size="1.778" layer="27" display="off"/>
+<attribute name="MANF" value="Harwin Inc." x="2" y="20" size="1.778" layer="27" display="off"/>
+<attribute name="MANF#" value="M20-9770246" x="2" y="20" size="1.778" layer="27" display="off"/>
 </element>
 <element name="ACT" library="SparkFun-LED" package="LED-0603" value="RED" x="1" y="44.5" locked="yes"/>
 <element name="R9" library="SparkFun-Passives" package="0603-RES" value="160" x="2.8" y="44.5" rot="R270"/>
-<element name="F1" library="reclone-rise" package="1206L" value="POLYFUSE" x="4.1" y="23.7"/>
+<element name="F1" library="reclone-rise" package="1206L" value="POLYFUSE" x="4.1" y="23.7">
+<attribute name="DIGIKEY#" value="MF-NSMF150-2CT-ND" x="4.1" y="23.7" size="1.778" layer="27" display="off"/>
+<attribute name="MANF" value="Bourns Inc." x="4.1" y="23.7" size="1.778" layer="27" display="off"/>
+<attribute name="MANF#" value="MF-NSMF150-2" x="4.1" y="23.7" size="1.778" layer="27" display="off"/>
+</element>
 <element name="L1" library="SparkFun-Passives" package="0603" value="BEAD" x="10.2" y="25.2" smashed="yes">
 <attribute name="NAME" x="7.911" y="25.262" size="0.4064" layer="25" font="vector"/>
 <attribute name="VALUE" x="9.184" y="24.057" size="0.4064" layer="27" font="vector"/>
@@ -5096,11 +5110,23 @@ design rules under a new name.</description>
 <element name="C16" library="SparkFun-Passives" package="0603-CAP" value="27p" x="59.7" y="7.3" rot="R180"/>
 <element name="R61" library="SparkFun-Passives" package="0603-RES" value="2K2" x="25.4" y="41.3" rot="R180"/>
 <element name="R62" library="SparkFun-Passives" package="0603-RES" value="2K2" x="28.5" y="41.3" rot="R180"/>
-<element name="REG12" library="reclone-rise" package="SOT-23-5" value="PAM2305AAB120" x="22.8" y="46.8" rot="R180"/>
-<element name="REG18" library="reclone-rise" package="SOT-23-5" value="PAM2305AAB180" x="15.2" y="46.8" rot="R180"/>
-<element name="REG33" library="reclone-rise" package="SOT-23-5" value="PAM2305AAB330" x="10.5" y="46.7" rot="R90"/>
-<element name="L4" library="SparkFun-Passives" package="0603" value="4u7" x="22.8" y="44" rot="R180"/>
-<element name="L5" library="SparkFun-Passives" package="0603" value="4u7" x="15.8" y="43.6" rot="R180"/>
+<element name="REG12" library="reclone-rise" package="SOT-23-5" value="PAM2305AAB120" x="22.8" y="46.8" rot="R180">
+<attribute name="DIGIKEY#" value="PAM2305AAB120DICT-ND" x="22.8" y="46.8" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANF" value="Diodes Incorporated" x="22.8" y="46.8" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANF#" value="PAM2305AAB120" x="22.8" y="46.8" size="1.778" layer="27" rot="R180" display="off"/>
+</element>
+<element name="REG18" library="reclone-rise" package="SOT-23-5" value="ADP2108AUJZ-1.8-R7" x="15.2" y="46.8" rot="R180">
+<attribute name="DIGIKEY#" value="ADP2108AUJZ-1.8-R7CT-ND" x="15.2" y="46.8" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANF" value="Analog Devices Inc." x="15.2" y="46.8" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANF#" value="ADP2108AUJZ-1.8-R7" x="15.2" y="46.8" size="1.778" layer="27" rot="R180" display="off"/>
+</element>
+<element name="REG33" library="reclone-rise" package="SOT-23-5" value="PAM2305AAB330" x="10.5" y="46.7" rot="R90">
+<attribute name="DIGIKEY#" value="PAM2305AAB330DICT-ND" x="10.5" y="46.7" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANF" value="Diodes Incorporated" x="10.5" y="46.7" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANF#" value="PAM2305AAB330" x="10.5" y="46.7" size="1.778" layer="27" rot="R90" display="off"/>
+</element>
+<element name="L4" library="SparkFun-Passives" package="0603" value="2u2" x="22.8" y="44" rot="R180"/>
+<element name="L5" library="SparkFun-Passives" package="0603" value="1u" x="15.8" y="43.6" rot="R180"/>
 <element name="L6" library="SparkFun-Passives" package="0603" value="4u7" x="7.7" y="46.7" smashed="yes" rot="R90">
 <attribute name="NAME" x="8.838" y="46.311" size="0.4064" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="8.843" y="45.684" size="0.4064" layer="27" font="vector" rot="R90"/>
@@ -5146,6 +5172,9 @@ design rules under a new name.</description>
 <element name="C55" library="SparkFun-Passives" package="0603-CAP" value="4u7" x="19.4" y="47.7"/>
 <element name="BAT" library="SparkFun-Electromechanical" package="BATTCON_12MM" value="3V" x="6.2" y="35.2" locked="yes" rot="R90">
 <attribute name="PROD_ID" value="BATT-08044" x="6.2" y="35.2" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY#" value="BK-885-ND" x="6.2" y="35.2" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANF" value="MPD (Memory Protection Devices)" x="6.2" y="35.2" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANF#" value="BK-885" x="6.2" y="35.2" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="Y4" library="SparkFun-FreqCtrl" package="CRYSTAL-32KHZ-SMD_EPSON_MC146" value="32K768" x="54.875" y="48" rot="R180"/>
 <element name="C58" library="SparkFun-Passives" package="0603-CAP" value="6p8" x="56" y="47.625" rot="R270"/>
@@ -5173,12 +5202,18 @@ design rules under a new name.</description>
 <element name="R22" library="SparkFun-Passives" package="0603-RES" value="10K" x="49.2" y="44.6" rot="R180"/>
 <element name="RGB" library="reclone-rise" package="RGB_LED_1204_RTANG" value="OVSRRGBCC3" x="83" y="47" locked="yes" smashed="yes" rot="R180">
 <attribute name="NAME" x="82" y="50" size="0.8" layer="25" font="vector" ratio="19"/>
+<attribute name="DIGIKEY#" value="365-1410-1-ND" x="83" y="47" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANF" value="TT Electronics/Optek Technology" x="83" y="47" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANF#" value="OVSRRGBCC3" x="83" y="47" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="R23" library="SparkFun-Passives" package="0603-RES" value="160" x="78.75" y="41.75" rot="R270"/>
 <element name="R24" library="SparkFun-Passives" package="0603-RES" value="43" x="80.875" y="41.75" rot="R270"/>
 <element name="R25" library="SparkFun-Passives" package="0603-RES" value="39" x="83" y="41.75" rot="R270"/>
 <element name="USER" library="reclone-rise" package="PB_TACT_RTANG" value="TL1105SF250Q" x="77" y="47" locked="yes" smashed="yes" rot="R90">
 <attribute name="NAME" x="76" y="51" size="0.8" layer="25" font="vector" ratio="19"/>
+<attribute name="DIGIKEY#" value="EG1840-ND" x="77" y="47" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANF" value="E-Switch" x="77" y="47" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANF#" value="TL1105SF250Q" x="77" y="47" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="R27" library="SparkFun-Passives" package="0603-RES" value="4K7" x="76.625" y="41.75" rot="R270"/>
 <element name="OSC10M" library="reclone-rise" package="OSC-5X3.2" value="10M" x="45" y="46.75" smashed="yes" rot="R270">
