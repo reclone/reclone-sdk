@@ -7403,7 +7403,11 @@ Production Part - 8199
 </class>
 </classes>
 <parts>
-<part name="USB" library="reclone-rise" deviceset="USB_A_2H" device=""/>
+<part name="USB" library="reclone-rise" deviceset="USB_A_2H" device="">
+<attribute name="DIGIKEY#" value="AE11131-ND"/>
+<attribute name="MANF" value="Assmann WSW Components"/>
+<attribute name="MANF#" value="AU-Y1008-2"/>
+</part>
 <part name="DVI" library="reclone-rise" deviceset="TMDS_A" device="">
 <attribute name="DIGIKEY#" value="609-4614-1-ND"/>
 <attribute name="MANF" value="FCI"/>
@@ -7520,7 +7524,11 @@ Production Part - 8199
 <part name="SUPPLY26" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY27" library="supply2" deviceset="GND" device=""/>
 <part name="P+7" library="supply1" deviceset="+5V" device=""/>
-<part name="ACT" library="SparkFun-LED" deviceset="LED" device="0603" value="RED"/>
+<part name="ACT" library="SparkFun-LED" deviceset="LED" device="0603" value="RED">
+<attribute name="DIGIKEY#" value="732-4978-1-ND"/>
+<attribute name="MANF" value="Wurth Electronics Inc."/>
+<attribute name="MANF#" value="150060RS75000"/>
+</part>
 <part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="160"/>
 <part name="SUPPLY30" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY31" library="supply2" deviceset="GND" device=""/>
@@ -7532,7 +7540,11 @@ Production Part - 8199
 <part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
 <part name="L2" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
 <part name="L3" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD"/>
-<part name="D1" library="SparkFun-DiscreteSemi" deviceset="DIODE-ZENER" device="5.6V" value="5.6V"/>
+<part name="D1" library="SparkFun-DiscreteSemi" deviceset="DIODE-ZENER" device="5.6V" value="5.42V">
+<attribute name="DIGIKEY#" value="DDZ5V6ASF-7DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="DDZ5V6ASF-7"/>
+</part>
 <part name="SUPPLY32" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY33" library="supply2" deviceset="GND" device=""/>
 <part name="R16" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="165"/>
@@ -7701,7 +7713,11 @@ Production Part - 8199
 <plain>
 </plain>
 <instances>
-<instance part="USB" gate="USB_A_2H" x="353.06" y="121.92"/>
+<instance part="USB" gate="USB_A_2H" x="353.06" y="121.92">
+<attribute name="DIGIKEY#" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="DEBUG" gate="G$1" x="43.18" y="238.76" rot="R180">
 <attribute name="DIGIKEY#" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
@@ -7787,7 +7803,11 @@ Production Part - 8199
 <instance part="SUPPLY26" gate="GND" x="198.12" y="233.68"/>
 <instance part="SUPPLY27" gate="GND" x="213.36" y="213.36"/>
 <instance part="P+7" gate="1" x="116.84" y="246.38"/>
-<instance part="ACT" gate="G$1" x="233.68" y="96.52" rot="R90"/>
+<instance part="ACT" gate="G$1" x="233.68" y="96.52" rot="R90">
+<attribute name="DIGIKEY#" x="233.68" y="96.52" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF" x="233.68" y="96.52" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="233.68" y="96.52" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 <instance part="R9" gate="G$1" x="223.52" y="96.52" smashed="yes">
 <attribute name="NAME" x="217.932" y="96.7486" size="1.778" layer="95"/>
 <attribute name="VALUE" x="225.806" y="96.774" size="1.778" layer="96"/>
@@ -7802,8 +7822,12 @@ Production Part - 8199
 <instance part="L1" gate="G$1" x="106.68" y="236.22" rot="R90"/>
 <instance part="L2" gate="G$1" x="30.48" y="121.92" rot="R90"/>
 <instance part="L3" gate="G$1" x="38.1" y="129.54" rot="R90"/>
-<instance part="D1" gate="G$1" x="96.52" y="228.6" rot="R90"/>
-<instance part="SUPPLY32" gate="GND" x="96.52" y="220.98"/>
+<instance part="D1" gate="G$1" x="96.52" y="226.06" rot="R90">
+<attribute name="DIGIKEY#" x="96.52" y="226.06" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF" x="96.52" y="226.06" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="96.52" y="226.06" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="SUPPLY32" gate="GND" x="96.52" y="218.44"/>
 <instance part="REG12" gate="VREG" x="40.64" y="205.74">
 <attribute name="DIGIKEY#" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
@@ -8237,7 +8261,7 @@ Production Part - 8199
 <segment>
 <pinref part="D1" gate="G$1" pin="A"/>
 <pinref part="SUPPLY32" gate="GND" pin="GND"/>
-<wire x1="96.52" y1="223.52" x2="96.52" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="220.98" x2="96.52" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="REG12" gate="VREG" pin="GND"/>
@@ -9008,7 +9032,7 @@ Production Part - 8199
 <wire x1="99.06" y1="236.22" x2="96.52" y2="236.22" width="0.1524" layer="91"/>
 <pinref part="D1" gate="G$1" pin="C"/>
 <wire x1="96.52" y1="236.22" x2="91.44" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="96.52" y1="231.14" x2="96.52" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="228.6" x2="96.52" y2="236.22" width="0.1524" layer="91"/>
 <junction x="96.52" y="236.22"/>
 </segment>
 </net>
