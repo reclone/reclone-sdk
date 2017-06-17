@@ -147,7 +147,7 @@
 <library name="reclone-rise">
 <packages>
 <package name="USB-A-2H">
-<wire x1="0" y1="-6.5" x2="-17" y2="-6.5" width="0.127" layer="21"/>
+<wire x1="0" y1="-6.5" x2="-13.19" y2="-6.5" width="0.127" layer="21"/>
 <pad name="VBUS1" x="-4.0272" y="3.55" drill="0.9144" rot="R270"/>
 <pad name="DM1" x="-4.0272" y="1.05" drill="0.9144" rot="R270"/>
 <pad name="DP1" x="-4.0272" y="-0.95" drill="0.9144" rot="R270"/>
@@ -155,17 +155,17 @@
 <pad name="SH1" x="-6.7" y="-6.5" drill="2.3114" rot="R270"/>
 <pad name="SH4" x="-6.7" y="6.6" drill="2.3114" rot="R270"/>
 <text x="1" y="-5" size="0.8" layer="25" font="vector" ratio="19" rot="R90" align="top-left">&gt;NAME</text>
-<wire x1="0" y1="6.6" x2="-17" y2="6.6" width="0.127" layer="21"/>
-<wire x1="-17" y1="-6.5" x2="-17" y2="6.6" width="0.127" layer="21"/>
+<wire x1="0" y1="6.6" x2="-13.19" y2="6.6" width="0.127" layer="21"/>
+<wire x1="-17" y1="-6.5" x2="-17" y2="6.6" width="0.127" layer="51"/>
 <wire x1="0" y1="-6.5" x2="0" y2="6.6" width="0.127" layer="21"/>
 <pad name="SH2" x="-1.02" y="-6.5" drill="2.3114" rot="R270"/>
 <pad name="SH3" x="-1.02" y="6.6" drill="2.3114" rot="R270"/>
-<wire x1="-16" y1="4.5" x2="-16" y2="1.5" width="0.127" layer="21"/>
-<wire x1="-16" y1="-4.5" x2="-16" y2="-1.5" width="0.127" layer="21"/>
-<wire x1="-16" y1="4.5" x2="-10" y2="5.5" width="0.127" layer="21"/>
-<wire x1="-16" y1="1.5" x2="-10" y2="0.5" width="0.127" layer="21"/>
-<wire x1="-16" y1="-1.5" x2="-10" y2="-0.5" width="0.127" layer="21"/>
-<wire x1="-16" y1="-4.5" x2="-10" y2="-5.5" width="0.127" layer="21"/>
+<wire x1="-16" y1="4.5" x2="-16" y2="1.5" width="0.127" layer="51"/>
+<wire x1="-16" y1="-4.5" x2="-16" y2="-1.5" width="0.127" layer="51"/>
+<wire x1="-16" y1="4.5" x2="-10" y2="5.5" width="0.127" layer="51"/>
+<wire x1="-16" y1="1.5" x2="-10" y2="0.5" width="0.127" layer="51"/>
+<wire x1="-16" y1="-1.5" x2="-10" y2="-0.5" width="0.127" layer="51"/>
+<wire x1="-16" y1="-4.5" x2="-10" y2="-5.5" width="0.127" layer="51"/>
 <pad name="GND2" x="-1.37" y="-3.45" drill="0.9144" rot="R270"/>
 <pad name="DP2" x="-1.37" y="-0.95" drill="0.9144" rot="R270"/>
 <pad name="DM2" x="-1.37" y="1.05" drill="0.9144" rot="R270"/>
@@ -173,11 +173,11 @@
 <text x="1" y="5" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="top-right">&gt;VALUE</text>
 </package>
 <package name="TMDS_A_SMT">
-<wire x1="3.69" y1="8" x2="3.69" y2="-8" width="0.127" layer="21"/>
-<wire x1="-3.81" y1="-7.5" x2="-3.81" y2="7.5" width="0.127" layer="51"/>
-<wire x1="-3.81" y1="7.5" x2="4.69" y2="7.5" width="0.127" layer="51"/>
+<wire x1="3.69" y1="8" x2="3.69" y2="-8" width="0.127" layer="51"/>
+<wire x1="-3.81" y1="-7.5" x2="-3.81" y2="7.5" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="7.5" x2="2.69" y2="7.5" width="0.127" layer="21"/>
 <wire x1="4.69" y1="7.5" x2="4.69" y2="-7.5" width="0.127" layer="51"/>
-<wire x1="4.69" y1="-7.5" x2="-3.81" y2="-7.5" width="0.127" layer="51"/>
+<wire x1="2.69" y1="-7.5" x2="-3.81" y2="-7.5" width="0.127" layer="21"/>
 <smd name="P1" x="-4.76" y="4.5" dx="1.9" dy="0.3" layer="1"/>
 <smd name="P2" x="-4.76" y="4" dx="1.9" dy="0.3" layer="1"/>
 <smd name="P3" x="-4.76" y="3.5" dx="1.9" dy="0.3" layer="1"/>
@@ -215,10 +215,10 @@
 <pad name="MNT4" x="3.5" y="1.45" drill="1.15"/>
 <pad name="MNT1" x="-3.5" y="1.45" drill="1.15"/>
 <wire x1="-3.5" y1="4.3" x2="3.5" y2="4.3" width="0.127" layer="21"/>
-<wire x1="3.5" y1="4.3" x2="3.5" y2="-0.7" width="0.127" layer="21"/>
-<wire x1="-3.5" y1="4.3" x2="-3.5" y2="-0.7" width="0.127" layer="21"/>
+<wire x1="3.5" y1="4.3" x2="3.5" y2="0.3" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="4.3" x2="-3.5" y2="0.3" width="0.127" layer="21"/>
 <wire x1="-4" y1="0" x2="4" y2="0" width="0.127" layer="51"/>
-<wire x1="-3.5" y1="-0.7" x2="3.5" y2="-0.7" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="-0.7" x2="3.5" y2="-0.7" width="0.127" layer="51"/>
 <text x="-3" y="5.6" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <text x="-3" y="6.8" size="0.8" layer="27" font="vector" ratio="19">&gt;VALUE</text>
 </package>
@@ -326,11 +326,11 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="28" x="7.75" y="-5" dx="0.3" dy="1.2" layer="1" rot="R270"/>
 <smd name="27" x="7.75" y="-5.5" dx="0.3" dy="1.2" layer="1" rot="R270"/>
 <smd name="26" x="7.75" y="-6" dx="0.3" dy="1.2" layer="1" rot="R270"/>
-<wire x1="-7" y1="-7" x2="-7" y2="7" width="0.127" layer="51"/>
-<wire x1="7" y1="7" x2="-7" y2="7" width="0.127" layer="51"/>
-<wire x1="7" y1="7" x2="7" y2="-7" width="0.127" layer="51"/>
-<wire x1="-7" y1="-7" x2="7" y2="-7" width="0.127" layer="51"/>
-<circle x="-5.65" y="-5.65" radius="0.5" width="0.127" layer="51"/>
+<wire x1="-7" y1="-7" x2="-7" y2="7" width="0.127" layer="21"/>
+<wire x1="7" y1="7" x2="-7" y2="7" width="0.127" layer="21"/>
+<wire x1="7" y1="7" x2="7" y2="-7" width="0.127" layer="21"/>
+<wire x1="-7" y1="-7" x2="7" y2="-7" width="0.127" layer="21"/>
+<circle x="-5.65" y="-5.65" radius="0.5" width="0.127" layer="21"/>
 <text x="-6.15" y="-9.62" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <text x="-8.784" y="7.058" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
 </package>
@@ -1066,6 +1066,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="G3" x="-1.6" y="-0.8" dx="0.34" dy="0.34" layer="1" roundness="100"/>
 <text x="-4.25" y="-5" size="0.8" layer="27" font="vector" ratio="19" rot="R90">&gt;VALUE</text>
 <text x="-3.75" y="5.25" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+<circle x="-3.2" y="4" radius="0.4" width="0.1" layer="21"/>
 </package>
 <package name="ESP-12F">
 <wire x1="-8" y1="0" x2="8" y2="0" width="0.127" layer="21"/>
@@ -1119,9 +1120,9 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-1.75" y1="-2.5" x2="1.75" y2="-2.5" width="0.127" layer="21"/>
 <wire x1="1.75" y1="-2.5" x2="3.5" y2="-2.5" width="0.127" layer="21"/>
 <wire x1="3.5" y1="-2.5" x2="3.5" y2="1" width="0.127" layer="21"/>
-<wire x1="1.75" y1="-2.5" x2="1.75" y2="-8.35" width="0.127" layer="21"/>
-<wire x1="1.75" y1="-8.35" x2="-1.75" y2="-8.35" width="0.127" layer="21"/>
-<wire x1="-1.75" y1="-8.35" x2="-1.75" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="1.75" y1="-2.5" x2="1.75" y2="-8.35" width="0.127" layer="51"/>
+<wire x1="1.75" y1="-8.35" x2="-1.75" y2="-8.35" width="0.127" layer="51"/>
+<wire x1="-1.75" y1="-8.35" x2="-1.75" y2="-2.5" width="0.127" layer="51"/>
 <text x="-3" y="5" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 </package>
 <package name="OSC-5X3.2">
