@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.5.0">
+<eagle version="7.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -1068,39 +1068,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-3.75" y="5.25" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <circle x="-3.2" y="4" radius="0.4" width="0.1" layer="21"/>
 </package>
-<package name="ESP-12F">
-<wire x1="-8" y1="0" x2="8" y2="0" width="0.127" layer="21"/>
-<wire x1="-8" y1="0" x2="-8" y2="-18" width="0.127" layer="21"/>
-<wire x1="-8" y1="-18" x2="8" y2="-18" width="0.127" layer="21"/>
-<wire x1="8" y1="-18" x2="8" y2="0" width="0.127" layer="21"/>
-<smd name="15" x="7.5" y="-16.5" dx="2" dy="1" layer="1"/>
-<smd name="16" x="7.5" y="-14.5" dx="2" dy="1" layer="1"/>
-<smd name="17" x="7.5" y="-12.5" dx="2" dy="1" layer="1"/>
-<smd name="18" x="7.5" y="-10.5" dx="2" dy="1" layer="1"/>
-<smd name="19" x="7.5" y="-8.5" dx="2" dy="1" layer="1"/>
-<smd name="20" x="7.5" y="-6.5" dx="2" dy="1" layer="1"/>
-<smd name="21" x="7.5" y="-4.5" dx="2" dy="1" layer="1"/>
-<smd name="22" x="7.5" y="-2.5" dx="2" dy="1" layer="1"/>
-<smd name="8" x="-7.5" y="-16.5" dx="2" dy="1" layer="1"/>
-<smd name="7" x="-7.5" y="-14.5" dx="2" dy="1" layer="1"/>
-<smd name="6" x="-7.5" y="-12.5" dx="2" dy="1" layer="1"/>
-<smd name="5" x="-7.5" y="-10.5" dx="2" dy="1" layer="1"/>
-<smd name="4" x="-7.5" y="-8.5" dx="2" dy="1" layer="1"/>
-<smd name="3" x="-7.5" y="-6.5" dx="2" dy="1" layer="1"/>
-<smd name="2" x="-7.5" y="-4.5" dx="2" dy="1" layer="1"/>
-<smd name="1" x="-7.5" y="-2.5" dx="2" dy="1" layer="1"/>
-<wire x1="-8" y1="0" x2="-8" y2="6" width="0.127" layer="51"/>
-<wire x1="-8" y1="6" x2="8" y2="6" width="0.127" layer="51"/>
-<wire x1="8" y1="6" x2="8" y2="0" width="0.127" layer="51"/>
-<smd name="12" x="1" y="-18" dx="1.5" dy="1" layer="1" rot="R90"/>
-<smd name="11" x="-1" y="-18" dx="1.5" dy="1" layer="1" rot="R90"/>
-<smd name="10" x="-3" y="-18" dx="1.5" dy="1" layer="1" rot="R90"/>
-<smd name="9" x="-5" y="-18" dx="1.5" dy="1" layer="1" rot="R90"/>
-<smd name="13" x="3" y="-18" dx="1.5" dy="1" layer="1" rot="R90"/>
-<smd name="14" x="5" y="-18" dx="1.5" dy="1" layer="1" rot="R90"/>
-<text x="-9.5" y="-17" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
-<text x="-9.5" y="-1" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
-</package>
 <package name="RGB_LED_1204_RTANG">
 <smd name="3" x="0" y="1.5" dx="1" dy="0.8" layer="1" rot="R90"/>
 <smd name="4" x="0" y="-1.5" dx="1" dy="0.8" layer="1" rot="R90"/>
@@ -1987,36 +1954,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="VSS@J1" x="10.16" y="-38.1" length="short" rot="R90"/>
 <pin name="VSS@K9" x="12.7" y="-38.1" length="short" rot="R90"/>
 </symbol>
-<symbol name="ESP-12F">
-<wire x1="12.7" y1="17.78" x2="-12.7" y2="17.78" width="0.254" layer="94"/>
-<wire x1="-12.7" y1="17.78" x2="-12.7" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="-12.7" y1="-20.32" x2="12.7" y2="-20.32" width="0.254" layer="94"/>
-<pin name="SD_CLK" x="-17.78" y="12.7" length="middle"/>
-<pin name="SD_CMD" x="-17.78" y="10.16" length="middle"/>
-<pin name="SD_D0" x="-17.78" y="7.62" length="middle"/>
-<pin name="SD_D1" x="-17.78" y="5.08" length="middle"/>
-<pin name="SD_D2" x="-17.78" y="2.54" length="middle"/>
-<pin name="SD_D3" x="-17.78" y="0" length="middle"/>
-<pin name="TXD0" x="17.78" y="5.08" length="middle" rot="R180"/>
-<pin name="RXD0" x="17.78" y="2.54" length="middle" rot="R180"/>
-<pin name="IO0" x="17.78" y="-2.54" length="middle" rot="R180"/>
-<wire x1="12.7" y1="17.78" x2="12.7" y2="-20.32" width="0.254" layer="94"/>
-<pin name="RST_N" x="-17.78" y="-7.62" length="middle"/>
-<pin name="CHIP_EN" x="-17.78" y="15.24" length="middle"/>
-<pin name="ADC" x="17.78" y="10.16" length="middle" rot="R180"/>
-<pin name="IO2" x="17.78" y="-10.16" length="middle" rot="R180"/>
-<pin name="IO4" x="17.78" y="-7.62" length="middle" rot="R180"/>
-<pin name="IO5" x="17.78" y="-5.08" length="middle" rot="R180"/>
-<pin name="MTDI" x="-17.78" y="-12.7" length="middle"/>
-<pin name="MTCK" x="-17.78" y="-15.24" length="middle"/>
-<pin name="MTMS" x="-17.78" y="-17.78" length="middle"/>
-<pin name="IO15/MTDO" x="-17.78" y="-10.16" length="middle"/>
-<pin name="IO16" x="17.78" y="-12.7" length="middle" rot="R180"/>
-<pin name="VCC" x="17.78" y="15.24" length="middle" rot="R180"/>
-<pin name="GND" x="17.78" y="-17.78" length="middle" rot="R180"/>
-<text x="-12.7" y="-22.86" size="1.27" layer="95">&gt;NAME</text>
-<text x="12.7" y="-22.86" size="1.27" layer="96" align="bottom-right">&gt;VALUE</text>
-</symbol>
 <symbol name="STM32F407_GPIO">
 <wire x1="-5.08" y1="-17.78" x2="0" y2="-17.78" width="0.254" layer="94"/>
 <wire x1="0" y1="-17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
@@ -2895,42 +2832,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="VSSQ@D2" pad="D2"/>
 <connect gate="G$1" pin="VSSQ@D8" pad="D8"/>
 <connect gate="G$1" pin="WE#" pad="F3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="ESP-12F">
-<gates>
-<gate name="G$1" symbol="ESP-12F" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="ESP-12F">
-<connects>
-<connect gate="G$1" pin="ADC" pad="2"/>
-<connect gate="G$1" pin="CHIP_EN" pad="3"/>
-<connect gate="G$1" pin="GND" pad="15"/>
-<connect gate="G$1" pin="IO0" pad="18"/>
-<connect gate="G$1" pin="IO15/MTDO" pad="16"/>
-<connect gate="G$1" pin="IO16" pad="4"/>
-<connect gate="G$1" pin="IO2" pad="17"/>
-<connect gate="G$1" pin="IO4" pad="19"/>
-<connect gate="G$1" pin="IO5" pad="20"/>
-<connect gate="G$1" pin="MTCK" pad="7"/>
-<connect gate="G$1" pin="MTDI" pad="6"/>
-<connect gate="G$1" pin="MTMS" pad="5"/>
-<connect gate="G$1" pin="RST_N" pad="1"/>
-<connect gate="G$1" pin="RXD0" pad="21"/>
-<connect gate="G$1" pin="SD_CLK" pad="14"/>
-<connect gate="G$1" pin="SD_CMD" pad="9"/>
-<connect gate="G$1" pin="SD_D0" pad="10"/>
-<connect gate="G$1" pin="SD_D1" pad="13"/>
-<connect gate="G$1" pin="SD_D2" pad="11"/>
-<connect gate="G$1" pin="SD_D3" pad="12"/>
-<connect gate="G$1" pin="TXD0" pad="22"/>
-<connect gate="G$1" pin="VCC" pad="8"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8008,7 +7909,6 @@ Production Part - 8199
 <attribute name="MANF" value="Alliance Memory, Inc."/>
 <attribute name="MANF#" value="AS4C128M8D2-25BCN"/>
 </part>
-<part name="WIFI" library="reclone-rise" deviceset="ESP-12F" device=""/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
 <part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
@@ -8611,7 +8511,6 @@ Production Part - 8199
 <attribute name="MANF" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="WIFI" gate="G$1" x="248.92" y="50.8"/>
 <instance part="+3V2" gate="G$1" x="271.78" y="71.12"/>
 <instance part="SUPPLY3" gate="GND" x="269.24" y="30.48"/>
 <instance part="R10" gate="G$1" x="203.2" y="40.64" smashed="yes">
@@ -9133,7 +9032,6 @@ Production Part - 8199
 <junction x="243.84" y="172.72"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="GND"/>
 <pinref part="SUPPLY3" gate="GND" pin="GND"/>
 <wire x1="266.7" y1="33.02" x2="269.24" y2="33.02" width="0.1524" layer="91"/>
 </segment>
@@ -9281,7 +9179,6 @@ Production Part - 8199
 <junction x="78.74" y="160.02"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="VCC"/>
 <pinref part="+3V2" gate="G$1" pin="+3V3"/>
 <wire x1="266.7" y1="66.04" x2="271.78" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="271.78" y1="66.04" x2="271.78" y2="68.58" width="0.1524" layer="91"/>
@@ -9591,7 +9488,6 @@ Production Part - 8199
 <wire x1="160.02" y1="76.2" x2="185.42" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="MTDI"/>
 <wire x1="231.14" y1="38.1" x2="228.6" y2="38.1" width="0.1524" layer="91"/>
 <label x="210.82" y="38.1" size="1.778" layer="95"/>
 </segment>
@@ -9614,7 +9510,6 @@ Production Part - 8199
 <label x="162.56" y="73.66" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="MTMS"/>
 <wire x1="231.14" y1="33.02" x2="228.6" y2="33.02" width="0.1524" layer="91"/>
 <label x="218.44" y="33.02" size="1.778" layer="95"/>
 </segment>
@@ -9650,7 +9545,6 @@ Production Part - 8199
 <label x="162.56" y="81.28" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="MTCK"/>
 <wire x1="231.14" y1="35.56" x2="228.6" y2="35.56" width="0.1524" layer="91"/>
 <label x="218.44" y="35.56" size="1.778" layer="95"/>
 </segment>
@@ -9681,7 +9575,6 @@ Production Part - 8199
 <junction x="137.16" y="93.98"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="RST_N"/>
 <wire x1="231.14" y1="43.18" x2="228.6" y2="43.18" width="0.1524" layer="91"/>
 <label x="220.98" y="43.18" size="1.778" layer="95"/>
 </segment>
@@ -9920,7 +9813,6 @@ Production Part - 8199
 <label x="162.56" y="45.72" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="RXD0"/>
 <wire x1="266.7" y1="53.34" x2="269.24" y2="53.34" width="0.1524" layer="91"/>
 <label x="269.24" y="53.34" size="1.778" layer="95"/>
 </segment>
@@ -9932,14 +9824,12 @@ Production Part - 8199
 <label x="162.56" y="43.18" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="WIFI" gate="G$1" pin="TXD0"/>
 <wire x1="266.7" y1="55.88" x2="269.24" y2="55.88" width="0.1524" layer="91"/>
 <label x="269.24" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="JTAG_ESP_TDO" class="0">
 <segment>
-<pinref part="WIFI" gate="G$1" pin="IO15/MTDO"/>
 <label x="210.82" y="40.64" size="1.778" layer="95"/>
 <pinref part="R10" gate="G$1" pin="2"/>
 <wire x1="231.14" y1="40.64" x2="208.28" y2="40.64" width="0.1524" layer="91"/>
@@ -9953,49 +9843,42 @@ Production Part - 8199
 <net name="ESP_CH_EN" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_EN"/>
-<pinref part="WIFI" gate="G$1" pin="CHIP_EN"/>
 <wire x1="213.36" y1="66.04" x2="231.14" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDIO_CLK" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_CLK"/>
-<pinref part="WIFI" gate="G$1" pin="SD_CLK"/>
 <wire x1="213.36" y1="63.5" x2="231.14" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDIO_CMD" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_CMD"/>
-<pinref part="WIFI" gate="G$1" pin="SD_CMD"/>
 <wire x1="213.36" y1="60.96" x2="231.14" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDIO_D0" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D0"/>
-<pinref part="WIFI" gate="G$1" pin="SD_D0"/>
 <wire x1="213.36" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDIO_D1" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D1"/>
-<pinref part="WIFI" gate="G$1" pin="SD_D1"/>
 <wire x1="213.36" y1="55.88" x2="231.14" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDIO_D2" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D2"/>
-<pinref part="WIFI" gate="G$1" pin="SD_D2"/>
 <wire x1="213.36" y1="53.34" x2="231.14" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDIO_D3" class="0">
 <segment>
 <pinref part="MCU" gate="G$4" pin="SDIO_D3"/>
-<pinref part="WIFI" gate="G$1" pin="SD_D3"/>
 <wire x1="213.36" y1="50.8" x2="231.14" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -10014,7 +9897,6 @@ Production Part - 8199
 </net>
 <net name="ESP8266_DBG" class="0">
 <segment>
-<pinref part="WIFI" gate="G$1" pin="IO2"/>
 <wire x1="266.7" y1="40.64" x2="269.24" y2="40.64" width="0.1524" layer="91"/>
 <label x="269.24" y="40.64" size="1.778" layer="95"/>
 </segment>
@@ -10204,7 +10086,6 @@ Production Part - 8199
 </net>
 <net name="WIFI_INT" class="0">
 <segment>
-<pinref part="WIFI" gate="G$1" pin="IO16"/>
 <wire x1="266.7" y1="38.1" x2="269.24" y2="38.1" width="0.1524" layer="91"/>
 <label x="269.24" y="38.1" size="1.778" layer="95"/>
 </segment>
