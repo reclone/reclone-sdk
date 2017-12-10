@@ -8053,7 +8053,7 @@ Production Part - 8199
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
-<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
+<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
@@ -8130,7 +8130,7 @@ Production Part - 8199
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
 <part name="+3V24" library="supply1" deviceset="+3V3" device=""/>
-<part name="R14" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
+<part name="R14" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
@@ -8157,21 +8157,32 @@ Production Part - 8199
 </part>
 <part name="WIFI_BLUETOOTH" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device=""/>
 <part name="MICROSD" library="reclone-rise" deviceset="MICROSD_PUSHPULL" device=""/>
-<part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
+<part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
 </part>
-<part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
+<part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
 </part>
-<part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
+<part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
 </part>
+<part name="L7" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="22u">
+<attribute name="DIGIKEY#" value="490-15635-1-ND"/>
+<attribute name="MANF" value="Murata Electronics North America"/>
+<attribute name="MANF#" value="LQM18PN3R3MGHD"/>
+</part>
+<part name="C12" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
+<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+</part>
+<part name="SUPPLY24" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8319,7 +8330,7 @@ Production Part - 8199
 </instance>
 <instance part="+3V22" gate="G$1" x="213.36" y="243.84"/>
 <instance part="SUPPLY28" gate="GND" x="271.78" y="193.04"/>
-<instance part="+3V23" gate="G$1" x="274.32" y="241.3"/>
+<instance part="+3V23" gate="G$1" x="246.38" y="241.3"/>
 <instance part="SUPPLY29" gate="GND" x="25.4" y="226.06"/>
 <instance part="C7" gate="G$1" x="205.74" y="200.66" rot="R180">
 <attribute name="DIGIKEY#" x="205.74" y="200.66" size="1.778" layer="96" rot="R180" display="off"/>
@@ -8730,10 +8741,10 @@ Production Part - 8199
 <instance part="U$1" gate="G$1" x="73.66" y="127"/>
 <instance part="U$2" gate="G$1" x="73.66" y="190.5"/>
 <instance part="U$3" gate="G$1" x="73.66" y="213.36"/>
-<instance part="R14" gate="G$1" x="246.38" y="228.6" rot="R270">
-<attribute name="DIGIKEY#" x="246.38" y="228.6" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="246.38" y="228.6" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="246.38" y="228.6" size="1.778" layer="96" display="off"/>
+<instance part="R14" gate="G$1" x="261.62" y="205.74" rot="R90">
+<attribute name="DIGIKEY#" x="261.62" y="205.74" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="261.62" y="205.74" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="261.62" y="205.74" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="C8" gate="G$1" x="129.54" y="231.14">
 <attribute name="DIGIKEY#" x="129.54" y="231.14" size="1.778" layer="96" display="off"/>
@@ -8762,16 +8773,27 @@ Production Part - 8199
 <attribute name="MANF" x="254" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="254" y="228.6" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R32" gate="G$1" x="238.76" y="228.6" rot="R270">
+<instance part="R32" gate="G$1" x="246.38" y="228.6" rot="R270">
+<attribute name="DIGIKEY#" x="246.38" y="228.6" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="246.38" y="228.6" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="246.38" y="228.6" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R33" gate="G$1" x="238.76" y="228.6" rot="R270">
 <attribute name="DIGIKEY#" x="238.76" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="238.76" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="238.76" y="228.6" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R33" gate="G$1" x="231.14" y="228.6" rot="R270">
-<attribute name="DIGIKEY#" x="231.14" y="228.6" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="231.14" y="228.6" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="231.14" y="228.6" size="1.778" layer="96" display="off"/>
+<instance part="L7" gate="G$1" x="269.24" y="238.76" rot="R90">
+<attribute name="DIGIKEY#" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
+<instance part="C12" gate="G$1" x="299.72" y="233.68" rot="R180">
+<attribute name="DIGIKEY#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="SUPPLY24" gate="GND" x="299.72" y="223.52"/>
 </instances>
 <busses>
 </busses>
@@ -9193,6 +9215,14 @@ Production Part - 8199
 <junction x="271.78" y="203.2"/>
 <junction x="271.78" y="200.66"/>
 <junction x="271.78" y="198.12"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<wire x1="261.62" y1="200.66" x2="261.62" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="198.12" x2="271.78" y2="198.12" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C12" gate="G$1" pin="1"/>
+<pinref part="SUPPLY24" gate="GND" pin="GND"/>
+<wire x1="299.72" y1="228.6" x2="299.72" y2="226.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -9261,32 +9291,6 @@ Production Part - 8199
 <wire x1="137.16" y1="116.84" x2="137.16" y2="119.38" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="116.84" x2="137.16" y2="116.84" width="0.1524" layer="91"/>
 <junction x="137.16" y="116.84"/>
-</segment>
-<segment>
-<pinref part="+3V23" gate="G$1" pin="+3V3"/>
-<wire x1="274.32" y1="238.76" x2="274.32" y2="236.22" width="0.1524" layer="91"/>
-<pinref part="MICROSD" gate="G$1" pin="VDD"/>
-<pinref part="R14" gate="G$1" pin="1"/>
-<wire x1="274.32" y1="236.22" x2="274.32" y2="226.06" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="233.68" x2="246.38" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="236.22" x2="254" y2="236.22" width="0.1524" layer="91"/>
-<junction x="274.32" y="236.22"/>
-<pinref part="R22" gate="G$1" pin="1"/>
-<wire x1="254" y1="236.22" x2="261.62" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="261.62" y1="236.22" x2="274.32" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="261.62" y1="233.68" x2="261.62" y2="236.22" width="0.1524" layer="91"/>
-<junction x="261.62" y="236.22"/>
-<pinref part="R31" gate="G$1" pin="1"/>
-<wire x1="254" y1="233.68" x2="254" y2="236.22" width="0.1524" layer="91"/>
-<pinref part="R32" gate="G$1" pin="1"/>
-<wire x1="238.76" y1="233.68" x2="238.76" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="238.76" y1="236.22" x2="246.38" y2="236.22" width="0.1524" layer="91"/>
-<pinref part="R33" gate="G$1" pin="1"/>
-<wire x1="231.14" y1="233.68" x2="231.14" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="231.14" y1="236.22" x2="238.76" y2="236.22" width="0.1524" layer="91"/>
-<junction x="238.76" y="236.22"/>
-<junction x="246.38" y="236.22"/>
-<junction x="254" y="236.22"/>
 </segment>
 <segment>
 <pinref part="+3V22" gate="G$1" pin="+3V3"/>
@@ -9397,6 +9401,26 @@ Production Part - 8199
 <junction x="200.66" y="213.36"/>
 <pinref part="+3V9" gate="G$1" pin="+3V3"/>
 <wire x1="200.66" y1="213.36" x2="205.74" y2="213.36" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R22" gate="G$1" pin="1"/>
+<wire x1="254" y1="236.22" x2="261.62" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="233.68" x2="261.62" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="R31" gate="G$1" pin="1"/>
+<wire x1="254" y1="233.68" x2="254" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="R32" gate="G$1" pin="1"/>
+<wire x1="246.38" y1="233.68" x2="246.38" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="236.22" x2="254" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="R33" gate="G$1" pin="1"/>
+<wire x1="238.76" y1="233.68" x2="238.76" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="236.22" x2="246.38" y2="236.22" width="0.1524" layer="91"/>
+<junction x="246.38" y="236.22"/>
+<junction x="254" y="236.22"/>
+<pinref part="+3V23" gate="G$1" pin="+3V3"/>
+<wire x1="246.38" y1="236.22" x2="246.38" y2="238.76" width="0.1524" layer="91"/>
+<pinref part="L7" gate="G$1" pin="1"/>
+<wire x1="261.62" y1="238.76" x2="261.62" y2="236.22" width="0.1524" layer="91"/>
+<junction x="261.62" y="236.22"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_CLK" class="0">
@@ -9791,8 +9815,8 @@ Production Part - 8199
 <label x="264.16" y="213.36" size="1.778" layer="95"/>
 <pinref part="MICROSD" gate="G$1" pin="DETECT"/>
 <pinref part="R33" gate="G$1" pin="2"/>
-<wire x1="274.32" y1="213.36" x2="231.14" y2="213.36" width="0.1524" layer="91"/>
-<wire x1="231.14" y1="213.36" x2="231.14" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="213.36" x2="238.76" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="213.36" x2="238.76" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="MCU" gate="G$3" pin="PC4"/>
@@ -10115,8 +10139,8 @@ Production Part - 8199
 <label x="264.16" y="215.9" size="1.778" layer="95"/>
 <pinref part="MICROSD" gate="G$1" pin="DO"/>
 <pinref part="R32" gate="G$1" pin="2"/>
-<wire x1="274.32" y1="215.9" x2="238.76" y2="215.9" width="0.1524" layer="91"/>
-<wire x1="238.76" y1="215.9" x2="238.76" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="215.9" x2="246.38" y2="215.9" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="215.9" x2="246.38" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SD_CLK" class="0">
@@ -10128,8 +10152,8 @@ Production Part - 8199
 <segment>
 <label x="264.16" y="218.44" size="1.778" layer="95"/>
 <pinref part="R14" gate="G$1" pin="2"/>
-<wire x1="274.32" y1="218.44" x2="246.38" y2="218.44" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="218.44" x2="246.38" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="218.44" x2="261.62" y2="218.44" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="218.44" x2="261.62" y2="210.82" width="0.1524" layer="91"/>
 <pinref part="MICROSD" gate="G$1" pin="SCLK"/>
 </segment>
 </net>
@@ -10256,6 +10280,20 @@ Production Part - 8199
 <pinref part="MCU" gate="G$3" pin="PB5"/>
 <wire x1="213.36" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
 <label x="215.9" y="111.76" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="L7" gate="G$1" pin="2"/>
+<pinref part="C12" gate="G$1" pin="2"/>
+<wire x1="276.86" y1="238.76" x2="279.4" y2="238.76" width="0.1524" layer="91"/>
+<wire x1="279.4" y1="238.76" x2="299.72" y2="238.76" width="0.1524" layer="91"/>
+<wire x1="299.72" y1="238.76" x2="299.72" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="MICROSD" gate="G$1" pin="VDD"/>
+<wire x1="274.32" y1="226.06" x2="274.32" y2="233.68" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="233.68" x2="279.4" y2="233.68" width="0.1524" layer="91"/>
+<wire x1="279.4" y1="233.68" x2="279.4" y2="238.76" width="0.1524" layer="91"/>
+<junction x="279.4" y="238.76"/>
 </segment>
 </net>
 </nets>
