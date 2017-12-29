@@ -1055,13 +1055,11 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pad name="MNT_A" x="-3.5" y="2.5" drill="1.3"/>
 <wire x1="-3.5" y1="4" x2="3.5" y2="4" width="0.127" layer="21"/>
 <wire x1="-3.5" y1="1" x2="-3.5" y2="-2.5" width="0.127" layer="21"/>
-<wire x1="-3.5" y1="-2.5" x2="-1.75" y2="-2.5" width="0.127" layer="21"/>
-<wire x1="-1.75" y1="-2.5" x2="1.75" y2="-2.5" width="0.127" layer="21"/>
-<wire x1="1.75" y1="-2.5" x2="3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="-2.5" x2="3.5" y2="-2.5" width="0.127" layer="21"/>
 <wire x1="3.5" y1="-2.5" x2="3.5" y2="1" width="0.127" layer="21"/>
-<wire x1="1.75" y1="-2.5" x2="1.75" y2="-8.35" width="0.127" layer="51"/>
-<wire x1="1.75" y1="-8.35" x2="-1.75" y2="-8.35" width="0.127" layer="51"/>
-<wire x1="-1.75" y1="-8.35" x2="-1.75" y2="-2.5" width="0.127" layer="51"/>
+<wire x1="1.75" y1="-2.5" x2="1.75" y2="-6.15" width="0.127" layer="51"/>
+<wire x1="1.75" y1="-6.15" x2="-1.75" y2="-6.15" width="0.127" layer="51"/>
+<wire x1="-1.75" y1="-6.15" x2="-1.75" y2="-2.5" width="0.127" layer="51"/>
 <text x="-3" y="5" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 </package>
 <package name="OSC-5X3.2">
@@ -1156,6 +1154,17 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-5.65" y1="7.7" x2="5.65" y2="7.7" width="0.127" layer="21"/>
 <text x="-5" y="9" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <text x="5" y="9" size="0.8" layer="27" font="vector" ratio="19" align="bottom-right">&gt;VALUE</text>
+</package>
+<package name="PB_TACT_SMT_4.5X4.5">
+<smd name="4" x="3.6" y="1.5" dx="1.6" dy="1.4" layer="1"/>
+<smd name="2" x="3.6" y="-1.5" dx="1.6" dy="1.4" layer="1"/>
+<smd name="3" x="-3.6" y="1.5" dx="1.6" dy="1.4" layer="1"/>
+<smd name="1" x="-3.6" y="-1.5" dx="1.6" dy="1.4" layer="1"/>
+<wire x1="-2.25" y1="2.25" x2="2.25" y2="2.25" width="0.127" layer="21"/>
+<wire x1="-2.25" y1="-2.25" x2="2.25" y2="-2.25" width="0.127" layer="21"/>
+<wire x1="2.25" y1="2.25" x2="2.25" y2="-2.25" width="0.127" layer="21"/>
+<wire x1="-2.25" y1="2.25" x2="-2.25" y2="-2.25" width="0.127" layer="21"/>
+<text x="-4.8" y="-2.2" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
 </package>
 </packages>
 <symbols>
@@ -3026,6 +3035,22 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connect gate="G$1" pin="SCLK" pad="P5"/>
 <connect gate="G$1" pin="VDD" pad="P4"/>
 <connect gate="G$1" pin="VSS" pad="P6"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="P010471">
+<gates>
+<gate name="G$1" symbol="SPST_NO" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="PB_TACT_SMT_4.5X4.5">
+<connects>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="B" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8080,9 +8105,9 @@ Production Part - 8199
 <attribute name="MANF#" value="RC0603FR-0739RL"/>
 </part>
 <part name="USER" library="reclone-rise" deviceset="TL1105SF250Q" device="">
-<attribute name="DIGIKEY#" value="EG1840-ND"/>
+<attribute name="DIGIKEY#" value="EG1837-ND"/>
 <attribute name="MANF" value="E-Switch"/>
-<attribute name="MANF#" value="TL1105SF250Q"/>
+<attribute name="MANF#" value="TL1105RF160Q"/>
 </part>
 <part name="R27" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
 <attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
@@ -8183,6 +8208,7 @@ Production Part - 8199
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
 <part name="SUPPLY24" library="supply2" deviceset="GND" device=""/>
+<part name="RESET" library="reclone-rise" deviceset="P010471" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8794,6 +8820,7 @@ Production Part - 8199
 <attribute name="MANF#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY24" gate="GND" x="299.72" y="223.52"/>
+<instance part="RESET" gate="G$1" x="127" y="83.82"/>
 </instances>
 <busses>
 </busses>

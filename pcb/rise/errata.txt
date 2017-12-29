@@ -1,0 +1,15 @@
+Reclone Rise - Errata Notes
+---------------------------
+
+Rev A - June 2017
+- Use less crappy 1.8V switching regulator
+- Should use PA2 and PA3 as the GPIO analog inputs, as they can double as an extra serial port (USART2)
+- Micro SD card holder is obsolete, use a more common/available footprint that's easier to solder
+- Use a more available 3.5mm 4-conductor jack part number
+- Mounting holes need wider tStop/bStop radius to match Pi
+- Board is thicker than the Pi
+- Switch to RTL8723BS for WiFi/Bluetooth
+- Turn boot jumper into shorting pads
+- Length match the GPIO traces
+- Add tStop/bStop and inner copper keepouts so that RGB LED shines through board
+- Use easier to solder RTC crystal
