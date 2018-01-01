@@ -1233,150 +1233,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="SH3" x="17.78" y="2.54" length="short" rot="R180"/>
 <pin name="SH4" x="17.78" y="0" length="short" rot="R180"/>
 </symbol>
-<symbol name="STM32F407_PWR">
-<wire x1="-5.08" y1="17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
-<wire x1="0" y1="17.78" x2="0" y2="-22.86" width="0.254" layer="94"/>
-<pin name="VBAT" x="5.08" y="-5.08" length="middle" rot="R180"/>
-<pin name="VSS@10" x="5.08" y="-12.7" length="middle" rot="R180"/>
-<pin name="VDD@11" x="5.08" y="10.16" length="middle" rot="R180"/>
-<pin name="VDD@19" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="VDD@28" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="VSS@27" x="5.08" y="-15.24" length="middle" rot="R180"/>
-<pin name="VDD@50" x="5.08" y="2.54" length="middle" rot="R180"/>
-<pin name="VCAP_1" x="5.08" y="-10.16" length="middle" rot="R180"/>
-<pin name="VCAP_2" x="5.08" y="-7.62" length="middle" rot="R180"/>
-<wire x1="0" y1="-22.86" x2="-5.08" y2="-22.86" width="0.254" layer="94"/>
-<text x="-12.7" y="18.288" size="1.778" layer="95">&gt;NAME</text>
-<text x="-12.7" y="-25.4" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="VDD@75" x="5.08" y="0" length="middle" rot="R180"/>
-<pin name="VSS@74" x="5.08" y="-17.78" length="middle" rot="R180"/>
-<pin name="VDD@100" x="5.08" y="-2.54" length="middle" rot="R180"/>
-<pin name="VSS@99" x="5.08" y="-20.32" length="middle" rot="R180"/>
-<pin name="BOOT0" x="5.08" y="15.24" length="middle" rot="R180"/>
-<pin name="BOOT1" x="5.08" y="12.7" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_FSMC">
-<wire x1="5.08" y1="0" x2="5.08" y2="83.82" width="0.254" layer="94"/>
-<pin name="A0/D0" x="10.16" y="2.54" length="middle" rot="R180"/>
-<pin name="A1/D1" x="10.16" y="5.08" length="middle" rot="R180"/>
-<pin name="A2/D2" x="10.16" y="7.62" length="middle" rot="R180"/>
-<pin name="A3/D3" x="10.16" y="10.16" length="middle" rot="R180"/>
-<pin name="A4/D4" x="10.16" y="12.7" length="middle" rot="R180"/>
-<pin name="A5/D5" x="10.16" y="15.24" length="middle" rot="R180"/>
-<pin name="A6/D6" x="10.16" y="17.78" length="middle" rot="R180"/>
-<pin name="A7/D7" x="10.16" y="20.32" length="middle" rot="R180"/>
-<pin name="A8/D8" x="10.16" y="22.86" length="middle" rot="R180"/>
-<pin name="A9/D9" x="10.16" y="25.4" length="middle" rot="R180"/>
-<pin name="A10/D10" x="10.16" y="27.94" length="middle" rot="R180"/>
-<pin name="A11/D11" x="10.16" y="30.48" length="middle" rot="R180"/>
-<pin name="A12/D12" x="10.16" y="33.02" length="middle" rot="R180"/>
-<pin name="A13/D13" x="10.16" y="35.56" length="middle" rot="R180"/>
-<pin name="A14/D14" x="10.16" y="38.1" length="middle" rot="R180"/>
-<pin name="A15/D15" x="10.16" y="40.64" length="middle" rot="R180"/>
-<pin name="A16" x="10.16" y="43.18" length="middle" rot="R180"/>
-<pin name="A17" x="10.16" y="45.72" length="middle" rot="R180"/>
-<pin name="A18" x="10.16" y="48.26" length="middle" rot="R180"/>
-<pin name="A19" x="10.16" y="50.8" length="middle" rot="R180"/>
-<pin name="A20" x="10.16" y="53.34" length="middle" rot="R180"/>
-<pin name="A21" x="10.16" y="55.88" length="middle" rot="R180"/>
-<pin name="A22" x="10.16" y="58.42" length="middle" rot="R180"/>
-<pin name="A23" x="10.16" y="60.96" length="middle" rot="R180"/>
-<pin name="NOE" x="10.16" y="63.5" length="middle" rot="R180"/>
-<pin name="NWE" x="10.16" y="66.04" length="middle" rot="R180"/>
-<pin name="NWAIT" x="10.16" y="68.58" length="middle" rot="R180"/>
-<pin name="CLK" x="10.16" y="71.12" length="middle" rot="R180"/>
-<pin name="NBL1" x="10.16" y="73.66" length="middle" rot="R180"/>
-<pin name="NBL0" x="10.16" y="76.2" length="middle" rot="R180"/>
-<pin name="NL" x="10.16" y="78.74" length="middle" rot="R180"/>
-<pin name="NE1" x="10.16" y="81.28" length="middle" rot="R180"/>
-<wire x1="5.08" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
-<wire x1="5.08" y1="83.82" x2="0" y2="83.82" width="0.254" layer="94"/>
-<text x="-5.08" y="84.328" size="1.778" layer="95">&gt;NAME</text>
-<text x="-5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-</symbol>
-<symbol name="STM32F407_JTAG">
-<wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
-<wire x1="5.08" y1="0" x2="5.08" y2="17.78" width="0.254" layer="94"/>
-<wire x1="5.08" y1="17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
-<pin name="NRST" x="10.16" y="2.54" length="middle" rot="R180"/>
-<pin name="TRST" x="10.16" y="5.08" length="middle" rot="R180"/>
-<pin name="TDI" x="10.16" y="7.62" length="middle" rot="R180"/>
-<pin name="TDO/SWO" x="10.16" y="10.16" length="middle" rot="R180"/>
-<pin name="TCK/SWCLK" x="10.16" y="12.7" length="middle" rot="R180"/>
-<pin name="TMS/SWDIO" x="10.16" y="15.24" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_CLK">
-<wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
-<wire x1="5.08" y1="0" x2="5.08" y2="17.78" width="0.254" layer="94"/>
-<wire x1="5.08" y1="17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
-<pin name="OSC32_IN" x="10.16" y="12.7" length="middle" rot="R180"/>
-<pin name="OSC32_OUT" x="10.16" y="10.16" length="middle" rot="R180"/>
-<pin name="MCO1" x="10.16" y="7.62" length="middle" rot="R180"/>
-<pin name="OSC_OUT" x="10.16" y="5.08" length="middle" rot="R180"/>
-<pin name="OSC_IN" x="10.16" y="2.54" length="middle" rot="R180"/>
-<text x="-5.08" y="18.288" size="1.778" layer="95">&gt;NAME</text>
-<text x="-5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="WKUP" x="10.16" y="15.24" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_SDIO">
-<wire x1="-5.08" y1="-10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="-10.16" x2="0" y2="10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
-<pin name="SDIO_CMD" x="5.08" y="2.54" length="middle" rot="R180"/>
-<pin name="SDIO_CLK" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="SDIO_D0" x="5.08" y="0" length="middle" rot="R180"/>
-<pin name="SDIO_D1" x="5.08" y="-2.54" length="middle" rot="R180"/>
-<pin name="SDIO_D2" x="5.08" y="-5.08" length="middle" rot="R180"/>
-<pin name="SDIO_D3" x="5.08" y="-7.62" length="middle" rot="R180"/>
-<pin name="SDIO_EN" x="5.08" y="7.62" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_USB">
-<wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
-<wire x1="5.08" y1="0" x2="5.08" y2="15.24" width="0.254" layer="94"/>
-<wire x1="5.08" y1="15.24" x2="0" y2="15.24" width="0.254" layer="94"/>
-<pin name="USB_FS_DM" x="10.16" y="10.16" length="middle" rot="R180"/>
-<pin name="USB_FS_DP" x="10.16" y="12.7" length="middle" rot="R180"/>
-<pin name="USB_HS_DP" x="10.16" y="5.08" length="middle" rot="R180"/>
-<pin name="USB_HS_DM" x="10.16" y="2.54" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_SPI">
-<wire x1="-5.08" y1="-10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="-10.16" x2="0" y2="10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
-<pin name="SPI1_SCK" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="SPI1_MISO" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="SPI1_MOSI" x="5.08" y="2.54" length="middle" rot="R180"/>
-<text x="-10.16" y="10.668" size="1.778" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="SPI2_SCK" x="5.08" y="-2.54" length="middle" rot="R180"/>
-<pin name="SPI2_MISO" x="5.08" y="-5.08" length="middle" rot="R180"/>
-<pin name="SPI2_MOSI" x="5.08" y="-7.62" length="middle" rot="R180"/>
-<pin name="SPI1_NSS" x="5.08" y="0" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_AN">
-<wire x1="0" y1="10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="-10.16" x2="-5.08" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
-<pin name="VREF+" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="VSSA" x="5.08" y="-7.62" length="middle" rot="R180"/>
-<text x="-10.16" y="10.668" size="1.778" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="VDDA" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="ADC123_IN1" x="5.08" y="0" length="middle" rot="R180"/>
-<pin name="ADC123_IN2" x="5.08" y="-2.54" length="middle" rot="R180"/>
-</symbol>
-<symbol name="STM32F407_USART">
-<wire x1="0" y1="10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="-10.16" x2="-5.08" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
-<pin name="USART1_TX" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="USART1_RX" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="USART6_TX" x="5.08" y="-5.08" length="middle" rot="R180"/>
-<pin name="USART6_RX" x="5.08" y="-7.62" length="middle" rot="R180"/>
-<text x="-10.16" y="10.668" size="1.778" layer="95">&gt;NAME</text>
-<text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="USART3_RX" x="5.08" y="0" length="middle" rot="R180"/>
-</symbol>
 <symbol name="FT2232H">
 <wire x1="22.86" y1="53.34" x2="22.86" y2="-50.8" width="0.254" layer="94"/>
 <wire x1="22.86" y1="-50.8" x2="-20.32" y2="-50.8" width="0.254" layer="94"/>
@@ -1987,26 +1843,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="VSS@J1" x="10.16" y="-38.1" length="short" rot="R90"/>
 <pin name="VSS@K9" x="12.7" y="-38.1" length="short" rot="R90"/>
 </symbol>
-<symbol name="STM32F407_GPIO">
-<wire x1="-5.08" y1="-17.78" x2="0" y2="-17.78" width="0.254" layer="94"/>
-<wire x1="0" y1="-17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
-<wire x1="0" y1="17.78" x2="-5.08" y2="17.78" width="0.254" layer="94"/>
-<text x="-7.62" y="18.288" size="1.778" layer="95">&gt;NAME</text>
-<text x="-7.62" y="-20.32" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="PB0" x="5.08" y="12.7" length="middle" rot="R180"/>
-<pin name="PB1" x="5.08" y="10.16" length="middle" rot="R180"/>
-<pin name="PB5" x="5.08" y="7.62" length="middle" rot="R180"/>
-<pin name="PB6" x="5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="PB8" x="5.08" y="2.54" length="middle" rot="R180"/>
-<pin name="PB9" x="5.08" y="0" length="middle" rot="R180"/>
-<pin name="PB12" x="5.08" y="-2.54" length="middle" rot="R180"/>
-<pin name="PB13" x="5.08" y="-5.08" length="middle" rot="R180"/>
-<pin name="PC0" x="5.08" y="-7.62" length="middle" rot="R180"/>
-<pin name="PC1" x="5.08" y="-10.16" length="middle" rot="R180"/>
-<pin name="PC4" x="5.08" y="-12.7" length="middle" rot="R180"/>
-<pin name="PC5" x="5.08" y="-15.24" length="middle" rot="R180"/>
-<pin name="PA3" x="5.08" y="15.24" length="middle" rot="R180"/>
-</symbol>
 <symbol name="RGB_LED_COMMON_ANODE">
 <wire x1="0" y1="-2.54" x2="2.54" y2="0" width="0.254" layer="94"/>
 <wire x1="2.54" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
@@ -2080,11 +1916,11 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="15.24" y1="25.4" x2="15.24" y2="-27.94" width="0.254" layer="94"/>
 <wire x1="15.24" y1="-27.94" x2="-15.24" y2="-27.94" width="0.254" layer="94"/>
 <wire x1="-15.24" y1="-27.94" x2="-15.24" y2="25.4" width="0.254" layer="94"/>
-<pin name="GND@1" x="-12.7" y="-30.48" length="short" rot="R90"/>
+<pin name="GND@1" x="-17.78" y="-15.24" length="short"/>
 <pin name="WIFI/BT_ANT" x="17.78" y="12.7" length="short" rot="R180"/>
 <pin name="BT_WAKE" x="17.78" y="5.08" length="short" rot="R180"/>
 <pin name="BT_HOST_WAKE" x="17.78" y="2.54" length="short" rot="R180"/>
-<pin name="VBAT" x="-7.62" y="27.94" length="short" rot="R270"/>
+<pin name="VBAT" x="-17.78" y="22.86" length="short"/>
 <pin name="WL_DIS#" x="-17.78" y="10.16" length="short"/>
 <pin name="WL_HOST_WAKE" x="-17.78" y="7.62" length="short"/>
 <pin name="SD_D0" x="-17.78" y="2.54" length="short"/>
@@ -2093,11 +1929,11 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="SD_D3" x="-17.78" y="-5.08" length="short"/>
 <pin name="SD_CMD" x="-17.78" y="-7.62" length="short"/>
 <pin name="SD_CLK" x="-17.78" y="-10.16" length="short"/>
-<pin name="GND@20" x="-10.16" y="-30.48" length="short" rot="R90"/>
-<pin name="VDD_IO" x="-5.08" y="27.94" length="short" rot="R270"/>
-<pin name="GND@31" x="-7.62" y="-30.48" length="short" rot="R90"/>
-<pin name="GND@36" x="-2.54" y="-30.48" length="short" rot="R90"/>
-<pin name="GND@33" x="-5.08" y="-30.48" length="short" rot="R90"/>
+<pin name="GND@20" x="-17.78" y="-17.78" length="short"/>
+<pin name="VDD_IO" x="-17.78" y="20.32" length="short"/>
+<pin name="GND@31" x="-17.78" y="-20.32" length="short"/>
+<pin name="GND@36" x="-17.78" y="-25.4" length="short"/>
+<pin name="GND@33" x="-17.78" y="-22.86" length="short"/>
 <pin name="BT_DIS#" x="17.78" y="0" length="short" rot="R180"/>
 <pin name="UART_CTS#" x="17.78" y="-5.08" length="short" rot="R180"/>
 <pin name="UART_RXD" x="17.78" y="-7.62" length="short" rot="R180"/>
@@ -2128,6 +1964,176 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="7.62" y1="15.24" x2="-7.62" y2="15.24" width="0.254" layer="94"/>
 <text x="-7.62" y="16.256" size="1.778" layer="95">&gt;NAME</text>
 <text x="-7.62" y="-20.32" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="STM32F405_PWR">
+<wire x1="-5.08" y1="17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
+<wire x1="0" y1="17.78" x2="0" y2="-22.86" width="0.254" layer="94"/>
+<pin name="VBAT" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="VSS@10" x="5.08" y="-12.7" length="middle" rot="R180"/>
+<pin name="VDD@11" x="5.08" y="10.16" length="middle" rot="R180"/>
+<pin name="VDD@19" x="5.08" y="7.62" length="middle" rot="R180"/>
+<pin name="VDD@28" x="5.08" y="5.08" length="middle" rot="R180"/>
+<pin name="VSS@27" x="5.08" y="-15.24" length="middle" rot="R180"/>
+<pin name="VDD@50" x="5.08" y="2.54" length="middle" rot="R180"/>
+<pin name="VCAP_1" x="5.08" y="-10.16" length="middle" rot="R180"/>
+<pin name="VCAP_2" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<wire x1="0" y1="-22.86" x2="-5.08" y2="-22.86" width="0.254" layer="94"/>
+<text x="-12.7" y="18.288" size="1.778" layer="95">&gt;NAME</text>
+<text x="-12.7" y="-25.4" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="VDD@75" x="5.08" y="0" length="middle" rot="R180"/>
+<pin name="VSS@74" x="5.08" y="-17.78" length="middle" rot="R180"/>
+<pin name="VDD@100" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="VSS@99" x="5.08" y="-20.32" length="middle" rot="R180"/>
+<pin name="BOOT0" x="5.08" y="15.24" length="middle" rot="R180"/>
+<pin name="BOOT1" x="5.08" y="12.7" length="middle" rot="R180"/>
+</symbol>
+<symbol name="STM32F405_FSMC">
+<wire x1="5.08" y1="0" x2="5.08" y2="83.82" width="0.254" layer="94"/>
+<pin name="A0/D0" x="10.16" y="2.54" length="middle" rot="R180"/>
+<pin name="A1/D1" x="10.16" y="5.08" length="middle" rot="R180"/>
+<pin name="A2/D2" x="10.16" y="7.62" length="middle" rot="R180"/>
+<pin name="A3/D3" x="10.16" y="10.16" length="middle" rot="R180"/>
+<pin name="A4/D4" x="10.16" y="12.7" length="middle" rot="R180"/>
+<pin name="A5/D5" x="10.16" y="15.24" length="middle" rot="R180"/>
+<pin name="A6/D6" x="10.16" y="17.78" length="middle" rot="R180"/>
+<pin name="A7/D7" x="10.16" y="20.32" length="middle" rot="R180"/>
+<pin name="A8/D8" x="10.16" y="22.86" length="middle" rot="R180"/>
+<pin name="A9/D9" x="10.16" y="25.4" length="middle" rot="R180"/>
+<pin name="A10/D10" x="10.16" y="27.94" length="middle" rot="R180"/>
+<pin name="A11/D11" x="10.16" y="30.48" length="middle" rot="R180"/>
+<pin name="A12/D12" x="10.16" y="33.02" length="middle" rot="R180"/>
+<pin name="A13/D13" x="10.16" y="35.56" length="middle" rot="R180"/>
+<pin name="A14/D14" x="10.16" y="38.1" length="middle" rot="R180"/>
+<pin name="A15/D15" x="10.16" y="40.64" length="middle" rot="R180"/>
+<pin name="A16" x="10.16" y="43.18" length="middle" rot="R180"/>
+<pin name="A17" x="10.16" y="45.72" length="middle" rot="R180"/>
+<pin name="A18" x="10.16" y="48.26" length="middle" rot="R180"/>
+<pin name="A19" x="10.16" y="50.8" length="middle" rot="R180"/>
+<pin name="A20" x="10.16" y="53.34" length="middle" rot="R180"/>
+<pin name="A21" x="10.16" y="55.88" length="middle" rot="R180"/>
+<pin name="A22" x="10.16" y="58.42" length="middle" rot="R180"/>
+<pin name="A23" x="10.16" y="60.96" length="middle" rot="R180"/>
+<pin name="NOE" x="10.16" y="63.5" length="middle" rot="R180"/>
+<pin name="NWE" x="10.16" y="66.04" length="middle" rot="R180"/>
+<pin name="NWAIT" x="10.16" y="68.58" length="middle" rot="R180"/>
+<pin name="CLK" x="10.16" y="71.12" length="middle" rot="R180"/>
+<pin name="NBL1" x="10.16" y="73.66" length="middle" rot="R180"/>
+<pin name="NBL0" x="10.16" y="76.2" length="middle" rot="R180"/>
+<pin name="NL" x="10.16" y="78.74" length="middle" rot="R180"/>
+<pin name="NE1" x="10.16" y="81.28" length="middle" rot="R180"/>
+<wire x1="5.08" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="5.08" y1="83.82" x2="0" y2="83.82" width="0.254" layer="94"/>
+<text x="-5.08" y="84.328" size="1.778" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="STM32F405_SPI">
+<wire x1="-5.08" y1="-12.7" x2="0" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="0" y1="-12.7" x2="0" y2="10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
+<pin name="SPI1_SCK" x="5.08" y="7.62" length="middle" rot="R180"/>
+<pin name="SPI1_MISO" x="5.08" y="5.08" length="middle" rot="R180"/>
+<pin name="SPI1_MOSI" x="5.08" y="2.54" length="middle" rot="R180"/>
+<text x="-10.16" y="10.668" size="1.778" layer="95">&gt;NAME</text>
+<text x="-10.16" y="-15.24" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="SPI2_SCK" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="SPI2_MISO" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="SPI2_MOSI" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<pin name="SPI1_NSS" x="5.08" y="0" length="middle" rot="R180"/>
+<pin name="SPI2_NSS" x="5.08" y="-10.16" length="middle" rot="R180"/>
+</symbol>
+<symbol name="STM32F405_CLK">
+<wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="5.08" y2="15.24" width="0.254" layer="94"/>
+<wire x1="5.08" y1="15.24" x2="0" y2="15.24" width="0.254" layer="94"/>
+<pin name="OSC32_IN" x="10.16" y="12.7" length="middle" rot="R180"/>
+<pin name="OSC32_OUT" x="10.16" y="10.16" length="middle" rot="R180"/>
+<pin name="MCO1" x="10.16" y="7.62" length="middle" rot="R180"/>
+<pin name="OSC_OUT" x="10.16" y="5.08" length="middle" rot="R180"/>
+<pin name="OSC_IN" x="10.16" y="2.54" length="middle" rot="R180"/>
+<text x="-5.08" y="15.748" size="1.778" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="STM32F405_AN">
+<wire x1="0" y1="10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="-10.16" x2="-5.08" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
+<pin name="VREF+" x="5.08" y="5.08" length="middle" rot="R180"/>
+<pin name="VSSA" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<text x="-10.16" y="10.668" size="1.778" layer="95">&gt;NAME</text>
+<text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="VDDA" x="5.08" y="7.62" length="middle" rot="R180"/>
+<pin name="ADC123_IN10" x="5.08" y="0" length="middle" rot="R180"/>
+<pin name="ADC123_IN11" x="5.08" y="-2.54" length="middle" rot="R180"/>
+</symbol>
+<symbol name="STM32F405_USART">
+<wire x1="0" y1="10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="-10.16" x2="-5.08" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
+<pin name="USART1_TX" x="5.08" y="7.62" length="middle" rot="R180"/>
+<pin name="USART1_RX" x="5.08" y="5.08" length="middle" rot="R180"/>
+<text x="-10.16" y="10.668" size="1.778" layer="95">&gt;NAME</text>
+<text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="USART2_RX" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<pin name="USART2_TX" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="USART2_RTS" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="USART2_CTS" x="5.08" y="0" length="middle" rot="R180"/>
+</symbol>
+<symbol name="STM32F405_GPIO">
+<wire x1="-5.08" y1="-17.78" x2="0" y2="-17.78" width="0.254" layer="94"/>
+<wire x1="0" y1="-17.78" x2="0" y2="15.24" width="0.254" layer="94"/>
+<wire x1="0" y1="15.24" x2="-5.08" y2="15.24" width="0.254" layer="94"/>
+<text x="-7.62" y="15.748" size="1.778" layer="95">&gt;NAME</text>
+<text x="-7.62" y="-20.32" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="PB0" x="5.08" y="12.7" length="middle" rot="R180"/>
+<pin name="PB1" x="5.08" y="10.16" length="middle" rot="R180"/>
+<pin name="PB5" x="5.08" y="7.62" length="middle" rot="R180"/>
+<pin name="PB6" x="5.08" y="5.08" length="middle" rot="R180"/>
+<pin name="PB8" x="5.08" y="2.54" length="middle" rot="R180"/>
+<pin name="PB9" x="5.08" y="0" length="middle" rot="R180"/>
+<pin name="PB13" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="PC4" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<pin name="PC5" x="5.08" y="-10.16" length="middle" rot="R180"/>
+<pin name="PB11" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="PC6" x="5.08" y="-12.7" length="middle" rot="R180"/>
+<pin name="PC7" x="5.08" y="-15.24" length="middle" rot="R180"/>
+</symbol>
+<symbol name="STM32F405_SDIO">
+<wire x1="-5.08" y1="-10.16" x2="0" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="-10.16" x2="0" y2="10.16" width="0.254" layer="94"/>
+<wire x1="0" y1="10.16" x2="-5.08" y2="10.16" width="0.254" layer="94"/>
+<pin name="SDIO_CMD" x="5.08" y="-5.08" length="middle" rot="R180"/>
+<pin name="SDIO_CLK" x="5.08" y="-7.62" length="middle" rot="R180"/>
+<pin name="SDIO_D0" x="5.08" y="5.08" length="middle" rot="R180"/>
+<pin name="SDIO_D1" x="5.08" y="2.54" length="middle" rot="R180"/>
+<pin name="SDIO_D2" x="5.08" y="0" length="middle" rot="R180"/>
+<pin name="SDIO_D3" x="5.08" y="-2.54" length="middle" rot="R180"/>
+<pin name="SDIO_EN" x="5.08" y="7.62" length="middle" rot="R180"/>
+<text x="0" y="12.7" size="1.778" layer="95" rot="R180">&gt;NAME</text>
+<text x="0" y="-12.7" size="1.778" layer="96" align="bottom-right">&gt;VALUE</text>
+</symbol>
+<symbol name="STM32F405_USB">
+<wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="5.08" y2="15.24" width="0.254" layer="94"/>
+<wire x1="5.08" y1="15.24" x2="0" y2="15.24" width="0.254" layer="94"/>
+<pin name="USB_FS_DM" x="10.16" y="10.16" length="middle" rot="R180"/>
+<pin name="USB_FS_DP" x="10.16" y="12.7" length="middle" rot="R180"/>
+<pin name="USB_HS_DP" x="10.16" y="5.08" length="middle" rot="R180"/>
+<pin name="USB_HS_DM" x="10.16" y="2.54" length="middle" rot="R180"/>
+<text x="5.08" y="17.78" size="1.778" layer="95" align="top-right">&gt;NAME</text>
+<text x="5.08" y="-2.54" size="1.778" layer="96" align="bottom-right">&gt;VALUE</text>
+</symbol>
+<symbol name="STM32F405_JTAG">
+<wire x1="0" y1="0" x2="5.08" y2="0" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="5.08" y2="17.78" width="0.254" layer="94"/>
+<wire x1="5.08" y1="17.78" x2="0" y2="17.78" width="0.254" layer="94"/>
+<pin name="NRST" x="10.16" y="2.54" length="middle" rot="R180"/>
+<pin name="TRST" x="10.16" y="5.08" length="middle" rot="R180"/>
+<pin name="TDI" x="10.16" y="7.62" length="middle" rot="R180"/>
+<pin name="TDO/SWO" x="10.16" y="10.16" length="middle" rot="R180"/>
+<pin name="TCK/SWCLK" x="10.16" y="12.7" length="middle" rot="R180"/>
+<pin name="TMS/SWDIO" x="10.16" y="15.24" length="middle" rot="R180"/>
+<text x="5.08" y="20.32" size="1.778" layer="95" align="top-right">&gt;NAME</text>
+<text x="5.08" y="-2.54" size="1.778" layer="96" align="bottom-right">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -2212,133 +2218,6 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="STM32F407VGT6">
-<gates>
-<gate name="G$1" symbol="STM32F407_PWR" x="-45.72" y="-5.08"/>
-<gate name="G$2" symbol="STM32F407_FSMC" x="-17.78" y="-45.72"/>
-<gate name="G$4" symbol="STM32F407_SDIO" x="17.78" y="-15.24"/>
-<gate name="G$5" symbol="STM32F407_USB" x="12.7" y="-48.26"/>
-<gate name="G$6" symbol="STM32F407_JTAG" x="-50.8" y="20.32"/>
-<gate name="G$7" symbol="STM32F407_SPI" x="50.8" y="22.86"/>
-<gate name="G$8" symbol="STM32F407_CLK" x="45.72" y="-15.24"/>
-<gate name="G$10" symbol="STM32F407_AN" x="-45.72" y="-48.26"/>
-<gate name="G$11" symbol="STM32F407_USART" x="50.8" y="-40.64"/>
-<gate name="G$3" symbol="STM32F407_GPIO" x="17.78" y="20.32"/>
-</gates>
-<devices>
-<device name="" package="LQFP-100">
-<connects>
-<connect gate="G$1" pin="BOOT0" pad="94"/>
-<connect gate="G$1" pin="BOOT1" pad="37"/>
-<connect gate="G$1" pin="VBAT" pad="6"/>
-<connect gate="G$1" pin="VCAP_1" pad="49"/>
-<connect gate="G$1" pin="VCAP_2" pad="73"/>
-<connect gate="G$1" pin="VDD@100" pad="100"/>
-<connect gate="G$1" pin="VDD@11" pad="11"/>
-<connect gate="G$1" pin="VDD@19" pad="19"/>
-<connect gate="G$1" pin="VDD@28" pad="28"/>
-<connect gate="G$1" pin="VDD@50" pad="50"/>
-<connect gate="G$1" pin="VDD@75" pad="75"/>
-<connect gate="G$1" pin="VSS@10" pad="10"/>
-<connect gate="G$1" pin="VSS@27" pad="27"/>
-<connect gate="G$1" pin="VSS@74" pad="74"/>
-<connect gate="G$1" pin="VSS@99" pad="99"/>
-<connect gate="G$10" pin="ADC123_IN1" pad="24"/>
-<connect gate="G$10" pin="ADC123_IN2" pad="25"/>
-<connect gate="G$10" pin="VDDA" pad="22"/>
-<connect gate="G$10" pin="VREF+" pad="21"/>
-<connect gate="G$10" pin="VSSA" pad="20"/>
-<connect gate="G$11" pin="USART1_RX" pad="69"/>
-<connect gate="G$11" pin="USART1_TX" pad="68"/>
-<connect gate="G$11" pin="USART3_RX" pad="48"/>
-<connect gate="G$11" pin="USART6_RX" pad="64"/>
-<connect gate="G$11" pin="USART6_TX" pad="63"/>
-<connect gate="G$2" pin="A0/D0" pad="61"/>
-<connect gate="G$2" pin="A1/D1" pad="62"/>
-<connect gate="G$2" pin="A10/D10" pad="44"/>
-<connect gate="G$2" pin="A11/D11" pad="45"/>
-<connect gate="G$2" pin="A12/D12" pad="46"/>
-<connect gate="G$2" pin="A13/D13" pad="55"/>
-<connect gate="G$2" pin="A14/D14" pad="56"/>
-<connect gate="G$2" pin="A15/D15" pad="57"/>
-<connect gate="G$2" pin="A16" pad="58"/>
-<connect gate="G$2" pin="A17" pad="59"/>
-<connect gate="G$2" pin="A18" pad="60"/>
-<connect gate="G$2" pin="A19" pad="2"/>
-<connect gate="G$2" pin="A2/D2" pad="81"/>
-<connect gate="G$2" pin="A20" pad="3"/>
-<connect gate="G$2" pin="A21" pad="4"/>
-<connect gate="G$2" pin="A22" pad="5"/>
-<connect gate="G$2" pin="A23" pad="1"/>
-<connect gate="G$2" pin="A3/D3" pad="82"/>
-<connect gate="G$2" pin="A4/D4" pad="38"/>
-<connect gate="G$2" pin="A5/D5" pad="39"/>
-<connect gate="G$2" pin="A6/D6" pad="40"/>
-<connect gate="G$2" pin="A7/D7" pad="41"/>
-<connect gate="G$2" pin="A8/D8" pad="42"/>
-<connect gate="G$2" pin="A9/D9" pad="43"/>
-<connect gate="G$2" pin="CLK" pad="84"/>
-<connect gate="G$2" pin="NBL0" pad="97"/>
-<connect gate="G$2" pin="NBL1" pad="98"/>
-<connect gate="G$2" pin="NE1" pad="88"/>
-<connect gate="G$2" pin="NL" pad="93"/>
-<connect gate="G$2" pin="NOE" pad="85"/>
-<connect gate="G$2" pin="NWAIT" pad="87"/>
-<connect gate="G$2" pin="NWE" pad="86"/>
-<connect gate="G$3" pin="PA3" pad="26"/>
-<connect gate="G$3" pin="PB0" pad="35"/>
-<connect gate="G$3" pin="PB1" pad="36"/>
-<connect gate="G$3" pin="PB12" pad="51"/>
-<connect gate="G$3" pin="PB13" pad="52"/>
-<connect gate="G$3" pin="PB5" pad="91"/>
-<connect gate="G$3" pin="PB6" pad="92"/>
-<connect gate="G$3" pin="PB8" pad="95"/>
-<connect gate="G$3" pin="PB9" pad="96"/>
-<connect gate="G$3" pin="PC0" pad="15"/>
-<connect gate="G$3" pin="PC1" pad="16"/>
-<connect gate="G$3" pin="PC4" pad="33"/>
-<connect gate="G$3" pin="PC5" pad="34"/>
-<connect gate="G$4" pin="SDIO_CLK" pad="80"/>
-<connect gate="G$4" pin="SDIO_CMD" pad="83"/>
-<connect gate="G$4" pin="SDIO_D0" pad="65"/>
-<connect gate="G$4" pin="SDIO_D1" pad="66"/>
-<connect gate="G$4" pin="SDIO_D2" pad="78"/>
-<connect gate="G$4" pin="SDIO_D3" pad="79"/>
-<connect gate="G$4" pin="SDIO_EN" pad="7"/>
-<connect gate="G$5" pin="USB_FS_DM" pad="70"/>
-<connect gate="G$5" pin="USB_FS_DP" pad="71"/>
-<connect gate="G$5" pin="USB_HS_DM" pad="53"/>
-<connect gate="G$5" pin="USB_HS_DP" pad="54"/>
-<connect gate="G$6" pin="NRST" pad="14"/>
-<connect gate="G$6" pin="TCK/SWCLK" pad="76"/>
-<connect gate="G$6" pin="TDI" pad="77"/>
-<connect gate="G$6" pin="TDO/SWO" pad="89"/>
-<connect gate="G$6" pin="TMS/SWDIO" pad="72"/>
-<connect gate="G$6" pin="TRST" pad="90"/>
-<connect gate="G$7" pin="SPI1_MISO" pad="31"/>
-<connect gate="G$7" pin="SPI1_MOSI" pad="32"/>
-<connect gate="G$7" pin="SPI1_NSS" pad="29"/>
-<connect gate="G$7" pin="SPI1_SCK" pad="30"/>
-<connect gate="G$7" pin="SPI2_MISO" pad="17"/>
-<connect gate="G$7" pin="SPI2_MOSI" pad="18"/>
-<connect gate="G$7" pin="SPI2_SCK" pad="47"/>
-<connect gate="G$8" pin="MCO1" pad="67"/>
-<connect gate="G$8" pin="OSC32_IN" pad="8"/>
-<connect gate="G$8" pin="OSC32_OUT" pad="9"/>
-<connect gate="G$8" pin="OSC_IN" pad="12"/>
-<connect gate="G$8" pin="OSC_OUT" pad="13"/>
-<connect gate="G$8" pin="WKUP" pad="23"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="DIGIKEY#" value="497-11605-ND"/>
-<attribute name="MANF" value="STMicroelectronics"/>
-<attribute name="MANF#" value="STM32F407VGT6"/>
-</technology>
 </technologies>
 </device>
 </devices>
@@ -3054,6 +2933,133 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="STM32F405VGT6">
+<gates>
+<gate name="_PWR" symbol="STM32F405_PWR" x="-45.72" y="-5.08"/>
+<gate name="_FSMC" symbol="STM32F405_FSMC" x="-17.78" y="-45.72"/>
+<gate name="_SDIO" symbol="STM32F405_SDIO" x="17.78" y="-15.24"/>
+<gate name="_USB" symbol="STM32F405_USB" x="12.7" y="-48.26"/>
+<gate name="_JTAG" symbol="STM32F405_JTAG" x="-50.8" y="20.32"/>
+<gate name="_SPI" symbol="STM32F405_SPI" x="50.8" y="22.86"/>
+<gate name="_CLK" symbol="STM32F405_CLK" x="45.72" y="-15.24"/>
+<gate name="_AN" symbol="STM32F405_AN" x="-45.72" y="-48.26"/>
+<gate name="_USART" symbol="STM32F405_USART" x="50.8" y="-40.64"/>
+<gate name="_GPIO" symbol="STM32F405_GPIO" x="17.78" y="20.32"/>
+</gates>
+<devices>
+<device name="" package="LQFP-100">
+<connects>
+<connect gate="_AN" pin="ADC123_IN10" pad="15"/>
+<connect gate="_AN" pin="ADC123_IN11" pad="16"/>
+<connect gate="_AN" pin="VDDA" pad="22"/>
+<connect gate="_AN" pin="VREF+" pad="21"/>
+<connect gate="_AN" pin="VSSA" pad="20"/>
+<connect gate="_CLK" pin="MCO1" pad="67"/>
+<connect gate="_CLK" pin="OSC32_IN" pad="8"/>
+<connect gate="_CLK" pin="OSC32_OUT" pad="9"/>
+<connect gate="_CLK" pin="OSC_IN" pad="12"/>
+<connect gate="_CLK" pin="OSC_OUT" pad="13"/>
+<connect gate="_FSMC" pin="A0/D0" pad="61"/>
+<connect gate="_FSMC" pin="A1/D1" pad="62"/>
+<connect gate="_FSMC" pin="A10/D10" pad="44"/>
+<connect gate="_FSMC" pin="A11/D11" pad="45"/>
+<connect gate="_FSMC" pin="A12/D12" pad="46"/>
+<connect gate="_FSMC" pin="A13/D13" pad="55"/>
+<connect gate="_FSMC" pin="A14/D14" pad="56"/>
+<connect gate="_FSMC" pin="A15/D15" pad="57"/>
+<connect gate="_FSMC" pin="A16" pad="58"/>
+<connect gate="_FSMC" pin="A17" pad="59"/>
+<connect gate="_FSMC" pin="A18" pad="60"/>
+<connect gate="_FSMC" pin="A19" pad="2"/>
+<connect gate="_FSMC" pin="A2/D2" pad="81"/>
+<connect gate="_FSMC" pin="A20" pad="3"/>
+<connect gate="_FSMC" pin="A21" pad="4"/>
+<connect gate="_FSMC" pin="A22" pad="5"/>
+<connect gate="_FSMC" pin="A23" pad="1"/>
+<connect gate="_FSMC" pin="A3/D3" pad="82"/>
+<connect gate="_FSMC" pin="A4/D4" pad="38"/>
+<connect gate="_FSMC" pin="A5/D5" pad="39"/>
+<connect gate="_FSMC" pin="A6/D6" pad="40"/>
+<connect gate="_FSMC" pin="A7/D7" pad="41"/>
+<connect gate="_FSMC" pin="A8/D8" pad="42"/>
+<connect gate="_FSMC" pin="A9/D9" pad="43"/>
+<connect gate="_FSMC" pin="CLK" pad="84"/>
+<connect gate="_FSMC" pin="NBL0" pad="97"/>
+<connect gate="_FSMC" pin="NBL1" pad="98"/>
+<connect gate="_FSMC" pin="NE1" pad="88"/>
+<connect gate="_FSMC" pin="NL" pad="93"/>
+<connect gate="_FSMC" pin="NOE" pad="85"/>
+<connect gate="_FSMC" pin="NWAIT" pad="87"/>
+<connect gate="_FSMC" pin="NWE" pad="86"/>
+<connect gate="_GPIO" pin="PB0" pad="35"/>
+<connect gate="_GPIO" pin="PB1" pad="36"/>
+<connect gate="_GPIO" pin="PB11" pad="48"/>
+<connect gate="_GPIO" pin="PB13" pad="52"/>
+<connect gate="_GPIO" pin="PB5" pad="91"/>
+<connect gate="_GPIO" pin="PB6" pad="92"/>
+<connect gate="_GPIO" pin="PB8" pad="95"/>
+<connect gate="_GPIO" pin="PB9" pad="96"/>
+<connect gate="_GPIO" pin="PC4" pad="33"/>
+<connect gate="_GPIO" pin="PC5" pad="34"/>
+<connect gate="_GPIO" pin="PC6" pad="63"/>
+<connect gate="_GPIO" pin="PC7" pad="64"/>
+<connect gate="_JTAG" pin="NRST" pad="14"/>
+<connect gate="_JTAG" pin="TCK/SWCLK" pad="76"/>
+<connect gate="_JTAG" pin="TDI" pad="77"/>
+<connect gate="_JTAG" pin="TDO/SWO" pad="89"/>
+<connect gate="_JTAG" pin="TMS/SWDIO" pad="72"/>
+<connect gate="_JTAG" pin="TRST" pad="90"/>
+<connect gate="_PWR" pin="BOOT0" pad="94"/>
+<connect gate="_PWR" pin="BOOT1" pad="37"/>
+<connect gate="_PWR" pin="VBAT" pad="6"/>
+<connect gate="_PWR" pin="VCAP_1" pad="49"/>
+<connect gate="_PWR" pin="VCAP_2" pad="73"/>
+<connect gate="_PWR" pin="VDD@100" pad="100"/>
+<connect gate="_PWR" pin="VDD@11" pad="11"/>
+<connect gate="_PWR" pin="VDD@19" pad="19"/>
+<connect gate="_PWR" pin="VDD@28" pad="28"/>
+<connect gate="_PWR" pin="VDD@50" pad="50"/>
+<connect gate="_PWR" pin="VDD@75" pad="75"/>
+<connect gate="_PWR" pin="VSS@10" pad="10"/>
+<connect gate="_PWR" pin="VSS@27" pad="27"/>
+<connect gate="_PWR" pin="VSS@74" pad="74"/>
+<connect gate="_PWR" pin="VSS@99" pad="99"/>
+<connect gate="_SDIO" pin="SDIO_CLK" pad="80"/>
+<connect gate="_SDIO" pin="SDIO_CMD" pad="83"/>
+<connect gate="_SDIO" pin="SDIO_D0" pad="65"/>
+<connect gate="_SDIO" pin="SDIO_D1" pad="66"/>
+<connect gate="_SDIO" pin="SDIO_D2" pad="78"/>
+<connect gate="_SDIO" pin="SDIO_D3" pad="79"/>
+<connect gate="_SDIO" pin="SDIO_EN" pad="7"/>
+<connect gate="_SPI" pin="SPI1_MISO" pad="31"/>
+<connect gate="_SPI" pin="SPI1_MOSI" pad="32"/>
+<connect gate="_SPI" pin="SPI1_NSS" pad="29"/>
+<connect gate="_SPI" pin="SPI1_SCK" pad="30"/>
+<connect gate="_SPI" pin="SPI2_MISO" pad="17"/>
+<connect gate="_SPI" pin="SPI2_MOSI" pad="18"/>
+<connect gate="_SPI" pin="SPI2_NSS" pad="51"/>
+<connect gate="_SPI" pin="SPI2_SCK" pad="47"/>
+<connect gate="_USART" pin="USART1_RX" pad="69"/>
+<connect gate="_USART" pin="USART1_TX" pad="68"/>
+<connect gate="_USART" pin="USART2_CTS" pad="23"/>
+<connect gate="_USART" pin="USART2_RTS" pad="24"/>
+<connect gate="_USART" pin="USART2_RX" pad="26"/>
+<connect gate="_USART" pin="USART2_TX" pad="25"/>
+<connect gate="_USB" pin="USB_FS_DM" pad="70"/>
+<connect gate="_USB" pin="USB_FS_DP" pad="71"/>
+<connect gate="_USB" pin="USB_HS_DM" pad="53"/>
+<connect gate="_USB" pin="USB_HS_DP" pad="54"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DIGIKEY#" value="497-11605-ND"/>
+<attribute name="MANF" value="STMicroelectronics"/>
+<attribute name="MANF#" value="STM32F407VGT6"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -7273,17 +7279,16 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10029449-111RLF"/>
 </part>
-<part name="DEBUG" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
+<part name="PWR/DEBUG" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
 <attribute name="DIGIKEY#" value="609-4618-1-ND"/>
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10118194-0001LF"/>
 </part>
-<part name="MCU" library="reclone-rise" deviceset="STM32F407VGT6" device=""/>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY5" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY6" library="supply2" deviceset="GND" device=""/>
-<part name="USB-SERIAL" library="reclone-rise" deviceset="FT2232H" device="">
+<part name="SERIAL/JTAG" library="reclone-rise" deviceset="FT2232H" device="">
 <attribute name="DIGIKEY#" value="768-1024-1-ND"/>
 <attribute name="MANF" value="FTDI, Future Technology Devices International Ltd"/>
 <attribute name="MANF#" value="FT2232HL-REEL"/>
@@ -7856,14 +7861,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Alliance Memory, Inc."/>
 <attribute name="MANF#" value="AS4C128M8D2-25BCN"/>
 </part>
-<part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
-<part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
-<part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
-<attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
-<attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-074K7L"/>
-</part>
-<part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
 <part name="R11" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
 <attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
@@ -7989,7 +7986,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Murata Electronics North America"/>
 <attribute name="MANF#" value="GRM31CR60J107ME39K"/>
 </part>
-<part name="WIFI_BLUETOOTH" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device=""/>
+<part name="WIFI/BT" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device=""/>
 <part name="MICROSD" library="reclone-rise" deviceset="MICROSD_PUSHPULL" device=""/>
 <part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
@@ -8018,6 +8015,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
 </part>
+<part name="SUPPLY25" library="supply2" deviceset="GND" device=""/>
+<part name="MCU" library="reclone-rise" deviceset="STM32F405VGT6" device=""/>
+<part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
+<part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8030,16 +8031,12 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="DEBUG" gate="G$1" x="43.18" y="238.76" rot="R180">
+<instance part="PWR/DEBUG" gate="G$1" x="43.18" y="238.76" rot="R180">
 <attribute name="DIGIKEY#" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="MCU" gate="G$1" x="193.04" y="213.36"/>
-<instance part="MCU" gate="G$10" x="353.06" y="177.8"/>
-<instance part="MCU" gate="G$7" x="154.94" y="22.86"/>
-<instance part="MCU" gate="G$5" x="309.88" y="121.92"/>
-<instance part="USB-SERIAL" gate="G$1" x="81.28" y="63.5">
+<instance part="SERIAL/JTAG" gate="G$1" x="81.28" y="63.5">
 <attribute name="DIGIKEY#" x="81.28" y="63.5" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="81.28" y="63.5" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="81.28" y="63.5" size="1.778" layer="96" display="off"/>
@@ -8140,7 +8137,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="SUPPLY14" gate="GND" x="365.76" y="167.64"/>
 <instance part="SUPPLY15" gate="GND" x="213.36" y="190.5"/>
 <instance part="+3V9" gate="G$1" x="205.74" y="215.9"/>
-<instance part="MCU" gate="G$6" x="149.86" y="96.52"/>
 <instance part="R15" gate="G$1" x="137.16" y="101.6" rot="R270">
 <attribute name="DIGIKEY#" x="137.16" y="101.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="137.16" y="101.6" size="1.778" layer="96" display="off"/>
@@ -8150,9 +8146,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="FPGA" gate="BNA" x="154.94" y="78.74"/>
 <instance part="SUPPLY16" gate="GND" x="165.1" y="86.36" rot="R90"/>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
-<instance part="MCU" gate="G$4" x="208.28" y="58.42"/>
-<instance part="MCU" gate="G$11" x="154.94" y="50.8"/>
-<instance part="MCU" gate="G$8" x="203.2" y="157.48"/>
 <instance part="R35" gate="G$1" x="213.36" y="233.68" rot="R270">
 <attribute name="DIGIKEY#" x="213.36" y="233.68" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="213.36" y="233.68" size="1.778" layer="96" display="off"/>
@@ -8190,19 +8183,19 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="SUPPLY26" gate="GND" x="198.12" y="233.68"/>
 <instance part="SUPPLY27" gate="GND" x="213.36" y="213.36"/>
 <instance part="P+7" gate="1" x="116.84" y="246.38"/>
-<instance part="ACTIVITY" gate="G$1" x="233.68" y="96.52" rot="R90">
-<attribute name="DIGIKEY#" x="233.68" y="96.52" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF" x="233.68" y="96.52" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF#" x="233.68" y="96.52" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="ACTIVITY" gate="G$1" x="246.38" y="58.42" rot="R90">
+<attribute name="DIGIKEY#" x="246.38" y="58.42" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF" x="246.38" y="58.42" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="246.38" y="58.42" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="R9" gate="G$1" x="223.52" y="96.52" smashed="yes">
-<attribute name="NAME" x="217.932" y="96.7486" size="1.778" layer="95"/>
-<attribute name="VALUE" x="225.806" y="96.774" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="223.52" y="96.52" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="223.52" y="96.52" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="223.52" y="96.52" size="1.778" layer="96" display="off"/>
+<instance part="R9" gate="G$1" x="236.22" y="58.42" smashed="yes">
+<attribute name="NAME" x="230.632" y="58.6486" size="1.778" layer="95"/>
+<attribute name="VALUE" x="238.506" y="58.674" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="236.22" y="58.42" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="236.22" y="58.42" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="236.22" y="58.42" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="SUPPLY30" gate="GND" x="241.3" y="93.98"/>
+<instance part="SUPPLY30" gate="GND" x="254" y="55.88"/>
 <instance part="SUPPLY31" gate="GND" x="129.54" y="220.98"/>
 <instance part="F1" gate="F1" x="86.36" y="236.22">
 <attribute name="DIGIKEY#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
@@ -8475,16 +8468,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="+3V2" gate="G$1" x="271.78" y="71.12"/>
-<instance part="SUPPLY3" gate="GND" x="269.24" y="30.48"/>
-<instance part="R10" gate="G$1" x="203.2" y="40.64" smashed="yes">
-<attribute name="NAME" x="197.358" y="38.5826" size="1.778" layer="95"/>
-<attribute name="VALUE" x="205.486" y="40.894" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="203.2" y="40.64" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="203.2" y="40.64" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="203.2" y="40.64" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="+3V7" gate="G$1" x="198.12" y="45.72"/>
 <instance part="R11" gate="G$1" x="185.42" y="109.22" smashed="yes">
 <attribute name="NAME" x="179.578" y="107.1626" size="1.778" layer="95"/>
 <attribute name="VALUE" x="187.706" y="109.474" size="1.778" layer="96"/>
@@ -8514,7 +8497,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="129.54" y="111.76" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="129.54" y="111.76" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="MCU" gate="G$3" x="208.28" y="104.14"/>
 <instance part="R22" gate="G$1" x="261.62" y="228.6" rot="R270">
 <attribute name="DIGIKEY#" x="261.62" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="261.62" y="228.6" size="1.778" layer="96" display="off"/>
@@ -8595,7 +8577,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="78.74" y="203.2" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="78.74" y="203.2" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="WIFI_BLUETOOTH" gate="G$1" x="317.5" y="71.12"/>
+<instance part="WIFI/BT" gate="G$1" x="317.5" y="71.12"/>
 <instance part="MICROSD" gate="G$1" x="284.48" y="213.36"/>
 <instance part="R31" gate="G$1" x="254" y="228.6" rot="R270">
 <attribute name="DIGIKEY#" x="254" y="228.6" size="1.778" layer="96" display="off"/>
@@ -8618,12 +8600,24 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY24" gate="GND" x="299.72" y="223.52"/>
-<instance part="RESET" gate="G$1" x="127" y="83.82"/>
+<instance part="RESET" gate="G$1" x="167.64" y="93.98"/>
 <instance part="R34" gate="G$1" x="269.24" y="238.76">
 <attribute name="DIGIKEY#" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="MANF" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="MANF#" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
+<instance part="SUPPLY25" gate="GND" x="175.26" y="91.44"/>
+<instance part="MCU" gate="_PWR" x="193.04" y="213.36"/>
+<instance part="MCU" gate="_CLK" x="203.2" y="157.48"/>
+<instance part="MCU" gate="_AN" x="353.06" y="177.8"/>
+<instance part="MCU" gate="_USB" x="309.88" y="121.92"/>
+<instance part="MCU" gate="_USART" x="154.94" y="50.8"/>
+<instance part="MCU" gate="_JTAG" x="149.86" y="96.52"/>
+<instance part="MCU" gate="_SPI" x="154.94" y="22.86"/>
+<instance part="MCU" gate="_GPIO" x="208.28" y="63.5"/>
+<instance part="MCU" gate="_SDIO" x="287.02" y="68.58"/>
+<instance part="SUPPLY3" gate="GND" x="297.18" y="40.64"/>
+<instance part="+3V2" gate="G$1" x="297.18" y="99.06"/>
 </instances>
 <busses>
 </busses>
@@ -8703,9 +8697,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="GND" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@8"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@8"/>
 <pinref part="SUPPLY1" gate="GND" pin="GND"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="TEST"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="TEST"/>
 <wire x1="86.36" y1="10.16" x2="83.82" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="10.16" x2="81.28" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="10.16" x2="78.74" y2="10.16" width="0.1524" layer="91"/>
@@ -8715,21 +8709,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="71.12" y1="10.16" x2="66.04" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="10.16" x2="58.42" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="10.16" x2="58.42" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="AGND"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="AGND"/>
 <junction x="66.04" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@1"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@1"/>
 <junction x="71.12" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@2"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@2"/>
 <junction x="73.66" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@3"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@3"/>
 <junction x="76.2" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@4"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@4"/>
 <junction x="78.74" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@5"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@5"/>
 <junction x="81.28" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@6"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@6"/>
 <junction x="83.82" y="10.16"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="GND@7"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="GND@7"/>
 <junction x="86.36" y="10.16"/>
 <junction x="88.9" y="10.16"/>
 <wire x1="86.36" y1="10.16" x2="88.9" y2="10.16" width="0.1524" layer="91"/>
@@ -8769,24 +8763,20 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="45.72" y="81.28"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$10" pin="VSSA"/>
 <pinref part="SUPPLY14" gate="GND" pin="GND"/>
 <wire x1="358.14" y1="170.18" x2="365.76" y2="170.18" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_AN" pin="VSSA"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$1" pin="VSS@10"/>
 <wire x1="198.12" y1="200.66" x2="200.66" y2="200.66" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="200.66" x2="200.66" y2="198.12" width="0.1524" layer="91"/>
 <pinref part="SUPPLY15" gate="GND" pin="GND"/>
 <wire x1="200.66" y1="198.12" x2="200.66" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="195.58" x2="200.66" y2="193.04" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="193.04" x2="205.74" y2="193.04" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VSS@99"/>
 <wire x1="205.74" y1="193.04" x2="213.36" y2="193.04" width="0.1524" layer="91"/>
 <wire x1="198.12" y1="193.04" x2="200.66" y2="193.04" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VSS@74"/>
 <wire x1="198.12" y1="195.58" x2="200.66" y2="195.58" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VSS@27"/>
 <wire x1="198.12" y1="198.12" x2="200.66" y2="198.12" width="0.1524" layer="91"/>
 <junction x="200.66" y="198.12"/>
 <junction x="200.66" y="195.58"/>
@@ -8800,6 +8790,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="BAT" gate="G$1" pin="-"/>
 <wire x1="223.52" y1="198.12" x2="223.52" y2="193.04" width="0.1524" layer="91"/>
 <wire x1="223.52" y1="193.04" x2="213.36" y2="193.04" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_PWR" pin="VSS@10"/>
+<pinref part="MCU" gate="_PWR" pin="VSS@27"/>
+<pinref part="MCU" gate="_PWR" pin="VSS@74"/>
+<pinref part="MCU" gate="_PWR" pin="VSS@99"/>
 </segment>
 <segment>
 <pinref part="SUPPLY13" gate="GND" pin="GND"/>
@@ -8836,16 +8830,16 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="SUPPLY29" gate="GND" pin="GND"/>
 <wire x1="25.4" y1="228.6" x2="25.4" y2="231.14" width="0.1524" layer="91"/>
-<pinref part="DEBUG" gate="G$1" pin="GND"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="GND"/>
 <wire x1="45.72" y1="243.84" x2="45.72" y2="238.76" width="0.1524" layer="91"/>
-<pinref part="DEBUG" gate="G$1" pin="SH1"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="SH1"/>
 <wire x1="25.4" y1="231.14" x2="25.4" y2="233.68" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="233.68" x2="25.4" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="236.22" x2="25.4" y2="238.76" width="0.1524" layer="91"/>
-<pinref part="DEBUG" gate="G$1" pin="SH4"/>
-<pinref part="DEBUG" gate="G$1" pin="SH3"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="SH4"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="SH3"/>
 <junction x="25.4" y="236.22"/>
-<pinref part="DEBUG" gate="G$1" pin="SH2"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="SH2"/>
 <junction x="25.4" y="233.68"/>
 <wire x1="25.4" y1="238.76" x2="25.4" y2="243.84" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="243.84" x2="45.72" y2="243.84" width="0.1524" layer="91"/>
@@ -8864,7 +8858,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="ACTIVITY" gate="G$1" pin="C"/>
 <pinref part="SUPPLY30" gate="GND" pin="GND"/>
-<wire x1="238.76" y1="96.52" x2="241.3" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="251.46" y1="58.42" x2="254" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY31" gate="GND" pin="GND"/>
@@ -9001,10 +8995,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="243.84" y="172.72"/>
 </segment>
 <segment>
-<pinref part="SUPPLY3" gate="GND" pin="GND"/>
-<wire x1="266.7" y1="33.02" x2="269.24" y2="33.02" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="R11" gate="G$1" pin="2"/>
 <pinref part="SUPPLY19" gate="GND" pin="GND"/>
 <wire x1="190.5" y1="109.22" x2="193.04" y2="109.22" width="0.1524" layer="91"/>
@@ -9049,19 +9039,46 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="SUPPLY24" gate="GND" pin="GND"/>
 <wire x1="299.72" y1="228.6" x2="299.72" y2="226.06" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="RESET" gate="G$1" pin="B"/>
+<pinref part="SUPPLY25" gate="GND" pin="GND"/>
+<wire x1="175.26" y1="93.98" x2="172.72" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY3" gate="GND" pin="GND"/>
+<pinref part="WIFI/BT" gate="G$1" pin="GND@1"/>
+<wire x1="297.18" y1="43.18" x2="297.18" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="45.72" x2="297.18" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="48.26" x2="297.18" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="50.8" x2="297.18" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="53.34" x2="297.18" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="55.88" x2="299.72" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="GND@20"/>
+<wire x1="299.72" y1="53.34" x2="297.18" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="GND@31"/>
+<wire x1="299.72" y1="50.8" x2="297.18" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="GND@33"/>
+<wire x1="299.72" y1="48.26" x2="297.18" y2="48.26" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="GND@36"/>
+<wire x1="299.72" y1="45.72" x2="297.18" y2="45.72" width="0.1524" layer="91"/>
+<junction x="297.18" y="45.72"/>
+<junction x="297.18" y="48.26"/>
+<junction x="297.18" y="50.8"/>
+<junction x="297.18" y="53.34"/>
+</segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCCIO@4"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCCIO@4"/>
 <wire x1="86.36" y1="121.92" x2="88.9" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="121.92" x2="91.44" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="91.44" y1="121.92" x2="91.44" y2="119.38" width="0.1524" layer="91"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCCIO@3"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCCIO@3"/>
 <wire x1="88.9" y1="119.38" x2="88.9" y2="121.92" width="0.1524" layer="91"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCCIO@1"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCCIO@1"/>
 <wire x1="86.36" y1="119.38" x2="86.36" y2="121.92" width="0.1524" layer="91"/>
 <junction x="88.9" y="121.92"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCCIO@2"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCCIO@2"/>
 <wire x1="83.82" y1="119.38" x2="83.82" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="121.92" x2="86.36" y2="121.92" width="0.1524" layer="91"/>
 <pinref part="+3V3" gate="G$1" pin="+3V3"/>
@@ -9099,14 +9116,14 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="L3" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$10" pin="VREF+"/>
 <pinref part="+3V8" gate="G$1" pin="+3V3"/>
 <wire x1="358.14" y1="182.88" x2="360.68" y2="182.88" width="0.1524" layer="91"/>
 <wire x1="360.68" y1="182.88" x2="360.68" y2="185.42" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$10" pin="VDDA"/>
 <wire x1="360.68" y1="185.42" x2="360.68" y2="190.5" width="0.1524" layer="91"/>
 <wire x1="358.14" y1="185.42" x2="360.68" y2="185.42" width="0.1524" layer="91"/>
 <junction x="360.68" y="185.42"/>
+<pinref part="MCU" gate="_AN" pin="VREF+"/>
+<pinref part="MCU" gate="_AN" pin="VDDA"/>
 </segment>
 <segment>
 <pinref part="R15" gate="G$1" pin="1"/>
@@ -9169,16 +9186,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="78.74" y="160.02"/>
 </segment>
 <segment>
-<pinref part="+3V2" gate="G$1" pin="+3V3"/>
-<wire x1="266.7" y1="66.04" x2="271.78" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="271.78" y1="66.04" x2="271.78" y2="68.58" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="R10" gate="G$1" pin="1"/>
-<pinref part="+3V7" gate="G$1" pin="+3V3"/>
-<wire x1="198.12" y1="40.64" x2="198.12" y2="43.18" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="R12" gate="G$1" pin="2"/>
 <pinref part="+3V12" gate="G$1" pin="+3V3"/>
 <wire x1="185.42" y1="111.76" x2="185.42" y2="114.3" width="0.1524" layer="91"/>
@@ -9203,22 +9210,16 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="198.12" y1="144.78" x2="200.66" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$1" pin="VDD@100"/>
 <wire x1="198.12" y1="210.82" x2="200.66" y2="210.82" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="210.82" x2="200.66" y2="213.36" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="213.36" x2="200.66" y2="215.9" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="215.9" x2="200.66" y2="218.44" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="218.44" x2="200.66" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="220.98" x2="200.66" y2="223.52" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VDD@11"/>
 <wire x1="198.12" y1="223.52" x2="200.66" y2="223.52" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VDD@19"/>
 <wire x1="198.12" y1="220.98" x2="200.66" y2="220.98" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VDD@28"/>
 <wire x1="198.12" y1="218.44" x2="200.66" y2="218.44" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VDD@50"/>
 <wire x1="198.12" y1="215.9" x2="200.66" y2="215.9" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$1" pin="VDD@75"/>
 <wire x1="198.12" y1="213.36" x2="200.66" y2="213.36" width="0.1524" layer="91"/>
 <junction x="200.66" y="220.98"/>
 <junction x="200.66" y="218.44"/>
@@ -9226,6 +9227,12 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="200.66" y="213.36"/>
 <pinref part="+3V9" gate="G$1" pin="+3V3"/>
 <wire x1="200.66" y1="213.36" x2="205.74" y2="213.36" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_PWR" pin="VDD@11"/>
+<pinref part="MCU" gate="_PWR" pin="VDD@19"/>
+<pinref part="MCU" gate="_PWR" pin="VDD@28"/>
+<pinref part="MCU" gate="_PWR" pin="VDD@50"/>
+<pinref part="MCU" gate="_PWR" pin="VDD@75"/>
+<pinref part="MCU" gate="_PWR" pin="VDD@100"/>
 </segment>
 <segment>
 <pinref part="R22" gate="G$1" pin="1"/>
@@ -9248,40 +9255,50 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="R34" gate="G$1" pin="1"/>
 <wire x1="264.16" y1="238.76" x2="261.62" y2="238.76" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="+3V2" gate="G$1" pin="+3V3"/>
+<wire x1="297.18" y1="96.52" x2="297.18" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="VDD_IO"/>
+<wire x1="297.18" y1="93.98" x2="297.18" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="91.44" x2="299.72" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="VBAT"/>
+<wire x1="299.72" y1="93.98" x2="297.18" y2="93.98" width="0.1524" layer="91"/>
+<junction x="297.18" y="93.98"/>
+</segment>
 </net>
 <net name="FPGA_CONFIG_CLK" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI2_SCK"/>
 <wire x1="160.02" y1="20.32" x2="162.56" y2="20.32" width="0.1524" layer="91"/>
 <label x="162.56" y="20.32" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI2_SCK"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_DONE" class="0">
 <segment>
-<pinref part="MCU" gate="G$3" pin="PB1"/>
-<wire x1="213.36" y1="114.3" x2="215.9" y2="114.3" width="0.1524" layer="91"/>
-<label x="215.9" y="114.3" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_GPIO" pin="PB1"/>
+<wire x1="213.36" y1="73.66" x2="215.9" y2="73.66" width="0.1524" layer="91"/>
+<label x="215.9" y="73.66" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_PROGRAM_B" class="0">
 <segment>
-<pinref part="MCU" gate="G$3" pin="PC5"/>
-<wire x1="213.36" y1="88.9" x2="215.9" y2="88.9" width="0.1524" layer="91"/>
-<label x="215.9" y="88.9" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_GPIO" pin="PC5"/>
+<wire x1="213.36" y1="53.34" x2="215.9" y2="53.34" width="0.1524" layer="91"/>
+<label x="215.9" y="53.34" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_INIT_B" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI2_MISO"/>
 <wire x1="160.02" y1="17.78" x2="162.56" y2="17.78" width="0.1524" layer="91"/>
 <label x="162.56" y="17.78" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI2_MISO"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_DIN" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI2_MOSI"/>
 <wire x1="160.02" y1="15.24" x2="162.56" y2="15.24" width="0.1524" layer="91"/>
 <label x="162.56" y="15.24" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI2_MOSI"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -9304,12 +9321,12 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="+1V8" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCORE@1"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCORE@2"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCORE@1"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCORE@2"/>
 <wire x1="76.2" y1="119.38" x2="76.2" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="121.92" x2="73.66" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="121.92" x2="73.66" y2="119.38" width="0.1524" layer="91"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="VCORE@3"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VCORE@3"/>
 <wire x1="78.74" y1="119.38" x2="78.74" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="121.92" x2="76.2" y2="121.92" width="0.1524" layer="91"/>
 <junction x="76.2" y="121.92"/>
@@ -9365,7 +9382,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <pinref part="R2" gate="G$1" pin="2"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="PWRSAVE/BCBUS7"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="PWRSAVE/BCBUS7"/>
 <wire x1="106.68" y1="20.32" x2="111.76" y2="20.32" width="0.1524" layer="91"/>
 <junction x="111.76" y="20.32"/>
 <wire x1="111.76" y1="20.32" x2="116.84" y2="20.32" width="0.1524" layer="91"/>
@@ -9378,7 +9395,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <label x="116.84" y="30.48" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="DEBUG" gate="G$1" pin="VBUS"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="VBUS"/>
 <pinref part="BUSPWR" gate="G$1" pin="1"/>
 <label x="48.26" y="236.22" size="1.778" layer="95"/>
 <wire x1="45.72" y1="236.22" x2="71.12" y2="236.22" width="0.1524" layer="91"/>
@@ -9386,13 +9403,13 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="REF"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="REF"/>
 <pinref part="R3" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="-RESET"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="-RESET"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 </segment>
 </net>
@@ -9408,7 +9425,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$11" class="0">
 <segment>
 <pinref part="CFG" gate="G$1" pin="DI"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="EEDATA"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="EEDATA"/>
 <wire x1="33.02" y1="30.48" x2="55.88" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="30.48" x2="58.42" y2="30.48" width="0.1524" layer="91"/>
@@ -9419,7 +9436,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$12" class="0">
 <segment>
 <pinref part="CFG" gate="G$1" pin="CLK"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="EESK"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="EESK"/>
 <wire x1="33.02" y1="33.02" x2="40.64" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="40.64" y1="33.02" x2="58.42" y2="33.02" width="0.1524" layer="91"/>
@@ -9429,7 +9446,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$13" class="0">
 <segment>
 <pinref part="CFG" gate="G$1" pin="CS"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="EECS"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="EECS"/>
 <wire x1="33.02" y1="35.56" x2="58.42" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="2"/>
 <junction x="33.02" y="35.56"/>
@@ -9437,7 +9454,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="VPHY"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VPHY"/>
 <wire x1="38.1" y1="121.92" x2="45.72" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="45.72" y1="121.92" x2="66.04" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="121.92" x2="66.04" y2="119.38" width="0.1524" layer="91"/>
@@ -9450,7 +9467,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="N$17" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="VPLL"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="VPLL"/>
 <wire x1="45.72" y1="129.54" x2="53.34" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="129.54" x2="60.96" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="129.54" x2="68.58" y2="129.54" width="0.1524" layer="91"/>
@@ -9467,7 +9484,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$19" class="0">
 <segment>
 <pinref part="C6" gate="G$1" pin="2"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="XTOUT"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="XTOUT"/>
 <wire x1="53.34" y1="81.28" x2="55.88" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="81.28" x2="58.42" y2="81.28" width="0.1524" layer="91"/>
@@ -9478,7 +9495,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$20" class="0">
 <segment>
 <pinref part="C5" gate="G$1" pin="1"/>
-<pinref part="USB-SERIAL" gate="G$1" pin="XTIN"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="XTIN"/>
 <wire x1="40.64" y1="91.44" x2="55.88" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="2"/>
 <wire x1="55.88" y1="91.44" x2="58.42" y2="91.44" width="0.1524" layer="91"/>
@@ -9493,84 +9510,71 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="R20" gate="G$1" pin="1"/>
 <wire x1="160.02" y1="76.2" x2="185.42" y2="76.2" width="0.1524" layer="91"/>
 </segment>
-<segment>
-<wire x1="231.14" y1="38.1" x2="228.6" y2="38.1" width="0.1524" layer="91"/>
-<label x="210.82" y="38.1" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="JTAG_TMS" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="ADBUS3"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS3"/>
 <wire x1="106.68" y1="101.6" x2="109.22" y2="101.6" width="0.1524" layer="91"/>
 <label x="109.22" y="101.6" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$6" pin="TMS/SWDIO"/>
 <label x="162.56" y="111.76" size="1.778" layer="95"/>
 <pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="175.26" y1="111.76" x2="160.02" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_JTAG" pin="TMS/SWDIO"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="BNA" pin="TMS"/>
 <wire x1="160.02" y1="73.66" x2="162.56" y2="73.66" width="0.1524" layer="91"/>
 <label x="162.56" y="73.66" size="1.778" layer="95"/>
 </segment>
-<segment>
-<wire x1="231.14" y1="33.02" x2="228.6" y2="33.02" width="0.1524" layer="91"/>
-<label x="218.44" y="33.02" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="JTAG_MCU_TDI" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="ADBUS1"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS1"/>
 <label x="109.22" y="106.68" size="1.778" layer="95"/>
 <pinref part="R21" gate="G$1" pin="1"/>
 <wire x1="106.68" y1="106.68" x2="129.54" y2="106.68" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$6" pin="TDI"/>
 <wire x1="160.02" y1="104.14" x2="162.56" y2="104.14" width="0.1524" layer="91"/>
 <label x="162.56" y="104.14" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_JTAG" pin="TDI"/>
 </segment>
 </net>
 <net name="JTAG_TCK" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="ADBUS0"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS0"/>
 <wire x1="106.68" y1="109.22" x2="109.22" y2="109.22" width="0.1524" layer="91"/>
 <label x="109.22" y="109.22" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$6" pin="TCK/SWCLK"/>
 <label x="162.56" y="109.22" size="1.778" layer="95"/>
 <pinref part="R11" gate="G$1" pin="1"/>
 <wire x1="160.02" y1="109.22" x2="180.34" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_JTAG" pin="TCK/SWCLK"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="BNA" pin="TCK"/>
 <wire x1="160.02" y1="81.28" x2="162.56" y2="81.28" width="0.1524" layer="91"/>
 <label x="162.56" y="81.28" size="1.778" layer="95"/>
 </segment>
-<segment>
-<wire x1="231.14" y1="35.56" x2="228.6" y2="35.56" width="0.1524" layer="91"/>
-<label x="218.44" y="35.56" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="JTAG_TRST" class="0">
 <segment>
-<pinref part="MCU" gate="G$6" pin="TRST"/>
 <wire x1="160.02" y1="101.6" x2="162.56" y2="101.6" width="0.1524" layer="91"/>
 <label x="162.56" y="101.6" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_JTAG" pin="TRST"/>
 </segment>
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="ADBUS4"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS4"/>
 <wire x1="106.68" y1="99.06" x2="109.22" y2="99.06" width="0.1524" layer="91"/>
 <label x="109.22" y="99.06" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="/RESET" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="ADBUS6"/>
-<pinref part="MCU" gate="G$6" pin="NRST"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS6"/>
 <wire x1="160.02" y1="99.06" x2="162.56" y2="99.06" width="0.1524" layer="91"/>
 <label x="109.22" y="93.98" size="1.778" layer="95"/>
 <wire x1="106.68" y1="93.98" x2="137.16" y2="93.98" width="0.1524" layer="91"/>
@@ -9579,48 +9583,47 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="R15" gate="G$1" pin="2"/>
 <wire x1="137.16" y1="96.52" x2="137.16" y2="93.98" width="0.1524" layer="91"/>
 <junction x="137.16" y="93.98"/>
-</segment>
-<segment>
-<wire x1="231.14" y1="43.18" x2="228.6" y2="43.18" width="0.1524" layer="91"/>
-<label x="220.98" y="43.18" size="1.778" layer="95"/>
+<pinref part="RESET" gate="G$1" pin="A"/>
+<junction x="162.56" y="93.98"/>
+<pinref part="MCU" gate="_JTAG" pin="NRST"/>
 </segment>
 </net>
 <net name="JTAG_MCU_TDO" class="0">
 <segment>
-<pinref part="MCU" gate="G$6" pin="TDO/SWO"/>
 <wire x1="160.02" y1="106.68" x2="180.34" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="106.68" x2="180.34" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="FPGA" gate="BNA" pin="TDI"/>
 <wire x1="180.34" y1="78.74" x2="160.02" y2="78.74" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_JTAG" pin="TDO/SWO"/>
 </segment>
 </net>
 <net name="MCO1_CLK" class="0">
 <segment>
-<pinref part="MCU" gate="G$8" pin="MCO1"/>
 <wire x1="213.36" y1="165.1" x2="236.22" y2="165.1" width="0.1524" layer="91"/>
-<label x="236.22" y="165.1" size="1.778" layer="95"/>
+<label x="228.6" y="162.56" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_CLK" pin="MCO1"/>
 </segment>
 </net>
 <net name="CONSOLE_TXD" class="0">
 <segment>
-<pinref part="MCU" gate="G$11" pin="USART1_TX"/>
 <wire x1="160.02" y1="58.42" x2="162.56" y2="58.42" width="0.1524" layer="91"/>
 <label x="162.56" y="58.42" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_USART" pin="USART1_TX"/>
 </segment>
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="BDBUS1"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="BDBUS1"/>
 <wire x1="106.68" y1="58.42" x2="109.22" y2="58.42" width="0.1524" layer="91"/>
 <label x="109.22" y="58.42" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CONSOLE_RXD" class="0">
 <segment>
-<pinref part="MCU" gate="G$11" pin="USART1_RX"/>
 <wire x1="160.02" y1="55.88" x2="162.56" y2="55.88" width="0.1524" layer="91"/>
 <label x="162.56" y="55.88" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_USART" pin="USART1_RX"/>
 </segment>
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="BDBUS0"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="BDBUS0"/>
 <wire x1="106.68" y1="60.96" x2="109.22" y2="60.96" width="0.1524" layer="91"/>
 <label x="109.22" y="60.96" size="1.778" layer="95"/>
 </segment>
@@ -9628,15 +9631,15 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="BOOT0" class="0">
 <segment>
 <pinref part="R35" gate="G$1" pin="2"/>
-<pinref part="MCU" gate="G$1" pin="BOOT0"/>
 <wire x1="213.36" y1="228.6" x2="203.2" y2="228.6" width="0.1524" layer="91"/>
 <pinref part="BOOT" gate="G$1" pin="2"/>
 <wire x1="203.2" y1="228.6" x2="198.12" y2="228.6" width="0.1524" layer="91"/>
 <wire x1="203.2" y1="228.6" x2="203.2" y2="236.22" width="0.1524" layer="91"/>
 <junction x="203.2" y="228.6"/>
+<pinref part="MCU" gate="_PWR" pin="BOOT0"/>
 </segment>
 </net>
-<net name="SD_CD" class="0">
+<net name="SD_DETECT" class="0">
 <segment>
 <label x="264.16" y="213.36" size="1.778" layer="95"/>
 <pinref part="MICROSD" gate="G$1" pin="DETECT"/>
@@ -9645,30 +9648,30 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="238.76" y1="213.36" x2="238.76" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$3" pin="PC4"/>
-<wire x1="213.36" y1="91.44" x2="215.9" y2="91.44" width="0.1524" layer="91"/>
-<label x="215.9" y="91.44" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_GPIO" pin="PC4"/>
+<wire x1="213.36" y1="55.88" x2="215.9" y2="55.88" width="0.1524" layer="91"/>
+<label x="215.9" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VCAP_1" class="0">
 <segment>
-<pinref part="MCU" gate="G$1" pin="VCAP_1"/>
 <pinref part="C7" gate="G$1" pin="2"/>
 <wire x1="198.12" y1="203.2" x2="205.74" y2="203.2" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_PWR" pin="VCAP_1"/>
 </segment>
 </net>
 <net name="VCAP_2" class="0">
 <segment>
-<pinref part="MCU" gate="G$1" pin="VCAP_2"/>
 <pinref part="C13" gate="G$1" pin="2"/>
 <wire x1="198.12" y1="205.74" x2="213.36" y2="205.74" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_PWR" pin="VCAP_2"/>
 </segment>
 </net>
 <net name="BOOT1" class="0">
 <segment>
-<pinref part="MCU" gate="G$1" pin="BOOT1"/>
 <pinref part="R36" gate="G$1" pin="2"/>
 <wire x1="198.12" y1="226.06" x2="213.36" y2="226.06" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_PWR" pin="BOOT1"/>
 </segment>
 </net>
 <net name="N$59" class="0">
@@ -9708,24 +9711,24 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="USB_DEVICE_DM" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="D-"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="D-"/>
 <wire x1="58.42" y1="68.58" x2="53.34" y2="68.58" width="0.1524" layer="91"/>
 <label x="38.1" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="DEBUG" gate="G$1" pin="D-"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="D-"/>
 <wire x1="45.72" y1="233.68" x2="50.8" y2="233.68" width="0.1524" layer="91"/>
 <label x="48.26" y="233.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="USB_DEVICE_DP" class="0">
 <segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="D+"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="D+"/>
 <wire x1="58.42" y1="66.04" x2="53.34" y2="66.04" width="0.1524" layer="91"/>
 <label x="38.1" y="66.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="DEBUG" gate="G$1" pin="D+"/>
+<pinref part="PWR/DEBUG" gate="G$1" pin="D+"/>
 <wire x1="45.72" y1="231.14" x2="50.8" y2="231.14" width="0.1524" layer="91"/>
 <label x="48.26" y="231.14" size="1.778" layer="95"/>
 </segment>
@@ -9734,14 +9737,14 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="ACTIVITY" gate="G$1" pin="A"/>
-<wire x1="228.6" y1="96.52" x2="231.14" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="241.3" y1="58.42" x2="243.84" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VBAT" class="0">
 <segment>
-<pinref part="MCU" gate="G$1" pin="VBAT"/>
 <pinref part="BAT" gate="G$1" pin="+"/>
 <wire x1="198.12" y1="208.28" x2="223.52" y2="208.28" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_PWR" pin="VBAT"/>
 </segment>
 </net>
 <net name="N$40" class="0">
@@ -9751,8 +9754,8 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="C58" gate="G$1" pin="2"/>
 <wire x1="231.14" y1="172.72" x2="233.68" y2="172.72" width="0.1524" layer="91"/>
 <junction x="231.14" y="172.72"/>
-<pinref part="MCU" gate="G$8" pin="OSC32_OUT"/>
 <wire x1="213.36" y1="167.64" x2="231.14" y2="167.64" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_CLK" pin="OSC32_OUT"/>
 </segment>
 </net>
 <net name="N$48" class="0">
@@ -9763,37 +9766,37 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="231.14" y1="180.34" x2="231.14" y2="177.8" width="0.1524" layer="91"/>
 <junction x="231.14" y="180.34"/>
 <wire x1="226.06" y1="180.34" x2="231.14" y2="180.34" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="G$8" pin="OSC32_IN"/>
 <wire x1="213.36" y1="170.18" x2="226.06" y2="170.18" width="0.1524" layer="91"/>
 <wire x1="226.06" y1="170.18" x2="226.06" y2="180.34" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_CLK" pin="OSC32_IN"/>
 </segment>
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="MCU" gate="G$5" pin="USB_FS_DP"/>
 <pinref part="R37" gate="G$1" pin="1"/>
 <wire x1="320.04" y1="134.62" x2="325.12" y2="134.62" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_USB" pin="USB_FS_DP"/>
 </segment>
 </net>
 <net name="N$2" class="0">
 <segment>
-<pinref part="MCU" gate="G$5" pin="USB_FS_DM"/>
 <pinref part="R38" gate="G$1" pin="1"/>
 <wire x1="320.04" y1="132.08" x2="325.12" y2="132.08" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_USB" pin="USB_FS_DM"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="MCU" gate="G$5" pin="USB_HS_DP"/>
 <pinref part="R39" gate="G$1" pin="1"/>
 <wire x1="320.04" y1="127" x2="325.12" y2="127" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_USB" pin="USB_HS_DP"/>
 </segment>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="MCU" gate="G$5" pin="USB_HS_DM"/>
 <pinref part="R40" gate="G$1" pin="1"/>
 <wire x1="320.04" y1="124.46" x2="325.12" y2="124.46" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_USB" pin="USB_HS_DM"/>
 </segment>
 </net>
 <net name="N$54" class="0">
@@ -9810,125 +9813,45 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="347.98" y1="132.08" x2="335.28" y2="132.08" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="ESP8266_RX" class="0">
-<segment>
-<pinref part="MCU" gate="G$11" pin="USART6_TX"/>
-<wire x1="160.02" y1="45.72" x2="162.56" y2="45.72" width="0.1524" layer="91"/>
-<label x="162.56" y="45.72" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="266.7" y1="53.34" x2="269.24" y2="53.34" width="0.1524" layer="91"/>
-<label x="269.24" y="53.34" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="ESP8266_TX" class="0">
-<segment>
-<pinref part="MCU" gate="G$11" pin="USART6_RX"/>
-<wire x1="160.02" y1="43.18" x2="162.56" y2="43.18" width="0.1524" layer="91"/>
-<label x="162.56" y="43.18" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="266.7" y1="55.88" x2="269.24" y2="55.88" width="0.1524" layer="91"/>
-<label x="269.24" y="55.88" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="JTAG_ESP_TDO" class="0">
 <segment>
-<label x="210.82" y="40.64" size="1.778" layer="95"/>
-<pinref part="R10" gate="G$1" pin="2"/>
-<wire x1="231.14" y1="40.64" x2="208.28" y2="40.64" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="USB-SERIAL" gate="G$1" pin="ADBUS2"/>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS2"/>
 <wire x1="106.68" y1="104.14" x2="109.22" y2="104.14" width="0.1524" layer="91"/>
 <label x="109.22" y="104.14" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="ESP_CH_EN" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_EN"/>
-<wire x1="213.36" y1="66.04" x2="231.14" y2="66.04" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="SDIO_CLK" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_CLK"/>
-<wire x1="213.36" y1="63.5" x2="231.14" y2="63.5" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="SDIO_CMD" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_CMD"/>
-<wire x1="213.36" y1="60.96" x2="231.14" y2="60.96" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="SDIO_D0" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_D0"/>
-<wire x1="213.36" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="SDIO_D1" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_D1"/>
-<wire x1="213.36" y1="55.88" x2="231.14" y2="55.88" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="SDIO_D2" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_D2"/>
-<wire x1="213.36" y1="53.34" x2="231.14" y2="53.34" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="SDIO_D3" class="0">
-<segment>
-<pinref part="MCU" gate="G$4" pin="SDIO_D3"/>
-<wire x1="213.36" y1="50.8" x2="231.14" y2="50.8" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="WKUP" class="0">
-<segment>
-<pinref part="MCU" gate="G$8" pin="WKUP"/>
-<wire x1="213.36" y1="172.72" x2="220.98" y2="172.72" width="0.1524" layer="91"/>
-<label x="215.9" y="172.72" size="1.778" layer="95"/>
-</segment>
+<net name="USER_BTN" class="0">
 <segment>
 <pinref part="R27" gate="G$1" pin="1"/>
 <pinref part="USER" gate="G$1" pin="A"/>
 <wire x1="314.96" y1="233.68" x2="322.58" y2="233.68" width="0.1524" layer="91"/>
-<label x="314.96" y="233.68" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="ESP8266_DBG" class="0">
-<segment>
-<wire x1="266.7" y1="40.64" x2="269.24" y2="40.64" width="0.1524" layer="91"/>
-<label x="269.24" y="40.64" size="1.778" layer="95"/>
+<label x="317.5" y="231.14" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="MCU" gate="G$11" pin="USART3_RX"/>
-<wire x1="160.02" y1="50.8" x2="162.56" y2="50.8" width="0.1524" layer="91"/>
-<label x="162.56" y="50.8" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_GPIO" pin="PB11"/>
+<wire x1="213.36" y1="60.96" x2="215.9" y2="60.96" width="0.1524" layer="91"/>
+<label x="215.9" y="60.96" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPIO07" class="0">
 <segment>
-<pinref part="MCU" gate="G$10" pin="ADC123_IN1"/>
 <wire x1="358.14" y1="177.8" x2="360.68" y2="177.8" width="0.1524" layer="91"/>
 <label x="360.68" y="177.8" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_AN" pin="ADC123_IN10"/>
 </segment>
 </net>
 <net name="GPIO23" class="0">
 <segment>
-<pinref part="MCU" gate="G$10" pin="ADC123_IN2"/>
 <wire x1="358.14" y1="175.26" x2="360.68" y2="175.26" width="0.1524" layer="91"/>
 <label x="360.68" y="175.26" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_AN" pin="ADC123_IN11"/>
 </segment>
 </net>
 <net name="SD_CS" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI1_NSS"/>
 <wire x1="160.02" y1="22.86" x2="162.56" y2="22.86" width="0.1524" layer="91"/>
 <label x="162.56" y="22.86" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI1_NSS"/>
 </segment>
 <segment>
 <wire x1="274.32" y1="223.52" x2="261.62" y2="223.52" width="0.1524" layer="91"/>
@@ -9939,9 +9862,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="SD_DI" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI1_MOSI"/>
 <wire x1="160.02" y1="25.4" x2="162.56" y2="25.4" width="0.1524" layer="91"/>
 <label x="162.56" y="25.4" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI1_MOSI"/>
 </segment>
 <segment>
 <label x="264.16" y="220.98" size="1.778" layer="95"/>
@@ -9953,9 +9876,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="SD_DO" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI1_MISO"/>
 <wire x1="160.02" y1="27.94" x2="162.56" y2="27.94" width="0.1524" layer="91"/>
 <label x="162.56" y="27.94" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI1_MISO"/>
 </segment>
 <segment>
 <label x="264.16" y="215.9" size="1.778" layer="95"/>
@@ -9967,9 +9890,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="SD_CLK" class="0">
 <segment>
-<pinref part="MCU" gate="G$7" pin="SPI1_SCK"/>
 <wire x1="160.02" y1="30.48" x2="162.56" y2="30.48" width="0.1524" layer="91"/>
 <label x="162.56" y="30.48" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_SPI" pin="SPI1_SCK"/>
 </segment>
 <segment>
 <label x="264.16" y="218.44" size="1.778" layer="95"/>
@@ -9981,45 +9904,38 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="LED_B" class="0">
 <segment>
-<pinref part="MCU" gate="G$3" pin="PB6"/>
-<wire x1="213.36" y1="109.22" x2="215.9" y2="109.22" width="0.1524" layer="91"/>
-<label x="215.9" y="109.22" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="R25" gate="G$1" pin="2"/>
 <wire x1="365.76" y1="226.06" x2="370.84" y2="226.06" width="0.1524" layer="91"/>
 <label x="368.3" y="226.06" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PB6"/>
+<wire x1="213.36" y1="68.58" x2="215.9" y2="68.58" width="0.1524" layer="91"/>
+<label x="215.9" y="68.58" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="LED_G" class="0">
-<segment>
-<pinref part="MCU" gate="G$3" pin="PB8"/>
-<wire x1="213.36" y1="106.68" x2="215.9" y2="106.68" width="0.1524" layer="91"/>
-<label x="215.9" y="106.68" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="R24" gate="G$1" pin="2"/>
 <wire x1="365.76" y1="233.68" x2="370.84" y2="233.68" width="0.1524" layer="91"/>
 <label x="368.3" y="233.68" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PB8"/>
+<wire x1="213.36" y1="66.04" x2="215.9" y2="66.04" width="0.1524" layer="91"/>
+<label x="215.9" y="66.04" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="LED_R" class="0">
-<segment>
-<pinref part="MCU" gate="G$3" pin="PB9"/>
-<wire x1="213.36" y1="104.14" x2="215.9" y2="104.14" width="0.1524" layer="91"/>
-<label x="215.9" y="104.14" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="R23" gate="G$1" pin="2"/>
 <wire x1="365.76" y1="241.3" x2="370.84" y2="241.3" width="0.1524" layer="91"/>
 <label x="368.3" y="241.3" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="LED_ACT" class="0">
 <segment>
-<pinref part="MCU" gate="G$3" pin="PC0"/>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="213.36" y1="96.52" x2="218.44" y2="96.52" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_GPIO" pin="PB9"/>
+<wire x1="213.36" y1="63.5" x2="215.9" y2="63.5" width="0.1524" layer="91"/>
+<label x="215.9" y="63.5" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$25" class="0">
@@ -10045,19 +9961,19 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="CLK_10M" class="0">
 <segment>
-<pinref part="MCU" gate="G$8" pin="OSC_IN"/>
 <label x="215.9" y="160.02" size="1.778" layer="95"/>
 <wire x1="213.36" y1="160.02" x2="223.52" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="223.52" y1="160.02" x2="223.52" y2="144.78" width="0.1524" layer="91"/>
 <pinref part="OSC10M" gate="G$1" pin="OUT"/>
 <wire x1="223.52" y1="144.78" x2="220.98" y2="144.78" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_CLK" pin="OSC_IN"/>
 </segment>
 </net>
 <net name="FPGA_INT" class="0">
 <segment>
-<pinref part="MCU" gate="G$3" pin="PB13"/>
-<wire x1="213.36" y1="99.06" x2="215.9" y2="99.06" width="0.1524" layer="91"/>
-<label x="215.9" y="99.06" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_GPIO" pin="PB0"/>
+<wire x1="213.36" y1="76.2" x2="215.9" y2="76.2" width="0.1524" layer="91"/>
+<label x="215.9" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+1V2" class="0">
@@ -10095,13 +10011,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="WIFI_INT" class="0">
 <segment>
-<wire x1="266.7" y1="38.1" x2="269.24" y2="38.1" width="0.1524" layer="91"/>
-<label x="269.24" y="38.1" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="MCU" gate="G$3" pin="PB5"/>
-<wire x1="213.36" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
-<label x="215.9" y="111.76" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_GPIO" pin="PB5"/>
+<wire x1="213.36" y1="71.12" x2="215.9" y2="71.12" width="0.1524" layer="91"/>
+<label x="215.9" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+3V3_SD" class="0">
@@ -10116,6 +10028,78 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="276.86" y="238.76"/>
 <pinref part="R34" gate="G$1" pin="2"/>
 <wire x1="274.32" y1="238.76" x2="276.86" y2="238.76" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$15" class="0">
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PB13"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="213.36" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="BT_RST_N" class="0">
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PC6"/>
+<wire x1="213.36" y1="50.8" x2="215.9" y2="50.8" width="0.1524" layer="91"/>
+<label x="215.9" y="50.8" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="AP_WAKE_BT" class="0">
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PC7"/>
+<wire x1="213.36" y1="48.26" x2="215.9" y2="48.26" width="0.1524" layer="91"/>
+<label x="215.9" y="48.26" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_D0"/>
+<pinref part="WIFI/BT" gate="G$1" pin="SD_D0"/>
+<wire x1="292.1" y1="73.66" x2="299.72" y2="73.66" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$16" class="0">
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="SD_D1"/>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_D1"/>
+<wire x1="299.72" y1="71.12" x2="292.1" y2="71.12" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$21" class="0">
+<segment>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_D2"/>
+<pinref part="WIFI/BT" gate="G$1" pin="SD_D2"/>
+<wire x1="292.1" y1="68.58" x2="299.72" y2="68.58" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$22" class="0">
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="SD_D3"/>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_D3"/>
+<wire x1="299.72" y1="66.04" x2="292.1" y2="66.04" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$24" class="0">
+<segment>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_CMD"/>
+<pinref part="WIFI/BT" gate="G$1" pin="SD_CMD"/>
+<wire x1="292.1" y1="63.5" x2="299.72" y2="63.5" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$29" class="0">
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="SD_CLK"/>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_CLK"/>
+<wire x1="299.72" y1="60.96" x2="292.1" y2="60.96" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$30" class="0">
+<segment>
+<pinref part="MCU" gate="_SDIO" pin="SDIO_EN"/>
+<wire x1="292.1" y1="76.2" x2="294.64" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="294.64" y1="76.2" x2="294.64" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="WIFI/BT" gate="G$1" pin="WL_DIS#"/>
+<wire x1="294.64" y1="81.28" x2="299.72" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -10196,7 +10180,6 @@ within 0.254mm</text>
 <instance part="+3V19" gate="G$1" x="38.1" y="137.16"/>
 <instance part="+3V20" gate="G$1" x="106.68" y="162.56"/>
 <instance part="+3V21" gate="G$1" x="160.02" y="137.16"/>
-<instance part="MCU" gate="G$2" x="88.9" y="170.18"/>
 <instance part="SUPPLY33" gate="GND" x="281.94" y="165.1"/>
 <instance part="R16" gate="G$1" x="154.94" y="187.96">
 <attribute name="DIGIKEY#" x="154.94" y="187.96" size="1.778" layer="96" display="off"/>
@@ -10353,6 +10336,7 @@ within 0.254mm</text>
 <attribute name="MANF#" x="193.04" y="25.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="+3V24" gate="G$1" x="193.04" y="35.56"/>
+<instance part="MCU" gate="_FSMC" x="88.9" y="170.18"/>
 </instances>
 <busses>
 </busses>
@@ -11883,9 +11867,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NE1" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NE1"/>
 <wire x1="99.06" y1="251.46" x2="101.6" y2="251.46" width="0.1524" layer="91"/>
 <label x="101.6" y="251.46" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NE1"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L32N_A16_M1A9_1"/>
@@ -11895,9 +11879,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NL" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NL"/>
 <wire x1="99.06" y1="248.92" x2="101.6" y2="248.92" width="0.1524" layer="91"/>
 <label x="101.6" y="248.92" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NL"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L34N_A12_M1BA2_1"/>
@@ -11907,9 +11891,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NBL0" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NBL0"/>
 <wire x1="99.06" y1="246.38" x2="101.6" y2="246.38" width="0.1524" layer="91"/>
 <label x="101.6" y="246.38" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NBL0"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L34P_A13_M1WE_1"/>
@@ -11919,9 +11903,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NBL1" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NBL1"/>
 <wire x1="99.06" y1="243.84" x2="101.6" y2="243.84" width="0.1524" layer="91"/>
 <label x="101.6" y="243.84" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NBL1"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L31N_A18_M1A12_1"/>
@@ -11931,9 +11915,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_CLK" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="CLK"/>
 <wire x1="99.06" y1="241.3" x2="101.6" y2="241.3" width="0.1524" layer="91"/>
 <label x="101.6" y="241.3" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="CLK"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L41N_GCLK8_M1CASN_1"/>
@@ -11943,9 +11927,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NWAIT" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NWAIT"/>
 <wire x1="99.06" y1="238.76" x2="101.6" y2="238.76" width="0.1524" layer="91"/>
 <label x="101.6" y="238.76" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NWAIT"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L35P_A11_M1A7_1"/>
@@ -11955,9 +11939,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NWE" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NWE"/>
 <wire x1="99.06" y1="236.22" x2="101.6" y2="236.22" width="0.1524" layer="91"/>
 <label x="101.6" y="236.22" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NWE"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L35N_A10_M1A2_1"/>
@@ -11967,9 +11951,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_NOE" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="NOE"/>
 <wire x1="99.06" y1="233.68" x2="101.6" y2="233.68" width="0.1524" layer="91"/>
 <label x="101.6" y="233.68" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="NOE"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L36P_A9_M1BA0_1"/>
@@ -11979,9 +11963,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A23" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A23"/>
 <wire x1="99.06" y1="231.14" x2="101.6" y2="231.14" width="0.1524" layer="91"/>
 <label x="101.6" y="231.14" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A23"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L31P_A19_M1CKE_1"/>
@@ -11991,9 +11975,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A22" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A22"/>
 <wire x1="99.06" y1="228.6" x2="101.6" y2="228.6" width="0.1524" layer="91"/>
 <label x="101.6" y="228.6" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A22"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L29P_A23_M1A13_1"/>
@@ -12003,9 +11987,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A21" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A21"/>
 <wire x1="99.06" y1="226.06" x2="101.6" y2="226.06" width="0.1524" layer="91"/>
 <label x="101.6" y="226.06" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A21"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L29N_A22_M1A14_1"/>
@@ -12015,9 +11999,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A20" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A20"/>
 <wire x1="99.06" y1="223.52" x2="101.6" y2="223.52" width="0.1524" layer="91"/>
 <label x="101.6" y="223.52" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A20"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L33P_A15_M1A10_1"/>
@@ -12027,9 +12011,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A19" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A19"/>
 <wire x1="99.06" y1="220.98" x2="101.6" y2="220.98" width="0.1524" layer="91"/>
 <label x="101.6" y="220.98" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A19"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L33N_A14_M1A4_1"/>
@@ -12039,9 +12023,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A18" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A18"/>
 <wire x1="99.06" y1="218.44" x2="101.6" y2="218.44" width="0.1524" layer="91"/>
 <label x="101.6" y="218.44" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A18"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L50P_M1UDQS_1"/>
@@ -12051,9 +12035,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A17" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A17"/>
 <wire x1="99.06" y1="215.9" x2="101.6" y2="215.9" width="0.1524" layer="91"/>
 <label x="101.6" y="215.9" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A17"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L49P_M1DQ10_1"/>
@@ -12063,9 +12047,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_A16" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A16"/>
 <wire x1="99.06" y1="213.36" x2="101.6" y2="213.36" width="0.1524" layer="91"/>
 <label x="101.6" y="213.36" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A16"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L49N_M1DQ11_1"/>
@@ -12075,9 +12059,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D15" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A15/D15"/>
 <wire x1="99.06" y1="210.82" x2="101.6" y2="210.82" width="0.1524" layer="91"/>
 <label x="101.6" y="210.82" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A15/D15"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L48P_HDC_M1DQ8_1"/>
@@ -12087,9 +12071,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D14" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A14/D14"/>
 <wire x1="99.06" y1="208.28" x2="101.6" y2="208.28" width="0.1524" layer="91"/>
 <label x="101.6" y="208.28" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A14/D14"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L48N_M1DQ9_1"/>
@@ -12099,9 +12083,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D13" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A13/D13"/>
 <wire x1="99.06" y1="205.74" x2="101.6" y2="205.74" width="0.1524" layer="91"/>
 <label x="101.6" y="205.74" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A13/D13"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L45N_A0_M1LDQSN_1"/>
@@ -12111,9 +12095,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D12" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A12/D12"/>
 <wire x1="99.06" y1="203.2" x2="101.6" y2="203.2" width="0.1524" layer="91"/>
 <label x="101.6" y="203.2" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A12/D12"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L45P_A1_M1LDQS_1"/>
@@ -12123,9 +12107,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D11" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A11/D11"/>
 <wire x1="99.06" y1="200.66" x2="101.6" y2="200.66" width="0.1524" layer="91"/>
 <label x="101.6" y="200.66" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A11/D11"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L46N_FOE_B_M1DQ3_1"/>
@@ -12135,9 +12119,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D10" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A10/D10"/>
 <wire x1="99.06" y1="198.12" x2="101.6" y2="198.12" width="0.1524" layer="91"/>
 <label x="101.6" y="198.12" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A10/D10"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L46P_FCS_B_M1DQ2_1"/>
@@ -12147,9 +12131,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D9" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A9/D9"/>
 <wire x1="99.06" y1="195.58" x2="101.6" y2="195.58" width="0.1524" layer="91"/>
 <label x="101.6" y="195.58" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A9/D9"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L47N_LDC_M1DQ1_1"/>
@@ -12159,9 +12143,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D8" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A8/D8"/>
 <wire x1="99.06" y1="193.04" x2="101.6" y2="193.04" width="0.1524" layer="91"/>
 <label x="101.6" y="193.04" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A8/D8"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L47P_FWE_B_M1DQ0_1"/>
@@ -12171,9 +12155,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D7" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A7/D7"/>
 <wire x1="99.06" y1="190.5" x2="101.6" y2="190.5" width="0.1524" layer="91"/>
 <label x="101.6" y="190.5" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A7/D7"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L44N_A2_M1DQ7_1"/>
@@ -12183,9 +12167,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D6" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A6/D6"/>
 <wire x1="99.06" y1="187.96" x2="101.6" y2="187.96" width="0.1524" layer="91"/>
 <label x="101.6" y="187.96" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A6/D6"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L44P_A3_M1DQ6_1"/>
@@ -12195,9 +12179,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D5" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A5/D5"/>
 <wire x1="99.06" y1="185.42" x2="101.6" y2="185.42" width="0.1524" layer="91"/>
 <label x="101.6" y="185.42" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A5/D5"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L39N_M1ODT_1"/>
@@ -12207,9 +12191,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D4" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A4/D4"/>
 <wire x1="99.06" y1="182.88" x2="101.6" y2="182.88" width="0.1524" layer="91"/>
 <label x="101.6" y="182.88" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A4/D4"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L37N_A6_M1A1_1"/>
@@ -12219,9 +12203,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D3" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A3/D3"/>
 <wire x1="99.06" y1="180.34" x2="101.6" y2="180.34" width="0.1524" layer="91"/>
 <label x="101.6" y="180.34" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A3/D3"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L36N_A8_M1BA1_1"/>
@@ -12231,9 +12215,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D2" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A2/D2"/>
 <wire x1="99.06" y1="177.8" x2="101.6" y2="177.8" width="0.1524" layer="91"/>
 <label x="101.6" y="177.8" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A2/D2"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L37P_A7_M1A0_1"/>
@@ -12243,9 +12227,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D1" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A1/D1"/>
 <wire x1="99.06" y1="175.26" x2="101.6" y2="175.26" width="0.1524" layer="91"/>
 <label x="101.6" y="175.26" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A1/D1"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L51P_M1DQ12_1"/>
@@ -12255,9 +12239,9 @@ within 0.254mm</text>
 </net>
 <net name="FSMC_D0" class="0">
 <segment>
-<pinref part="MCU" gate="G$2" pin="A0/D0"/>
 <wire x1="99.06" y1="172.72" x2="101.6" y2="172.72" width="0.1524" layer="91"/>
 <label x="101.6" y="172.72" size="1.778" layer="95"/>
+<pinref part="MCU" gate="_FSMC" pin="A0/D0"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B1" pin="IO_L50N_M1UDQSN_1"/>
