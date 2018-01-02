@@ -7274,7 +7274,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Assmann WSW Components"/>
 <attribute name="MANF#" value="AU-Y1008-2"/>
 </part>
-<part name="DVI" library="reclone-rise" deviceset="TMDS_A" device="">
+<part name="TMDS" library="reclone-rise" deviceset="TMDS_A" device="">
 <attribute name="DIGIKEY#" value="609-4614-1-ND"/>
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10029449-111RLF"/>
@@ -7309,7 +7309,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="93LC46BT-I/OT"/>
 </part>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
-<part name="A/V" library="reclone-rise" deviceset="AV-JACK-4COND" device="">
+<part name="ANALOG" library="reclone-rise" deviceset="AV-JACK-4COND" device="">
 <attribute name="DIGIKEY#" value="CP-43514SJCT-ND"/>
 <attribute name="MANF" value="CUI Inc."/>
 <attribute name="MANF#" value="SJ-43514-SMT-TR"/>
@@ -8183,19 +8183,19 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="SUPPLY26" gate="GND" x="198.12" y="233.68"/>
 <instance part="SUPPLY27" gate="GND" x="213.36" y="213.36"/>
 <instance part="P+7" gate="1" x="116.84" y="246.38"/>
-<instance part="ACTIVITY" gate="G$1" x="246.38" y="58.42" rot="R90">
-<attribute name="DIGIKEY#" x="246.38" y="58.42" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF" x="246.38" y="58.42" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF#" x="246.38" y="58.42" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="ACTIVITY" gate="G$1" x="236.22" y="81.28" rot="R90">
+<attribute name="DIGIKEY#" x="236.22" y="81.28" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF" x="236.22" y="81.28" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="236.22" y="81.28" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="R9" gate="G$1" x="236.22" y="58.42" smashed="yes">
-<attribute name="NAME" x="230.632" y="58.6486" size="1.778" layer="95"/>
-<attribute name="VALUE" x="238.506" y="58.674" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="236.22" y="58.42" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="236.22" y="58.42" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="236.22" y="58.42" size="1.778" layer="96" display="off"/>
+<instance part="R9" gate="G$1" x="226.06" y="81.28" smashed="yes">
+<attribute name="NAME" x="220.472" y="81.5086" size="1.778" layer="95"/>
+<attribute name="VALUE" x="228.346" y="81.534" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="226.06" y="81.28" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="226.06" y="81.28" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="226.06" y="81.28" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="SUPPLY30" gate="GND" x="254" y="55.88"/>
+<instance part="SUPPLY30" gate="GND" x="243.84" y="78.74"/>
 <instance part="SUPPLY31" gate="GND" x="129.54" y="220.98"/>
 <instance part="F1" gate="F1" x="86.36" y="236.22">
 <attribute name="DIGIKEY#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
@@ -8858,7 +8858,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="ACTIVITY" gate="G$1" pin="C"/>
 <pinref part="SUPPLY30" gate="GND" pin="GND"/>
-<wire x1="251.46" y1="58.42" x2="254" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="241.3" y1="81.28" x2="243.84" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY31" gate="GND" pin="GND"/>
@@ -9737,7 +9737,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="ACTIVITY" gate="G$1" pin="A"/>
-<wire x1="241.3" y1="58.42" x2="243.84" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="231.14" y1="81.28" x2="233.68" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VBAT" class="0">
@@ -9969,13 +9969,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="MCU" gate="_CLK" pin="OSC_IN"/>
 </segment>
 </net>
-<net name="FPGA_INT" class="0">
-<segment>
-<pinref part="MCU" gate="_GPIO" pin="PB0"/>
-<wire x1="213.36" y1="76.2" x2="215.9" y2="76.2" width="0.1524" layer="91"/>
-<label x="215.9" y="76.2" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="+1V2" class="0">
 <segment>
 <pinref part="L4" gate="G$1" pin="2"/>
@@ -10028,13 +10021,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="276.86" y="238.76"/>
 <pinref part="R34" gate="G$1" pin="2"/>
 <wire x1="274.32" y1="238.76" x2="276.86" y2="238.76" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$15" class="0">
-<segment>
-<pinref part="MCU" gate="_GPIO" pin="PB13"/>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="213.36" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="BT_RST_N" class="0">
@@ -10102,6 +10088,23 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="294.64" y1="81.28" x2="299.72" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
+<net name="FPGA_INT" class="0">
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PB13"/>
+<wire x1="213.36" y1="58.42" x2="215.9" y2="58.42" width="0.1524" layer="91"/>
+<label x="215.9" y="58.42" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_ACT" class="0">
+<segment>
+<pinref part="MCU" gate="_GPIO" pin="PB0"/>
+<wire x1="213.36" y1="76.2" x2="215.9" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="76.2" x2="215.9" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="215.9" y1="81.28" x2="220.98" y2="81.28" width="0.1524" layer="91"/>
+<label x="215.9" y="76.2" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -10138,12 +10141,12 @@ within 0.254mm</text>
 <attribute name="MANF#" x="33.02" y="73.66" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY4" gate="GND" x="48.26" y="116.84" rot="R90"/>
-<instance part="A/V" gate="G$1" x="203.2" y="182.88" rot="R180">
+<instance part="ANALOG" gate="G$1" x="203.2" y="182.88" rot="R180">
 <attribute name="DIGIKEY#" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="DVI" gate="G$1" x="172.72" y="228.6">
+<instance part="TMDS" gate="G$1" x="172.72" y="228.6">
 <attribute name="MANF" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY#" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="172.72" y="228.6" size="1.778" layer="96" display="off"/>
@@ -10858,18 +10861,18 @@ within 0.254mm</text>
 </segment>
 <segment>
 <pinref part="SUPPLY12" gate="GND" pin="GND"/>
-<pinref part="DVI" gate="G$1" pin="TMDS_D2_SHLD"/>
-<pinref part="DVI" gate="G$1" pin="TMDS_D1_SHLD"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D2_SHLD"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D1_SHLD"/>
 <junction x="157.48" y="210.82"/>
 <wire x1="157.48" y1="203.2" x2="157.48" y2="205.74" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="205.74" x2="157.48" y2="208.28" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="208.28" x2="157.48" y2="210.82" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="210.82" x2="157.48" y2="213.36" width="0.1524" layer="91"/>
-<pinref part="DVI" gate="G$1" pin="TMDS_D0_SHLD"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D0_SHLD"/>
 <junction x="157.48" y="208.28"/>
-<pinref part="DVI" gate="G$1" pin="TMDS_CLK_SHLD"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_CLK_SHLD"/>
 <junction x="157.48" y="205.74"/>
-<pinref part="DVI" gate="G$1" pin="GND"/>
+<pinref part="TMDS" gate="G$1" pin="GND"/>
 <junction x="157.48" y="203.2"/>
 <pinref part="R13" gate="G$1" pin="1"/>
 <wire x1="149.86" y1="208.28" x2="157.48" y2="208.28" width="0.1524" layer="91"/>
@@ -10955,21 +10958,21 @@ within 0.254mm</text>
 <wire x1="378.46" y1="241.3" x2="378.46" y2="243.84" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="DVI" gate="G$1" pin="SH1"/>
+<pinref part="TMDS" gate="G$1" pin="SH1"/>
 <wire x1="190.5" y1="238.76" x2="190.5" y2="241.3" width="0.1524" layer="91"/>
-<pinref part="DVI" gate="G$1" pin="SH2"/>
+<pinref part="TMDS" gate="G$1" pin="SH2"/>
 <junction x="190.5" y="246.38"/>
 <wire x1="190.5" y1="241.3" x2="190.5" y2="243.84" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="243.84" x2="190.5" y2="246.38" width="0.1524" layer="91"/>
 <wire x1="190.5" y1="246.38" x2="190.5" y2="248.92" width="0.1524" layer="91"/>
-<pinref part="DVI" gate="G$1" pin="SH3"/>
+<pinref part="TMDS" gate="G$1" pin="SH3"/>
 <junction x="190.5" y="243.84"/>
-<pinref part="DVI" gate="G$1" pin="SH4"/>
+<pinref part="TMDS" gate="G$1" pin="SH4"/>
 <junction x="190.5" y="241.3"/>
 <pinref part="SUPPLY18" gate="GND" pin="GND"/>
 </segment>
 <segment>
-<pinref part="A/V" gate="G$1" pin="GND"/>
+<pinref part="ANALOG" gate="G$1" pin="GND"/>
 <wire x1="170.18" y1="172.72" x2="170.18" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="180.34" x2="175.26" y2="180.34" width="0.1524" layer="91"/>
 <pinref part="C15" gate="G$1" pin="1"/>
@@ -11494,7 +11497,7 @@ within 0.254mm</text>
 </net>
 <net name="N$23" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="DETECT"/>
+<pinref part="TMDS" gate="G$1" pin="DETECT"/>
 <pinref part="R13" gate="G$1" pin="2"/>
 <wire x1="157.48" y1="218.44" x2="149.86" y2="218.44" width="0.1524" layer="91"/>
 </segment>
@@ -11502,13 +11505,13 @@ within 0.254mm</text>
 <net name="N$26" class="0">
 <segment>
 <pinref part="R17" gate="G$1" pin="1"/>
-<pinref part="DVI" gate="G$1" pin="DDC_CLK"/>
+<pinref part="TMDS" gate="G$1" pin="DDC_CLK"/>
 <wire x1="137.16" y1="223.52" x2="157.48" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$27" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="DDC_DATA"/>
+<pinref part="TMDS" gate="G$1" pin="DDC_DATA"/>
 <pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="157.48" y1="220.98" x2="129.54" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="220.98" x2="129.54" y2="223.52" width="0.1524" layer="91"/>
@@ -11516,7 +11519,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_D2P" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_D2P"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D2P"/>
 <wire x1="157.48" y1="246.38" x2="154.94" y2="246.38" width="0.1524" layer="91"/>
 <label x="142.24" y="246.38" size="1.778" layer="95"/>
 </segment>
@@ -11528,7 +11531,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_D2N" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_D2N"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D2N"/>
 <wire x1="157.48" y1="243.84" x2="154.94" y2="243.84" width="0.1524" layer="91"/>
 <label x="142.24" y="243.84" size="1.778" layer="95"/>
 </segment>
@@ -11540,7 +11543,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_D1P" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_D1P"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D1P"/>
 <wire x1="157.48" y1="241.3" x2="154.94" y2="241.3" width="0.1524" layer="91"/>
 <label x="142.24" y="241.3" size="1.778" layer="95"/>
 </segment>
@@ -11552,7 +11555,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_D1N" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_D1N"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D1N"/>
 <wire x1="157.48" y1="238.76" x2="154.94" y2="238.76" width="0.1524" layer="91"/>
 <label x="142.24" y="238.76" size="1.778" layer="95"/>
 </segment>
@@ -11564,7 +11567,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_D0P" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_D0P"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D0P"/>
 <wire x1="157.48" y1="236.22" x2="154.94" y2="236.22" width="0.1524" layer="91"/>
 <label x="142.24" y="236.22" size="1.778" layer="95"/>
 </segment>
@@ -11576,7 +11579,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_D0N" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_D0N"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_D0N"/>
 <wire x1="157.48" y1="233.68" x2="154.94" y2="233.68" width="0.1524" layer="91"/>
 <label x="142.24" y="233.68" size="1.778" layer="95"/>
 </segment>
@@ -11588,7 +11591,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_CLKP" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_CLKP"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_CLKP"/>
 <wire x1="157.48" y1="231.14" x2="154.94" y2="231.14" width="0.1524" layer="91"/>
 <label x="142.24" y="231.14" size="1.778" layer="95"/>
 </segment>
@@ -11600,7 +11603,7 @@ within 0.254mm</text>
 </net>
 <net name="TMDS_CLKN" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="TMDS_CLKN"/>
+<pinref part="TMDS" gate="G$1" pin="TMDS_CLKN"/>
 <wire x1="157.48" y1="228.6" x2="154.94" y2="228.6" width="0.1524" layer="91"/>
 <label x="142.24" y="228.6" size="1.778" layer="95"/>
 </segment>
@@ -11612,7 +11615,7 @@ within 0.254mm</text>
 </net>
 <net name="N$28" class="0">
 <segment>
-<pinref part="DVI" gate="G$1" pin="+5V"/>
+<pinref part="TMDS" gate="G$1" pin="+5V"/>
 <pinref part="R19" gate="G$1" pin="1"/>
 <wire x1="154.94" y1="248.92" x2="157.48" y2="248.92" width="0.1524" layer="91"/>
 </segment>
@@ -11722,7 +11725,7 @@ within 0.254mm</text>
 </net>
 <net name="N$79" class="0">
 <segment>
-<pinref part="A/V" gate="G$1" pin="VID"/>
+<pinref part="ANALOG" gate="G$1" pin="VID"/>
 <pinref part="C16" gate="G$1" pin="2"/>
 <wire x1="190.5" y1="177.8" x2="193.04" y2="177.8" width="0.1524" layer="91"/>
 <pinref part="R56" gate="G$1" pin="1"/>
@@ -12259,13 +12262,13 @@ within 0.254mm</text>
 <net name="N$65" class="0">
 <segment>
 <pinref part="C34" gate="G$1" pin="-"/>
-<pinref part="A/V" gate="G$1" pin="R"/>
+<pinref part="ANALOG" gate="G$1" pin="R"/>
 <wire x1="170.18" y1="182.88" x2="193.04" y2="182.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$66" class="0">
 <segment>
-<pinref part="A/V" gate="G$1" pin="L"/>
+<pinref part="ANALOG" gate="G$1" pin="L"/>
 <pinref part="C35" gate="G$1" pin="-"/>
 <wire x1="193.04" y1="187.96" x2="180.34" y2="187.96" width="0.1524" layer="91"/>
 </segment>
