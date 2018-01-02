@@ -7309,7 +7309,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="93LC46BT-I/OT"/>
 </part>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
-<part name="ANALOG" library="reclone-rise" deviceset="AV-JACK-4COND" device="">
+<part name="A/V" library="reclone-rise" deviceset="AV-JACK-4COND" device="">
 <attribute name="DIGIKEY#" value="CP-43514SJCT-ND"/>
 <attribute name="MANF" value="CUI Inc."/>
 <attribute name="MANF#" value="SJ-43514-SMT-TR"/>
@@ -9301,7 +9301,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="MCU" gate="_SPI" pin="SPI2_MOSI"/>
 </segment>
 </net>
-<net name="N$5" class="0">
+<net name="DM2" class="0">
 <segment>
 <wire x1="337.82" y1="124.46" x2="337.82" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="DM2"/>
@@ -9310,7 +9310,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="335.28" y1="124.46" x2="337.82" y2="124.46" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$6" class="0">
+<net name="DP2" class="0">
 <segment>
 <pinref part="USB" gate="USB_A_2H" pin="DP2"/>
 <wire x1="347.98" y1="121.92" x2="340.36" y2="121.92" width="0.1524" layer="91"/>
@@ -9799,14 +9799,14 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="MCU" gate="_USB" pin="USB_HS_DM"/>
 </segment>
 </net>
-<net name="N$54" class="0">
+<net name="DP1" class="0">
 <segment>
 <pinref part="R37" gate="G$1" pin="2"/>
 <pinref part="USB" gate="USB_A_2H" pin="DP1"/>
 <wire x1="335.28" y1="134.62" x2="347.98" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$62" class="0">
+<net name="DM1" class="0">
 <segment>
 <pinref part="USB" gate="USB_A_2H" pin="DM1"/>
 <pinref part="R38" gate="G$1" pin="2"/>
@@ -10141,7 +10141,7 @@ within 0.254mm</text>
 <attribute name="MANF#" x="33.02" y="73.66" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY4" gate="GND" x="48.26" y="116.84" rot="R90"/>
-<instance part="ANALOG" gate="G$1" x="203.2" y="182.88" rot="R180">
+<instance part="A/V" gate="G$1" x="203.2" y="182.88" rot="R180">
 <attribute name="DIGIKEY#" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="203.2" y="182.88" size="1.778" layer="96" rot="R180" display="off"/>
@@ -10972,7 +10972,7 @@ within 0.254mm</text>
 <pinref part="SUPPLY18" gate="GND" pin="GND"/>
 </segment>
 <segment>
-<pinref part="ANALOG" gate="G$1" pin="GND"/>
+<pinref part="A/V" gate="G$1" pin="GND"/>
 <wire x1="170.18" y1="172.72" x2="170.18" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="180.34" x2="175.26" y2="180.34" width="0.1524" layer="91"/>
 <pinref part="C15" gate="G$1" pin="1"/>
@@ -11725,7 +11725,7 @@ within 0.254mm</text>
 </net>
 <net name="N$79" class="0">
 <segment>
-<pinref part="ANALOG" gate="G$1" pin="VID"/>
+<pinref part="A/V" gate="G$1" pin="VID"/>
 <pinref part="C16" gate="G$1" pin="2"/>
 <wire x1="190.5" y1="177.8" x2="193.04" y2="177.8" width="0.1524" layer="91"/>
 <pinref part="R56" gate="G$1" pin="1"/>
@@ -12262,13 +12262,13 @@ within 0.254mm</text>
 <net name="N$65" class="0">
 <segment>
 <pinref part="C34" gate="G$1" pin="-"/>
-<pinref part="ANALOG" gate="G$1" pin="R"/>
+<pinref part="A/V" gate="G$1" pin="R"/>
 <wire x1="170.18" y1="182.88" x2="193.04" y2="182.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$66" class="0">
 <segment>
-<pinref part="ANALOG" gate="G$1" pin="L"/>
+<pinref part="A/V" gate="G$1" pin="L"/>
 <pinref part="C35" gate="G$1" pin="-"/>
 <wire x1="193.04" y1="187.96" x2="180.34" y2="187.96" width="0.1524" layer="91"/>
 </segment>
