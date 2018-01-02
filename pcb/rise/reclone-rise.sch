@@ -9511,6 +9511,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="R20" gate="G$1" pin="1"/>
 <wire x1="160.02" y1="76.2" x2="185.42" y2="76.2" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS2"/>
+<wire x1="106.68" y1="104.14" x2="109.22" y2="104.14" width="0.1524" layer="91"/>
+<label x="109.22" y="104.14" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="JTAG_TMS" class="0">
 <segment>
@@ -9814,13 +9819,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="347.98" y1="132.08" x2="335.28" y2="132.08" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="JTAG_ESP_TDO" class="0">
-<segment>
-<pinref part="SERIAL/JTAG" gate="G$1" pin="ADBUS2"/>
-<wire x1="106.68" y1="104.14" x2="109.22" y2="104.14" width="0.1524" layer="91"/>
-<label x="109.22" y="104.14" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="USER_BTN" class="0">
 <segment>
 <pinref part="R27" gate="G$1" pin="1"/>
@@ -10030,12 +10028,22 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="213.36" y1="50.8" x2="215.9" y2="50.8" width="0.1524" layer="91"/>
 <label x="215.9" y="50.8" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="BT_DIS#"/>
+<wire x1="335.28" y1="71.12" x2="337.82" y2="71.12" width="0.1524" layer="91"/>
+<label x="337.82" y="71.12" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="AP_WAKE_BT" class="0">
 <segment>
 <pinref part="MCU" gate="_GPIO" pin="PC7"/>
 <wire x1="213.36" y1="48.26" x2="215.9" y2="48.26" width="0.1524" layer="91"/>
 <label x="215.9" y="48.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="BT_WAKE"/>
+<wire x1="335.28" y1="76.2" x2="337.82" y2="76.2" width="0.1524" layer="91"/>
+<label x="337.82" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$14" class="0">
@@ -10104,6 +10112,54 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="215.9" y1="81.28" x2="220.98" y2="81.28" width="0.1524" layer="91"/>
 <label x="215.9" y="76.2" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="AP_CTS" class="0">
+<segment>
+<pinref part="MCU" gate="_USART" pin="USART2_CTS"/>
+<wire x1="160.02" y1="50.8" x2="162.56" y2="50.8" width="0.1524" layer="91"/>
+<label x="162.56" y="50.8" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="UART_RTS#"/>
+<wire x1="335.28" y1="58.42" x2="337.82" y2="58.42" width="0.1524" layer="91"/>
+<label x="337.82" y="58.42" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="AP_RTS" class="0">
+<segment>
+<pinref part="MCU" gate="_USART" pin="USART2_RTS"/>
+<wire x1="160.02" y1="48.26" x2="162.56" y2="48.26" width="0.1524" layer="91"/>
+<label x="162.56" y="48.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="UART_CTS#"/>
+<wire x1="335.28" y1="66.04" x2="337.82" y2="66.04" width="0.1524" layer="91"/>
+<label x="337.82" y="66.04" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="AP_TXD" class="0">
+<segment>
+<pinref part="MCU" gate="_USART" pin="USART2_TX"/>
+<wire x1="160.02" y1="45.72" x2="162.56" y2="45.72" width="0.1524" layer="91"/>
+<label x="162.56" y="45.72" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="UART_RXD"/>
+<wire x1="335.28" y1="63.5" x2="337.82" y2="63.5" width="0.1524" layer="91"/>
+<label x="337.82" y="63.5" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="AP_RXD" class="0">
+<segment>
+<pinref part="MCU" gate="_USART" pin="USART2_RX"/>
+<wire x1="160.02" y1="43.18" x2="162.56" y2="43.18" width="0.1524" layer="91"/>
+<label x="162.56" y="43.18" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="UART_TXD"/>
+<wire x1="335.28" y1="60.96" x2="337.82" y2="60.96" width="0.1524" layer="91"/>
+<label x="337.82" y="60.96" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
