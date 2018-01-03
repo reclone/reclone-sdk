@@ -1166,6 +1166,25 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-2.25" y1="2.25" x2="-2.25" y2="-2.25" width="0.127" layer="21"/>
 <text x="-4.8" y="-2.2" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
 </package>
+<package name="MEANDER_ANTENNA_2.4GHZ">
+<rectangle x1="-2.8" y1="0.5" x2="-2.3" y2="4.9" layer="1" rot="R180"/>
+<rectangle x1="-0.9" y1="0.5" x2="0" y2="4.9" layer="1" rot="R180"/>
+<rectangle x1="-5" y1="4.9" x2="0" y2="5.4" layer="1" rot="R180"/>
+<rectangle x1="-5" y1="2.26" x2="-4.5" y2="4.9" layer="1" rot="R180"/>
+<rectangle x1="-7" y1="2.26" x2="-5" y2="2.76" layer="1" rot="R180"/>
+<rectangle x1="-7.5" y1="2.26" x2="-7" y2="4.9" layer="1" rot="R180"/>
+<rectangle x1="-9.7" y1="4.9" x2="-7" y2="5.4" layer="1" rot="R180"/>
+<rectangle x1="-9.7" y1="2.26" x2="-9.2" y2="4.9" layer="1" rot="R180"/>
+<rectangle x1="-11.7" y1="2.26" x2="-9.7" y2="2.76" layer="1" rot="R180"/>
+<rectangle x1="-12.2" y1="2.26" x2="-11.7" y2="4.9" layer="1" rot="R180"/>
+<rectangle x1="-14.4" y1="4.9" x2="-11.7" y2="5.4" layer="1" rot="R180"/>
+<rectangle x1="-14.4" y1="0.96" x2="-13.9" y2="4.9" layer="1" rot="R180"/>
+<smd name="FEED" x="-2.55" y="0.25" dx="0.5" dy="0.5" layer="1" rot="R90" stop="no" thermals="no" cream="no"/>
+<text x="-13" y="1" size="0.8" layer="26" font="vector" ratio="19">&gt;NAME</text>
+<text x="-3" y="1" size="0.8" layer="27" font="vector" ratio="19" align="bottom-right">&gt;VALUE</text>
+<rectangle x1="-15.4" y1="0.5" x2="1" y2="6" layer="39" rot="R180"/>
+<smd name="GND" x="-0.45" y="0.25" dx="0.9" dy="0.5" layer="1" stop="no" cream="no"/>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -1917,7 +1936,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="15.24" y1="-27.94" x2="-15.24" y2="-27.94" width="0.254" layer="94"/>
 <wire x1="-15.24" y1="-27.94" x2="-15.24" y2="25.4" width="0.254" layer="94"/>
 <pin name="GND@1" x="-17.78" y="-15.24" length="short"/>
-<pin name="WIFI/BT_ANT" x="17.78" y="12.7" length="short" rot="R180"/>
+<pin name="WIFI/BT_ANT" x="17.78" y="-20.32" length="short" rot="R180"/>
 <pin name="BT_WAKE" x="17.78" y="5.08" length="short" rot="R180"/>
 <pin name="BT_HOST_WAKE" x="17.78" y="2.54" length="short" rot="R180"/>
 <pin name="VBAT" x="-17.78" y="22.86" length="short"/>
@@ -2134,6 +2153,20 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <pin name="TMS/SWDIO" x="10.16" y="15.24" length="middle" rot="R180"/>
 <text x="5.08" y="20.32" size="1.778" layer="95" align="top-right">&gt;NAME</text>
 <text x="5.08" y="-2.54" size="1.778" layer="96" align="bottom-right">&gt;VALUE</text>
+</symbol>
+<symbol name="ANTENNA_MEANDER">
+<wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="2.54" x2="-2.54" y2="2.54" width="0.254" layer="94"/>
+<pin name="FEED" x="-5.08" y="0" visible="pad" length="short"/>
+<pin name="GND" x="5.08" y="0" visible="pad" length="short" rot="R180"/>
+<wire x1="0" y1="-1.27" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="1.27" x2="0" y2="1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="1.27" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="1.27" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="1.27" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -3060,6 +3093,22 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <attribute name="MANF" value="STMicroelectronics"/>
 <attribute name="MANF#" value="STM32F407VGT6"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="ANTENNA_MEANDER_2.4GHZ">
+<gates>
+<gate name="G$1" symbol="ANTENNA_MEANDER" x="0" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="MEANDER_ANTENNA_2.4GHZ">
+<connects>
+<connect gate="G$1" pin="FEED" pad="FEED"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -7810,11 +7859,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="MPD (Memory Protection Devices)"/>
 <attribute name="MANF#" value="BK-885"/>
 </part>
-<part name="Y4" library="SparkFun-FreqCtrl" deviceset="CRYSTAL" device="EPSONMC146" value="32K768">
-<attribute name="DIGIKEY#" value="300-8039-1-ND"/>
-<attribute name="MANF" value="Citizen Finedevice Co Ltd"/>
-<attribute name="MANF#" value="CM13032768DZFT"/>
-</part>
 <part name="C58" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="15p">
 <attribute name="DIGIKEY#" value="478-10289-1-ND"/>
 <attribute name="MANF" value="AVX Corporation"/>
@@ -7884,7 +7928,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
-<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
+<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
@@ -7988,17 +8032,17 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </part>
 <part name="WIFI/BT" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device=""/>
 <part name="MICROSD" library="reclone-rise" deviceset="MICROSD_PUSHPULL" device=""/>
-<part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
+<part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
 </part>
-<part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
+<part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
 </part>
-<part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
+<part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-0710KL"/>
@@ -8019,6 +8063,54 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="MCU" library="reclone-rise" deviceset="STM32F405VGT6" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
+<part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R41" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R42" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R43" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R44" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R45" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R46" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R47" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="R48" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
+<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0710KL"/>
+</part>
+<part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
+<part name="ANTENNA" library="reclone-rise" deviceset="ANTENNA_MEANDER_2.4GHZ" device=""/>
+<part name="SUPPLY32" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8026,10 +8118,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <plain>
 </plain>
 <instances>
-<instance part="USB" gate="USB_A_2H" x="353.06" y="121.92">
-<attribute name="DIGIKEY#" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="353.06" y="121.92" size="1.778" layer="96" display="off"/>
+<instance part="USB" gate="USB_A_2H" x="360.68" y="180.34">
+<attribute name="DIGIKEY#" x="360.68" y="180.34" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="360.68" y="180.34" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="360.68" y="180.34" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="PWR/DEBUG" gate="G$1" x="43.18" y="238.76" rot="R180">
 <attribute name="DIGIKEY#" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
@@ -8131,10 +8223,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="55.88" y="86.36" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="MANF#" x="55.88" y="86.36" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="P+4" gate="1" x="342.9" y="142.24"/>
-<instance part="SUPPLY13" gate="GND" x="342.9" y="114.3"/>
-<instance part="+3V8" gate="G$1" x="360.68" y="193.04"/>
-<instance part="SUPPLY14" gate="GND" x="365.76" y="167.64"/>
+<instance part="P+4" gate="1" x="350.52" y="200.66"/>
+<instance part="SUPPLY13" gate="GND" x="350.52" y="172.72"/>
+<instance part="+3V8" gate="G$1" x="215.9" y="127"/>
+<instance part="SUPPLY14" gate="GND" x="220.98" y="101.6"/>
 <instance part="SUPPLY15" gate="GND" x="213.36" y="190.5"/>
 <instance part="+3V9" gate="G$1" x="205.74" y="215.9"/>
 <instance part="R15" gate="G$1" x="137.16" y="101.6" rot="R270">
@@ -8424,11 +8516,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="223.52" y="203.2" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="MANF#" x="223.52" y="203.2" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
-<instance part="Y4" gate="G$1" x="231.14" y="175.26" rot="R90">
-<attribute name="DIGIKEY#" x="231.14" y="175.26" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF" x="231.14" y="175.26" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF#" x="231.14" y="175.26" size="1.778" layer="96" rot="R90" display="off"/>
-</instance>
 <instance part="C58" gate="G$1" x="236.22" y="172.72" rot="R270">
 <attribute name="DIGIKEY#" x="236.22" y="172.72" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="236.22" y="172.72" size="1.778" layer="96" display="off"/>
@@ -8440,33 +8527,33 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" x="236.22" y="180.34" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
 <instance part="SUPPLY7" gate="GND" x="243.84" y="170.18"/>
-<instance part="R37" gate="G$1" x="330.2" y="134.62" smashed="yes">
-<attribute name="NAME" x="324.358" y="132.5626" size="1.778" layer="95"/>
-<attribute name="VALUE" x="332.486" y="134.874" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="330.2" y="134.62" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="330.2" y="134.62" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="330.2" y="134.62" size="1.778" layer="96" display="off"/>
+<instance part="R37" gate="G$1" x="337.82" y="193.04" smashed="yes">
+<attribute name="NAME" x="331.978" y="190.9826" size="1.778" layer="95"/>
+<attribute name="VALUE" x="340.106" y="193.294" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="337.82" y="193.04" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="337.82" y="193.04" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="337.82" y="193.04" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R38" gate="G$1" x="330.2" y="132.08" smashed="yes">
-<attribute name="NAME" x="324.358" y="130.0226" size="1.778" layer="95"/>
-<attribute name="VALUE" x="332.486" y="132.334" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="330.2" y="132.08" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="330.2" y="132.08" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="330.2" y="132.08" size="1.778" layer="96" display="off"/>
+<instance part="R38" gate="G$1" x="337.82" y="190.5" smashed="yes">
+<attribute name="NAME" x="331.978" y="188.4426" size="1.778" layer="95"/>
+<attribute name="VALUE" x="340.106" y="190.754" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="337.82" y="190.5" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="337.82" y="190.5" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="337.82" y="190.5" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R39" gate="G$1" x="330.2" y="127" smashed="yes">
-<attribute name="NAME" x="324.358" y="124.9426" size="1.778" layer="95"/>
-<attribute name="VALUE" x="332.486" y="127.254" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="330.2" y="127" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="330.2" y="127" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="330.2" y="127" size="1.778" layer="96" display="off"/>
+<instance part="R39" gate="G$1" x="337.82" y="185.42" smashed="yes">
+<attribute name="NAME" x="331.978" y="183.3626" size="1.778" layer="95"/>
+<attribute name="VALUE" x="340.106" y="185.674" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="337.82" y="185.42" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="337.82" y="185.42" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="337.82" y="185.42" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R40" gate="G$1" x="330.2" y="124.46" smashed="yes">
-<attribute name="NAME" x="324.358" y="122.4026" size="1.778" layer="95"/>
-<attribute name="VALUE" x="332.486" y="124.714" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="330.2" y="124.46" size="1.778" layer="96" display="off"/>
+<instance part="R40" gate="G$1" x="337.82" y="182.88" smashed="yes">
+<attribute name="NAME" x="331.978" y="180.8226" size="1.778" layer="95"/>
+<attribute name="VALUE" x="340.106" y="183.134" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="337.82" y="182.88" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="337.82" y="182.88" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="337.82" y="182.88" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R11" gate="G$1" x="185.42" y="109.22" smashed="yes">
 <attribute name="NAME" x="179.578" y="107.1626" size="1.778" layer="95"/>
@@ -8577,7 +8664,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="78.74" y="203.2" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="78.74" y="203.2" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="WIFI/BT" gate="G$1" x="317.5" y="71.12"/>
+<instance part="WIFI/BT" gate="G$1" x="330.2" y="109.22"/>
 <instance part="MICROSD" gate="G$1" x="284.48" y="213.36"/>
 <instance part="R31" gate="G$1" x="254" y="228.6" rot="R270">
 <attribute name="DIGIKEY#" x="254" y="228.6" size="1.778" layer="96" display="off"/>
@@ -8609,15 +8696,63 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="SUPPLY25" gate="GND" x="175.26" y="91.44"/>
 <instance part="MCU" gate="_PWR" x="193.04" y="213.36"/>
 <instance part="MCU" gate="_CLK" x="203.2" y="157.48"/>
-<instance part="MCU" gate="_AN" x="353.06" y="177.8"/>
-<instance part="MCU" gate="_USB" x="309.88" y="121.92"/>
+<instance part="MCU" gate="_AN" x="208.28" y="111.76"/>
+<instance part="MCU" gate="_USB" x="317.5" y="180.34"/>
 <instance part="MCU" gate="_USART" x="154.94" y="50.8"/>
 <instance part="MCU" gate="_JTAG" x="149.86" y="96.52"/>
 <instance part="MCU" gate="_SPI" x="154.94" y="22.86"/>
 <instance part="MCU" gate="_GPIO" x="208.28" y="63.5"/>
-<instance part="MCU" gate="_SDIO" x="287.02" y="68.58"/>
-<instance part="SUPPLY3" gate="GND" x="297.18" y="40.64"/>
-<instance part="+3V2" gate="G$1" x="297.18" y="99.06"/>
+<instance part="MCU" gate="_SDIO" x="256.54" y="106.68"/>
+<instance part="SUPPLY3" gate="GND" x="309.88" y="78.74"/>
+<instance part="+3V2" gate="G$1" x="309.88" y="137.16"/>
+<instance part="R10" gate="G$1" x="266.7" y="121.92" rot="R270">
+<attribute name="DIGIKEY#" x="266.7" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="266.7" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="266.7" y="121.92" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R41" gate="G$1" x="274.32" y="121.92" rot="R270">
+<attribute name="DIGIKEY#" x="274.32" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="274.32" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="274.32" y="121.92" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R42" gate="G$1" x="281.94" y="121.92" rot="R270">
+<attribute name="DIGIKEY#" x="281.94" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="281.94" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="281.94" y="121.92" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R43" gate="G$1" x="289.56" y="121.92" rot="R270">
+<attribute name="DIGIKEY#" x="289.56" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="289.56" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="289.56" y="121.92" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R44" gate="G$1" x="297.18" y="121.92" rot="R270">
+<attribute name="DIGIKEY#" x="297.18" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="297.18" y="121.92" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="297.18" y="121.92" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R45" gate="G$1" x="353.06" y="127" rot="R270">
+<attribute name="DIGIKEY#" x="353.06" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="353.06" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="353.06" y="127" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R46" gate="G$1" x="360.68" y="127" rot="R270">
+<attribute name="DIGIKEY#" x="360.68" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="360.68" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="360.68" y="127" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R47" gate="G$1" x="368.3" y="127" rot="R270">
+<attribute name="DIGIKEY#" x="368.3" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="368.3" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="368.3" y="127" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R48" gate="G$1" x="375.92" y="127" rot="R270">
+<attribute name="DIGIKEY#" x="375.92" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="375.92" y="127" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="375.92" y="127" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="+3V7" gate="G$1" x="353.06" y="139.7"/>
+<instance part="ANTENNA" gate="G$1" x="358.14" y="88.9"/>
+<instance part="SUPPLY32" gate="GND" x="365.76" y="86.36"/>
 </instances>
 <busses>
 </busses>
@@ -8625,13 +8760,13 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="+5V" class="0">
 <segment>
 <pinref part="USB" gate="USB_A_2H" pin="VBUS2"/>
-<wire x1="342.9" y1="124.46" x2="347.98" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="350.52" y1="182.88" x2="355.6" y2="182.88" width="0.1524" layer="91"/>
 <pinref part="P+4" gate="1" pin="+5V"/>
-<wire x1="342.9" y1="124.46" x2="342.9" y2="137.16" width="0.1524" layer="91"/>
+<wire x1="350.52" y1="182.88" x2="350.52" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="VBUS1"/>
-<wire x1="342.9" y1="137.16" x2="342.9" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="347.98" y1="137.16" x2="342.9" y2="137.16" width="0.1524" layer="91"/>
-<junction x="342.9" y="137.16"/>
+<wire x1="350.52" y1="195.58" x2="350.52" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="355.6" y1="195.58" x2="350.52" y2="195.58" width="0.1524" layer="91"/>
+<junction x="350.52" y="195.58"/>
 </segment>
 <segment>
 <pinref part="L1" gate="G$1" pin="2"/>
@@ -8764,7 +8899,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="SUPPLY14" gate="GND" pin="GND"/>
-<wire x1="358.14" y1="170.18" x2="365.76" y2="170.18" width="0.1524" layer="91"/>
+<wire x1="213.36" y1="104.14" x2="220.98" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_AN" pin="VSSA"/>
 </segment>
 <segment>
@@ -8798,28 +8933,28 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="SUPPLY13" gate="GND" pin="GND"/>
 <pinref part="USB" gate="USB_A_2H" pin="GND1"/>
-<wire x1="347.98" y1="129.54" x2="345.44" y2="129.54" width="0.1524" layer="91"/>
-<wire x1="345.44" y1="129.54" x2="345.44" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="355.6" y1="187.96" x2="353.06" y2="187.96" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="187.96" x2="353.06" y2="175.26" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="GND2"/>
-<wire x1="347.98" y1="116.84" x2="345.44" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="345.44" y1="116.84" x2="342.9" y2="116.84" width="0.1524" layer="91"/>
-<junction x="345.44" y="116.84"/>
+<wire x1="355.6" y1="175.26" x2="353.06" y2="175.26" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="175.26" x2="350.52" y2="175.26" width="0.1524" layer="91"/>
+<junction x="353.06" y="175.26"/>
 <pinref part="USB" gate="USB_A_2H" pin="SH1"/>
-<wire x1="355.6" y1="99.06" x2="355.6" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="363.22" y1="157.48" x2="363.22" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="SH2"/>
-<wire x1="355.6" y1="99.06" x2="358.14" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="358.14" y1="99.06" x2="358.14" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="363.22" y1="157.48" x2="365.76" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="365.76" y1="157.48" x2="365.76" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="SH3"/>
-<wire x1="358.14" y1="99.06" x2="360.68" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="360.68" y1="99.06" x2="360.68" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="365.76" y1="157.48" x2="368.3" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="368.3" y1="157.48" x2="368.3" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="SH4"/>
-<wire x1="360.68" y1="99.06" x2="363.22" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="363.22" y1="99.06" x2="363.22" y2="101.6" width="0.1524" layer="91"/>
-<junction x="358.14" y="99.06"/>
-<junction x="360.68" y="99.06"/>
-<wire x1="345.44" y1="116.84" x2="345.44" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="345.44" y1="99.06" x2="355.6" y2="99.06" width="0.1524" layer="91"/>
-<junction x="355.6" y="99.06"/>
+<wire x1="368.3" y1="157.48" x2="370.84" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="370.84" y1="157.48" x2="370.84" y2="160.02" width="0.1524" layer="91"/>
+<junction x="365.76" y="157.48"/>
+<junction x="368.3" y="157.48"/>
+<wire x1="353.06" y1="175.26" x2="353.06" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="157.48" x2="363.22" y2="157.48" width="0.1524" layer="91"/>
+<junction x="363.22" y="157.48"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="BNA" pin="SUSPEND"/>
@@ -9042,29 +9177,34 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="SUPPLY3" gate="GND" pin="GND"/>
 <pinref part="WIFI/BT" gate="G$1" pin="GND@1"/>
-<wire x1="297.18" y1="43.18" x2="297.18" y2="45.72" width="0.1524" layer="91"/>
-<wire x1="297.18" y1="45.72" x2="297.18" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="297.18" y1="48.26" x2="297.18" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="297.18" y1="50.8" x2="297.18" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="297.18" y1="53.34" x2="297.18" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="297.18" y1="55.88" x2="299.72" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="81.28" x2="309.88" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="83.82" x2="309.88" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="86.36" x2="309.88" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="88.9" x2="309.88" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="91.44" x2="309.88" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="93.98" x2="312.42" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="GND@20"/>
-<wire x1="299.72" y1="53.34" x2="297.18" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="312.42" y1="91.44" x2="309.88" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="GND@31"/>
-<wire x1="299.72" y1="50.8" x2="297.18" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="312.42" y1="88.9" x2="309.88" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="GND@33"/>
-<wire x1="299.72" y1="48.26" x2="297.18" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="312.42" y1="86.36" x2="309.88" y2="86.36" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="GND@36"/>
-<wire x1="299.72" y1="45.72" x2="297.18" y2="45.72" width="0.1524" layer="91"/>
-<junction x="297.18" y="45.72"/>
-<junction x="297.18" y="48.26"/>
-<junction x="297.18" y="50.8"/>
-<junction x="297.18" y="53.34"/>
+<wire x1="312.42" y1="83.82" x2="309.88" y2="83.82" width="0.1524" layer="91"/>
+<junction x="309.88" y="83.82"/>
+<junction x="309.88" y="86.36"/>
+<junction x="309.88" y="88.9"/>
+<junction x="309.88" y="91.44"/>
 </segment>
 <segment>
 <pinref part="SUPPLY26" gate="GND" pin="GND"/>
 <pinref part="R35" gate="G$1" pin="1"/>
 <wire x1="220.98" y1="218.44" x2="220.98" y2="215.9" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="ANTENNA" gate="G$1" pin="GND"/>
+<pinref part="SUPPLY32" gate="GND" pin="GND"/>
+<wire x1="363.22" y1="88.9" x2="365.76" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -9117,11 +9257,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="+3V8" gate="G$1" pin="+3V3"/>
-<wire x1="358.14" y1="182.88" x2="360.68" y2="182.88" width="0.1524" layer="91"/>
-<wire x1="360.68" y1="182.88" x2="360.68" y2="185.42" width="0.1524" layer="91"/>
-<wire x1="360.68" y1="185.42" x2="360.68" y2="190.5" width="0.1524" layer="91"/>
-<wire x1="358.14" y1="185.42" x2="360.68" y2="185.42" width="0.1524" layer="91"/>
-<junction x="360.68" y="185.42"/>
+<wire x1="213.36" y1="116.84" x2="215.9" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="116.84" x2="215.9" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="119.38" x2="215.9" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="213.36" y1="119.38" x2="215.9" y2="119.38" width="0.1524" layer="91"/>
+<junction x="215.9" y="119.38"/>
 <pinref part="MCU" gate="_AN" pin="VREF+"/>
 <pinref part="MCU" gate="_AN" pin="VDDA"/>
 </segment>
@@ -9252,19 +9392,56 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="+3V2" gate="G$1" pin="+3V3"/>
-<wire x1="297.18" y1="96.52" x2="297.18" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="134.62" x2="309.88" y2="132.08" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="VDD_IO"/>
-<wire x1="297.18" y1="93.98" x2="297.18" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="297.18" y1="91.44" x2="299.72" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="132.08" x2="309.88" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="309.88" y1="129.54" x2="312.42" y2="129.54" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="VBAT"/>
-<wire x1="299.72" y1="93.98" x2="297.18" y2="93.98" width="0.1524" layer="91"/>
-<junction x="297.18" y="93.98"/>
+<wire x1="312.42" y1="132.08" x2="309.88" y2="132.08" width="0.1524" layer="91"/>
+<junction x="309.88" y="132.08"/>
+<pinref part="R10" gate="G$1" pin="1"/>
+<wire x1="266.7" y1="127" x2="266.7" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="266.7" y1="132.08" x2="274.32" y2="132.08" width="0.1524" layer="91"/>
+<pinref part="R41" gate="G$1" pin="1"/>
+<wire x1="274.32" y1="132.08" x2="281.94" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="132.08" x2="289.56" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="289.56" y1="132.08" x2="297.18" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="132.08" x2="309.88" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="127" x2="274.32" y2="132.08" width="0.1524" layer="91"/>
+<pinref part="R42" gate="G$1" pin="1"/>
+<wire x1="281.94" y1="127" x2="281.94" y2="132.08" width="0.1524" layer="91"/>
+<pinref part="R43" gate="G$1" pin="1"/>
+<wire x1="289.56" y1="127" x2="289.56" y2="132.08" width="0.1524" layer="91"/>
+<pinref part="R44" gate="G$1" pin="1"/>
+<wire x1="297.18" y1="127" x2="297.18" y2="132.08" width="0.1524" layer="91"/>
+<junction x="274.32" y="132.08"/>
+<junction x="281.94" y="132.08"/>
+<junction x="289.56" y="132.08"/>
+<junction x="297.18" y="132.08"/>
 </segment>
 <segment>
 <pinref part="BOOT" gate="G$1" pin="1"/>
 <pinref part="+3V22" gate="G$1" pin="+3V3"/>
 <wire x1="200.66" y1="236.22" x2="193.04" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="193.04" y1="236.22" x2="193.04" y2="241.3" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R45" gate="G$1" pin="1"/>
+<wire x1="353.06" y1="132.08" x2="353.06" y2="134.62" width="0.1524" layer="91"/>
+<pinref part="R48" gate="G$1" pin="1"/>
+<wire x1="375.92" y1="132.08" x2="375.92" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="375.92" y1="134.62" x2="368.3" y2="134.62" width="0.1524" layer="91"/>
+<pinref part="R46" gate="G$1" pin="1"/>
+<wire x1="368.3" y1="134.62" x2="360.68" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="360.68" y1="134.62" x2="353.06" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="360.68" y1="132.08" x2="360.68" y2="134.62" width="0.1524" layer="91"/>
+<pinref part="R47" gate="G$1" pin="1"/>
+<wire x1="368.3" y1="132.08" x2="368.3" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="134.62" x2="353.06" y2="137.16" width="0.1524" layer="91"/>
+<pinref part="+3V7" gate="G$1" pin="+3V3"/>
+<junction x="353.06" y="134.62"/>
+<junction x="360.68" y="134.62"/>
+<junction x="368.3" y="134.62"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_CLK" class="0">
@@ -9304,20 +9481,20 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="DM2" class="0">
 <segment>
-<wire x1="337.82" y1="124.46" x2="337.82" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="345.44" y1="182.88" x2="345.44" y2="177.8" width="0.1524" layer="91"/>
 <pinref part="USB" gate="USB_A_2H" pin="DM2"/>
-<wire x1="337.82" y1="119.38" x2="347.98" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="345.44" y1="177.8" x2="355.6" y2="177.8" width="0.1524" layer="91"/>
 <pinref part="R40" gate="G$1" pin="2"/>
-<wire x1="335.28" y1="124.46" x2="337.82" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="342.9" y1="182.88" x2="345.44" y2="182.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="DP2" class="0">
 <segment>
 <pinref part="USB" gate="USB_A_2H" pin="DP2"/>
-<wire x1="347.98" y1="121.92" x2="340.36" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="340.36" y1="121.92" x2="340.36" y2="127" width="0.1524" layer="91"/>
+<wire x1="355.6" y1="180.34" x2="347.98" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="347.98" y1="180.34" x2="347.98" y2="185.42" width="0.1524" layer="91"/>
 <pinref part="R39" gate="G$1" pin="2"/>
-<wire x1="335.28" y1="127" x2="340.36" y2="127" width="0.1524" layer="91"/>
+<wire x1="342.9" y1="185.42" x2="347.98" y2="185.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+1V8" class="0">
@@ -9755,11 +9932,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="N$40" class="0">
 <segment>
-<pinref part="Y4" gate="G$1" pin="1"/>
 <wire x1="231.14" y1="167.64" x2="231.14" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="C58" gate="G$1" pin="2"/>
 <wire x1="231.14" y1="172.72" x2="233.68" y2="172.72" width="0.1524" layer="91"/>
-<junction x="231.14" y="172.72"/>
 <wire x1="213.36" y1="167.64" x2="231.14" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_CLK" pin="OSC32_OUT"/>
 </segment>
@@ -9767,7 +9942,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$48" class="0">
 <segment>
 <pinref part="C59" gate="G$1" pin="2"/>
-<pinref part="Y4" gate="G$1" pin="2"/>
 <wire x1="233.68" y1="180.34" x2="231.14" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="231.14" y1="180.34" x2="231.14" y2="177.8" width="0.1524" layer="91"/>
 <junction x="231.14" y="180.34"/>
@@ -9780,28 +9954,28 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$1" class="0">
 <segment>
 <pinref part="R37" gate="G$1" pin="1"/>
-<wire x1="320.04" y1="134.62" x2="325.12" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="327.66" y1="193.04" x2="332.74" y2="193.04" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_USB" pin="USB_FS_DP"/>
 </segment>
 </net>
 <net name="N$2" class="0">
 <segment>
 <pinref part="R38" gate="G$1" pin="1"/>
-<wire x1="320.04" y1="132.08" x2="325.12" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="327.66" y1="190.5" x2="332.74" y2="190.5" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_USB" pin="USB_FS_DM"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
 <pinref part="R39" gate="G$1" pin="1"/>
-<wire x1="320.04" y1="127" x2="325.12" y2="127" width="0.1524" layer="91"/>
+<wire x1="327.66" y1="185.42" x2="332.74" y2="185.42" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_USB" pin="USB_HS_DP"/>
 </segment>
 </net>
 <net name="N$4" class="0">
 <segment>
 <pinref part="R40" gate="G$1" pin="1"/>
-<wire x1="320.04" y1="124.46" x2="325.12" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="327.66" y1="182.88" x2="332.74" y2="182.88" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_USB" pin="USB_HS_DM"/>
 </segment>
 </net>
@@ -9809,14 +9983,14 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <segment>
 <pinref part="R37" gate="G$1" pin="2"/>
 <pinref part="USB" gate="USB_A_2H" pin="DP1"/>
-<wire x1="335.28" y1="134.62" x2="347.98" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="342.9" y1="193.04" x2="355.6" y2="193.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="DM1" class="0">
 <segment>
 <pinref part="USB" gate="USB_A_2H" pin="DM1"/>
 <pinref part="R38" gate="G$1" pin="2"/>
-<wire x1="347.98" y1="132.08" x2="335.28" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="355.6" y1="190.5" x2="342.9" y2="190.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="USER_BTN" class="0">
@@ -9834,15 +10008,15 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="GPIO07" class="0">
 <segment>
-<wire x1="358.14" y1="177.8" x2="360.68" y2="177.8" width="0.1524" layer="91"/>
-<label x="360.68" y="177.8" size="1.778" layer="95"/>
+<wire x1="213.36" y1="111.76" x2="215.9" y2="111.76" width="0.1524" layer="91"/>
+<label x="215.9" y="111.76" size="1.778" layer="95"/>
 <pinref part="MCU" gate="_AN" pin="ADC123_IN10"/>
 </segment>
 </net>
 <net name="GPIO23" class="0">
 <segment>
-<wire x1="358.14" y1="175.26" x2="360.68" y2="175.26" width="0.1524" layer="91"/>
-<label x="360.68" y="175.26" size="1.778" layer="95"/>
+<wire x1="213.36" y1="109.22" x2="215.9" y2="109.22" width="0.1524" layer="91"/>
+<label x="215.9" y="109.22" size="1.778" layer="95"/>
 <pinref part="MCU" gate="_AN" pin="ADC123_IN11"/>
 </segment>
 </net>
@@ -10030,8 +10204,8 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="BT_DIS#"/>
-<wire x1="335.28" y1="71.12" x2="337.82" y2="71.12" width="0.1524" layer="91"/>
-<label x="337.82" y="71.12" size="1.778" layer="95"/>
+<wire x1="347.98" y1="109.22" x2="350.52" y2="109.22" width="0.1524" layer="91"/>
+<label x="350.52" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="AP_WAKE_BT" class="0">
@@ -10042,59 +10216,79 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="BT_WAKE"/>
-<wire x1="335.28" y1="76.2" x2="337.82" y2="76.2" width="0.1524" layer="91"/>
-<label x="337.82" y="76.2" size="1.778" layer="95"/>
+<wire x1="347.98" y1="114.3" x2="350.52" y2="114.3" width="0.1524" layer="91"/>
+<label x="350.52" y="114.3" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$14" class="0">
+<net name="SDIO_D0" class="0">
 <segment>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_D0"/>
 <pinref part="WIFI/BT" gate="G$1" pin="SD_D0"/>
-<wire x1="292.1" y1="73.66" x2="299.72" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="111.76" x2="266.7" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="R10" gate="G$1" pin="2"/>
+<wire x1="266.7" y1="111.76" x2="312.42" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="266.7" y1="116.84" x2="266.7" y2="111.76" width="0.1524" layer="91"/>
+<junction x="266.7" y="111.76"/>
 </segment>
 </net>
-<net name="N$16" class="0">
+<net name="SDIO_D1" class="0">
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="SD_D1"/>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_D1"/>
-<wire x1="299.72" y1="71.12" x2="292.1" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="312.42" y1="109.22" x2="274.32" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="R41" gate="G$1" pin="2"/>
+<wire x1="274.32" y1="109.22" x2="261.62" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="116.84" x2="274.32" y2="109.22" width="0.1524" layer="91"/>
+<junction x="274.32" y="109.22"/>
 </segment>
 </net>
-<net name="N$21" class="0">
+<net name="SDIO_D2" class="0">
 <segment>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_D2"/>
 <pinref part="WIFI/BT" gate="G$1" pin="SD_D2"/>
-<wire x1="292.1" y1="68.58" x2="299.72" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="106.68" x2="281.94" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="R42" gate="G$1" pin="2"/>
+<wire x1="281.94" y1="106.68" x2="312.42" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="116.84" x2="281.94" y2="106.68" width="0.1524" layer="91"/>
+<junction x="281.94" y="106.68"/>
 </segment>
 </net>
-<net name="N$22" class="0">
+<net name="SDIO_D3" class="0">
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="SD_D3"/>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_D3"/>
-<wire x1="299.72" y1="66.04" x2="292.1" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="312.42" y1="104.14" x2="289.56" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="R43" gate="G$1" pin="2"/>
+<wire x1="289.56" y1="104.14" x2="261.62" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="289.56" y1="116.84" x2="289.56" y2="104.14" width="0.1524" layer="91"/>
+<junction x="289.56" y="104.14"/>
 </segment>
 </net>
-<net name="N$24" class="0">
+<net name="SDIO_CMD" class="0">
 <segment>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_CMD"/>
 <pinref part="WIFI/BT" gate="G$1" pin="SD_CMD"/>
-<wire x1="292.1" y1="63.5" x2="299.72" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="101.6" x2="297.18" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="R44" gate="G$1" pin="2"/>
+<wire x1="297.18" y1="101.6" x2="312.42" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="297.18" y1="116.84" x2="297.18" y2="101.6" width="0.1524" layer="91"/>
+<junction x="297.18" y="101.6"/>
 </segment>
 </net>
-<net name="N$29" class="0">
+<net name="SDIO_CLK" class="0">
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="SD_CLK"/>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_CLK"/>
-<wire x1="299.72" y1="60.96" x2="292.1" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="312.42" y1="99.06" x2="261.62" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$30" class="0">
+<net name="SDIO_EN" class="0">
 <segment>
 <pinref part="MCU" gate="_SDIO" pin="SDIO_EN"/>
-<wire x1="292.1" y1="76.2" x2="294.64" y2="76.2" width="0.1524" layer="91"/>
-<wire x1="294.64" y1="76.2" x2="294.64" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="114.3" x2="307.34" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="307.34" y1="114.3" x2="307.34" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="WIFI/BT" gate="G$1" pin="WL_DIS#"/>
-<wire x1="294.64" y1="81.28" x2="299.72" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="307.34" y1="119.38" x2="312.42" y2="119.38" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="FPGA_INT" class="0">
@@ -10122,8 +10316,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="UART_RTS#"/>
-<wire x1="335.28" y1="58.42" x2="337.82" y2="58.42" width="0.1524" layer="91"/>
-<label x="337.82" y="58.42" size="1.778" layer="95"/>
+<label x="350.52" y="96.52" size="1.778" layer="95"/>
+<pinref part="R48" gate="G$1" pin="2"/>
+<wire x1="375.92" y1="121.92" x2="375.92" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="375.92" y1="96.52" x2="347.98" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="AP_RTS" class="0">
@@ -10134,8 +10330,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="UART_CTS#"/>
-<wire x1="335.28" y1="66.04" x2="337.82" y2="66.04" width="0.1524" layer="91"/>
-<label x="337.82" y="66.04" size="1.778" layer="95"/>
+<label x="350.52" y="104.14" size="1.778" layer="95"/>
+<pinref part="R45" gate="G$1" pin="2"/>
+<wire x1="353.06" y1="121.92" x2="353.06" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="104.14" x2="347.98" y2="104.14" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="AP_TXD" class="0">
@@ -10146,8 +10344,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="UART_RXD"/>
-<wire x1="335.28" y1="63.5" x2="337.82" y2="63.5" width="0.1524" layer="91"/>
-<label x="337.82" y="63.5" size="1.778" layer="95"/>
+<label x="350.52" y="101.6" size="1.778" layer="95"/>
+<pinref part="R46" gate="G$1" pin="2"/>
+<wire x1="360.68" y1="121.92" x2="360.68" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="360.68" y1="101.6" x2="347.98" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="AP_RXD" class="0">
@@ -10158,8 +10358,17 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </segment>
 <segment>
 <pinref part="WIFI/BT" gate="G$1" pin="UART_TXD"/>
-<wire x1="335.28" y1="60.96" x2="337.82" y2="60.96" width="0.1524" layer="91"/>
-<label x="337.82" y="60.96" size="1.778" layer="95"/>
+<label x="350.52" y="99.06" size="1.778" layer="95"/>
+<pinref part="R47" gate="G$1" pin="2"/>
+<wire x1="368.3" y1="121.92" x2="368.3" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="368.3" y1="99.06" x2="347.98" y2="99.06" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="ANTENNA" class="0">
+<segment>
+<pinref part="WIFI/BT" gate="G$1" pin="WIFI/BT_ANT"/>
+<pinref part="ANTENNA" gate="G$1" pin="FEED"/>
+<wire x1="347.98" y1="88.9" x2="353.06" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
