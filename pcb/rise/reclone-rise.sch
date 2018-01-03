@@ -8111,6 +8111,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
 <part name="ANTENNA" library="reclone-rise" deviceset="ANTENNA_MEANDER_2.4GHZ" device=""/>
 <part name="SUPPLY32" library="supply2" deviceset="GND" device=""/>
+<part name="C20" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
+<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -8376,35 +8381,35 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="109.22" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="109.22" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C26" gate="G$1" x="116.84" y="157.48" rot="R180">
-<attribute name="DIGIKEY#" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="C27" gate="G$1" x="124.46" y="157.48" rot="R180">
+<instance part="C26" gate="G$1" x="124.46" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="124.46" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="124.46" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="124.46" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C28" gate="G$1" x="132.08" y="157.48" rot="R180">
+<instance part="C27" gate="G$1" x="132.08" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="132.08" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="132.08" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="132.08" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C29" gate="G$1" x="139.7" y="157.48" rot="R180">
+<instance part="C28" gate="G$1" x="139.7" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="139.7" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="139.7" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="139.7" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C30" gate="G$1" x="147.32" y="157.48" rot="R180">
+<instance part="C29" gate="G$1" x="147.32" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="147.32" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="147.32" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="147.32" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C31" gate="G$1" x="154.94" y="157.48" rot="R180">
+<instance part="C30" gate="G$1" x="154.94" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="154.94" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="154.94" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="154.94" y="157.48" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C31" gate="G$1" x="177.8" y="154.94">
+<attribute name="DIGIKEY#" x="177.8" y="154.94" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="177.8" y="154.94" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="177.8" y="154.94" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="C32" gate="G$1" x="162.56" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="162.56" y="157.48" size="1.778" layer="96" display="off"/>
@@ -8753,6 +8758,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="+3V7" gate="G$1" x="353.06" y="139.7"/>
 <instance part="ANTENNA" gate="G$1" x="358.14" y="88.9"/>
 <instance part="SUPPLY32" gate="GND" x="365.76" y="86.36"/>
+<instance part="C20" gate="G$1" x="116.84" y="157.48" rot="R180">
+<attribute name="DIGIKEY#" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -9084,7 +9094,8 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="93.98" y="152.4"/>
 <wire x1="78.74" y1="152.4" x2="93.98" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="152.4" x2="162.56" y2="152.4" width="0.1524" layer="91"/>
-<wire x1="162.56" y1="152.4" x2="154.94" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="162.56" y1="152.4" x2="177.8" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="152.4" x2="154.94" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="152.4" x2="147.32" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="152.4" x2="139.7" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="152.4" x2="132.08" y2="152.4" width="0.1524" layer="91"/>
@@ -9098,22 +9109,24 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="C25" gate="G$1" pin="1"/>
 <junction x="109.22" y="152.4"/>
 <pinref part="C26" gate="G$1" pin="1"/>
-<junction x="116.84" y="152.4"/>
-<pinref part="C27" gate="G$1" pin="1"/>
 <junction x="124.46" y="152.4"/>
-<pinref part="C28" gate="G$1" pin="1"/>
+<pinref part="C27" gate="G$1" pin="1"/>
 <junction x="132.08" y="152.4"/>
-<pinref part="C29" gate="G$1" pin="1"/>
+<pinref part="C28" gate="G$1" pin="1"/>
 <junction x="139.7" y="152.4"/>
-<pinref part="C30" gate="G$1" pin="1"/>
+<pinref part="C29" gate="G$1" pin="1"/>
 <junction x="147.32" y="152.4"/>
-<pinref part="C31" gate="G$1" pin="1"/>
+<pinref part="C30" gate="G$1" pin="1"/>
 <junction x="154.94" y="152.4"/>
+<pinref part="C31" gate="G$1" pin="2"/>
+<junction x="177.8" y="152.4"/>
 <pinref part="C32" gate="G$1" pin="1"/>
 <junction x="162.56" y="152.4"/>
 <pinref part="C33" gate="G$1" pin="1"/>
 <pinref part="C9" gate="G$1" pin="-"/>
 <junction x="78.74" y="152.4"/>
+<pinref part="C20" gate="G$1" pin="1"/>
+<junction x="116.84" y="152.4"/>
 </segment>
 <segment>
 <pinref part="C58" gate="G$1" pin="1"/>
@@ -9296,29 +9309,32 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="109.22" y="160.02"/>
 <wire x1="109.22" y1="160.02" x2="116.84" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="C26" gate="G$1" pin="2"/>
-<junction x="116.84" y="160.02"/>
-<wire x1="116.84" y1="160.02" x2="124.46" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="C27" gate="G$1" pin="2"/>
 <junction x="124.46" y="160.02"/>
+<wire x1="116.84" y1="160.02" x2="124.46" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="160.02" x2="132.08" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="C28" gate="G$1" pin="2"/>
+<pinref part="C27" gate="G$1" pin="2"/>
 <junction x="132.08" y="160.02"/>
 <wire x1="132.08" y1="160.02" x2="139.7" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="C29" gate="G$1" pin="2"/>
+<pinref part="C28" gate="G$1" pin="2"/>
 <junction x="139.7" y="160.02"/>
 <wire x1="139.7" y1="160.02" x2="147.32" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="C30" gate="G$1" pin="2"/>
+<pinref part="C29" gate="G$1" pin="2"/>
 <junction x="147.32" y="160.02"/>
 <wire x1="147.32" y1="160.02" x2="154.94" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="C31" gate="G$1" pin="2"/>
+<pinref part="C30" gate="G$1" pin="2"/>
 <junction x="154.94" y="160.02"/>
-<wire x1="154.94" y1="160.02" x2="162.56" y2="160.02" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="160.02" x2="177.8" y2="160.02" width="0.1524" layer="91"/>
+<pinref part="C31" gate="G$1" pin="1"/>
+<junction x="177.8" y="160.02"/>
+<wire x1="177.8" y1="160.02" x2="162.56" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="C32" gate="G$1" pin="2"/>
 <junction x="162.56" y="160.02"/>
 <wire x1="162.56" y1="160.02" x2="170.18" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="C33" gate="G$1" pin="2"/>
 <pinref part="C9" gate="G$1" pin="+"/>
 <junction x="78.74" y="160.02"/>
+<pinref part="C20" gate="G$1" pin="2"/>
+<junction x="116.84" y="160.02"/>
 </segment>
 <segment>
 <pinref part="R12" gate="G$1" pin="2"/>
