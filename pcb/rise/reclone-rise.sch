@@ -1185,6 +1185,32 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <rectangle x1="-15.4" y1="0.5" x2="1" y2="6" layer="39" rot="R180"/>
 <smd name="GND" x="-0.45" y="0.25" dx="0.9" dy="0.5" layer="1" stop="no" cream="no"/>
 </package>
+<package name="CRYSTAL-32KHZ-SMD">
+<smd name="4" x="-2.75" y="1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
+<smd name="1" x="-2.75" y="-1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
+<smd name="NC2" x="2.75" y="-1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
+<smd name="NC3" x="2.75" y="1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
+<wire x1="-4" y1="1.9" x2="4" y2="1.9" width="0.127" layer="21"/>
+<wire x1="-4" y1="-1.9" x2="4" y2="-1.9" width="0.127" layer="21"/>
+<wire x1="4" y1="1.9" x2="4" y2="-1.9" width="0.127" layer="21"/>
+<wire x1="-4" y1="1.9" x2="-4" y2="-1.9" width="0.127" layer="21"/>
+<wire x1="1.9" y1="-1" x2="1.5" y2="-1" width="0.127" layer="21"/>
+<wire x1="1.5" y1="-1" x2="1.5" y2="1" width="0.127" layer="21"/>
+<wire x1="1.5" y1="1" x2="1.9" y2="1" width="0.127" layer="21"/>
+<wire x1="-1.9" y1="1" x2="-1.5" y2="1" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="1" x2="-1.5" y2="0.5" width="0.127" layer="21"/>
+<wire x1="-1.9" y1="-1" x2="-1.5" y2="-1" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-1" x2="-1.5" y2="-0.5" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-0.5" x2="-1.2" y2="-0.5" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-0.5" x2="-1.8" y2="-0.5" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="0.5" x2="-1.8" y2="0.5" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="0.5" x2="-1.2" y2="0.5" width="0.127" layer="21"/>
+<wire x1="-1.8" y1="0.2" x2="-1.8" y2="-0.2" width="0.127" layer="21"/>
+<wire x1="-1.8" y1="-0.2" x2="-1.2" y2="-0.2" width="0.127" layer="21"/>
+<wire x1="-1.2" y1="-0.2" x2="-1.2" y2="0.2" width="0.127" layer="21"/>
+<wire x1="-1.2" y1="0.2" x2="-1.8" y2="0.2" width="0.127" layer="21"/>
+<text x="-1.8" y="2" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="USB_A_2H">
@@ -2168,6 +2194,22 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-1.27" y1="1.27" x2="0" y2="0" width="0.254" layer="94"/>
 <wire x1="0" y1="0" x2="0" y2="1.27" width="0.254" layer="94"/>
 </symbol>
+<symbol name="Q">
+<wire x1="1.016" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-1.016" y2="0" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="1.524" x2="-0.381" y2="-1.524" width="0.254" layer="94"/>
+<wire x1="-0.381" y1="-1.524" x2="0.381" y2="-1.524" width="0.254" layer="94"/>
+<wire x1="0.381" y1="-1.524" x2="0.381" y2="1.524" width="0.254" layer="94"/>
+<wire x1="0.381" y1="1.524" x2="-0.381" y2="1.524" width="0.254" layer="94"/>
+<wire x1="1.016" y1="1.778" x2="1.016" y2="-1.778" width="0.254" layer="94"/>
+<wire x1="-1.016" y1="1.778" x2="-1.016" y2="-1.778" width="0.254" layer="94"/>
+<text x="2.54" y="1.016" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<text x="-2.159" y="-1.143" size="0.8636" layer="93">1</text>
+<text x="1.524" y="-1.143" size="0.8636" layer="93">2</text>
+<pin name="2" x="2.54" y="0" visible="off" length="point" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="1" x="-2.54" y="0" visible="off" length="point" direction="pas" swaplevel="1"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="USB_A_2H">
@@ -3106,6 +3148,22 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <connects>
 <connect gate="G$1" pin="FEED" pad="FEED"/>
 <connect gate="G$1" pin="GND" pad="GND"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CRYSTAL">
+<gates>
+<gate name="G$1" symbol="Q" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="CRYSTAL-32KHZ-SMD">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8116,6 +8174,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
+<part name="RTC" library="reclone-rise" deviceset="CRYSTAL" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8763,6 +8822,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="116.84" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
+<instance part="RTC" gate="G$1" x="231.14" y="177.8" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -9948,23 +10008,26 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="N$40" class="0">
 <segment>
+<wire x1="213.36" y1="167.64" x2="231.14" y2="167.64" width="0.1524" layer="91"/>
+<pinref part="MCU" gate="_CLK" pin="OSC32_OUT"/>
 <wire x1="231.14" y1="167.64" x2="231.14" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="C58" gate="G$1" pin="2"/>
 <wire x1="231.14" y1="172.72" x2="233.68" y2="172.72" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="167.64" x2="231.14" y2="167.64" width="0.1524" layer="91"/>
-<pinref part="MCU" gate="_CLK" pin="OSC32_OUT"/>
+<pinref part="RTC" gate="G$1" pin="2"/>
+<wire x1="231.14" y1="175.26" x2="231.14" y2="172.72" width="0.1524" layer="91"/>
+<junction x="231.14" y="172.72"/>
 </segment>
 </net>
 <net name="N$48" class="0">
 <segment>
 <pinref part="C59" gate="G$1" pin="2"/>
 <wire x1="233.68" y1="180.34" x2="231.14" y2="180.34" width="0.1524" layer="91"/>
-<wire x1="231.14" y1="180.34" x2="231.14" y2="177.8" width="0.1524" layer="91"/>
 <junction x="231.14" y="180.34"/>
 <wire x1="226.06" y1="180.34" x2="231.14" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="213.36" y1="170.18" x2="226.06" y2="170.18" width="0.1524" layer="91"/>
 <wire x1="226.06" y1="170.18" x2="226.06" y2="180.34" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_CLK" pin="OSC32_IN"/>
+<pinref part="RTC" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$1" class="0">
