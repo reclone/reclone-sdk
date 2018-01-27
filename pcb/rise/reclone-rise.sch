@@ -7956,10 +7956,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
-<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R22" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="RGB" library="reclone-rise" deviceset="OVSRRGBCC3" device="">
 <attribute name="DIGIKEY#" value="365-1410-1-ND"/>
@@ -8033,10 +8033,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
 <part name="+3V24" library="supply1" deviceset="+3V3" device=""/>
-<part name="R14" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="50K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R14" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="C8" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="22u">
 <attribute name="DIGIKEY#" value="490-6510-1-ND"/>
@@ -8058,22 +8058,29 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Murata Electronics North America"/>
 <attribute name="MANF#" value="GRM31CR60J107ME39K"/>
 </part>
-<part name="WIFI/BT" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device=""/>
-<part name="MICROSD" library="reclone-rise" deviceset="MICROSD_PUSHPULL" device=""/>
-<part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
-<attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<part name="WIFI/BT" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device="">
+<attribute name="MANF" value="Realtek"/>
+<attribute name="MANF#" value="RL-SM02BD-8723BS-V1.3"/>
 </part>
-<part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
-<attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<part name="MICROSD" library="reclone-rise" deviceset="MICROSD_PUSHPULL" device="">
+<attribute name="DIGIKEY#" value="WM14405CT-ND"/>
+<attribute name="MANF" value="Molex, LLC"/>
+<attribute name="MANF#" value="1051620001"/>
 </part>
-<part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
+</part>
+<part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
+</part>
+<part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="C12" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
 <attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
@@ -8087,58 +8094,58 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="TL3305AF260QG"/>
 </part>
 <part name="R34" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="0">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<attribute name="DIGIKEY#" value="311-0.0HRTR-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-070RL"/>
 </part>
 <part name="SUPPLY25" library="supply2" deviceset="GND" device=""/>
 <part name="MCU" library="reclone-rise" deviceset="STM32F405VGT6" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="GND" device=""/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
-<part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R41" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R41" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R42" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R42" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R43" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R43" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R44" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R44" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R45" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R45" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R46" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R46" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R47" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R47" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
-<part name="R48" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="48K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R48" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
+<attribute name="DIGIKEY#" value="311-47.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
 <part name="ANTENNA" library="reclone-rise" deviceset="ANTENNA_MEANDER_2.4GHZ" device=""/>
@@ -8148,7 +8155,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
-<part name="RTC" library="reclone-rise" deviceset="CRYSTAL" device=""/>
+<part name="RTC" library="reclone-rise" deviceset="CRYSTAL" device="" value="32K768">
+<attribute name="DIGIKEY#" value="XC1195CT-ND"/>
+<attribute name="MANF" value="ECS Inc."/>
+<attribute name="MANF#" value="ECS-.327-12.5-17X-TR"/>
+</part>
 <part name="VREG12" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1">
 <attribute name="DIGIKEY#" value="AP3429AKTTR-G1DICT-ND"/>
 <attribute name="MANF" value="Diodes Incorporated"/>
@@ -8164,30 +8175,54 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" value="Diodes Incorporated"/>
 <attribute name="MANF#" value="AP3429AKTTR-G1"/>
 </part>
-<part name="R49" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="540K">
+<part name="R49" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="536K">
+<attribute name="DIGIKEY#" value="311-536KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07536KL"/>
 </part>
 <part name="R63" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="120K">
+<attribute name="DIGIKEY#" value="311-120KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07120KL"/>
 </part>
 <part name="SUPPLY38" library="supply2" deviceset="GND" device=""/>
 <part name="R64" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K">
+<attribute name="DIGIKEY#" value="311-100KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07100KL"/>
 </part>
 <part name="R65" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="200K">
+<attribute name="DIGIKEY#" value="311-200KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07200KL"/>
 </part>
 <part name="SUPPLY42" library="supply2" deviceset="GND" device=""/>
 <part name="R66" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K">
+<attribute name="DIGIKEY#" value="311-100KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07100KL"/>
 </part>
 <part name="R67" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K">
+<attribute name="DIGIKEY#" value="311-100KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07100KL"/>
 </part>
 <part name="SUPPLY43" library="supply2" deviceset="GND" device=""/>
-<part name="C21" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
-<part name="C22" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
-<part name="C51" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
+<part name="C21" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
+<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+</part>
+<part name="C22" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
+<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+</part>
+<part name="C51" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
+<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+</part>
 <part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0805" value="2u2">
 <attribute name="DIGIKEY#" value="1276-6911-1-ND"/>
 <attribute name="MANF" value="Samsung Electro-Mechanics"/>
@@ -8726,8 +8761,15 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="91.44" y="205.74" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="91.44" y="205.74" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="WIFI/BT" gate="G$1" x="330.2" y="109.22"/>
-<instance part="MICROSD" gate="G$1" x="284.48" y="213.36"/>
+<instance part="WIFI/BT" gate="G$1" x="330.2" y="109.22">
+<attribute name="MANF" x="330.2" y="109.22" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="330.2" y="109.22" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="MICROSD" gate="G$1" x="284.48" y="213.36">
+<attribute name="DIGIKEY#" x="284.48" y="213.36" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="284.48" y="213.36" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="284.48" y="213.36" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="R31" gate="G$1" x="254" y="228.6" rot="R270">
 <attribute name="DIGIKEY#" x="254" y="228.6" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="254" y="228.6" size="1.778" layer="96" display="off"/>
@@ -8824,7 +8866,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF" x="127" y="160.02" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="127" y="160.02" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="RTC" gate="G$1" x="231.14" y="177.8" rot="R270"/>
+<instance part="RTC" gate="G$1" x="231.14" y="177.8" rot="R270">
+<attribute name="DIGIKEY#" x="231.14" y="177.8" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="231.14" y="177.8" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="231.14" y="177.8" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="VREG12" gate="G$1" x="40.64" y="205.74">
 <attribute name="DIGIKEY#" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
@@ -8842,28 +8888,52 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </instance>
 <instance part="R49" gate="G$1" x="73.66" y="157.48" rot="R90">
 <attribute name="MANF" x="73.66" y="157.48" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY#" x="73.66" y="157.48" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="73.66" y="157.48" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="R63" gate="G$1" x="60.96" y="152.4">
 <attribute name="MANF" x="60.96" y="152.4" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="DIGIKEY#" x="60.96" y="152.4" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="60.96" y="152.4" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY38" gate="GND" x="91.44" y="149.86"/>
-<instance part="R64" gate="G$1" x="60.96" y="175.26">
-<attribute name="MANF" x="60.96" y="175.26" size="1.778" layer="96" rot="R270" display="off"/>
+<instance part="R64" gate="G$1" x="60.96" y="175.26" rot="R180">
+<attribute name="MANF" x="60.96" y="175.26" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="DIGIKEY#" x="60.96" y="175.26" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="60.96" y="175.26" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R65" gate="G$1" x="73.66" y="180.34" rot="R90">
 <attribute name="MANF" x="73.66" y="180.34" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY#" x="73.66" y="180.34" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MANF#" x="73.66" y="180.34" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="SUPPLY42" gate="GND" x="91.44" y="172.72"/>
 <instance part="R66" gate="G$1" x="60.96" y="198.12">
 <attribute name="MANF" x="60.96" y="198.12" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="DIGIKEY#" x="60.96" y="198.12" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="60.96" y="198.12" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R67" gate="G$1" x="73.66" y="203.2" rot="R90">
 <attribute name="MANF" x="73.66" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY#" x="73.66" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="73.66" y="203.2" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY43" gate="GND" x="91.44" y="195.58"/>
-<instance part="C21" gate="G$1" x="83.82" y="157.48" rot="R180"/>
-<instance part="C22" gate="G$1" x="81.28" y="177.8"/>
-<instance part="C51" gate="G$1" x="83.82" y="203.2" rot="R180"/>
+<instance part="C21" gate="G$1" x="83.82" y="157.48" rot="R180">
+<attribute name="DIGIKEY#" x="83.82" y="157.48" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="83.82" y="157.48" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="83.82" y="157.48" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C22" gate="G$1" x="81.28" y="177.8">
+<attribute name="DIGIKEY#" x="81.28" y="177.8" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="81.28" y="177.8" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="81.28" y="177.8" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C51" gate="G$1" x="83.82" y="203.2" rot="R180">
+<attribute name="DIGIKEY#" x="83.82" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="83.82" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="83.82" y="203.2" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="L4" gate="G$1" x="60.96" y="208.28" rot="R270">
 <attribute name="DIGIKEY#" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="MANF" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
@@ -9149,7 +9219,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="C18" gate="G$1" pin="2"/>
 <wire x1="17.78" y1="175.26" x2="40.64" y2="175.26" width="0.1524" layer="91"/>
 <pinref part="R64" gate="G$1" pin="2"/>
-<wire x1="40.64" y1="175.26" x2="66.04" y2="175.26" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="175.26" x2="55.88" y2="175.26" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY41" gate="GND" pin="GND"/>
@@ -10506,7 +10576,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="53.34" y1="180.34" x2="68.58" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="68.58" y1="180.34" x2="68.58" y2="175.26" width="0.1524" layer="91"/>
 <pinref part="R64" gate="G$1" pin="1"/>
-<wire x1="68.58" y1="175.26" x2="55.88" y2="175.26" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="175.26" x2="66.04" y2="175.26" width="0.1524" layer="91"/>
 <junction x="68.58" y="175.26"/>
 <pinref part="R65" gate="G$1" pin="1"/>
 <wire x1="68.58" y1="175.26" x2="73.66" y2="175.26" width="0.1524" layer="91"/>
