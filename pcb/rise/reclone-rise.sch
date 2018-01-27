@@ -7575,9 +7575,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="CL10B225KQ8NFNC"/>
 </part>
 <part name="BOOT" library="SparkFun-Connectors" deviceset="M02" device="PTH" value="1X2">
-<attribute name="DIGIKEY#" value="952-1770-ND"/>
-<attribute name="MANF" value="Harwin Inc."/>
-<attribute name="MANF#" value="M20-9770246"/>
+<attribute name="DIGIKEY#" value=""/>
+<attribute name="MANF" value=""/>
+<attribute name="MANF#" value="Do Not Populate"/>
 </part>
 <part name="BUSPWR" library="SparkFun-Connectors" deviceset="M02" device="PTH" value="1X2">
 <attribute name="DIGIKEY#" value="952-1770-ND"/>
@@ -7717,11 +7717,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="SUPPLY40" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY41" library="supply2" deviceset="GND" device=""/>
 <part name="+3V27" library="supply1" deviceset="+3V3" device=""/>
-<part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="2u2">
-<attribute name="DIGIKEY#" value="490-14478-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="LQM18PN2R2MGHD"/>
-</part>
 <part name="C17" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
 <attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
 <attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
@@ -8086,7 +8081,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
 <part name="SUPPLY24" library="supply2" deviceset="GND" device=""/>
-<part name="RESET" library="reclone-rise" deviceset="P010471" device=""/>
+<part name="RESET" library="reclone-rise" deviceset="P010471" device="">
+<attribute name="DIGIKEY#" value="EG5353CT-ND"/>
+<attribute name="MANF" value="E-Switch"/>
+<attribute name="MANF#" value="TL3305AF260QG"/>
+</part>
 <part name="R34" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="0">
 <attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
@@ -8150,19 +8149,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
 <part name="RTC" library="reclone-rise" deviceset="CRYSTAL" device=""/>
-<part name="L5" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="2u2">
-<attribute name="DIGIKEY#" value="490-14478-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="LQM18PN2R2MGHD"/>
+<part name="VREG12" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1">
+<attribute name="DIGIKEY#" value="AP3429AKTTR-G1DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="AP3429AKTTR-G1"/>
 </part>
-<part name="L6" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="2u2">
-<attribute name="DIGIKEY#" value="490-14478-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="LQM18PN2R2MGHD"/>
+<part name="VREG18" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1">
+<attribute name="DIGIKEY#" value="AP3429AKTTR-G1DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="AP3429AKTTR-G1"/>
 </part>
-<part name="VREG12" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1"/>
-<part name="VREG18" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1"/>
-<part name="VREG33" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1"/>
+<part name="VREG33" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1">
+<attribute name="DIGIKEY#" value="AP3429AKTTR-G1DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="AP3429AKTTR-G1"/>
+</part>
 <part name="R49" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="540K">
 <attribute name="MANF" value="Yageo"/>
 </part>
@@ -8187,6 +8188,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="C21" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
 <part name="C22" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
 <part name="C51" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p"/>
+<part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0805" value="2u2">
+<attribute name="DIGIKEY#" value="1276-6911-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CIGT201610LH2R2MNE"/>
+</part>
+<part name="L5" library="SparkFun-Passives" deviceset="INDUCTOR" device="0805" value="2u2">
+<attribute name="DIGIKEY#" value="1276-6911-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CIGT201610LH2R2MNE"/>
+</part>
+<part name="L6" library="SparkFun-Passives" deviceset="INDUCTOR" device="0805" value="2u2">
+<attribute name="DIGIKEY#" value="1276-6911-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CIGT201610LH2R2MNE"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -8392,11 +8408,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="SUPPLY40" gate="GND" x="40.64" y="172.72"/>
 <instance part="SUPPLY41" gate="GND" x="40.64" y="149.86"/>
 <instance part="+3V27" gate="G$1" x="73.66" y="167.64"/>
-<instance part="L4" gate="G$1" x="63.5" y="208.28" rot="R90">
-<attribute name="DIGIKEY#" x="63.5" y="208.28" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF" x="63.5" y="208.28" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF#" x="63.5" y="208.28" size="1.778" layer="96" rot="R90" display="off"/>
-</instance>
 <instance part="C17" gate="G$1" x="17.78" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="17.78" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="17.78" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
@@ -8738,7 +8749,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY24" gate="GND" x="299.72" y="223.52"/>
-<instance part="RESET" gate="G$1" x="167.64" y="93.98"/>
+<instance part="RESET" gate="G$1" x="167.64" y="93.98">
+<attribute name="DIGIKEY#" x="167.64" y="93.98" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="167.64" y="93.98" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="167.64" y="93.98" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="R34" gate="G$1" x="269.24" y="238.76">
 <attribute name="DIGIKEY#" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="MANF" x="269.24" y="238.76" size="1.778" layer="96" rot="R90" display="off"/>
@@ -8810,19 +8825,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" x="127" y="160.02" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="RTC" gate="G$1" x="231.14" y="177.8" rot="R270"/>
-<instance part="L5" gate="G$1" x="63.5" y="185.42" rot="R90">
-<attribute name="DIGIKEY#" x="63.5" y="185.42" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF" x="63.5" y="185.42" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF#" x="63.5" y="185.42" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="VREG12" gate="G$1" x="40.64" y="205.74">
+<attribute name="DIGIKEY#" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="40.64" y="205.74" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="L6" gate="G$1" x="63.5" y="162.56" rot="R90">
-<attribute name="DIGIKEY#" x="63.5" y="162.56" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF" x="63.5" y="162.56" size="1.778" layer="96" rot="R90" display="off"/>
-<attribute name="MANF#" x="63.5" y="162.56" size="1.778" layer="96" rot="R90" display="off"/>
+<instance part="VREG18" gate="G$1" x="40.64" y="182.88">
+<attribute name="DIGIKEY#" x="40.64" y="182.88" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="40.64" y="182.88" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="40.64" y="182.88" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="VREG12" gate="G$1" x="40.64" y="205.74"/>
-<instance part="VREG18" gate="G$1" x="40.64" y="182.88"/>
-<instance part="VREG33" gate="G$1" x="40.64" y="160.02"/>
+<instance part="VREG33" gate="G$1" x="40.64" y="160.02">
+<attribute name="DIGIKEY#" x="40.64" y="160.02" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="40.64" y="160.02" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="40.64" y="160.02" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="R49" gate="G$1" x="73.66" y="157.48" rot="R90">
 <attribute name="MANF" x="73.66" y="157.48" size="1.778" layer="96" display="off"/>
 </instance>
@@ -8847,6 +8864,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="C21" gate="G$1" x="83.82" y="157.48" rot="R180"/>
 <instance part="C22" gate="G$1" x="81.28" y="177.8"/>
 <instance part="C51" gate="G$1" x="83.82" y="203.2" rot="R180"/>
+<instance part="L4" gate="G$1" x="60.96" y="208.28" rot="R270">
+<attribute name="DIGIKEY#" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="L5" gate="G$1" x="63.5" y="185.42" rot="R90">
+<attribute name="DIGIKEY#" x="63.5" y="185.42" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="63.5" y="185.42" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="63.5" y="185.42" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="L6" gate="G$1" x="63.5" y="162.56" rot="R90">
+<attribute name="DIGIKEY#" x="63.5" y="162.56" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="63.5" y="162.56" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="63.5" y="162.56" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -9510,7 +9542,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="368.3" y="134.62"/>
 </segment>
 <segment>
-<pinref part="L6" gate="G$1" pin="2"/>
 <pinref part="R49" gate="G$1" pin="2"/>
 <wire x1="71.12" y1="162.56" x2="73.66" y2="162.56" width="0.1524" layer="91"/>
 <junction x="73.66" y="162.56"/>
@@ -9559,6 +9590,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="83.82" y1="162.56" x2="91.44" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="160.02" x2="83.82" y2="162.56" width="0.1524" layer="91"/>
 <junction x="83.82" y="162.56"/>
+<pinref part="L6" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="FPGA_CONFIG_CLK" class="0">
@@ -9630,7 +9662,6 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="73.66" y="121.92"/>
 </segment>
 <segment>
-<pinref part="L5" gate="G$1" pin="2"/>
 <pinref part="U$2" gate="G$1" pin="+1V8"/>
 <wire x1="71.12" y1="185.42" x2="73.66" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="185.42" x2="73.66" y2="187.96" width="0.1524" layer="91"/>
@@ -9673,6 +9704,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="81.28" y1="185.42" x2="91.44" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="182.88" x2="81.28" y2="185.42" width="0.1524" layer="91"/>
 <junction x="81.28" y="185.42"/>
+<pinref part="L5" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -9990,25 +10022,18 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="99.06" y1="236.22" x2="91.44" y2="236.22" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$119" class="0">
-<segment>
-<pinref part="L4" gate="G$1" pin="2"/>
-<wire x1="71.12" y1="208.28" x2="53.34" y2="208.28" width="0.1524" layer="91"/>
-<pinref part="VREG12" gate="G$1" pin="LX"/>
-</segment>
-</net>
 <net name="N$120" class="0">
 <segment>
 <wire x1="53.34" y1="185.42" x2="55.88" y2="185.42" width="0.1524" layer="91"/>
-<pinref part="L5" gate="G$1" pin="1"/>
 <pinref part="VREG18" gate="G$1" pin="LX"/>
+<pinref part="L5" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$121" class="0">
 <segment>
 <wire x1="55.88" y1="162.56" x2="53.34" y2="162.56" width="0.1524" layer="91"/>
-<pinref part="L6" gate="G$1" pin="1"/>
 <pinref part="VREG33" gate="G$1" pin="LX"/>
+<pinref part="L6" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="USB_DEVICE_DM" class="0">
@@ -10508,9 +10533,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="+1V2" class="0">
 <segment>
 <pinref part="U$3" gate="G$1" pin="+1V2"/>
-<pinref part="L4" gate="G$1" pin="1"/>
 <wire x1="73.66" y1="208.28" x2="73.66" y2="210.82" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="208.28" x2="73.66" y2="208.28" width="0.1524" layer="91"/>
 <pinref part="R67" gate="G$1" pin="2"/>
 <junction x="73.66" y="208.28"/>
 <junction x="73.66" y="208.28"/>
@@ -10538,6 +10561,14 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="83.82" y1="208.28" x2="73.66" y2="208.28" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="205.74" x2="83.82" y2="208.28" width="0.1524" layer="91"/>
 <junction x="83.82" y="208.28"/>
+<pinref part="L4" gate="G$1" pin="1"/>
+<wire x1="68.58" y1="208.28" x2="73.66" y2="208.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="VREG12" gate="G$1" pin="LX"/>
+<pinref part="L4" gate="G$1" pin="2"/>
 </segment>
 </net>
 </nets>
