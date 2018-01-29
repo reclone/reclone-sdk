@@ -1034,6 +1034,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-0.4" y1="-1" x2="-0.4" y2="1" width="0.05" layer="21" curve="-180"/>
 <text x="2" y="-2" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
 <rectangle x1="-2" y1="-2.1" x2="-0.5" y2="2.1" layer="29"/>
+<rectangle x1="-2" y1="-2.1" x2="-0.5" y2="2.1" layer="30"/>
 </package>
 <package name="PB_TACT_RTANG">
 <pad name="SW_B" x="2.25" y="0" drill="1"/>
@@ -1136,11 +1137,16 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="P9" x="5.36" y="3.18" dx="0.72" dy="0.78" layer="1"/>
 <rectangle x1="-4.1" y1="2" x2="4.1" y2="6" layer="41"/>
 <rectangle x1="-4.1" y1="2" x2="4.1" y2="6" layer="43"/>
-<wire x1="-5.65" y1="7.7" x2="-5.65" y2="0.1" width="0.127" layer="21"/>
-<wire x1="5.65" y1="7.7" x2="5.65" y2="0.1" width="0.127" layer="21"/>
-<wire x1="-5.65" y1="7.7" x2="5.65" y2="7.7" width="0.127" layer="21"/>
+<wire x1="-5.65" y1="7.7" x2="-5.65" y2="7.3" width="0.127" layer="21"/>
+<wire x1="5.65" y1="2.6" x2="5.65" y2="0.1" width="0.127" layer="21"/>
 <text x="-5" y="9" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <text x="5" y="9" size="0.8" layer="27" font="vector" ratio="19" align="bottom-right">&gt;VALUE</text>
+<wire x1="-5.65" y1="5.7" x2="-5.65" y2="4.7" width="0.127" layer="21"/>
+<wire x1="-5.65" y1="1.9" x2="-5.65" y2="0.1" width="0.127" layer="21"/>
+<wire x1="-5.65" y1="7.7" x2="-3.8" y2="7.7" width="0.127" layer="21"/>
+<wire x1="-0.4" y1="7.7" x2="0.4" y2="7.7" width="0.127" layer="21"/>
+<wire x1="3.8" y1="7.7" x2="4.6" y2="7.7" width="0.127" layer="21"/>
+<wire x1="5.65" y1="5.2" x2="5.65" y2="6.2" width="0.127" layer="21"/>
 </package>
 <package name="PB_TACT_SMT_4.5X4.5">
 <smd name="4" x="3.6" y="1.5" dx="1.6" dy="1.4" layer="1"/>
