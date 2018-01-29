@@ -1173,7 +1173,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <rectangle x1="-14.4" y1="4.9" x2="-11.7" y2="5.4" layer="1" rot="R180"/>
 <rectangle x1="-14.4" y1="0.96" x2="-13.9" y2="4.9" layer="1" rot="R180"/>
 <smd name="FEED" x="-2.55" y="0.25" dx="0.5" dy="0.5" layer="1" rot="R90" stop="no" thermals="no" cream="no"/>
-<text x="-13" y="1" size="0.8" layer="26" font="vector" ratio="19">&gt;NAME</text>
+<text x="-13" y="1" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <text x="-3" y="1" size="0.8" layer="27" font="vector" ratio="19" align="bottom-right">&gt;VALUE</text>
 <rectangle x1="-15.4" y1="0.5" x2="1" y2="6" layer="39" rot="R180"/>
 <smd name="GND" x="-0.45" y="0.25" dx="0.9" dy="0.5" layer="1" stop="no" cream="no"/>
