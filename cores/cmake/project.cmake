@@ -1,4 +1,4 @@
-project (RecloneCores)
+project (RecloneCores C CXX)
 
 # Set default VERILATOR_ROOT (at least works in Ubuntu)
 set(VERILATOR_ROOT /usr/share/verilator)
