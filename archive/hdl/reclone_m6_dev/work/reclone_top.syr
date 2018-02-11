@@ -1,0 +1,1179 @@
+Release 14.7 - xst P.20131013 (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.19 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.19 secs
+ 
+--> Reading design: reclone_top.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "reclone_top.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "reclone_top"
+Output Format                      : NGC
+Target Device                      : xc6slx25-3-ftg256
+
+---- Source Options
+Top Module Name                    : reclone_top
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\GrayCounter.vhd" into library work
+Parsing entity <GrayCounter>.
+Parsing architecture <Behavioral> of entity <graycounter>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\TmdsEncoder.vhd" into library work
+Parsing entity <TmdsEncoder>.
+Parsing architecture <Behavioral> of entity <tmdsencoder>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\OutputSerializer5Bit.vhd" into library work
+Parsing entity <OutputSerializer5Bit>.
+Parsing architecture <Behavioral> of entity <outputserializer5bit>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\MultiRateFifo.vhd" into library work
+Parsing entity <MultiRateFifo>.
+Parsing architecture <Behavioral> of entity <multiratefifo>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\GlyphRom.vhd" into library work
+Parsing entity <GlyphRom>.
+Parsing architecture <Behavioral> of entity <glyphrom>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\DvidSer.vhd" into library work
+Parsing entity <DvidSer>.
+Parsing architecture <Behavioral> of entity <dvidser>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\TextRenderer.vhd" into library work
+Parsing entity <TextRenderer>.
+Parsing architecture <Behavioral> of entity <textrenderer>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\TextBuffer.vhd" into library work
+Parsing entity <TextBuffer>.
+Parsing architecture <Behavioral> of entity <textbuffer>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\PsramInterface.vhd" into library work
+Parsing entity <PsramInterface>.
+Parsing architecture <Behavioral> of entity <psraminterface>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\DvidGen.vhd" into library work
+Parsing entity <DvidGen>.
+Parsing architecture <Behavioral> of entity <dvidgen>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\clocking.vhd" into library work
+Parsing entity <clocking>.
+Parsing architecture <Behavioral> of entity <clocking>.
+Parsing VHDL file "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\reclone_top.vhd" into library work
+Parsing entity <reclone_top>.
+Parsing architecture <Behavioral> of entity <reclone_top>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <reclone_top> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <clocking> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <DvidGen> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <DvidSer> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <TmdsEncoder> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <MultiRateFifo> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <GrayCounter> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <OutputSerializer5Bit> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <TextRenderer> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <GlyphRom> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <TextBuffer> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <PsramInterface> (architecture <Behavioral>) from library <work>.
+WARNING:HDLCompiler:1127 - "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\PsramInterface.vhd" Line 89: Assignment to psram_state ignored, since the identifier is never used
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <reclone_top>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\reclone_top.vhd".
+WARNING:Xst:647 - Input <Switches> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 1-bit register for signal <LEDs<6>>.
+    Found 26-bit register for signal <count32>.
+    Found 1-bit register for signal <LEDs<7>>.
+    Found 26-bit register for signal <count50>.
+    Found 26-bit adder for signal <count50[25]_GND_4_o_add_1_OUT> created at line 1241.
+    Found 26-bit adder for signal <count32[25]_GND_4_o_add_3_OUT> created at line 1241.
+    Summary:
+	inferred   2 Adder/Subtractor(s).
+	inferred  54 D-type flip-flop(s).
+Unit <reclone_top> synthesized.
+
+Synthesizing Unit <clocking>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\clocking.vhd".
+    Summary:
+	no macro.
+Unit <clocking> synthesized.
+
+Synthesizing Unit <DvidGen>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\DvidGen.vhd".
+    Found 8-bit register for signal <red_level>.
+    Found 8-bit register for signal <green_level>.
+    Found 8-bit register for signal <blue_level>.
+    Found 1-bit register for signal <hsync>.
+    Found 1-bit register for signal <vsync>.
+    Found 12-bit register for signal <h_count>.
+    Found 12-bit register for signal <v_count>.
+    Found 12-bit register for signal <h_next>.
+    Found 12-bit register for signal <v_next>.
+    Found 1-bit register for signal <blank>.
+    Found 12-bit adder for signal <v_next[11]_GND_9_o_add_17_OUT> created at line 1241.
+    Found 12-bit adder for signal <h_next[11]_GND_9_o_add_19_OUT> created at line 1241.
+    Found 12-bit comparator lessequal for signal <n0006> created at line 107
+    Found 12-bit comparator lessequal for signal <n0008> created at line 107
+    Found 12-bit comparator lessequal for signal <n0011> created at line 116
+    Found 12-bit comparator greater for signal <h_count[11]_GND_9_o_LessThan_10_o> created at line 116
+    Found 12-bit comparator lessequal for signal <n0015> created at line 123
+    Found 12-bit comparator greater for signal <v_count[11]_GND_9_o_LessThan_12_o> created at line 123
+    Summary:
+	inferred   2 Adder/Subtractor(s).
+	inferred  75 D-type flip-flop(s).
+	inferred   6 Comparator(s).
+Unit <DvidGen> synthesized.
+
+Synthesizing Unit <DvidSer>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\DvidSer.vhd".
+INFO:Xst:3210 - "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\DvidSer.vhd" line 117: Output port <Full> of the instance <out_fifo> is unconnected or connected to loadless signal.
+    Found 5-bit register for signal <ser_in_green>.
+    Found 5-bit register for signal <ser_in_blue>.
+    Found 5-bit register for signal <ser_in_clock>.
+    Found 1-bit register for signal <rd_enable>.
+    Found 5-bit register for signal <ser_in_red>.
+    Summary:
+	inferred  21 D-type flip-flop(s).
+	inferred   3 Multiplexer(s).
+Unit <DvidSer> synthesized.
+
+Synthesizing Unit <TmdsEncoder>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\TmdsEncoder.vhd".
+    Found 4-bit register for signal <dc_bias>.
+    Found 10-bit register for signal <Encoded>.
+    Found 4-bit adder for signal <n0156> created at line 65.
+    Found 4-bit adder for signal <n0159> created at line 65.
+    Found 4-bit adder for signal <n0162> created at line 65.
+    Found 4-bit adder for signal <n0165> created at line 65.
+    Found 4-bit adder for signal <n0168> created at line 65.
+    Found 4-bit adder for signal <n0171> created at line 65.
+    Found 4-bit adder for signal <ones> created at line 65.
+    Found 4-bit adder for signal <n0176> created at line 81.
+    Found 4-bit adder for signal <n0179> created at line 81.
+    Found 4-bit adder for signal <n0182> created at line 81.
+    Found 4-bit adder for signal <n0185> created at line 81.
+    Found 4-bit adder for signal <n0188> created at line 81.
+    Found 4-bit adder for signal <n0191> created at line 81.
+    Found 4-bit adder for signal <n0194> created at line 81.
+    Found 4-bit adder for signal <data_word_disparity> created at line 81.
+    Found 4-bit adder for signal <dc_bias[3]_data_word_disparity[3]_add_25_OUT> created at line 102.
+    Found 4-bit adder for signal <dc_bias[3]_GND_13_o_add_29_OUT> created at line 110.
+    Found 4-bit adder for signal <GND_13_o_data_word_disparity[3]_add_32_OUT> created at line 113.
+    Found 4-bit subtractor for signal <GND_13_o_GND_13_o_sub_27_OUT<3:0>> created at line 105.
+    Found 4-bit subtractor for signal <GND_13_o_GND_13_o_sub_31_OUT<3:0>> created at line 110.
+    Found 4-bit subtractor for signal <n0203> created at line 0.
+    Found 4-bit comparator greater for signal <GND_13_o_ones[3]_LessThan_9_o> created at line 71
+    Summary:
+	inferred  20 Adder/Subtractor(s).
+	inferred  14 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred  15 Multiplexer(s).
+Unit <TmdsEncoder> synthesized.
+
+Synthesizing Unit <MultiRateFifo>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\MultiRateFifo.vhd".
+        DATA_WIDTH = 30
+        ADDR_WIDTH = 4
+    Found 16x30-bit dual-port RAM <Mram_mem> for signal <mem>.
+    Found 1-bit register for signal <going_empty>.
+    Found 1-bit register for signal <going_full>.
+    Found 1-bit register for signal <empty_out>.
+    Found 30-bit register for signal <DataOut>.
+    Found 1-bit register for signal <full_out>.
+    Found 4-bit comparator equal for signal <equal_addresses> created at line 144
+    Summary:
+	inferred   1 RAM(s).
+	inferred  34 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+Unit <MultiRateFifo> synthesized.
+
+Synthesizing Unit <GrayCounter>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\GrayCounter.vhd".
+        COUNTER_WIDTH = 4
+    Found 4-bit register for signal <GrayCount>.
+    Found 4-bit register for signal <binary_count>.
+    Found 4-bit adder for signal <binary_count[3]_GND_19_o_add_0_OUT> created at line 48.
+    Summary:
+	inferred   1 Adder/Subtractor(s).
+	inferred   8 D-type flip-flop(s).
+Unit <GrayCounter> synthesized.
+
+Synthesizing Unit <OutputSerializer5Bit>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\OutputSerializer5Bit.vhd".
+    Summary:
+	no macro.
+Unit <OutputSerializer5Bit> synthesized.
+
+Synthesizing Unit <TextRenderer>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\TextRenderer.vhd".
+WARNING:Xst:647 - Input <HPos<0:0>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <HPos<11:11>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <HRes> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <HMax> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <VRes> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <VMax> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 12-bit register for signal <vpos_latched>.
+    Found 25-bit register for signal <blink_timer>.
+    Found 3-bit register for signal <hpos_latched<3:1>>.
+    Found 12-bit adder for signal <vpos_shifted> created at line 1241.
+    Found 25-bit adder for signal <blink_timer[24]_GND_40_o_add_3_OUT> created at line 1241.
+    Found 12-bit adder for signal <glyph_rom_addr> created at line 140.
+    Found 3-bit subtractor for signal <GND_40_o_GND_40_o_sub_14_OUT<2:0>> created at line 161.
+    Found 12x12-bit multiplier for signal <row_location> created at line 124.
+    Found 8x4-bit multiplier for signal <n0056> created at line 140.
+    Found 1-bit 8-to-1 multiplexer for signal <GND_40_o_glyph_row[7]_Mux_14_o> created at line 161.
+    Summary:
+	inferred   2 Multiplier(s).
+	inferred   4 Adder/Subtractor(s).
+	inferred  40 D-type flip-flop(s).
+	inferred   2 Multiplexer(s).
+Unit <TextRenderer> synthesized.
+
+Synthesizing Unit <mod_12u_5u>.
+    Related source file is "".
+    Found 17-bit adder for signal <GND_43_o_b[4]_add_1_OUT> created at line 0.
+    Found 16-bit adder for signal <GND_43_o_b[4]_add_3_OUT> created at line 0.
+    Found 15-bit adder for signal <GND_43_o_b[4]_add_5_OUT> created at line 0.
+    Found 14-bit adder for signal <GND_43_o_b[4]_add_7_OUT> created at line 0.
+    Found 13-bit adder for signal <GND_43_o_b[4]_add_9_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_b[4]_add_11_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_13_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_15_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_17_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_19_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_21_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_23_OUT> created at line 0.
+    Found 12-bit adder for signal <a[11]_GND_43_o_add_25_OUT> created at line 0.
+    Found 17-bit comparator lessequal for signal <BUS_0001> created at line 0
+    Found 16-bit comparator lessequal for signal <BUS_0002> created at line 0
+    Found 15-bit comparator lessequal for signal <BUS_0003> created at line 0
+    Found 14-bit comparator lessequal for signal <BUS_0004> created at line 0
+    Found 13-bit comparator lessequal for signal <BUS_0005> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0006> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0007> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0008> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0009> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0010> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0011> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0012> created at line 0
+    Found 12-bit comparator lessequal for signal <BUS_0013> created at line 0
+    Summary:
+	inferred  13 Adder/Subtractor(s).
+	inferred  13 Comparator(s).
+	inferred 145 Multiplexer(s).
+Unit <mod_12u_5u> synthesized.
+
+Synthesizing Unit <GlyphRom>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\GlyphRom.vhd".
+WARNING:Xst:2999 - Signal 'rom', unconnected in block 'GlyphRom', is tied to its initial value.
+    Found 4096x8-bit single-port Read Only RAM <Mram_rom> for signal <rom>.
+    Found 8-bit register for signal <Data>.
+    Summary:
+	inferred   1 RAM(s).
+	inferred   8 D-type flip-flop(s).
+Unit <GlyphRom> synthesized.
+
+Synthesizing Unit <TextBuffer>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\TextBuffer.vhd".
+    Found 4096x8-bit dual-port RAM <Mram_RAM_H> for signal <RAM_H>.
+    Found 4096x8-bit dual-port RAM <Mram_RAM_L> for signal <RAM_L>.
+    Found 1-bit register for signal <ack_out>.
+    Found 16-bit register for signal <dat_b_out>.
+    Found 16-bit register for signal <dat_a_out>.
+    Summary:
+	inferred   2 RAM(s).
+	inferred  33 D-type flip-flop(s).
+	inferred   5 Multiplexer(s).
+Unit <TextBuffer> synthesized.
+
+Synthesizing Unit <PsramInterface>.
+    Related source file is "C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\PsramInterface.vhd".
+WARNING:Xst:647 - Input <FSMC_CLK> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Register <CYC_O> equivalent to <STB_O> has been removed
+    Found 1-bit register for signal <FSMC_NWAIT>.
+    Found 16-bit register for signal <Z_20_o_dff_27_OUT>.
+    Found 6-bit register for signal <dbg>.
+    Found 31-bit register for signal <ADR_O>.
+    Found 16-bit register for signal <DAT_O>.
+    Found 1-bit register for signal <WE_O>.
+    Found 1-bit register for signal <STB_O>.
+    Found 2-bit register for signal <SEL_O>.
+    Found 24-bit register for signal <latched_addr>.
+    Found 2-bit register for signal <latched_nbl>.
+    Found 1-bit register for signal <RST_I_CLK_I_DFF_215>.
+    Found 16-bit register for signal <data_out>.
+    Found 1-bit tristate buffer for signal <FSMC_D<15>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<14>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<13>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<12>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<11>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<10>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<9>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<8>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<7>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<6>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<5>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<4>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<3>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<2>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<1>> created at line 89
+    Found 1-bit tristate buffer for signal <FSMC_D<0>> created at line 89
+    Summary:
+	inferred 117 D-type flip-flop(s).
+	inferred  12 Multiplexer(s).
+	inferred  16 Tristate(s).
+Unit <PsramInterface> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 4
+ 16x30-bit dual-port RAM                               : 1
+ 4096x8-bit dual-port RAM                              : 2
+ 4096x8-bit single-port Read Only RAM                  : 1
+# Multipliers                                          : 2
+ 12x12-bit multiplier                                  : 1
+ 8x4-bit multiplier                                    : 1
+# Adders/Subtractors                                   : 83
+ 12-bit adder                                          : 12
+ 13-bit adder                                          : 1
+ 14-bit adder                                          : 1
+ 15-bit adder                                          : 1
+ 16-bit adder                                          : 1
+ 17-bit adder                                          : 1
+ 25-bit adder                                          : 1
+ 26-bit adder                                          : 2
+ 3-bit subtractor                                      : 1
+ 4-bit adder                                           : 53
+ 4-bit addsub                                          : 3
+ 4-bit subtractor                                      : 6
+# Registers                                            : 53
+ 1-bit register                                        : 15
+ 10-bit register                                       : 3
+ 12-bit register                                       : 5
+ 16-bit register                                       : 5
+ 2-bit register                                        : 2
+ 24-bit register                                       : 1
+ 25-bit register                                       : 1
+ 26-bit register                                       : 2
+ 3-bit register                                        : 1
+ 30-bit register                                       : 1
+ 31-bit register                                       : 1
+ 4-bit register                                        : 7
+ 5-bit register                                        : 4
+ 6-bit register                                        : 1
+ 8-bit register                                        : 4
+# Comparators                                          : 23
+ 12-bit comparator greater                             : 2
+ 12-bit comparator lessequal                           : 12
+ 13-bit comparator lessequal                           : 1
+ 14-bit comparator lessequal                           : 1
+ 15-bit comparator lessequal                           : 1
+ 16-bit comparator lessequal                           : 1
+ 17-bit comparator lessequal                           : 1
+ 4-bit comparator equal                                : 1
+ 4-bit comparator greater                              : 3
+# Multiplexers                                         : 212
+ 1-bit 2-to-1 multiplexer                              : 184
+ 1-bit 8-to-1 multiplexer                              : 1
+ 10-bit 2-to-1 multiplexer                             : 9
+ 2-bit 2-to-1 multiplexer                              : 1
+ 24-bit 2-to-1 multiplexer                             : 1
+ 4-bit 2-to-1 multiplexer                              : 6
+ 5-bit 2-to-1 multiplexer                              : 4
+ 9-bit 2-to-1 multiplexer                              : 6
+# Tristates                                            : 16
+ 1-bit tristate buffer                                 : 16
+# Xors                                                 : 48
+ 1-bit xor2                                            : 46
+ 3-bit xor2                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+INFO:Xst:2261 - The FF/Latch <ADR_O_25> in Unit <psramif> is equivalent to the following 6 FFs/Latches, which will be removed : <ADR_O_26> <ADR_O_27> <ADR_O_28> <ADR_O_29> <ADR_O_30> <ADR_O_31> 
+WARNING:Xst:2677 - Node <latched_addr_12> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_13> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_14> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_15> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_16> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_17> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_18> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_19> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_20> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_21> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_22> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <latched_addr_23> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_13> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_14> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_15> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_16> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_17> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_18> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_19> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_20> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_21> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_22> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_23> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_24> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2677 - Node <ADR_O_25> of sequential type is unconnected in block <psramif>.
+WARNING:Xst:2404 -  FFs/Latches <ADR_O<31:24>> (without init value) have a constant value of 0 in block <PsramInterface>.
+
+Synthesizing (advanced) Unit <DvidGen>.
+The following registers are absorbed into counter <h_next>: 1 register on signal <h_next>.
+The following registers are absorbed into counter <v_next>: 1 register on signal <v_next>.
+Unit <DvidGen> synthesized (advanced).
+
+Synthesizing (advanced) Unit <GlyphRom>.
+INFO:Xst:3226 - The RAM <Mram_rom> will be implemented as a BLOCK RAM, absorbing the following register(s): <Data>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4096-word x 8-bit                   |          |
+    |     mode           | write-first                         |          |
+    |     clkA           | connected to signal <Clock>         | fall     |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <Address>       |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to signal <Data>          |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+Unit <GlyphRom> synthesized (advanced).
+
+Synthesizing (advanced) Unit <GrayCounter>.
+The following registers are absorbed into counter <binary_count>: 1 register on signal <binary_count>.
+Unit <GrayCounter> synthesized (advanced).
+
+Synthesizing (advanced) Unit <MultiRateFifo>.
+INFO:Xst:3212 - HDL ADVISOR - Asynchronous or synchronous initialization of the register <GrayCount> prevents it from being combined with the RAM <Mram_mem> for implementation as read-only block RAM.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 16-word x 30-bit                    |          |
+    |     clkA           | connected to signal <WriteClk>      | rise     |
+    |     weA            | connected to signal <full_out>      | low      |
+    |     addrA          | connected to signal <next_word_to_write> |          |
+    |     diA            | connected to signal <DataIn>        |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 16-word x 30-bit                    |          |
+    |     addrB          | connected to signal <next_word_to_read> |          |
+    |     doB            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3231 - The small RAM <Mram_mem> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+Unit <MultiRateFifo> synthesized (advanced).
+
+Synthesizing (advanced) Unit <TextRenderer>.
+The following registers are absorbed into counter <blink_timer>: 1 register on signal <blink_timer>.
+	Multiplier <Mmult_n0056> in block <TextRenderer> and adder/subtractor <Madd_glyph_rom_addr> in block <TextRenderer> are combined into a MAC<Maddsub_n0056>.
+Unit <TextRenderer> synthesized (advanced).
+
+Synthesizing (advanced) Unit <TmdsEncoder>.
+The following registers are absorbed into accumulator <dc_bias>: 1 register on signal <dc_bias>.
+	The following adders/subtractors are grouped into adder tree <Madd_data_word_disparity_Madd1> :
+ 	<Madd_n0179_Madd> in block <TmdsEncoder>, 	<Madd_n0185_Madd> in block <TmdsEncoder>, 	<Madd_n0191_Madd> in block <TmdsEncoder>, 	<Madd_data_word_disparity_Madd> in block <TmdsEncoder>.
+	The following adders/subtractors are grouped into adder tree <Madd_ones_Madd1> :
+ 	<Madd_n0162_Madd> in block <TmdsEncoder>, 	<Madd_n0168_Madd> in block <TmdsEncoder>, 	<Madd_ones_Madd> in block <TmdsEncoder>.
+Unit <TmdsEncoder> synthesized (advanced).
+
+Synthesizing (advanced) Unit <reclone_top>.
+The following registers are absorbed into counter <count50>: 1 register on signal <count50>.
+The following registers are absorbed into counter <count32>: 1 register on signal <count32>.
+INFO:Xst:3226 - The RAM <text_buffer/Mram_RAM_H> will be implemented as a BLOCK RAM, absorbing the following register(s): <text_buffer/dat_a_out_sliced> <text_buffer/dat_b_out_sliced>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4096-word x 8-bit                   |          |
+    |     mode           | read-first                          |          |
+    |     clkA           | connected to signal <pixel_clock_t> | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <textbuf_adr_o> |          |
+    |     diA            | connected to signal <textbuf_dat_o<15:8>> |          |
+    |     doA            | connected to signal <textbuf_dat_i> |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 4096-word x 8-bit                   |          |
+    |     mode           | write-first                         |          |
+    |     clkB           | connected to signal <pixel_clock_t> | rise     |
+    |     addrB          | connected to signal <character_addr> |          |
+    |     doB            | connected to signal <character_data> |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+INFO:Xst:3226 - The RAM <text_buffer/Mram_RAM_L> will be implemented as a BLOCK RAM, absorbing the following register(s): <text_buffer/dat_a_out> <text_buffer/dat_b_out>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4096-word x 8-bit                   |          |
+    |     mode           | read-first                          |          |
+    |     clkA           | connected to signal <pixel_clock_t> | rise     |
+    |     weA            | connected to internal node          | high     |
+    |     addrA          | connected to signal <textbuf_adr_o> |          |
+    |     diA            | connected to signal <textbuf_dat_o<7:0>> |          |
+    |     doA            | connected to signal <textbuf_dat_i> |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 4096-word x 8-bit                   |          |
+    |     mode           | write-first                         |          |
+    |     clkB           | connected to signal <pixel_clock_t> | rise     |
+    |     addrB          | connected to signal <character_addr> |          |
+    |     doB            | connected to signal <character_data> |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+Unit <reclone_top> synthesized (advanced).
+WARNING:Xst:2677 - Node <psramif/latched_addr_12> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_13> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_14> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_15> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_16> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_17> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_18> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_19> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_20> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_21> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_22> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/latched_addr_23> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_13> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_14> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_15> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_16> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_17> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_18> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_19> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_20> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_21> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_22> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_23> of sequential type is unconnected in block <reclone_top>.
+WARNING:Xst:2677 - Node <psramif/ADR_O_24> of sequential type is unconnected in block <reclone_top>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 4
+ 16x30-bit dual-port distributed RAM                   : 1
+ 4096x8-bit dual-port block RAM                        : 2
+ 4096x8-bit single-port block Read Only RAM            : 1
+# MACs                                                 : 1
+ 8x4-to-12-bit MAC                                     : 1
+# Multipliers                                          : 1
+ 12x12-bit multiplier                                  : 1
+# Adders/Subtractors                                   : 30
+ 12-bit adder                                          : 13
+ 3-bit subtractor                                      : 1
+ 4-bit adder                                           : 9
+ 4-bit subtractor                                      : 6
+ 5-bit adder                                           : 1
+# Adder Trees                                          : 6
+ 4-bit / 4-inputs adder tree                           : 6
+# Counters                                             : 7
+ 12-bit up counter                                     : 2
+ 25-bit up counter                                     : 1
+ 26-bit up counter                                     : 2
+ 4-bit up counter                                      : 2
+# Accumulators                                         : 3
+ 4-bit updown loadable accumulator                     : 3
+# Registers                                            : 248
+ Flip-Flops                                            : 248
+# Comparators                                          : 23
+ 12-bit comparator greater                             : 2
+ 12-bit comparator lessequal                           : 12
+ 13-bit comparator lessequal                           : 1
+ 14-bit comparator lessequal                           : 1
+ 15-bit comparator lessequal                           : 1
+ 16-bit comparator lessequal                           : 1
+ 17-bit comparator lessequal                           : 1
+ 4-bit comparator equal                                : 1
+ 4-bit comparator greater                              : 3
+# Multiplexers                                         : 209
+ 1-bit 2-to-1 multiplexer                              : 184
+ 1-bit 8-to-1 multiplexer                              : 1
+ 10-bit 2-to-1 multiplexer                             : 9
+ 2-bit 2-to-1 multiplexer                              : 1
+ 24-bit 2-to-1 multiplexer                             : 1
+ 4-bit 2-to-1 multiplexer                              : 3
+ 5-bit 2-to-1 multiplexer                              : 4
+ 9-bit 2-to-1 multiplexer                              : 6
+# Xors                                                 : 48
+ 1-bit xor2                                            : 46
+ 3-bit xor2                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:2677 - Node <h_count_0> of sequential type is unconnected in block <DvidGen>.
+WARNING:Xst:2677 - Node <h_count_1> of sequential type is unconnected in block <DvidGen>.
+WARNING:Xst:2677 - Node <h_count_2> of sequential type is unconnected in block <DvidGen>.
+WARNING:Xst:2677 - Node <vpos_latched_0> of sequential type is unconnected in block <TextRenderer>.
+INFO:Xst:1901 - Instance PLL_BASE_32m_to_25p6m in unit PLL_BASE_32m_to_25p6m of type PLL_BASE has been replaced by PLL_ADV
+INFO:Xst:1901 - Instance PLL_BASE_inst in unit PLL_BASE_inst of type PLL_BASE has been replaced by PLL_ADV
+INFO:Xst:2261 - The FF/Latch <GrayCounter_pRd/GrayCount_0> in Unit <MultiRateFifo> is equivalent to the following FF/Latch, which will be removed : <GrayCounter_pRd/binary_count_1> 
+INFO:Xst:2261 - The FF/Latch <GrayCounter_pWr/GrayCount_0> in Unit <MultiRateFifo> is equivalent to the following FF/Latch, which will be removed : <GrayCounter_pWr/binary_count_1> 
+
+Optimizing unit <clocking> ...
+
+Optimizing unit <reclone_top> ...
+
+Optimizing unit <DvidGen> ...
+
+Optimizing unit <DvidSer> ...
+
+Optimizing unit <TmdsEncoder> ...
+
+Optimizing unit <MultiRateFifo> ...
+
+Optimizing unit <TextRenderer> ...
+WARNING:Xst:1293 - FF/Latch <Inst_DvidGen/h_next_11> has a constant value of 0 in block <reclone_top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <Inst_DvidGen/h_count_11> has a constant value of 0 in block <reclone_top>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/blue_level_5> in Unit <reclone_top> is equivalent to the following 5 FFs/Latches, which will be removed : <Inst_DvidGen/blue_level_4> <Inst_DvidGen/blue_level_3> <Inst_DvidGen/blue_level_2> <Inst_DvidGen/blue_level_1> <Inst_DvidGen/blue_level_0> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_4> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_2> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_5> in Unit <reclone_top> is equivalent to the following 3 FFs/Latches, which will be removed : <Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_3> <Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_1> <Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_0> 
+INFO:Xst:2261 - The FF/Latch <psramif/latched_addr_2> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <psramif/dbg_5> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_4> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_2> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_5> in Unit <reclone_top> is equivalent to the following 3 FFs/Latches, which will be removed : <Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_3> <Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_1> <Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_0> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/red_level_5> in Unit <reclone_top> is equivalent to the following 5 FFs/Latches, which will be removed : <Inst_DvidGen/red_level_4> <Inst_DvidGen/red_level_3> <Inst_DvidGen/red_level_2> <Inst_DvidGen/red_level_1> <Inst_DvidGen/red_level_0> 
+INFO:Xst:2261 - The FF/Latch <count32_10> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_10> 
+INFO:Xst:2261 - The FF/Latch <count32_11> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_11> 
+INFO:Xst:2261 - The FF/Latch <count32_12> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_12> 
+INFO:Xst:2261 - The FF/Latch <count32_13> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_13> 
+INFO:Xst:2261 - The FF/Latch <count32_14> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_14> 
+INFO:Xst:2261 - The FF/Latch <count32_20> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_20> 
+INFO:Xst:2261 - The FF/Latch <count32_15> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_15> 
+INFO:Xst:2261 - The FF/Latch <count32_21> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_21> 
+INFO:Xst:2261 - The FF/Latch <count32_16> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_16> 
+INFO:Xst:2261 - The FF/Latch <count32_22> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_22> 
+INFO:Xst:2261 - The FF/Latch <count32_17> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_17> 
+INFO:Xst:2261 - The FF/Latch <count32_23> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_23> 
+INFO:Xst:2261 - The FF/Latch <count32_18> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_18> 
+INFO:Xst:2261 - The FF/Latch <count32_24> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_24> 
+INFO:Xst:2261 - The FF/Latch <count32_19> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_19> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/ser_in_clock_4> in Unit <reclone_top> is equivalent to the following 4 FFs/Latches, which will be removed : <Inst_DvidGen/dvid_ser/ser_in_clock_3> <Inst_DvidGen/dvid_ser/ser_in_clock_2> <Inst_DvidGen/dvid_ser/ser_in_clock_1> <Inst_DvidGen/dvid_ser/ser_in_clock_0> 
+INFO:Xst:2261 - The FF/Latch <count32_0> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_0> 
+INFO:Xst:2261 - The FF/Latch <count32_1> in Unit <reclone_top> is equivalent to the following 2 FFs/Latches, which will be removed : <renderer/blink_timer_1> <renderer/hpos_latched_1> 
+INFO:Xst:2261 - The FF/Latch <count32_2> in Unit <reclone_top> is equivalent to the following 2 FFs/Latches, which will be removed : <renderer/blink_timer_2> <renderer/hpos_latched_2> 
+INFO:Xst:2261 - The FF/Latch <count32_3> in Unit <reclone_top> is equivalent to the following 2 FFs/Latches, which will be removed : <Inst_DvidGen/h_count_3> <renderer/blink_timer_3> 
+INFO:Xst:2261 - The FF/Latch <count32_4> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_4> 
+INFO:Xst:2261 - The FF/Latch <count32_5> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_5> 
+INFO:Xst:2261 - The FF/Latch <psramif/ADR_O_1> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <psramif/dbg_0> 
+INFO:Xst:2261 - The FF/Latch <count32_6> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_6> 
+INFO:Xst:2261 - The FF/Latch <psramif/ADR_O_2> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <psramif/dbg_1> 
+INFO:Xst:2261 - The FF/Latch <count32_7> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_7> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/green_level_5> in Unit <reclone_top> is equivalent to the following 5 FFs/Latches, which will be removed : <Inst_DvidGen/green_level_4> <Inst_DvidGen/green_level_3> <Inst_DvidGen/green_level_2> <Inst_DvidGen/green_level_1> <Inst_DvidGen/green_level_0> 
+INFO:Xst:2261 - The FF/Latch <psramif/ADR_O_3> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <psramif/dbg_2> 
+INFO:Xst:2261 - The FF/Latch <count32_8> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_8> 
+INFO:Xst:2261 - The FF/Latch <count32_9> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <renderer/blink_timer_9> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_4> in Unit <reclone_top> is equivalent to the following FF/Latch, which will be removed : <Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_2> 
+INFO:Xst:2261 - The FF/Latch <Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_5> in Unit <reclone_top> is equivalent to the following 3 FFs/Latches, which will be removed : <Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_3> <Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_1> <Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_0> 
+INFO:Xst:3203 - The FF/Latch <count32_0> in Unit <reclone_top> is the opposite to the following FF/Latch, which will be removed : <Inst_DvidGen/h_next_0> 
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block reclone_top, actual ratio is 4.
+FlipFlop psramif/latched_addr_2 has been replicated 1 time(s) to handle iob=true attribute.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 298
+ Flip-Flops                                            : 298
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : reclone_top.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 508
+#      GND                         : 1
+#      INV                         : 14
+#      LUT1                        : 80
+#      LUT2                        : 41
+#      LUT3                        : 42
+#      LUT4                        : 21
+#      LUT5                        : 42
+#      LUT6                        : 57
+#      MUXCY                       : 97
+#      MUXF7                       : 11
+#      VCC                         : 1
+#      XORCY                       : 101
+# FlipFlops/Latches                : 298
+#      FD                          : 126
+#      FDE                         : 111
+#      FDP                         : 2
+#      FDR                         : 36
+#      FDRE                        : 22
+#      FDS                         : 1
+# RAMS                             : 11
+#      RAM32M                      : 5
+#      RAMB16BWER                  : 6
+# Clock Buffers                    : 6
+#      BUFG                        : 5
+#      BUFGP                       : 1
+# IO Buffers                       : 36
+#      IBUF                        : 6
+#      IBUFG                       : 1
+#      IOBUF                       : 16
+#      OBUF                        : 9
+#      OBUFDS                      : 4
+# DSPs                             : 1
+#      DSP48A1                     : 1
+# Others                           : 11
+#      BUFPLL                      : 1
+#      OSERDES2                    : 8
+#      PLL_ADV                     : 2
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 6slx25ftg256-3 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:             297  out of  30064     0%  
+ Number of Slice LUTs:                  317  out of  15032     2%  
+    Number used as Logic:               297  out of  15032     1%  
+    Number used as Memory:               20  out of   3664     0%  
+       Number used as RAM:               20
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:    451
+   Number with an unused Flip Flop:     154  out of    451    34%  
+   Number with an unused LUT:           134  out of    451    29%  
+   Number of fully used LUT-FF pairs:   163  out of    451    36%  
+   Number of unique control sets:        19
+
+IO Utilization: 
+ Number of IOs:                          53
+ Number of bonded IOBs:                  41  out of    186    22%  
+    IOB Flip Flops/Latches:               1
+
+Specific Feature Utilization:
+ Number of Block RAM/FIFO:                6  out of     52    11%  
+    Number using Block RAM only:          6
+ Number of BUFG/BUFGCTRLs:                6  out of     16    37%  
+ Number of DSP48A1s:                      1  out of     38     2%  
+ Number of PLL_ADVs:                      2  out of      2   100%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+Clk50                              | BUFGP                  | 27    |
+Inst_clocking/PLL_BASE_inst/CLKOUT2| BUFG                   | 226   |
+Inst_clocking/PLL_BASE_inst/CLKOUT1| BUFG                   | 56    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -3
+
+   Minimum period: 14.936ns (Maximum Frequency: 66.951MHz)
+   Minimum input arrival time before clock: 3.942ns
+   Maximum output required time after clock: 4.807ns
+   Maximum combinational path delay: 3.150ns
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'Clk50'
+  Clock period: 2.142ns (frequency: 466.886MHz)
+  Total number of paths / destination ports: 352 / 27
+-------------------------------------------------------------------------
+Delay:               2.142ns (Levels of Logic = 27)
+  Source:            count50_0 (FF)
+  Destination:       count50_25 (FF)
+  Source Clock:      Clk50 rising
+  Destination Clock: Clk50 rising
+
+  Data Path: count50_0 to count50_25
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               1   0.447   0.579  count50_0 (count50_0)
+     INV:I->O              1   0.206   0.000  Mcount_count50_lut<0>_INV_0 (Mcount_count50_lut<0>)
+     MUXCY:S->O            1   0.172   0.000  Mcount_count50_cy<0> (Mcount_count50_cy<0>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<1> (Mcount_count50_cy<1>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<2> (Mcount_count50_cy<2>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<3> (Mcount_count50_cy<3>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<4> (Mcount_count50_cy<4>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<5> (Mcount_count50_cy<5>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<6> (Mcount_count50_cy<6>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<7> (Mcount_count50_cy<7>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<8> (Mcount_count50_cy<8>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<9> (Mcount_count50_cy<9>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<10> (Mcount_count50_cy<10>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<11> (Mcount_count50_cy<11>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<12> (Mcount_count50_cy<12>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<13> (Mcount_count50_cy<13>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<14> (Mcount_count50_cy<14>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<15> (Mcount_count50_cy<15>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<16> (Mcount_count50_cy<16>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<17> (Mcount_count50_cy<17>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<18> (Mcount_count50_cy<18>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<19> (Mcount_count50_cy<19>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<20> (Mcount_count50_cy<20>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<21> (Mcount_count50_cy<21>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<22> (Mcount_count50_cy<22>)
+     MUXCY:CI->O           1   0.019   0.000  Mcount_count50_cy<23> (Mcount_count50_cy<23>)
+     MUXCY:CI->O           0   0.019   0.000  Mcount_count50_cy<24> (Mcount_count50_cy<24>)
+     XORCY:CI->O           1   0.180   0.000  Mcount_count50_xor<25> (Result<25>)
+     FD:D                      0.102          count50_25
+    ----------------------------------------
+    Total                      2.142ns (1.563ns logic, 0.579ns route)
+                                       (73.0% logic, 27.0% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'Inst_clocking/PLL_BASE_inst/CLKOUT2'
+  Clock period: 14.936ns (frequency: 66.951MHz)
+  Total number of paths / destination ports: 18744 / 447
+-------------------------------------------------------------------------
+Delay:               7.468ns (Levels of Logic = 16)
+  Source:            renderer/vpos_latched_11 (FF)
+  Destination:       renderer_character_rom/Mram_rom1 (RAM)
+  Source Clock:      Inst_clocking/PLL_BASE_inst/CLKOUT2 rising
+  Destination Clock: Inst_clocking/PLL_BASE_inst/CLKOUT2 falling
+
+  Data Path: renderer/vpos_latched_11 to renderer_character_rom/Mram_rom1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              13   0.447   1.277  renderer/vpos_latched_11 (renderer/vpos_latched_11)
+     LUT6:I1->O            3   0.203   0.651  renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0011_INV_194_o1211 (renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0011_INV_194_o121)
+     LUT3:I2->O            1   0.205   0.580  renderer/vpos_latched[11]_PWR_25_o_mod_8/Mmux_a[7]_a[11]_MUX_315_o11 (renderer/vpos_latched[11]_PWR_25_o_mod_8/Mmux_a[7]_a[11]_MUX_315_o1)
+     LUT6:I5->O            1   0.205   0.580  renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0013_INV_220_o14_SW0 (N115)
+     LUT5:I4->O            2   0.205   0.617  renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0013_INV_220_o14 (renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0013_INV_220_o14)
+     LUT5:I4->O            2   0.205   0.617  renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0013_INV_220_o16 (renderer/vpos_latched[11]_PWR_25_o_mod_8/BUS_0013_INV_220_o)
+     LUT5:I4->O            1   0.205   0.000  renderer/Maddsub_n0056_Madd_lut<2> (renderer/Maddsub_n0056_Madd_lut<2>)
+     MUXCY:S->O            1   0.172   0.000  renderer/Maddsub_n0056_Madd_cy<2> (renderer/Maddsub_n0056_Madd_cy<2>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<3> (renderer/Maddsub_n0056_Madd_cy<3>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<4> (renderer/Maddsub_n0056_Madd_cy<4>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<5> (renderer/Maddsub_n0056_Madd_cy<5>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<6> (renderer/Maddsub_n0056_Madd_cy<6>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<7> (renderer/Maddsub_n0056_Madd_cy<7>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<8> (renderer/Maddsub_n0056_Madd_cy<8>)
+     MUXCY:CI->O           1   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<9> (renderer/Maddsub_n0056_Madd_cy<9>)
+     MUXCY:CI->O           0   0.019   0.000  renderer/Maddsub_n0056_Madd_cy<10> (renderer/Maddsub_n0056_Madd_cy<10>)
+     XORCY:CI->O           2   0.180   0.616  renderer/Maddsub_n0056_Madd_xor<11> (renderer/glyph_rom_addr<11>)
+     RAMB16BWER:ADDRA13        0.350          renderer_character_rom/Mram_rom2
+    ----------------------------------------
+    Total                      7.468ns (2.529ns logic, 4.939ns route)
+                                       (33.9% logic, 66.1% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'Inst_clocking/PLL_BASE_inst/CLKOUT1'
+  Clock period: 4.146ns (frequency: 241.176MHz)
+  Total number of paths / destination ports: 162 / 79
+-------------------------------------------------------------------------
+Delay:               4.146ns (Levels of Logic = 2)
+  Source:            Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd/GrayCount_0 (FF)
+  Destination:       Inst_DvidGen/dvid_ser/out_fifo/empty_out (FF)
+  Source Clock:      Inst_clocking/PLL_BASE_inst/CLKOUT1 rising
+  Destination Clock: Inst_clocking/PLL_BASE_inst/CLKOUT1 rising
+
+  Data Path: Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd/GrayCount_0 to Inst_DvidGen/dvid_ser/out_fifo/empty_out
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            20   0.447   1.321  Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd/GrayCount_0 (Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd/GrayCount_0)
+     LUT4:I1->O            2   0.205   0.961  Inst_DvidGen/dvid_ser/out_fifo/preset_full_SW0 (N53)
+     LUT6:I1->O            1   0.203   0.579  Inst_DvidGen/dvid_ser/out_fifo/preset_empty (Inst_DvidGen/dvid_ser/out_fifo/preset_empty)
+     FDP:PRE                   0.430          Inst_DvidGen/dvid_ser/out_fifo/empty_out
+    ----------------------------------------
+    Total                      4.146ns (1.285ns logic, 2.861ns route)
+                                       (31.0% logic, 69.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'Inst_clocking/PLL_BASE_inst/CLKOUT2'
+  Total number of paths / destination ports: 186 / 106
+-------------------------------------------------------------------------
+Offset:              3.942ns (Levels of Logic = 2)
+  Source:            FSMC_NE1_NCE2 (PAD)
+  Destination:       psramif/data_out_8 (FF)
+  Destination Clock: Inst_clocking/PLL_BASE_inst/CLKOUT2 rising
+
+  Data Path: FSMC_NE1_NCE2 to psramif/data_out_8
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            10   1.222   0.961  FSMC_NE1_NCE2_IBUF (FSMC_NE1_NCE2_IBUF)
+     LUT2:I0->O           28   0.203   1.234  psramif/_n0118_inv1 (psramif/_n0118_inv)
+     FDE:CE                    0.322          psramif/data_out_8
+    ----------------------------------------
+    Total                      3.942ns (1.747ns logic, 2.195ns route)
+                                       (44.3% logic, 55.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'Inst_clocking/PLL_BASE_inst/CLKOUT2'
+  Total number of paths / destination ports: 40 / 24
+-------------------------------------------------------------------------
+Offset:              4.807ns (Levels of Logic = 2)
+  Source:            psramif/RST_I_CLK_I_DFF_215 (FF)
+  Destination:       FSMC_D<15> (PAD)
+  Source Clock:      Inst_clocking/PLL_BASE_inst/CLKOUT2 rising
+
+  Data Path: psramif/RST_I_CLK_I_DFF_215 to FSMC_D<15>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              1   0.447   0.579  psramif/RST_I_CLK_I_DFF_215 (psramif/RST_I_CLK_I_DFF_215)
+     INV:I->O             16   0.206   1.004  psramif/RST_I_CLK_I_DFF_215_inv1_INV_0 (psramif/RST_I_CLK_I_DFF_215_inv)
+     IOBUF:T->IO               2.571          FSMC_D_15_IOBUF (FSMC_D<15>)
+    ----------------------------------------
+    Total                      4.807ns (3.224ns logic, 1.583ns route)
+                                       (67.1% logic, 32.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'Clk50'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              3.597ns (Levels of Logic = 1)
+  Source:            LEDs_6 (FF)
+  Destination:       LEDs<6> (PAD)
+  Source Clock:      Clk50 rising
+
+  Data Path: LEDs_6 to LEDs<6>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               1   0.447   0.579  LEDs_6 (LEDs_6)
+     OBUF:I->O                 2.571          LEDs_6_OBUF (LEDs<6>)
+    ----------------------------------------
+    Total                      3.597ns (3.018ns logic, 0.579ns route)
+                                       (83.9% logic, 16.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'Inst_clocking/PLL_BASE_inst/CLKOUT1'
+  Total number of paths / destination ports: 20 / 20
+-------------------------------------------------------------------------
+Offset:              1.191ns (Levels of Logic = 0)
+  Source:            Inst_DvidGen/dvid_ser/ser_in_clock_4 (FF)
+  Destination:       Inst_DvidGen/dvid_ser/output_serializer_c/OSERDES2_master:D1 (PAD)
+  Source Clock:      Inst_clocking/PLL_BASE_inst/CLKOUT1 rising
+
+  Data Path: Inst_DvidGen/dvid_ser/ser_in_clock_4 to Inst_DvidGen/dvid_ser/output_serializer_c/OSERDES2_master:D1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               6   0.447   0.744  Inst_DvidGen/dvid_ser/ser_in_clock_4 (Inst_DvidGen/dvid_ser/ser_in_clock_4)
+    OSERDES2:D1                0.000          Inst_DvidGen/dvid_ser/output_serializer_c/OSERDES2_slave
+    ----------------------------------------
+    Total                      1.191ns (0.447ns logic, 0.744ns route)
+                                       (37.5% logic, 62.5% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 40 / 40
+-------------------------------------------------------------------------
+Delay:               3.150ns (Levels of Logic = 1)
+  Source:            Inst_DvidGen/dvid_ser/output_serializer_c/OSERDES2_master:OQ (PAD)
+  Destination:       TMDS_Out_P<3> (PAD)
+
+  Data Path: Inst_DvidGen/dvid_ser/output_serializer_c/OSERDES2_master:OQ to TMDS_Out_P<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+    OSERDES2:OQ            1   0.000   0.579  Inst_DvidGen/dvid_ser/output_serializer_c/OSERDES2_master (Inst_DvidGen/tmds_out_clock)
+     OBUFDS:I->O               2.571          Inst_DvidGen/OBUFDS_clock (TMDS_Out_P<3>)
+    ----------------------------------------
+    Total                      3.150ns (2.571ns logic, 0.579ns route)
+                                       (81.6% logic, 18.4% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock Clk50
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+Clk50          |    2.142|         |         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock Inst_clocking/PLL_BASE_inst/CLKOUT1
+-----------------------------------+---------+---------+---------+---------+
+                                   | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock                       |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------------------------+---------+---------+---------+---------+
+Inst_clocking/PLL_BASE_inst/CLKOUT1|    4.146|         |         |         |
+Inst_clocking/PLL_BASE_inst/CLKOUT2|    3.927|         |         |         |
+-----------------------------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock Inst_clocking/PLL_BASE_inst/CLKOUT2
+-----------------------------------+---------+---------+---------+---------+
+                                   | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock                       |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------------------------+---------+---------+---------+---------+
+Inst_clocking/PLL_BASE_inst/CLKOUT1|    4.146|         |         |         |
+Inst_clocking/PLL_BASE_inst/CLKOUT2|    8.755|    5.447|    7.468|         |
+-----------------------------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 7.77 secs
+ 
+--> 
+
+Total memory usage is 265776 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   66 (   0 filtered)
+Number of infos    :   51 (   0 filtered)
+

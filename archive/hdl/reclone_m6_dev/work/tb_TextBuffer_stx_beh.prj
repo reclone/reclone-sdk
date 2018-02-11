@@ -1,0 +1,2 @@
+vhdl isim_temp "../TextBuffer.vhd"
+vhdl isim_temp "../test/tb_TextBuffer.vhd"

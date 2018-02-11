@@ -1,0 +1,29 @@
+Command line:
+   tb_TextBuffer_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  51667
+
+Sun Sep 25 13:21:07 2016
+
+
+ Elaboration Time: 0.078125 sec
+
+ Current Memory Usage: 888.959 Meg
+
+ Total Signals          : 32
+ Total Nets             : 65650
+ Total Signal Drivers   : 16
+ Total Blocks           : 6
+ Total Primitive Blocks : 5
+ Total Processes        : 10
+ Total Traceable Variables  : 18
+ Total Scalar Nets and Variables : 66656
+Total Line Count : 56
+
+ Total Simulation Time: 0.21875 sec
+
+ Current Memory Usage: 731.673 Meg
+
+Sun Sep 25 13:23:44 2016
+

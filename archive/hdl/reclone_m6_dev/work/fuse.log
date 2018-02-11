@@ -1,0 +1,60 @@
+Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib secureip -o C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/tb_reclone_top_isim_beh.exe -prj C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/tb_reclone_top_beh.prj work.tb_reclone_top 
+ISim P.20131013 (signature 0x7708f090)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
+Determining compilation order of HDL files
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../GrayCounter.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../TmdsEncoder.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../OutputSerializer5Bit.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../MultiRateFifo.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../GlyphRom.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../DvidSer.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../TextRenderer.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../TextBuffer.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../PsramInterface.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../DvidGen.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../clocking.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../reclone_top.vhd" into library work
+Parsing VHDL file "C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/../tb_reclone_top.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package numeric_std
+Compiling package vcomponents
+Compiling package textio
+Compiling package std_logic_textio
+Compiling package std_logic_arith
+Compiling package std_logic_signed
+Compiling package vital_timing
+Compiling package vital_primitives
+Compiling package vpkg
+Compiling architecture bufg_v of entity BUFG [bufg_default]
+Compiling architecture pll_adv_v of entity PLL_ADV [\PLL_ADV("OPTIMIZED","CLKFBOUT",...]
+Compiling architecture pll_base_v of entity PLL_BASE [\PLL_BASE("OPTIMIZED",16,0.0,31....]
+Compiling architecture pll_adv_v of entity PLL_ADV [\PLL_ADV("OPTIMIZED","CLKFBOUT",...]
+Compiling architecture pll_base_v of entity PLL_BASE [\PLL_BASE("OPTIMIZED",29,0.0,39....]
+Compiling architecture bufpll_v of entity BUFPLL [\BUFPLL(5,true)\]
+Compiling architecture behavioral of entity clocking [clocking_default]
+Compiling package std_logic_unsigned
+Compiling architecture behavioral of entity TmdsEncoder [tmdsencoder_default]
+Compiling architecture behavioral of entity GrayCounter [\GrayCounter(4)\]
+Compiling architecture behavioral of entity MultiRateFifo [\MultiRateFifo(30,4)\]
+Compiling architecture oserdes2_v of entity OSERDES2 [\OSERDES2(false,"SDR","SDR",5,"S...]
+Compiling architecture oserdes2_v of entity OSERDES2 [\OSERDES2(false,"SDR","SDR",5,"S...]
+Compiling architecture behavioral of entity OutputSerializer5Bit [outputserializer5bit_default]
+Compiling architecture behavioral of entity DvidSer [dvidser_default]
+Compiling architecture obufds_v of entity OBUFDS [\OBUFDS("DONT_CARE","DEFAULT","S...]
+Compiling architecture behavioral of entity DvidGen [dvidgen_default]
+Compiling architecture behavioral of entity GlyphRom [glyphrom_default]
+Compiling architecture behavioral of entity TextRenderer [textrenderer_default]
+Compiling architecture behavioral of entity TextBuffer [textbuffer_default]
+Compiling architecture behavioral of entity PsramInterface [psraminterface_default]
+Compiling architecture behavioral of entity reclone_top [reclone_top_default]
+Compiling architecture behavior of entity tb_reclone_top
+Time Resolution for simulation is 1ps.
+Waiting for 10 sub-compilation(s) to finish...
+Compiled 55 VHDL Units
+Built simulation executable C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/work/tb_reclone_top_isim_beh.exe
+Fuse Memory Usage: 72016 KB
+Fuse CPU Usage: 1218 ms

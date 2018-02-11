@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="HDLCompiler" num="1127" delta="old" >"C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\PsramInterface.vhd" Line 89: Assignment to <arg fmt="%s" index="1">psram_state</arg> ignored, since the identifier is never used
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">Switches</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="info" file="Xst" num="3210" delta="old" >&quot;<arg fmt="%s" index="1">C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\DvidSer.vhd</arg>&quot; line <arg fmt="%s" index="2">117</arg>: Output port &lt;<arg fmt="%s" index="3">Full</arg>&gt; of the instance &lt;<arg fmt="%s" index="4">out_fifo</arg>&gt; is unconnected or connected to loadless signal.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">HPos&lt;0:0&gt;</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">HPos&lt;11:11&gt;</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">HRes</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">HMax</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">VRes</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">VMax</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="warning" file="Xst" num="2999" delta="old" >Signal &apos;<arg fmt="%s" index="1">rom</arg>&apos;, unconnected in block &apos;<arg fmt="%s" index="2">GlyphRom</arg>&apos;, is tied to its initial value.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">FSMC_CLK</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">ADR_O_25</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">psramif</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">6 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;ADR_O_26&gt; &lt;ADR_O_27&gt; &lt;ADR_O_28&gt; &lt;ADR_O_29&gt; &lt;ADR_O_30&gt; &lt;ADR_O_31&gt; </arg>
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_12</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">latched_addr_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_24</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">ADR_O_25</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">psramif</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2404" delta="old" > FFs/Latches &lt;<arg fmt="%s" index="1">ADR_O</arg>&lt;<arg fmt="%d" index="2">31</arg>:<arg fmt="%d" index="3">24</arg>&gt;&gt; (without init value) have a constant value of <arg fmt="%c" index="4">0</arg> in block &lt;<arg fmt="%s" index="5">PsramInterface</arg>&gt;.
+</msg>
+
+<msg type="info" file="Xst" num="3226" delta="old" >The RAM &lt;<arg fmt="%s" index="1">Mram_rom</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
+
+<msg type="info" file="Xst" num="3212" delta="old" >HDL ADVISOR - Asynchronous or synchronous initialization of the register &lt;<arg fmt="%s" index="1">GrayCount</arg>&gt; prevents it from being combined with the RAM &lt;<arg fmt="%s" index="2">Mram_mem</arg>&gt; for implementation as read-only block RAM.
+</msg>
+
+<msg type="info" file="Xst" num="3231" delta="old" >The small RAM &lt;<arg fmt="%s" index="1">Mram_mem</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+</msg>
+
+<msg type="info" file="Xst" num="3226" delta="old" >The RAM &lt;<arg fmt="%s" index="1">text_buffer/Mram_RAM_H</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
+
+<msg type="info" file="Xst" num="3226" delta="old" >The RAM &lt;<arg fmt="%s" index="1">text_buffer/Mram_RAM_L</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_12</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/latched_addr_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">psramif/ADR_O_24</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">h_count_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">DvidGen</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">h_count_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">DvidGen</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">h_count_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">DvidGen</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">vpos_latched_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">TextRenderer</arg>&gt;.
+</msg>
+
+<msg type="info" file="Xst" num="1901" delta="old" >Instance <arg fmt="%s" index="1">PLL_BASE_32m_to_25p6m</arg> in unit <arg fmt="%s" index="2">PLL_BASE_32m_to_25p6m</arg> of type <arg fmt="%s" index="3">PLL_BASE</arg> has been replaced by <arg fmt="%s" index="4">PLL_ADV</arg>
+</msg>
+
+<msg type="info" file="Xst" num="1901" delta="old" >Instance <arg fmt="%s" index="1">PLL_BASE_inst</arg> in unit <arg fmt="%s" index="2">PLL_BASE_inst</arg> of type <arg fmt="%s" index="3">PLL_BASE</arg> has been replaced by <arg fmt="%s" index="4">PLL_ADV</arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">GrayCounter_pRd/GrayCount_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">MultiRateFifo</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;GrayCounter_pRd/binary_count_1&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">GrayCounter_pWr/GrayCount_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">MultiRateFifo</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;GrayCounter_pWr/binary_count_1&gt; </arg>
+</msg>
+
+<msg type="warning" file="Xst" num="1293" delta="old" >FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/h_next_11</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">reclone_top</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+</msg>
+
+<msg type="warning" file="Xst" num="1896" delta="old" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/h_count_11</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">reclone_top</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/blue_level_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">5 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/blue_level_4&gt; &lt;Inst_DvidGen/blue_level_3&gt; &lt;Inst_DvidGen/blue_level_2&gt; &lt;Inst_DvidGen/blue_level_1&gt; &lt;Inst_DvidGen/blue_level_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_4</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_2&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">3 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_3&gt; &lt;Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_1&gt; &lt;Inst_DvidGen/dvid_ser/TMDS_encoder_green/Encoded_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">psramif/latched_addr_2</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;psramif/dbg_5&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_4</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_2&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">3 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_3&gt; &lt;Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_1&gt; &lt;Inst_DvidGen/dvid_ser/TMDS_encoder_red/Encoded_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/red_level_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">5 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/red_level_4&gt; &lt;Inst_DvidGen/red_level_3&gt; &lt;Inst_DvidGen/red_level_2&gt; &lt;Inst_DvidGen/red_level_1&gt; &lt;Inst_DvidGen/red_level_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_10</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_10&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_11</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_11&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_12</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_12&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_13</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_13&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_14</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_14&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_20</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_20&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_15</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_15&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_21</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_21&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_16</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_16&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_22</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_22&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_17</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_17&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_23</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_23&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_18</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_18&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_24</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_24&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_19</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_19&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/ser_in_clock_4</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">4 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/ser_in_clock_3&gt; &lt;Inst_DvidGen/dvid_ser/ser_in_clock_2&gt; &lt;Inst_DvidGen/dvid_ser/ser_in_clock_1&gt; &lt;Inst_DvidGen/dvid_ser/ser_in_clock_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_1</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_1&gt; &lt;renderer/hpos_latched_1&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_2</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_2&gt; &lt;renderer/hpos_latched_2&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_3</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/h_count_3&gt; &lt;renderer/blink_timer_3&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_4</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_4&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_5&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">psramif/ADR_O_1</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;psramif/dbg_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_6</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_6&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">psramif/ADR_O_2</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;psramif/dbg_1&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_7</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_7&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/green_level_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">5 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/green_level_4&gt; &lt;Inst_DvidGen/green_level_3&gt; &lt;Inst_DvidGen/green_level_2&gt; &lt;Inst_DvidGen/green_level_1&gt; &lt;Inst_DvidGen/green_level_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">psramif/ADR_O_3</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;psramif/dbg_2&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_8</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_8&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_9</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;renderer/blink_timer_9&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_4</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_2&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">3 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_3&gt; &lt;Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_1&gt; &lt;Inst_DvidGen/dvid_ser/TMDS_encoder_blue/Encoded_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="3203" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">count32_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">reclone_top</arg>&gt; is the opposite to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;Inst_DvidGen/h_next_0&gt; </arg>
+</msg>
+
+</messages>

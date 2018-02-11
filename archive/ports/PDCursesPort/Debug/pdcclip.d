@@ -1,0 +1,1 @@
+pdcclip.o: ../pdcclip.c

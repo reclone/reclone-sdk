@@ -1,0 +1,2 @@
+vhdl isim_temp "../PsramInterface.vhd"
+vhdl isim_temp "../test/tb_PsramInterface.vhd"

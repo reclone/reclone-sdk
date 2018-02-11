@@ -1,0 +1,31 @@
+Command line:
+   tb_reclone_top_isim_beh.exe
+     -simmode  gui
+     -simrunnum  1
+     -socket  57944
+
+Tue Nov 01 00:14:51 2016
+
+
+ Elaboration Time: 0.125 sec
+
+ Current Memory Usage: 927.003 Meg
+
+ Total Signals          : 2150
+ Total Nets             : 103102
+ Total Signal Drivers   : 1511
+ Total Blocks           : 52
+ Total Primitive Blocks : 39
+ Total Processes        : 993
+ Total Traceable Variables  : 432
+ Total Scalar Nets and Variables : 109605
+Total Line Count : 5370
+Total Line Count : 5370
+Total Line Count : 5370
+
+ Total Simulation Time: 75 sec
+
+ Current Memory Usage: 927.003 Meg
+
+Tue Nov 01 00:19:31 2016
+

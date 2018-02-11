@@ -1,0 +1,29 @@
+Release 14.7 - par P.20131013 (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Sat Dec 03 13:42:18 2016
+
+All signals are completely routed.
+
+WARNING:ParHelpers:361 - There are 17 loadless signals in this design. This design will cause Bitgen to issue DRC
+   warnings.
+
+   FSMC_A<16>_IBUF
+   FSMC_A<17>_IBUF
+   FSMC_A<18>_IBUF
+   FSMC_A<19>_IBUF
+   FSMC_A<20>_IBUF
+   FSMC_A<21>_IBUF
+   FSMC_A<22>_IBUF
+   FSMC_CLK_IBUF
+   Inst_DvidGen/dvid_ser/out_fifo/Mram_mem1_RAMD_D1_O
+   Inst_DvidGen/dvid_ser/out_fifo/Mram_mem2_RAMD_D1_O
+   Inst_DvidGen/dvid_ser/out_fifo/Mram_mem3_RAMD_D1_O
+   Inst_DvidGen/dvid_ser/out_fifo/Mram_mem4_RAMD_D1_O
+   Inst_DvidGen/dvid_ser/out_fifo/Mram_mem5_RAMD_D1_O
+   Switches<0>_IBUF
+   Switches<1>_IBUF
+   Switches<2>_IBUF
+   Switches<3>_IBUF
+
+

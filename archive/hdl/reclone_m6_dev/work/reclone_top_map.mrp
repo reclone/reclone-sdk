@@ -1,0 +1,665 @@
+Release 14.7 Map P.20131013 (nt)
+Xilinx Mapping Report File for Design 'reclone_top'
+
+Design Information
+------------------
+Command Line   : map -filter
+C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/hdl/reclone_m6_dev/
+iseconfig/filter.filter -intstyle ise -p xc6slx25-ftg256-3 -w -logic_opt off -ol
+high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -detail
+-ir off -pr off -lc off -power off -o reclone_top_map.ncd reclone_top.ngd
+reclone_top.pcf 
+Target Device  : xc6slx25
+Target Package : ftg256
+Target Speed   : -3
+Mapper Version : spartan6 -- $Revision: 1.55 $
+Mapped Date    : Sat Dec 03 13:41:55 2016
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:    5
+Slice Logic Utilization:
+  Number of Slice Registers:                   297 out of  30,064    1%
+    Number used as Flip Flops:                 297
+    Number used as Latches:                      0
+    Number used as Latch-thrus:                  0
+    Number used as AND/OR logics:                0
+  Number of Slice LUTs:                        272 out of  15,032    1%
+    Number used as logic:                      246 out of  15,032    1%
+      Number using O6 output only:             121
+      Number using O5 output only:              76
+      Number using O5 and O6:                   49
+      Number used as ROM:                        0
+    Number used as Memory:                      20 out of   3,664    1%
+      Number used as Dual Port RAM:             20
+        Number using O6 output only:             0
+        Number using O5 output only:             0
+        Number using O5 and O6:                 20
+      Number used as Single Port RAM:            0
+      Number used as Shift Register:             0
+    Number used exclusively as route-thrus:      6
+      Number with same-slice register load:      1
+      Number with same-slice carry load:         5
+      Number with other load:                    0
+
+Slice Logic Distribution:
+  Number of occupied Slices:                   130 out of   3,758    3%
+  Number of MUXCYs used:                       112 out of   7,516    1%
+  Number of LUT Flip Flop pairs used:          398
+    Number with an unused Flip Flop:           124 out of     398   31%
+    Number with an unused LUT:                 126 out of     398   31%
+    Number of fully used LUT-FF pairs:         148 out of     398   37%
+    Number of unique control sets:              18
+    Number of slice register sites lost
+      to control set restrictions:              71 out of  30,064    1%
+
+  A LUT Flip Flop pair for this architecture represents one LUT paired with
+  one Flip Flop within a slice.  A control set is a unique combination of
+  clock, reset, set, and enable signals for a registered element.
+  The Slice Logic Distribution report is not meaningful if the design is
+  over-mapped for a non-slice resource or if Placement fails.
+
+IO Utilization:
+  Number of bonded IOBs:                        53 out of     186   28%
+    Number of LOCed IOBs:                       53 out of      53  100%
+    IOB Flip Flops:                              1
+    IOB Master Pads:                             4
+    IOB Slave Pads:                              4
+
+Specific Feature Utilization:
+  Number of RAMB16BWERs:                         6 out of      52   11%
+  Number of RAMB8BWERs:                          0 out of     104    0%
+  Number of BUFIO2/BUFIO2_2CLKs:                 0 out of      32    0%
+  Number of BUFIO2FB/BUFIO2FB_2CLKs:             0 out of      32    0%
+  Number of BUFG/BUFGMUXs:                       5 out of      16   31%
+    Number used as BUFGs:                        5
+    Number used as BUFGMUX:                      0
+  Number of DCM/DCM_CLKGENs:                     0 out of       4    0%
+  Number of ILOGIC2/ISERDES2s:                   1 out of     272    1%
+    Number used as ILOGIC2s:                     1
+    Number used as ISERDES2s:                    0
+  Number of IODELAY2/IODRP2/IODRP2_MCBs:         0 out of     272    0%
+  Number of OLOGIC2/OSERDES2s:                   8 out of     272    2%
+    Number used as OLOGIC2s:                     0
+    Number used as OSERDES2s:                    8
+  Number of BSCANs:                              0 out of       4    0%
+  Number of BUFHs:                               0 out of     160    0%
+  Number of BUFPLLs:                             1 out of       8   12%
+  Number of BUFPLL_MCBs:                         0 out of       4    0%
+  Number of DSP48A1s:                            1 out of      38    2%
+  Number of ICAPs:                               0 out of       1    0%
+  Number of MCBs:                                0 out of       2    0%
+  Number of PCILOGICSEs:                         0 out of       2    0%
+  Number of PLL_ADVs:                            2 out of       2  100%
+  Number of PMVs:                                0 out of       1    0%
+  Number of STARTUPs:                            0 out of       1    0%
+  Number of SUSPEND_SYNCs:                       0 out of       1    0%
+
+Average Fanout of Non-Clock Nets:                2.58
+
+Peak Memory Usage:  327 MB
+Total REAL time to MAP completion:  9 secs 
+Total CPU time to MAP completion:   8 secs 
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group and Partition Summary
+Section 10 - Timing Report
+Section 11 - Configuration String Information
+Section 12 - Control Set Information
+Section 13 - Utilization by Hierarchy
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+WARNING:PhysDesignRules:367 - The signal
+   <Inst_DvidGen/dvid_ser/out_fifo/Mram_mem5_RAMD_D1_O> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <Inst_DvidGen/dvid_ser/out_fifo/Mram_mem1_RAMD_D1_O> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <Inst_DvidGen/dvid_ser/out_fifo/Mram_mem2_RAMD_D1_O> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <Inst_DvidGen/dvid_ser/out_fifo/Mram_mem4_RAMD_D1_O> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <Inst_DvidGen/dvid_ser/out_fifo/Mram_mem3_RAMD_D1_O> is incomplete. The
+   signal does not drive any load pins in the design.
+
+Section 3 - Informational
+-------------------------
+INFO:LIT:243 - Logical network Switches<3>_IBUF has no load.
+INFO:LIT:243 - Logical network Switches<2>_IBUF has no load.
+INFO:LIT:243 - Logical network Switches<1>_IBUF has no load.
+INFO:LIT:243 - Logical network Switches<0>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<22>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<21>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<20>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<19>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<18>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<17>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_A<16>_IBUF has no load.
+INFO:LIT:243 - Logical network FSMC_CLK_IBUF has no load.
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:159 - Net Timing constraints on signal Clk32 are pushed forward
+   through input buffer.
+INFO:MapLib:159 - Net Timing constraints on signal Clk50 are pushed forward
+   through input buffer.
+INFO:MapLib:841 - Changing COMPENSATION attribute from SYSTEM_SYNCHRONOUS to
+   INTERNAL for PLL_ADV Inst_clocking/PLL_BASE_32m_to_25p6m/PLL_ADV.
+INFO:MapLib:841 - Changing COMPENSATION attribute from SYSTEM_SYNCHRONOUS to
+   INTERNAL for PLL_ADV Inst_clocking/PLL_BASE_inst/PLL_ADV.
+INFO:Pack:1716 - Initializing temperature to 85.000 Celsius. (default - Range:
+   0.000 to 85.000 Celsius)
+INFO:Pack:1720 - Initializing voltage to 1.140 Volts. (default - Range: 1.140 to
+   1.260 Volts)
+INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
+   (.mrp).
+INFO:Pack:1650 - Map created a placed design.
+
+Section 4 - Removed Logic Summary
+---------------------------------
+   1 block(s) removed
+   2 block(s) optimized away
+  82 Block(s) redundant
+
+Section 5 - Removed Logic
+-------------------------
+
+The trimmed logic report below shows the logic removed from your design due to
+sourceless or loadless signals, and VCC or ground connections.  If the removal
+of a signal or symbol results in the subsequent removal of an additional signal
+or symbol, the message explaining that second removal will be indented.  This
+indentation will be repeated as a chain of related logic is removed.
+
+To quickly locate the original cause for the removal of a chain of logic, look
+above the place where that logic is listed in the trimming report, then locate
+the lines that are least indented (begin at the leftmost edge).
+
+Loadless block "Inst_clocking/BUFG_pclockx10" (CKBUF) removed.
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		XST_GND
+VCC 		XST_VCC
+
+Redundant Block(s):
+TYPE 		BLOCK
+LUT1 		Mcount_count50_cy<1>_rt
+LUT1 		Mcount_count50_cy<2>_rt
+LUT1 		Mcount_count50_cy<3>_rt
+LUT1 		Mcount_count50_cy<4>_rt
+LUT1 		Mcount_count50_cy<5>_rt
+LUT1 		Mcount_count50_cy<6>_rt
+LUT1 		Mcount_count50_cy<7>_rt
+LUT1 		Mcount_count50_cy<8>_rt
+LUT1 		Mcount_count50_cy<9>_rt
+LUT1 		Mcount_count50_cy<10>_rt
+LUT1 		Mcount_count50_cy<11>_rt
+LUT1 		Mcount_count50_cy<12>_rt
+LUT1 		Mcount_count50_cy<13>_rt
+LUT1 		Mcount_count50_cy<14>_rt
+LUT1 		Mcount_count50_cy<15>_rt
+LUT1 		Mcount_count50_cy<16>_rt
+LUT1 		Mcount_count50_cy<17>_rt
+LUT1 		Mcount_count50_cy<18>_rt
+LUT1 		Mcount_count50_cy<19>_rt
+LUT1 		Mcount_count50_cy<20>_rt
+LUT1 		Mcount_count50_cy<21>_rt
+LUT1 		Mcount_count50_cy<22>_rt
+LUT1 		Mcount_count50_cy<23>_rt
+LUT1 		Mcount_count50_cy<24>_rt
+LUT1 		Mcount_count32_cy<1>_rt
+LUT1 		Mcount_count32_cy<2>_rt
+LUT1 		Mcount_count32_cy<3>_rt
+LUT1 		Mcount_count32_cy<4>_rt
+LUT1 		Mcount_count32_cy<5>_rt
+LUT1 		Mcount_count32_cy<6>_rt
+LUT1 		Mcount_count32_cy<7>_rt
+LUT1 		Mcount_count32_cy<8>_rt
+LUT1 		Mcount_count32_cy<9>_rt
+LUT1 		Mcount_count32_cy<10>_rt
+LUT1 		Mcount_count32_cy<11>_rt
+LUT1 		Mcount_count32_cy<12>_rt
+LUT1 		Mcount_count32_cy<13>_rt
+LUT1 		Mcount_count32_cy<14>_rt
+LUT1 		Mcount_count32_cy<15>_rt
+LUT1 		Mcount_count32_cy<16>_rt
+LUT1 		Mcount_count32_cy<17>_rt
+LUT1 		Mcount_count32_cy<18>_rt
+LUT1 		Mcount_count32_cy<19>_rt
+LUT1 		Mcount_count32_cy<20>_rt
+LUT1 		Mcount_count32_cy<21>_rt
+LUT1 		Mcount_count32_cy<22>_rt
+LUT1 		Mcount_count32_cy<23>_rt
+LUT1 		Mcount_count32_cy<24>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<10>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<9>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<8>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<7>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<6>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<5>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<4>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<3>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<2>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_cy<1>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<9>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<8>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<7>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<6>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<5>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<4>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<3>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<2>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<1>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<10>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<9>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<8>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<7>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<6>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<5>_rt
+LUT1 		renderer/Maddsub_n0056_Madd_cy<4>_rt
+LUT1 		renderer/Maddsub_n0056_Madd1_cy<9>_rt
+LUT1 		Mcount_count50_xor<25>_rt
+LUT1 		Mcount_count32_xor<25>_rt
+LUT1 		Inst_DvidGen/Mcount_v_next_xor<11>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_xor<10>_rt
+LUT1 		Inst_DvidGen/Mcount_h_next_cy<0>_rt
+INV 		psramif/RST_I_FSMC_NE_AND_240_o_norst1_INV_0
+INV 		renderer_PixelClock_inv_INV_0
+
+Section 6 - IOB Properties
+--------------------------
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard          | Diff  | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |                      | Term  | Strength | Rate |              |          | Delay    |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Clk32                              | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| Clk50                              | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<16>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<17>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<18>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<19>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<20>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<21>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_A<22>                         | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_CLK                           | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| FSMC_D<0>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<1>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<2>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST | IFF          |          |          |
+| FSMC_D<3>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<4>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<5>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<6>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<7>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<8>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<9>                          | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<10>                         | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<11>                         | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<12>                         | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<13>                         | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<14>                         | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_D<15>                         | IOB              | BIDIR     | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_NBL<0>                        | IOB              | INPUT     | LVCMOS33             |       |          |      |              | PULLUP   |          |
+| FSMC_NBL<1>                        | IOB              | INPUT     | LVCMOS33             |       |          |      |              | PULLUP   |          |
+| FSMC_NE1_NCE2                      | IOB              | INPUT     | LVCMOS33             |       |          |      |              | PULLUP   |          |
+| FSMC_NL                            | IOB              | INPUT     | LVCMOS33             |       |          |      |              | PULLUP   |          |
+| FSMC_NOE                           | IOB              | INPUT     | LVCMOS33             |       |          |      |              | PULLUP   |          |
+| FSMC_NWAIT                         | IOB              | OUTPUT    | LVCMOS33             |       | 12       | FAST |              |          |          |
+| FSMC_NWE                           | IOB              | INPUT     | LVCMOS33             |       |          |      |              | PULLUP   |          |
+| LEDs<0>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<1>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<2>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<3>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<4>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<5>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<6>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| LEDs<7>                            | IOB              | OUTPUT    | LVTTL                |       | 8        | SLOW |              |          |          |
+| Switches<0>                        | IOB              | INPUT     | LVTTL                |       |          |      |              | PULLUP   |          |
+| Switches<1>                        | IOB              | INPUT     | LVTTL                |       |          |      |              | PULLUP   |          |
+| Switches<2>                        | IOB              | INPUT     | LVTTL                |       |          |      |              | PULLUP   |          |
+| Switches<3>                        | IOB              | INPUT     | LVTTL                |       |          |      |              | PULLUP   |          |
+| TMDS_Out_N<0>                      | IOBS             | OUTPUT    | TMDS_33              |       |          |      |              |          |          |
+| TMDS_Out_N<1>                      | IOBS             | OUTPUT    | TMDS_33              |       |          |      |              |          |          |
+| TMDS_Out_N<2>                      | IOBS             | OUTPUT    | TMDS_33              |       |          |      |              |          |          |
+| TMDS_Out_N<3>                      | IOBS             | OUTPUT    | TMDS_33              |       |          |      |              |          |          |
+| TMDS_Out_P<0>                      | IOBM             | OUTPUT    | TMDS_33              |       |          |      | OSERDES      |          |          |
+| TMDS_Out_P<1>                      | IOBM             | OUTPUT    | TMDS_33              |       |          |      | OSERDES      |          |          |
+| TMDS_Out_P<2>                      | IOBM             | OUTPUT    | TMDS_33              |       |          |      | OSERDES      |          |          |
+| TMDS_Out_P<3>                      | IOBM             | OUTPUT    | TMDS_33              |       |          |      | OSERDES      |          |          |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group and Partition Summary
+--------------------------------------------
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Area Group Information
+----------------------
+
+  No area groups were found in this design.
+
+----------------------
+
+Section 10 - Timing Report
+--------------------------
+A logic-level (pre-route) timing report can be generated by using Xilinx static
+timing analysis tools, Timing Analyzer (GUI) or TRCE (command line), with the
+mapped NCD and PCF files. Please note that this timing report will be generated
+using estimated delay information. For accurate numbers, please generate a
+timing report with the post Place and Route NCD file.
+
+For more information about the Timing Analyzer, consult the Xilinx Timing
+Analyzer Reference Manual; for more information about TRCE, consult the Xilinx
+Command Line Tools User Guide "TRACE" chapter.
+
+Section 11 - Configuration String Details
+-----------------------------------------
+PLL_ADV "Inst_clocking/PLL_BASE_32m_to_25p6m/PLL_ADV":
+BANDWIDTH:OPTIMIZED
+CLK_FEEDBACK:CLKFBOUT
+COMPENSATION:INTERNAL
+PLL_ADD_LEAKAGE:2
+PLL_AVDD_COMP_SET:2
+PLL_CLAMP_BYPASS:FALSE
+PLL_CLAMP_REF_SEL:1
+PLL_CLK0MX:0
+PLL_CLK1MX:0
+PLL_CLK2MX:0
+PLL_CLK3MX:0
+PLL_CLK4MX:0
+PLL_CLK5MX:0
+PLL_CLKBURST_CNT:0
+PLL_CLKBURST_ENABLE:TRUE
+PLL_CLKCNTRL:0
+PLL_CLKFBMX:0
+PLL_CLKFBOUT2_EDGE:TRUE
+PLL_CLKFBOUT2_NOCOUNT:TRUE
+PLL_CLKFBOUT_EDGE:TRUE
+PLL_CLKFBOUT_EN:FALSE
+PLL_CLKFBOUT_NOCOUNT:TRUE
+PLL_CLKOUT0_EDGE:TRUE
+PLL_CLKOUT0_EN:FALSE
+PLL_CLKOUT0_NOCOUNT:TRUE
+PLL_CLKOUT1_EDGE:TRUE
+PLL_CLKOUT1_EN:FALSE
+PLL_CLKOUT1_NOCOUNT:TRUE
+PLL_CLKOUT2_EDGE:TRUE
+PLL_CLKOUT2_EN:FALSE
+PLL_CLKOUT2_NOCOUNT:TRUE
+PLL_CLKOUT3_EDGE:TRUE
+PLL_CLKOUT3_EN:FALSE
+PLL_CLKOUT3_NOCOUNT:TRUE
+PLL_CLKOUT4_EDGE:TRUE
+PLL_CLKOUT4_EN:FALSE
+PLL_CLKOUT4_NOCOUNT:TRUE
+PLL_CLKOUT5_EDGE:TRUE
+PLL_CLKOUT5_EN:FALSE
+PLL_CLKOUT5_NOCOUNT:TRUE
+PLL_CLK_LOST_DETECT:FALSE
+PLL_CP:1
+PLL_CP_BIAS_TRIP_SHIFT:TRUE
+PLL_CP_REPL:1
+PLL_CP_RES:0
+PLL_DIRECT_PATH_CNTRL:TRUE
+PLL_DIVCLK_EDGE:TRUE
+PLL_DIVCLK_NOCOUNT:TRUE
+PLL_DVDD_COMP_SET:2
+PLL_EN:FALSE
+PLL_EN_DLY:TRUE
+PLL_EN_LEAKAGE:2
+PLL_EN_TCLK0:TRUE
+PLL_EN_TCLK1:TRUE
+PLL_EN_TCLK2:TRUE
+PLL_EN_TCLK3:TRUE
+PLL_EN_VCO0:FALSE
+PLL_EN_VCO1:FALSE
+PLL_EN_VCO2:FALSE
+PLL_EN_VCO3:FALSE
+PLL_EN_VCO4:FALSE
+PLL_EN_VCO5:FALSE
+PLL_EN_VCO6:FALSE
+PLL_EN_VCO7:FALSE
+PLL_EN_VCO_DIV1:FALSE
+PLL_EN_VCO_DIV6:TRUE
+PLL_INTFB:0
+PLL_IO_CLKSRC:0
+PLL_LFHF:3
+PLL_LOCK_FB_DLY:3
+PLL_LOCK_REF_DLY:5
+PLL_MAN_LF_EN:TRUE
+PLL_NBTI_EN:TRUE
+PLL_PFD_CNTRL:8
+PLL_PFD_DLY:1
+PLL_PWRD_CFG:FALSE
+PLL_REG_INPUT:TRUE
+PLL_RES:1
+PLL_SEL_SLIPD:FALSE
+PLL_SKEW_CNTRL:0
+PLL_TEST_IN_WINDOW:FALSE
+PLL_VDD_SEL:0
+PLL_VLFHIGH_DIS:TRUE
+CLKFBOUT_MULT = 16
+CLKFBOUT_PHASE = 0.0
+CLKIN1_PERIOD = 31.25
+CLKIN2_PERIOD = 31.25
+CLKOUT0_DIVIDE = 20
+CLKOUT0_DUTY_CYCLE = 0.5
+CLKOUT0_PHASE = 0.0
+CLKOUT1_DIVIDE = 1
+CLKOUT1_DUTY_CYCLE = 0.5
+CLKOUT1_PHASE = 0.0
+CLKOUT2_DIVIDE = 1
+CLKOUT2_DUTY_CYCLE = 0.5
+CLKOUT2_PHASE = 0.0
+CLKOUT3_DIVIDE = 1
+CLKOUT3_DUTY_CYCLE = 0.5
+CLKOUT3_PHASE = 0.0
+CLKOUT4_DIVIDE = 1
+CLKOUT4_DUTY_CYCLE = 0.5
+CLKOUT4_PHASE = 0.0
+CLKOUT5_DIVIDE = 1
+CLKOUT5_DUTY_CYCLE = 0.5
+CLKOUT5_PHASE = 0.0
+DIVCLK_DIVIDE = 1
+REF_JITTER = 0.1
+
+
+PLL_ADV "Inst_clocking/PLL_BASE_inst/PLL_ADV":
+BANDWIDTH:OPTIMIZED
+CLK_FEEDBACK:CLKFBOUT
+COMPENSATION:INTERNAL
+PLL_ADD_LEAKAGE:2
+PLL_AVDD_COMP_SET:2
+PLL_CLAMP_BYPASS:FALSE
+PLL_CLAMP_REF_SEL:1
+PLL_CLK0MX:0
+PLL_CLK1MX:0
+PLL_CLK2MX:0
+PLL_CLK3MX:0
+PLL_CLK4MX:0
+PLL_CLK5MX:0
+PLL_CLKBURST_CNT:0
+PLL_CLKBURST_ENABLE:TRUE
+PLL_CLKCNTRL:0
+PLL_CLKFBMX:0
+PLL_CLKFBOUT2_EDGE:TRUE
+PLL_CLKFBOUT2_NOCOUNT:TRUE
+PLL_CLKFBOUT_EDGE:TRUE
+PLL_CLKFBOUT_EN:FALSE
+PLL_CLKFBOUT_NOCOUNT:TRUE
+PLL_CLKOUT0_EDGE:TRUE
+PLL_CLKOUT0_EN:FALSE
+PLL_CLKOUT0_NOCOUNT:TRUE
+PLL_CLKOUT1_EDGE:TRUE
+PLL_CLKOUT1_EN:FALSE
+PLL_CLKOUT1_NOCOUNT:TRUE
+PLL_CLKOUT2_EDGE:TRUE
+PLL_CLKOUT2_EN:FALSE
+PLL_CLKOUT2_NOCOUNT:TRUE
+PLL_CLKOUT3_EDGE:TRUE
+PLL_CLKOUT3_EN:FALSE
+PLL_CLKOUT3_NOCOUNT:TRUE
+PLL_CLKOUT4_EDGE:TRUE
+PLL_CLKOUT4_EN:FALSE
+PLL_CLKOUT4_NOCOUNT:TRUE
+PLL_CLKOUT5_EDGE:TRUE
+PLL_CLKOUT5_EN:FALSE
+PLL_CLKOUT5_NOCOUNT:TRUE
+PLL_CLK_LOST_DETECT:FALSE
+PLL_CP:1
+PLL_CP_BIAS_TRIP_SHIFT:TRUE
+PLL_CP_REPL:1
+PLL_CP_RES:0
+PLL_DIRECT_PATH_CNTRL:TRUE
+PLL_DIVCLK_EDGE:TRUE
+PLL_DIVCLK_NOCOUNT:TRUE
+PLL_DVDD_COMP_SET:2
+PLL_EN:FALSE
+PLL_EN_DLY:TRUE
+PLL_EN_LEAKAGE:2
+PLL_EN_TCLK0:TRUE
+PLL_EN_TCLK1:TRUE
+PLL_EN_TCLK2:TRUE
+PLL_EN_TCLK3:TRUE
+PLL_EN_VCO0:FALSE
+PLL_EN_VCO1:FALSE
+PLL_EN_VCO2:FALSE
+PLL_EN_VCO3:FALSE
+PLL_EN_VCO4:FALSE
+PLL_EN_VCO5:FALSE
+PLL_EN_VCO6:FALSE
+PLL_EN_VCO7:FALSE
+PLL_EN_VCO_DIV1:FALSE
+PLL_EN_VCO_DIV6:TRUE
+PLL_INTFB:0
+PLL_IO_CLKSRC:0
+PLL_LFHF:3
+PLL_LOCK_FB_DLY:3
+PLL_LOCK_REF_DLY:5
+PLL_MAN_LF_EN:TRUE
+PLL_NBTI_EN:TRUE
+PLL_PFD_CNTRL:8
+PLL_PFD_DLY:1
+PLL_PWRD_CFG:FALSE
+PLL_REG_INPUT:TRUE
+PLL_RES:1
+PLL_SEL_SLIPD:FALSE
+PLL_SKEW_CNTRL:0
+PLL_TEST_IN_WINDOW:FALSE
+PLL_VDD_SEL:0
+PLL_VLFHIGH_DIS:TRUE
+CLKFBOUT_MULT = 29
+CLKFBOUT_PHASE = 0.0
+CLKIN1_PERIOD = 39.0625
+CLKIN2_PERIOD = 39.0625
+CLKOUT0_DIVIDE = 1
+CLKOUT0_DUTY_CYCLE = 0.5
+CLKOUT0_PHASE = 0.0
+CLKOUT1_DIVIDE = 5
+CLKOUT1_DUTY_CYCLE = 0.5
+CLKOUT1_PHASE = 0.0
+CLKOUT2_DIVIDE = 10
+CLKOUT2_DUTY_CYCLE = 0.5
+CLKOUT2_PHASE = 0.0
+CLKOUT3_DIVIDE = 1
+CLKOUT3_DUTY_CYCLE = 0.5
+CLKOUT3_PHASE = 0.0
+CLKOUT4_DIVIDE = 1
+CLKOUT4_DUTY_CYCLE = 0.5
+CLKOUT4_PHASE = 0.0
+CLKOUT5_DIVIDE = 1
+CLKOUT5_DUTY_CYCLE = 0.5
+CLKOUT5_PHASE = 0.0
+DIVCLK_DIVIDE = 1
+REF_JITTER = 0.1
+
+
+
+Section 12 - Control Set Information
+------------------------------------
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Clock Signal      | Reset Signal                                | Set Signal | Enable Signal                                        | Slice Load Count | Bel Load Count |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Clk50_BUFGP       |                                             |            |                                                      | 8                | 27             |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| data_load_clock_t |                                             |            |                                                      | 2                | 2              |
+| data_load_clock_t |                                             |            | Inst_DvidGen/dvid_ser/not_ready_yet_inv              | 4                | 16             |
+| data_load_clock_t |                                             |            | Inst_DvidGen/dvid_ser/out_fifo/next_read_address_en  | 12               | 37             |
+| data_load_clock_t | Inst_DvidGen/dvid_ser/out_fifo/preset_empty |            |                                                      | 1                | 1              |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| pixel_clock_t     |                                             |            |                                                      | 31               | 97             |
+| pixel_clock_t     |                                             |            | FSMC_NE1_NCE2_inv                                    | 2                | 2              |
+| pixel_clock_t     |                                             |            | Inst_DvidGen/dvid_ser/out_fifo/next_write_address_en | 7                | 47             |
+| pixel_clock_t     |                                             |            | Inst_DvidGen/h_next[11]_GND_9_o_equal_16_o           | 1                | 4              |
+| pixel_clock_t     |                                             |            | psramif/_n0118_inv                                   | 7                | 28             |
+| pixel_clock_t     |                                             |            | psramif/_n0123_inv                                   | 4                | 16             |
+| pixel_clock_t     |                                             |            | psramif/_n0125_inv                                   | 4                | 14             |
+| pixel_clock_t     | FSMC_NE1_NCE2_IBUF                          |            |                                                      | 5                | 6              |
+| pixel_clock_t     | Inst_DvidGen/GND_9_o_GND_9_o_OR_1_o         |            |                                                      | 3                | 9              |
+| pixel_clock_t     | Inst_DvidGen/_n0071                         |            | Inst_DvidGen/h_next[11]_GND_9_o_equal_16_o           | 3                | 8              |
+| pixel_clock_t     | Inst_DvidGen/blank                          |            |                                                      | 7                | 12             |
+| pixel_clock_t     | Inst_DvidGen/dvid_ser/out_fifo/preset_full  |            |                                                      | 1                | 1              |
+| pixel_clock_t     | Inst_DvidGen/h_next[11]_GND_9_o_equal_16_o  |            |                                                      | 3                | 10             |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 13 - Utilization by Hierarchy
+-------------------------------------
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Module                            | Partition | Slices*       | Slice Reg     | LUTs          | LUTRAM        | BRAM/FIFO | DSP48A1 | BUFG  | BUFIO | BUFR  | DCM   | PLL_ADV   | Full Hierarchical Name                                      |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| reclone_top/                      |           | 17/143        | 54/297        | 53/272        | 0/20          | 0/6       | 0/1     | 1/5   | 0/0   | 0/0   | 0/0   | 0/2       | reclone_top                                                 |
+| +Inst_DvidGen                     |           | 20/70         | 53/148        | 39/141        | 0/20          | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen                                    |
+| ++dvid_ser                        |           | 5/50          | 17/95         | 10/102        | 0/20          | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser                           |
+| +++TMDS_encoder_blue              |           | 6/6           | 10/10         | 19/19         | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/TMDS_encoder_blue         |
+| +++TMDS_encoder_green             |           | 5/5           | 10/10         | 19/19         | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/TMDS_encoder_green        |
+| +++TMDS_encoder_red               |           | 6/6           | 10/10         | 19/19         | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/TMDS_encoder_red          |
+| +++out_fifo                       |           | 23/28         | 34/48         | 29/35         | 20/20         | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/out_fifo                  |
+| ++++GrayCounter_pRd               |           | 3/3           | 7/7           | 3/3           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd  |
+| ++++GrayCounter_pWr               |           | 2/2           | 7/7           | 3/3           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pWr  |
+| +++output_serializer_b            |           | 0/0           | 0/0           | 0/0           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/output_serializer_b       |
+| +++output_serializer_c            |           | 0/0           | 0/0           | 0/0           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/output_serializer_c       |
+| +++output_serializer_g            |           | 0/0           | 0/0           | 0/0           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/output_serializer_g       |
+| +++output_serializer_r            |           | 0/0           | 0/0           | 0/0           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/Inst_DvidGen/dvid_ser/output_serializer_r       |
+| +Inst_clocking                    |           | 0/0           | 0/0           | 0/0           | 0/0           | 0/0       | 0/0     | 4/4   | 0/0   | 0/0   | 0/0   | 2/2       | reclone_top/Inst_clocking                                   |
+| +psramif                          |           | 28/28         | 82/82         | 6/6           | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/psramif                                         |
+| +renderer                         |           | 18/26         | 12/12         | 50/71         | 0/0           | 0/0       | 1/1     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/renderer                                        |
+| ++vpos_latched[11]_PWR_25_o_mod_8 |           | 8/8           | 0/0           | 21/21         | 0/0           | 0/0       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/renderer/vpos_latched[11]_PWR_25_o_mod_8        |
+| +renderer_character_rom           |           | 0/0           | 0/0           | 0/0           | 0/0           | 2/2       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/renderer_character_rom                          |
+| +text_buffer                      |           | 2/2           | 1/1           | 1/1           | 0/0           | 4/4       | 0/0     | 0/0   | 0/0   | 0/0   | 0/0   | 0/0       | reclone_top/text_buffer                                     |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+* Slices can be packed with basic elements from multiple hierarchies.
+  Therefore, a slice will be counted in every hierarchical module
+  that each of its packed basic elements belong to.
+** For each column, there are two numbers reported <A>/<B>.
+   <A> is the number of elements that belong to that specific hierarchical module.
+   <B> is the total number of elements from that hierarchical module and any lower level
+   hierarchical modules below.
+*** The LUTRAM column counts all LUTs used as memory including RAM, ROM, and shift registers.

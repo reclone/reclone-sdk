@@ -1,0 +1,2 @@
+vhdl work "../PsramInterface.vhd"
+vhdl work "../test/tb_PsramInterface.vhd"

@@ -1,0 +1,44 @@
+#:C9     
+#Xilinx FPGA Editor Command Log File
+#Editor Version:
+#:V   NT M2.1 P.20131013
+#Current Working Directory:
+#:D   C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\work
+#Date/Time:
+#:T   Fri Sep 16 19:27:42 2016
+#------------------------------
+	#Reading reclone_top.ncd...
+	#Loading device for application Rf_Device from file '6slx25.nph' in environment C:\Xilinx\14.7\ISE_DS\ISE\.
+	#   "reclone_top" is an NCD, version 3.2, device xc6slx25, package ftg256, speed -3
+	#Design creation date: 2016.09.16.22.27.24
+	#Building chip graphics...
+	#Loading speed info...
+	#1
+setattr main edit-mode no-logic-changes
+	#2
+select -k comp 'count50<19>'
+	#3
+unselect comp 'count50<19>'
+	#4
+select -k comp 'Inst_clocking/BUFG_clk25p6m'
+	#5
+unselect comp 'Inst_clocking/BUFG_clk25p6m'
+	#6
+select -k comp 'TMDS_Out_N<0>'
+	#7
+unselect comp 'TMDS_Out_N<0>'
+	#8
+select -k comp 'TMDS_Out_N<1>'
+	#9
+unselect comp 'TMDS_Out_N<1>'
+	#10
+select -k comp 'TMDS_Out_N<2>'
+	#11
+unselect comp 'TMDS_Out_N<2>'
+	#12
+select -k comp 'TMDS_Out_N<3>'
+	#13
+unselect -all
+	#14
+select comp 'Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd/GrayCount<3>'
+	#comp "Inst_DvidGen/dvid_ser/out_fifo/GrayCounter_pRd/GrayCount<3>",  site "SLICE_X9Y60",  type = SLICEX  (RPM grid X31Y240)

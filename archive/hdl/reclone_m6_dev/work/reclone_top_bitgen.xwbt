@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\work\reclone_top.ncd
+OUTFILE=C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\work\reclone_top.bit
+FAMILY=Spartan6
+PART=xc6slx25-3ftg256
+WORKINGDIR=C:\Users\Jeff\Documents\svn\reclone-sdk.git\branches\develop\hdl\reclone_m6_dev\work
+LICENSE=WebPack
+USER_INFO=211041960_0_0_533
