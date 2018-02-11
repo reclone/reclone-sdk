@@ -1,5 +1,7 @@
 project (RecloneCores)
 
+include(cmake/gtest.cmake)
+
 # Set default VERILATOR_ROOT (at least works in Ubuntu)
 set(VERILATOR_ROOT /usr/share/verilator)
 
@@ -8,3 +10,6 @@ set(VK_CPPFLAGS -MMD -I${VERILATOR_ROOT}/include -I${VERILATOR_ROOT}/include/vlt
 
 # Overall C++ compile flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Wfloat-conversion -Wlogical-op -Werror")
+
+# Allow use of add_test in subdirs
+enable_testing()
