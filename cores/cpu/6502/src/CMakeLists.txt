@@ -12,3 +12,5 @@ add_custom_command (
 )
 
 add_library (cpu6502 STATIC Vtop_6502.cpp Vtop_6502__Syms.cpp)
+
+target_compile_options(cpu6502 PRIVATE ${VK_CPPFLAGS})
