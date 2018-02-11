@@ -1,6 +1,6 @@
 project (RecloneCores)
 
-# Dirty hack to set default VERILATOR_ROOT
+# Set default VERILATOR_ROOT (at least works in Ubuntu)
 set(VERILATOR_ROOT /usr/share/verilator)
 
 # Verilated code compile flags normally in verilated.mk
