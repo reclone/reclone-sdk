@@ -1,0 +1,1 @@
+add_library(verilated STATIC verilated_inc.cpp)

@@ -4,3 +4,4 @@ include(cmake/project.cmake)
 
 add_subdirectory (cpu)
 add_subdirectory (gtest)
+add_subdirectory (verilator)
