@@ -26,10 +26,12 @@ add_dependencies(gtest gtest_external)
 if (MSVC)
   set_target_properties(gtest PROPERTIES
       "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/Debug/gtestd.lib"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
   )
 else()
   set_target_properties(gtest PROPERTIES
       "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest.a"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
   )
 endif (MSVC)
 
@@ -41,10 +43,12 @@ add_dependencies(gtest_main gtest_external)
 if (MSVC)
   set_target_properties(gtest_main PROPERTIES
       "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/Debug/gtest_maind.lib"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
   )
 else()
   set_target_properties(gtest_main PROPERTIES
       "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest_main.a"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
   )
 endif (MSVC)
 
@@ -53,18 +57,34 @@ add_library(gmock IMPORTED STATIC GLOBAL)
 add_dependencies(gmock gtest_external)
 
 # Set gmock properties
-set_target_properties(gmock PROPERTIES
-    "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock.a"
-)
+if (MSVC)
+  set_target_properties(gmock PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/Debug/gmockd.lib"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+  )
+else()
+  set_target_properties(gmock PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock.a"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+  )
+endif (MSVC)
 
 # Create a gmock_main target to be used as a dependency by test programs
 add_library(gmock_main IMPORTED STATIC GLOBAL)
 add_dependencies(gmock_main gtest_external)
 
 # Set gmock_main properties
-set_target_properties(gmock_main PROPERTIES
-    "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock_main.a"
-)
+if (MSVC)
+  set_target_properties(gmock PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/Debug/gmock_maind.lib"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+  )
+else()
+  set_target_properties(gmock PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock_main.a"
+      "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+  )
+endif (MSVC)
 
 # Add public include directories
 include_directories("${source_dir}/googletest/include"
