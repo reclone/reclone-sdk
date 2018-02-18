@@ -15,6 +15,12 @@ add_library(perfect6502 IMPORTED STATIC GLOBAL)
 add_dependencies(perfect6502 perfect6502_external)
 
 # Set perfect6502 properties
-set_target_properties(perfect6502 PROPERTIES
-    "IMPORTED_LOCATION" "${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external/src/perfect6502_external-build/libperfect6502.a"
-)
+if (MSVC)
+  set_target_properties(perfect6502 PROPERTIES
+      "IMPORTED_LOCATION" "${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external/src/perfect6502_external-build/Debug/perfect6502.lib"
+  )
+else()
+  set_target_properties(perfect6502 PROPERTIES
+      "IMPORTED_LOCATION" "${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external/src/perfect6502_external-build/libperfect6502.a"
+  )
+endif(MSVC)

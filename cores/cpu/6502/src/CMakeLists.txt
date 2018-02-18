@@ -8,7 +8,7 @@ add_custom_command (
           Vtop_6502__ver.d
           Vtop_6502__verFiles.dat
           Vtop_6502_classes.mk
-  COMMAND verilator -Wall -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc ${CMAKE_CURRENT_SOURCE_DIR}/top_6502.v
+  COMMAND perl ${VERILATOR} -Wall -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc ${CMAKE_CURRENT_SOURCE_DIR}/top_6502.v
 )
 
 add_library (cpu6502 STATIC Vtop_6502.cpp Vtop_6502__Syms.cpp)

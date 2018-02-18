@@ -23,20 +23,30 @@ add_library(gtest IMPORTED STATIC GLOBAL)
 add_dependencies(gtest gtest_external)
 
 # Set gtest properties
-set_target_properties(gtest PROPERTIES
-    "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest.a"
-    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
-)
+if (MSVC)
+  set_target_properties(gtest PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/Debug/gtestd.lib"
+  )
+else()
+  set_target_properties(gtest PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest.a"
+  )
+endif (MSVC)
 
 # Create a gtest_main target to be used as a dependency by test programs
 add_library(gtest_main IMPORTED STATIC GLOBAL)
 add_dependencies(gtest_main gtest_external)
 
 # Set gtest_main properties
-set_target_properties(gtest_main PROPERTIES
-    "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest_main.a"
-    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
-)
+if (MSVC)
+  set_target_properties(gtest_main PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/Debug/gtest_maind.lib"
+  )
+else()
+  set_target_properties(gtest_main PROPERTIES
+      "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest_main.a"
+  )
+endif (MSVC)
 
 # Create a gmock target to be used as a dependency by test programs
 add_library(gmock IMPORTED STATIC GLOBAL)
@@ -45,7 +55,6 @@ add_dependencies(gmock gtest_external)
 # Set gmock properties
 set_target_properties(gmock PROPERTIES
     "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock.a"
-    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
 )
 
 # Create a gmock_main target to be used as a dependency by test programs
@@ -55,7 +64,6 @@ add_dependencies(gmock_main gtest_external)
 # Set gmock_main properties
 set_target_properties(gmock_main PROPERTIES
     "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock_main.a"
-    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
 )
 
 # Add public include directories
