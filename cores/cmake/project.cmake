@@ -22,8 +22,9 @@ endif(MSVC)
 
 # Overall C++ compile flags
 if (MSVC)
-  set(CMAKE_CXX_FLAGS "/W3 /GR /EHsc /WX /MT")
+  set(CMAKE_CXX_FLAGS "/W3 /GR /EHsc /WX")
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
   add_definitions(/DWIN32 /D_WINDOWS)
 else()
   set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wfloat-conversion -Wlogical-op -Werror -faligned-new")
