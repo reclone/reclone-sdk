@@ -1,17 +1,22 @@
 
 add_custom_command (
-  OUTPUT  Vtop_6502.cpp
-          Vtop_6502.h
-          Vtop_6502.mk
-          Vtop_6502__Syms.cpp
-          Vtop_6502__Syms.h
-          Vtop_6502__ver.d
-          Vtop_6502__verFiles.dat
-          Vtop_6502_classes.mk
-  COMMAND perl ${VERILATOR} -Wall -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc ${CMAKE_CURRENT_SOURCE_DIR}/top_6502.v
+  OUTPUT  Vcpu_6502.cpp
+          Vcpu_6502.h
+          Vcpu_6502__Syms.cpp
+          Vcpu_6502__Syms.h
+          VRegister.cpp
+          VRegister.h
+          VRegister__Syms.cpp
+          VRegister__Syms.h
+  COMMAND perl ${VERILATOR} -Wall -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cpu_6502.v
+    ${PROJECT_SOURCE_DIR}/memory/register/src/Register.v
 )
 
-add_library (cpu6502 STATIC Vtop_6502.cpp Vtop_6502__Syms.cpp top_6502.v)
+add_library (cpu6502 STATIC
+    cpu_6502.v Vcpu_6502.cpp Vcpu_6502__Syms.cpp
+    ${PROJECT_SOURCE_DIR}/memory/register/src/Register.v VRegister.cpp VRegister__Syms.cpp
+)
 
 target_compile_options(cpu6502 PRIVATE ${VK_CPPFLAGS})
 
