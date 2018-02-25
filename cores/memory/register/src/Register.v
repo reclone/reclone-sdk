@@ -31,7 +31,7 @@
 
 module Register # (parameter SIZE = 8)
 (
-    output reg [SIZE-1:0] q,
+    output reg [SIZE-1:0] q = 0,
     input      [SIZE-1:0] d,
     input      clock,
     input      write,

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Vcpu_6502.h"
+#include "VCpu6502.h"
 
 class ImpliedAddressingTests : public ::testing::Test
 {
@@ -11,7 +11,7 @@ class ImpliedAddressingTests : public ::testing::Test
         }
         
     protected:
-        Vcpu_6502 _uut;
+        VCpu6502 _uut;
 };
 
 TEST_F(ImpliedAddressingTests, AssertPasses)

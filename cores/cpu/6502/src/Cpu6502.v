@@ -1,5 +1,5 @@
 //
-// cpu_6502 - Top-level module for a 6502 work-alike CPU
+// Cpu6502 - Top-level module for a 6502 work-alike CPU
 //
 // This top-level module is responsible for performing memory and register accesses,
 // handling interrupts and reset, and integrating the lower-level ALU, addressing, and
@@ -38,15 +38,46 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-module cpu_6502
+module Cpu6502
 (
-    output reg [7:0] q,
-    input      [7:0] d,
-    input      clock,
-    input      write,
-    input      reset
+    input                       clock,
+    //input                       clockEnable,
+    input                       reset,
+    
+    //output [15:0]               address;
+    //output [7:0]                dataIn;
+    
+    input                       write,
+    input   [2:0]               writeAddr,
+    input   [7:0]               writeData,
+
+    input   [2:0]               readAddrA,
+    output  [7:0]               readDataA,
+    
+    input   [2:0]               readAddrB,
+    output  [7:0]               readDataB
 );
 
-Register regA(q, d, clock, write, reset);
+//reg [15:0] programCounter = 16'hE000;
+//reg [7:0] opcode = 0;
+//wire fetchOpcode;
 
-endmodule 
+RegisterFile2Read1Write #(.REG_WIDTH(8), .ADDR_WIDTH(3)) 
+    regFile(clock, reset, write, writeAddr, writeData, readAddrA, readDataA, readAddrB, readDataB);
+
+//assign fetchOpcode = 1;
+
+// always @ (posedge clock)
+// begin
+    // if (reset)
+    // begin
+        // programCounter <= 16'hE000;
+    // end
+    // else if (clockEnable)
+    // begin
+        
+    // end
+// end
+
+
+endmodule
