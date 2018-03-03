@@ -41,11 +41,13 @@
 module Cpu6502
 (
     input                       clock,
-    //input                       clockEnable,
+    input                       clockEnable,
     input                       reset,
     
-    //output [15:0]               address;
-    //output [7:0]                dataIn;
+    input [7:0]                 dataIn,
+    output [7:0]                dataOut,
+    output [15:0]               address,
+
     
     input                       write,
     input   [2:0]               writeAddr,
@@ -55,29 +57,61 @@ module Cpu6502
     output  [7:0]               readDataA,
     
     input   [2:0]               readAddrB,
-    output  [7:0]               readDataB
+    output  [7:0]               readDataB,
+    
+    output  [7:0]               loadedOpcode
 );
 
-//reg [15:0] programCounter = 16'hE000;
+reg [15:0] programCounter = 16'hE000;
 //reg [7:0] opcode = 0;
-//wire fetchOpcode;
+wire fetchOpCode;
+wire [2:0] opCycle;
+
+OneHotCounter #(.SIZE(3))
+    opCycleCounter(.clock(clock), .increment(1), .load(0), .data(1), .reset(reset), .out(opCycle));
 
 RegisterFile2Read1Write #(.REG_WIDTH(8), .ADDR_WIDTH(3)) 
     regFile(clock, reset, write, writeAddr, writeData, readAddrA, readDataA, readAddrB, readDataB);
 
-//assign fetchOpcode = 1;
+Cpu6502Decode opDecoder
+(
+    .clock(clock),
+    .reset(reset),
+    .opcode(dataIn),
+    .loadOpcode(fetchOpCode),
+    .loadedOpcode(loadedOpcode)
+);
 
-// always @ (posedge clock)
-// begin
-    // if (reset)
-    // begin
-        // programCounter <= 16'hE000;
-    // end
-    // else if (clockEnable)
-    // begin
+
+assign fetchOpCode = 1;
+assign dataOut = 0;
+assign address = programCounter;
+
+
+always @ (posedge clock)
+begin
+    if (reset)
+    begin
+        programCounter <= 16'hE000;
+    end
+    else if (clockEnable)
+    begin
+        if (opCycle[0])
+        begin
+            
+        end
         
-    // end
-// end
+        if (opCycle[1])
+        begin
+        
+        end
+        
+        if (opCycle[2])
+        begin
+        
+        end
+    end
+end
 
 
 endmodule

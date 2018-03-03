@@ -1,17 +1,9 @@
 //
-// OneHotCounter - A basic synchronous one-hot counter of parameterized width
+// 6502DecodeRom - ROM acting as a lookup table to decode 6502 opcodes into CPU control signals.
 //
-// One-hot is a group of bits among which the legal combinations of values are only those with a 
-// single high (1) bit and all the others low (0).
-//
-// This one-hot counter rotates a single 1 bit left, i.e. 0001, 0010, 0100, 1000, 0001, ...
-// Reset returns the 1 to bit zero, i.e. 0001.
-//
-// One-hot counters are useful for implementing some state machines in an FPGA, because less
-// combinatorial logic is required to decode the state values, making the state machine faster.
 //
 // Copyright 2018 Reclone Labs <reclonelabs.com>
-//
+// 
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
 //
@@ -32,31 +24,42 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-module OneHotCounter # (parameter SIZE = 8)
+module Cpu6502DecodeRom
 (
-    input                   clock,
-    input                   increment,
-    input                   load,
-    input [SIZE-1:0]        data,
-    input                   reset,
-    output reg [SIZE-1:0]   out = 1
-    
+    input                       clock,
+    input                       enable,
+    input [7:0]                 address,
+    output reg [31:0]           data
 );
+
+parameter CYC0_INCREMENT_PC         =   32'h00000001;
+parameter CYC1_INCREMENT_PC         =   32'h00000002;
+
+parameter ALU_OPERAND1_IS_ZERO      =   32'h00000000;
+parameter ALU_OPERAND1_IS_A         =   32'h00000004;
+parameter ALU_OPERAND1_IS_X         =   32'h00000008;
+parameter ALU_OPERAND1_IS_Y         =   32'h0000000C;
+
+parameter ALU_OPERAND2_IS_ZERO      =   32'h00000000;
+parameter ALU_OPERAND2_IS_IMM       =   32'h00000010;
+
+parameter ALU_OPERATION_IS_ASSIGN   =   32'h00000000;
+
+parameter STORE_ALU_OUTPUT_NOWHERE  =   32'h00000000;
+parameter STORE_ALU_OUTPUT_IN_A     =   32'h00001000;
 
 always @ (posedge clock)
 begin
-    if (reset)
+    if (enable)
     begin
-        out <= 1;
-    end
-    else if (load)
-    begin
-        out <= data;
-    end
-    else if (increment)
-    begin
-        out <= {out[SIZE-2:0], out[SIZE-1]};
+        case (address)
+            8'hA9:   //LDA #immediate
+                data <= CYC0_INCREMENT_PC;
+            default: //NOP
+                data <= 0;
+        endcase
     end
 end
+
 
 endmodule
