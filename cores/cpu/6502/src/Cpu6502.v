@@ -81,6 +81,22 @@ Cpu6502Decode opDecoder
     .loadOpcode(fetchOpCode),
     .loadedOpcode(loadedOpcode)
 );
+/* verilator lint_off UNUSED */
+wire [15:0] newPC;
+wire branchPageCrossing;
+/* verilator lint_on UNUSED */
+
+Cpu6502JumpCalc jumpCalc
+(
+    .currentPC(programCounter),
+    .absoluteAddress(0),
+    .relativeOffset(0),
+    .increment(1),
+    .jumpRelative(0),
+    .jumpAbsolute(0),
+    .newPC(newPC),
+    .pageCrossing(branchPageCrossing)
+);
 
 
 assign fetchOpCode = 1;
@@ -92,7 +108,7 @@ always @ (posedge clock)
 begin
     if (reset)
     begin
-        programCounter <= 16'hE000;
+        //programCounter <= 16'hE000;
     end
     else if (clockEnable)
     begin

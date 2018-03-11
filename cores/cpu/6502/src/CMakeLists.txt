@@ -7,6 +7,7 @@ add_custom_command (
   DEPENDS Cpu6502.v
           Cpu6502Decode.v
           Cpu6502DecodeRom.v
+          Cpu6502JumpCalc.v
           ${PROJECT_SOURCE_DIR}/memory/register/src/RegisterFile2Read1Write.v
           ${PROJECT_SOURCE_DIR}/memory/register/src/Register.v
           ${PROJECT_SOURCE_DIR}/counter/one-hot/src/OneHotCounter.v
@@ -14,6 +15,7 @@ add_custom_command (
     ${CMAKE_CURRENT_SOURCE_DIR}/Cpu6502.v
     ${CMAKE_CURRENT_SOURCE_DIR}/Cpu6502Decode.v
     ${CMAKE_CURRENT_SOURCE_DIR}/Cpu6502DecodeRom.v
+    ${CMAKE_CURRENT_SOURCE_DIR}/Cpu6502JumpCalc.v
     ${PROJECT_SOURCE_DIR}/memory/register/src/RegisterFile2Read1Write.v
     ${PROJECT_SOURCE_DIR}/memory/register/src/Register.v
     ${PROJECT_SOURCE_DIR}/counter/one-hot/src/OneHotCounter.v

@@ -39,18 +39,20 @@ module Cpu6502JumpCalc
 wire [15:0] incrementedPC;
 wire [7:0] decrementedPCH;
 wire [7:0] incrementedPCH;
+wire [7:0] pageCorrectedPCH;
 wire [7:0] offsetPCL;
 wire pageUp;
 
-incrementedPC <= currentPC + 1;
-decrementedPCH <= currentPC[15:8] - 1;
-incrementedPCH <= currentPC[15:8] + 1;
-{pageCrossing, offsetPCL} <= currentPC[7:0] + relativeOffset;
-pageUp <= pageCrossing && ~relativeOffset[7];
-pageCorrectedPCH <= ~pageCrossing ? currentPC[15:7] :
-                    pageUp ? incrementedPCH : decrementedPCH;
+assign incrementedPC = currentPC + 1;
+assign decrementedPCH = currentPC[15:8] - 1;
+assign incrementedPCH = currentPC[15:8] + 1;
+assign {pageCrossing, offsetPCL} = currentPC[7:0] + relativeOffset;
+assign pageUp = pageCrossing && ~relativeOffset[7];
+assign pageCorrectedPCH = ~pageCrossing ? currentPC[15:8] :
+                          pageUp ? incrementedPCH : decrementedPCH;
 
-newPC <= jumpAbsolute ? absoluteAddress :
-         jumpRelative ? {pageCorrectedPCH, offsetPCL} :
-         increment ? incrementedPC : currentPC;
+assign newPC = jumpAbsolute ? absoluteAddress :
+               jumpRelative ? {pageCorrectedPCH, offsetPCL} :
+               increment ? incrementedPC : currentPC;
 
+endmodule
