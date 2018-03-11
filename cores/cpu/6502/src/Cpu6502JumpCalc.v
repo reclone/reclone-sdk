@@ -1,5 +1,5 @@
 //
-// 6502DecodeRom - ROM acting as a lookup table to decode 6502 opcodes into CPU control signals.
+// Cpu6502JumpCalc - Calculate changes to program counter, like jumps, branches, and increments
 //
 //
 // Copyright 2018 Reclone Labs <reclonelabs.com>
@@ -24,42 +24,33 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-module Cpu6502DecodeRom
+module Cpu6502JumpCalc
 (
-    input                       clock,
-    input                       enable,
-    input [7:0]                 address,
-    output reg [31:0]           data
+    input [15:0] currentPC,
+    input [15:0] absoluteAddress,
+    input [7:0] relativeOffset,
+    input increment,
+    input jumpRelative,
+    input jumpAbsolute,
+    output [15:0] newPC,
+    output pageCrossing
 );
 
-parameter CYC0_INCREMENT_PC         =   32'h80000000;
-parameter CYC1_INCREMENT_PC         =   32'h40000000;
+wire [15:0] incrementedPC;
+wire [7:0] decrementedPCH;
+wire [7:0] incrementedPCH;
+wire [7:0] offsetPCL;
+wire pageUp;
 
-parameter ALU_OPERAND1_IS_ZERO      =   32'h00000000;
-parameter ALU_OPERAND1_IS_A         =   32'h00000004;
-parameter ALU_OPERAND1_IS_X         =   32'h00000008;
-parameter ALU_OPERAND1_IS_Y         =   32'h0000000C;
+incrementedPC <= currentPC + 1;
+decrementedPCH <= currentPC[15:8] - 1;
+incrementedPCH <= currentPC[15:8] + 1;
+{pageCrossing, offsetPCL} <= currentPC[7:0] + relativeOffset;
+pageUp <= pageCrossing && ~relativeOffset[7];
+pageCorrectedPCH <= ~pageCrossing ? currentPC[15:7] :
+                    pageUp ? incrementedPCH : decrementedPCH;
 
-parameter ALU_OPERAND2_IS_ZERO      =   32'h00000000;
-parameter ALU_OPERAND2_IS_IMM       =   32'h00000010;
+newPC <= jumpAbsolute ? absoluteAddress :
+         jumpRelative ? {pageCorrectedPCH, offsetPCL} :
+         increment ? incrementedPC : currentPC;
 
-parameter ALU_OPERATION_IS_ASSIGN   =   32'h00000000;
-
-parameter STORE_ALU_OUTPUT_NOWHERE  =   32'h00000000;
-parameter STORE_ALU_OUTPUT_IN_A     =   32'h00001000;
-
-always @ (posedge clock)
-begin
-    if (enable)
-    begin
-        case (address)
-            8'hA9:   //LDA #immediate
-                data <= CYC0_INCREMENT_PC;
-            default: //NOP
-                data <= 0;
-        endcase
-    end
-end
-
-
-endmodule
