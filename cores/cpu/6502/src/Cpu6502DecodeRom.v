@@ -32,21 +32,6 @@ module Cpu6502DecodeRom
     output reg [31:0]           data
 );
 
-parameter CYC0_INCREMENT_PC         =   32'h80000000;
-parameter CYC1_INCREMENT_PC         =   32'h40000000;
-
-parameter ALU_OPERAND1_IS_ZERO      =   32'h00000000;
-parameter ALU_OPERAND1_IS_A         =   32'h00000004;
-parameter ALU_OPERAND1_IS_X         =   32'h00000008;
-parameter ALU_OPERAND1_IS_Y         =   32'h0000000C;
-
-parameter ALU_OPERAND2_IS_ZERO      =   32'h00000000;
-parameter ALU_OPERAND2_IS_IMM       =   32'h00000010;
-
-parameter ALU_OPERATION_IS_ASSIGN   =   32'h00000000;
-
-parameter STORE_ALU_OUTPUT_NOWHERE  =   32'h00000000;
-parameter STORE_ALU_OUTPUT_IN_A     =   32'h00001000;
 
 always @ (posedge clock)
 begin

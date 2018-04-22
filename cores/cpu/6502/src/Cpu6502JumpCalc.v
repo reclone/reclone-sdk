@@ -51,8 +51,8 @@ assign pageUp = pageCrossing && ~relativeOffset[7];
 assign pageCorrectedPCH = ~pageCrossing ? currentPC[15:8] :
                           pageUp ? incrementedPCH : decrementedPCH;
 
-assign newPC = jumpAbsolute ? absoluteAddress :
-               jumpRelative ? {pageCorrectedPCH, offsetPCL} :
-               increment ? incrementedPC : currentPC;
+assign newPC =  jumpAbsolute ? absoluteAddress :
+                jumpRelative ? {pageCorrectedPCH, offsetPCL} :
+                increment ? incrementedPC : currentPC;
 
 endmodule
