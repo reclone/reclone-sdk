@@ -1,5 +1,5 @@
 //
-// Cpu6502Alu - 6502 Arithmetic Logic Unit
+// Cpu6502AluConstants - Definitions of constants used by the 6502 arithmetic logic unit
 //
 //
 // Copyright 2018 Reclone Labs <reclonelabs.com>
@@ -24,30 +24,32 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-module Cpu6502Alu
-(
-    input   [7:0]   operand1,
-    input   [7:0]   operand2,
-    input           carryIn,
-    input   [2:0]   operation,
-    input           decimalMode,
-    output  [7:0]   result,
-    output          carryOut
-);
+`ifndef __CPU6502ALUCONSTANTS_VH_
+`define __CPU6502ALUCONSTANTS_VH_
 
-wire sbc = (operation == `ALU_OPERATION_SBC);
-wire [7:0] addend1 = operand1;
-wire [7:0] addend2 = sbc ? ~operand2 : operand2;
-wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + carryIn;
-wire halfCarry = rawSumL[4] | (decimalMode & (rawSumL[3:1] >= 3'd5));
-wire [4:0] rawSumH = addend1[7:4] + addend2[3:0] + halfCarry;
-assign carryOut = rawSumH[4] | (decimalMode & (rawSumH[3:1] >= 3'd5));
-//TODO: Decimal correction
+// ALU Operand Sources
+`define ALU_OPERAND_ZERO    4'h0
+`define ALU_OPERAND_ONE     4'h1
+`define ALU_OPERAND_DI      4'h2
+`define ALU_OPERAND_P       4'h3
+`define ALU_OPERAND_A       4'h4
+`define ALU_OPERAND_X       4'h5
+`define ALU_OPERAND_Y       4'h6
+`define ALU_OPERAND_S       4'h7
+`define ALU_OPERAND_PCL     4'h8
+`define ALU_OPERAND_PCH     4'h9
+`define ALU_OPERAND_INDL    4'hA
+`define ALU_OPERAND_INDH    4'hB
 
-always @*
-    case (operation)
-        default:    carryOut = X;
-    endcase
-end
+// ALU Operations
+`define ALU_OPERATION_COPY  3'h0
+`define ALU_OPERATION_AND   3'h1
+`define ALU_OPERATION_OR    3'h2
+`define ALU_OPERATION_EOR   3'h3
+`define ALU_OPERATION_ADC   3'h4
+`define ALU_OPERATION_SBC   3'h5
+`define ALU_OPERATION_ROR   3'h6
 
-endmodule //6502_alu
+
+
+`endif //__CPU6502ALUCONSTANTS_VH_
