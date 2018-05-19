@@ -32,21 +32,64 @@ module Cpu6502Alu
     input   [2:0]   operation,
     input           decimalMode,
     output  [7:0]   result,
-    output          carryOut
+    output          carryOut,
+    output          zero,
+    output          negative,
+    output          overflow
 );
 
-wire sbc = (operation == `ALU_OPERATION_SBC);
+wire subtract = (operation == `ALU_OPERATION_SBC);
 wire [7:0] addend1 = operand1;
-wire [7:0] addend2 = sbc ? ~operand2 : operand2;
+wire [7:0] addend2 = subtract ? ~operand2 : operand2;
 wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + carryIn;
 wire halfCarry = rawSumL[4] | (decimalMode & (rawSumL[3:1] >= 3'd5));
 wire [4:0] rawSumH = addend1[7:4] + addend2[3:0] + halfCarry;
-assign carryOut = rawSumH[4] | (decimalMode & (rawSumH[3:1] >= 3'd5));
-//TODO: Decimal correction
+wire fullCarry = rawSumH[4] | (decimalMode & (rawSumH[3:1] >= 3'd5));
+wire finalSum[7:0];
 
-always @*
+assign zero = ~|result;
+assign negative = result[7];
+assign overflow = addend1[7] ^ addend2[7] ^ result[7] ^ fullCarry;
+
+always @* begin
+    case ({decimalMode, subtract, halfCarry})
+        case 3'b110:    finalSum[3:0] = rawSumL[3:0] + 4'd10;
+        case 3'b101:    finalSum[3:0] = rawSumL[3:0] + 4'd6;
+        default:        finalSum[3:0] = rawSumL[3:0];
+    endcase
+end
+
+always @* begin
+    case ({decimalMode, subtract, fullCarry})
+        case 3'b110:    finalSum[7:4] = rawSumL[7:4] + 4'd10;
+        case 3'b101:    finalSum[7:4] = rawSumL[7:4] + 4'd6;
+        default:        finalSum[7:4] = rawSumL[7:4];
+    endcase
+end
+
+always @* begin
     case (operation)
-        default:    carryOut = X;
+        `ALU_OPERATION_COPY:
+            result = operand1;
+            carryOut = 1'bX;
+        `ALU_OPERATION_AND:
+            result = operand1 & operand2;
+            carryOut = 1'bX;
+        `ALU_OPERATION_OR:
+            result = operand1 | operand2;
+            carryOut = 1'bX;
+        `ALU_OPERATION_EOR:
+            result = operand1 ^ operand2;
+            carryOut = 1'bX;
+        `ALU_OPERATION_ADC, `ALU_OPERATION_SBC:
+            result = finalSum;
+            carryOut = fullCarry;
+        `ALU_OPERATION_ROR:
+            result = {carryIn, operand1[7:1]};
+            carryOut = operand1[0];
+        default:
+            result = 8'hXX;
+            carryOut = 1'bX;
     endcase
 end
 
