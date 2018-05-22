@@ -41,15 +41,15 @@
 module Cpu6502
 (
     input                       clock,
-    input                       clockEnable,
-    input                       reset,
+    input                       cpuClockEnable,
+    input                       cpuReset,
     
     input [7:0]                 dataIn,
     output [7:0]                dataOut,
     output [15:0]               address,
 
     
-    input                       write,
+    input                       hypervisorWrite,
     input   [2:0]               writeAddr,
     input   [7:0]               writeData,
 
@@ -57,75 +57,62 @@ module Cpu6502
     output  [7:0]               readDataA,
     
     input   [2:0]               readAddrB,
-    output  [7:0]               readDataB,
-    
-    output  [7:0]               loadedOpcode
+    output  [7:0]               readDataB
 );
 
 reg [15:0] programCounter = 16'hE000;
+reg [7:0] statusFlags = 8'h00;
+wire carryFlag = statusFlags[0];
+wire zeroFlag = statusFlags[1];
+wire irqDisableFlag = statusFlags[2];
+wire decimalFlag = statusFlags[3];
+wire breakFlag = statusFlags[4];
+wire overflowFlag = statusFlags[6];
+wire negativeFlag = statusFlags[7];
+
+wire newCarryValue;
+wire newZeroValue;
+wire newIrqDisableValue;
+wire newDecimalValue;
+wire newBreakValue;
+wire newOverflowValue;
+wire newNegativeValue;
+
 //reg [7:0] opcode = 0;
 wire fetchOpCode;
 wire [2:0] opCycle;
 
-OneHotCounter #(.SIZE(3))
-    opCycleCounter(.clock(clock), .increment(1), .load(0), .data(1), .reset(reset), .out(opCycle));
 
-RegisterFile2Read1Write #(.REG_WIDTH(8), .ADDR_WIDTH(3)) 
-    regFile(clock, reset, write, writeAddr, writeData, readAddrA, readDataA, readAddrB, readDataB);
-
-Cpu6502Decode opDecoder
-(
-    .clock(clock),
-    .reset(reset),
-    .opcode(dataIn),
-    .loadOpcode(fetchOpCode),
-    .loadedOpcode(loadedOpcode)
-);
 /* verilator lint_off UNUSED */
 wire [15:0] newPC;
 wire branchPageCrossing;
 /* verilator lint_on UNUSED */
-
-Cpu6502JumpCalc jumpCalc
-(
-    .currentPC(programCounter),
-    .absoluteAddress(0),
-    .relativeOffset(0),
-    .increment(1),
-    .jumpRelative(0),
-    .jumpAbsolute(0),
-    .newPC(newPC),
-    .pageCrossing(branchPageCrossing)
-);
 
 
 assign fetchOpCode = 1;
 assign dataOut = 0;
 assign address = programCounter;
 
+Cpu6502Alu alu
+(
+    .operand1(aluOperand1),
+    .operand2(aluOperand2),
+    .operation(aluOperation),
+    .carryIn(carryFlag),
+    .carryOut(newCarryValue),
+    .decimalMode(decimalFlag),
+    .result(aluResult),
+    .carryOut(newCarryValue),
+    .zero(newZeroValue),
+    .negative(newNegativeValue),
+    .overflow(newOverflowValue)
+);
 
-always @ (posedge clock)
-begin
-    if (reset)
-    begin
-        //programCounter <= 16'hE000;
-    end
-    else if (clockEnable)
-    begin
-        if (opCycle[0])
-        begin
-            
-        end
-        
-        if (opCycle[1])
-        begin
-        
-        end
-        
-        if (opCycle[2])
-        begin
-        
-        end
+always @ (posedge clock) begin
+    if (reset) begin
+
+    end else if (clockEnable) begin
+
     end
 end
 

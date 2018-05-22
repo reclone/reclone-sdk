@@ -53,9 +53,9 @@ wire [2:0] aluOperandB = stateData[24:22];
 wire [2:0] aluOperation = stateData[27:25];
 wire writeBack;
 
-always @*
+always @* begin
     case (nextStateDetermination)
-        `NEXT_STATE_DEFAULT:
+        `NEXT_STATE_DEFAULT, default:
             nextState = {0, nextStateOptionA};
         `NEXT_STATE_OPCODE:
             nextState = {1, opcode};
@@ -72,6 +72,7 @@ always @*
         `NEXT_STATE_FIX_PAGE:
             nextState = fixPage ? {0, nextStateOptionA} : {0, nextStateOptionB};
     endcase
+end
 
 endmodule
 

@@ -29,7 +29,7 @@
 
 // Next State Determination
 `define NEXT_STATE_DEFAULT      3'h0 /* Next state is OptionA */
-`define NEXT_STATE_OPCODE       3'h1 /* Next state is (9'h100 | opcode) */
+`define NEXT_STATE_OPCODE       3'h1 /* Next state is (9'h100 | 8'opcode) */
 `define NEXT_STATE_CARRY        3'h2 /* Next state is OptionA if carry flag set, otherwise OptionB */
 `define NEXT_STATE_OVERFLOW     3'h3 /* Next state is OptionA if overflow flag set, otherwise OptionB */
 `define NEXT_STATE_NEGATIVE     3'h4 /* Next state is OptionA if sign flag set, otherwise OptionB */

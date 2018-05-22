@@ -42,14 +42,13 @@
 `define ALU_OPERAND_INDH    4'hB
 
 // ALU Operations
-`define ALU_OPERATION_COPY  3'h0
-`define ALU_OPERATION_AND   3'h1
-`define ALU_OPERATION_OR    3'h2
-`define ALU_OPERATION_EOR   3'h3
-`define ALU_OPERATION_ADC   3'h4
-`define ALU_OPERATION_SBC   3'h5
-`define ALU_OPERATION_ROR   3'h6
-
+`define ALU_OPERATION_SBC   3'h0
+`define ALU_OPERATION_ADC   3'h1
+`define ALU_OPERATION_AND   3'h2
+`define ALU_OPERATION_OR    3'h3
+`define ALU_OPERATION_EOR   3'h4
+`define ALU_OPERATION_ROR   3'h5
+`define ALU_OPERATION_COPY  3'h7
 
 
 `endif //__CPU6502ALUCONSTANTS_VH_
