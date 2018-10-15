@@ -205,11 +205,11 @@
 <pad name="SH1" x="1.09" y="7.85" drill="1.4"/>
 </package>
 <package name="USB-MICRO-B-SMD">
-<smd name="3" x="0" y="4.15" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="4" x="0.65" y="4.15" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="5" x="1.3" y="4.15" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="2" x="-0.65" y="4.15" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="1" x="-1.3" y="4.15" dx="1.35" dy="0.4" layer="1" rot="R90"/>
+<smd name="3" x="0" y="4.35" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="4" x="0.65" y="4.35" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="5" x="1.3" y="4.35" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="2" x="-0.65" y="4.35" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="1" x="-1.3" y="4.35" dx="1.75" dy="0.4" layer="1" rot="R90"/>
 <pad name="MNT3" x="2.5" y="4.15" drill="0.85"/>
 <pad name="MNT2" x="-2.5" y="4.15" drill="0.85"/>
 <pad name="MNT4" x="3.5" y="1.45" drill="1.15"/>
