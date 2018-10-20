@@ -83,7 +83,10 @@
 <layer number="114" name="Badge_Outline" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="115" name="ReferenceISLANDS" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="116" name="Patch_BOT" color="9" fill="4" visible="yes" active="yes"/>
+<layer number="117" name="BACKMAAT1" color="7" fill="1" visible="no" active="no"/>
 <layer number="118" name="Rect_Pads" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="119" name="KAP_TEKEN" color="7" fill="1" visible="no" active="no"/>
+<layer number="120" name="KAP_MAAT1" color="7" fill="1" visible="no" active="no"/>
 <layer number="121" name="_tsilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="123" name="tTestmark" color="7" fill="1" visible="yes" active="yes"/>
@@ -93,15 +96,25 @@
 <layer number="127" name="_tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="128" name="_bValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="129" name="Mask" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="130" name="SMDSTROOK" color="7" fill="1" visible="no" active="no"/>
 <layer number="131" name="tAdjust" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="132" name="bAdjust" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="133" name="bottom_silk" color="7" fill="1" visible="no" active="no"/>
+<layer number="134" name="silk_top" color="7" fill="1" visible="no" active="no"/>
+<layer number="135" name="silk_bottom" color="7" fill="1" visible="no" active="no"/>
+<layer number="136" name="silktop" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="137" name="silkbottom" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="144" name="Drill_legend" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="145" name="DrillLegend_01-16" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="146" name="DrillLegend_01-20" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="150" name="Notes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="151" name="HeatSink" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="152" name="_bDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="153" name="FabDoc1" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="154" name="FabDoc2" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="155" name="FabDoc3" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="166" name="AntennaArea" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="168" name="4mmHeightArea" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="199" name="Contour" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="200" name="200bmp" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="201" name="201bmp" color="2" fill="10" visible="yes" active="yes"/>
@@ -135,6 +148,8 @@
 <layer number="229" name="229bmp" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="230" name="230bmp" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="231" name="231bmp" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="232" name="Eagle3D_PG2" color="7" fill="1" visible="no" active="no"/>
+<layer number="233" name="Eagle3D_PG3" color="7" fill="1" visible="no" active="no"/>
 <layer number="248" name="Housing" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="249" name="Edge" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="250" name="Descript" color="3" fill="1" visible="no" active="no"/>
@@ -178,31 +193,31 @@
 <wire x1="-3.81" y1="7.5" x2="2.69" y2="7.5" width="0.127" layer="21"/>
 <wire x1="4.69" y1="7.5" x2="4.69" y2="-7.5" width="0.127" layer="51"/>
 <wire x1="2.69" y1="-7.5" x2="-3.81" y2="-7.5" width="0.127" layer="21"/>
-<smd name="P1" x="-4.76" y="4.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P2" x="-4.76" y="4" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P3" x="-4.76" y="3.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P4" x="-4.76" y="3" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P5" x="-4.76" y="2.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P6" x="-4.76" y="2" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P7" x="-4.76" y="1.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P8" x="-4.76" y="1" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P9" x="-4.76" y="0.5" dx="1.9" dy="0.3" layer="1" rot="R180"/>
-<smd name="P10" x="-4.76" y="0" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P11" x="-4.76" y="-0.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P12" x="-4.76" y="-1" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P13" x="-4.76" y="-1.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P14" x="-4.76" y="-2" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P15" x="-4.76" y="-2.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P16" x="-4.76" y="-3" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P17" x="-4.76" y="-3.5" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P18" x="-4.76" y="-4" dx="1.9" dy="0.3" layer="1"/>
-<smd name="P19" x="-4.76" y="-4.5" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P1" x="-4.76" y="4.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P2" x="-4.76" y="4.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P3" x="-4.76" y="3.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P4" x="-4.76" y="3.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P5" x="-4.76" y="2.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P6" x="-4.76" y="2.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P7" x="-4.76" y="1.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P8" x="-4.76" y="1.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P9" x="-4.76" y="0.75" dx="1.9" dy="0.3" layer="1" rot="R180"/>
+<smd name="P10" x="-4.76" y="0.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P11" x="-4.76" y="-0.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P12" x="-4.76" y="-0.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P13" x="-4.76" y="-1.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P14" x="-4.76" y="-1.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P15" x="-4.76" y="-2.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P16" x="-4.76" y="-2.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P17" x="-4.76" y="-3.25" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P18" x="-4.76" y="-3.75" dx="1.9" dy="0.3" layer="1"/>
+<smd name="P19" x="-4.76" y="-4.25" dx="1.9" dy="0.3" layer="1"/>
 <text x="-6.5" y="-6" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
 <text x="-6.5" y="6" size="0.8" layer="27" font="vector" ratio="19" rot="R90" align="bottom-right">&gt;VALUE</text>
-<pad name="SH4" x="1.09" y="-7.85" drill="1.4"/>
-<pad name="SH3" x="-3.81" y="-7.25" drill="1.4"/>
-<pad name="SH2" x="-3.81" y="7.25" drill="1.4"/>
-<pad name="SH1" x="1.09" y="7.85" drill="1.4"/>
+<pad name="SH4" x="1.09" y="-7.85" drill="1.3"/>
+<pad name="SH3" x="-3.81" y="-7.25" drill="1.3"/>
+<pad name="SH2" x="-3.81" y="7.25" drill="1.3"/>
+<pad name="SH1" x="1.09" y="7.85" drill="1.3"/>
 </package>
 <package name="USB-MICRO-B-SMD">
 <smd name="3" x="0" y="4.35" dx="1.75" dy="0.4" layer="1" rot="R90"/>
