@@ -1218,6 +1218,7 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="-1.2" y1="-0.2" x2="-1.2" y2="0.2" width="0.127" layer="21"/>
 <wire x1="-1.2" y1="0.2" x2="-1.8" y2="0.2" width="0.127" layer="21"/>
 <text x="-1.8" y="2" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+<circle x="3.23" y="0" radius="0.1" width="0.25" layer="21"/>
 </package>
 <package name="SOT-23-5">
 <smd name="2" x="0" y="-1.4" dx="1.1" dy="0.6" layer="1" rot="R90"/>
@@ -7905,9 +7906,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
 <part name="BAT" library="SparkFun-Electromechanical" deviceset="BATTERY" device="12MM" value="CR1225">
-<attribute name="DIGIKEY#" value="BK-885-ND"/>
-<attribute name="MANF" value="MPD (Memory Protection Devices)"/>
-<attribute name="MANF#" value="BK-885"/>
+<attribute name="DIGIKEY#" value="36-3000-ND"/>
+<attribute name="MANF" value="Keystone Electronics"/>
+<attribute name="MANF#" value="3000"/>
 </part>
 <part name="C58" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="15p">
 <attribute name="DIGIKEY#" value="478-10289-1-ND"/>
