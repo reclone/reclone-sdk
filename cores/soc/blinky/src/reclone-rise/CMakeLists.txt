@@ -1,0 +1,56 @@
+
+set(SOC_NAME Blinky)
+
+set(VERILOG_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/${SOC_NAME}Top.v
+    ${PROJECT_SOURCE_DIR}/counter/count-up/src/CountUp.v
+)
+
+include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)
+
+set(PRJ_CONTENT "")
+foreach(vsrc ${VERILOG_SRCS})
+    set(PRJ_CONTENT "${PRJ_CONTENT}verilog work \"${vsrc}\"\n")
+endforeach(vsrc)
+
+file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${SOC_NAME}.prj CONTENT "${PRJ_CONTENT}")
+
+file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${SOC_NAME}.xst CONTENT
+"run
+-ifn ${SOC_NAME}.prj
+-ofn ${SOC_NAME}.ngc
+-ifmt mixed
+-top ${SOC_NAME}Top
+-ofmt NGC
+-p ${TARGET_PART}
+${XST_OPTS}"
+)
+
+file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${SOC_NAME}.ut CONTENT "${BITGEN_OPTS}")
+
+add_custom_command(OUTPUT ${SOC_NAME}.ngc DEPENDS ${VERILOG_SRCS} ${SOC_NAME}.prj ${SOC_NAME}.xst
+    COMMAND ${XST} ${ISE_COMMON_OPTS} -ifn ${SOC_NAME}.xst > ${SOC_NAME}_xst.log
+)
+
+add_custom_command(OUTPUT ${SOC_NAME}.ngd DEPENDS ${SOC_NAME}.ngc ${USER_CONSTRAINTS_FILE}
+    COMMAND ${NGDBUILD} ${ISE_COMMON_OPTS} ${NGDBUILD_OPTS} -p ${TARGET_PART} -uc ${USER_CONSTRAINTS_FILE} ${SOC_NAME}.ngc ${SOC_NAME}.ngd > ${SOC_NAME}_ngdbuild.log
+)
+
+add_custom_command(OUTPUT ${SOC_NAME}_map.ncd ${SOC_NAME}.pcf DEPENDS ${SOC_NAME}.ngd
+    COMMAND ${MAP} ${ISE_COMMON_OPTS} ${MAP_OPTS} -p ${TARGET_PART} -w ${SOC_NAME}.ngd -o ${SOC_NAME}_map.ncd ${SOC_NAME}.pcf > ${SOC_NAME}_map.log
+)
+
+add_custom_command(OUTPUT ${SOC_NAME}.ncd DEPENDS ${SOC_NAME}_map.ncd ${SOC_NAME}.pcf
+    COMMAND ${PAR} ${ISE_COMMON_OPTS} ${PAR_OPTS} -w ${SOC_NAME}_map.ncd ${SOC_NAME}.ncd ${SOC_NAME}.pcf > ${SOC_NAME}_par.log
+)
+
+string(TOLOWER "${SOC_NAME}.bit" BIT_FILE)
+string(TOLOWER "${SOC_NAME}.drc" DRC_FILE)
+add_custom_command(OUTPUT ${BIT_FILE} ${DRC_FILE} DEPENDS ${SOC_NAME}.ncd ${SOC_NAME}.ut
+    COMMAND ${BITGEN} ${ISE_COMMON_OPTS} -w -f ${SOC_NAME}.ut ${SOC_NAME}.ncd ${BIT_FILE} > ${SOC_NAME}_bitgen.log
+)
+
+add_custom_target(BlinkyForRecloneRise ALL DEPENDS ${BIT_FILE})
+
+
+

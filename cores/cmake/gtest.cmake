@@ -9,8 +9,9 @@ include(ExternalProject)
 # Download and install GoogleTest
 ExternalProject_Add(
     gtest_external
-    URL https://github.com/google/googletest/archive/master.zip
+    URL https://github.com/google/googletest/archive/release-1.10.0.zip
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest_external
+    URL_HASH SHA256=94c634d499558a76fa649edb13721dce6e98fb1e7018dfaeba3cd7a083945e91
     # Disable install step
     INSTALL_COMMAND ""
 )
