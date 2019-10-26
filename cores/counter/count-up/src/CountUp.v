@@ -51,7 +51,7 @@ begin
     end
     else if (increment)
     begin
-        out <= out + 1'd1;
+        out <= out + 1;
     end
 end
 

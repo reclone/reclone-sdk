@@ -49,9 +49,9 @@ set(XST_OPTS "\
 -equivalent_register_removal YES
 -slice_utilization_ratio_maxmargin 5
 ")
-set(NGDBUILD_OPTS "")
-set(MAP_OPTS "")
-set(PAR_OPTS "")
+set(NGDBUILD_OPTS "-dd _ngo -nt timestamp")
+set(MAP_OPTS "-logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off")
+set(PAR_OPTS "-ol high -mt off")
 set(BITGEN_OPTS "\
 -g Binary:no
 -g Compress
