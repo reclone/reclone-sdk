@@ -1,10 +1,11 @@
 //
-// reclone-rise/BlinkyTop - Top module for the very simple Blinky SoC targeting Reclone Rise
+// Blinky - Very simple system-on-chip that periodically toggles a pin
 //
-// This is a target-specific module for a specific board, the Reclone Rise.
-// Top modules like this should generally be a very basic "wiring-up" of common modules to the
-// specific I/O pins and resources of the target platform (FPGA and the board on which it resides).
-// HDL code that is common to all targets should be placed in common locations (e.g. soc/blinky/src).
+// The Blinky system-on-chip is intended to be an extremely simple example of using the 
+// Reclone SDK to build an FPGA design.  Blinky takes a system clock as input, supplies it to a
+// free-running counter, and outputs one of the counter's high bits for a human-visible blinking
+// pattern, suitable for observation using a multimeter or an LED.  This can be used as an
+// indicator that the FPGA can be properly configured.
 //
 //
 // Copyright 2019 Reclone Labs <reclonelabs.com>
@@ -29,17 +30,24 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-module BlinkyTop
+module Blinky # (parameter COUNTER_SIZE = 8)
 (
-   input CLK10M,
-   input GPIO28,
-   output GPIO29
+   input clock,
+   output blink
 );
 
-Blinky #(.COUNTER_SIZE(25)) blinky
+wire[COUNTER_SIZE-1:0] count;
+
+CountUp #(.SIZE(COUNTER_SIZE)) counter
 (
-    .clock(CLK10M),
-    .blink(GPIO29)
+    .clock(clock),
+    .increment(1'd1),
+    .load(1'd0),
+    .data(25'd0),
+    .reset(1'd0),
+    .out(count)
 );
+
+assign blink = count[COUNTER_SIZE-1];
 
 endmodule
