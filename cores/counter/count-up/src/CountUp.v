@@ -51,7 +51,7 @@ begin
     end
     else if (increment)
     begin
-        out <= out + 1;
+        out <= {out + 1}[SIZE-1:0];
     end
 end
 
