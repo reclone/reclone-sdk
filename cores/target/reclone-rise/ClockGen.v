@@ -47,16 +47,18 @@
 module ClockGen
 (
     input   clk10m,             // 10       MHz
-    output  hdmiPixelClock,     // 74.25    MHz     (720p60, 1080i60, 1080p30 and others)
-    output  hdmiDataLoadClock,  // 148.5    MHz
-    output  hdmiIoClock,        // 742.5    MHz
-    output  hdmiSerDesStrobe,   // Data load strobe signal to use with HDMI SERDES primitives
-    output  dpiPixelClock,      // Display Parallel Interface pixel clock for LCD, VGA, SVGA, XVGA, etc.
-    output  ntscClock,          // 57.27273 MHz     (NTSC color burst frequency x16)
-    output  palClock,           // ‭70.9379 ‬ MHz     (PAL  color burst frequency x16)
-    output  audioClock,         // 90       MHz     (48kHz x1875 sigma-delta frequency)
-    output  ddrClock            // 
+//    output  hdmiPixelClock,     // 74.25    MHz     (720p60, 1080i60, 1080p30 and others)
+//    output  hdmiDataLoadClock,  // 148.5    MHz
+//    output  hdmiIoClock,        // 742.5    MHz
+//    output  hdmiSerDesStrobe,   // Data load strobe signal to use with HDMI SERDES primitives
+//    output  dpiPixelClock,      // Display Parallel Interface pixel clock for LCD, VGA, SVGA, XVGA, etc.
+//    output  ntscClock,          // 57.27273 MHz     (NTSC color burst frequency x16)
+//    output  palClock,           // ‭70.9379 ‬ MHz     (PAL  color burst frequency x16)
+    output  audioClock//,         // 90       MHz     (48kHz x1875 sigma-delta frequency)
+//    output  ddrClock            // 
 );
+
+wire clk90m_unbuffered;
 
 // -- First Clock Management Tile --
 
@@ -67,6 +69,33 @@ module ClockGen
 // useful clock frequencies as we can along the way.
 
 // DCM_CLKGEN:  [10 MHz CLKIN] * [9 CLKFX_MULTIPLY] / [1 CLKFX_DIVIDE] = [90 MHz CLKFX] <-- HDMI PLL input, DPI gen input, 48 kHz * 1875 audio clock
+DCM_CLKGEN 
+#(
+    .CLKFX_MULTIPLY(9),
+    .CLKFX_DIVIDE(1),
+    .CLKIN_PERIOD("11.111"),
+    .STARTUP_WAIT("FALSE")
+) dcm90m
+(
+    .CLKIN(clk10m),
+    .RST(1'b0),
+    .FREEZEDCM(1'b0),
+    .CLKFX(clk90m_unbuffered),
+    .CLKFX180(),
+    .LOCKED(),
+    .STATUS(),
+    .CLKFXDV(),
+    .PROGDONE(),
+    .PROGDATA(1'b1),
+    .PROGEN(1'b0),
+    .PROGCLK(1'b1)
+);
+
+BUFG dcm90_bufg
+(
+    .O(audioClock),
+    .I(clk90m_unbuffered)
+);
 
 // PLL_BASE:    [90 MHz CLKIN] / [4 DIVCLK_DIVIDE] = [22.5 MHz DIVCLK_OUT]
 //              [22.5 MHz DIVCLK_OUT] * [33 CLKFBOUT_MULT] = [742.5 MHz internal VCO OUT]

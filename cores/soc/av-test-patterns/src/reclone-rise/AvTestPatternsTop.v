@@ -27,15 +27,39 @@
 
 module AvTestPatternsTop
 (
-   input CLK10M,
-   input GPIO28,
+   input  CLK10M,
+   output GPIO28,
    output GPIO29
 );
 
-Blinky #(.COUNTER_SIZE(25)) blinky
+wire audioClock;
+
+AvTestPatterns #(.COUNTER_SIZE(25)) blinky
 (
     .clock(CLK10M),
     .blink(GPIO29)
+);
+
+ClockGen clkGen
+(
+    .clk10m(CLK10M),
+    .audioClock(audioClock)
+);
+
+// Clock forwarding technique to output the clock
+ODDR2 #(
+.DDR_ALIGNMENT("NONE"),
+.INIT(1'b0),
+.SRTYPE("SYNC")
+) ODDR2_inst (
+.Q(GPIO28), // 1-bit DDR output data
+.C0(audioClock), // 1-bit clock input
+.C1(~audioClock), // 1-bit clock input
+.CE(1'b1), // 1-bit clock enable input
+.D0(1'b1), // 1-bit data input (associated with C0)
+.D1(1'b0), // 1-bit data input (associated with C1)
+.R(1'b0), // 1-bit reset input
+.S(1'b0) // 1-bit set input
 );
 
 endmodule

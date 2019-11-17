@@ -4,7 +4,6 @@ set(SOC_NAME AvTestPatterns)
 set(VERILOG_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/${SOC_NAME}Top.v
     ${CMAKE_CURRENT_SOURCE_DIR}/../${SOC_NAME}.v
-    ${PROJECT_SOURCE_DIR}/soc/blinky/src/Blinky.v
     ${PROJECT_SOURCE_DIR}/counter/count-up/src/CountUp.v
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/ClockGen.v)
 
