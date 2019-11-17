@@ -5,6 +5,7 @@ set(VERILOG_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/${SOC_NAME}Top.v
     ${CMAKE_CURRENT_SOURCE_DIR}/../${SOC_NAME}.v
     ${PROJECT_SOURCE_DIR}/counter/count-up/src/CountUp.v
+    ${PROJECT_SOURCE_DIR}/target/reclone-rise/ClockGen.v
 )
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)

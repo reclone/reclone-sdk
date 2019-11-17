@@ -58,7 +58,6 @@ module ClockGen
 //    output  ddrClock            // 
 );
 
-wire clk90m_unbuffered;
 
 // -- First Clock Management Tile --
 
@@ -69,12 +68,16 @@ wire clk90m_unbuffered;
 // useful clock frequencies as we can along the way.
 
 // DCM_CLKGEN:  [10 MHz CLKIN] * [9 CLKFX_MULTIPLY] / [1 CLKFX_DIVIDE] = [90 MHz CLKFX] <-- HDMI PLL input, DPI gen input, 48 kHz * 1875 audio clock
+wire clk90m_unbuffered;
 DCM_CLKGEN 
 #(
     .CLKFX_MULTIPLY(9),
     .CLKFX_DIVIDE(1),
-    .CLKIN_PERIOD("11.111"),
-    .STARTUP_WAIT("FALSE")
+    .CLKFXDV_DIVIDE(2),
+    .CLKIN_PERIOD(100.000),
+    .STARTUP_WAIT("FALSE"),
+    .SPREAD_SPECTRUM("NONE"),
+    .CLKFX_MD_MAX(0.000)
 ) dcm90m
 (
     .CLKIN(clk10m),
@@ -86,15 +89,14 @@ DCM_CLKGEN
     .STATUS(),
     .CLKFXDV(),
     .PROGDONE(),
-    .PROGDATA(1'b1),
+    .PROGDATA(1'b0),
     .PROGEN(1'b0),
-    .PROGCLK(1'b1)
+    .PROGCLK(1'b0)
 );
-
 BUFG dcm90_bufg
 (
-    .O(audioClock),
-    .I(clk90m_unbuffered)
+    .I(clk90m_unbuffered),
+    .O(audioClock)
 );
 
 // PLL_BASE:    [90 MHz CLKIN] / [4 DIVCLK_DIVIDE] = [22.5 MHz DIVCLK_OUT]
@@ -105,6 +107,53 @@ BUFG dcm90_bufg
 //              [742.5 MHz DIVCLK OUT] / [ 5 CLKOUT3_DIVIDE] = [148.5  MHz CLKOUT3] <-- hdmiDataLoadClock
 //              [742.5 MHz DIVCLK OUT] / [10 CLKOUT4_DIVIDE] = [ 74.25 MHz CLKOUT4] <-- hdmiPixelClock
 //              [742.5 MHz DIVCLK OUT] / [33 CLKOUT5_DIVIDE] = [ 22.5  MHz CLKOUT5] <-- jitter filtered CLKIN for NTSC DCM
+/* wire pll_hdmi_clkfb;
+wire pll_hdmi_clkout0_unbuffered;
+wire pll_hdmi_clkout1_unbuffered;
+wire pll_hdmi_clkout2_unbuffered;
+wire pll_hdmi_clkout3_unbuffered;
+wire pll_hdmi_clkout4_unbuffered;
+wire pll_hdmi_clkout5_unbuffered;
+PLL_BASE
+#(
+    .BANDWIDTH("OPTIMIZED"), // "HIGH", "LOW" or "OPTIMIZED"
+    .CLKFBOUT_MULT(33), // Multiplication factor for all output clocks
+    .CLKFBOUT_PHASE(0.0), // Phase shift (degrees) of all output clocks
+    .CLKIN_PERIOD("11.11111"), // Clock period (ns) of input clock on CLKIN
+    .CLKOUT0_DIVIDE(1), // Division factor for CLKOUT0 (1 to 128)
+    .CLKOUT0_PHASE(0.0), // Phase shift (degrees) for CLKOUT0 (0.0 to 360.0)
+    .CLKOUT1_DIVIDE(2), // Division factor for CLKOUT1 (1 to 128)
+    .CLKOUT1_PHASE(0.0), // Phase shift (degrees) for CLKOUT1 (0.0 to 360.0)
+    .CLKOUT2_DIVIDE(2), // Division factor for CLKOUT2 (1 to 128)
+    .CLKOUT2_PHASE(90.0), // Phase shift (degrees) for CLKOUT2 (0.0 to 360.0)
+    .CLKOUT3_DIVIDE(5), // Division factor for CLKOUT3 (1 to 128)
+    .CLKOUT3_PHASE(0.0), // Phase shift (degrees) for CLKOUT3 (0.0 to 360.0)
+    .CLKOUT4_DIVIDE(10), // Division factor for CLKOUT4 (1 to 128)
+    .CLKOUT4_PHASE(0.0), // Phase shift (degrees) for CLKOUT4 (0.0 to 360.0)
+    .CLKOUT5_DIVIDE(33), // Division factor for CLKOUT5 (1 to 128)
+    .CLKOUT5_PHASE(0.0), // Phase shift (degrees) for CLKOUT5 (0.0 to 360.0)
+    .DIVCLK_DIVIDE(4), // Division factor for all clocks (1 to 52)
+    .REF_JITTER(0.100) // Input reference jitter (0.000 to 0.999 UI%)
+) pll_hdmi
+(
+    .CLKFBOUT(pll_hdmi_clkfb), // General output feedback signal
+    .CLKOUT0(pll_hdmi_clkout0_unbuffered), // One of six general clock output signals
+    .CLKOUT1(pll_hdmi_clkout1_unbuffered), // One of six general clock output signals
+    .CLKOUT2(pll_hdmi_clkout2_unbuffered), // One of six general clock output signals
+    .CLKOUT3(pll_hdmi_clkout3_unbuffered), // One of six general clock output signals
+    .CLKOUT4(pll_hdmi_clkout4_unbuffered), // One of six general clock output signals
+    .CLKOUT5(pll_hdmi_clkout5_unbuffered), // One of six general clock output signals
+    .LOCKED(), // Active high PLL lock signal
+    .CLKFBIN(pll_hdmi_clkfb), // Clock feedback input
+    .CLKIN(clk90m_unbuffered), // Clock input
+    .RST(1'b0) // Asynchronous PLL reset
+);
+BUFG hdmiPixelClock_bufg
+(
+    .I(pll_hdmi_clkout4_unbuffered),
+    .O(hdmiPixelClock)
+); */
+
 
 // DCM_CLKGEN:  [22.5 MHz CLKIN] * [28 CLKFX_MULTIPLY] / [11 CLKFX_DIVIDE] = [57.2727... MHz CLKFX] <- ntscClock
 

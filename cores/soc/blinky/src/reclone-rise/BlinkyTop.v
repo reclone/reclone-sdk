@@ -36,10 +36,20 @@ module BlinkyTop
    output GPIO29
 );
 
-Blinky #(.COUNTER_SIZE(25)) blinky
+wire audioClock;
+
+assign GPIO28 = 1'b1;
+
+Blinky #(.COUNTER_SIZE(27)) blinky
 (
-    .clock(CLK10M),
+    .clock(audioClock),
     .blink(GPIO29)
+);
+
+ClockGen clkGen
+(
+    .clk10m(CLK10M),
+    .audioClock(audioClock)
 );
 
 endmodule
