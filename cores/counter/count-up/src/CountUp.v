@@ -29,13 +29,15 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+`default_nettype none
+
 module CountUp # (parameter SIZE = 8)
 (
-    input                   clock,
-    input                   increment,
-    input                   load,
-    input [SIZE-1:0]        data,
-    input                   reset,
+    input wire              clock,
+    input wire              reset,
+    input wire              increment,
+    input wire              load,
+    input wire [SIZE-1:0]   data,
     output reg [SIZE-1:0]   out = 0
 );
 
@@ -51,7 +53,7 @@ begin
     end
     else if (increment)
     begin
-        out <= {out + 1}[SIZE-1:0];
+        out <= out + 1'd1;
     end
 end
 

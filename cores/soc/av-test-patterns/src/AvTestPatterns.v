@@ -25,10 +25,12 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+`default_nettype none
+
 module AvTestPatterns # (parameter COUNTER_SIZE = 8)
 (
-   input clock,
-   output blink
+   input wire clock,
+   output wire blink
 );
 
 wire[COUNTER_SIZE-1:0] count;

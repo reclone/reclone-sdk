@@ -25,28 +25,30 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+`default_nettype none
+
 module AvTestPatternsTop
 (
-   input  CLK10M,
-   output GPIO28,
-   output GPIO29
+   input wire  CLK10M,
+   output wire GPIO28,
+   output wire GPIO29
 );
 
-wire audioClock;
+wire hdmiPixelClock;
 
-assign GPIO28 = 1'b1;
-
+assign GPIO28 = 1;
 
 AvTestPatterns #(.COUNTER_SIZE(25)) blinky
 (
-    .clock(audioClock),
+    .clock( hdmiPixelClock),
     .blink(GPIO29)
 );
 
 ClockGen clkGen
 (
     .clk10m(CLK10M),
-    .audioClock(audioClock)
+    .audioClock(),
+    .hdmiPixelClock(hdmiPixelClock)
 );
 
 endmodule

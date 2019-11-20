@@ -5,7 +5,7 @@ add_custom_command (
           VCountUp__Syms.cpp
           VCountUp__Syms.h
   DEPENDS CountUp.v
-  COMMAND perl ${VERILATOR} -Wall -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
+  COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
     ${CMAKE_CURRENT_SOURCE_DIR}/CountUp.v
 )
 
