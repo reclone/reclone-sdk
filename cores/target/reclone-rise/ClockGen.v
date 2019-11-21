@@ -345,15 +345,15 @@ PLL_BASE
     .DIVCLK_DIVIDE(1), // Division factor for all clocks (1 to 52)
     .REF_JITTER(0.100) // Input reference jitter (0.000 to 0.999 UI%)
 )
-pll_ddr2_pal
+pll_mcb_pal
 (
     .CLKFBOUT(pll_mcb_pal_clkfb), // General output feedback signal
     .CLKOUT0(pll_mcb_clkout0_unbuffered_567p5_0),  // [567.5 MHz internal VCO OUT] / [1 CLKOUT0_DIVIDE] = [567.5 MHz @   0deg phase] <-- ddr2Clock0
     .CLKOUT1(pll_mcb_clkout1_unbuffered_567p5_180),// [567.5 MHz internal VCO OUT] / [1 CLKOUT1_DIVIDE] = [567.5 MHz @ 180deg phase] <-- ddr2Clock180
     .CLKOUT2(pll_mcb_clkout2_unbuffered_94p5833),  // [567.5 MHz internal VCO OUT] / [6 CLKOUT2_DIVIDE] = [94.5833 MHz] <- mcbCalibClock
-    .CLKOUT3(pll_pal_clkout3_unbuffered_70p9375),   // [567.5 MHz internal VCO OUT] / [8 CLKOUT3_DIVIDE] = [70.9375 MHz] <- palClock
-    .CLKOUT4(),                                     // Unused
-    .CLKOUT5(),                                     // Unused
+    .CLKOUT3(pll_pal_clkout3_unbuffered_70p9375),  // [567.5 MHz internal VCO OUT] / [8 CLKOUT3_DIVIDE] = [70.9375 MHz] <- palClock
+    .CLKOUT4(),                                    // Unused
+    .CLKOUT5(),                                    // Unused
     .LOCKED(pll_mcb_pal_locked), // Active high PLL lock signal
     .CLKFBIN(pll_mcb_pal_clkfb), // Clock feedback input
     .CLKIN(clk141p875m_unbuffered), // Clock input
