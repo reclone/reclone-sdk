@@ -1,6 +1,6 @@
 
 set(USER_CONSTRAINTS_FILE ${CMAKE_CURRENT_LIST_DIR}/reclone-rise.ucf)
-set(TARGET_PART "xc6slx16-3-ftg256")
+set(TARGET_PART "xc6slx16-2-ftg256")
 
 # ISE tool options
 set(XST_OPTS "\
