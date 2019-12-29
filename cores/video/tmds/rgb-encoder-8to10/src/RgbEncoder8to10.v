@@ -7,8 +7,8 @@
 //
 // A pixel clock must be provided for this encoder because it uses a register to keep track of the
 // data stream "disparity", i.e. it tracks the excess ones and zeros that have been transmitted.
-// The synchronous reset input should be asserted during the video preamble to properly zero-out
-// the disparity register prior to beginning each video data period.
+// The synchronous reset input should be asserted during the video leading guard band to properly
+// zero-out the disparity register prior to beginning each video data period.
 //
 // Copyright 2019 Reclone Labs <reclonelabs.com>
 //
@@ -46,6 +46,7 @@ module RgbEncoder8to10
 // disparity_cnt[3]==1 means disparity is negative, i.e. an excess number of zeros were transmitted
 // disparity_cnt[3]==0 means disparity is zero/positive, i.e. a balance or excess number of ones were transmitted
 reg [3:0] disparity_cnt = 4'd0;
+wire [3:0] disparity_cnt_next;
 
 wire [8:0] xored;
 assign xored[0] = d[0];
@@ -76,28 +77,69 @@ wire [8:0] tmds_word = use_xnored ? xnored : xored;
 wire [3:0] tmds_disparity = -4'd4 + tmds_word[0] + tmds_word[1] + tmds_word[2] + tmds_word[3] + 
                                     tmds_word[4] + tmds_word[5] + tmds_word[6] + tmds_word[7];
 
-
+// This TMDS encoding algorithm was implemented from the Digital Video Interface (DVI) v1.0 specification.
+// Based on 8 input data bits and a (ones minus zeros) disparity counter, produce a 
+// 10-bit transition-minimized word that provides an approximate running DC balance in the bitstream.
+// TMDS bits 7 to 0: running xor or xnor representation of the bit transitions in the input byte
+// TMDS bit 8: Indicates whether xor(1) or xnor(0) was used to encode bit transitions in TMDS bits 7 to 0
+// TMDS bit 9: Indicates whether TMDS bits 7 to 0 were inverted to improve DC balance of the bitstream
 always @ (*) begin
     if (disparity_cnt == 4'd0 or tmds_disparity == 4'd0) begin
         q[9] <= !tmds_word[8];
         q[8] <= tmds_word[8];
         if (tmds_word[8] == 1'b1) begin
-            q[7:0] = tmds_word[7:0];
+
+            q[7:0] <= tmds_word[7:0];
+
+            // The next disparity count value is the current disparity count,
+            // plus the difference: (number of ones minus number of zeros in TMDS bits 0 to 7).
+            // From DVI Spec: Cnt(t) = Cnt(t-1) + (N_1{q_m[0:7]} - N_0{q_m[0:7]});
+            disparity_cnt_next <= disparity_cnt + tmds_disparity;
+
         end else begin
-            q[7:0] = ~tmds_word[7:0];
+
+            q[7:0] <= ~tmds_word[7:0];
+
+            // The next disparity count value is the current disparity count,
+            // plus the difference: (number of ones minus number of zeros in TMDS bits 0 to 7).
+            // From DVI Spec: Cnt(t) = Cnt(t-1) + (N_0{q_m[0:7]} - N_1{q_m[0:7]});
+            disparity_cnt_next <= disparity_cnt - tmds_disparity;
+
         end
     end else begin
-    
+        if (tmds_disparity[3] == disparity_cnt[3]) begin
+
+            q[9] <= 1'b1;
+            q[8] <= tmds_word[8];
+            q[7:0] <= ~tmds_word[7:0];
+
+            // The next disparity count value is the current disparity count, plus twice the value of TMDS bit 8,
+            // plus the difference: (number of zeros minus number of ones in TMDS bits 0 to 7).
+            // From DVI Spec: Cnt(t) = Cnt(t-1) + 2*q_m[8] + (N_0{q_m[0:7]} - N_1{q_m[0:7]});
+            disparity_cnt_next <= disparity_cnt + tmds_word[8] + tmds_word[8] - tmds_disparity;
+
+        end else begin
+
+            q[9] <= 1'b0;
+            q[8] <= tmds_word[8];
+            q[7:0] <= tmds_word[7:0];
+
+            // The next disparity count value is the current disparity count, minus twice the *inverted* value of TMDS bit 8,
+            // plus the difference: (number of ones minus number of zeros in TMDS bits 0 to 7).
+            // From DVI Spec: Cnt(t) = Cnt(t-1) - 2*(~q_m[8]) + (N_1{q_m[0:7]} - N_0{q_m[0:7]});
+            disparity_cnt_next <= disparity_cnt - !tmds_word[8] - !tmds_word[8] + tmds_disparity;
+
+        end
     end
 end
 
+// Reset or store the new disparity count on each positive clock edge
 always @ (posedge clock) begin
     if (reset) begin
-        disparityCnt <= 5'd0;
-        q <= 10'd0;
+        disparity_cnt <= 4'd0;
     end else begin
+        disparity_cnt <= disparity_cnt_next;
     end
 end
-
 
 endmodule
