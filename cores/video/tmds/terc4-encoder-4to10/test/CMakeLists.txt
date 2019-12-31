@@ -1,0 +1,5 @@
+add_executable(testTerc4Encoder4to10 Terc4Encoder4to10Tests.cpp)
+
+target_link_libraries(testTerc4Encoder4to10 VTerc4Encoder4to10 gtest gtest_main)
+
+add_test(NAME testTerc4Encoder4to10 COMMAND testTerc4Encoder4to10)
