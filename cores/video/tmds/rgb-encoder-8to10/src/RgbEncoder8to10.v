@@ -10,6 +10,9 @@
 // The synchronous reset input should be asserted during the video leading guard band to properly
 // zero-out the disparity register prior to beginning each video data period.
 //
+// The TMDS encoding algorithm was implemented from the Digital Video Interface (DVI) v1.0 specification,
+// referencing tmds_encoder.vhd which was written and released open source by Mike Field <hamster@snap.net.nz>.
+//
 // Copyright 2019 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -48,6 +51,7 @@ module RgbEncoder8to10
 reg [3:0] disparity_cnt = 4'd0;
 wire [3:0] disparity_cnt_next;
 
+// Use xor to generate a representation of the bit transitions in the input byte
 wire [8:0] xored;
 assign xored[0] = d[0];
 assign xored[1] = xored[0] xor d[1];
@@ -59,6 +63,7 @@ assign xored[6] = xored[5] xor d[6];
 assign xored[7] = xored[6] xor d[7];
 assign xored[8] = 1;
 
+// Use xnor to generate another representation of the bit transitions in the input byte
 wire [8:0] xnored;
 assign xnored[0] = d[0];
 assign xnored[1] = xnored[0] xnor d[1];
@@ -70,10 +75,13 @@ assign xnored[6] = xnored[5] xnor d[6];
 assign xnored[7] = xnored[6] xnor d[7];
 assign xnored[8] = 0;
 
+// Use xnor instead of xor if the number of 1 bits is greater than 0 bits, or if the
+// number of 1s equals the number of 0s AND bit zero is a 0.
 wire [3:0] ones = d[0] + d[1] + d[2] + d[3] + d[4] + d[5] + d[6] + d[7];
-
 wire use_xnored = (ones > 4'd4) or (ones == 4'd4 and d[0] == 1'b0);
 wire [8:0] tmds_word = use_xnored ? xnored : xored;
+
+// Number of ones minus the number of zeros in the xor/xnor encoded byte
 wire [3:0] tmds_disparity = -4'd4 + tmds_word[0] + tmds_word[1] + tmds_word[2] + tmds_word[3] + 
                                     tmds_word[4] + tmds_word[5] + tmds_word[6] + tmds_word[7];
 
@@ -85,8 +93,10 @@ wire [3:0] tmds_disparity = -4'd4 + tmds_word[0] + tmds_word[1] + tmds_word[2] +
 // TMDS bit 9: Indicates whether TMDS bits 7 to 0 were inverted to improve DC balance of the bitstream
 always @ (*) begin
     if (disparity_cnt == 4'd0 or tmds_disparity == 4'd0) begin
+
         q[9] <= !tmds_word[8];
         q[8] <= tmds_word[8];
+
         if (tmds_word[8] == 1'b1) begin
 
             q[7:0] <= tmds_word[7:0];
@@ -101,7 +111,7 @@ always @ (*) begin
             q[7:0] <= ~tmds_word[7:0];
 
             // The next disparity count value is the current disparity count,
-            // plus the difference: (number of ones minus number of zeros in TMDS bits 0 to 7).
+            // plus the difference: (number of zeros minus number of ones in TMDS bits 0 to 7).
             // From DVI Spec: Cnt(t) = Cnt(t-1) + (N_0{q_m[0:7]} - N_1{q_m[0:7]});
             disparity_cnt_next <= disparity_cnt - tmds_disparity;
 
