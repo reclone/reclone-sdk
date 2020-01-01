@@ -45,11 +45,11 @@ module RgbEncoder8to10
     output wire[9:0] q
 );
 
-// disparity_cnt holds a signed value.  disparity_cnt[3] is the sign bit.
-// disparity_cnt[3]==1 means disparity is negative, i.e. an excess number of zeros were transmitted
-// disparity_cnt[3]==0 means disparity is zero/positive, i.e. a balance or excess number of ones were transmitted
-reg [3:0] disparity_cnt = 4'd0;
-wire [3:0] disparity_cnt_next;
+// disparity_cnt holds a signed value.  disparity_cnt[4] is the sign bit.
+// disparity_cnt[4]==1 means disparity is negative, i.e. an excess number of zeros were transmitted
+// disparity_cnt[4]==0 means disparity is zero/positive, i.e. a balance or excess number of ones were transmitted
+reg [4:0] disparity_cnt = 5'd0;
+wire [4:0] disparity_cnt_next;
 
 // Use xor to generate a representation of the bit transitions in the input byte
 wire [8:0] xored;
@@ -83,8 +83,10 @@ wire use_xnored = (ones > 4'd4) || (ones == 4'd4 && d[0] == 1'b0);
 wire [8:0] tmds_word = use_xnored ? xnored : xored;
 
 // Number of ones minus the number of zeros in the xor/xnor encoded byte
-wire [3:0] tmds_disparity = -4'd4 + {3'd0, tmds_word[0]} + {3'd0, tmds_word[1]} + {3'd0, tmds_word[2]} + {3'd0, tmds_word[3]} + 
-                                    {3'd0, tmds_word[4]} + {3'd0, tmds_word[5]} + {3'd0, tmds_word[6]} + {3'd0, tmds_word[7]};
+wire [4:0] tmds_disparity = -5'd8 + {2'd0, tmds_word[0], 1'd0} + {2'd0, tmds_word[1], 1'd0} + 
+                                    {2'd0, tmds_word[2], 1'd0} + {2'd0, tmds_word[3], 1'd0} + 
+                                    {2'd0, tmds_word[4], 1'd0} + {2'd0, tmds_word[5], 1'd0} + 
+                                    {2'd0, tmds_word[6], 1'd0} + {2'd0, tmds_word[7], 1'd0};
 
 // This TMDS encoding algorithm was implemented from the Digital Video Interface (DVI) v1.0 specification.
 // Based on 8 input data bits and a (ones minus zeros) disparity counter, produce a 
@@ -93,7 +95,7 @@ wire [3:0] tmds_disparity = -4'd4 + {3'd0, tmds_word[0]} + {3'd0, tmds_word[1]} 
 // TMDS bit 8: Indicates whether xor(1) or xnor(0) was used to encode bit transitions in TMDS bits 7 to 0
 // TMDS bit 9: Indicates whether TMDS bits 7 to 0 were inverted to improve DC balance of the bitstream
 always @ (*) begin
-    if (disparity_cnt == 4'd0 || tmds_disparity == 4'd0) begin
+    if (disparity_cnt == 5'd0 || tmds_disparity == 5'd0) begin
 
         q[9] = !tmds_word[8];
         q[8] = tmds_word[8];
@@ -118,7 +120,7 @@ always @ (*) begin
 
         end
     end else begin
-        if (tmds_disparity[3] == disparity_cnt[3]) begin
+        if (tmds_disparity[4] == disparity_cnt[4] && tmds_disparity[3:0] != 4'd0 && disparity_cnt[3:0] != 4'd0) begin
 
             q[9] = 1'b1;
             q[8] = tmds_word[8];
@@ -147,7 +149,7 @@ end
 // Reset or store the new disparity count on each positive clock edge
 always @ (posedge clock) begin
     if (reset) begin
-        disparity_cnt <= 4'd0;
+        disparity_cnt <= 5'd0;
     end else begin
         disparity_cnt <= disparity_cnt_next;
     end

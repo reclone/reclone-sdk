@@ -1,0 +1,5 @@
+add_executable(testRgbEncoder8to10 RgbEncoder8to10Tests.cpp)
+
+target_link_libraries(testRgbEncoder8to10 VRgbEncoder8to10 gtest gtest_main)
+
+add_test(NAME testRgbEncoder8to10 COMMAND testRgbEncoder8to10)
