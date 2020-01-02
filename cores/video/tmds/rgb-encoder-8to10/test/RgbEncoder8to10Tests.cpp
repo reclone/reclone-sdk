@@ -24,6 +24,7 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <stdlib.h>
 #include "gtest/gtest.h"
 #include "VRgbEncoder8to10.h"
 
@@ -43,8 +44,115 @@ class RgbEncoder8to10Tests : public ::testing::Test
         
     protected:
         VRgbEncoder8to10 _uut;
-        unsigned int _expectedDisparityCnt;
+        int _expectedDisparityCnt;
+        
+        void testEncodingByteWithTmds(unsigned char d);
+        static int numberOfOneBits(unsigned char d);
+        static int numberOfZeroBits(unsigned char d) { return 8 - numberOfOneBits(d); }
 };
+
+int RgbEncoder8to10Tests::numberOfOneBits(unsigned char d)
+{
+    int numOnes = 0;
+    
+    for (int i = 0; i < 8; ++i)
+    {
+        if (((d >> i) & 1U) != 0U)
+        {
+            ++numOnes;
+        }
+    }
+    
+    return numOnes;
+}
+
+void RgbEncoder8to10Tests::testEncodingByteWithTmds(unsigned char d)
+{
+    // First, set the input and evaluate the module
+    _uut.d = d;
+    _uut.clock = 0;
+    _uut.reset = 0;
+    _uut.eval();
+    
+    // Calculate the expected encoded output and updated disparity count
+    
+    unsigned int q_m = (d & 1);
+    if (numberOfOneBits(d) > 4 || (numberOfOneBits(d) == 4 && (d & 1) == 0))
+    {
+        // xnor (bitwise equality)
+        q_m |= (((q_m >> 0) & 1) == ((d >> 1) & 1)) << 1;
+        q_m |= (((q_m >> 1) & 1) == ((d >> 2) & 1)) << 2;
+        q_m |= (((q_m >> 2) & 1) == ((d >> 3) & 1)) << 3;
+        q_m |= (((q_m >> 3) & 1) == ((d >> 4) & 1)) << 4;
+        q_m |= (((q_m >> 4) & 1) == ((d >> 5) & 1)) << 5;
+        q_m |= (((q_m >> 5) & 1) == ((d >> 6) & 1)) << 6;
+        q_m |= (((q_m >> 6) & 1) == ((d >> 7) & 1)) << 7;
+        q_m |= 0U << 8;
+    }
+    else
+    {
+        // xor
+        q_m |= (((q_m >> 0) & 1) ^ ((d >> 1) & 1)) << 1;
+        q_m |= (((q_m >> 1) & 1) ^ ((d >> 2) & 1)) << 2;
+        q_m |= (((q_m >> 2) & 1) ^ ((d >> 3) & 1)) << 3;
+        q_m |= (((q_m >> 3) & 1) ^ ((d >> 4) & 1)) << 4;
+        q_m |= (((q_m >> 4) & 1) ^ ((d >> 5) & 1)) << 5;
+        q_m |= (((q_m >> 5) & 1) ^ ((d >> 6) & 1)) << 6;
+        q_m |= (((q_m >> 6) & 1) ^ ((d >> 7) & 1)) << 7;
+        q_m |= 1U << 8;
+    }
+    
+    unsigned int q_out = 0;
+    if (0 == _expectedDisparityCnt || numberOfOneBits(q_m) == numberOfZeroBits(q_m))
+    {
+        q_out |= (((~q_m >> 8) & 1)) << 9;
+        q_out |= (((q_m >> 8) & 1)) << 8;
+        q_out |= ((q_m >> 8) & 1) ? (q_m & 0xFF) : (~q_m & 0xFF);
+        
+        if (((q_m >> 8) & 1) == 0)
+        {
+            _expectedDisparityCnt += numberOfZeroBits(q_m) - numberOfOneBits(q_m);
+        }
+        else
+        {
+            _expectedDisparityCnt += numberOfOneBits(q_m) - numberOfZeroBits(q_m);
+        }
+    }
+    else
+    {
+        if ((_expectedDisparityCnt > 0 && numberOfOneBits(q_m) > numberOfZeroBits(q_m)) ||
+            (_expectedDisparityCnt < 0 && numberOfZeroBits(q_m) > numberOfOneBits(q_m)))
+        {
+            q_out |= 1U << 9;
+            q_out |= (((q_m >> 8) & 1)) << 8;
+            q_out |= (~q_m & 0xFF);
+            _expectedDisparityCnt += 2 * ((q_m >> 8) & 1) + numberOfZeroBits(q_m) - numberOfOneBits(q_m);
+        }
+        else
+        {
+            q_out |= 0U << 9;
+            q_out |= (((q_m >> 8) & 1)) << 8;
+            q_out |= (q_m & 0xFF);
+            _expectedDisparityCnt += -2 * ((~q_m >> 8) & 1) + numberOfOneBits(q_m) - numberOfZeroBits(q_m);
+        }
+    }
+    
+    // Check the encoded output
+    //std::cout << "Output q is " << static_cast<unsigned int>(_uut.q) << std::endl;
+    ASSERT_EQ(q_out, _uut.q);
+    
+    // Check the new disparity count
+    // Normalize to an unsigned 5-bit field for comparison to the internal disparity count register
+    ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    
+    // Rising clock edge to store the new disparity count
+    _uut.clock = 1;
+    _uut.eval();
+    ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    
+    // Disparity count should never stray outside of -10..10
+    ASSERT_LE(abs(_expectedDisparityCnt), 10);
+}
 
 TEST_F(RgbEncoder8to10Tests, InitialConditions)
 {
@@ -170,4 +278,52 @@ TEST_F(RgbEncoder8to10Tests, NegDisparityMoreZeros)
     ASSERT_EQ(0xFF, _uut.q & 0xFF);
     ASSERT_EQ(0x06, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
 }
+
+TEST_F(RgbEncoder8to10Tests, InputSweepAscending)
+{
+    _uut.eval();
+    for (unsigned int i = 0; i <= 0xFF; ++i)
+    {
+        //std::cout << "Testing input of " << i << std::endl;
+        testEncodingByteWithTmds(static_cast<unsigned char>(i));
+        //std::cout << "Disparity count is " << static_cast<unsigned int>(_uut.RgbEncoder8to10__DOT__disparity_cnt) << std::endl;
+    }
+}
+
+TEST_F(RgbEncoder8to10Tests, InputSweepDescending)
+{
+    _uut.eval();
+    for (int i = 0xFF; i >= 0; --i)
+    {
+        //std::cout << "Testing input of " << i << std::endl;
+        testEncodingByteWithTmds(static_cast<unsigned char>(i));
+        //std::cout << "Disparity count is " << static_cast<unsigned int>(_uut.RgbEncoder8to10__DOT__disparity_cnt) << std::endl;
+    }
+}
+
+TEST_F(RgbEncoder8to10Tests, InputSweepAscendingXor)
+{
+    _uut.eval();
+    for (unsigned int i = 0; i <= 0xFF; ++i)
+    {
+        //std::cout << "Testing input of " << i << std::endl;
+        testEncodingByteWithTmds(static_cast<unsigned char>(i ^ 0x5A));
+        //std::cout << "Disparity count is " << static_cast<unsigned int>(_uut.RgbEncoder8to10__DOT__disparity_cnt) << std::endl;
+    }
+}
+
+TEST_F(RgbEncoder8to10Tests, RandomInputs)
+{
+    _uut.eval();
+    for (unsigned int i = 0; i < 1000000; ++i)
+    {
+        int d = rand() % 0x100;
+        //std::cout << "Testing input of " << d << std::endl;
+        testEncodingByteWithTmds(static_cast<unsigned char>(d));
+        //std::cout << "Disparity count is " << _expectedDisparityCnt << std::endl;
+    }
+}
+
+
+
 

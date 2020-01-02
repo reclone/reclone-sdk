@@ -97,7 +97,7 @@ wire [4:0] tmds_disparity = -5'd8 + {2'd0, tmds_word[0], 1'd0} + {2'd0, tmds_wor
 always @ (*) begin
     if (disparity_cnt == 5'd0 || tmds_disparity == 5'd0) begin
 
-        q[9] = !tmds_word[8];
+        q[9] = ~tmds_word[8];
         q[8] = tmds_word[8];
 
         if (tmds_word[8] == 1'b1) begin
@@ -129,7 +129,7 @@ always @ (*) begin
             // The next disparity count value is the current disparity count, plus twice the value of TMDS bit 8,
             // plus the difference: (number of zeros minus number of ones in TMDS bits 0 to 7).
             // From DVI Spec: Cnt(t) = Cnt(t-1) + 2*q_m[8] + (N_0{q_m[0:7]} - N_1{q_m[0:7]});
-            disparity_cnt_next = disparity_cnt + {3'd0, tmds_word[8]} + {3'd0, tmds_word[8]} - tmds_disparity;
+            disparity_cnt_next = disparity_cnt + {2'd0, tmds_word[8], 1'd0} - tmds_disparity;
 
         end else begin
 
@@ -140,7 +140,7 @@ always @ (*) begin
             // The next disparity count value is the current disparity count, minus twice the *inverted* value of TMDS bit 8,
             // plus the difference: (number of ones minus number of zeros in TMDS bits 0 to 7).
             // From DVI Spec: Cnt(t) = Cnt(t-1) - 2*(~q_m[8]) + (N_1{q_m[0:7]} - N_0{q_m[0:7]});
-            disparity_cnt_next = disparity_cnt - {3'd0, ~tmds_word[8]} - {3'd0, ~tmds_word[8]} + tmds_disparity;
+            disparity_cnt_next = disparity_cnt - {2'd0, ~tmds_word[8], 1'd0} + tmds_disparity;
 
         end
     end
