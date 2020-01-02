@@ -95,6 +95,7 @@ wire [4:0] tmds_disparity = -5'd8 + {2'd0, tmds_word[0], 1'd0} + {2'd0, tmds_wor
 // TMDS bit 8: Indicates whether xor(1) or xnor(0) was used to encode bit transitions in TMDS bits 7 to 0
 // TMDS bit 9: Indicates whether TMDS bits 7 to 0 were inverted to improve DC balance of the bitstream
 always @ (*) begin
+    // If either the TMDS word disparity or the disparity count is zero
     if (disparity_cnt == 5'd0 || tmds_disparity == 5'd0) begin
 
         q[9] = ~tmds_word[8];
@@ -120,7 +121,8 @@ always @ (*) begin
 
         end
     end else begin
-        if (tmds_disparity[4] == disparity_cnt[4] && tmds_disparity[3:0] != 4'd0 && disparity_cnt[3:0] != 4'd0) begin
+        // If the TMDS word disparity and the disparity count are both positive or both negative
+        if (tmds_disparity[4] == disparity_cnt[4]) begin
 
             q[9] = 1'b1;
             q[8] = tmds_word[8];
