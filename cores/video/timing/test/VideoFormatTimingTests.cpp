@@ -53,6 +53,7 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
     _uut.vBackPorch = 20;
     _uut.vActive = 720;
     _uut.syncIsActiveLow = 0;
+    _uut.isInterlaced = 0;
     _uut.eval();
     
     for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
@@ -122,7 +123,7 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
     }
 }
 
-/* TEST_F(VideoFormatTimingTests, Hd1080i60)
+TEST_F(VideoFormatTimingTests, Hd1080i60)
 {
     _uut.clock = 0;
     _uut.reset = 0;
@@ -130,16 +131,20 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
     _uut.hSyncPulse = 44;
     _uut.hBackPorch = 148;
     _uut.hActive = 1920;
-    _uut.vFrontPorch = 5;
-    _uut.vSyncPulse = 5;
-    _uut.vBackPorch = 20;
-    _uut.vActive = 720;
+    _uut.vFrontPorch = 4;
+    _uut.vSyncPulse = 10;
+    _uut.vBackPorch = 30;
+    _uut.vActive = 1080;
     _uut.syncIsActiveLow = 0;
+    _uut.isInterlaced = 1;
     _uut.eval();
+    
+    unsigned int hHalfLine = (_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive)/2U;
     
     for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
     {
-        for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
+        // even field
+        for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); vCount += 2)
         {
             ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
 
@@ -201,8 +206,73 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
                 _uut.eval();
             }
         }
+        
+        // odd field (one more line than in even field)
+        for (unsigned int vCount = 1; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive + 2U); vCount += 2U)
+        {
+            //std::cout << vCount << std::endl;
+            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+
+            if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + 2))
+            {
+                ASSERT_EQ(vCount - _uut.vFrontPorch - _uut.vSyncPulse - _uut.vBackPorch - 2, _uut.vPos);
+            }
+            else
+            {
+                ASSERT_EQ(0, _uut.vPos);
+            }
+
+            for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
+            {
+                //std::cout << vCount << " " << hCount << std::endl;
+                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                
+                if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
+                {
+                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                }
+                else
+                {
+                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                }
+                
+                if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch + 1U && hCount >= _uut.hFrontPorch + hHalfLine)) && 
+                    (vCount < (_uut.vFrontPorch + _uut.vSyncPulse + 1U) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse + 1U) && hCount < _uut.hFrontPorch + hHalfLine)))
+                {
+                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                }
+                else
+                {
+                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                }
+                
+                if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
+                {
+                    ASSERT_EQ(hCount - _uut.hFrontPorch - _uut.hSyncPulse - _uut.hBackPorch, _uut.hPos);
+
+                    if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + 2U))
+                    {
+                        ASSERT_EQ(1, _uut.dataEnable);
+                    }
+                    else
+                    {
+                        ASSERT_EQ(0, _uut.dataEnable);
+                    }
+                }
+                else
+                {
+                    ASSERT_EQ(0, _uut.dataEnable);
+                    ASSERT_EQ(0, _uut.hPos);
+                }
+                
+                _uut.clock = 1;
+                _uut.eval();
+                _uut.clock = 0;
+                _uut.eval();
+            }
+        }
     }
-}*/
+}
 
 
 TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
@@ -218,6 +288,7 @@ TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
     _uut.vBackPorch = 31;
     _uut.vActive = 480;
     _uut.syncIsActiveLow = 1;
+    _uut.isInterlaced = 0;
     _uut.eval();
     
     // Reset so that the non-default sync polarity takes effect
@@ -307,6 +378,7 @@ TEST_F(VideoFormatTimingTests, Svga800x600at72Hz)
     _uut.vBackPorch = 23;
     _uut.vActive = 600;
     _uut.syncIsActiveLow = 0;
+    _uut.isInterlaced = 0;
     _uut.eval();
     
     for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
@@ -389,6 +461,7 @@ TEST_F(VideoFormatTimingTests, Xga1024x768at85Hz)
     _uut.vBackPorch = 36;
     _uut.vActive = 768;
     _uut.syncIsActiveLow = 0;
+    _uut.isInterlaced = 0;
     _uut.eval();
     
     for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
