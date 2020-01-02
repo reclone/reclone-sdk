@@ -97,7 +97,7 @@ always @ (posedge clock) begin
                     ^ syncIsActiveLow;
         vSync <= ((vCountNext >= {7'd0, vFrontPorch}) && (vCountNext < {7'd0, vFrontPorch} + {7'd0, vSyncPulse}))
                     ^ syncIsActiveLow;
-        dataEnable <= hBlankNext || vBlankNext;
+        dataEnable <= !hBlankNext && !vBlankNext;
         hPos <= hBlankNext ? 12'd0 : (hCountNext - {3'd0, hBlank});
         vPos <= vBlankNext ? 11'd0 : (vCountNext - {6'd0, vBlank});
     end

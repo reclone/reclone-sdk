@@ -1,0 +1,5 @@
+add_executable(testVideoFormatTiming VideoFormatTimingTests.cpp)
+
+target_link_libraries(testVideoFormatTiming VVideoFormatTiming gtest gtest_main)
+
+add_test(NAME testVideoFormatTiming COMMAND testVideoFormatTiming)
