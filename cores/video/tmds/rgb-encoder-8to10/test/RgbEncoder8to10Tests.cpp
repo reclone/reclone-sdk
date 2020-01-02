@@ -133,4 +133,41 @@ TEST_F(RgbEncoder8to10Tests, PosDisparityMoreZeros)
     ASSERT_EQ(0x20-6, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
+TEST_F(RgbEncoder8to10Tests, NegDisparityMoreOnes)
+{
+    _uut.d = 0x79;
+    _uut.eval();
+    ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
+    ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
+    ASSERT_EQ(0x82, _uut.q & 0xFF); //10000010
+    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    _uut.clock = 1;
+    _uut.eval();
+    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    _uut.d = 0xFF;
+    _uut.eval();
+    ASSERT_EQ(0U, (_uut.q >> 9) & 1U);
+    ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
+    ASSERT_EQ(0xFF, _uut.q & 0xFF);
+    ASSERT_EQ(0x02, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+}
+
+TEST_F(RgbEncoder8to10Tests, NegDisparityMoreZeros)
+{
+    _uut.d = 0x79;
+    _uut.eval();
+    ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
+    ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
+    ASSERT_EQ(0x82, _uut.q & 0xFF); //10000010
+    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    _uut.clock = 1;
+    _uut.eval();
+    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    _uut.d = 0x00;
+    _uut.eval();
+    ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
+    ASSERT_EQ(1U, (_uut.q >> 8) & 1U);
+    ASSERT_EQ(0xFF, _uut.q & 0xFF);
+    ASSERT_EQ(0x06, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+}
 
