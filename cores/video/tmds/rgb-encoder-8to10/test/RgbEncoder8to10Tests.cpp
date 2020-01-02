@@ -141,6 +141,46 @@ void RgbEncoder8to10Tests::testEncodingByteWithTmds(unsigned char d)
     //std::cout << "Output q is " << static_cast<unsigned int>(_uut.q) << std::endl;
     ASSERT_EQ(q_out, _uut.q);
     
+    // Decode and make sure it matches the input
+    
+    unsigned char q_possibly_inverted;
+    if ((_uut.q >> 9) & 1)
+    {
+        q_possibly_inverted = (~_uut.q) & 0xFF;
+    }
+    else
+    {
+        q_possibly_inverted = (_uut.q) & 0xFF;
+    }
+    
+    unsigned char q_decoded = 0;
+    if ((_uut.q >> 8) & 1)
+    {
+        // xor
+        q_decoded |= (q_possibly_inverted >> 0) & 1;
+        q_decoded |= (((q_possibly_inverted >> 1) & 1) ^ ((q_possibly_inverted >> 0) & 1)) << 1;
+        q_decoded |= (((q_possibly_inverted >> 2) & 1) ^ ((q_possibly_inverted >> 1) & 1)) << 2;
+        q_decoded |= (((q_possibly_inverted >> 3) & 1) ^ ((q_possibly_inverted >> 2) & 1)) << 3;
+        q_decoded |= (((q_possibly_inverted >> 4) & 1) ^ ((q_possibly_inverted >> 3) & 1)) << 4;
+        q_decoded |= (((q_possibly_inverted >> 5) & 1) ^ ((q_possibly_inverted >> 4) & 1)) << 5;
+        q_decoded |= (((q_possibly_inverted >> 6) & 1) ^ ((q_possibly_inverted >> 5) & 1)) << 6;
+        q_decoded |= (((q_possibly_inverted >> 7) & 1) ^ ((q_possibly_inverted >> 6) & 1)) << 7;
+    }
+    else
+    {
+        // xnor
+        q_decoded |= (q_possibly_inverted >> 0) & 1;
+        q_decoded |= (((q_possibly_inverted >> 1) & 1) == ((q_possibly_inverted >> 0) & 1)) << 1;
+        q_decoded |= (((q_possibly_inverted >> 2) & 1) == ((q_possibly_inverted >> 1) & 1)) << 2;
+        q_decoded |= (((q_possibly_inverted >> 3) & 1) == ((q_possibly_inverted >> 2) & 1)) << 3;
+        q_decoded |= (((q_possibly_inverted >> 4) & 1) == ((q_possibly_inverted >> 3) & 1)) << 4;
+        q_decoded |= (((q_possibly_inverted >> 5) & 1) == ((q_possibly_inverted >> 4) & 1)) << 5;
+        q_decoded |= (((q_possibly_inverted >> 6) & 1) == ((q_possibly_inverted >> 5) & 1)) << 6;
+        q_decoded |= (((q_possibly_inverted >> 7) & 1) == ((q_possibly_inverted >> 6) & 1)) << 7;
+    }
+    
+    ASSERT_EQ(d, q_decoded);
+    
     // Check the new disparity count
     // Normalize to an unsigned 5-bit field for comparison to the internal disparity count register
     ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
