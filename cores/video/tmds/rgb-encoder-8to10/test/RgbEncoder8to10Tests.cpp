@@ -25,6 +25,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
+#include <time.h>
 #include "gtest/gtest.h"
 #include "VRgbEncoder8to10.h"
 
@@ -354,6 +355,7 @@ TEST_F(RgbEncoder8to10Tests, InputSweepAscendingXor)
 
 TEST_F(RgbEncoder8to10Tests, RandomInputs)
 {
+    srand(time(nullptr));
     _uut.eval();
     for (unsigned int i = 0; i < 1000000; ++i)
     {
