@@ -1,0 +1,5 @@
+add_executable(testCtlEncoder2to10 CtlEncoder2to10Tests.cpp)
+
+target_link_libraries(testCtlEncoder2to10 VCtlEncoder2to10 gtest gtest_main)
+
+add_test(NAME testCtlEncoder2to10 COMMAND testCtlEncoder2to10)
