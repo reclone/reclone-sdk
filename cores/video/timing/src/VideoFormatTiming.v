@@ -36,12 +36,12 @@ module VideoFormatTiming
     input wire clock,
     input wire reset,
     input wire [6:0] hFrontPorch,
-    input wire [5:0] hSyncPulse,
+    input wire [7:0] hSyncPulse,
     input wire [7:0] hBackPorch,
     input wire [10:0] hActive,
-    input wire [3:0] vFrontPorch,
+    input wire [5:0] vFrontPorch,
     input wire [3:0] vSyncPulse,
-    input wire [4:0] vBackPorch,
+    input wire [5:0] vBackPorch,
     input wire [10:0] vActive,
     input wire syncIsActiveLow,
     //TODO input wire isInterlaced,
@@ -56,16 +56,16 @@ module VideoFormatTiming
 reg [11:0] hCount = 0;
 reg [10:0] vCount = 0;
 
-wire [8:0] hBlank = {2'd0, hFrontPorch} + {3'd0, hSyncPulse} + {1'd0, hBackPorch};
+wire [8:0] hBlank = {2'd0, hFrontPorch} + {1'd0, hSyncPulse} + {1'd0, hBackPorch};
 wire [11:0] hTotal = {3'd0, hBlank} + hActive;
 
-wire [4:0] vBlank = {1'd0, vFrontPorch} + {1'd0, vSyncPulse} + vBackPorch;
-wire [10:0] vTotal = {6'd0, vBlank} + vActive;
+wire [6:0] vBlank = {1'd0, vFrontPorch} + {3'd0, vSyncPulse} + {1'd0, vBackPorch};
+wire [10:0] vTotal = {4'd0, vBlank} + vActive;
 
 wire [11:0] hCountNext;
 wire [10:0] vCountNext;
 wire hBlankNext = (hCountNext < {3'd0, hBlank});
-wire vBlankNext = (vCountNext < {6'd0, vBlank});
+wire vBlankNext = (vCountNext < {4'd0, vBlank});
 
 always @ (*) begin
     if (hCount + 1'd1 < hTotal) begin
@@ -85,21 +85,21 @@ always @ (posedge clock) begin
     if (reset == 1'b1) begin
         hCount <= 12'd0;
         vCount <= 11'd0;
-        hSync <= 1'b0;
-        vSync <= 1'b0;
+        hSync <= syncIsActiveLow;
+        vSync <= syncIsActiveLow;
         dataEnable <= 1'b0;
         hPos <= 12'd0;
         vPos <= 11'd0;
     end else begin
         hCount <= hCountNext;
         vCount <= vCountNext;
-        hSync <= ((hCountNext >= {5'd0, hFrontPorch}) && (hCountNext < {5'd0, hFrontPorch} + {6'd0, hSyncPulse})) 
+        hSync <= ((hCountNext >= {5'd0, hFrontPorch}) && (hCountNext < {5'd0, hFrontPorch} + {4'd0, hSyncPulse})) 
                     ^ syncIsActiveLow;
-        vSync <= ((vCountNext >= {7'd0, vFrontPorch}) && (vCountNext < {7'd0, vFrontPorch} + {7'd0, vSyncPulse}))
+        vSync <= ((vCountNext >= {5'd0, vFrontPorch}) && (vCountNext < {5'd0, vFrontPorch} + {7'd0, vSyncPulse}))
                     ^ syncIsActiveLow;
         dataEnable <= !hBlankNext && !vBlankNext;
         hPos <= hBlankNext ? 12'd0 : (hCountNext - {3'd0, hBlank});
-        vPos <= vBlankNext ? 11'd0 : (vCountNext - {6'd0, vBlank});
+        vPos <= vBlankNext ? 11'd0 : (vCountNext - {4'd0, vBlank});
     end
 end
 
