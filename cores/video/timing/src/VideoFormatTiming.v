@@ -66,6 +66,9 @@ wire [11:0] hCountNext;
 wire [10:0] vCountNext;
 wire hBlankNext = (hCountNext < {3'd0, hBlank});
 wire vBlankNext = (vCountNext < {4'd0, vBlank});
+wire [5:0] vSyncStartLine = vFrontPorch + {5'd0, (isInterlaced & vCountNext[0])};
+wire [5:0] vSyncEndLine = vFrontPorch + {2'd0, vSyncPulse} + {5'd0, (isInterlaced & vCountNext[0])};
+wire [11:0] vSyncInterlaceDelay = ((isInterlaced & vCountNext[0]) ? {1'd0, hTotal[11:1]} : 12'd0);
 
 always @ (*) begin
     if (hCount + 1'd1 < hTotal) begin
@@ -94,14 +97,12 @@ always @ (posedge clock) begin
         hCount <= hCountNext;
         vCount <= vCountNext;
         hSync <= ((hCountNext >= {5'd0, hFrontPorch}) && (hCountNext < {5'd0, hFrontPorch} + {4'd0, hSyncPulse})) 
-                    ^ syncIsActiveLow;
-        vSync <= ((vCountNext > {5'd0, vFrontPorch} + {10'd0, (isInterlaced & vCountNext[0])} || 
-                  (vCountNext == {5'd0, vFrontPorch} + {10'd0, (isInterlaced & vCountNext[0])} && 
-                   hCountNext >= ({5'd0, hFrontPorch} + ((isInterlaced & vCountNext[0]) ? {1'd0, hTotal[11:1]} : 12'd0)))) 
-              && ((vCountNext < {5'd0, vFrontPorch} + {7'd0, vSyncPulse} + {10'd0, (isInterlaced & vCountNext[0])}) || 
-                  (vCountNext == {5'd0, vFrontPorch} + {7'd0, vSyncPulse} + {10'd0, (isInterlaced & vCountNext[0])} && 
-                   hCountNext < ({5'd0, hFrontPorch} + ((isInterlaced & vCountNext[0]) ? {1'd0, hTotal[11:1]} : 12'd0))) ))
-              ^ syncIsActiveLow;
+                ^ syncIsActiveLow;
+        vSync <= ( (vCountNext > {5'd0, vSyncStartLine} || 
+                    (vCountNext == {5'd0, vSyncStartLine} && hCountNext >= ({5'd0, hFrontPorch} + vSyncInterlaceDelay))) 
+                && (vCountNext < {5'd0, vSyncEndLine} || 
+                    (vCountNext == {5'd0, vSyncEndLine} && hCountNext < ({5'd0, hFrontPorch} + vSyncInterlaceDelay)) ))
+                ^ syncIsActiveLow;
         dataEnable <= !hBlankNext && !vBlankNext;
         hPos <= hBlankNext ? 12'd0 : (hCountNext - {3'd0, hBlank});
         vPos <= vBlankNext ? 11'd0 : (vCountNext - {4'd0, vBlank});
