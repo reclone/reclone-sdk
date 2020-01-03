@@ -95,10 +95,10 @@ always @ (posedge clock) begin
         vCount <= vCountNext;
         hSync <= ((hCountNext >= {5'd0, hFrontPorch}) && (hCountNext < {5'd0, hFrontPorch} + {4'd0, hSyncPulse})) 
                     ^ syncIsActiveLow;
-        vSync <= ((vCountNext > {5'd0, vFrontPorch} || 
+        vSync <= ((vCountNext > {5'd0, vFrontPorch} + {10'd0, (isInterlaced & vCountNext[0])} || 
                   (vCountNext == {5'd0, vFrontPorch} + {10'd0, (isInterlaced & vCountNext[0])} && 
                    hCountNext >= ({5'd0, hFrontPorch} + ((isInterlaced & vCountNext[0]) ? {1'd0, hTotal[11:1]} : 12'd0)))) 
-              && ((vCountNext < {5'd0, vFrontPorch} + {7'd0, vSyncPulse}) || 
+              && ((vCountNext < {5'd0, vFrontPorch} + {7'd0, vSyncPulse} + {10'd0, (isInterlaced & vCountNext[0])}) || 
                   (vCountNext == {5'd0, vFrontPorch} + {7'd0, vSyncPulse} + {10'd0, (isInterlaced & vCountNext[0])} && 
                    hCountNext < ({5'd0, hFrontPorch} + ((isInterlaced & vCountNext[0]) ? {1'd0, hTotal[11:1]} : 12'd0))) ))
               ^ syncIsActiveLow;

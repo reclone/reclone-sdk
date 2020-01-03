@@ -24,13 +24,18 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VVideoFormatTiming.h"
 
 class VideoFormatTimingTests : public ::testing::Test
 {
     public:
-        VideoFormatTimingTests() { }
+        VideoFormatTimingTests() : _tickCount(1)
+        {
+            Verilated::traceEverOn(true);
+        }
+        
         virtual ~VideoFormatTimingTests()
         {
             _uut.final();
@@ -38,10 +43,15 @@ class VideoFormatTimingTests : public ::testing::Test
         
     protected:
         VVideoFormatTiming _uut;
+        unsigned int _tickCount;
 };
 
 TEST_F(VideoFormatTimingTests, Hd720p60)
 {
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("Hd720p60.vcd");
+    
     _uut.clock = 0;
     _uut.reset = 0;
     _uut.hFrontPorch = 110;
@@ -55,8 +65,10 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
     _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    vcd_trace.flush();
     
-    for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
+    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
@@ -116,15 +128,26 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
                 
                 _uut.clock = 1;
                 _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
                 _uut.clock = 0;
                 _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
+                vcd_trace.flush();
             }
         }
     }
+    
+    vcd_trace.close();
 }
 
 TEST_F(VideoFormatTimingTests, Hd1080i60)
 {
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("Hd1080i60.vcd");
+    
     _uut.clock = 0;
     _uut.reset = 0;
     _uut.hFrontPorch = 88;
@@ -139,9 +162,12 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
     _uut.isInterlaced = 1;
     _uut.eval();
     
+    vcd_trace.dump(_tickCount++);
+    vcd_trace.flush();
+    
     unsigned int hHalfLine = (_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive)/2U;
     
-    for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
+    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
         // even field
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); vCount += 2)
@@ -202,8 +228,13 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                 
                 _uut.clock = 1;
                 _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
                 _uut.clock = 0;
                 _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
+                vcd_trace.flush();
             }
         }
         
@@ -236,7 +267,7 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                     ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
                 }
                 
-                if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch + 1U && hCount >= _uut.hFrontPorch + hHalfLine)) && 
+                if ((vCount > _uut.vFrontPorch + 1U || (vCount == _uut.vFrontPorch + 1U && hCount >= _uut.hFrontPorch + hHalfLine)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse + 1U) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse + 1U) && hCount < _uut.hFrontPorch + hHalfLine)))
                 {
                     ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
@@ -267,11 +298,18 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                 
                 _uut.clock = 1;
                 _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
                 _uut.clock = 0;
                 _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
+                vcd_trace.flush();
             }
         }
     }
+    
+    vcd_trace.close();
 }
 
 
@@ -298,7 +336,7 @@ TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
     _uut.clock = 0;
     _uut.eval();
     
-    for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
+    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
@@ -381,7 +419,7 @@ TEST_F(VideoFormatTimingTests, Svga800x600at72Hz)
     _uut.isInterlaced = 0;
     _uut.eval();
     
-    for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
+    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
@@ -464,7 +502,7 @@ TEST_F(VideoFormatTimingTests, Xga1024x768at85Hz)
     _uut.isInterlaced = 0;
     _uut.eval();
     
-    for (unsigned int frameCount = 0; frameCount < 3; ++frameCount)
+    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
