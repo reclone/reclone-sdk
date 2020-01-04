@@ -9,7 +9,7 @@
 // are encoded to 10 bits using a transition-maximized signalling.
 //
 // The 10 output bits for each LVDS channel are typically serialized and transmitted on a
-// differential pair of output pins.  This serialization and differential signalling is
+// pair of differential output pins.  This serialization and differential signalling is
 // hardware-specific (depends on the selected FPGA), therefore it is not included this
 // common module.
 //
@@ -50,8 +50,71 @@ module DviEncoder
     output reg[9:0] channel0,
     output reg[9:0] channel1,
     output reg[9:0] channel2,
-    output reg[9:0] channelC
+    output wire[9:0] channelC
 );
 
+wire[9:0] ctlChannel0Out;
+wire[9:0] ctlChannel1Out;
+wire[9:0] ctlChannel2Out;
+
+wire[9:0] rgbChannel0Out;
+wire[9:0] rgbChannel1Out;
+wire[9:0] rgbChannel2Out;
+
+assign channelC = 10'b1111100000;
+
+RgbEncoder8to10 rgbChannel0
+(
+    .clock(pixelClock),
+    .reset(~dataEnable),
+    .d(blue),
+    .q(rgbChannel0Out)
+);
+
+RgbEncoder8to10 rgbChannel1
+(
+    .clock(pixelClock),
+    .reset(~dataEnable),
+    .d(green),
+    .q(rgbChannel1Out)
+);
+
+RgbEncoder8to10 rgbChannel2
+(
+    .clock(pixelClock),
+    .reset(~dataEnable),
+    .d(red),
+    .q(rgbChannel2Out)
+);
+
+CtlEncoder2to10 ctlChannel0
+(
+    .d({vSync, hSync}),
+    .q(ctlChannel0Out)
+);
+
+CtlEncoder2to10 ctlChannel1
+(
+    .d(2'd0),
+    .q(ctlChannel1Out)
+);
+
+CtlEncoder2to10 ctlChannel2
+(
+    .d(2'd0),
+    .q(ctlChannel2Out)
+);
+
+always @ (posedge pixelClock) begin
+    if (dataEnable == 1'b1) begin
+        channel0 <= rgbChannel0Out;
+        channel1 <= rgbChannel1Out;
+        channel2 <= rgbChannel2Out;
+    end else begin
+        channel0 <= ctlChannel0Out;
+        channel1 <= ctlChannel1Out;
+        channel2 <= ctlChannel2Out;
+    end
+end
 
 endmodule
