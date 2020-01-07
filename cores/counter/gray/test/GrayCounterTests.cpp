@@ -42,7 +42,9 @@ class GrayCounterTests : public ::testing::Test
 
 TEST_F(GrayCounterTests, InitialDefaults)
 {
-    ASSERT_EQ(0U, _uut.grayCount);
+    ASSERT_EQ(0x0, _uut.grayCount);
+    ASSERT_EQ(0x1, _uut.grayCountNext);
+    ASSERT_EQ(0x3, _uut.grayCountNextNext);
     ASSERT_EQ(0U, _uut.GrayCounter__DOT__binaryCount);
 }
 
@@ -73,6 +75,8 @@ TEST_F(GrayCounterTests, Reset)
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x0, _uut.grayCount);
+    ASSERT_EQ(0x1, _uut.grayCountNext);
+    ASSERT_EQ(0x3, _uut.grayCountNextNext);
     ASSERT_EQ(0U, _uut.GrayCounter__DOT__binaryCount);
     _uut.clock = 0;
     _uut.eval();
@@ -130,106 +134,142 @@ TEST_F(GrayCounterTests, FourBitGrayCount)
     _uut.reset = 0;
     _uut.eval();
     ASSERT_EQ(0x0, _uut.grayCount);
+    ASSERT_EQ(0x1, _uut.grayCountNext);
+    ASSERT_EQ(0x3, _uut.grayCountNextNext);
     
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x1, _uut.grayCount);
+    ASSERT_EQ(0x3, _uut.grayCountNext);
+    ASSERT_EQ(0x2, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x3, _uut.grayCount);
+    ASSERT_EQ(0x2, _uut.grayCountNext);
+    ASSERT_EQ(0x6, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x2, _uut.grayCount);
+    ASSERT_EQ(0x6, _uut.grayCountNext);
+    ASSERT_EQ(0x7, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x6, _uut.grayCount);
+    ASSERT_EQ(0x7, _uut.grayCountNext);
+    ASSERT_EQ(0x5, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x7, _uut.grayCount);
+    ASSERT_EQ(0x5, _uut.grayCountNext);
+    ASSERT_EQ(0x4, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x5, _uut.grayCount);
+    ASSERT_EQ(0x4, _uut.grayCountNext);
+    ASSERT_EQ(0xC, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x4, _uut.grayCount);
+    ASSERT_EQ(0xC, _uut.grayCountNext);
+    ASSERT_EQ(0xD, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xC, _uut.grayCount);
+    ASSERT_EQ(0xD, _uut.grayCountNext);
+    ASSERT_EQ(0xF, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xD, _uut.grayCount);
+    ASSERT_EQ(0xF, _uut.grayCountNext);
+    ASSERT_EQ(0xE, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xF, _uut.grayCount);
+    ASSERT_EQ(0xE, _uut.grayCountNext);
+    ASSERT_EQ(0xA, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xE, _uut.grayCount);
+    ASSERT_EQ(0xA, _uut.grayCountNext);
+    ASSERT_EQ(0xB, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xA, _uut.grayCount);
+    ASSERT_EQ(0xB, _uut.grayCountNext);
+    ASSERT_EQ(0x9, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xB, _uut.grayCount);
+    ASSERT_EQ(0x9, _uut.grayCountNext);
+    ASSERT_EQ(0x8, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x9, _uut.grayCount);
+    ASSERT_EQ(0x8, _uut.grayCountNext);
+    ASSERT_EQ(0x0, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x8, _uut.grayCount);
+    ASSERT_EQ(0x0, _uut.grayCountNext);
+    ASSERT_EQ(0x1, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x0, _uut.grayCount);
+    ASSERT_EQ(0x1, _uut.grayCountNext);
+    ASSERT_EQ(0x3, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
     _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x1, _uut.grayCount);
+    ASSERT_EQ(0x3, _uut.grayCountNext);
+    ASSERT_EQ(0x2, _uut.grayCountNextNext);
     _uut.clock = 0;
     _uut.eval();
 
