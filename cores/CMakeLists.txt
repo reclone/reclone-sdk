@@ -4,6 +4,7 @@ include(cmake/project.cmake)
 
 add_subdirectory (counter)
 add_subdirectory (cpu)
+add_subdirectory (memory)
 add_subdirectory (soc)
 add_subdirectory (verilator)
 add_subdirectory (video)

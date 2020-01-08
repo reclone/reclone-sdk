@@ -17,7 +17,7 @@ set(VK_CPPFLAGS -MMD -I${VERILATOR_ROOT}/include -I${VERILATOR_ROOT}/include/vlt
 find_file(VERILATOR verilator PATHS C:\\msys64\\usr\\bin C:\\msys32\\usr\\bin /usr/bin NO_DEFAULT_PATH)
 
 # Global verilator options
-set(VERILATOR_OPTS -Wall --trace --default-language 1364-2005)
+set(VERILATOR_OPTS -Wall -Wno-PINCONNECTEMPTY --trace --default-language 1364-2005)
 
 
 # Overall C++ compile flags

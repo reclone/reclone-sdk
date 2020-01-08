@@ -74,7 +74,7 @@ reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
 assign readData = mem[readPointer];
 
 wire pushEnable = writeEnable && !full;
-wire popEnable = readEnable && !empty
+wire popEnable = readEnable && !empty;
 
 wire [ADDR_WIDTH-1:0] writePointerNextNext;
 reg [ADDR_WIDTH-1:0] writePointerSync1 = {ADDR_WIDTH{1'b0}};
@@ -89,7 +89,7 @@ reg [ADDR_WIDTH-1:0] readPointerSync2 = {ADDR_WIDTH{1'b0}};
 reg readSyncReset = 1'b0;
 reg writeSyncReset = 1'b0;
 
-GrayCounter writeGrayCounter
+GrayCounter #(.WIDTH(ADDR_WIDTH)) writeGrayCounter
 (
     .clock(writeClock),
     .enable(pushEnable),
@@ -99,7 +99,7 @@ GrayCounter writeGrayCounter
     .grayCountNextNext(writePointerNextNext)
 );
 
-GrayCounter readGrayCounter
+GrayCounter #(.WIDTH(ADDR_WIDTH)) readGrayCounter
 (
     .clock(readClock),
     .enable(popEnable),
@@ -139,7 +139,6 @@ always @ (posedge readClock) begin
     end
 end
 
-
 reg readResetPipe = 1'b0;
 always @ (posedge readClock, posedge asyncReset) begin
     if (asyncReset) begin
@@ -150,7 +149,6 @@ always @ (posedge readClock, posedge asyncReset) begin
         readResetPipe <= 1'b0;
     end
 end
-
 
 reg writeResetPipe = 1'b0;
 always @ (posedge writeClock, posedge asyncReset) begin
