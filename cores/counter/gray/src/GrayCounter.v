@@ -41,27 +41,27 @@ module GrayCounter #(parameter WIDTH = 4)
     input wire enable,
     input wire reset,
     output reg[WIDTH-1:0] grayCount = {WIDTH{1'b0}},
-    output reg[WIDTH-1:0] grayCountNext = {{WIDTH-2{1'b0}}, 2'd1},
-    output reg[WIDTH-1:0] grayCountNextNext = {{WIDTH-2{1'b0}}, 2'd3}
+    output reg[WIDTH-1:0] grayCountNext = {{(WIDTH-2){1'b0}}, 2'd1},
+    output reg[WIDTH-1:0] grayCountNextNext = {{(WIDTH-2){1'b0}}, 2'd3}
 );
 
 reg [WIDTH-1:0] binaryCount = {WIDTH{1'b0}};
-wire [WIDTH-1:0] binaryCountNext = binaryCount + {{WIDTH-2{1'b0}}, 2'd1};
-wire [WIDTH-1:0] binaryCountNextNext = binaryCount + {{WIDTH-2{1'b0}}, 2'd2};
-wire [WIDTH-1:0] binaryCountNextNextNext = binaryCount + {{WIDTH-2{1'b0}}, 2'd3};
+wire [WIDTH-1:0] binaryCountNext = binaryCount + {{(WIDTH-2){1'b0}}, 2'd1};
+wire [WIDTH-1:0] binaryCountNextNext = binaryCount + {{(WIDTH-2){1'b0}}, 2'd2};
+wire [WIDTH-1:0] binaryCountNextNextNext = binaryCount + {{(WIDTH-2){1'b0}}, 2'd3};
 
 always @ (posedge clock) begin
     if (reset == 1'b1) begin
         binaryCount <= {WIDTH{1'b0}};
         grayCount <= {WIDTH{1'b0}};
-        grayCountNext <= {{WIDTH-2{1'b0}}, 2'd1};
-        grayCountNextNext <= {{WIDTH-2{1'b0}}, 2'd3};
+        grayCountNext <= {{(WIDTH-2){1'b0}}, 2'd1};
+        grayCountNextNext <= {{(WIDTH-2){1'b0}}, 2'd3};
     end else begin
         if (enable == 1'b1) begin
             binaryCount <= binaryCountNext;
-            grayCount <= binaryCountNext ^ {1'b0, binaryCountNext[WIDTH-1:1]};
-            grayCountNext <= binaryCountNextNext ^ {1'b0, binaryCountNextNext[WIDTH-1:1]};
-            grayCountNextNext <= binaryCountNextNextNext ^ {1'b0, binaryCountNextNextNext[WIDTH-1:1]};
+            grayCount <= binaryCountNext ^ {1'b0, binaryCountNext[(WIDTH-1):1]};
+            grayCountNext <= binaryCountNextNext ^ {1'b0, binaryCountNextNext[(WIDTH-1):1]};
+            grayCountNextNext <= binaryCountNextNextNext ^ {1'b0, binaryCountNextNextNext[(WIDTH-1):1]};
         end
     end
 end

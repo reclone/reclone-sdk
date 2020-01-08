@@ -42,6 +42,11 @@ class GrayCounterTests : public ::testing::Test
 
 TEST_F(GrayCounterTests, InitialDefaults)
 {
+    _uut.clock = 0;
+    _uut.enable = 0;
+    _uut.reset = 0;
+    _uut.eval();
+    
     ASSERT_EQ(0x0, _uut.grayCount);
     ASSERT_EQ(0x1, _uut.grayCountNext);
     ASSERT_EQ(0x3, _uut.grayCountNextNext);
