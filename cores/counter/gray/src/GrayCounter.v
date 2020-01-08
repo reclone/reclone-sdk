@@ -5,6 +5,11 @@
 // consecutive count values.  Gray counters are useful for designing data structures (e.g. fifos)
 // that can operate glitch-free in multiple different clock domains.
 //
+// This counter has three outputs - grayCount, grayCountNext, and grayCountNextNext - to support
+// designing things like an asynchronous FIFO that uses subsequent count values to determine if
+// the buffer will be full or empty on the next clock.  If the other outputs are not needed, leave
+// them unconnected and the synthesizer should optimize away the unused logic and flip flops.
+//
 //
 // Copyright 2019 Reclone Labs <reclonelabs.com>
 //
