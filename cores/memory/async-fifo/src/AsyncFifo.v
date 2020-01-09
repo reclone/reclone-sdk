@@ -57,7 +57,7 @@ module AsyncFifo # (parameter DATA_WIDTH = 8, ADDR_WIDTH = 3)
     input wire readClock,
     input wire readEnable,
     output reg empty = 1'b1,
-    output wire[DATA_WIDTH-1:0] readData,
+    output reg[DATA_WIDTH-1:0] readData,
     
     input wire writeClock,
     input wire writeEnable,
@@ -71,7 +71,6 @@ wire [ADDR_WIDTH-1:0] writePointer;
 wire [ADDR_WIDTH-1:0] readPointer;
 
 reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
-assign readData = mem[readPointer];
 
 wire pushEnable = writeEnable && !full;
 wire popEnable = readEnable && !empty;
@@ -134,6 +133,10 @@ always @ (posedge readClock) begin
     end else begin
         writePointerSync2 <= writePointerSync1;
         writePointerSync1 <= writePointer;
+        
+        if (popEnable == 1'b1) begin
+            readData <= mem[readPointer];
+        end
         
         empty <= (readPointerNext == writePointerSync2);
     end

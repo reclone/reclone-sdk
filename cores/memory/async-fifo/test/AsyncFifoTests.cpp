@@ -53,3 +53,38 @@ TEST_F(AsyncFifoTests, InitialDefaults)
     ASSERT_EQ(0U, _uut.full);
 }
 
+TEST_F(AsyncFifoTests, OneWriteOneRead)
+{
+    _uut.asyncReset = 0;
+    _uut.readClock = 0;
+    _uut.readEnable = 0;
+    _uut.writeClock = 0;
+    _uut.writeEnable = 1;
+    _uut.writeData = 0xA9;
+    _uut.eval();
+    ASSERT_EQ(1U, _uut.empty);
+    ASSERT_EQ(0U, _uut.full);
+    
+    _uut.writeClock = 1;
+    _uut.eval();
+    _uut.writeEnable = 0;
+    _uut.writeClock = 0;
+    _uut.readClock = 1;
+    _uut.eval();
+    _uut.readClock = 0;
+    _uut.eval();
+    _uut.readClock = 1;
+    _uut.eval();
+    ASSERT_EQ(0U, _uut.empty);
+    ASSERT_EQ(0U, _uut.full);
+    
+    _uut.readClock = 0;
+    _uut.readEnable = 1;
+    _uut.eval();
+    _uut.readClock = 1;
+    _uut.eval();
+    ASSERT_EQ(0xA9, _uut.readData);
+    ASSERT_EQ(1U, _uut.empty);
+    ASSERT_EQ(0U, _uut.full);
+}
+
