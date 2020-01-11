@@ -11,7 +11,9 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/tmds/rgb-encoder-8to10/src/RgbEncoder8to10.v
     ${PROJECT_SOURCE_DIR}/video/tmds/ctl-encoder-2to10/src/CtlEncoder2to10.v
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/LvdsOut5Bit.v
-    ${PROJECT_SOURCE_DIR}/target/reclone-rise/OutputSerializerSdr5Bit.v)
+    ${PROJECT_SOURCE_DIR}/target/reclone-rise/OutputSerializerSdr5Bit.v
+    ${PROJECT_SOURCE_DIR}/memory/async-fifo/src/AsyncFifo.v
+    ${PROJECT_SOURCE_DIR}/counter/gray/src/GrayCounter.v)
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)
 

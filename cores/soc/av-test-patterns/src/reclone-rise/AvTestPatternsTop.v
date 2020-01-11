@@ -59,18 +59,64 @@ ClockGen clkGen
     .hdmiSerDesStrobe(hdmiSerDesStrobe)
 );
 
+wire [9:0] dviChannel0;
+wire [9:0] dviChannel1;
+wire [9:0] dviChannel2;
+wire [9:0] dviChannelC;
 AvTestPatterns #(.COUNTER_SIZE(25)) blinky
 (
     .pixelClock(hdmiPixelClock),
-    .blink(GPIO29)
+    .blink(GPIO29),
+    .dviChannel0(dviChannel0),
+    .dviChannel1(dviChannel1),
+    .dviChannel2(dviChannel2),
+    .dviChannelC(dviChannelC)
 );
+
+wire tmdsFifoEmpty;
+wire [39:0] tmdsData;
+reg tmdsFifoReadEnable = 1'b1;
+AsyncFifo #(.DATA_WIDTH(40), .ADDR_WIDTH(3)) tmdsFifo
+(
+    .asyncReset(1'b0),
+    .writeClock(hdmiPixelClock),
+    .writeEnable(1'b1),
+    .writeData({dviChannelC, dviChannel2, dviChannel1, dviChannel0}),
+    .full(),
+    .readClock(hdmiDataLoadClock),
+    .readEnable(tmdsFifoReadEnable),
+    .empty(tmdsFifoEmpty),
+    .readData(tmdsData)
+);
+
+reg [4:0] lvds0Data;
+reg [4:0] lvds1Data;
+reg [4:0] lvds2Data;
+reg [4:0] lvdsCData;
+always @ (posedge hdmiDataLoadClock) begin
+    if (tmdsFifoEmpty == 1'b0) begin
+        if (tmdsFifoReadEnable == 1'b1) begin
+            lvdsCData <= tmdsData[39:35];
+            lvds2Data <= tmdsData[29:25];
+            lvds1Data <= tmdsData[19:15];
+            lvds0Data <= tmdsData[9:5];
+            tmdsFifoReadEnable <= 1'b0;
+        end else begin
+            lvdsCData <= tmdsData[34:30];
+            lvds2Data <= tmdsData[24:20];
+            lvds1Data <= tmdsData[14:10];
+            lvds0Data <= tmdsData[4:0];
+            tmdsFifoReadEnable <= 1'b1;
+        end
+    end
+end
 
 LvdsOut5Bit lvds0
 (
     .clkLoad(hdmiDataLoadClock),
     .clkOutput(hdmiIoClock),
     .loadStrobe(hdmiSerDesStrobe),
-    .serialData(/*TODO*/ 5'd0),
+    .serialData(lvds0Data),
     .lvdsOutputP(TmdsOutCh0P),
     .lvdsOutputN(TmdsOutCh0N)
 );
@@ -80,7 +126,7 @@ LvdsOut5Bit lvds1
     .clkLoad(hdmiDataLoadClock),
     .clkOutput(hdmiIoClock),
     .loadStrobe(hdmiSerDesStrobe),
-    .serialData(/*TODO*/ 5'd0),
+    .serialData(lvds1Data),
     .lvdsOutputP(TmdsOutCh1P),
     .lvdsOutputN(TmdsOutCh1N)
 );
@@ -90,7 +136,7 @@ LvdsOut5Bit lvds2
     .clkLoad(hdmiDataLoadClock),
     .clkOutput(hdmiIoClock),
     .loadStrobe(hdmiSerDesStrobe),
-    .serialData(/*TODO*/ 5'd0),
+    .serialData(lvds2Data),
     .lvdsOutputP(TmdsOutCh2P),
     .lvdsOutputN(TmdsOutCh2N)
 );
@@ -100,7 +146,7 @@ LvdsOut5Bit lvdsC
     .clkLoad(hdmiDataLoadClock),
     .clkOutput(hdmiIoClock),
     .loadStrobe(hdmiSerDesStrobe),
-    .serialData(/*TODO*/ 5'd0),
+    .serialData(lvdsCData),
     .lvdsOutputP(TmdsOutChCP),
     .lvdsOutputN(TmdsOutChCN)
 );
