@@ -42,14 +42,14 @@ module RgbEncoder8to10
     input wire clock,
     input wire reset,
     input wire[7:0] d,
-    output wire[9:0] q
+    output reg[9:0] q
 );
 
 // disparity_cnt holds a signed value.  disparity_cnt[4] is the sign bit.
 // disparity_cnt[4]==1 means disparity is negative, i.e. an excess number of zeros were transmitted
 // disparity_cnt[4]==0 means disparity is zero/positive, i.e. a balance or excess number of ones were transmitted
 reg [4:0] disparity_cnt = 5'd0;
-wire [4:0] disparity_cnt_next;
+reg [4:0] disparity_cnt_next;
 
 // Use xor to generate a representation of the bit transitions in the input byte
 wire [8:0] xored;

@@ -29,15 +29,19 @@
 
 module AvTestPatterns # (parameter COUNTER_SIZE = 8)
 (
-   input wire clock,
-   output wire blink
+    input wire pixelClock,
+    output wire blink,
+    output wire[9:0] dviChannel0,
+    output wire[9:0] dviChannel1,
+    output wire[9:0] dviChannel2,
+    output wire[9:0] dviChannelC
 );
 
 wire[COUNTER_SIZE-1:0] count;
 
 CountUp #(.SIZE(COUNTER_SIZE)) counter
 (
-    .clock(clock),
+    .clock(pixelClock),
     .increment(1'd1),
     .load(1'd0),
     .data(25'd0),
@@ -46,5 +50,47 @@ CountUp #(.SIZE(COUNTER_SIZE)) counter
 );
 
 assign blink = count[COUNTER_SIZE-1];
+
+
+wire dataEnable;
+wire hSync;
+wire vSync;
+
+VideoFormatTiming hd720pTiming
+(
+    .clock(pixelClock),
+    .reset(1'b0),
+    .hFrontPorch(7'd110),
+    .hSyncPulse(8'd40),
+    .hBackPorch(8'd220),
+    .hActive(11'd1280),
+    .vFrontPorch(6'd5),
+    .vSyncPulse(4'd5),
+    .vBackPorch(6'd20),
+    .vActive(11'd720),
+    .syncIsActiveLow(1'b0),
+    .isInterlaced(1'b0),
+    .dataEnable(dataEnable),
+    .hSync(hSync),
+    .vSync(vSync),
+    .hPos(),
+    .vPos()
+);
+
+DviEncoder dvi
+(
+    .pixelClock(pixelClock),
+    .dataEnable(dataEnable),
+    .hSync(hSync),
+    .vSync(vSync),
+    .blue(8'd0),
+    .green(8'd255),
+    .red(8'd0),
+    .channel0(dviChannel0),
+    .channel1(dviChannel1),
+    .channel2(dviChannel2),
+    .channelC(dviChannelC)
+);
+
 
 endmodule

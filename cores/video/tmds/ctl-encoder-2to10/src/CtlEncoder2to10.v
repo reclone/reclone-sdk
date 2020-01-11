@@ -32,7 +32,7 @@
 module CtlEncoder2to10
 (
     input wire[1:0] d,
-    output wire[9:0] q
+    output reg[9:0] q
 );
 
 always @ (d)

@@ -31,24 +31,78 @@ module AvTestPatternsTop
 (
    input wire  CLK10M,
    output wire GPIO28,
-   output wire GPIO29
+   output wire GPIO29,
+   output wire TmdsOutCh0P,
+   output wire TmdsOutCh0N,
+   output wire TmdsOutCh1P,
+   output wire TmdsOutCh1N,
+   output wire TmdsOutCh2P,
+   output wire TmdsOutCh2N,
+   output wire TmdsOutChCP,
+   output wire TmdsOutChCN
 );
 
 wire hdmiPixelClock;
+wire hdmiDataLoadClock;
+wire hdmiIoClock;
+wire hdmiSerDesStrobe;
 
-assign GPIO28 = 1;
-
-AvTestPatterns #(.COUNTER_SIZE(25)) blinky
-(
-    .clock( hdmiPixelClock),
-    .blink(GPIO29)
-);
+assign GPIO28 = 1'b1;
 
 ClockGen clkGen
 (
     .clk10m(CLK10M),
     .audioClock(),
-    .hdmiPixelClock(hdmiPixelClock)
+    .hdmiPixelClock(hdmiPixelClock),
+    .hdmiDataLoadClock(hdmiDataLoadClock),
+    .hdmiIoClock(hdmiIoClock),
+    .hdmiSerDesStrobe(hdmiSerDesStrobe)
+);
+
+AvTestPatterns #(.COUNTER_SIZE(25)) blinky
+(
+    .pixelClock(hdmiPixelClock),
+    .blink(GPIO29)
+);
+
+LvdsOut5Bit lvds0
+(
+    .clkLoad(hdmiDataLoadClock),
+    .clkOutput(hdmiIoClock),
+    .loadStrobe(hdmiSerDesStrobe),
+    .serialData(/*TODO*/ 5'd0),
+    .lvdsOutputP(TmdsOutCh0P),
+    .lvdsOutputN(TmdsOutCh0N)
+);
+
+LvdsOut5Bit lvds1
+(
+    .clkLoad(hdmiDataLoadClock),
+    .clkOutput(hdmiIoClock),
+    .loadStrobe(hdmiSerDesStrobe),
+    .serialData(/*TODO*/ 5'd0),
+    .lvdsOutputP(TmdsOutCh1P),
+    .lvdsOutputN(TmdsOutCh1N)
+);
+
+LvdsOut5Bit lvds2
+(
+    .clkLoad(hdmiDataLoadClock),
+    .clkOutput(hdmiIoClock),
+    .loadStrobe(hdmiSerDesStrobe),
+    .serialData(/*TODO*/ 5'd0),
+    .lvdsOutputP(TmdsOutCh2P),
+    .lvdsOutputN(TmdsOutCh2N)
+);
+
+LvdsOut5Bit lvdsC
+(
+    .clkLoad(hdmiDataLoadClock),
+    .clkOutput(hdmiIoClock),
+    .loadStrobe(hdmiSerDesStrobe),
+    .serialData(/*TODO*/ 5'd0),
+    .lvdsOutputP(TmdsOutChCP),
+    .lvdsOutputN(TmdsOutChCN)
 );
 
 endmodule

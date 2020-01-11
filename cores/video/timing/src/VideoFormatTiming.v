@@ -62,27 +62,15 @@ wire [11:0] hTotal = {3'd0, hBlank} + hActive;
 wire [6:0] vBlank = {1'd0, vFrontPorch} + {3'd0, vSyncPulse} + {1'd0, vBackPorch} + {5'd0, isInterlaced & vCount[0], 1'd0};
 wire [10:0] vTotal = {4'd0, vBlank} + vActive;
 
-wire [11:0] hCountNext;
-wire [10:0] vCountNext;
 wire hBlankNext = (hCountNext < {3'd0, hBlank});
 wire vBlankNext = (vCountNext < {4'd0, vBlank});
 wire [5:0] vSyncStartLine = vFrontPorch + {5'd0, (isInterlaced & vCountNext[0])};
 wire [5:0] vSyncEndLine = vFrontPorch + {2'd0, vSyncPulse} + {5'd0, (isInterlaced & vCountNext[0])};
 wire [11:0] vSyncInterlaceDelay = ((isInterlaced & vCountNext[0]) ? {1'd0, hTotal[11:1]} : 12'd0);
-
-always @ (*) begin
-    if (hCount + 1'd1 < hTotal) begin
-        hCountNext = hCount + 1'd1;
-        vCountNext = vCount;
-    end else begin
-        hCountNext = 12'd0;
-        if (vCount + 11'd1 + {10'd0, isInterlaced} < vTotal) begin
-            vCountNext = vCount + 11'd1 + {10'd0, isInterlaced};
-        end else begin
-            vCountNext = 11'd0 + {10'd0, isInterlaced & ~vCount[0]};
-        end
-    end
-end
+wire hLastPixel = hCount + 1'd1 >= hTotal;
+wire vLastLine = (vCount + 11'd1 + {10'd0, isInterlaced}) >= vTotal;
+wire [11:0] hCountNext = hLastPixel ? 12'd0 : hCount + 1'd1;
+wire [10:0] vCountNext = hLastPixel ? (vLastLine ? {10'd0, isInterlaced & ~vCount[0]} : vCount + 11'd1 + {10'd0, isInterlaced}) : vCount;
 
 always @ (posedge clock) begin
     if (reset == 1'b1) begin

@@ -31,9 +31,17 @@
 
 module BlinkyTop
 (
-   input CLK10M,
-   input GPIO28,
-   output GPIO29
+    input wire CLK10M,
+    input wire GPIO28,
+    output wire GPIO29,
+    output wire TmdsOutCh0P,
+    output wire TmdsOutCh0N,
+    output wire TmdsOutCh1P,
+    output wire TmdsOutCh1N,
+    output wire TmdsOutCh2P,
+    output wire TmdsOutCh2N,
+    output wire TmdsOutChCP,
+    output wire TmdsOutChCN
 );
 
 wire audioClock;
@@ -51,5 +59,10 @@ ClockGen clkGen
     .clk10m(CLK10M),
     .audioClock(audioClock)
 );
+
+OBUFDS lvds0(.I(1'b0),.O(TmdsOutCh0P),.OB(TmdsOutCh0N));
+OBUFDS lvds1(.I(1'b0),.O(TmdsOutCh1P),.OB(TmdsOutCh1N));
+OBUFDS lvds2(.I(1'b0),.O(TmdsOutCh2P),.OB(TmdsOutCh2N));
+OBUFDS lvdsC(.I(1'b0),.O(TmdsOutChCP),.OB(TmdsOutChCN));
 
 endmodule
