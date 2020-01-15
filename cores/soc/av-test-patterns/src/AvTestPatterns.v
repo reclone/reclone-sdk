@@ -55,6 +55,8 @@ assign blink = count[COUNTER_SIZE-1];
 wire dataEnable;
 wire hSync;
 wire vSync;
+wire [11:0] hPos;
+wire [10:0] vPos;
 
 VideoFormatTiming hd720pTiming
 (
@@ -73,8 +75,8 @@ VideoFormatTiming hd720pTiming
     .dataEnable(dataEnable),
     .hSync(hSync),
     .vSync(vSync),
-    .hPos(),
-    .vPos()
+    .hPos(hPos),
+    .vPos(vPos)
 );
 
 DviEncoder dvi
@@ -83,9 +85,9 @@ DviEncoder dvi
     .dataEnable(dataEnable),
     .hSync(hSync),
     .vSync(vSync),
-    .blue(8'd0),
-    .green(8'd255),
-    .red(8'd0),
+    .blue(hPos[9:2]),
+    .green(vPos[7:0]),
+    .red(hPos[7:0]),
     .channel0(dviChannel0),
     .channel1(dviChannel1),
     .channel2(dviChannel2),
