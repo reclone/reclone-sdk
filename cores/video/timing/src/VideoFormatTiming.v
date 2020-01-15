@@ -50,7 +50,9 @@ module VideoFormatTiming
     output reg hSync,
     output reg vSync,
     output reg [11:0] hPos,
-    output reg [10:0] vPos
+    output reg [10:0] vPos,
+    output reg activeVideoPreamble,
+    output reg activeVideoGuardBand
 );
 
 reg [11:0] hCount = 0;
@@ -81,6 +83,8 @@ always @ (posedge clock) begin
         dataEnable <= 1'b0;
         hPos <= 12'd0;
         vPos <= 11'd0;
+        activeVideoGuardBand <= 1'b0;
+        activeVideoPreamble <= 1'b0;
     end else begin
         hCount <= hCountNext;
         vCount <= vCountNext;
@@ -94,6 +98,8 @@ always @ (posedge clock) begin
         dataEnable <= !hBlankNext && !vBlankNext;
         hPos <= hBlankNext ? 12'd0 : (hCountNext - {3'd0, hBlank});
         vPos <= vBlankNext ? 11'd0 : (vCountNext - {4'd0, vBlank});
+        activeVideoGuardBand <= (hCountNext < {3'd0, hBlank}) && (hCountNext >= {3'd0, hBlank - 9'd2});
+        activeVideoPreamble <= (hCountNext < {3'd0, hBlank - 9'd2}) && (hCountNext >= {3'd0, hBlank - 9'd10});
     end
 end
 
