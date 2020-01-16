@@ -55,7 +55,7 @@ assign ecc = {eccByte[0], eccStage}; //TODO is this order correct?
 BchEccStep bchFirst
 (
     .data(data[0]),
-    .ecc(isFirstDataBit ? 8'h00 : eccByte),
+    .ecc(isFirstDataClock ? 8'h00 : eccByte),
     .eccNext(eccNext)
 );
 
