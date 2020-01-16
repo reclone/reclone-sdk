@@ -11,13 +11,14 @@
 // The packet sends two values, N and CTS:
 //
 //      N       Fixed clock divider used to generate an intermediate clock that is slower than
-//              128*f_s by a factor of N.  Audio clock regen packets are transmitted at this rate.
+//              128*f_s by a factor of N.  Audio clock regen packets are transmitted at
+//              this rate of 128 * f_s / N.
 //              Required:  128 * f_s / 1500Hz <= N <= 128 * f_s / 300Hz
-//              Optimally: 128 * f_s / N ~= 1kHz
+//              Optimally: 128 * f_s / N == 1kHz
 //              Example: For f_s = 48 kHz, N = 128 * 48kHz / 1kHz = 6144
 //
 //      CTS     Cycle Time Stamp value that is normally determined by counting the number of TMDS
-//              clocks in each of the 128 * f_s / N clocks.  However, if the sample rate is
+//              clocks in each of the 128 * f_s / N clocks.  However, if the audio sample rate is
 //              reliable and well-known, the design could cheat and transmit a constant CTS value.
 //              Example: For N = 6144, f_s = 48 kHz, and f_tmdsclk = 74.25 MHz, expect
 //                       CTS = 74.25 MHz * 6144 / 128 / 48 kHz = 74250

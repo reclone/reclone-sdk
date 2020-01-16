@@ -36,11 +36,11 @@
 
 module NullDataIslandPacket
 (
-    output wire [23:0] header;
-    output wire [55:0] subpacket0;
-    output wire [55:0] subpacket1;
-    output wire [55:0] subpacket2;
-    output wire [55:0] subpacket3;
+    output wire [23:0] header,
+    output wire [55:0] subpacket0,
+    output wire [55:0] subpacket1,
+    output wire [55:0] subpacket2,
+    output wire [55:0] subpacket3
 );
 
 assign header = 24'd0;
