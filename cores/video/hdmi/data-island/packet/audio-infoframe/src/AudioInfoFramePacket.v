@@ -1,5 +1,5 @@
 //
-// AudioInfoframePacket - Information about the HDMI audio stream
+// AudioInfoFramePacket - Information about the HDMI audio stream
 //
 // This HDMI data island packet contains basic information about the audio stream.  The Audio
 // Infoframe must be transmitted "at least once per two video fields", and must be transmitted
@@ -36,7 +36,7 @@
 
 `default_nettype none
 
-module AudioInfoframePacket
+module AudioInfoFramePacket
 (
     input [2:0] cc,
     input [7:0] ca,
@@ -54,13 +54,13 @@ assign header[7:0] = 8'h84;     // packet type
 assign header[15:8] = 8'h01;    // version
 assign header[23:16] = 8'h0A;   // length
 
-wire [7:0] infoframeByte1 = {5'd0, cc[2:0]};
-wire [7:0] infoframeByte4 = ca[7:0];
-wire [7:0] infoframeByte5 = {1'b0, lsv[3:0], 1'b0, lfepbl[1:0]};
+wire [7:0] infoFrameByte1 = {5'd0, cc[2:0]};
+wire [7:0] infoFrameByte4 = ca[7:0];
+wire [7:0] infoFrameByte5 = {1'b0, lsv[3:0], 1'b0, lfepbl[1:0]};
 wire [7:0] checksum = 8'd1 + ~(header[7:0] + header[15:8] + header[23:16] + 
-                               infoframeByte1 + infoframeByte4 + infoframeByte5);
+                               infoFrameByte1 + infoFrameByte4 + infoFrameByte5);
 
-assign subpacket0 = {8'd0, infoframeByte5, infoframeByte4, 16'd0, infoframeByte1, checksum};
+assign subpacket0 = {8'd0, infoFrameByte5, infoFrameByte4, 16'd0, infoFrameByte1, checksum};
 assign subpacket1 = 56'd0;
 assign subpacket2 = 56'd0;
 assign subpacket3 = 56'd0;
