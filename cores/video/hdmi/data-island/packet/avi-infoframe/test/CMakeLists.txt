@@ -1,0 +1,5 @@
+add_executable(testAviInfoFramePacket AviInfoFramePacketTests.cpp)
+
+target_link_libraries(testAviInfoFramePacket VAviInfoFramePacket gtest gtest_main)
+
+add_test(NAME testAviInfoFramePacket COMMAND testAviInfoFramePacket)

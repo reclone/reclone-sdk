@@ -20,6 +20,8 @@
 //      itc IT content                  1'b0=No data; 1'b1=IT content
 //      vic Video Identification Code   7'd4=720p60; 7'd5=1080i60; etc. from CEA-861-D table 3
 //      pr  Pixel Repetition Factor     4'd0=No repetition; otherwise repetition factor - 1
+//      cn  Content Type                2'b00=Graphics/No data; 2'b01=Photo; 2'b10=Cinema; 2'b11=Game
+//      yq  YCC Quantization Range      2'b00=Limited Range; 2'b01=Full Range
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
 //

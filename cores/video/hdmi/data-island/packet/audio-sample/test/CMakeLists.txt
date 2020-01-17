@@ -1,0 +1,5 @@
+add_executable(testAudioSamplePacket AudioSamplePacketTests.cpp)
+
+target_link_libraries(testAudioSamplePacket VAudioSamplePacket gtest gtest_main)
+
+add_test(NAME testAudioSamplePacket COMMAND testAudioSamplePacket)

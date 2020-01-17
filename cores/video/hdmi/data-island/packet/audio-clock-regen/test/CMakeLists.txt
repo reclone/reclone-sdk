@@ -1,0 +1,5 @@
+add_executable(testAudioClockRegenPacket AudioClockRegenPacketTests.cpp)
+
+target_link_libraries(testAudioClockRegenPacket VAudioClockRegenPacket gtest gtest_main)
+
+add_test(NAME testAudioClockRegenPacket COMMAND testAudioClockRegenPacket)

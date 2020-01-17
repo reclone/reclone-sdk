@@ -1,0 +1,5 @@
+add_executable(testAudioInfoFramePacket AudioInfoFramePacketTests.cpp)
+
+target_link_libraries(testAudioInfoFramePacket VAudioInfoFramePacket gtest gtest_main)
+
+add_test(NAME testAudioInfoFramePacket COMMAND testAudioInfoFramePacket)

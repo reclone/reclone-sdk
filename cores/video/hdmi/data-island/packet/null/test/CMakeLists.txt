@@ -1,0 +1,5 @@
+add_executable(testNullDataIslandPacket NullDataIslandPacketTests.cpp)
+
+target_link_libraries(testNullDataIslandPacket VNullDataIslandPacket gtest gtest_main)
+
+add_test(NAME testNullDataIslandPacket COMMAND testNullDataIslandPacket)
