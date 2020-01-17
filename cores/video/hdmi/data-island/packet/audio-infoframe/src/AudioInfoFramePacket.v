@@ -2,10 +2,10 @@
 // AudioInfoFramePacket - Information about the HDMI audio stream
 //
 // This HDMI data island packet contains basic information about the audio stream.  The Audio
-// Infoframe must be transmitted "at least once per two video fields", and must be transmitted
+// InfoFrame must be transmitted "at least once per two video fields", and must be transmitted
 // "no later than one video field following the first affected non-silent audio sample".
 //
-// A brief summary of the interesting fields:
+// A brief summary of the interesting fields in the packet:
 //      cc      Channel Count - Number of channels MINUS ONE; zero is "refer to stream header"
 //      ca      Channel/Speaker Allocation - How the audio channels are mapped to speaker positions
 //      lsv     Level Shift Value - For downmixing
