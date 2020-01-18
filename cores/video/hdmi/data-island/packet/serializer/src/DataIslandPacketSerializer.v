@@ -66,7 +66,8 @@ always @ (posedge clock) begin
     end
 end
 
-wire useEcc = (count >= 6'd24);
+wire headerUseEcc = (count >= 6'd24);
+wire subpacketUseEcc = (count >= 6'd28);
 
 assign terc4channel0[0] = hsync;
 assign terc4channel0[1] = vsync;
@@ -76,55 +77,55 @@ wire headerEcc;
 BchEccSingleBitEncoder headerEccEncoder
 (
     .clock(clock),
-    .data(useEcc ? 1'b0 : (isFirstPacketClock ? header[5'd0] : headerReg[count[4:0]])),
+    .data(headerUseEcc ? 1'b0 : (isFirstPacketClock ? header[5'd0] : headerReg[count[4:0]])),
     .isFirstDataClock(isFirstPacketClock),
     .ecc(headerEcc)
 );
-assign terc4channel0[2] = isFirstPacketClock ? header[5'd0] : (useEcc ? headerEcc : header[count[4:0]]);
+assign terc4channel0[2] = isFirstPacketClock ? header[5'd0] : (headerUseEcc ? headerEcc : header[count[4:0]]);
 
 wire [1:0] subpacket0Ecc;
 BchEccDualBitEncoder subpacket0EccEncoder
 (
     .clock(clock),
-    .data(useEcc ? 2'b00 : (isFirstPacketClock ? subpacket0[1:0] : {subpacket0Reg[{count[4:0], 1'b1}], subpacket0Reg[{count[4:0], 1'b0}]})),
+    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket0[1:0] : {subpacket0Reg[{count[4:0], 1'b1}], subpacket0Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .ecc(subpacket0Ecc)
 );
-assign terc4channel1[0] = isFirstPacketClock ? subpacket0[0] : (useEcc ? subpacket0Ecc[0] : subpacket0Reg[{count[4:0], 1'b0}]);
-assign terc4channel2[0] = isFirstPacketClock ? subpacket0[1] : (useEcc ? subpacket0Ecc[1] : subpacket0Reg[{count[4:0], 1'b1}]);
+assign terc4channel1[0] = isFirstPacketClock ? subpacket0[0] : (subpacketUseEcc ? subpacket0Ecc[0] : subpacket0Reg[{count[4:0], 1'b0}]);
+assign terc4channel2[0] = isFirstPacketClock ? subpacket0[1] : (subpacketUseEcc ? subpacket0Ecc[1] : subpacket0Reg[{count[4:0], 1'b1}]);
 
 wire [1:0] subpacket1Ecc;
 BchEccDualBitEncoder subpacket1EccEncoder
 (
     .clock(clock),
-    .data(useEcc ? 2'b00 : (isFirstPacketClock ? subpacket1[1:0] : {subpacket1Reg[{count[4:0], 1'b1}], subpacket1Reg[{count[4:0], 1'b0}]})),
+    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket1[1:0] : {subpacket1Reg[{count[4:0], 1'b1}], subpacket1Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .ecc(subpacket1Ecc)
 );
-assign terc4channel1[1] = isFirstPacketClock ? subpacket1[0] : (useEcc ? subpacket1Ecc[0] : subpacket1Reg[{count[4:0], 1'b0}]);
-assign terc4channel2[1] = isFirstPacketClock ? subpacket1[1] : (useEcc ? subpacket1Ecc[1] : subpacket1Reg[{count[4:0], 1'b1}]);
+assign terc4channel1[1] = isFirstPacketClock ? subpacket1[0] : (subpacketUseEcc ? subpacket1Ecc[0] : subpacket1Reg[{count[4:0], 1'b0}]);
+assign terc4channel2[1] = isFirstPacketClock ? subpacket1[1] : (subpacketUseEcc ? subpacket1Ecc[1] : subpacket1Reg[{count[4:0], 1'b1}]);
 
 wire [1:0] subpacket2Ecc;
 BchEccDualBitEncoder subpacket2EccEncoder
 (
     .clock(clock),
-    .data(useEcc ? 2'b00 : (isFirstPacketClock ? subpacket2[1:0] : {subpacket2Reg[{count[4:0], 1'b1}], subpacket2Reg[{count[4:0], 1'b0}]})),
+    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket2[1:0] : {subpacket2Reg[{count[4:0], 1'b1}], subpacket2Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .ecc(subpacket2Ecc)
 );
-assign terc4channel1[2] = isFirstPacketClock ? subpacket2[0] : (useEcc ? subpacket2Ecc[0] : subpacket2Reg[{count[4:0], 1'b0}]);
-assign terc4channel2[2] = isFirstPacketClock ? subpacket2[1] : (useEcc ? subpacket2Ecc[1] : subpacket2Reg[{count[4:0], 1'b1}]);
+assign terc4channel1[2] = isFirstPacketClock ? subpacket2[0] : (subpacketUseEcc ? subpacket2Ecc[0] : subpacket2Reg[{count[4:0], 1'b0}]);
+assign terc4channel2[2] = isFirstPacketClock ? subpacket2[1] : (subpacketUseEcc ? subpacket2Ecc[1] : subpacket2Reg[{count[4:0], 1'b1}]);
 
 wire [1:0] subpacket3Ecc;
 BchEccDualBitEncoder subpacket3EccEncoder
 (
     .clock(clock),
-    .data(useEcc ? 2'b00 : (isFirstPacketClock ? subpacket3[1:0] : {subpacket3Reg[{count[4:0], 1'b1}], subpacket3Reg[{count[4:0], 1'b0}]})),
+    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket3[1:0] : {subpacket3Reg[{count[4:0], 1'b1}], subpacket3Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .ecc(subpacket3Ecc)
 );
-assign terc4channel1[3] = isFirstPacketClock ? subpacket3[0] : (useEcc ? subpacket3Ecc[0] : subpacket3Reg[{count[4:0], 1'b0}]);
-assign terc4channel2[3] = isFirstPacketClock ? subpacket3[1] : (useEcc ? subpacket3Ecc[1] : subpacket3Reg[{count[4:0], 1'b1}]);
+assign terc4channel1[3] = isFirstPacketClock ? subpacket3[0] : (subpacketUseEcc ? subpacket3Ecc[0] : subpacket3Reg[{count[4:0], 1'b0}]);
+assign terc4channel2[3] = isFirstPacketClock ? subpacket3[1] : (subpacketUseEcc ? subpacket3Ecc[1] : subpacket3Reg[{count[4:0], 1'b1}]);
 
 
 
