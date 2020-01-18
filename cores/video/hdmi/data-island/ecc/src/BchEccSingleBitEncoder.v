@@ -40,7 +40,7 @@ module BchEccSingleBitEncoder
 (
     input wire clock,
     input wire data,
-    input wire isFirstDataBit,
+    input wire isFirstDataClock,
 
     output wire ecc
 );
@@ -53,7 +53,7 @@ assign ecc = eccByte[0];
 BchEccStep bch
 (
     .data(data),
-    .ecc(isFirstDataBit ? 8'h00 : eccByte),
+    .ecc(isFirstDataClock ? 8'h00 : eccByte),
     .eccNext(eccNext)
 );
 
