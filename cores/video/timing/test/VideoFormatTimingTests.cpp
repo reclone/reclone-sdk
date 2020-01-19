@@ -134,8 +134,9 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
                 _uut.eval();
                 vcd_trace.dump(_tickCount++);
                 
-                vcd_trace.flush();
+                //vcd_trace.flush();
             }
+            vcd_trace.flush();
         }
     }
     
@@ -234,8 +235,9 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                 _uut.eval();
                 vcd_trace.dump(_tickCount++);
                 
-                vcd_trace.flush();
+                //vcd_trace.flush();
             }
+            vcd_trace.flush();
         }
         
         // odd field (one more line than in even field)
@@ -304,8 +306,9 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                 _uut.eval();
                 vcd_trace.dump(_tickCount++);
                 
-                vcd_trace.flush();
+                //vcd_trace.flush();
             }
+            vcd_trace.flush();
         }
     }
     
