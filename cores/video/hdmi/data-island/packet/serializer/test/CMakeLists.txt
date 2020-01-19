@@ -1,0 +1,5 @@
+add_executable(testDataIslandPacketSerializer DataIslandPacketSerializerTests.cpp)
+
+target_link_libraries(testDataIslandPacketSerializer VDataIslandPacketSerializer gtest gtest_main)
+
+add_test(NAME testDataIslandPacketSerializer COMMAND testDataIslandPacketSerializer)
