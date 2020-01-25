@@ -54,10 +54,23 @@ TEST_F(RgbToYiqTests, CheckAllOutputValues)
                 
                 _uut.eval();
                 
+                // Y = 0.299*R + 0.587*G + 0.114*B
                 double expected_y_float = 0.299 * r + 0.587 * g + 0.114 * b;
                 unsigned int expected_y = static_cast<unsigned int>(round(expected_y_float));
-                ASSERT_NEAR(expected_y, _uut.y, 1) << r << " " << g << " " << b << " " << (expected_y_float)
-                    << (((9848226U * g + 0x800000) >> 24) + ((1912603U * b + 0x800000) >> 24));
+                
+                // I = 0.596*R – 0.275*G – 0.321*B
+                double expected_i_float = 0.596 * r - 0.275 * g - 0.321 * b;
+                int expected_i = static_cast<int>(round(expected_i_float));
+                int signed_i = (_uut.i & 0x100) ? _uut.i - 512 : _uut.i;
+                
+                // Q = 0.212*R – 0.523*G + 0.311*B
+                double expected_q_float = 0.212 * r - 0.523 * g + 0.311 * b;
+                int expected_q = static_cast<int>(round(expected_q_float));
+                int signed_q = (_uut.q & 0x100) ? _uut.q - 512 : _uut.q;
+                
+                ASSERT_NEAR(expected_y, _uut.y, 1) << r << " " << g << " " << b << " " << (expected_y_float) << " " << static_cast<unsigned int>(_uut.y);
+                ASSERT_NEAR(expected_i, signed_i, 1) << r << " " << g << " " << b << " " << (expected_i_float) << " " << _uut.i;
+                ASSERT_NEAR(expected_q, signed_q, 1) << r << " " << g << " " << b << " " << (expected_q_float) << " " << _uut.q;
             }
         }
     }

@@ -34,19 +34,35 @@ module RgbToYiq
     input wire[7:0] g,
     input wire[7:0] b,
     
-    output wire[7:0] y//,
-    //output wire[7:0] i,
-    //output wire[7:0] q
+    output wire[7:0] y,
+    output wire[8:0] i,
+    output wire[8:0] q
 );
 
-// Y = 0.299*R + 0.587*G + 0.114*B
 /* verilator lint_off UNUSED */
+
+// Y = 0.299*R + 0.587*G + 0.114*B
 wire [31:0] rAddendOfY = (24'd5016388 * r);
 wire [31:0] gAddendOfY = (24'd9848226 * g);
 wire [31:0] bAddendOfY = (24'd1912603 * b);
 wire [31:0] ySum = (rAddendOfY + gAddendOfY + bAddendOfY + 32'h800000);
+
+// I = 0.596*R – 0.275*G – 0.321*B
+wire [31:0] rAddendOfI = (24'd4999610 * r);
+wire [31:0] gSubtrahendOfI = (24'd2306867 * g);
+wire [31:0] bSubtrahendOfI = (24'd2692743 * b);
+wire [31:0] iSum = (rAddendOfI - gSubtrahendOfI - bSubtrahendOfI + 32'h400000);
+
+// Q = 0.212*R – 0.523*G + 0.311*B 
+wire [31:0] rAddendOfQ = (24'd1778385 * r);
+wire [31:0] gSubtrahendOfQ = (24'd4387242 * g);
+wire [31:0] bAddendOfQ = (24'd2608857 * b);
+wire [31:0] qSum = (rAddendOfQ - gSubtrahendOfQ + bAddendOfQ + 32'h400000);
+
 /* verilator lint_on UNUSED */
 
 assign y = ySum[31:24];
+assign i = iSum[31:23];
+assign q = qSum[31:23];
 
 endmodule
