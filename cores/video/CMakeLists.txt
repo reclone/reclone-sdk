@@ -1,3 +1,4 @@
+add_subdirectory(conversion)
 add_subdirectory(dvi)
 add_subdirectory(hdmi)
 add_subdirectory(timing)
