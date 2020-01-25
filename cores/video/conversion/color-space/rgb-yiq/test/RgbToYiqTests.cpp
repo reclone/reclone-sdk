@@ -1,10 +1,8 @@
 //
-// RgbToYiq - Convert a pixel value from RGB888 to YIQ color space, for NTSC encoding
+// RgbToYiqTests - Unit tests for verilated RgbToYiq module
 //
 //
-// https://www.eembc.org/techlit/datasheets/yiq_consumer.pdf
-//
-// Copyright 2020 Reclone Labs <reclonelabs.com>
+// Copyright 2019 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -26,27 +24,41 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-`default_nettype none
+#include "gtest/gtest.h"
+#include "VRgbToYiq.h"
 
-module RgbToYiq
-(
-    input wire[7:0] r,
-    input wire[7:0] g,
-    input wire[7:0] b,
-    
-    output wire[7:0] y//,
-    //output wire[7:0] i,
-    //output wire[7:0] q
-);
+class RgbToYiqTests : public ::testing::Test
+{
+    public:
+        RgbToYiqTests() { }
+        virtual ~RgbToYiqTests()
+        {
+            _uut.final();
+        }
+        
+    protected:
+        VRgbToYiq _uut;
+};
 
-// Y = 0.299*R + 0.587*G + 0.114*B
-/* verilator lint_off UNUSED */
-wire [31:0] rAddendOfY = (24'd5016388 * r);
-wire [31:0] gAddendOfY = (24'd9848226 * g);
-wire [31:0] bAddendOfY = (24'd1912603 * b);
-wire [31:0] ySum = (rAddendOfY + gAddendOfY + bAddendOfY + 32'h800000);
-/* verilator lint_on UNUSED */
-
-assign y = ySum[31:24];
-
-endmodule
+TEST_F(RgbToYiqTests, CheckAllOutputValues)
+{
+    for (unsigned int r = 0; r <= 255; ++r)
+    {
+        for (unsigned int g = 0; g <= 255; ++g)
+        {
+            for (unsigned int b = 0; b <= 255; ++b)
+            {
+                _uut.r = r;
+                _uut.g = g;
+                _uut.b = b;
+                
+                _uut.eval();
+                
+                double expected_y_float = 0.299 * r + 0.587 * g + 0.114 * b;
+                unsigned int expected_y = static_cast<unsigned int>(round(expected_y_float));
+                ASSERT_NEAR(expected_y, _uut.y, 1) << r << " " << g << " " << b << " " << (expected_y_float)
+                    << (((9848226U * g + 0x800000) >> 24) + ((1912603U * b + 0x800000) >> 24));
+            }
+        }
+    }
+}
