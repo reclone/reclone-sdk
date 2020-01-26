@@ -1,8 +1,8 @@
 //
-// RgbToYiq - Convert a pixel value from RGB888 to YIQ color space, for NTSC encoding
+// RgbToYuv - Convert a pixel value from RGB888 to YUV color space, for PAL encoding
 //
-//
-// https://www.eembc.org/techlit/datasheets/yiq_consumer.pdf
+// https://en.wikipedia.org/wiki/YUV
+// 
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
 //
@@ -28,15 +28,15 @@
 
 `default_nettype none
 
-module RgbToYiq
+module RgbToYuv
 (
     input wire[7:0] r,
     input wire[7:0] g,
     input wire[7:0] b,
     
     output wire[7:0] y,
-    output wire[8:0] i, /*signed*/
-    output wire[8:0] q  /*signed*/
+    output wire[8:0] u, /*signed*/
+    output wire[8:0] v  /*signed*/
 );
 
 /* verilator lint_off UNUSED */
@@ -47,22 +47,22 @@ wire [31:0] gAddendOfY = (24'd9848226 * g);
 wire [31:0] bAddendOfY = (24'd1912603 * b);
 wire [31:0] ySum = (rAddendOfY + gAddendOfY + bAddendOfY + 32'h800000);
 
-// I = 0.596*R – 0.275*G – 0.321*B
-wire [31:0] rAddendOfI = (24'd4999610 * r);
-wire [31:0] gSubtrahendOfI = (24'd2306867 * g);
-wire [31:0] bSubtrahendOfI = (24'd2692743 * b);
-wire [31:0] iSum = (rAddendOfI - gSubtrahendOfI - bSubtrahendOfI + 32'h400000);
+// U = -0.147*R - 0.289*G + 0.436*B
+wire [31:0] rSubtrahendOfU = (24'd1233125 * r);
+wire [31:0] gSubtrahendOfU = (24'd2424308 * g);
+wire [31:0] bAddendOfU = (24'd3657433 * b);
+wire [31:0] uSum = (-rSubtrahendOfU - gSubtrahendOfU + bAddendOfU + 32'h400000);
 
-// Q = 0.212*R – 0.523*G + 0.311*B 
-wire [31:0] rAddendOfQ = (24'd1778385 * r);
-wire [31:0] gSubtrahendOfQ = (24'd4387242 * g);
-wire [31:0] bAddendOfQ = (24'd2608857 * b);
-wire [31:0] qSum = (rAddendOfQ - gSubtrahendOfQ + bAddendOfQ + 32'h400000);
+// V = 0.615*R - 0.515*G - 0.100*B
+wire [31:0] rAddendOfV = (24'd5158994 * r);
+wire [31:0] gSubtrahendOfV = (24'd4320133 * g);
+wire [31:0] bSubtrahendOfV = (24'd838861 * b);
+wire [31:0] vSum = (rAddendOfV - gSubtrahendOfV - bSubtrahendOfV + 32'h400000);
 
 /* verilator lint_on UNUSED */
 
 assign y = ySum[31:24];
-assign i = iSum[31:23];
-assign q = qSum[31:23];
+assign u = uSum[31:23];
+assign v = vSum[31:23];
 
 endmodule
