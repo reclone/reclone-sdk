@@ -10,3 +10,15 @@ Rev A - June 2017
 - Switch to RTL8723BS module for WiFi/Bluetooth
 - Turn boot jumper into shorting pads
 - Use easier to solder RTC crystal
+
+Rev C - Jan 2019
+- Consider FPGA protection and/or level shifting for HDMI
+- Right angle tact switch is annoying; get rid of it so that it's easier to reach reset button
+- Hot-plugging USB devices causes inrush current that makes FTDI chip disconnect from host
+  Use USB power switch AP2171D with discharge and 1.5A current limit
+  Use BOOT1 pin for USB power enable
+  Connect open-drain FLG pin to FPGA and to active-low LED
+  Must limit input 5V capacitance to 10uF
+- microUSB port shield should not be connected directly to ground.  Use 100nF cap instead.
+- Revisit composite video lowpass filter
+- Use 147/294 ohm resistors in R-2R DAC for voltage swing up to ~1.11V and precision of ~5IRE/bit
