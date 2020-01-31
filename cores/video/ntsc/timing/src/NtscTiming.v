@@ -144,6 +144,11 @@ wire syncNext = (!vEqualizingPulsesNext && !vSyncNext && hSyncNext) ||
                 (vEqualizingPulsesNext && equalizingSyncPulseNext) ||
                 (vSyncNext && verticalSyncPulseNext);
 
+wire [9:0] hPosNext = hBlankNext ? 10'd0 : (hCountNext - hFrontPorch - hSyncPulse - hBreezeway - hBurst - hBackPorch);
+wire [9:0] vPosNext = vBlankNext ? 10'd0 : ((vCountNext <= vTotalProgressive) ? 
+                                            (vCountNext - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace + 10'd1) : 
+                                            (vCountNext - vTotalProgressive - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace));
+
 always @ (posedge phaseClock) begin
     if (reset) begin
         phase <= {PHASE_BITS{1'b0}};
@@ -166,6 +171,8 @@ always @ (posedge phaseClock) begin
             blank <= hBlankNext || vBlankNext;
             sync <= syncNext;
             burst <= burstNext;
+            hPos <= hPosNext;
+            vPos <= vPosNext;
         end
 
         // Increment phase counter
