@@ -16,6 +16,8 @@
 // Sub-carrier burst: 2.23 to 3.11 us => 9 color burst cycles = 36 pixels
 // Back porch: 39 - 6 - 17 - 2 - 9 = 5 color burst cycles = 20 pixels
 // Active video: 52.65556 us = 188.5 color burst cycles = 754 pixels
+// Equalizing pulse: 2.35 us = 34 pixels (occurs twice per line)
+// Field-synchronizing pulse: 27.1 us = 388 pixels (occurs twice per line)
 //
 // Interlaced scanning:
 // Frame period: 525 horizontal lines
@@ -132,7 +134,15 @@ wire vEqualizingPulsesNext = !vSyncNext &&
                                (((vCountNext == vTotalProgressive + vPreEqualization + vSyncPulse + vPostEqualization) && (hCountNext < {1'b0, hTotal[9:1]})) || 
                                 (vCountNext < vTotalProgressive + vPreEqualization + vSyncPulse + vPostEqualization))));
 
-wire syncNext = (!vEqualizingPulsesNext && !vSyncNext && hSyncNext) /*|| (TODO vsync pulses) */;
+wire [9:0] equalizingPulseWidth = 10'd34;
+wire equalizingSyncPulseNext = (hCountNext < equalizingPulseWidth) || ((hCountNext >= {1'b0, hTotal[9:1]}) && (hCountNext < {1'b0, hTotal[9:1]} + equalizingPulseWidth));
+
+wire [9:0] fieldSynchronizingPulseWidth = 10'd388;
+wire verticalSyncPulseNext = (hCountNext < fieldSynchronizingPulseWidth) || ((hCountNext >= {1'b0, hTotal[9:1]}) && (hCountNext < {1'b0, hTotal[9:1]} + fieldSynchronizingPulseWidth));
+
+wire syncNext = (!vEqualizingPulsesNext && !vSyncNext && hSyncNext) || 
+                (vEqualizingPulsesNext && equalizingSyncPulseNext) ||
+                (vSyncNext && verticalSyncPulseNext);
 
 always @ (posedge phaseClock) begin
     if (reset) begin
@@ -155,6 +165,7 @@ always @ (posedge phaseClock) begin
             vSync <= vSyncNext;
             blank <= hBlankNext || vBlankNext;
             sync <= syncNext;
+            burst <= burstNext;
         end
 
         // Increment phase counter
