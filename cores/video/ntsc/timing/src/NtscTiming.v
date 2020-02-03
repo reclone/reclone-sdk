@@ -102,7 +102,7 @@ wire hLastPixel = hCount + 1'd1 >= hTotal;
 wire vLastLine = (vCount + 10'd1) >= vTotal;
 
 wire [9:0] hCountNext = hLastPixel ? 10'd0 : hCount + 10'd1;
-wire [10:0] vCountNext = hLastPixel ? (vLastLine ? 10'd0 : vCount + 10'd1) : vCount;
+wire [9:0] vCountNext = hLastPixel ? (vLastLine ? 10'd0 : vCount + 10'd1) : vCount;
 
 wire [9:0] hFrontPorch = 10'd24;
 wire [9:0] hSyncPulse = 10'd68;
@@ -116,7 +116,7 @@ wire hBlankNext = (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst +
 wire [9:0] vPreEqualization = 10'd3;
 wire [9:0] vSyncPulse = 10'd3;
 wire [9:0] vPostEqualization = 10'd3;
-wire [9:0] vRetrace = 10'd10;
+wire [9:0] vRetrace = 10'd11;
 wire vSyncNext = ((vCountNext >= vPreEqualization) && (vCountNext < vPreEqualization + vSyncPulse)) ||
                  ((((vCountNext == vTotalProgressive + vPreEqualization) && (hCountNext >= {1'b0, hTotal[9:1]})) || (vCountNext > vTotalProgressive + vPreEqualization)) &&
                   (((vCountNext == vTotalProgressive + vPreEqualization + vSyncPulse) && (hCountNext < {1'b0, hTotal[9:1]})) || (vCountNext < vTotalProgressive + vPreEqualization + vSyncPulse)));
@@ -135,10 +135,10 @@ wire vEqualizingPulsesNext = !vSyncNext &&
                                 (vCountNext < vTotalProgressive + vPreEqualization + vSyncPulse + vPostEqualization))));
 
 wire [9:0] equalizingPulseWidth = 10'd34;
-wire equalizingSyncPulseNext = (hCountNext < equalizingPulseWidth) || ((hCountNext >= {1'b0, hTotal[9:1]}) && (hCountNext < {1'b0, hTotal[9:1]} + equalizingPulseWidth));
+wire equalizingSyncPulseNext = ((hCountNext >= hFrontPorch) && (hCountNext < equalizingPulseWidth + hFrontPorch)) || ((hCountNext >= {1'b0, hTotal[9:1]} + hFrontPorch) && (hCountNext < {1'b0, hTotal[9:1]} + equalizingPulseWidth + hFrontPorch));
 
 wire [9:0] fieldSynchronizingPulseWidth = 10'd388;
-wire verticalSyncPulseNext = (hCountNext < fieldSynchronizingPulseWidth) || ((hCountNext >= {1'b0, hTotal[9:1]}) && (hCountNext < {1'b0, hTotal[9:1]} + fieldSynchronizingPulseWidth));
+wire verticalSyncPulseNext = ((hCountNext >= hFrontPorch) && (hCountNext < fieldSynchronizingPulseWidth + hFrontPorch)) || ((hCountNext >= {1'b0, hTotal[9:1]} + hFrontPorch) && (hCountNext < {1'b0, hTotal[9:1]} + fieldSynchronizingPulseWidth + hFrontPorch));
 
 wire syncNext = (!vEqualizingPulsesNext && !vSyncNext && hSyncNext) || 
                 (vEqualizingPulsesNext && equalizingSyncPulseNext) ||
@@ -150,15 +150,15 @@ wire [9:0] vPosNext = vBlankNext ? 10'd0 : ((vCountNext <= vTotalProgressive) ?
                                             (vCountNext - vTotalProgressive - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace));
 
 always @ (posedge phaseClock) begin
-    if (reset) begin
+    if (reset == 1'b1) begin
         phase <= {PHASE_BITS{1'b0}};
         hCount <= 10'd0;
         vCount <= 10'd0;
         hPos <= 10'd0;
         vPos <= 10'd0;
         blank <= 1'b1;
-        hsync <= 1'b0;
-        vsync <= 1'b0;
+        hSync <= 1'b0;
+        vSync <= 1'b0;
         sync <= 1'b0;
         burst <= 1'b0;
     end else begin
