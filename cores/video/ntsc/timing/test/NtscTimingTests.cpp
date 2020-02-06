@@ -87,96 +87,86 @@ TEST_F(NtscTimingTests, Interlaced)
     _uut.progressivePhaseAlternation = 0;
     _uut.eval();
     
-    for (unsigned int frame = 0; frame < 1; ++frame)
+    for (unsigned int frame = 0; frame < 3; ++frame)
     {
         for (unsigned int line = 0; line < 525; ++line)
         {
             for (unsigned int pixel = 0; pixel < 910U; ++pixel)
             {
-                // First field: 262.5 lines total
-                if (line < 262U || (line == 262U && pixel < 455U))
+                bool vBlank = (line < 20U) || ((line > 262U || (line == 262U && pixel >= 455U)) && (line < 282U || (line == 282U && pixel < 455U)));
+                bool vSync = (line >= 3U && line < 6U) || ((line > 265U || (line == 265U && pixel >= 455U)) && (line < 268U || (line == 268U && pixel < 455U)));
+                bool vEqualize = !vSync && ((line < 9U) || ((line > 262U || (line == 262U && pixel >= 455U)) && (line < 271U || (line == 271U && pixel < 455U))));
+                
+                // Front Porch
+                if (pixel < 24U)
                 {
-                    bool vBlank = line < 20U;
-                    bool vSync = line >= 3U && line < 6U;
-                    bool vEqualize = !vSync && line < 9U;
-                    
-                    // Front Porch
-                    if (pixel < 24U)
-                    {
-                        ASSERT_EQ(_uut.blank, 1U);
-                        ASSERT_EQ(_uut.hSync, 0U);
-                        ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
-                        ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
-                        ASSERT_EQ(_uut.burst, 0U);
-                        ASSERT_EQ(_uut.hPos, 0U);
-                        nextPixel();
-                    }
-                    
-                    // Horizontal Sync
-                    else if (pixel < 92)
-                    {
-                        ASSERT_EQ(_uut.blank, 1U);
-                        ASSERT_EQ(_uut.hSync, 1U);
-                        ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
-                        ASSERT_EQ(_uut.sync, !vEqualize || (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))));
-                        ASSERT_EQ(_uut.burst, 0U);
-                        ASSERT_EQ(_uut.hPos, 0U);
-                        nextPixel();
-                    }
-                    
-                    // Breezeway
-                    else if (pixel < 100U)
-                    {
-                        ASSERT_EQ(_uut.blank, 1U);
-                        ASSERT_EQ(_uut.hSync, 0U);
-                        ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
-                        ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
-                        ASSERT_EQ(_uut.burst, 0U);
-                        ASSERT_EQ(_uut.hPos, 0U);
-                        nextPixel();
-                    }
-                    
-                    // Color Burst
-                    else if (pixel < 136U)
-                    {
-                        ASSERT_EQ(_uut.blank, 1U);
-                        ASSERT_EQ(_uut.hSync, 0U);
-                        ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
-                        ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
-                        ASSERT_EQ(_uut.burst, vBlank ? 0U : 1U) << line << std::endl << pixel;
-                        ASSERT_EQ(_uut.hPos, 0U);
-                        nextPixel();
-                    }
-                    
-                    // Back Porch
-                    else if (pixel < 156U)
-                    {
-                        ASSERT_EQ(_uut.blank, 1U);
-                        ASSERT_EQ(_uut.hSync, 0U);
-                        ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
-                        ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
-                        ASSERT_EQ(_uut.burst, 0U);
-                        ASSERT_EQ(_uut.hPos, 0U);
-                        nextPixel();
-                    }
-
-                    // Active Video
-                    else
-                    {
-                        ASSERT_EQ(_uut.blank, vBlank ? 1U : 0U);
-                        ASSERT_EQ(_uut.hSync, 0U);
-                        ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
-                        ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
-                        ASSERT_EQ(_uut.burst, 0U);
-                        ASSERT_EQ(_uut.hPos, pixel - 156U);
-                        nextPixel();
-                    }
+                    ASSERT_EQ(_uut.blank, 1U);
+                    ASSERT_EQ(_uut.hSync, 0U);
+                    ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
+                    ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
+                    ASSERT_EQ(_uut.burst, 0U);
+                    ASSERT_EQ(_uut.hPos, 0U);
+                    nextPixel();
                 }
                 
-                // Second field: 262.5 lines total
-                if (line > 262U || (line == 262U && pixel >= 455U))
+                // Horizontal Sync
+                else if (pixel < 92)
                 {
-                    //TODO
+                    ASSERT_EQ(_uut.blank, 1U);
+                    ASSERT_EQ(_uut.hSync, 1U);
+                    ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
+                    ASSERT_EQ(_uut.sync, !vEqualize || (vEqualize && (((pixel % 455U) >= 24U) &&  ((pixel % 455U) < 58U))));
+                    ASSERT_EQ(_uut.burst, 0U);
+                    ASSERT_EQ(_uut.hPos, 0U);
+                    nextPixel();
+                }
+                
+                // Breezeway
+                else if (pixel < 100U)
+                {
+                    ASSERT_EQ(_uut.blank, 1U);
+                    ASSERT_EQ(_uut.hSync, 0U);
+                    ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
+                    ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
+                    ASSERT_EQ(_uut.burst, 0U);
+                    ASSERT_EQ(_uut.hPos, 0U);
+                    nextPixel();
+                }
+                
+                // Color Burst
+                else if (pixel < 136U)
+                {
+                    ASSERT_EQ(_uut.blank, 1U);
+                    ASSERT_EQ(_uut.hSync, 0U);
+                    ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
+                    ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
+                    ASSERT_EQ(_uut.burst, vBlank ? 0U : 1U);
+                    ASSERT_EQ(_uut.hPos, 0U);
+                    nextPixel();
+                }
+                
+                // Back Porch
+                else if (pixel < 156U)
+                {
+                    ASSERT_EQ(_uut.blank, 1U);
+                    ASSERT_EQ(_uut.hSync, 0U);
+                    ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
+                    ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
+                    ASSERT_EQ(_uut.burst, 0U);
+                    ASSERT_EQ(_uut.hPos, 0U);
+                    nextPixel();
+                }
+
+                // Active Video
+                else
+                {
+                    ASSERT_EQ(_uut.blank, vBlank ? 1U : 0U);
+                    ASSERT_EQ(_uut.hSync, 0U);
+                    ASSERT_EQ(_uut.vSync, vSync ? 1U : 0U);
+                    ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 58U))) || (vSync && (((pixel % 455U) >= 24U) && ((pixel % 455U) < 412U))));
+                    ASSERT_EQ(_uut.burst, 0U);
+                    ASSERT_EQ(_uut.hPos, pixel - 156U);
+                    nextPixel();
                 }
             }
         }
