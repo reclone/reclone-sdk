@@ -145,9 +145,14 @@ wire syncNext = (!vEqualizingPulsesNext && !vSyncNext && hSyncNext) ||
                 (vSyncNext && verticalSyncPulseNext);
 
 wire [9:0] hPosNext = hBlankNext ? 10'd0 : (hCountNext - hFrontPorch - hSyncPulse - hBreezeway - hBurst - hBackPorch);
-wire [9:0] vPosNext = vBlankNext ? 10'd0 : ((vCountNext <= vTotalProgressive) ? 
-                                            (vCountNext - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace + 10'd1) : 
-                                            (vCountNext - vTotalProgressive - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace));
+
+/* verilator lint_off UNUSED */
+wire [10:0] vPosFirstField  = vBlankNext ? 11'd1 : {vCountNext - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace, 1'b1};
+wire [10:0] vPosSecondField = vBlankNext ? 11'd0 : {vCountNext - vTotalProgressive - vPreEqualization - vSyncPulse - vPostEqualization - vRetrace, 1'b0};
+/* verilator lint_on UNUSED */
+
+wire [9:0] vPosNext = (vCountNext < vTotalProgressive || (vCountNext == vTotalProgressive && hCountNext < {1'b0, hTotal[9:1]}))
+                      ? vPosFirstField[9:0] : vPosSecondField[9:0];
 
 always @ (posedge phaseClock) begin
     if (reset == 1'b1) begin
