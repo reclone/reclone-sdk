@@ -24,6 +24,7 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <math.h>
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VNtscGenerator.h"
@@ -65,6 +66,8 @@ TEST_F(NtscGeneratorTests, ColorBurst)
         _uut.phaseClock = 1;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
+        // Burst is always 180 degrees out of phase (inverted) with the subcarrier
+        ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
         
         _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
         _uut.phaseClock = 0;
