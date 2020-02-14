@@ -78,3 +78,71 @@ TEST_F(NtscGeneratorTests, ColorBurst)
     vcd_trace.close();
 }
 
+TEST_F(NtscGeneratorTests, JustBlue)
+{
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("NtscGeneratorBlue.vcd");
+
+    _uut.reset = 0;
+    _uut.phaseClock = 0;
+    _uut.subcarrierPhase = 0;
+    _uut.blank = 0;
+    _uut.sync = 0;
+    _uut.burst = 0;
+    _uut.y = 29;
+    _uut.i = -82;
+    _uut.q = 79;
+    _uut.eval();
+
+    for (unsigned int i = 0; i < 9U * 16U; ++i)
+    {
+        _uut.phaseClock = 1;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        // TODO
+        //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        
+        _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
+        _uut.phaseClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+
+    vcd_trace.close();
+}
+
+TEST_F(NtscGeneratorTests, JustYellow)
+{
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("NtscGeneratorYellow.vcd");
+
+    _uut.reset = 0;
+    _uut.phaseClock = 0;
+    _uut.subcarrierPhase = 0;
+    _uut.blank = 0;
+    _uut.sync = 0;
+    _uut.burst = 0;
+    _uut.y = 226;
+    _uut.i = 82;
+    _uut.q = -79;
+    _uut.eval();
+
+    for (unsigned int i = 0; i < 9U * 16U; ++i)
+    {
+        _uut.phaseClock = 1;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        // TODO
+        //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        
+        _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
+        _uut.phaseClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+
+    vcd_trace.close();
+}
+
