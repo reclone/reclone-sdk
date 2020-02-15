@@ -36,12 +36,10 @@
 // Vertical retrace settling time: 11 lines
 // Active video: 242 lines
 //
-// (#1) If both "progressive" and "progressivePhaseAlternation" is set,
-// the 20th scan line is reduced by 0.5 color burst period (2 pixels) so that the
-// subcarrier phase alternates on each frame, helping to visually cancel out
-// chroma-luma interference patterns, but causing the image to "dot crawl" at
-// half the frame rate.  This might be desireable on some video games, but
-// might not be desireable for more static computer displays.
+// (#1) If "progressive" is set, the 0th scan line is reduced by
+// 0.5 color burst period (2 pixels) so that the subcarrier phase alternates
+// on each frame, helping to visually cancel out chroma-luma interference
+// patterns, but causing the image to "dot crawl" at half the frame rate.
 //
 // http://www.kolumbus.fi/pami1/video/pal_ntsc.html
 // https://sagargv.blogspot.com/2014/07/ntsc-demystified-color-demo-with.html
@@ -77,9 +75,8 @@ module NtscTiming # (parameter PHASE_BITS = 4)
     input wire reset,
     input wire phaseClock,
     input wire progressive,
-    input wire progressivePhaseAlternation,
     
-    output reg [PHASE_BITS-1:0] phase = {PHASE_BITS{1'b0}},
+    output reg [PHASE_BITS-1:0] phase = {2'h1, {(PHASE_BITS-2){1'b0}}},
     output reg blank = 1'b1,
     output reg hSync = 1'b0,
     output reg vSync = 1'b0,
@@ -93,7 +90,7 @@ module NtscTiming # (parameter PHASE_BITS = 4)
 reg [9:0] hCount = 0;
 reg [9:0] vCount = 0;
 
-wire [9:0] hTotal = (progressive == 1'b1 && progressivePhaseAlternation == 1'b1 && vCount == 10'd19) ? 10'd908 : 10'd910;
+wire [9:0] hTotal = (progressive == 1'b1 && vCount == (vPreEqualization + vSyncPulse + vPostEqualization)) ? 10'd908 : 10'd910;
 wire [9:0] vTotalProgressive = 10'd262;
 wire [9:0] vTotalInterlaced = 10'd525;
 wire [9:0] vTotal = progressive ? vTotalProgressive : vTotalInterlaced;
@@ -159,7 +156,7 @@ wire [9:0] vPosNext = progressive ? vPosProgressiveNext : vPosInterlacedNext;
 
 always @ (posedge phaseClock) begin
     if (reset == 1'b1) begin
-        phase <= {PHASE_BITS{1'b0}};
+        phase <= {2'h1, {(PHASE_BITS-2){1'b0}}};
         hCount <= 10'd0;
         vCount <= 10'd0;
         hPos <= 10'd0;

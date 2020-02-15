@@ -1,5 +1,5 @@
 add_executable(testNtscGenerator NtscGeneratorTests.cpp)
 
-target_link_libraries(testNtscGenerator VNtscGenerator gtest gtest_main)
+target_link_libraries(testNtscGenerator VNtscGenerator VNtscTiming gtest gtest_main)
 
 add_test(NAME testNtscGenerator COMMAND testNtscGenerator)

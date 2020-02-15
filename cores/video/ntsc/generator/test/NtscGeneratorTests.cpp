@@ -28,6 +28,7 @@
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VNtscGenerator.h"
+#include "VNtscTiming.h"
 
 class NtscGeneratorTests : public ::testing::Test
 {
@@ -143,6 +144,57 @@ TEST_F(NtscGeneratorTests, JustYellow)
         vcd_trace.dump(_tickCount++);
     }
 
+    vcd_trace.close();
+}
+
+TEST_F(NtscGeneratorTests, TimingWithPositiveI)
+{
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("NtscGeneratorPositiveI.vcd");
+    
+    VNtscTiming timing;
+    timing.reset = 0;
+    timing.phaseClock = 0;
+    timing.progressive = 0;
+    timing.eval();
+    
+    _uut.reset = 0;
+    _uut.subcarrierPhase = 0;
+    _uut.y = 0x80;
+    _uut.i = 0x80;
+    _uut.q = 0x00;
+    _uut.blank = timing.blank;
+    _uut.sync = timing.sync;
+    _uut.burst = timing.burst;
+    _uut.eval();
+    
+    for (unsigned int i = 0; i < 910U * 4U * 40U; ++i)
+    {
+        _uut.phaseClock = 1;
+        timing.phaseClock = 1;
+        _uut.eval();
+        timing.eval();
+        vcd_trace.dump(_tickCount++);
+        // TODO
+        //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        
+        _uut.y = (timing.hPos > 17U && timing.hPos < 737) ? 0x80 : 0x00;
+        _uut.i = (timing.hPos > 17U && timing.hPos < 737) ? 0x80 : 0x00;
+        _uut.q = 0x00;
+        _uut.phaseClock = 0;
+        timing.phaseClock = 0;
+        timing.eval();
+        _uut.subcarrierPhase = timing.phase;
+        _uut.blank = timing.blank;
+        _uut.sync = timing.sync;
+        _uut.burst = timing.burst;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+    
+    
+    timing.final();
     vcd_trace.close();
 }
 
