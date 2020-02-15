@@ -13,7 +13,10 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/LvdsOut5Bit.v
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/OutputSerializerSdr5Bit.v
     ${PROJECT_SOURCE_DIR}/memory/async-fifo/src/AsyncFifo.v
-    ${PROJECT_SOURCE_DIR}/counter/gray/src/GrayCounter.v)
+    ${PROJECT_SOURCE_DIR}/counter/gray/src/GrayCounter.v
+    ${PROJECT_SOURCE_DIR}/video/ntsc/timing/src/NtscTiming.v
+    ${PROJECT_SOURCE_DIR}/video/ntsc/generator/src/NtscGenerator.v
+    ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v)
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)
 

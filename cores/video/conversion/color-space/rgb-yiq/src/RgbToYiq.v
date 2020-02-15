@@ -35,8 +35,8 @@ module RgbToYiq
     input wire[7:0] b,
     
     output wire[7:0] y,
-    output wire[8:0] i, /*signed*/
-    output wire[8:0] q  /*signed*/
+    output wire signed[8:0] i,
+    output wire signed[8:0] q
 );
 
 /* verilator lint_off UNUSED */
@@ -51,13 +51,13 @@ wire [31:0] ySum = (rAddendOfY + gAddendOfY + bAddendOfY + 32'h800000);
 wire [31:0] rAddendOfI = (24'd4999610 * r);
 wire [31:0] gSubtrahendOfI = (24'd2306867 * g);
 wire [31:0] bSubtrahendOfI = (24'd2692743 * b);
-wire [31:0] iSum = (rAddendOfI - gSubtrahendOfI - bSubtrahendOfI + 32'h400000);
+wire signed[31:0] iSum = (rAddendOfI - gSubtrahendOfI - bSubtrahendOfI + 32'h400000);
 
 // Q = 0.212*R – 0.523*G + 0.311*B 
 wire [31:0] rAddendOfQ = (24'd1778385 * r);
 wire [31:0] gSubtrahendOfQ = (24'd4387242 * g);
 wire [31:0] bAddendOfQ = (24'd2608857 * b);
-wire [31:0] qSum = (rAddendOfQ - gSubtrahendOfQ + bAddendOfQ + 32'h400000);
+wire signed[31:0] qSum = (rAddendOfQ - gSubtrahendOfQ + bAddendOfQ + 32'h400000);
 
 /* verilator lint_on UNUSED */
 

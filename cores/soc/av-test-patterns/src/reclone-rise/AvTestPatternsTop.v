@@ -39,13 +39,16 @@ module AvTestPatternsTop
    output wire TmdsOutCh2P,
    output wire TmdsOutCh2N,
    output wire TmdsOutChCP,
-   output wire TmdsOutChCN
+   output wire TmdsOutChCN,
+   output wire [4:0] VideoDac
 );
 
 wire hdmiPixelClock;
 wire hdmiDataLoadClock;
 wire hdmiIoClock;
 wire hdmiSerDesStrobe;
+
+wire ntscClock;
 
 assign GPIO28 = 1'b1;
 
@@ -56,7 +59,8 @@ ClockGen clkGen
     .hdmiPixelClock(hdmiPixelClock),
     .hdmiDataLoadClock(hdmiDataLoadClock),
     .hdmiIoClock(hdmiIoClock),
-    .hdmiSerDesStrobe(hdmiSerDesStrobe)
+    .hdmiSerDesStrobe(hdmiSerDesStrobe),
+    .ntscClock(ntscClock)
 );
 
 wire [9:0] dviChannel0;
@@ -70,7 +74,10 @@ AvTestPatterns #(.COUNTER_SIZE(25)) blinky
     .dviChannel0(dviChannel0),
     .dviChannel1(dviChannel1),
     .dviChannel2(dviChannel2),
-    .dviChannelC(dviChannelC)
+    .dviChannelC(dviChannelC),
+    
+    .ntscClock(ntscClock),
+    .videoDac(VideoDac)
 );
 
 wire tmdsFifoEmpty;

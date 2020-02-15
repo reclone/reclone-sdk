@@ -30,11 +30,13 @@
 module AvTestPatterns # (parameter COUNTER_SIZE = 8)
 (
     input wire pixelClock,
+    input wire ntscClock,
     output wire blink,
     output wire[9:0] dviChannel0,
     output wire[9:0] dviChannel1,
     output wire[9:0] dviChannel2,
-    output wire[9:0] dviChannelC
+    output wire[9:0] dviChannelC,
+    output wire[4:0] videoDac
 );
 
 wire[COUNTER_SIZE-1:0] count;
@@ -77,6 +79,53 @@ VideoFormatTiming hd720pTiming
     .vSync(vSync),
     .hPos(hPos),
     .vPos(vPos)
+);
+
+wire [3:0] ntscPhase;
+wire ntscBlank;
+wire ntscSync;
+wire ntscBurst;
+NtscTiming ntscCompositeTiming
+(
+    .reset(1'b0),
+    .phaseClock(ntscClock),
+    .progressive(1'b0),
+    .progressivePhaseAlternation(1'b0),
+    .phase(ntscPhase),
+    .blank(ntscBlank),
+    .hSync(),
+    .vSync(),
+    .sync(ntscSync),
+    .burst(ntscBurst),
+    .hPos(),
+    .vPos()
+);
+
+wire [7:0] ntscY;
+wire signed [8:0] ntscI;
+wire signed [8:0] ntscQ;
+RgbToYiq ntscColorConverter
+(
+    .r(8'h00),
+    .g(8'hFF),
+    .b(8'h00),
+    .y(ntscY),
+    .i(ntscI),
+    .q(ntscQ)
+);
+
+NtscGenerator ntscGen
+(
+    .reset(1'b0),
+    .phaseClock(ntscClock),
+    .subcarrierPhase(ntscPhase),
+    .blank(ntscBlank),
+    .sync(ntscSync),
+    .burst(ntscBurst),
+    .y(ntscY),
+    .i(ntscI),
+    .q(ntscQ),
+    .dacSample(videoDac)
 );
 
 DviEncoder dvi
