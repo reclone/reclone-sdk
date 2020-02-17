@@ -34,9 +34,9 @@ module NtscGenerator
     input wire blank,
     input wire sync,
     input wire burst,
-    input wire[7:0] y,
-    input wire signed[8:0] i,
-    input wire signed[8:0] q,
+    input wire signed [8:0] y,
+    input wire signed [8:0] i,
+    input wire signed [8:0] q,
 
     output reg [DAC_BITS-1:0] dacSample = BLANK_LEVEL[DAC_BITS-1:0]
 );
@@ -54,7 +54,7 @@ localparam SYNC_LEVEL = 0;
 localparam COSINE_PRECISION_BITS = 7;
 localparam DAC_LEVEL_SHIFT = 11;
 
-reg [7:0] yLatched = 8'd0;
+reg signed [8:0] yLatched = 9'd0;
 reg signed [8:0] iLatched = 9'd0;
 reg signed [8:0] qLatched = 9'd0;
 
@@ -163,7 +163,7 @@ reg [DAC_BITS-1:0] zeroOffset = BLANK_LEVEL[DAC_BITS-1:0];
 reg signed [COSINE_PRECISION_BITS:0] phaseSine = 8'd0;
 reg signed [COSINE_PRECISION_BITS:0] phaseCosine = 8'd0;
 
-reg [7+COSINE_PRECISION_BITS:0] yComponent = 15'd0;
+reg signed [8+COSINE_PRECISION_BITS+1:0] yComponent = 17'd0;
 reg signed [8+COSINE_PRECISION_BITS+1:0] iComponent = 17'd0;
 reg signed [8+COSINE_PRECISION_BITS+1:0] qComponent = 17'd0;
 
@@ -176,7 +176,7 @@ always @ (posedge phaseClock) begin
     if (reset) begin
         dacSample <= BLANK_LEVEL[DAC_BITS-1:0];
         zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
-        yLatched <= 8'h0;
+        yLatched <= 9'h0;
         iLatched <= 9'h0;
         qLatched <= 9'h0;
     end else begin
@@ -187,17 +187,17 @@ always @ (posedge phaseClock) begin
         phaseSine <= sine[subcarrierPhase];
         if (sync) begin
             zeroOffset <= SYNC_LEVEL[DAC_BITS-1:0];
-            yLatched <= 8'h0;
+            yLatched <= 9'h0;
             iLatched <= 9'h0;
             qLatched <= 9'h0;
         end else if (burst) begin
             zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
-            yLatched <= 8'h0;
+            yLatched <= 9'h0;
             iLatched <= 9'd35;  //== 64*cos(-57deg)
             qLatched <= -9'd54; //== 64*sin(-57deg)
         end else if (blank) begin
             zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
-            yLatched <= 8'h0;
+            yLatched <= 9'h0;
             iLatched <= 9'h0;
             qLatched <= 9'h0;
         end else begin
@@ -208,14 +208,14 @@ always @ (posedge phaseClock) begin
         end
         
         // Second stage: multiply y, i, q and scale zeroOffset
-        yComponent <= {yLatched, {(COSINE_PRECISION_BITS){1'b0}}};
+        yComponent <= {yLatched[8], yLatched, {(COSINE_PRECISION_BITS){1'b0}}};
         iComponent <= iLatched * phaseCosine;
         qComponent <= qLatched * phaseSine;
         // zeroOffsetScaled includes the "+0.5" factor so that truncation is rounding in the next stage
         zeroOffsetScaled <= {zeroOffset, 1'b1, {(DAC_LEVEL_SHIFT-1){1'b0}}};
         
         // Third stage: sum the components and offset
-        compositeSum <= {2'b00,yComponent} + iComponent + qComponent + zeroOffsetScaled;
+        compositeSum <= yComponent + iComponent + qComponent + zeroOffsetScaled;
         
         // Final stage: truncate and shift into DAC range
         dacSample <= compositeSum[DAC_LEVEL_SHIFT+DAC_BITS-1:DAC_LEVEL_SHIFT];
