@@ -52,6 +52,15 @@ localparam UPPER_SWING_LEVEL = 31;
 localparam SWING_RANGE = UPPER_SWING_LEVEL - LOWER_SWING_LEVEL;
 localparam SYNC_LEVEL = 0;
 localparam COSINE_PRECISION_BITS = 7;
+localparam DAC_LEVEL_SHIFT = 11;
+
+reg [7:0] yLatched = 8'd0;
+reg signed [8:0] iLatched = 9'd0;
+reg signed [8:0] qLatched = 9'd0;
+
+
+//reg [PHASE_BITS-1:0] subcarrierPhaseLatched;
+
 
 reg signed [COSINE_PRECISION_BITS:0] cosine [0:15];
 initial begin
@@ -103,63 +112,115 @@ assign sine[15] = cosine[11];
 //  burstLevel = BLANK_LEVEL + ((cosine[burstPhase] << BURST_AMPLITUDE_SHIFT) + (1 << COSINE_PRECISION_BITS-1)) >> COSINE_PRECISION_BITS
 
 // Color burst is always 180 degrees out of phase with the subcarrier
-wire [3:0] burstPhase = subcarrierPhase + 4'd8;
+//wire [3:0] burstPhase = subcarrierPhase + 4'd8;
+//reg [3:0] burstPhase = 4'd8;
 
 // burstCosineMultiplied = cosine[burstPhase] << BURST_AMPLITUDE_SHIFT (with proper padding, widths, sign extension)
-wire signed [COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT:0] burstCosineMultiplied = {cosine[burstPhase], {BURST_AMPLITUDE_SHIFT{1'b0}}};
+//wire signed [COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT:0] burstCosineMultiplied = {cosine[burstPhase], {BURST_AMPLITUDE_SHIFT{1'b0}}};
 
 // burstCosineRounded = burstCosineMultiplied + (1 << COSINE_PRECISION_BITS-1)
 /* verilator lint_off UNUSED */
-wire signed [COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT+1:0] burstCosineRounded =
-    {burstCosineMultiplied[COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT],burstCosineMultiplied} + (11'd1 << (COSINE_PRECISION_BITS-1));
+//wire signed [COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT+1:0] burstCosineRounded =
+//    {burstCosineMultiplied[COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT],burstCosineMultiplied} + (11'd1 << (COSINE_PRECISION_BITS-1));
+//reg signed [COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT+1:0] burstCosineRoundedLatched;
 /* verilator lint_on UNUSED */
 
-// burstScaled = burstCosineRounded >> COSINE_PRECISION_BITS (with proper widths)
-wire signed [BURST_AMPLITUDE_SHIFT+1:0] burstScaled = burstCosineRounded[COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT+1:COSINE_PRECISION_BITS];
+// burstScaled = burstCosineRoundedLatched >> COSINE_PRECISION_BITS (with proper widths)
+//wire signed [BURST_AMPLITUDE_SHIFT+1:0] burstScaled = burstCosineRoundedLatched[COSINE_PRECISION_BITS+BURST_AMPLITUDE_SHIFT+1:COSINE_PRECISION_BITS];
 
 // burstLevel = BLANK_LEVEL + burstScaled (with proper padding, widths, sign extension)
-wire [DAC_BITS-1:0] burstLevel = BLANK_LEVEL[DAC_BITS-1:0] + {{(DAC_BITS-BURST_AMPLITUDE_SHIFT-2){burstScaled[BURST_AMPLITUDE_SHIFT+1]}},burstScaled};
+//wire [DAC_BITS-1:0] burstLevel = BLANK_LEVEL[DAC_BITS-1:0] + {{(DAC_BITS-BURST_AMPLITUDE_SHIFT-2){burstScaled[BURST_AMPLITUDE_SHIFT+1]}},burstScaled};
 
 // y is in the range of 0 to 255
 // yScaled is the Y component in the range of 0 to 32640
-wire [14:0] yScaled = {y, {COSINE_PRECISION_BITS{1'b0}}};
+//reg [14:0] yScaled;
 
 // i is in the range of -152 to 152
 // iScaled is the I component in the range of -19304 to 19304
-wire signed [16:0] iScaled = i * cosine[subcarrierPhase];
+//reg signed [16:0] iScaled;
 
 // q is in the range of -133 to 133
 // qScaled is the Q component in the range of -16891 to 16891
-wire signed [16:0] qScaled = q * sine[subcarrierPhase];
+//reg signed [16:0] qScaled;
 
 // Full-saturation yellow can swing up to 1.333*2^15=43680
 // Full-saturation blue can swing down to -0.333*2^15=-10912
 /* verilator lint_off UNUSED */
-wire signed [16:0] yiqSumRounded = {2'd0, yScaled} + iScaled + qScaled + 17'h200;
+//wire signed [16:0] yiqSumRounded = {2'd0, yScaled} + iScaled + qScaled + 17'h200;
 /* verilator lint_on UNUSED */
 
 // Scale this into a level of LOWER_SWING_LEVEL to UPPER_SWING_LEVEL
 // Scale by 27/54592=0.00049458 which is roughly 32/65536=0.000488 or simply >> 11
 /* verilator lint_off UNUSED */
-wire [DAC_BITS:0] yiqLevelExtended = BLACK_LEVEL[DAC_BITS:0] + yiqSumRounded[16:11];
+//wire [DAC_BITS:0] yiqLevelExtended = BLACK_LEVEL[DAC_BITS:0] + yiqSumRounded[16:11];
 /* verilator lint_on UNUSED */
 
 // yiqLevelExtended should be in the proper range of LOWER_SWING_LEVEL to UPPER_SWING_LEVEL, so truncate
-wire [DAC_BITS-1:0] yiqLevel = yiqLevelExtended[DAC_BITS-1:0];
+//wire [DAC_BITS-1:0] yiqLevel = yiqLevelExtended[DAC_BITS-1:0];
+
+
+reg [DAC_BITS-1:0] zeroOffset = BLANK_LEVEL[DAC_BITS-1:0];
+reg signed [COSINE_PRECISION_BITS:0] phaseSine = 8'd0;
+reg signed [COSINE_PRECISION_BITS:0] phaseCosine = 8'd0;
+
+reg [7+COSINE_PRECISION_BITS:0] yComponent = 15'd0;
+reg signed [8+COSINE_PRECISION_BITS+1:0] iComponent = 17'd0;
+reg signed [8+COSINE_PRECISION_BITS+1:0] qComponent = 17'd0;
+
+reg [DAC_BITS+DAC_LEVEL_SHIFT-1:0] zeroOffsetScaled = 16'd0;
+/* verilator lint_off UNUSED */
+reg signed [8+COSINE_PRECISION_BITS+1:0] compositeSum = 17'd0;
+/* verilator lint_on UNUSED */
 
 always @ (posedge phaseClock) begin
     if (reset) begin
         dacSample <= BLANK_LEVEL[DAC_BITS-1:0];
+        zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
+        yLatched <= 8'h0;
+        iLatched <= 9'h0;
+        qLatched <= 9'h0;
     end else begin
-        if (sync)
-            dacSample <= SYNC_LEVEL[DAC_BITS-1:0];
-        else if (burst)
-            dacSample <= burstLevel;
-        else if (blank)
-            dacSample <= BLANK_LEVEL[DAC_BITS-1:0];
-        else
-            dacSample <= yiqLevel;
+        // Pipeline the calculation of dacSample so that burst and video data stay in phase
+        
+        // First stage: determine yLatched, iLatched, qLatched, zeroOffset, phaseCosine, phaseSine
+        phaseCosine <= cosine[subcarrierPhase];
+        phaseSine <= sine[subcarrierPhase];
+        if (sync) begin
+            zeroOffset <= SYNC_LEVEL[DAC_BITS-1:0];
+            yLatched <= 8'h0;
+            iLatched <= 9'h0;
+            qLatched <= 9'h0;
+        end else if (burst) begin
+            zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
+            yLatched <= 8'h0;
+            iLatched <= 9'd35;  //== 64*cos(-57deg)
+            qLatched <= -9'd54; //== 64*sin(-57deg)
+        end else if (blank) begin
+            zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
+            yLatched <= 8'h0;
+            iLatched <= 9'h0;
+            qLatched <= 9'h0;
+        end else begin
+            zeroOffset <= BLACK_LEVEL[DAC_BITS-1:0];
+            yLatched <= y;
+            iLatched <= i;
+            qLatched <= q;
+        end
+        
+        // Second stage: multiply y, i, q and scale zeroOffset
+        yComponent <= {yLatched, {(COSINE_PRECISION_BITS){1'b0}}};
+        iComponent <= iLatched * phaseCosine;
+        qComponent <= qLatched * phaseSine;
+        // zeroOffsetScaled includes the "+0.5" factor so that truncation is rounding in the next stage
+        zeroOffsetScaled <= {zeroOffset, 1'b1, {(DAC_LEVEL_SHIFT-1){1'b0}}};
+        
+        // Third stage: sum the components and offset
+        compositeSum <= {2'b00,yComponent} + iComponent + qComponent + zeroOffsetScaled;
+        
+        // Final stage: truncate and shift into DAC range
+        dacSample <= compositeSum[DAC_LEVEL_SHIFT+DAC_BITS-1:DAC_LEVEL_SHIFT];
     end
 end
 
 endmodule
+
