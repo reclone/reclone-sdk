@@ -85,33 +85,71 @@ wire [3:0] ntscPhase;
 wire ntscBlank;
 wire ntscSync;
 wire ntscBurst;
+wire [9:0] ntscHPos;
+wire [9:0] ntscVPos;
 NtscTiming ntscCompositeTiming
 (
     .reset(1'b0),
     .phaseClock(ntscClock),
     .progressive(1'b0),
-    .progressivePhaseAlternation(1'b0),
     .phase(ntscPhase),
     .blank(ntscBlank),
     .hSync(),
     .vSync(),
     .sync(ntscSync),
     .burst(ntscBurst),
-    .hPos(),
-    .vPos()
+    .hPos(ntscHPos),
+    .vPos(ntscVPos)
 );
 
-wire [7:0] ntscY;
+/* wire [7:0] ntscY = (ntscHPos > 10'd17 && ntscHPos < 10'd737) ? 8'h80 : 8'h00;
+wire signed [8:0] ntscI = (ntscHPos > 10'd17 && ntscHPos < 10'd737) ? 9'h80 : 9'h00;
+wire signed [8:0] ntscQ = 9'h00; */
+
+wire signed [8:0] ntscY;
 wire signed [8:0] ntscI;
 wire signed [8:0] ntscQ;
-RgbToYiq ntscColorConverter
+
+// 2-D Color Gradients
+/* RgbToYiq ntscColorConverter
 (
-    .r(8'h00),
-    .g(8'hFF),
-    .b(8'h00),
+    .r({ntscVPos[6:0], 1'b0}),
+    .g(ntscVPos[7:0]),
+    .b(ntscHPos[7:0]),
     .y(ntscY),
     .i(ntscI),
     .q(ntscQ)
+); */
+
+// Grayscale Gradient
+/* RgbToYiq ntscColorConverter
+(
+    .r(ntscHPos[8:1]),
+    .g(ntscHPos[8:1]),
+    .b(ntscHPos[8:1]),
+    .y(ntscY),
+    .i(ntscI),
+    .q(ntscQ)
+); */
+
+// Color Bars
+wire ntscBlankDelayed;
+wire ntscSyncDelayed;
+wire ntscBurstDelayed;
+NtscColorBars colorBars
+(
+    .ntscClock(ntscClock),
+    .hPos(ntscHPos),
+    .vPos(ntscVPos),
+    .blank(ntscBlank),
+    .sync(ntscSync),
+    .burst(ntscBurst),
+    .y(ntscY),
+    .i(ntscI),
+    .q(ntscQ),
+    .blankDelayed(ntscBlankDelayed),
+    .syncDelayed(ntscSyncDelayed),
+    .burstDelayed(ntscBurstDelayed)
 );
 
 NtscGenerator ntscGen
@@ -119,9 +157,9 @@ NtscGenerator ntscGen
     .reset(1'b0),
     .phaseClock(ntscClock),
     .subcarrierPhase(ntscPhase),
-    .blank(ntscBlank),
-    .sync(ntscSync),
-    .burst(ntscBurst),
+    .blank(ntscBlankDelayed),
+    .sync(ntscSyncDelayed),
+    .burst(ntscBurstDelayed),
     .y(ntscY),
     .i(ntscI),
     .q(ntscQ),

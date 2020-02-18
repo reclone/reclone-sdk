@@ -16,6 +16,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/counter/gray/src/GrayCounter.v
     ${PROJECT_SOURCE_DIR}/video/ntsc/timing/src/NtscTiming.v
     ${PROJECT_SOURCE_DIR}/video/ntsc/generator/src/NtscGenerator.v
+    ${PROJECT_SOURCE_DIR}/video/ntsc/test-pattern/color-bars/src/NtscColorBars.v
     ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v)
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)
