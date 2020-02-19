@@ -17,7 +17,7 @@
 // Back porch: 53 - 7 - 21 - 4 - 10 = 11 color burst cycles = 20 pixels
 // Active video: 52.04552 us = 230.75 color burst cycles = 923 pixels
 // Equalizing pulse: 2.35+-0.1 us = 42 pixels (occurs twice per line)
-// Field-synchronizing pulse: 27.3 us = 121 pixels (occurs twice per line)
+// Field-synchronizing pulse: 27.3 us = 484 pixels (occurs twice per line)
 //
 // Interlaced scanning:
 // Frame period: 625 horizontal lines
@@ -35,7 +35,6 @@
 // Postequalization pulses: 2.5 lines
 // Vertical retrace settling time: 17.5 lines
 // Active video: 287 lines
-//
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
@@ -68,7 +67,7 @@ module PalTiming # (parameter PHASE_BITS = 4)
     input wire phaseClock,
     input wire progressive,
     
-    output reg [PHASE_BITS-1:0] phase = {2'h1, {(PHASE_BITS-2){1'b0}}},
+    output reg [PHASE_BITS-1:0] phase = {(PHASE_BITS){1'b0}},
     output reg blank = 1'b1,
     output reg hSync = 1'b0,
     output reg vSync = 1'b0,
@@ -78,6 +77,106 @@ module PalTiming # (parameter PHASE_BITS = 4)
     output reg [9:0] vPos = 10'd0
 );
 
+reg [10:0] hCount = 11'd568;
+reg [9:0] vCount = 10'd0;
 
+wire [10:0] hTotal = 11'd1135;
+wire [9:0] vTotalProgressive = 10'd312;
+wire [9:0] vTotalInterlaced = 10'd625;
+wire [9:0] vTotal = progressive ? vTotalProgressive : vTotalInterlaced;
+
+wire hLastPixel = (hCount + 11'd1) >= hTotal;
+wire vLastLine = (vCount + 10'd1) >= vTotal;
+
+wire [10:0] hCountNext = hLastPixel ? 11'd0 : hCount + 11'd1;
+wire [9:0] vCountNext = hLastPixel ? (vLastLine ? 10'd0 : vCount + 10'd1) : vCount;
+
+wire [10:0] hFrontPorch = 11'd28;
+wire [10:0] hSyncPulse = 11'd84;
+wire [10:0] hBreezeway = 11'd16;
+wire [10:0] hBurst = 11'd40;
+wire [10:0] hBackPorch = 11'd20;
+wire hSyncNext = (hCountNext >= hFrontPorch) && (hCountNext < hFrontPorch + hSyncPulse);
+
+wire hBlankNext = (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst + hBackPorch);
+
+wire [10:0] vPreEqualizationHalfLines = 11'd5;
+wire [10:0] vSyncPulseHalfLines = 11'd5;
+wire [10:0] vPostEqualizationHalfLines = 11'd5;
+wire [10:0] vRetraceHalfLines = 11'd35;
+wire [10:0] vTotalProgressiveHalfLines = {vTotalProgressive, 1'b0};
+
+wire [10:0] vCountNextHalfLines = {vCountNext, (hCountNext >= {1'b0, hTotal[10:1]}) ? 1'b1 : 1'b0};
+
+wire vSyncNext = ((vCountNextHalfLines > vPreEqualizationHalfLines) && (vCountNextHalfLines <= vPreEqualizationHalfLines + vSyncPulseHalfLines)) ||
+                 ((vCountNextHalfLines > vPreEqualizationHalfLines + vTotalProgressiveHalfLines) && (vCountNextHalfLines <= vPreEqualizationHalfLines + vSyncPulseHalfLines + vTotalProgressiveHalfLines));
+
+wire vBlankNext = (vCountNextHalfLines < vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines + vRetraceHalfLines + 11'd1) ||
+                  ((vCountNext > vTotalProgressive) && (vCountNextHalfLines <= vTotalProgressiveHalfLines + vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines + vRetraceHalfLines));
+
+wire burstNext = !vBlankNext && (hCountNext >= hFrontPorch + hSyncPulse + hBreezeway) && (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst);
+
+wire vEqualizingPulsesNext = !vSyncNext &&
+                             ((vCountNextHalfLines <= vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines) ||
+                              ((vCountNextHalfLines > vTotalProgressiveHalfLines) && 
+                               (vCountNextHalfLines <= vTotalProgressiveHalfLines + vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines)));
+
+wire [10:0] equalizingPulseWidth = 11'd42;
+wire equalizingSyncPulseNext = ((hCountNext >= hFrontPorch) && (hCountNext < equalizingPulseWidth + hFrontPorch)) || ((hCountNext >= {1'b0, hTotal[9:1]} + hFrontPorch) && (hCountNext < {1'b0, hTotal[9:1]} + equalizingPulseWidth + hFrontPorch));
+
+wire [10:0] fieldSynchronizingPulseWidth = 11'd484;
+wire verticalSyncPulseNext = ((hCountNext >= hFrontPorch) && (hCountNext < fieldSynchronizingPulseWidth + hFrontPorch)) || ((hCountNext >= {1'b0, hTotal[9:1]} + hFrontPorch) && (hCountNext < {1'b0, hTotal[9:1]} + fieldSynchronizingPulseWidth + hFrontPorch));
+
+wire syncNext = (!vEqualizingPulsesNext && !vSyncNext && hSyncNext) || 
+                (vEqualizingPulsesNext && equalizingSyncPulseNext) ||
+                (vSyncNext && verticalSyncPulseNext);
+
+/* verilator lint_off UNUSED */
+wire [10:0] hPosNext = hBlankNext ? 11'd0 : (hCountNext - hFrontPorch - hSyncPulse - hBreezeway - hBurst - hBackPorch);
+
+wire [10:0] vPosFirstFieldNextHalfLines = vBlankNext ? 11'd2 : vCountNextHalfLines - vPreEqualizationHalfLines - vSyncPulseHalfLines - vPostEqualizationHalfLines - vRetraceHalfLines + 11'd2;
+wire [10:0] vPosSecondFieldNextHalfLines = vBlankNext ? 11'd0 : vCountNextHalfLines - vTotalProgressiveHalfLines - vPreEqualizationHalfLines - vSyncPulseHalfLines - vPostEqualizationHalfLines - vRetraceHalfLines;
+/* verilator lint_on UNUSED */
+
+wire [9:0] vPosInterlacedNext = (vCountNextHalfLines <= vTotalProgressiveHalfLines)
+                            ? vPosFirstFieldNextHalfLines[10:1] : vPosSecondFieldNextHalfLines[10:1];
+
+/* verilator lint_off UNUSED */
+wire [10:0] vPosProgressiveNextHalfLines = vBlankNext ? 11'd0 : (vCountNextHalfLines - vPreEqualizationHalfLines - vSyncPulseHalfLines - vPostEqualizationHalfLines - vRetraceHalfLines);
+/* verilator lint_on UNUSED */
+
+wire [9:0] vPosNext = progressive ? vPosProgressiveNextHalfLines[10:1] : vPosInterlacedNext;
+
+
+always @ (posedge phaseClock) begin
+    if (reset == 1'b1) begin
+        phase <= {(PHASE_BITS){1'b0}};
+        hCount <= 11'd568;
+        vCount <= 10'd0;
+        hPos <= 10'd0;
+        vPos <= 10'd0;
+        blank <= 1'b1;
+        hSync <= 1'b0;
+        vSync <= 1'b0;
+        sync <= 1'b0;
+        burst <= 1'b0;
+    end else begin
+        // If the low bits of phase are 1, it's time to increment the pixel position
+        if (phase[PHASE_BITS-3:0] == {(PHASE_BITS-2){1'b1}}) begin
+            hCount <= hCountNext;
+            vCount <= vCountNext;
+            hSync <= hSyncNext;
+            vSync <= vSyncNext;
+            blank <= hBlankNext || vBlankNext;
+            sync <= syncNext;
+            burst <= burstNext;
+            hPos <= hPosNext[9:0];
+            vPos <= vPosNext;
+        end
+
+        // Increment phase counter
+        phase <= phase + {{(PHASE_BITS-1){1'b0}}, 1'b1};
+    end
+end
 
 endmodule
