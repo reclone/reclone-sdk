@@ -1,8 +1,8 @@
 //
 // RgbToYiq - Convert a pixel value from RGB888 to YIQ color space, for NTSC encoding
 //
-//
 // https://www.eembc.org/techlit/datasheets/yiq_consumer.pdf
+//
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
 //

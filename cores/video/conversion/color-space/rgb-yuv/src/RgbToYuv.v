@@ -35,8 +35,8 @@ module RgbToYuv
     input wire[7:0] b,
     
     output wire[7:0] y,
-    output wire[8:0] u, /*signed*/
-    output wire[8:0] v  /*signed*/
+    output wire signed[8:0] u,
+    output wire signed[8:0] v
 );
 
 /* verilator lint_off UNUSED */
