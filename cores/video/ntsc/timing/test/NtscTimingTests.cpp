@@ -254,7 +254,7 @@ TEST_F(NtscTimingTests, FakeProgressive)
     {
         for (unsigned int line = 0; line < 262; ++line)
         {
-            // The 0th line of every frame is shortened by two pixels, to switch subcarrier phase
+            // The 10th line of every frame is shortened by two pixels, to switch subcarrier phase
             for (unsigned int pixel = 0; pixel < 910U && (pixel < 908U || line != 9U); ++pixel)
             {
                 unsigned int vPos;

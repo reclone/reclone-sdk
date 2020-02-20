@@ -36,7 +36,7 @@
 // Vertical retrace settling time: 11 lines
 // Active video: 242 lines
 //
-// (#1) If "progressive" is set, the 0th scan line is reduced by
+// (#1) If "progressive" is set, the 10th scan line is reduced by
 // 0.5 color burst period (2 pixels) so that the subcarrier phase alternates
 // on each frame, helping to visually cancel out chroma-luma interference
 // patterns, but causing the image to "dot crawl" at half the frame rate.
@@ -87,8 +87,8 @@ module NtscTiming # (parameter PHASE_BITS = 4)
 );
 
 
-reg [9:0] hCount = 0;
-reg [9:0] vCount = 0;
+reg [9:0] hCount = 10'd0;
+reg [9:0] vCount = 10'd0;
 
 wire [9:0] hTotal = (progressive == 1'b1 && vCount == (vPreEqualization + vSyncPulse + vPostEqualization)) ? 10'd908 : 10'd910;
 wire [9:0] vTotalProgressive = 10'd262;
