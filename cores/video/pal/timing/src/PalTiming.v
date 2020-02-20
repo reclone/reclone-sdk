@@ -14,7 +14,7 @@
 // Synchronizing pulse: 4.5 to 4.9 us = 21 color burst cycles = 84 pixels
 // Breezeway: 0.9 us = 4 color burst cycles = 16 pixels
 // Sub-carrier burst: 2.25+-0.23 us => 10 color burst cycles = 40 pixels
-// Back porch: 53 - 7 - 21 - 4 - 10 = 11 color burst cycles = 20 pixels
+// Back porch: 53 - 7 - 21 - 4 - 10 = 11 color burst cycles = 44 pixels
 // Active video: 52.04552 us = 230.75 color burst cycles = 923 pixels
 // Equalizing pulse: 2.35+-0.1 us = 42 pixels (occurs twice per line)
 // Field-synchronizing pulse: 27.3 us = 484 pixels (occurs twice per line)
@@ -73,11 +73,11 @@ module PalTiming # (parameter PHASE_BITS = 4)
     output reg vSync = 1'b0,
     output reg sync = 1'b0,
     output reg burst = 1'b0,
-    output reg [9:0] hPos = 10'd380,
+    output reg [9:0] hPos = 10'd355,
     output reg [9:0] vPos = 10'd0
 );
 
-reg [10:0] hCount = 11'd568;
+reg [10:0] hCount = 11'd567;
 reg [9:0] vCount = 10'd0;
 
 wire [10:0] hTotal = 11'd1135;
@@ -96,7 +96,7 @@ wire [10:0] hFrontPorch = 11'd28;
 wire [10:0] hSyncPulse = 11'd84;
 wire [10:0] hBreezeway = 11'd16;
 wire [10:0] hBurst = 11'd40;
-wire [10:0] hBackPorch = 11'd20;
+wire [10:0] hBackPorch = 11'd44;
 wire hSyncNext = (hCountNext >= hFrontPorch) && (hCountNext < hFrontPorch + hSyncPulse);
 
 wire hBlankNext = (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst + hBackPorch);
