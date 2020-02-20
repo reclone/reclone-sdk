@@ -114,6 +114,33 @@ TEST_F(PalTimingTests, Interlaced)
     vcd_trace.close();
 }
 
+TEST_F(PalTimingTests, FakeProgressive)
+{
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("PalFakeProgressive.vcd");
+    
+    _uut.reset = 0;
+    _uut.phaseClock = 0;
+    _uut.progressive = 1;
+    _uut.eval();
+    
+    //bool firstPixel = true;
+    
+    for (unsigned int frame = 0; frame < 2U; ++frame)
+    {
+        for (unsigned int line = 0; line < 312U; ++line)
+        {
+            for (unsigned int pixel = 0; pixel < 1135U; ++pixel)
+            {
+                nextPixel(vcd_trace);
+            }
+        }
+    }
+    
+    vcd_trace.close();
+}
+
 /* TEST_F(PalTimingTests, FakeProgressive)
 {
     VerilatedVcdC vcd_trace;

@@ -86,11 +86,11 @@ wire [9:0] vTotalInterlaced = 10'd625;
 wire [9:0] vTotal = progressive ? vTotalProgressive : vTotalInterlaced;
 
 wire hLastPixel = (hCount + 11'd1) >= hTotal;
-wire vLastLine = (vCount + 10'd1) >= vTotal;
+wire vLastLine = (vCount == vTotal);
 
 wire [10:0] hCountNext = hLastPixel ? 11'd0 : hCount + 11'd1;
-wire [9:0] vCountNext = hLastPixel ? ((progressive && vLastLine) ? 10'd0 : vCount + 10'd1) : 
-                            ((!progressive && (vCount == vTotal) && (hCountNext >= {1'b0, hTotal[10:1]})) ? 10'd0 : vCount);
+wire [9:0] vCountNext = hLastPixel ? (vCount + 10'd1) : 
+                            ((vLastLine && (hCountNext >= {1'b0, hTotal[10:1]})) ? 10'd0 : vCount);
 
 wire [10:0] hFrontPorch = 11'd28;
 wire [10:0] hSyncPulse = 11'd84;
