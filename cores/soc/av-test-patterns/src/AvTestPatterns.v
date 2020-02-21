@@ -31,6 +31,7 @@ module AvTestPatterns # (parameter COUNTER_SIZE = 8)
 (
     input wire pixelClock,
     input wire ntscClock,
+    input wire palClock,
     output wire blink,
     output wire[9:0] dviChannel0,
     output wire[9:0] dviChannel1,
@@ -81,7 +82,7 @@ VideoFormatTiming hd720pTiming
     .vPos(vPos)
 );
 
-wire [3:0] ntscPhase;
+/* wire [3:0] ntscPhase;
 wire ntscBlank;
 wire ntscSync;
 wire ntscBurst;
@@ -100,15 +101,43 @@ NtscTiming ntscCompositeTiming
     .burst(ntscBurst),
     .hPos(ntscHPos),
     .vPos(ntscVPos)
+); */
+
+wire [3:0] palPhase;
+wire palBlank;
+wire palSync;
+wire palBurst;
+wire palVSync;
+wire [9:0] palHPos;
+wire [9:0] palVPos;
+PalTiming palCompositeTiming
+(
+    .reset(1'b0),
+    .phaseClock(palClock),
+    .progressive(1'b0),
+    .phase(palPhase),
+    .blank(palBlank),
+    .hSync(),
+    .vSync(palVSync),
+    .sync(palSync),
+    .burst(palBurst),
+    .hPos(palHPos),
+    .vPos(palVPos)
 );
 
-/* wire [7:0] ntscY = (ntscHPos > 10'd17 && ntscHPos < 10'd737) ? 8'h80 : 8'h00;
-wire signed [8:0] ntscI = (ntscHPos > 10'd17 && ntscHPos < 10'd737) ? 9'h80 : 9'h00;
-wire signed [8:0] ntscQ = 9'h00; */
+reg palOddFrame = 1'b1;
+always @ (posedge palVSync) begin
+    palOddFrame = ~palOddFrame;
+end
 
-wire signed [8:0] ntscY;
+
+/* wire signed [8:0] ntscY;
 wire signed [8:0] ntscI;
-wire signed [8:0] ntscQ;
+wire signed [8:0] ntscQ; */
+
+wire signed [8:0] palY;
+wire signed [8:0] palU;
+wire signed [8:0] palV;
 
 // 2-D Color Gradients
 /* RgbToYiq ntscColorConverter
@@ -133,7 +162,7 @@ wire signed [8:0] ntscQ;
 ); */
 
 // Color Bars
-wire ntscBlankDelayed;
+/* wire ntscBlankDelayed;
 wire ntscSyncDelayed;
 wire ntscBurstDelayed;
 NtscColorBars colorBars
@@ -150,9 +179,9 @@ NtscColorBars colorBars
     .blankDelayed(ntscBlankDelayed),
     .syncDelayed(ntscSyncDelayed),
     .burstDelayed(ntscBurstDelayed)
-);
+); */
 
-NtscGenerator ntscGen
+/* NtscGenerator ntscGen
 (
     .reset(1'b0),
     .phaseClock(ntscClock),
@@ -163,6 +192,26 @@ NtscGenerator ntscGen
     .y(ntscY),
     .i(ntscI),
     .q(ntscQ),
+    .dacSample(videoDac)
+); */
+
+assign palY = 9'd128;
+assign palU = 9'd0;
+assign palV = 9'd0;
+
+PalGenerator palGen
+(
+    .reset(1'b0),
+    .phaseClock(palClock),
+    .subcarrierPhase(palPhase),
+    .blank(palBlank),
+    .sync(palSync),
+    .burst(palBurst),
+    .y(palY),
+    .u(palU),
+    .v(palV),
+    .oddFrame(palOddFrame),
+    .oddLine(!palVPos[0]),
     .dacSample(videoDac)
 );
 

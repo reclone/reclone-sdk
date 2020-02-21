@@ -29,7 +29,7 @@
 // Active video: 287.5 lines per field
 //
 // "Fake progressive" scanning:
-// Frame period: 312 horizontal lines
+// Frame period: 312 horizontal lines (includes two half-lines)
 // Preequalization pulses: 2.5 lines
 // Vertical synch pulses: 2.5 lines
 // Postequalization pulses: 2.5 lines

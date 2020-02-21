@@ -49,6 +49,7 @@ wire hdmiIoClock;
 wire hdmiSerDesStrobe;
 
 wire ntscClock;
+wire palClock;
 
 assign GPIO28 = 1'b1;
 
@@ -60,7 +61,8 @@ ClockGen clkGen
     .hdmiDataLoadClock(hdmiDataLoadClock),
     .hdmiIoClock(hdmiIoClock),
     .hdmiSerDesStrobe(hdmiSerDesStrobe),
-    .ntscClock(ntscClock)
+    .ntscClock(ntscClock),
+    .palClock(palClock)
 );
 
 wire [9:0] dviChannel0;
@@ -77,6 +79,7 @@ AvTestPatterns #(.COUNTER_SIZE(25)) blinky
     .dviChannelC(dviChannelC),
     
     .ntscClock(ntscClock),
+    .palClock(palClock),
     .videoDac(VideoDac)
 );
 

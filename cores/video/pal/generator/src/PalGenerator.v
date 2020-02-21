@@ -132,8 +132,8 @@ always @ (posedge phaseClock) begin
         dacSample <= BLANK_LEVEL[DAC_BITS-1:0];
         zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
         yLatched <= 9'h0;
-        iLatched <= 9'h0;
-        qLatched <= 9'h0;
+        uLatched <= 9'h0;
+        vLatched <= 9'h0;
     end else begin
         // Four stage pipeline to calculate the composite video signal from components
     
