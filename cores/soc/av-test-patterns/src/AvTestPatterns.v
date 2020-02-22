@@ -107,6 +107,7 @@ wire [3:0] palPhase;
 wire palBlank;
 wire palSync;
 wire palBurst;
+wire palBurstPhase;
 wire palVSync;
 wire [9:0] palHPos;
 wire [9:0] palVPos;
@@ -121,13 +122,14 @@ PalTiming palCompositeTiming
     .vSync(palVSync),
     .sync(palSync),
     .burst(palBurst),
+    .burstPhase(palBurstPhase),
     .hPos(palHPos),
     .vPos(palVPos)
 );
 
-reg palOddFrame = 1'b1;
+reg [1:0] palOddFrame = 2'b11;
 always @ (posedge palVSync) begin
-    palOddFrame = ~palOddFrame;
+    palOddFrame = palOddFrame + 2'd1;
 end
 
 
@@ -181,6 +183,28 @@ NtscColorBars colorBars
     .burstDelayed(ntscBurstDelayed)
 ); */
 
+wire palBlankDelayed;
+wire palSyncDelayed;
+wire palBurstDelayed;
+wire palBurstPhaseDelayed;
+PalColorBars colorBars
+(
+    .palClock(palClock),
+    .hPos(palHPos),
+    .vPos(palVPos),
+    .blank(palBlank),
+    .sync(palSync),
+    .burst(palBurst),
+    .burstPhase(palBurstPhase),
+    .y(palY),
+    .u(palU),
+    .v(palV),
+    .blankDelayed(palBlankDelayed),
+    .syncDelayed(palSyncDelayed),
+    .burstDelayed(palBurstDelayed),
+    .burstPhaseDelayed(palBurstPhaseDelayed)
+);
+
 /* NtscGenerator ntscGen
 (
     .reset(1'b0),
@@ -195,23 +219,18 @@ NtscColorBars colorBars
     .dacSample(videoDac)
 ); */
 
-assign palY = 9'd128;
-assign palU = 9'd0;
-assign palV = 9'd0;
-
 PalGenerator palGen
 (
     .reset(1'b0),
     .phaseClock(palClock),
     .subcarrierPhase(palPhase),
-    .blank(palBlank),
-    .sync(palSync),
-    .burst(palBurst),
+    .blank(palBlankDelayed),
+    .sync(palSyncDelayed),
+    .burst(palBurstDelayed),
+    .burstPhase(palBurstPhaseDelayed),
     .y(palY),
     .u(palU),
     .v(palV),
-    .oddFrame(palOddFrame),
-    .oddLine(!palVPos[0]),
     .dacSample(videoDac)
 );
 

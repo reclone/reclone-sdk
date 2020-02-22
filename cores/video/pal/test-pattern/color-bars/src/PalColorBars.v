@@ -35,19 +35,22 @@ module PalColorBars
     input wire blank,
     input wire sync,
     input wire burst,
+    input wire burstPhase,
     
     output reg signed [8:0] y = 9'd0,
     output reg signed [8:0] u = 9'd0,
     output reg signed [8:0] v = 9'd0,
     output reg blankDelayed = 1'b1,
     output reg syncDelayed = 1'b0,
-    output reg burstDelayed = 1'b0
+    output reg burstDelayed = 1'b0,
+    output reg burstPhaseDelayed = 1'b0
 );
 
 always @ (posedge palClock) begin
     blankDelayed <= blank;
     syncDelayed <= sync;
     burstDelayed <= burst;
+    burstPhaseDelayed <= burstPhase;
 
     if (vPos < 10'd324) begin
         // Main set of seven color bars
@@ -61,33 +64,33 @@ always @ (posedge palClock) begin
         end else if (hPos < 10'd223) begin
             // 75% yellow
             y <= 9'd169;
-            u <= 9'd61;
-            v <= -9'd59;
+            u <= -9'd83;
+            v <= 9'd19;
         end else if (hPos < 10'd326) begin
             // 75% cyan
             y <= 9'd134;
-            u <= -9'd114;
-            v <= -9'd40;
+            u <= 9'd28;
+            v <= -9'd117;
         end else if (hPos < 10'd429) begin
             // 75% green
             y <= 9'd112;
-            u <= -9'd53;
-            v <= -9'd100;
+            u <= -9'd55;
+            v <= -9'd98;
         end else if (hPos < 10'd532) begin
             // 75% magenta
             y <= 9'd79;
-            u <= 9'd53;
-            v <= 9'd100;
+            u <= 9'd55;
+            v <= 9'd98;
         end else if (hPos < 10'd635) begin
             // 75% red
             y <= 9'd57;
-            u <= 9'd114;
-            v <= 9'd40;
+            u <= -9'd28;
+            v <= 9'd117;
         end else begin
             // 75% blue
             y <= 9'd22;
-            u <= -9'd61;
-            v <= 9'd59;
+            u <= 9'd83;
+            v <= -9'd19;
         end
     end else if (vPos < 10'd363) begin
         // Strip of blue, magenta, cyan, and white castellations
@@ -132,7 +135,7 @@ always @ (posedge palClock) begin
         // Starts with four wider bars 5*103/4=129 pixels per wide bar
         // 17 overscan pixels on left and right sides
         if (hPos < 10'd146) begin
-            // -I at the same magnitude as color burst
+            // -U at the same magnitude as color burst
             y <= 9'd0;
             u <= -9'd64;
             v <= 9'd0;
@@ -142,7 +145,7 @@ always @ (posedge palClock) begin
             u <= 9'd0;
             v <= 9'd0;
         end else if (hPos < 10'd404) begin
-            // +Q at the same magnitude as color burst
+            // +V at the same magnitude as color burst
             y <= 9'd0;
             u <= 9'd0;
             v <= 9'd64;

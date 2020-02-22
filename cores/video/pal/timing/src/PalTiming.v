@@ -73,12 +73,14 @@ module PalTiming # (parameter PHASE_BITS = 4)
     output reg vSync = 1'b0,
     output reg sync = 1'b0,
     output reg burst = 1'b0,
+    output reg burstPhase = 1'b0,
     output reg [9:0] hPos = 10'd355,
     output reg [9:0] vPos = 10'd0
 );
 
 reg [10:0] hCount = 11'd567;
 reg [9:0] vCount = 10'd0;
+reg [1:0] fieldCount = 2'd3;
 
 wire [10:0] hTotal = 11'd1135;
 wire [9:0] vTotalProgressive = 10'd312;
@@ -116,7 +118,13 @@ wire vSyncNext = ((vCountNextHalfLines > vPreEqualizationHalfLines) && (vCountNe
 wire vBlankNext = (vCountNextHalfLines <= vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines + vRetraceHalfLines) ||
                   ((vCountNextHalfLines > vFieldInterlacedHalfLines) && (vCountNextHalfLines <= vFieldInterlacedHalfLines + vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines + vRetraceHalfLines));
 
-wire burstNext = !vBlankNext && (hCountNext >= hFrontPorch + hSyncPulse + hBreezeway) && (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst);
+wire burstBlankingNext = (vCountNextHalfLines < vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines + {9'd0, (2'd2 - fieldCount)}) ||
+                         (vCountNextHalfLines >= vFieldInterlacedHalfLines - {9'd0, (fieldCount + 2'd2)} && vCountNextHalfLines < vFieldInterlacedHalfLines + vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines + {9'd0, (2'd2 - fieldCount)}) ||
+                         (vCountNextHalfLines >= vFieldInterlacedHalfLines + vFieldInterlacedHalfLines - {9'd0, (fieldCount + 2'd2)});
+
+wire burstNext = !burstBlankingNext && (hCountNext >= hFrontPorch + hSyncPulse + hBreezeway) && (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst);
+
+wire burstPhaseNext = (fieldCount[1] == !vCount[0]);
 
 wire vEqualizingPulsesNext = !vSyncNext &&
                              ((vCountNextHalfLines <= vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines) ||
@@ -162,6 +170,8 @@ always @ (posedge phaseClock) begin
         vSync <= 1'b0;
         sync <= 1'b0;
         burst <= 1'b0;
+        burstPhase <= 1'b0;
+        fieldCount <= 2'd3;
     end else begin
         // If the low bits of phase are 1, it's time to increment the pixel position
         if (phase[PHASE_BITS-3:0] == {(PHASE_BITS-2){1'b1}}) begin
@@ -172,8 +182,14 @@ always @ (posedge phaseClock) begin
             blank <= hBlankNext || vBlankNext;
             sync <= syncNext;
             burst <= burstNext;
+            burstPhase <= burstPhaseNext;
             hPos <= hPosNext[9:0];
             vPos <= vPosNext;
+            
+            if (vSyncNext == 1'b1 && vSync == 1'b0) begin
+                // Active edge of vertical sync, so increment field counter
+                fieldCount <= fieldCount + 2'd1;
+            end
         end
 
         // Increment phase counter

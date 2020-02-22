@@ -1,5 +1,5 @@
-add_executable(testNtscGenerator NtscGeneratorTests.cpp)
+add_executable(testPalGenerator PalGeneratorTests.cpp)
 
-target_link_libraries(testNtscGenerator VNtscGenerator VNtscTiming gtest gtest_main)
+target_link_libraries(testPalGenerator VPalGenerator VPalTiming gtest gtest_main)
 
-add_test(NAME testNtscGenerator COMMAND testNtscGenerator)
+add_test(NAME testPalGenerator COMMAND testPalGenerator)

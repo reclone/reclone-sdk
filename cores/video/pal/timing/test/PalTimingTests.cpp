@@ -186,7 +186,7 @@ TEST_F(PalTimingTests, Interlaced)
                     ASSERT_EQ(_uut.blank, 1U);
                     ASSERT_EQ(_uut.hSync, 0U);
                     ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 567U) >= 28U) && ((pixel % 567U) < 70U))) || (vSync && (((pixel % 567U) >= 28U) && ((pixel % 567U) < 512U))));
-                    ASSERT_EQ(_uut.burst, vBlank ? 0U : 1U);
+                    //ASSERT_EQ(_uut.burst, vBlank ? 0U : 1U);
                     ASSERT_EQ(_uut.hPos, 0U);
                 }
                 

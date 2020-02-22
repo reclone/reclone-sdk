@@ -1,5 +1,5 @@
 //
-// NtscGeneratorTests - Unit tests for verilated NtscGenerator module
+// PalGeneratorTests - Unit tests for verilated PalGenerator module
 //
 //
 // Copyright 2019 Reclone Labs <reclonelabs.com>
@@ -27,32 +27,32 @@
 #include <math.h>
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
-#include "VNtscGenerator.h"
-#include "VNtscTiming.h"
+#include "VPalGenerator.h"
+#include "VPalTiming.h"
 
-class NtscGeneratorTests : public ::testing::Test
+class PalGeneratorTests : public ::testing::Test
 {
     public:
-        NtscGeneratorTests() : _tickCount(1)
+        PalGeneratorTests() : _tickCount(1)
         {
             Verilated::traceEverOn(true);
         }
         
-        virtual ~NtscGeneratorTests()
+        virtual ~PalGeneratorTests()
         {
             _uut.final();
         }
         
     protected:
-        VNtscGenerator _uut;
+        VPalGenerator _uut;
         unsigned int _tickCount;
 };
 
-TEST_F(NtscGeneratorTests, ColorBurst)
+TEST_F(PalGeneratorTests, ColorBurst)
 {
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("NtscGeneratorColorBurst.vcd");
+    vcd_trace.open("PalGeneratorColorBurst.vcd");
 
     _uut.reset = 0;
     _uut.phaseClock = 0;
@@ -60,6 +60,8 @@ TEST_F(NtscGeneratorTests, ColorBurst)
     _uut.blank = 1;
     _uut.sync = 0;
     _uut.burst = 1;
+    //_uut.oddFrame = 1;
+    //_uut.oddLine = 1;
     _uut.eval();
 
     for (unsigned int i = 0; i < 9U * 16U; ++i)
@@ -67,8 +69,7 @@ TEST_F(NtscGeneratorTests, ColorBurst)
         _uut.phaseClock = 1;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
-        // Burst is always 180 degrees out of phase with (inverted with respect to) the subcarrier
-        ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        //TODO assert
         
         _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
         _uut.phaseClock = 0;
@@ -79,11 +80,11 @@ TEST_F(NtscGeneratorTests, ColorBurst)
     vcd_trace.close();
 }
 
-TEST_F(NtscGeneratorTests, JustBlue)
+TEST_F(PalGeneratorTests, JustBlue)
 {
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("NtscGeneratorBlue.vcd");
+    vcd_trace.open("PalGeneratorBlue.vcd");
 
     _uut.reset = 0;
     _uut.phaseClock = 0;
@@ -91,9 +92,11 @@ TEST_F(NtscGeneratorTests, JustBlue)
     _uut.blank = 0;
     _uut.sync = 0;
     _uut.burst = 0;
+    //_uut.oddFrame = 1;
+    //_uut.oddLine = 1;
     _uut.y = 29;
-    _uut.i = -82;
-    _uut.q = 79;
+    _uut.u = 111;
+    _uut.v = -26;
     _uut.eval();
 
     for (unsigned int i = 0; i < 9U * 16U; ++i)
@@ -113,11 +116,11 @@ TEST_F(NtscGeneratorTests, JustBlue)
     vcd_trace.close();
 }
 
-TEST_F(NtscGeneratorTests, JustYellow)
+TEST_F(PalGeneratorTests, JustYellow)
 {
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("NtscGeneratorYellow.vcd");
+    vcd_trace.open("PalGeneratorYellow.vcd");
 
     _uut.reset = 0;
     _uut.phaseClock = 0;
@@ -125,9 +128,11 @@ TEST_F(NtscGeneratorTests, JustYellow)
     _uut.blank = 0;
     _uut.sync = 0;
     _uut.burst = 0;
+    //_uut.oddFrame = 1;
+    //_uut.oddLine = 1;
     _uut.y = 226;
-    _uut.i = 82;
-    _uut.q = -79;
+    _uut.u = -111;
+    _uut.v = 26;
     _uut.eval();
 
     for (unsigned int i = 0; i < 9U * 16U; ++i)
@@ -147,13 +152,13 @@ TEST_F(NtscGeneratorTests, JustYellow)
     vcd_trace.close();
 }
 
-TEST_F(NtscGeneratorTests, TimingWithPositiveI)
+TEST_F(PalGeneratorTests, TimingWithPositiveU)
 {
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("NtscGeneratorPositiveI.vcd");
+    vcd_trace.open("PalGeneratorPositiveU.vcd");
     
-    VNtscTiming timing;
+    VPalTiming timing;
     timing.reset = 0;
     timing.phaseClock = 0;
     timing.progressive = 0;
@@ -162,11 +167,12 @@ TEST_F(NtscGeneratorTests, TimingWithPositiveI)
     _uut.reset = 0;
     _uut.subcarrierPhase = 0;
     _uut.y = 0x80;
-    _uut.i = 0x80;
-    _uut.q = 0x00;
+    _uut.u = 0x80;
+    _uut.v = 0x00;
     _uut.blank = timing.blank;
     _uut.sync = timing.sync;
     _uut.burst = timing.burst;
+    _uut.burstPhase = 0;
     _uut.eval();
     
     for (unsigned int i = 0; i < 910U * 4U * 40U; ++i)
@@ -179,9 +185,9 @@ TEST_F(NtscGeneratorTests, TimingWithPositiveI)
         // TODO
         //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
         
-        _uut.y = (timing.hPos > 17U && timing.hPos < 737) ? 0x80 : 0x00;
-        _uut.i = (timing.hPos > 17U && timing.hPos < 737) ? 0x80 : 0x00;
-        _uut.q = 0x00;
+        _uut.y = (timing.hPos > 17U && timing.hPos < 737U) ? 226 : 0;
+        _uut.u = (timing.hPos > 17U && timing.hPos < 737U) ? -111 : 0;
+        _uut.v = (timing.hPos > 17U && timing.hPos < 737U) ? 26 : 0;
         _uut.phaseClock = 0;
         timing.phaseClock = 0;
         timing.eval();
@@ -189,6 +195,7 @@ TEST_F(NtscGeneratorTests, TimingWithPositiveI)
         _uut.blank = timing.blank;
         _uut.sync = timing.sync;
         _uut.burst = timing.burst;
+        _uut.burstPhase = timing.burstPhase;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
     }

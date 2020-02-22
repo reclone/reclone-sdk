@@ -19,6 +19,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/pal/timing/src/PalTiming.v
     ${PROJECT_SOURCE_DIR}/video/pal/generator/src/PalGenerator.v
     ${PROJECT_SOURCE_DIR}/video/ntsc/test-pattern/color-bars/src/NtscColorBars.v
+    ${PROJECT_SOURCE_DIR}/video/pal/test-pattern/color-bars/src/PalColorBars.v
     ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v)
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)

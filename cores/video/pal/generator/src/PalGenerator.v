@@ -35,8 +35,7 @@ module PalGenerator
     input wire blank,
     input wire sync,
     input wire burst,
-    input wire oddFrame, // first, second, fifth, sixth... fields
-    input wire oddLine,  // first, second, fifth, sixth... lines
+    input wire burstPhase, // 1=+135deg 0=-135deg
     input wire signed [YUV_PRECISION_BITS:0] y, // 0 to 255, but can be slightly negative for a test pattern
     input wire signed [YUV_PRECISION_BITS:0] u, // 
     input wire signed [YUV_PRECISION_BITS:0] v, // 
@@ -148,8 +147,8 @@ always @ (posedge phaseClock) begin
         end else if (burst) begin
             zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
             yLatched <= 9'h0;
-            uLatched <= -9'd45;                                 // 64*cos(+-135deg)
-            vLatched <= (oddFrame == oddLine) ? 9'd45 : -9'd45; // 64*sin(+-135deg)
+            uLatched <= -9'd45;                      // 64*cos(+-135deg)
+            vLatched <= burstPhase ? 9'd45 : -9'd45; // 64*sin(+-135deg)
         end else if (blank) begin
             zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
             yLatched <= 9'h0;
@@ -159,7 +158,7 @@ always @ (posedge phaseClock) begin
             zeroOffset <= BLACK_LEVEL[DAC_BITS-1:0];
             yLatched <= y;
             uLatched <= u;
-            vLatched <= v;
+            vLatched <= burstPhase ? v : -v;
         end
         
         // Second stage: multiply y, i, q and scale zeroOffset
