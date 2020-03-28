@@ -67,8 +67,15 @@ TEST_F(NtscGeneratorTests, ColorBurst)
         _uut.phaseClock = 1;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
-        // Burst is always 180 degrees out of phase with (inverted with respect to) the subcarrier
-        ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        
+        unsigned int subcarrierPhaseDelayed = (_uut.subcarrierPhase + 13U) % 16U;
+        
+        // Need four cycles to get through the pipeline
+        if (i > 3U)
+        {
+            // Burst is 57 degrees (1 radian) out of phase with the subcarrier
+            ASSERT_EQ(8 + round(4 * cos(2 * 3.14159265 * subcarrierPhaseDelayed / 16.0 + 1.0)), _uut.dacSample) << subcarrierPhaseDelayed;
+        }
         
         _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
         _uut.phaseClock = 0;
@@ -81,6 +88,10 @@ TEST_F(NtscGeneratorTests, ColorBurst)
 
 TEST_F(NtscGeneratorTests, JustBlue)
 {
+    const int Y = 29;
+    const int I = -82;
+    const int Q = 79;
+    
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("NtscGeneratorBlue.vcd");
@@ -91,9 +102,9 @@ TEST_F(NtscGeneratorTests, JustBlue)
     _uut.blank = 0;
     _uut.sync = 0;
     _uut.burst = 0;
-    _uut.y = 29;
-    _uut.i = -82;
-    _uut.q = 79;
+    _uut.y = Y;
+    _uut.i = I;
+    _uut.q = Q;
     _uut.eval();
 
     for (unsigned int i = 0; i < 9U * 16U; ++i)
@@ -101,8 +112,14 @@ TEST_F(NtscGeneratorTests, JustBlue)
         _uut.phaseClock = 1;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
-        // TODO
-        //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        
+        unsigned int subcarrierPhaseDelayed = (_uut.subcarrierPhase + 13U) % 16U;
+        
+        // Need four cycles to get through the pipeline
+        if (i > 3U)
+        {
+            ASSERT_EQ(10 + round((Y + I * cos(2 * 3.14159265 * subcarrierPhaseDelayed / 16.0) + Q * sin(2 * 3.14159265 * subcarrierPhaseDelayed / 16.0)) / 16.0), _uut.dacSample) << _uut.i;
+        }
         
         _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
         _uut.phaseClock = 0;
@@ -115,6 +132,10 @@ TEST_F(NtscGeneratorTests, JustBlue)
 
 TEST_F(NtscGeneratorTests, JustYellow)
 {
+    const int Y = 226;
+    const int I = 82;
+    const int Q = -79;
+    
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("NtscGeneratorYellow.vcd");
@@ -125,9 +146,9 @@ TEST_F(NtscGeneratorTests, JustYellow)
     _uut.blank = 0;
     _uut.sync = 0;
     _uut.burst = 0;
-    _uut.y = 226;
-    _uut.i = 82;
-    _uut.q = -79;
+    _uut.y = Y;
+    _uut.i = I;
+    _uut.q = Q;
     _uut.eval();
 
     for (unsigned int i = 0; i < 9U * 16U; ++i)
@@ -135,8 +156,14 @@ TEST_F(NtscGeneratorTests, JustYellow)
         _uut.phaseClock = 1;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
-        // TODO
-        //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
+        
+        unsigned int subcarrierPhaseDelayed = (_uut.subcarrierPhase + 13U) % 16U;
+        
+        // Need four cycles to get through the pipeline
+        if (i > 3U)
+        {
+            ASSERT_EQ(10 + round((Y + I * cos(2 * 3.14159265 * subcarrierPhaseDelayed / 16.0) + Q * sin(2 * 3.14159265 * subcarrierPhaseDelayed / 16.0)) / 16.0), _uut.dacSample) << _uut.i;
+        }
         
         _uut.subcarrierPhase = (_uut.subcarrierPhase + 1) % 16;
         _uut.phaseClock = 0;
@@ -161,9 +188,9 @@ TEST_F(NtscGeneratorTests, TimingWithPositiveI)
     
     _uut.reset = 0;
     _uut.subcarrierPhase = 0;
-    _uut.y = 0x80;
-    _uut.i = 0x80;
-    _uut.q = 0x00;
+    _uut.y = 0;
+    _uut.i = 0;
+    _uut.q = 0;
     _uut.blank = timing.blank;
     _uut.sync = timing.sync;
     _uut.burst = timing.burst;
@@ -176,8 +203,6 @@ TEST_F(NtscGeneratorTests, TimingWithPositiveI)
         _uut.eval();
         timing.eval();
         vcd_trace.dump(_tickCount++);
-        // TODO
-        //ASSERT_EQ(8 - round(4 * cos(2 * 3.14159265 * _uut.subcarrierPhase / 16.0)), _uut.dacSample);
         
         _uut.y = (timing.hPos > 17U && timing.hPos < 737) ? 0x80 : 0x00;
         _uut.i = (timing.hPos > 17U && timing.hPos < 737) ? 0x80 : 0x00;
