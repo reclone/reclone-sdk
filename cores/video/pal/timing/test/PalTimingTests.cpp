@@ -186,7 +186,28 @@ TEST_F(PalTimingTests, Interlaced)
                     ASSERT_EQ(_uut.blank, 1U);
                     ASSERT_EQ(_uut.hSync, 0U);
                     ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 567U) >= 28U) && ((pixel % 567U) < 70U))) || (vSync && (((pixel % 567U) >= 28U) && ((pixel % 567U) < 512U))));
-                    //ASSERT_EQ(_uut.burst, vBlank ? 0U : 1U);
+                    if (frame % 2U == 0U)
+                    {
+                        if (line < 313U)
+                        {
+                            ASSERT_EQ(_uut.burst, (line >= 9U && line < 312U) ? 1U : 0U) << line;
+                        }
+                        else
+                        {
+                            ASSERT_EQ(_uut.burst, (line >= 321U && line < 624U) ? 1U : 0U) << line;
+                        }
+                    }
+                    else
+                    {
+                        if (line < 313U)
+                        {
+                            ASSERT_EQ(_uut.burst, (line >= 8U && line < 313U) ? 1U : 0U) << line;
+                        }
+                        else
+                        {
+                            ASSERT_EQ(_uut.burst, (line >= 322U && line < 625U) ? 1U : 0U) << line;
+                        }
+                    }
                     ASSERT_EQ(_uut.hPos, 0U);
                 }
                 
@@ -229,13 +250,14 @@ TEST_F(PalTimingTests, FakeProgressive)
     _uut.progressive = 1;
     _uut.eval();
     
-    for (unsigned int frame = 0; frame < 2U; ++frame)
+    for (unsigned int frame = 0; frame < 5U; ++frame)
     {
         for (unsigned int line = 0; line <= 312U; ++line)
         {
             // The 0th line starts at its midpoint
             // The 312th line ends just before its midpoint
-            for (unsigned int pixel = ((line == 0U) ? 567U : 0U); pixel < ((line == 312U) ? 567U : 1135U); ++pixel)
+            // The 8th line of every frame is shortened by two pixels, to switch subcarrier phase
+            for (unsigned int pixel = ((line == 0U) ? 567U : 0U); pixel < ((line == 312U) ? 567U : ((line == 8U) ? 1133U : 1135U)); ++pixel)
             {
                 unsigned int vPos;
                 
@@ -296,7 +318,22 @@ TEST_F(PalTimingTests, FakeProgressive)
                     ASSERT_EQ(_uut.blank, 1U);
                     ASSERT_EQ(_uut.hSync, 0U);
                     ASSERT_EQ(_uut.sync, (vEqualize && (((pixel % 567U) >= 28U) && ((pixel % 567U) < 70U))) || (vSync && (((pixel % 567U) >= 28U) && ((pixel % 567U) < 512U))));
-                    ASSERT_EQ(_uut.burst, vBlank ? 0U : 1U);
+                    if (frame % 4U == 0U)
+                    {
+                        ASSERT_EQ(_uut.burst, (line >= 9U && line < 312U) ? 1U : 0U) << frame << std::endl << line;
+                    }
+                    else if (frame % 4U == 1U)
+                    {
+                        ASSERT_EQ(_uut.burst, (line >= 8U && line < 311U) ? 1U : 0U) << frame << std::endl << line;
+                    }
+                    else if (frame % 4U == 2U)
+                    {
+                        ASSERT_EQ(_uut.burst, (line >= 8U && line < 313U) ? 1U : 0U) << frame << std::endl << line;
+                    }
+                    else
+                    {
+                        ASSERT_EQ(_uut.burst, (line >= 9U && line < 312U) ? 1U : 0U) << frame << std::endl << line;
+                    }
                     ASSERT_EQ(_uut.hPos, 0U);
                 }
                 

@@ -1,6 +1,7 @@
 //
 // PalGenerator - Generate DAC samples for PAL composite video, given timing and color signals
 //
+// TODO description
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
@@ -37,8 +38,8 @@ module PalGenerator
     input wire burst,
     input wire burstPhase, // 1=+135deg 0=-135deg
     input wire signed [YUV_PRECISION_BITS:0] y, // 0 to 255, but can be slightly negative for a test pattern
-    input wire signed [YUV_PRECISION_BITS:0] u, // 
-    input wire signed [YUV_PRECISION_BITS:0] v, // 
+    input wire signed [YUV_PRECISION_BITS:0] u, // TODO
+    input wire signed [YUV_PRECISION_BITS:0] v, // TODO
 
     output reg [DAC_BITS-1:0] dacSample = BLANK_LEVEL[DAC_BITS-1:0]
 );

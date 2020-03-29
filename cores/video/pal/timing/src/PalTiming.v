@@ -8,7 +8,7 @@
 // Four pixels per color burst cycle; one pixel is one quarter of the subcarrier cycle period
 // 225.55 ns/cyc  /  4 pix/cyc  =  56.387 ns/pix
 //
-// Line period: 64 us = 283.75 color burst cycles = 1135 pixels
+// Line period: 64 us = 283.75 color burst cycles = 1135 pixels (#1)
 // Line-blanking interval: 11.7 to 12 us = 53 color burst cycles = 212 pixels
 // Front porch: 1.5 to 1.8 us => 1.579 us = 7 color burst cycles = 28 pixels
 // Synchronizing pulse: 4.5 to 4.9 us = 21 color burst cycles = 84 pixels
@@ -35,6 +35,11 @@
 // Postequalization pulses: 2.5 lines
 // Vertical retrace settling time: 17.5 lines
 // Active video: 287 lines
+//
+// (#1) If "progressive" is set, the 10th scan line is reduced by
+// 0.5 color burst period (2 pixels) so that the subcarrier phase alternates
+// on each frame, helping to visually cancel out chroma-luma interference
+// patterns, but causing the image to "dot crawl" at half the frame rate.
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
@@ -82,7 +87,8 @@ reg [10:0] hCount = 11'd567;
 reg [9:0] vCount = 10'd0;
 reg [1:0] fieldCount = 2'd3;
 
-wire [10:0] hTotal = 11'd1135;
+wire [9:0] progShortLineNumber = 10'd8;
+wire [10:0] hTotal = (progressive == 1'b1 && vCount == progShortLineNumber) ? 11'd1133 :11'd1135;
 wire [9:0] vTotalProgressive = 10'd312;
 wire [9:0] vTotalInterlaced = 10'd625;
 wire [9:0] vTotal = progressive ? vTotalProgressive : vTotalInterlaced;

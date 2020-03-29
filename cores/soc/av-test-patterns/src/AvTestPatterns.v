@@ -127,10 +127,6 @@ PalTiming palCompositeTiming
     .vPos(palVPos)
 );
 
-reg [1:0] palOddFrame = 2'b11;
-always @ (posedge palVSync) begin
-    palOddFrame = palOddFrame + 2'd1;
-end
 
 
 /* wire signed [8:0] ntscY;
