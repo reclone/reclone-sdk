@@ -36,7 +36,7 @@
 // Vertical retrace settling time: 17.5 lines
 // Active video: 287 lines
 //
-// (#1) If "progressive" is set, the 10th scan line is reduced by
+// (#1) If "progressive" is set, the 8th scan line is reduced by
 // 0.5 color burst period (2 pixels) so that the subcarrier phase alternates
 // on each frame, helping to visually cancel out chroma-luma interference
 // patterns, but causing the image to "dot crawl" at half the frame rate.
