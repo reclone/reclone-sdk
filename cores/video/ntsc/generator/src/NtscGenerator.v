@@ -7,7 +7,7 @@
 //  - Y, I, and Q are 9-bit signed values, with expected ranges corresponding to rgb-yiq conversion.
 //  - The dacSample output is 5 bits, expecting roughly 5 IRE/bit (35.7 mV/bit) for an output
 //    voltage range of 0 to 1.1 V when terminated with a 75 ohm load.  On a 3.3 V IO bank,
-//    his can be implemented with a 5-bit R-2R resistor ladder DAC, where R=147.
+//    this can be implemented with a 5-bit R-2R resistor ladder DAC, where R=147.
 //
 // Granted the assumptions above, the module attempts to be FPGA-agnostic in that it does not
 // manually instantiate any DSP primitives, but they may be inferred, if DSP slices are available
