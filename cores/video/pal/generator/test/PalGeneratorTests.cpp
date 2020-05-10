@@ -60,7 +60,7 @@ TEST_F(PalGeneratorTests, ColorBurst)
     _uut.blank = 1;
     _uut.sync = 0;
     _uut.burst = 1;
-    //_uut.oddFrame = 1;
+    _uut.linePhase = 0; //-V
     //_uut.oddLine = 1;
     _uut.eval();
 
@@ -172,7 +172,7 @@ TEST_F(PalGeneratorTests, TimingWithPositiveU)
     _uut.blank = timing.blank;
     _uut.sync = timing.sync;
     _uut.burst = timing.burst;
-    _uut.burstPhase = 0;
+    _uut.linePhase = 0;
     _uut.eval();
     
     for (unsigned int i = 0; i < 910U * 4U * 40U; ++i)
@@ -195,7 +195,7 @@ TEST_F(PalGeneratorTests, TimingWithPositiveU)
         _uut.blank = timing.blank;
         _uut.sync = timing.sync;
         _uut.burst = timing.burst;
-        _uut.burstPhase = timing.burstPhase;
+        _uut.linePhase = timing.linePhase;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
     }

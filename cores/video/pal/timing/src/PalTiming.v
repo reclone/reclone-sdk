@@ -78,7 +78,7 @@ module PalTiming # (parameter PHASE_BITS = 4)
     output reg vSync = 1'b0,
     output reg sync = 1'b0,
     output reg burst = 1'b0,
-    output reg burstPhase = 1'b0,
+    output reg linePhase = 1'b0,
     output reg [9:0] hPos = 10'd355,
     output reg [9:0] vPos = 10'd0
 );
@@ -130,7 +130,7 @@ wire burstBlankingNext = (vCountNextHalfLines < vPreEqualizationHalfLines + vSyn
 
 wire burstNext = !burstBlankingNext && (hCountNext >= hFrontPorch + hSyncPulse + hBreezeway) && (hCountNext < hFrontPorch + hSyncPulse + hBreezeway + hBurst);
 
-wire burstPhaseNext = (fieldCount[1] == !vCount[0]);
+wire linePhaseNext = (fieldCount[1] == !vCount[0]);
 
 wire vEqualizingPulsesNext = !vSyncNext &&
                              ((vCountNextHalfLines <= vPreEqualizationHalfLines + vSyncPulseHalfLines + vPostEqualizationHalfLines) ||
@@ -176,7 +176,7 @@ always @ (posedge phaseClock) begin
         vSync <= 1'b0;
         sync <= 1'b0;
         burst <= 1'b0;
-        burstPhase <= 1'b0;
+        linePhase <= 1'b0;
         fieldCount <= 2'd3;
     end else begin
         // If the low bits of phase are 1, it's time to increment the pixel position
@@ -188,7 +188,7 @@ always @ (posedge phaseClock) begin
             blank <= hBlankNext || vBlankNext;
             sync <= syncNext;
             burst <= burstNext;
-            burstPhase <= burstPhaseNext;
+            linePhase <= linePhaseNext;
             hPos <= hPosNext[9:0];
             vPos <= vPosNext;
             

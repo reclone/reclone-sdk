@@ -35,7 +35,7 @@ module PalColorBars
     input wire blank,
     input wire sync,
     input wire burst,
-    input wire burstPhase,
+    input wire linePhase,
     
     output reg signed [8:0] y = 9'd0,
     output reg signed [8:0] u = 9'd0,
@@ -43,14 +43,14 @@ module PalColorBars
     output reg blankDelayed = 1'b1,
     output reg syncDelayed = 1'b0,
     output reg burstDelayed = 1'b0,
-    output reg burstPhaseDelayed = 1'b0
+    output reg linePhaseDelayed = 1'b0
 );
 
 always @ (posedge palClock) begin
     blankDelayed <= blank;
     syncDelayed <= sync;
     burstDelayed <= burst;
-    burstPhaseDelayed <= burstPhase;
+    linePhaseDelayed <= linePhase;
 
     if (vPos < 10'd383) begin
         // Main set of seven color bars

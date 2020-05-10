@@ -62,7 +62,7 @@ module PalGenerator
     input wire blank,
     input wire sync,
     input wire burst,
-    input wire burstPhase, // 1=+135deg 0=-135deg
+    input wire linePhase, // For color burst: 1=+135deg, 0=-135deg; For active video: 1=+V, 0=-V
     input wire signed [YUV_PRECISION_BITS:0] y, // 0 to 255, but can be slightly negative for a test pattern
     input wire signed [YUV_PRECISION_BITS:0] u, // -111 to 111
     input wire signed [YUV_PRECISION_BITS:0] v, // -157 to 157
@@ -180,7 +180,7 @@ always @ (posedge phaseClock) begin
             zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
             yLatched <= 9'h0;
             uLatched <= -9'd45;                      // 64*cos(+-135deg)
-            vLatched <= burstPhase ? 9'd45 : -9'd45; // 64*sin(+-135deg)
+            vLatched <= linePhase ? 9'd45 : -9'd45;  // 64*sin(+-135deg)
         end else if (blank) begin
             zeroOffset <= BLANK_LEVEL[DAC_BITS-1:0];
             yLatched <= 9'h0;
@@ -190,7 +190,7 @@ always @ (posedge phaseClock) begin
             zeroOffset <= BLACK_LEVEL[DAC_BITS-1:0];
             yLatched <= y;
             uLatched <= u;
-            vLatched <= burstPhase ? v : -v;
+            vLatched <= linePhase ? v : -v;
         end
         
         // Second stage: multiply y, i, q and scale zeroOffset
