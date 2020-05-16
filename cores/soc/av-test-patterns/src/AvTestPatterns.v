@@ -107,7 +107,7 @@ wire [3:0] palPhase;
 wire palBlank;
 wire palSync;
 wire palBurst;
-wire palBurstPhase;
+wire palLinePhase;
 wire palVSync;
 wire [9:0] palHPos;
 wire [9:0] palVPos;
@@ -122,7 +122,7 @@ PalTiming palCompositeTiming
     .vSync(palVSync),
     .sync(palSync),
     .burst(palBurst),
-    .burstPhase(palBurstPhase),
+    .linePhase(palLinePhase),
     .hPos(palHPos),
     .vPos(palVPos)
 );
@@ -182,7 +182,7 @@ NtscColorBars colorBars
 wire palBlankDelayed;
 wire palSyncDelayed;
 wire palBurstDelayed;
-wire palBurstPhaseDelayed;
+wire palLinePhaseDelayed;
 PalColorBars colorBars
 (
     .palClock(palClock),
@@ -191,14 +191,14 @@ PalColorBars colorBars
     .blank(palBlank),
     .sync(palSync),
     .burst(palBurst),
-    .burstPhase(palBurstPhase),
+    .linePhase(palLinePhase),
     .y(palY),
     .u(palU),
     .v(palV),
     .blankDelayed(palBlankDelayed),
     .syncDelayed(palSyncDelayed),
     .burstDelayed(palBurstDelayed),
-    .burstPhaseDelayed(palBurstPhaseDelayed)
+    .linePhaseDelayed(palLinePhaseDelayed)
 );
 
 /* NtscGenerator ntscGen
@@ -223,7 +223,7 @@ PalGenerator palGen
     .blank(palBlankDelayed),
     .sync(palSyncDelayed),
     .burst(palBurstDelayed),
-    .burstPhase(palBurstPhaseDelayed),
+    .linePhase(palLinePhaseDelayed),
     .y(palY),
     .u(palU),
     .v(palV),
