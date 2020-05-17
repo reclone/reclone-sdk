@@ -37,10 +37,11 @@
 module BchEccStep
 (
     input wire data,
+    input wire syndrome,
     input wire [7:0] ecc,
     output wire [7:0] eccNext
 );
 
-assign eccNext = (ecc >> 1) ^ ((ecc[0] ^ data) ? 8'h83 : 8'h00);
+assign eccNext = (ecc >> 1) ^ ((~syndrome) && (ecc[0] ^ data) ? 8'h83 : 8'h00);
 
 endmodule

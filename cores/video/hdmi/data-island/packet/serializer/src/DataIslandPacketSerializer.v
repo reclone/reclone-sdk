@@ -1,6 +1,16 @@
 //
 // DataIslandPacketSerializer - Clock out an HDMI data island packet to three TERC4 channels
 //
+// Given an HDMI data island packet's header and subpacket data, along with HSync, VSync,
+// and "is first packet clock" signals, this module serializes a data island packet to the
+// three TERC4 channels used during a data island period.  This includes calculating the 
+// BCH ECC parity byte for the header and each subpacket.
+//
+// A key assumption and simplification made by this module is that each data island contains
+// exactly one packet.  This allows "isFirstPacketClock" to always specify the high bit of
+// terc4channel0.  If this assumption were not in place, the module would need an additional
+// signal to tell it whether it is the first packet in the island, while also requiring more
+// complex upstream logic to handle longer data islands.
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
@@ -79,6 +89,7 @@ BchEccSingleBitEncoder headerEccEncoder
     .clock(clock),
     .data(headerUseEcc ? 1'b0 : (isFirstPacketClock ? header[5'd0] : headerReg[count[4:0]])),
     .isFirstDataClock(isFirstPacketClock),
+    .syndrome(headerUseEcc),
     .ecc(headerEcc)
 );
 assign terc4channel0[2] = isFirstPacketClock ? header[5'd0] : (headerUseEcc ? headerEcc : header[count[4:0]]);
@@ -89,6 +100,7 @@ BchEccDualBitEncoder subpacket0EccEncoder
     .clock(clock),
     .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket0[1:0] : {subpacket0Reg[{count[4:0], 1'b1}], subpacket0Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
+    .syndrome(subpacketUseEcc),
     .ecc(subpacket0Ecc)
 );
 assign terc4channel1[0] = isFirstPacketClock ? subpacket0[0] : (subpacketUseEcc ? subpacket0Ecc[0] : subpacket0Reg[{count[4:0], 1'b0}]);
@@ -100,6 +112,7 @@ BchEccDualBitEncoder subpacket1EccEncoder
     .clock(clock),
     .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket1[1:0] : {subpacket1Reg[{count[4:0], 1'b1}], subpacket1Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
+    .syndrome(subpacketUseEcc),
     .ecc(subpacket1Ecc)
 );
 assign terc4channel1[1] = isFirstPacketClock ? subpacket1[0] : (subpacketUseEcc ? subpacket1Ecc[0] : subpacket1Reg[{count[4:0], 1'b0}]);
@@ -111,6 +124,7 @@ BchEccDualBitEncoder subpacket2EccEncoder
     .clock(clock),
     .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket2[1:0] : {subpacket2Reg[{count[4:0], 1'b1}], subpacket2Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
+    .syndrome(subpacketUseEcc),
     .ecc(subpacket2Ecc)
 );
 assign terc4channel1[2] = isFirstPacketClock ? subpacket2[0] : (subpacketUseEcc ? subpacket2Ecc[0] : subpacket2Reg[{count[4:0], 1'b0}]);
@@ -122,6 +136,7 @@ BchEccDualBitEncoder subpacket3EccEncoder
     .clock(clock),
     .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket3[1:0] : {subpacket3Reg[{count[4:0], 1'b1}], subpacket3Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
+    .syndrome(subpacketUseEcc),
     .ecc(subpacket3Ecc)
 );
 assign terc4channel1[3] = isFirstPacketClock ? subpacket3[0] : (subpacketUseEcc ? subpacket3Ecc[0] : subpacket3Reg[{count[4:0], 1'b0}]);

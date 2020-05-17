@@ -39,6 +39,7 @@
 module BchEccDualBitEncoder
 (
     input wire clock,
+    input wire syndrome,
     input wire [1:0] data,
     input wire isFirstDataClock,
 
@@ -46,15 +47,15 @@ module BchEccDualBitEncoder
 );
 
 reg [7:0] eccByte = 8'h00;
-reg eccStage = 1'b0;
 wire [7:0] eccNext;
 wire [7:0] eccNextNext;
 
-assign ecc = {eccByte[0], eccStage}; //TODO is this order correct?
+assign ecc = eccByte[1:0];
 
 BchEccStep bchFirst
 (
     .data(data[0]),
+    .syndrome(syndrome),
     .ecc(isFirstDataClock ? 8'h00 : eccByte),
     .eccNext(eccNext)
 );
@@ -62,13 +63,13 @@ BchEccStep bchFirst
 BchEccStep bchSecond
 (
     .data(data[1]),
+    .syndrome(syndrome),
     .ecc(eccNext),
     .eccNext(eccNextNext)
 );
 
 always @ (posedge clock) begin
     eccByte <= eccNextNext;
-    eccStage <= eccNext[0];
 end
 
 endmodule
