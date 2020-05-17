@@ -7,6 +7,11 @@
 // Vertical Sync (vsync), and  Data Enable (de) are generated, along with the current pixel's
 // coordinates, so that downstream modules can generate a video frame at the desired resolution.
 //
+// Outputs activeVideoPreamble and activeVideoGuardBand are added as helpers for HDMI encoding.
+// Since the HDMI encoder cannot predict when an active video region is about to begin, the
+// two signals indicate when to send the active video preamble or guard band characters.
+//
+//
 // Copyright 2019 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
