@@ -1,0 +1,5 @@
+add_executable(testVBlankDataIsland VBlankDataIslandTests.cpp)
+
+target_link_libraries(testVBlankDataIsland VVBlankDataIsland gtest gtest_main)
+
+add_test(NAME testVBlankDataIsland COMMAND testVBlankDataIsland)
