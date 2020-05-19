@@ -3,6 +3,8 @@
 //
 // This test pattern is based on the description in the SMPTE color bars article in Wikipedia:
 // https://en.wikipedia.org/wiki/SMPTE_color_bars
+// Referencing the 720p rendering from Wikimedia:
+// https://commons.wikimedia.org/wiki/File:SMPTE_Color_Bars_16x9.svg
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
