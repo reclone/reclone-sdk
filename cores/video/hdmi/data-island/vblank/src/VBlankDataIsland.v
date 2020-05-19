@@ -65,13 +65,13 @@ reg hSyncLatched = 1'b0;
 
 reg isFirstPacketClock = 1'b0;
 
-reg [5:0] characterCount = 6'd0;
+reg [6:0] characterCount = 7'd0;
 
-wire [9:0] channel0GuardBand;
+wire [9:0] ch0GuardBand;
 Terc4Encoder4to10 ch0GuardBandEncoder
 (
     .d({2'b11, vSync, hSync}),
-    .q(channel0GuardBand)
+    .q(ch0GuardBand)
 );
 
 
@@ -163,6 +163,30 @@ Terc4Encoder4to10 ch2PacketDataEncoder
     .q(ch2PacketDataEncoded)
 );
 
+wire [9:0] ch0PreambleDataEncoded;
+CtlEncoder2to10 ch0PreambleEncoder
+(
+    .d({vSync, hSync}),
+    .q(ch0PreambleDataEncoded)
+);
+
+wire [9:0] ch1PreambleDataEncoded;
+CtlEncoder2to10 ch1PreambleEncoder
+(
+    .d(2'b01),
+    .q(ch1PreambleDataEncoded)
+);
+
+wire [9:0] ch2PreambleDataEncoded;
+CtlEncoder2to10 ch2PreambleEncoder
+(
+    .d(2'b01),
+    .q(ch2PreambleDataEncoded)
+);
+
+wire [9:0] ch1GuardBand = 10'b0100110011;
+wire [9:0] ch2GuardBand = 10'b0100110011;
+
 always @ (posedge pixelClock) begin
     if (vSync ^ syncIsActiveLow) begin
         // VSync is active
@@ -170,27 +194,45 @@ always @ (posedge pixelClock) begin
             // HSync is active; start data island period once HSync goes inactive
             hSyncLatched <= 1'b1;
             isFirstPacketClock <= 1'b0;
-            characterCount <= 6'd0;
+            characterCount <= 7'd0;
             dataIslandActive <= 1'b0;
             channel0 <= 10'd0;
             channel1 <= 10'd0;
             channel2 <= 10'd0;
-        end else if ((hSyncLatched || dataIslandActive) &&
-                     ((characterCount < 6'd2) || ((characterCount >= 6'd34) && (characterCount < 6'd36)))) begin
+        end else if (hSyncLatched && characterCount < 7'd42) begin
+            // Wait 42 clocks after hsync is released to start the preamble
+            hSyncLatched <= 1'b1;
+            isFirstPacketClock <= 1'b0;
+            characterCount <= characterCount + 7'd1;
+            dataIslandActive <= 1'b0;
+            channel0 <= 10'd0;
+            channel1 <= 10'd0;
+            channel2 <= 10'd0;
+        end else if ((hSyncLatched || dataIslandActive) && characterCount < 7'd50) begin
+            // 8 characters of preamble
+            hSyncLatched <= 1'b0;
+            isFirstPacketClock <= 1'b0;
+            characterCount <= characterCount + 7'd1;
+            dataIslandActive <= 1'b1;
+            channel0 <= ch0PreambleDataEncoded;
+            channel1 <= ch1PreambleDataEncoded;
+            channel2 <= ch2PreambleDataEncoded;
+        end else if (dataIslandActive &&
+                     ((characterCount < 7'd52) || ((characterCount >= 7'd84) && (characterCount < 7'd86)))) begin
             // Data island leading or trailing guard band - 2 characters
             hSyncLatched <= 1'b0;
             isFirstPacketClock <= 1'b0;
             dataIslandActive <= 1'b1;
-            characterCount <= characterCount + 6'd1;
-            channel0 <= channel0GuardBand;
-            channel1 <= 10'b0100110011;
-            channel2 <= 10'b0100110011;
-        end else if (dataIslandActive && (characterCount >= 6'd2) && (characterCount < 6'd34)) begin
+            characterCount <= characterCount + 7'd1;
+            channel0 <= ch0GuardBand;
+            channel1 <= ch1GuardBand;
+            channel2 <= ch2GuardBand;
+        end else if (dataIslandActive && (characterCount >= 7'd52) && (characterCount < 7'd84)) begin
             // Data island packet - 32 characters
             hSyncLatched <= 1'b0;
-            isFirstPacketClock <= (characterCount == 6'd2) ? 1'b1 : 1'b0;
+            isFirstPacketClock <= (characterCount == 7'd52) ? 1'b1 : 1'b0;
             dataIslandActive <= 1'b1;
-            characterCount <= characterCount + 6'd1;
+            characterCount <= characterCount + 7'd1;
             channel0 <= ch0PacketDataEncoded;
             channel1 <= ch1PacketDataEncoded;
             channel2 <= ch2PacketDataEncoded;
@@ -198,22 +240,22 @@ always @ (posedge pixelClock) begin
             // Finished sending the data island
             hSyncLatched <= 1'b0;
             isFirstPacketClock <= 1'b0;
-            characterCount <= 6'd0;
+            characterCount <= 7'd0;
             dataIslandActive <= 1'b0;
             channel0 <= 10'd0;
             channel1 <= 10'd0;
             channel2 <= 10'd0;
         end
     end else begin
+        // Not in VSync
         hSyncLatched <= 1'b0;
         isFirstPacketClock <= 1'b0;
-        characterCount <= 6'd0;
+        characterCount <= 7'd0;
         dataIslandActive <= 1'b0;
         channel0 <= 10'd0;
         channel1 <= 10'd0;
         channel2 <= 10'd0;
     end
-    
 end
 
 

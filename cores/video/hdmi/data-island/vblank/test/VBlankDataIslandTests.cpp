@@ -126,6 +126,35 @@ TEST_F(VBlankDataIslandTests, EvenLineAviInfoframe)
     _uut.hSync = 0;
     _uut.eval();
     
+    // Margin of safety from the HBlank data island
+    for (unsigned int count = 0; count < 42; ++count)
+    {
+        _uut.pixelClock = 1;
+        _uut.eval();
+        EXPECT_EQ(0, _uut.dataIslandActive);
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+    
+    // Preamble
+    for (unsigned int count = 0; count < 8; ++count)
+    {
+        _uut.pixelClock = 1;
+        _uut.eval();
+        EXPECT_EQ(1, _uut.dataIslandActive);
+        EXPECT_EQ(0x154, _uut.channel0);
+        EXPECT_EQ(0x0AB, _uut.channel1);
+        EXPECT_EQ(0x0AB, _uut.channel2);
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+    
     // Leading guard band
     for (unsigned int count = 0; count < 2; ++count)
     {
@@ -211,6 +240,35 @@ TEST_F(VBlankDataIslandTests, OddLineAudioInfoframe)
     
     _uut.hSync = 0;
     _uut.eval();
+    
+    // Margin of safety from the HBlank data island
+    for (unsigned int count = 0; count < 42; ++count)
+    {
+        _uut.pixelClock = 1;
+        _uut.eval();
+        EXPECT_EQ(0, _uut.dataIslandActive);
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+    
+    // Preamble
+    for (unsigned int count = 0; count < 8; ++count)
+    {
+        _uut.pixelClock = 1;
+        _uut.eval();
+        EXPECT_EQ(1, _uut.dataIslandActive);
+        EXPECT_EQ(0x154, _uut.channel0);
+        EXPECT_EQ(0x0AB, _uut.channel1);
+        EXPECT_EQ(0x0AB, _uut.channel2);
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
     
     // Leading guard band
     for (unsigned int count = 0; count < 2; ++count)
