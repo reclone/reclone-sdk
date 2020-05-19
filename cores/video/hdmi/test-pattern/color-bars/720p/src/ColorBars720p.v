@@ -39,13 +39,17 @@ module ColorBars720p
     input wire dataEnable,
     input wire hSync,
     input wire vSync,
+    input wire activeVideoPreamble,
+    input wire activeVideoGuardBand,
     
     output reg [7:0] r = 8'd0,
     output reg [7:0] g = 8'd0,
     output reg [7:0] b = 8'd0,
     output reg dataEnableDelayed,
     output reg hSyncDelayed,
-    output reg vSyncDelayed
+    output reg vSyncDelayed,
+    output reg activeVideoPreambleDelayed,
+    output reg activeVideoGuardBandDelayed
 );
 
 // To divide by a constant, multiply by its reciprocal (with fixed point scaling)
@@ -58,6 +62,8 @@ always @ (posedge pixelClock) begin
     dataEnableDelayed <= dataEnable;
     hSyncDelayed <= hSync;
     vSyncDelayed <= vSync;
+    activeVideoPreambleDelayed <= activeVideoPreamble;
+    activeVideoGuardBandDelayed <= activeVideoGuardBand;
 
     if (vPos < 10'd420) begin
         // Main set of seven color bars and gray side bars
