@@ -230,15 +230,37 @@ PalGenerator palGen
     .dacSample(videoDac)
 );
 
-DviEncoder dvi
+wire [7:0] dviR;
+wire [7:0] dviG;
+wire [7:0] dviB;
+wire dataEnableDelayed;
+wire hSyncDelayed;
+wire vSyncDelayed;
+ColorBars720p hdColorBars
 (
     .pixelClock(pixelClock),
     .dataEnable(dataEnable),
     .hSync(hSync),
     .vSync(vSync),
-    .blue(hPos[9:2]),
-    .green(vPos[7:0]),
-    .red(hPos[7:0]),
+    .hPos(hPos),
+    .vPos(vPos),
+    .r(dviR),
+    .g(dviG),
+    .b(dviB),
+    .dataEnableDelayed(dataEnableDelayed),
+    .hSyncDelayed(hSyncDelayed),
+    .vSyncDelayed(vSyncDelayed)
+);
+
+DviEncoder dvi
+(
+    .pixelClock(pixelClock),
+    .dataEnable(dataEnableDelayed),
+    .hSync(hSyncDelayed),
+    .vSync(vSyncDelayed),
+    .blue(dviB),
+    .green(dviG),
+    .red(dviR),
     .channel0(dviChannel0),
     .channel1(dviChannel1),
     .channel2(dviChannel2),
