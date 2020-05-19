@@ -56,7 +56,6 @@ module HdmiEncoder
     input wire useYCbCr,
     input wire activeVideoPreamble,
     input wire activeVideoGuardBand,
-    input wire oddLine,
     input wire [6:0] videoFormatCode,
     input wire[7:0] blueOrCb,
     input wire[7:0] greenOrY,
@@ -84,13 +83,12 @@ wire [9:0] vBlankDataIslandCh2;
 VBlankDataIsland vBlankIsland
 (
     .pixelClock(pixelClock),
-    .oddLine(oddLine),
     .hSync(hSync),
     .vSync(vSync),
     .syncIsActiveLow(syncIsActiveLow),
     .videoFormatCode(videoFormatCode),
     .rgbOrYuvCode(useYCbCr ? 2'b10 : 2'b00),
-    .yccQuantizationRange(2'b01 /* full range */),
+    .yccQuantizationRange(2'b00 /* limited range */),
     .dataIslandActive(vBlankDataIslandActive),
     .channel0(vBlankDataIslandCh0),
     .channel1(vBlankDataIslandCh1),

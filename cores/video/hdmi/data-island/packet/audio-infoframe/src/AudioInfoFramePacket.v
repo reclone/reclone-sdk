@@ -38,10 +38,10 @@
 
 module AudioInfoFramePacket
 (
-    input [2:0] cc,
-    input [7:0] ca,
-    input [3:0] lsv,
-    input [1:0] lfepbl,
+    input wire [2:0] cc,
+    input wire [7:0] ca,
+    input wire [3:0] lsv,
+    input wire [1:0] lfepbl,
     
     output wire [23:0] header,
     output wire [55:0] subpacket0,

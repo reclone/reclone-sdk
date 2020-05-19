@@ -47,7 +47,6 @@
 module VBlankDataIsland
 (
     input wire pixelClock,
-    input wire oddLine,
     input wire hSync,
     input wire vSync,
     input wire syncIsActiveLow,
@@ -64,6 +63,9 @@ module VBlankDataIsland
 reg hSyncLatched = 1'b0;
 
 reg isFirstPacketClock = 1'b0;
+
+reg [1:0] packetCount = 2'd0;
+wire oddLine = packetCount[0];
 
 reg [6:0] characterCount = 7'd0;
 
@@ -132,11 +134,16 @@ DataIslandPacketSerializer serializer
     .isFirstPacketClock(isFirstPacketClock),
     .hsync(hSync),
     .vsync(vSync),
-    .header(oddLine ? audioHeader : aviHeader),
-    .subpacket0(oddLine ? audioSubpacket0 : aviSubpacket0),
+/*    .header(oddLine ? audioHeader : aviHeader),
+     .subpacket0(oddLine ? audioSubpacket0 : aviSubpacket0),
     .subpacket1(oddLine ? audioSubpacket1 : aviSubpacket1),
     .subpacket2(oddLine ? audioSubpacket2 : aviSubpacket2),
-    .subpacket3(oddLine ? audioSubpacket3 : aviSubpacket3),
+    .subpacket3(oddLine ? audioSubpacket3 : aviSubpacket3), */
+    .header(24'h000000),
+    .subpacket0(56'h00000000000000),
+    .subpacket1(56'h00000000000000),
+    .subpacket2(56'h00000000000000),
+    .subpacket3(56'h00000000000000),
     .terc4channel0(ch0PacketData),
     .terc4channel1(ch1PacketData),
     .terc4channel2(ch2PacketData)
@@ -190,7 +197,7 @@ wire [9:0] ch2GuardBand = 10'b0100110011;
 always @ (posedge pixelClock) begin
     if (vSync ^ syncIsActiveLow) begin
         // VSync is active
-        if (hSync ^ syncIsActiveLow) begin
+        if ((hSync ^ syncIsActiveLow) && (packetCount < 2'd2)) begin
             // HSync is active; start data island period once HSync goes inactive
             hSyncLatched <= 1'b1;
             isFirstPacketClock <= 1'b0;
@@ -231,6 +238,7 @@ always @ (posedge pixelClock) begin
             // Data island packet - 32 characters
             hSyncLatched <= 1'b0;
             isFirstPacketClock <= (characterCount == 7'd52) ? 1'b1 : 1'b0;
+            packetCount <= packetCount + (characterCount == 7'd83) ? 2'd1 : 2'd0;
             dataIslandActive <= 1'b1;
             characterCount <= characterCount + 7'd1;
             channel0 <= ch0PacketDataEncoded;
@@ -251,6 +259,7 @@ always @ (posedge pixelClock) begin
         hSyncLatched <= 1'b0;
         isFirstPacketClock <= 1'b0;
         characterCount <= 7'd0;
+        packetCount <= 2'd0;
         dataIslandActive <= 1'b0;
         channel0 <= 10'd0;
         channel1 <= 10'd0;

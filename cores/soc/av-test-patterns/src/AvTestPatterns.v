@@ -60,7 +60,8 @@ wire hSync;
 wire vSync;
 wire [11:0] hPos;
 wire [10:0] vPos;
-
+wire activeVideoPreamble;
+wire activeVideoGuardBand;
 VideoFormatTiming hd720pTiming
 (
     .clock(pixelClock),
@@ -79,7 +80,9 @@ VideoFormatTiming hd720pTiming
     .hSync(hSync),
     .vSync(vSync),
     .hPos(hPos),
-    .vPos(vPos)
+    .vPos(vPos),
+    .activeVideoPreamble(activeVideoPreamble),
+    .activeVideoGuardBand(activeVideoGuardBand)
 );
 
 /* wire [3:0] ntscPhase;
@@ -236,6 +239,8 @@ wire [7:0] dviB;
 wire dataEnableDelayed;
 wire hSyncDelayed;
 wire vSyncDelayed;
+wire activeVideoGuardBandDelayed;
+wire activeVideoPreambleDelayed;
 ColorBars720p hdColorBars
 (
     .pixelClock(pixelClock),
@@ -244,15 +249,19 @@ ColorBars720p hdColorBars
     .vSync(vSync),
     .hPos(hPos),
     .vPos(vPos),
+    .activeVideoGuardBand(activeVideoGuardBand),
+    .activeVideoPreamble(activeVideoPreamble),
     .r(dviR),
     .g(dviG),
     .b(dviB),
     .dataEnableDelayed(dataEnableDelayed),
     .hSyncDelayed(hSyncDelayed),
-    .vSyncDelayed(vSyncDelayed)
+    .vSyncDelayed(vSyncDelayed),
+    .activeVideoGuardBandDelayed(activeVideoGuardBandDelayed),
+    .activeVideoPreambleDelayed(activeVideoPreambleDelayed)
 );
 
-DviEncoder dvi
+/*DviEncoder dvi
 (
     .pixelClock(pixelClock),
     .dataEnable(dataEnableDelayed),
@@ -261,6 +270,26 @@ DviEncoder dvi
     .blue(dviB),
     .green(dviG),
     .red(dviR),
+    .channel0(dviChannel0),
+    .channel1(dviChannel1),
+    .channel2(dviChannel2),
+    .channelC(dviChannelC)
+);*/
+
+HdmiEncoder hdmi
+(
+    .pixelClock(pixelClock),
+    .dataEnable(dataEnableDelayed),
+    .hSync(hSyncDelayed),
+    .vSync(vSyncDelayed),
+    .activeVideoGuardBand(activeVideoGuardBandDelayed),
+    .activeVideoPreamble(activeVideoPreambleDelayed),
+    .syncIsActiveLow(1'b0),
+    .useYCbCr(1'b0),
+    .videoFormatCode(7'd4),
+    .blueOrCb(dviB),
+    .greenOrY(dviG),
+    .redOrCr(dviR),
     .channel0(dviChannel0),
     .channel1(dviChannel1),
     .channel2(dviChannel2),

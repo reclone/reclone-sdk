@@ -34,8 +34,8 @@
 module ColorBars720p
 (
     input wire pixelClock,
-    input wire [10:0] hPos,
-    input wire [9:0] vPos,
+    input wire [11:0] hPos,
+    input wire [10:0] vPos,
     input wire dataEnable,
     input wire hSync,
     input wire vSync,
@@ -65,46 +65,46 @@ always @ (posedge pixelClock) begin
     activeVideoPreambleDelayed <= activeVideoPreamble;
     activeVideoGuardBandDelayed <= activeVideoGuardBand;
 
-    if (vPos < 10'd420) begin
+    if (vPos < 11'd420) begin
         // Main set of seven color bars and gray side bars
         // Gray bars on left and right sides are 160px wide
         // Color bars are 137ish pixels wide (center bar an extra pixel wide)
-        if (hPos < 11'd160) begin
+        if (hPos < 12'd160) begin
             // gray
             r <= 8'd102;
             g <= 8'd102;
             b <= 8'd102;
-        end else if (hPos < 11'd297) begin
+        end else if (hPos < 12'd297) begin
             // 75% white
             r <= 8'd191;
             g <= 8'd191;
             b <= 8'd191;
-        end else if (hPos < 11'd434) begin
+        end else if (hPos < 12'd434) begin
             // 75% yellow
             r <= 8'd191;
             g <= 8'd191;
             b <= 8'd0;
-        end else if (hPos < 11'd571) begin
+        end else if (hPos < 12'd571) begin
             // 75% cyan
             r <= 8'd0;
             g <= 8'd191;
             b <= 8'd191;
-        end else if (hPos < 11'd709) begin
+        end else if (hPos < 12'd709) begin
             // 75% green
             r <= 8'd0;
             g <= 8'd191;
             b <= 8'd0;
-        end else if (hPos < 11'd846) begin
+        end else if (hPos < 12'd846) begin
             // 75% magenta
             r <= 8'd191;
             g <= 8'd0;
             b <= 8'd191;
-        end else if (hPos < 11'd983) begin
+        end else if (hPos < 12'd983) begin
             // 75% red
             r <= 8'd191;
             g <= 8'd0;
             b <= 8'd0;
-        end else if (hPos < 11'd1120) begin
+        end else if (hPos < 12'd1120) begin
             // 75% blue
             r <= 8'd0;
             g <= 8'd0;
@@ -115,18 +115,18 @@ always @ (posedge pixelClock) begin
             g <= 8'd102;
             b <= 8'd102;
         end
-    end else if (vPos < 10'd480) begin
-        if (hPos < 11'd160) begin
+    end else if (vPos < 11'd480) begin
+        if (hPos < 12'd160) begin
             // 100% cyan
             r <= 8'd0;
             g <= 8'd255;
             b <= 8'd255;
-        end else if (hPos < 11'd297) begin
+        end else if (hPos < 12'd297) begin
             // -I
             r <= 8'd0;
             g <= 8'd33;
             b <= 8'd76;
-        end else if (hPos < 11'd1120) begin
+        end else if (hPos < 12'd1120) begin
             // 75% white
             r <= 8'd191;
             g <= 8'd191;
@@ -137,18 +137,18 @@ always @ (posedge pixelClock) begin
             g <= 8'd0;
             b <= 8'd255;
         end
-    end else if (vPos < 10'd540) begin
-        if (hPos < 11'd160) begin
+    end else if (vPos < 11'd540) begin
+        if (hPos < 12'd160) begin
             // 100% yellow
             r <= 8'd255;
             g <= 8'd255;
             b <= 8'd0;
-        end else if (hPos < 11'd297) begin
+        end else if (hPos < 12'd297) begin
             // +Q
             r <= 8'd50;
             g <= 8'd0;
             b <= 8'd106;
-        end else if (hPos < 11'd1120) begin
+        end else if (hPos < 12'd1120) begin
             // Grayscale gradient
             r <= gradientLevel;
             g <= gradientLevel;
@@ -160,42 +160,42 @@ always @ (posedge pixelClock) begin
             b <= 8'd0;
         end
     end else begin
-        if (hPos < 11'd160) begin
+        if (hPos < 12'd160) begin
             // 15% gray
             r <= 8'd38;
             g <= 8'd38;
             b <= 8'd38;
-        end else if (hPos < 11'd366) begin
+        end else if (hPos < 12'd366) begin
             // black
             r <= 8'd0;
             g <= 8'd0;
             b <= 8'd0;
-        end else if (hPos < 11'd640) begin
+        end else if (hPos < 12'd640) begin
             // white
             r <= 8'd255;
             g <= 8'd255;
             b <= 8'd255;
-        end else if (hPos < 11'd846) begin
+        end else if (hPos < 12'd846) begin
             // black
             r <= 8'd0;
             g <= 8'd0;
             b <= 8'd0;
-        end else if (hPos < 11'd892) begin
+        end else if (hPos < 12'd892) begin
             // 2% black
             r <= 8'd5;
             g <= 8'd5;
             b <= 8'd5;
-        end else if (hPos < 11'd937) begin
+        end else if (hPos < 12'd937) begin
             // black
             r <= 8'd0;
             g <= 8'd0;
             b <= 8'd0;
-        end else if (hPos < 11'd983) begin
+        end else if (hPos < 12'd983) begin
             // 4% black
             r <= 8'd10;
             g <= 8'd10;
             b <= 8'd10;
-        end else if (hPos < 11'd1120) begin
+        end else if (hPos < 12'd1120) begin
             // black
             r <= 8'd0;
             g <= 8'd0;

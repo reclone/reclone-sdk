@@ -8,6 +8,15 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/ClockGen.v
     ${PROJECT_SOURCE_DIR}/video/timing/src/VideoFormatTiming.v
     ${PROJECT_SOURCE_DIR}/video/dvi/src/DviEncoder.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/encoder/src/HdmiEncoder.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/vblank/src/VBlankDataIsland.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/avi-infoframe/src/AviInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-infoframe/src/AudioInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccDualBitEncoder.v
+    ${PROJECT_SOURCE_DIR}/video/tmds/terc4-encoder-4to10/src/Terc4Encoder4to10.v
     ${PROJECT_SOURCE_DIR}/video/tmds/rgb-encoder-8to10/src/RgbEncoder8to10.v
     ${PROJECT_SOURCE_DIR}/video/tmds/ctl-encoder-2to10/src/CtlEncoder2to10.v
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/LvdsOut5Bit.v

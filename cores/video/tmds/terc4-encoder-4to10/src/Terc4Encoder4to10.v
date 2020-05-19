@@ -29,8 +29,8 @@
 
 module Terc4Encoder4to10
 (
-    input wire[3:0] d,
-    output wire[9:0] q
+    input wire [3:0] d,
+    output reg [9:0] q
 );
 
 always @ (d)
