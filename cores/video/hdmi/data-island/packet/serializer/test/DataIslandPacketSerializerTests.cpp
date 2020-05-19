@@ -101,7 +101,7 @@ TEST_F(DataIslandPacketSerializerTests, RandomValues)
 {
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("DataIslandPacketSerializer.vcd");
+    vcd_trace.open("DataIslandPacketSerializerRandoms.vcd");
     
 
     // Set up random header and subpackets
@@ -110,6 +110,79 @@ TEST_F(DataIslandPacketSerializerTests, RandomValues)
     _uut.subpacket1 = randomUInt64() & 0xFFFFFFFFFFFFFF;
     _uut.subpacket2 = randomUInt64() & 0xFFFFFFFFFFFFFF;
     _uut.subpacket3 = randomUInt64() & 0xFFFFFFFFFFFFFF;
+    _uut.vsync = 0;
+    _uut.hsync = 1;
+    
+    // Calculate expected TERC4 channel values
+    
+    unsigned long long headerWithParity = _uut.header | (bchParity(_uut.header, 24) << 24);
+    unsigned char ch0[32];
+    for (unsigned int i = 0; i < 32; ++i)
+    {
+        // Bit 0: HSync
+        // Bit 1: VSync
+        // Bit 2: Header bit (LSbit first)
+        // Bit 3: Zero if first bit of the data island
+        ch0[i] = (_uut.hsync & 0x1) | ((_uut.vsync & 0x1) << 1) | (((headerWithParity >> i) & 0x1) << 2) | ((0 != i) << 3);
+    }
+    
+    unsigned long long subpacket0WithParity = _uut.subpacket0 | (static_cast<unsigned long long>(bchParity(_uut.subpacket0, 56)) << 56);
+    unsigned long long subpacket1WithParity = _uut.subpacket1 | (static_cast<unsigned long long>(bchParity(_uut.subpacket1, 56)) << 56);
+    unsigned long long subpacket2WithParity = _uut.subpacket2 | (static_cast<unsigned long long>(bchParity(_uut.subpacket2, 56)) << 56);
+    unsigned long long subpacket3WithParity = _uut.subpacket3 | (static_cast<unsigned long long>(bchParity(_uut.subpacket3, 56)) << 56);
+    
+    unsigned char ch1[32];
+    for (unsigned int i = 0; i < 32; ++i)
+    {
+        // Bit 0: Even-numbered bits of subpacket 0 plus parity
+        // Bit 1: Even-numbered bits of subpacket 1 plus parity
+        // Bit 2: Even-numbered bits of subpacket 2 plus parity
+        // Bit 3: Even-numbered bits of subpacket 3 plus parity
+        ch1[i] = ((subpacket0WithParity >> (2*i)) & 1) | (((subpacket1WithParity >> (2*i)) & 1) << 1) | (((subpacket2WithParity >> (2*i)) & 1) << 2) | (((subpacket3WithParity >> (2*i)) & 1) << 3);
+    }
+    
+    unsigned char ch2[32];
+    for (unsigned int i = 0; i < 32; ++i)
+    {
+        // Bit 0: Odd-numbered bits of subpacket 0 plus parity
+        // Bit 1: Odd-numbered bits of subpacket 1 plus parity
+        // Bit 2: Odd-numbered bits of subpacket 2 plus parity
+        // Bit 3: Odd-numbered bits of subpacket 3 plus parity
+        ch2[i] = ((subpacket0WithParity >> (2*i+1)) & 1) | (((subpacket1WithParity >> (2*i+1)) & 1) << 1) | (((subpacket2WithParity >> (2*i+1)) & 1) << 2) | (((subpacket3WithParity >> (2*i+1)) & 1) << 3);
+    }
+    
+    for (unsigned int i = 0; i < 32; ++i)
+    {
+        _uut.isFirstPacketClock = (i == 0) ? 1 : 0;
+        _uut.vsync = 0;
+        _uut.hsync = 1;
+        _uut.clock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
+        EXPECT_EQ(ch0[i], _uut.terc4channel0) << i;
+        EXPECT_EQ(ch1[i], _uut.terc4channel1) << i;
+        EXPECT_EQ(ch2[i], _uut.terc4channel2) << i;
+        
+        _uut.clock = 1;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+}
+
+TEST_F(DataIslandPacketSerializerTests, AviInfoframe)
+{
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("DataIslandPacketSerializerAviInfoframe.vcd");
+    
+
+    // Set up header and subpackets
+    _uut.header = 0x0D0282;
+    _uut.subpacket0 = 0x0000000000402F;
+    _uut.subpacket1 = 0x00000000000000;
+    _uut.subpacket2 = 0x00000000000000;
+    _uut.subpacket3 = 0x00000000000000;
     _uut.vsync = 0;
     _uut.hsync = 1;
     

@@ -49,7 +49,6 @@ class VBlankDataIslandTests : public ::testing::Test
 TEST_F(VBlankDataIslandTests, NoVSync)
 {
     _uut.pixelClock = 0;
-    _uut.oddLine = 0;
     _uut.hSync = 0;
     _uut.vSync = 0;
     _uut.syncIsActiveLow = 0;
@@ -96,14 +95,13 @@ TEST_F(VBlankDataIslandTests, NoVSync)
     }
 }
 
-TEST_F(VBlankDataIslandTests, EvenLineAviInfoframe)
+TEST_F(VBlankDataIslandTests, Infoframe)
 {
     VerilatedVcdC vcd_trace;
     _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("DataIslandAviInfoframe.vcd");
+    vcd_trace.open("DataIslandInfoframes.vcd");
     
     _uut.pixelClock = 0;
-    _uut.oddLine = 0;
     _uut.hSync = 1;
     _uut.vSync = 1;
     _uut.syncIsActiveLow = 0;
@@ -211,118 +209,4 @@ TEST_F(VBlankDataIslandTests, EvenLineAviInfoframe)
     vcd_trace.dump(_tickCount++);
 }
 
-TEST_F(VBlankDataIslandTests, OddLineAudioInfoframe)
-{
-    VerilatedVcdC vcd_trace;
-    _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("DataIslandAudioInfoframe.vcd");
-    
-    _uut.pixelClock = 0;
-    _uut.oddLine = 1;
-    _uut.hSync = 1;
-    _uut.vSync = 1;
-    _uut.syncIsActiveLow = 0;
-    _uut.videoFormatCode = 4; //720p
-    _uut.rgbOrYuvCode = 0;
-    _uut.yccQuantizationRange = 0;
-    _uut.eval();
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 1;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 0;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.hSync = 0;
-    _uut.eval();
-    
-    // Margin of safety from the HBlank data island
-    for (unsigned int count = 0; count < 42; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-    
-    // Preamble
-    for (unsigned int count = 0; count < 8; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        EXPECT_EQ(0x154, _uut.channel0);
-        EXPECT_EQ(0x0AB, _uut.channel1);
-        EXPECT_EQ(0x0AB, _uut.channel2);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-    
-    // Leading guard band
-    for (unsigned int count = 0; count < 2; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        EXPECT_EQ(0x163, _uut.channel0);
-        EXPECT_EQ(0x133, _uut.channel1);
-        EXPECT_EQ(0x133, _uut.channel2);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-
-    // Packet data
-    for (unsigned int count = 0; count < 32; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-
-    // Trailing guard band
-    for (unsigned int count = 0; count < 2; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        EXPECT_EQ(0x163, _uut.channel0);
-        EXPECT_EQ(0x133, _uut.channel1);
-        EXPECT_EQ(0x133, _uut.channel2);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-    
-    _uut.pixelClock = 1;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 0;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-}
 
