@@ -103,8 +103,8 @@ always @ (posedge clock) begin
         dataEnable <= !hBlankNext && !vBlankNext;
         hPos <= hBlankNext ? 12'd0 : (hCountNext - {3'd0, hBlank});
         vPos <= vBlankNext ? 11'd0 : (vCountNext - {4'd0, vBlank});
-        activeVideoGuardBand <= (hCountNext < {3'd0, hBlank}) && (hCountNext >= {3'd0, hBlank - 9'd2});
-        activeVideoPreamble <= (hCountNext < {3'd0, hBlank - 9'd2}) && (hCountNext >= {3'd0, hBlank - 9'd10});
+        activeVideoGuardBand <= (vCountNext >= {4'd0, vBlank}) && (hCountNext < {3'd0, hBlank}) && (hCountNext >= {3'd0, hBlank - 9'd2});
+        activeVideoPreamble <= (vCountNext >= {4'd0, vBlank}) && (hCountNext < {3'd0, hBlank - 9'd2}) && (hCountNext >= {3'd0, hBlank - 9'd10});
     end
 end
 
