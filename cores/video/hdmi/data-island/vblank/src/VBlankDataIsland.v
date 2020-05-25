@@ -84,8 +84,8 @@ wire [55:0] aviSubpacket2;
 wire [55:0] aviSubpacket3;
 AviInfoFramePacket aviPacket
 (
-    .s(2'b00),
-    .a(1'b0),
+    .s(2'b10),
+    .a(1'b1),
     .y(rgbOrYuvCode),
     .r(4'b1000),
     .m(2'b10),
@@ -197,7 +197,7 @@ wire [9:0] ch2GuardBand = 10'b0100110011;
 always @ (posedge pixelClock) begin
     if (vSync ^ syncIsActiveLow) begin
         // VSync is active
-        if ((hSync ^ syncIsActiveLow) && (packetCount < 2'd1)) begin
+        if ((hSync ^ syncIsActiveLow) && (packetCount < 2'd2)) begin
             // HSync is active; start data island period once HSync goes inactive
             hSyncLatched <= 1'b1;
             isFirstPacketClock <= 1'b0;
@@ -228,7 +228,7 @@ always @ (posedge pixelClock) begin
                      ((characterCount < 7'd52) || ((characterCount >= 7'd84) && (characterCount < 7'd86)))) begin
             // Data island leading or trailing guard band - 2 characters
             hSyncLatched <= 1'b0;
-            isFirstPacketClock <= 1'b0;
+            isFirstPacketClock <= (characterCount == 7'd51) ? 1'b1 : 1'b0;
             dataIslandActive <= 1'b1;
             characterCount <= characterCount + 7'd1;
             channel0 <= ch0GuardBand;
@@ -237,7 +237,7 @@ always @ (posedge pixelClock) begin
         end else if (dataIslandActive && (characterCount >= 7'd52) && (characterCount < 7'd84)) begin
             // Data island packet - 32 characters
             hSyncLatched <= 1'b0;
-            isFirstPacketClock <= (characterCount == 7'd52) ? 1'b1 : 1'b0;
+            isFirstPacketClock <= 1'b0;
             packetCount <= packetCount + ((characterCount == 7'd83) ? 2'd1 : 2'd0);
             dataIslandActive <= 1'b1;
             characterCount <= characterCount + 7'd1;

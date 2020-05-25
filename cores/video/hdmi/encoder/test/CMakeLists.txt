@@ -1,0 +1,5 @@
+add_executable(testHdmiEncoder HdmiEncoderTests.cpp)
+
+target_link_libraries(testHdmiEncoder VHdmiEncoder VVideoFormatTiming gtest gtest_main)
+
+add_test(NAME testHdmiEncoder COMMAND testHdmiEncoder)
