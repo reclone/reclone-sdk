@@ -285,7 +285,7 @@ HdmiEncoder hdmi
     .activeVideoGuardBand(activeVideoGuardBandDelayed),
     .activeVideoPreamble(activeVideoPreambleDelayed),
     .syncIsActiveLow(1'b0),
-    .useYCbCr(1'b1),
+    .useYCbCr(1'b0),
     .videoFormatCode(7'd4),
     .blueOrCb(dviB),
     .greenOrY(dviG),
