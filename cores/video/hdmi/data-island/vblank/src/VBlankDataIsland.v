@@ -51,7 +51,7 @@ module VBlankDataIsland
     input wire vSync,
     input wire syncIsActiveLow,
     input wire [6:0] videoFormatCode,
-    input wire [1:0] rgbOrYuvCode,
+    input wire [1:0] rgbOrYCbCrCode,
     input wire [1:0] yccQuantizationRange,
     
     output reg dataIslandActive = 1'b0,
@@ -86,7 +86,7 @@ AviInfoFramePacket aviPacket
 (
     .s(2'b10),
     .a(1'b1),
-    .y(rgbOrYuvCode),
+    .y(rgbOrYCbCrCode),
     .r(4'b1000),
     .m(2'b10),
     .c(2'b00),

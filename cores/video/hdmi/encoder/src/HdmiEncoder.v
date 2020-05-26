@@ -87,7 +87,7 @@ VBlankDataIsland vBlankIsland
     .vSync(vSync),
     .syncIsActiveLow(syncIsActiveLow),
     .videoFormatCode(videoFormatCode),
-    .rgbOrYuvCode(useYCbCr ? 2'b10 : 2'b00),
+    .rgbOrYCbCrCode(useYCbCr ? 2'b10 : 2'b00),
     .yccQuantizationRange(2'b00 /* limited range */),
     .dataIslandActive(vBlankDataIslandActive),
     .channel0(vBlankDataIslandCh0),
