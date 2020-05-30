@@ -57,7 +57,7 @@ module ClockGen
     output wire dpiPixelClock,      // Display Parallel Interface pixel clock for LCD, VGA, SVGA, XVGA, etc.
     output wire ntscClock,          // 57.27273 MHz     (NTSC color burst frequency x16)
     output wire palClock,           // 70.9379  MHz     (PAL  color burst frequency x16)
-    output wire audioClock,         // 90       MHz     (48kHz x1875 sigma-delta frequency)
+    output wire audioClock,         // 90       MHz     (48kHz x1875 delta-sigma frequency)
     output wire mcbCalibClock,      // 94.5833  MHz     (Clock for MCB calibration soft logic)
     output wire mcbSysClk2x0,
     output wire mcbSerDesStrobe0,
