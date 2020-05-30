@@ -85,7 +85,7 @@ VideoFormatTiming hd720pTiming
     .activeVideoGuardBand(activeVideoGuardBand)
 );
 
-/* wire [3:0] ntscPhase;
+wire [3:0] ntscPhase;
 wire ntscBlank;
 wire ntscSync;
 wire ntscBurst;
@@ -104,9 +104,9 @@ NtscTiming ntscCompositeTiming
     .burst(ntscBurst),
     .hPos(ntscHPos),
     .vPos(ntscVPos)
-); */
+);
 
-wire [3:0] palPhase;
+/*wire [3:0] palPhase;
 wire palBlank;
 wire palSync;
 wire palBurst;
@@ -128,17 +128,17 @@ PalTiming palCompositeTiming
     .linePhase(palLinePhase),
     .hPos(palHPos),
     .vPos(palVPos)
-);
+);*/
 
 
 
-/* wire signed [8:0] ntscY;
+wire signed [8:0] ntscY;
 wire signed [8:0] ntscI;
-wire signed [8:0] ntscQ; */
+wire signed [8:0] ntscQ;
 
-wire signed [8:0] palY;
+/*wire signed [8:0] palY;
 wire signed [8:0] palU;
-wire signed [8:0] palV;
+wire signed [8:0] palV;*/
 
 // 2-D Color Gradients
 /* RgbToYiq ntscColorConverter
@@ -163,7 +163,7 @@ wire signed [8:0] palV;
 ); */
 
 // Color Bars
-/* wire ntscBlankDelayed;
+wire ntscBlankDelayed;
 wire ntscSyncDelayed;
 wire ntscBurstDelayed;
 NtscColorBars colorBars
@@ -180,9 +180,9 @@ NtscColorBars colorBars
     .blankDelayed(ntscBlankDelayed),
     .syncDelayed(ntscSyncDelayed),
     .burstDelayed(ntscBurstDelayed)
-); */
+);
 
-wire palBlankDelayed;
+/*wire palBlankDelayed;
 wire palSyncDelayed;
 wire palBurstDelayed;
 wire palLinePhaseDelayed;
@@ -202,9 +202,9 @@ PalColorBars colorBars
     .syncDelayed(palSyncDelayed),
     .burstDelayed(palBurstDelayed),
     .linePhaseDelayed(palLinePhaseDelayed)
-);
+);*/
 
-/* NtscGenerator ntscGen
+NtscGenerator ntscGen
 (
     .reset(1'b0),
     .phaseClock(ntscClock),
@@ -216,9 +216,9 @@ PalColorBars colorBars
     .i(ntscI),
     .q(ntscQ),
     .dacSample(videoDac)
-); */
+);
 
-PalGenerator palGen
+/*PalGenerator palGen
 (
     .reset(1'b0),
     .phaseClock(palClock),
@@ -231,7 +231,7 @@ PalGenerator palGen
     .u(palU),
     .v(palV),
     .dacSample(videoDac)
-);
+);*/
 
 wire [7:0] dviR;
 wire [7:0] dviG;
