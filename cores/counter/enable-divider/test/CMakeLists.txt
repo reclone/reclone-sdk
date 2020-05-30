@@ -1,0 +1,5 @@
+add_executable(testClockEnableDivider ClockEnableDividerTests.cpp)
+
+target_link_libraries(testClockEnableDivider VClockEnableDivider gtest gtest_main)
+
+add_test(NAME testClockEnableDivider COMMAND testClockEnableDivider)
