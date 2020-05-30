@@ -1,0 +1,5 @@
+add_executable(testAudioDeltaSigmaDac AudioDeltaSigmaDacTests.cpp)
+
+target_link_libraries(testAudioDeltaSigmaDac VAudioDeltaSigmaDac gtest gtest_main)
+
+add_test(NAME testAudioDeltaSigmaDac COMMAND testAudioDeltaSigmaDac)

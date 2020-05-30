@@ -86,18 +86,23 @@ wire signed [SAMPLE_BITS+ATTENUATION_BITS+1:0] sigma2Next = sigma2 + delta2;
 wire bitstreamNext = sigma2Next[SAMPLE_BITS+ATTENUATION_BITS+1];
 
 always @ (posedge oversampleClock) begin
-    if (sampleEnable) begin
-        attenuatedSampleReg <= {{(ATTENUATION_BITS+2){sampleLevel[SAMPLE_BITS-1]}}, sampleLevel};
-    end
-
     if (reset) begin
+    
         sigma1 <= {(SAMPLE_BITS+ATTENUATION_BITS+2){1'b0}};
         sigma2 <= {(SAMPLE_BITS+ATTENUATION_BITS+2){1'b0}};
         bitstream <= 1'b0;
+        attenuatedSampleReg <= {(SAMPLE_BITS+ATTENUATION_BITS+2){1'b0}};
+        
     end else begin
+    
         sigma1 <= sigma1Next;
         sigma2 <= sigma2Next;
         bitstream <= bitstreamNext;
+        
+        if (sampleEnable) begin
+            attenuatedSampleReg <= {{(ATTENUATION_BITS+2){sampleLevel[SAMPLE_BITS-1]}}, sampleLevel};
+        end
+        
     end
 end
 
