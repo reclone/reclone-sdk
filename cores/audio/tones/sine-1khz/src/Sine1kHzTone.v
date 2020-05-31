@@ -1,7 +1,16 @@
 //
 // Sine1kHzTone - Produce 16-bit samples for a 1 kHz sine wave, assuming a 48 kHz sample rate
 //
-// 
+// This module produces signed 16-bit sample values for a 1 kHz sine wave.  The wave is at
+// quarter-amplitude (to help spare your ear drums) meaning that the output sample ranges from
+// -8192 to +8192.  48 sine samples are pre-calculated and stored in a ROM array, which is
+// initialized from the file "sine1khz.mem".
+//
+// The "sampleEnable" signal advances the angle of the sine wave, so that the next sample is 
+// loaded in the output register.  Since we are assuming a 48 kHz sample rate, there should be
+// 48000 rising edges of audioClock with sampleEnable==1 per second.
+//
+// The 1 kHz tone is useful as a test pattern tone to accompany SMPTE color bars.
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
