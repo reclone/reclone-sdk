@@ -1,4 +1,5 @@
 configure_file(../src/sine1khz.mem ${CMAKE_BINARY_DIR}/sine1khz.mem COPYONLY)
+configure_file(../src/sine1khz.mem ${CMAKE_CURRENT_BINARY_DIR}/sine1khz.mem COPYONLY)
 
 add_executable(testSine1kHzTone Sine1kHzToneTests.cpp)
 
