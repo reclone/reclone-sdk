@@ -32,12 +32,16 @@ module AvTestPatterns # (parameter COUNTER_SIZE = 8)
     input wire pixelClock,
     input wire ntscClock,
     input wire palClock,
+    input wire audioClock,
+    input wire audioSampleEnable,
     output wire blink,
     output wire[9:0] dviChannel0,
     output wire[9:0] dviChannel1,
     output wire[9:0] dviChannel2,
     output wire[9:0] dviChannelC,
-    output wire[4:0] videoDac
+    output wire[4:0] videoDac,
+    output wire deltaSigmaRight,
+    output wire deltaSigmaLeft
 );
 
 wire[COUNTER_SIZE-1:0] count;
@@ -296,5 +300,23 @@ HdmiEncoder hdmi
     .channelC(dviChannelC)
 );
 
+wire signed [15:0] toneSample;
+Sine1kHzTone sineTone
+(
+    .audioClock(audioClock),
+    .sampleEnable(audioSampleEnable),
+    .reset(1'b0),
+    .sample(toneSample)
+);
+
+AudioDeltaSigmaDac audioDac
+(
+    .oversampleClock(audioClock),
+    .sampleEnable(audioSampleEnable),
+    .sampleLevel(toneSample),
+    .reset(1'b0),
+    .bitstream(deltaSigmaLeft)
+);
+assign deltaSigmaRight = 1'b0;
 
 endmodule

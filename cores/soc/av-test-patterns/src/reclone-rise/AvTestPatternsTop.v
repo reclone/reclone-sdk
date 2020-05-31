@@ -40,7 +40,9 @@ module AvTestPatternsTop
    output wire TmdsOutCh2N,
    output wire TmdsOutChCP,
    output wire TmdsOutChCN,
-   output wire [4:0] VideoDac
+   output wire [4:0] VideoDac,
+   output wire AudioDacLeft,
+   output wire AudioDacRight
 );
 
 wire hdmiPixelClock;
@@ -51,24 +53,27 @@ wire hdmiSerDesStrobe;
 wire ntscClock;
 wire palClock;
 
+wire audioClock;
+
 assign GPIO28 = 1'b1;
 
 ClockGen clkGen
 (
     .clk10m(CLK10M),
-    .audioClock(),
     .hdmiPixelClock(hdmiPixelClock),
     .hdmiDataLoadClock(hdmiDataLoadClock),
     .hdmiIoClock(hdmiIoClock),
     .hdmiSerDesStrobe(hdmiSerDesStrobe),
     .ntscClock(ntscClock),
-    .palClock(palClock)
+    .palClock(palClock),
+    .audioClock(audioClock)
 );
 
 wire [9:0] dviChannel0;
 wire [9:0] dviChannel1;
 wire [9:0] dviChannel2;
 wire [9:0] dviChannelC;
+wire audioSampleEnable;
 AvTestPatterns #(.COUNTER_SIZE(25)) blinky
 (
     .pixelClock(hdmiPixelClock),
@@ -80,7 +85,23 @@ AvTestPatterns #(.COUNTER_SIZE(25)) blinky
     
     .ntscClock(ntscClock),
     .palClock(palClock),
-    .videoDac(VideoDac)
+    .videoDac(VideoDac),
+    
+    .audioClock(audioClock),
+    .audioSampleEnable(audioSampleEnable),
+    .deltaSigmaRight(AudioDacRight),
+    .deltaSigmaLeft(AudioDacLeft)
+);
+
+// Divide audio clock to get a 48 kHz sample clock enable signal
+ClockEnableDivider audioClockDivider
+(
+    .clock(audioClock),
+    .masterEnable(1'b1),
+    .reset(1'b0),
+    .numerator(16'd1),
+    .denominator(16'd1875),
+    .dividedEnable(audioSampleEnable)
 );
 
 wire tmdsFifoEmpty;

@@ -63,7 +63,7 @@ TEST_F(Sine1kHzToneTests, Accuracy)
     for (unsigned int i = 0; i < 96; ++i)
     {
         int generatedSample = static_cast<short>(static_cast<unsigned short>(_uut.sample));
-        int expectedSample = static_cast<int>(round(8192.0 * sin(static_cast<double>(i * M_PI / 24.0))));
+        int expectedSample = static_cast<int>(round(2048.0 * sin(static_cast<double>(i * M_PI / 24.0))));
         ASSERT_EQ(expectedSample, generatedSample);
         
         _uut.audioClock = 0;

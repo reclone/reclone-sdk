@@ -23,6 +23,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/target/reclone-rise/OutputSerializerSdr5Bit.v
     ${PROJECT_SOURCE_DIR}/memory/async-fifo/src/AsyncFifo.v
     ${PROJECT_SOURCE_DIR}/counter/gray/src/GrayCounter.v
+    ${PROJECT_SOURCE_DIR}/counter/enable-divider/src/ClockEnableDivider.v
     ${PROJECT_SOURCE_DIR}/video/ntsc/timing/src/NtscTiming.v
     ${PROJECT_SOURCE_DIR}/video/ntsc/generator/src/NtscGenerator.v
     ${PROJECT_SOURCE_DIR}/video/pal/timing/src/PalTiming.v
@@ -30,7 +31,10 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/ntsc/test-pattern/color-bars/src/NtscColorBars.v
     ${PROJECT_SOURCE_DIR}/video/pal/test-pattern/color-bars/src/PalColorBars.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/test-pattern/color-bars/720p/src/ColorBars720p.v
-    ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v)
+    ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v
+    ${PROJECT_SOURCE_DIR}/audio/tones/sine-1khz/src/Sine1kHzTone.v
+    ${PROJECT_SOURCE_DIR}/audio/delta-sigma/src/AudioDeltaSigmaDac.v
+    )
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)
 

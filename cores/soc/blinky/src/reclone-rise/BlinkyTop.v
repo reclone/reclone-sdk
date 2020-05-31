@@ -42,13 +42,17 @@ module BlinkyTop
     output wire TmdsOutCh2N,
     output wire TmdsOutChCP,
     output wire TmdsOutChCN,
-    output wire [4:0] VideoDac
+    output wire [4:0] VideoDac,
+    output wire AudioDacLeft,
+    output wire AudioDacRight
 );
 
 wire audioClock;
 
 assign GPIO28 = 1'b1;
 assign VideoDac = 5'bzzzzz;
+assign AudioDacLeft = 1'bz;
+assign AudioDacRight = 1'bz;
 
 Blinky #(.COUNTER_SIZE(27)) blinky
 (
