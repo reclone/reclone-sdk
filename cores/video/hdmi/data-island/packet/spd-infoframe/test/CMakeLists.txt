@@ -1,0 +1,5 @@
+add_executable(testSpdInfoFramePacket SpdInfoFramePacketTests.cpp)
+
+target_link_libraries(testSpdInfoFramePacket VSpdInfoFramePacket gtest gtest_main)
+
+add_test(NAME testSpdInfoFramePacket COMMAND testSpdInfoFramePacket)
