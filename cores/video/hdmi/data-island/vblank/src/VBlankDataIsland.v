@@ -53,6 +53,9 @@ module VBlankDataIsland
     input wire [6:0] videoFormatCode,
     input wire [1:0] rgbOrYCbCrCode,
     input wire [1:0] yccQuantizationRange,
+    input wire [63:0] vendorName,
+    input wire [127:0] productDescription,
+    input wire [7:0] sourceDeviceInformation,
     
     output reg dataIslandActive = 1'b0,
     output reg [9:0] channel0 = 10'd0,
@@ -65,7 +68,6 @@ reg hSyncLatched = 1'b0;
 reg isFirstPacketClock = 1'b0;
 
 reg [1:0] packetCount = 2'd0;
-wire oddLine = packetCount[0];
 
 reg [6:0] characterCount = 7'd0;
 
@@ -125,6 +127,24 @@ AudioInfoFramePacket audioPacket
     .subpacket3(audioSubpacket3)
 );
 
+wire [23:0] spdHeader;
+wire [55:0] spdSubpacket0;
+wire [55:0] spdSubpacket1;
+wire [55:0] spdSubpacket2;
+wire [55:0] spdSubpacket3;
+SpdInfoFramePacket spdPacket
+(
+    .vn(vendorName),
+    .pd(productDescription),
+    .sdi(sourceDeviceInformation),
+
+    .header(spdHeader),
+    .subpacket0(spdSubpacket0),
+    .subpacket1(spdSubpacket1),
+    .subpacket2(spdSubpacket2),
+    .subpacket3(spdSubpacket3)
+);
+
 wire [3:0] ch0PacketData;
 wire [3:0] ch1PacketData;
 wire [3:0] ch2PacketData;
@@ -134,11 +154,11 @@ DataIslandPacketSerializer serializer
     .isFirstPacketClock(isFirstPacketClock),
     .hsync(hSync),
     .vsync(vSync),
-    .header(oddLine ? audioHeader : aviHeader),
-    .subpacket0(oddLine ? audioSubpacket0 : aviSubpacket0),
-    .subpacket1(oddLine ? audioSubpacket1 : aviSubpacket1),
-    .subpacket2(oddLine ? audioSubpacket2 : aviSubpacket2),
-    .subpacket3(oddLine ? audioSubpacket3 : aviSubpacket3),
+    .header((packetCount == 2'd0) ? aviHeader : ((packetCount == 2'd1) ? audioHeader : spdHeader)),
+    .subpacket0((packetCount == 2'd0) ? aviSubpacket0 : ((packetCount == 2'd1) ? audioSubpacket0 : spdSubpacket0)),
+    .subpacket1((packetCount == 2'd0) ? aviSubpacket1 : ((packetCount == 2'd1) ? audioSubpacket1 : spdSubpacket1)),
+    .subpacket2((packetCount == 2'd0) ? aviSubpacket2 : ((packetCount == 2'd1) ? audioSubpacket2 : spdSubpacket2)),
+    .subpacket3((packetCount == 2'd0) ? aviSubpacket3 : ((packetCount == 2'd1) ? audioSubpacket3 : spdSubpacket3)),
     /*.header(24'h000000),
     .subpacket0(56'h00000000000000),
     .subpacket1(56'h00000000000000),
@@ -197,7 +217,7 @@ wire [9:0] ch2GuardBand = 10'b0100110011;
 always @ (posedge pixelClock) begin
     if (vSync ^ syncIsActiveLow) begin
         // VSync is active
-        if ((hSync ^ syncIsActiveLow) && (packetCount < 2'd2)) begin
+        if ((hSync ^ syncIsActiveLow) && (packetCount < 2'd3)) begin
             // HSync is active; start data island period once HSync goes inactive
             hSyncLatched <= 1'b1;
             isFirstPacketClock <= 1'b0;

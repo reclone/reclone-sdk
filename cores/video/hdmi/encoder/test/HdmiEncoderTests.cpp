@@ -87,60 +87,8 @@ TEST_F(HdmiEncoderTests, EncoderWith720pTiming)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_timing.vFrontPorch + _timing.vSyncPulse + _timing.vBackPorch + _timing.vActive); ++vCount)
         {
-            // ASSERT_EQ(vCount, _uut.HdmiEncoder__DOT__vCount);
-
-            // if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
-            // {
-                // ASSERT_EQ(vCount - _uut.vFrontPorch - _uut.vSyncPulse - _uut.vBackPorch, _uut.vPos);
-            // }
-            // else
-            // {
-                // ASSERT_EQ(0, _uut.vPos);
-            // }
-
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_timing.hFrontPorch + _timing.hSyncPulse + _timing.hBackPorch + _timing.hActive); ++hCount)
             {
-                //std::cout << vCount << " " << hCount << std::endl;
-                // ASSERT_EQ(hCount, _uut.HdmiEncoder__DOT__hCount);
-                
-                // if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
-                // {
-                    // ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
-                // }
-                // else
-                // {
-                    // ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
-                // }
-                
-                // if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
-                    // (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
-                // {
-                    // ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
-                // }
-                // else
-                // {
-                    // ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
-                // }
-                
-                // if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
-                // {
-                    // ASSERT_EQ(hCount - _uut.hFrontPorch - _uut.hSyncPulse - _uut.hBackPorch, _uut.hPos);
-
-                    // if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
-                    // {
-                        // ASSERT_EQ(1, _uut.dataEnable);
-                    // }
-                    // else
-                    // {
-                        // ASSERT_EQ(0, _uut.dataEnable);
-                    // }
-                // }
-                // else
-                // {
-                    // ASSERT_EQ(0, _uut.dataEnable);
-                    // ASSERT_EQ(0, _uut.hPos);
-                // }
-                
                 _timing.clock = 1;
                 _timing.eval();
                 _uut.pixelClock = _timing.clock;
@@ -167,8 +115,8 @@ TEST_F(HdmiEncoderTests, EncoderWith720pTiming)
                 
                 //vcd_trace.flush();
             }
-            vcd_trace.flush();
         }
+        vcd_trace.flush();
     }
     
     vcd_trace.close();

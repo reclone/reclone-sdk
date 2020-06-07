@@ -12,6 +12,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/vblank/src/VBlankDataIsland.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/avi-infoframe/src/AviInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-infoframe/src/AudioInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v
