@@ -1,0 +1,5 @@
+add_executable(testSpdifChannelStatus SpdifChannelStatusTests.cpp)
+
+target_link_libraries(testSpdifChannelStatus VSpdifChannelStatus gtest gtest_main)
+
+add_test(NAME testSpdifChannelStatus COMMAND testSpdifChannelStatus)
