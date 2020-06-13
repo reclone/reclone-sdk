@@ -12,18 +12,12 @@
 // For simplicity, this module is hard-coded to "mode 0 channel status format for consumer use".
 //
 // The Channel Status word has the following configurable fields:
-//      d                   Additional format information for linear PCM:
-//                              3'd0    2 audio channels without pre-emphasis
-//                              3'd1    2 audio channels with 50 us / 15 us pre-emphasis
-//                              others  Reserved
 //      categoryCode        Kind of equipment generating the digital audio signal, e.g.:
 //                              8'b00000000     General
 //                              8'b10011001     DVD
 //                              8'b01100000     Analog-to-digital converter without copyright info
 //                              8'b00010000     Recorder and player using solid state memory
 //                              8'b00000010     Experimental product
-//      sourceNum           One-based source index, or 4'd0 for "do not take into account"
-//      channelNum          Channel number; 4'd1=left, 4'd2=right, 4'd0="do not take into account"
 //      samplingFreq        Sampling frequency; 4'd2="48 kHz"
 //      wordLength          Sample word length, e.g.:
 //                              4'd0    Word length not indicated
@@ -56,21 +50,18 @@
 
 module SpdifChannelStatus
 (
-    input wire [2:0] d,
     input wire [7:0] categoryCode,
-    input wire [3:0] sourceNum,
-    input wire [3:0] channelNum,
     input wire [3:0] samplingFreq,
     input wire [3:0] wordLength,
     output wire [191:0] channelStatus
 );
 
 assign channelStatus[2:0] = 3'b100;     //c,b,a
-assign channelStatus[5:3] = d;
+assign channelStatus[5:3] = 3'd0;       //d = 2 audio channels without pre-emphasis
 assign channelStatus[7:6] = 2'b00;      //mode
 assign channelStatus[15:8] = categoryCode;
-assign channelStatus[19:16] = sourceNum;
-assign channelStatus[23:20] = channelNum;
+assign channelStatus[19:16] = 4'd0;     //sourceNum: do not take into account
+assign channelStatus[23:20] = 4'd0;     //channelNum: do not take into account
 assign channelStatus[27:24] = samplingFreq;
 assign channelStatus[29:28] = 2'b00;    //clock accuracy = Level II
 assign channelStatus[31:30] = 2'b00;    //reserved

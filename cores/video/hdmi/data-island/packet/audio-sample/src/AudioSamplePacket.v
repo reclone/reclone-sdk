@@ -14,6 +14,15 @@
 // In each subpacket, "left" is considered the "first" sub-frame and is transmitted first,
 // while "right" is considered the "second" sub-frame and is transmitted last.
 //
+// Audio sample packets also transmit frames of an IEC 60958 Channel Status block.  The frames
+// are transmitted one bit per sample in the first (left channel) sub-frame, as the 'c' bit.
+// The 'c' bit is duplicated in the second (right channel) sub-frame, as well.
+// The 'B' flag indicates whether the a frame is the first of a 192-bit Channel Status block.
+// The 'v' bit is an active-low validity flag that is always zero (valid) in this implementation.
+// The 'u' bit is used to transmit user data, and is not implemented here, so it is always zero.
+// The 'p' bit is an even parity flag, such that the 28-bit subframe has an even number of
+// 1 and 0 bits.
+//
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
 //
@@ -44,30 +53,19 @@ module AudioSamplePacket
     input wire layout,
     input wire [3:0] present,
     input wire [3:0] flat,
+    input wire [3:0] B,
     
     input wire [47:0] sample0,
-    input wire [1:0] p0,
-    input wire [1:0] c0,
-    input wire [1:0] u0,
-    input wire [1:0] v0,
+    input wire c0,
     
     input wire [47:0] sample1,
-    input wire [1:0] p1,
-    input wire [1:0] c1,
-    input wire [1:0] u1,
-    input wire [1:0] v1,
+    input wire c1,
     
     input wire [47:0] sample2,
-    input wire [1:0] p2,
-    input wire [1:0] c2,
-    input wire [1:0] u2,
-    input wire [1:0] v2,
+    input wire c2,
     
     input wire [47:0] sample3,
-    input wire [1:0] p3,
-    input wire [1:0] c3,
-    input wire [1:0] u3,
-    input wire [1:0] v3,
+    input wire c3,
     
     output wire [23:0] header,
     output wire [55:0] subpacket0,
@@ -81,46 +79,54 @@ assign header[11:8] = present[3:0];
 assign header[12] = layout;
 assign header[15:13] = 3'd0;
 assign header[19:16] = flat[3:0];
-assign header[23:20] = 4'd0; // IEC 60958 channel status blocks not used
+assign header[23:20] = B;
 
+wire v0 = ~present[0];
+wire [1:0] p0 = {(^sample0[47:24]) ^ v0 ^ c0, (^sample0[23:0]) ^ v0 ^ c0};
 assign subpacket0[47:0] = sample0[47:0];
-assign subpacket0[48] = v0[0];
-assign subpacket0[49] = u0[0];
-assign subpacket0[50] = c0[0];
+assign subpacket0[48] = v0;
+assign subpacket0[49] = 1'b0; //u0
+assign subpacket0[50] = c0;
 assign subpacket0[51] = p0[0];
-assign subpacket0[52] = v0[1];
-assign subpacket0[53] = u0[1];
-assign subpacket0[54] = c0[1];
+assign subpacket0[52] = v0;
+assign subpacket0[53] = 1'b0; //u0
+assign subpacket0[54] = c0;
 assign subpacket0[55] = p0[1];
 
+wire v1 = ~present[1];
+wire [1:0] p1 = {(^sample1[47:24]) ^ v1 ^ c1, (^sample1[23:0]) ^ v1 ^ c1};
 assign subpacket1[47:0] = sample1[47:0];
-assign subpacket1[48] = v1[0];
-assign subpacket1[49] = u1[0];
-assign subpacket1[50] = c1[0];
+assign subpacket1[48] = v1;
+assign subpacket1[49] = 1'b0; //u1
+assign subpacket1[50] = c1;
 assign subpacket1[51] = p1[0];
-assign subpacket1[52] = v1[1];
-assign subpacket1[53] = u1[1];
-assign subpacket1[54] = c1[1];
+assign subpacket1[52] = v1;
+assign subpacket1[53] = 1'b0; //u1
+assign subpacket1[54] = c1;
 assign subpacket1[55] = p1[1];
 
+wire v2 = ~present[2];
+wire [1:0] p2 = {(^sample2[47:24]) ^ v2 ^ c2, (^sample2[23:0]) ^ v2 ^ c2};
 assign subpacket2[47:0] = sample2[47:0];
-assign subpacket2[48] = v2[0];
-assign subpacket2[49] = u2[0];
-assign subpacket2[50] = c2[0];
+assign subpacket2[48] = v2;
+assign subpacket2[49] = 1'b0; //u2
+assign subpacket2[50] = c2;
 assign subpacket2[51] = p2[0];
-assign subpacket2[52] = v2[1];
-assign subpacket2[53] = u2[1];
-assign subpacket2[54] = c2[1];
+assign subpacket2[52] = v2;
+assign subpacket2[53] = 1'b0; //u2
+assign subpacket2[54] = c2;
 assign subpacket2[55] = p2[1];
 
+wire v3 = ~present[3];
+wire [1:0] p3 = {(^sample3[47:24]) ^ v3 ^ c3, (^sample3[23:0]) ^ v3 ^ c3};
 assign subpacket3[47:0] = sample3[47:0];
-assign subpacket3[48] = v3[0];
-assign subpacket3[49] = u3[0];
-assign subpacket3[50] = c3[0];
+assign subpacket3[48] = v3;
+assign subpacket3[49] = 1'b0; //u3
+assign subpacket3[50] = c3;
 assign subpacket3[51] = p3[0];
-assign subpacket3[52] = v3[1];
-assign subpacket3[53] = u3[1];
-assign subpacket3[54] = c3[1];
+assign subpacket3[52] = v3;
+assign subpacket3[53] = 1'b0; //u3
+assign subpacket3[54] = c3;
 assign subpacket3[55] = p3[1];
 
 
