@@ -2,7 +2,7 @@
 // SpdInfoFramePacketTests - Unit tests for verilated SpdInfoFramePacket module
 //
 //
-// Copyright 2019 Reclone Labs <reclonelabs.com>
+// Copyright 2020 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
