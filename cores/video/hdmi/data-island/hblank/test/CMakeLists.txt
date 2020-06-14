@@ -1,0 +1,5 @@
+add_executable(testHBlankDataIsland HBlankDataIslandTests.cpp)
+
+target_link_libraries(testHBlankDataIsland VHBlankDataIsland gtest gtest_main)
+
+add_test(NAME testHBlankDataIsland COMMAND testHBlankDataIsland)

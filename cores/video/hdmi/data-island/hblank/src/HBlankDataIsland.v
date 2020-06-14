@@ -85,6 +85,7 @@ module HBlankDataIsland
 
 reg isFirstPacketClock = 1'b0;
 
+reg sampleAvailable = 1'b0;
 reg [2:0] latchedSampleCount = 3'd0;
 reg [7:0] regenSampleCount = 8'd0;
 reg [33:0] latchedSamples [0:3]; //{B, c, sampleR[15:0], sampleL[15:0]}
@@ -241,6 +242,7 @@ always @ (posedge pixelClock) begin
             channel2 <= ch2GuardBand;
         end else if (characterCount < 7'd42) begin
             // Data island packet - 32 characters
+            isFirstPacketClock <= 1'b0;
             channel0 <= ch0PacketDataEncoded;
             channel1 <= ch1PacketDataEncoded;
             channel2 <= ch2PacketDataEncoded;
@@ -268,12 +270,16 @@ always @ (posedge pixelClock) begin
         characterCount <= characterCount + 7'd1;
     end else begin
         // When not in hSync, read up to four samples from the FIFO into the latchedSamples array
-        if ((sampleFifoReadEnable == 1'b0) && (sampleFifoEmpty == 1'b0) && (latchedSampleCount < 3'd4)) begin
+        if ((sampleFifoReadEnable == 1'b0) && (sampleFifoEmpty == 1'b0) && (sampleAvailable == 1'b0) && (latchedSampleCount < 3'd4)) begin
             // Read a sample from the FIFO
             sampleFifoReadEnable <= 1'b1;
         end else if (sampleFifoReadEnable == 1'b1) begin
-            // Save the sample in latchedSamples
+            // Sample will be available on sampleFifoReadData next clock
             sampleFifoReadEnable <= 1'b0;
+            sampleAvailable <= 1'b1;
+        end else if (sampleAvailable == 1'b1) begin
+            // Save the sample in latchedSamples
+            sampleAvailable <= 1'b0;
             latchedSamples[latchedSampleCount[1:0]] <=
                 {channelStatusIndex == 8'd0, channelStatusWord[channelStatusIndex], sampleFifoReadData};
             latchedSampleCount <= latchedSampleCount + 3'd1;
