@@ -16,7 +16,7 @@
 // The VBlankDataIsland must wait until HSync is inactive, to avoid potential timing conflicts
 // with HBlankDataIsland.
 //
-// Because all supported timings include at least two VSync lines, we are guaranteed that each
+// Because all supported timings include at least three VSync lines, we are guaranteed that each
 // type of Infoframe will get sent at least once for each video field.
 //
 //

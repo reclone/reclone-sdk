@@ -12,9 +12,9 @@
 //
 // At specific periods during blanking, HDMI data islands are sent.  In this implementation,
 // the "HBlank data island" preamble starts on the active edge of each HSync, and then sends an
-// audio sample packet, audio clock regeneration packet, or null packet.  The "VBlank data island"
+// audio sample packet or an audio clock regeneration packet.  The "VBlank data island"
 // preamble starts a while after the inactive edge of HSync, on lines where VSync is active, and
-// then alternately sends an AVI Infoframe packet or an Audio Infoframe packet.
+// then sends an AVI Infoframe packet or an Audio Infoframe packet.
 //
 // The 10 output bits for each LVDS channel are typically serialized and transmitted on a
 // pair of differential output pins.  This serialization and differential signalling is
@@ -63,6 +63,16 @@ module HdmiEncoder
     input wire[7:0] blueOrCb,
     input wire[7:0] greenOrY,
     input wire[7:0] redOrCr,
+    input wire [19:0] n,
+    input wire [19:0] cts,
+    input wire [7:0] samplesPerRegenPacket,
+    input wire [7:0] spdifCategoryCode,
+    input wire [3:0] spdifSamplingFreq,
+    input wire [3:0] spdifWordLength,
+    input wire sampleFifoEmpty,
+    input wire [31:0] sampleFifoReadData,
+    
+    output wire sampleFifoReadEnable,
     output reg[9:0] channel0,
     output reg[9:0] channel1,
     output reg[9:0] channel2,
@@ -78,6 +88,31 @@ wire[9:0] rgbChannel1Out;
 wire[9:0] rgbChannel2Out;
 
 assign channelC = 10'b1111100000;
+
+wire hBlankDataIslandActive;
+wire [9:0] hBlankDataIslandCh0;
+wire [9:0] hBlankDataIslandCh1;
+wire [9:0] hBlankDataIslandCh2;
+HBlankDataIsland hBlankIsland
+(
+    .pixelClock(pixelClock),
+    .hSync(hSync),
+    .vSync(vSync),
+    .syncIsActiveLow(syncIsActiveLow),
+    .n(n),
+    .cts(cts),
+    .samplesPerRegenPacket(samplesPerRegenPacket),
+    .spdifCategoryCode(spdifCategoryCode),
+    .spdifSamplingFreq(spdifSamplingFreq),
+    .spdifWordLength(spdifWordLength),
+    .sampleFifoEmpty(sampleFifoEmpty),
+    .sampleFifoReadData(sampleFifoReadData),
+    .sampleFifoReadEnable(sampleFifoReadEnable),
+    .dataIslandActive(hBlankDataIslandActive),
+    .channel0(hBlankDataIslandCh0),
+    .channel1(hBlankDataIslandCh1),
+    .channel2(hBlankDataIslandCh2)
+);
 
 wire vBlankDataIslandActive;
 wire [9:0] vBlankDataIslandCh0;
@@ -152,6 +187,10 @@ always @ (posedge pixelClock) begin
         channel0 <= 10'b1011001100;
         channel1 <= 10'b0100110011;
         channel2 <= 10'b1011001100;
+    end else if (hBlankDataIslandActive) begin
+        channel0 <= hBlankDataIslandCh0;
+        channel1 <= hBlankDataIslandCh1;
+        channel2 <= hBlankDataIslandCh2;
     end else if (vBlankDataIslandActive) begin
         channel0 <= vBlankDataIslandCh0;
         channel1 <= vBlankDataIslandCh1;

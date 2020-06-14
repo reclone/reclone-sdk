@@ -280,6 +280,33 @@ ColorBars720p hdColorBars
     .channelC(dviChannelC)
 );*/
 
+wire signed [15:0] toneSample;
+Sine1kHzTone sineTone
+(
+    .audioClock(audioClock),
+    .sampleEnable(audioSampleEnable),
+    .reset(1'b0),
+    .sample(toneSample)
+);
+
+wire sampleFifoReadEnable;
+wire sampleFifoEmpty;
+wire [31:0] sampleFifoReadData;
+AsyncFifo #(.DATA_WIDTH(32), .ADDR_WIDTH(3)) sampleFifo
+(
+    .asyncReset(1'b0),
+    
+    .readClock(pixelClock),
+    .readEnable(sampleFifoReadEnable),
+    .empty(sampleFifoEmpty),
+    .readData(sampleFifoReadData),
+    
+    .writeClock(audioClock),
+    .writeEnable(audioSampleEnable),
+    .full(),
+    .writeData({toneSample, toneSample})
+);
+
 HdmiEncoder hdmi
 (
     .pixelClock(pixelClock),
@@ -297,20 +324,22 @@ HdmiEncoder hdmi
     .blueOrCb(dviB),
     .greenOrY(dviG),
     .redOrCr(dviR),
+    .n(20'd6144),
+    .cts(20'd74250),
+    .samplesPerRegenPacket(8'd48),
+    .spdifCategoryCode(8'h00),  // ADC without copyright
+    .spdifSamplingFreq(4'd2),   // 48 kHz
+    .spdifWordLength(4'd0),     // 16-bit samples
+    .sampleFifoEmpty(sampleFifoEmpty),
+    .sampleFifoReadData(sampleFifoReadData),
+    .sampleFifoReadEnable(sampleFifoReadEnable),
     .channel0(dviChannel0),
     .channel1(dviChannel1),
     .channel2(dviChannel2),
     .channelC(dviChannelC)
 );
 
-wire signed [15:0] toneSample;
-Sine1kHzTone sineTone
-(
-    .audioClock(audioClock),
-    .sampleEnable(audioSampleEnable),
-    .reset(1'b0),
-    .sample(toneSample)
-);
+
 
 AudioDeltaSigmaDac audioDac
 (

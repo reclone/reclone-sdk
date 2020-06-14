@@ -10,9 +10,13 @@ add_custom_command (
   COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
     ${CMAKE_CURRENT_SOURCE_DIR}/HdmiEncoder.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/vblank/src/VBlankDataIsland.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/hblank/src/HBlankDataIsland.v
+    ${PROJECT_SOURCE_DIR}/audio/spdif/channel-status/src/SpdifChannelStatus.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/avi-infoframe/src/AviInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-infoframe/src/AudioInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-sample/src/AudioSamplePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-clock-regen/src/AudioClockRegenPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v
