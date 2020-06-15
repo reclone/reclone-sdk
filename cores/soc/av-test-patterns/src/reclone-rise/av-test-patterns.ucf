@@ -1,0 +1,3 @@
+NET "*/sampleAsyncFifo/readGrayCounter/grayCount*" TIG;
+NET "*/sampleAsyncFifo/writeGrayCounter/grayCount*" TIG;
+INST "*/sampleAsyncFifo/Mram*" TIG;

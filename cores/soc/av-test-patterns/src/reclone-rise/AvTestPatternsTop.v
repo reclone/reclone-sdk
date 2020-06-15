@@ -74,7 +74,7 @@ wire [9:0] dviChannel1;
 wire [9:0] dviChannel2;
 wire [9:0] dviChannelC;
 wire audioSampleEnable;
-AvTestPatterns #(.COUNTER_SIZE(25)) blinky
+AvTestPatterns #(.COUNTER_SIZE(25)) testPatterns
 (
     .pixelClock(hdmiPixelClock),
     .blink(GPIO29),

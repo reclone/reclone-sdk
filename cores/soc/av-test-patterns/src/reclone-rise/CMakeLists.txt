@@ -67,8 +67,8 @@ add_custom_command(OUTPUT ${SOC_NAME}.ngc DEPENDS ${VERILOG_SRCS} ${SOC_NAME}.pr
     COMMAND ${XST} ${ISE_COMMON_OPTS} -ifn ${SOC_NAME}.xst
 )
 
-add_custom_command(OUTPUT ${SOC_NAME}.ngd DEPENDS ${SOC_NAME}.ngc ${USER_CONSTRAINTS_FILE}
-    COMMAND ${NGDBUILD} ${ISE_COMMON_OPTS} ${NGDBUILD_OPTS} -p ${TARGET_PART} -uc ${USER_CONSTRAINTS_FILE} ${SOC_NAME}.ngc ${SOC_NAME}.ngd
+add_custom_command(OUTPUT ${SOC_NAME}.ngd DEPENDS ${SOC_NAME}.ngc ${USER_CONSTRAINTS_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/av-test-patterns.ucf
+    COMMAND ${NGDBUILD} ${ISE_COMMON_OPTS} ${NGDBUILD_OPTS} -p ${TARGET_PART} -uc ${USER_CONSTRAINTS_FILE} -uc ${CMAKE_CURRENT_SOURCE_DIR}/av-test-patterns.ucf ${SOC_NAME}.ngc ${SOC_NAME}.ngd
 )
 
 add_custom_command(OUTPUT ${SOC_NAME}_map.ncd ${SOC_NAME}.pcf DEPENDS ${SOC_NAME}.ngd
@@ -79,9 +79,13 @@ add_custom_command(OUTPUT ${SOC_NAME}.ncd DEPENDS ${SOC_NAME}_map.ncd ${SOC_NAME
     COMMAND ${PAR} ${ISE_COMMON_OPTS} ${PAR_OPTS} -w ${SOC_NAME}_map.ncd ${SOC_NAME}.ncd ${SOC_NAME}.pcf
 )
 
+add_custom_command(OUTPUT ${SOC_NAME}.twr DEPENDS ${SOC_NAME}.ncd ${SOC_NAME}.pcf
+    COMMAND ${TRCE} ${ISE_COMMON_OPTS} ${TRCE_OPTS} ${SOC_NAME}.ncd ${SOC_NAME}.pcf
+)
+
 string(TOLOWER "${SOC_NAME}.bit" BIT_FILE)
 string(TOLOWER "${SOC_NAME}.drc" DRC_FILE)
-add_custom_command(OUTPUT ${BIT_FILE} ${DRC_FILE} DEPENDS ${SOC_NAME}.ncd ${SOC_NAME}.ut
+add_custom_command(OUTPUT ${BIT_FILE} ${DRC_FILE} DEPENDS ${SOC_NAME}.ncd ${SOC_NAME}.ut ${SOC_NAME}.twr
     COMMAND ${BITGEN} ${ISE_COMMON_OPTS} -w -f ${SOC_NAME}.ut ${SOC_NAME}.ncd ${BIT_FILE}
 )
 

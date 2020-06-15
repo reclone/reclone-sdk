@@ -88,18 +88,29 @@ reg isFirstPacketClock = 1'b0;
 reg sampleAvailable = 1'b0;
 reg [2:0] latchedSampleCount = 3'd0;
 reg [7:0] regenSampleCount = 8'd0;
-reg [33:0] latchedSamples [0:3]; //{B, c, sampleR[15:0], sampleL[15:0]}
+reg [34:0] latchedSamples [0:3]; //{B, cR, cL, sampleR[15:0], sampleL[15:0]}
 
 reg [6:0] characterCount = 7'd0;
 reg[7:0] channelStatusIndex = 8'd0;
 
-wire[191:0] channelStatusWord;
-SpdifChannelStatus chnlStatus
+wire[191:0] channelStatusLeftWord;
+SpdifChannelStatus chnlStatusLeft
 (
+    .channelNum(4'd1),
     .categoryCode(spdifCategoryCode),
     .samplingFreq(spdifSamplingFreq),
     .wordLength(spdifWordLength),
-    .channelStatus(channelStatusWord)
+    .channelStatus(channelStatusLeftWord)
+);
+
+wire[191:0] channelStatusRightWord;
+SpdifChannelStatus chnlStatusRight
+(
+    .channelNum(4'd2),
+    .categoryCode(spdifCategoryCode),
+    .samplingFreq(spdifSamplingFreq),
+    .wordLength(spdifWordLength),
+    .channelStatus(channelStatusRightWord)
 );
 
 wire [23:0] sampleHeader;
@@ -112,15 +123,15 @@ AudioSamplePacket samplePacket
     .layout(1'b0),
     .present({(latchedSampleCount >= 3'd4), (latchedSampleCount >= 3'd3), (latchedSampleCount >= 3'd2), (latchedSampleCount >= 3'd1)}),
     .flat(4'd0),
-    .B({latchedSamples[3][33], latchedSamples[2][33], latchedSamples[1][33], latchedSamples[0][33]}),
+    .B({latchedSamples[3][34], latchedSamples[2][34], latchedSamples[1][34], latchedSamples[0][34]}),
     .sample0({latchedSamples[0][31:16], 8'd0, latchedSamples[0][15:0], 8'd0}),
-    .c0(latchedSamples[0][32]),
+    .c0({latchedSamples[0][33], latchedSamples[0][32]}),
     .sample1({latchedSamples[1][31:16], 8'd0, latchedSamples[1][15:0], 8'd0}),
-    .c1(latchedSamples[1][32]),
+    .c1({latchedSamples[1][33], latchedSamples[1][32]}),
     .sample2({latchedSamples[2][31:16], 8'd0, latchedSamples[2][15:0], 8'd0}),
-    .c2(latchedSamples[2][32]),
+    .c2({latchedSamples[2][33], latchedSamples[2][32]}),
     .sample3({latchedSamples[3][31:16], 8'd0, latchedSamples[3][15:0], 8'd0}),
-    .c3(latchedSamples[3][32]),
+    .c3({latchedSamples[3][33], latchedSamples[3][32]}),
     .header(sampleHeader),
     .subpacket0(sampleSubpacket0),
     .subpacket1(sampleSubpacket1),
@@ -261,10 +272,10 @@ always @ (posedge pixelClock) begin
                 latchedSampleCount <= 3'd0;
                 
                 // Zero out the latched samples
-                latchedSamples[0] <= 34'd0;
-                latchedSamples[1] <= 34'd0;
-                latchedSamples[2] <= 34'd0;
-                latchedSamples[3] <= 34'd0;
+                latchedSamples[0] <= 35'd0;
+                latchedSamples[1] <= 35'd0;
+                latchedSamples[2] <= 35'd0;
+                latchedSamples[3] <= 35'd0;
             end
         end
         characterCount <= characterCount + 7'd1;
@@ -281,7 +292,7 @@ always @ (posedge pixelClock) begin
             // Save the sample in latchedSamples
             sampleAvailable <= 1'b0;
             latchedSamples[latchedSampleCount[1:0]] <=
-                {channelStatusIndex == 8'd0, channelStatusWord[channelStatusIndex], sampleFifoReadData};
+                {channelStatusIndex == 8'd0, channelStatusRightWord[channelStatusIndex], channelStatusLeftWord[channelStatusIndex], sampleFifoReadData};
             latchedSampleCount <= latchedSampleCount + 3'd1;
             regenSampleCount <= regenSampleCount + 8'd1;
             if (channelStatusIndex >= 8'd191) begin

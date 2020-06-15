@@ -56,16 +56,16 @@ module AudioSamplePacket
     input wire [3:0] B,
     
     input wire [47:0] sample0,
-    input wire c0,
+    input wire [1:0] c0,
     
     input wire [47:0] sample1,
-    input wire c1,
+    input wire [1:0] c1,
     
     input wire [47:0] sample2,
-    input wire c2,
+    input wire [1:0] c2,
     
     input wire [47:0] sample3,
-    input wire c3,
+    input wire [1:0] c3,
     
     output wire [23:0] header,
     output wire [55:0] subpacket0,
@@ -81,52 +81,52 @@ assign header[15:13] = 3'd0;
 assign header[19:16] = flat[3:0];
 assign header[23:20] = B;
 
-wire v0 = ~present[0];
-wire [1:0] p0 = {(^sample0[47:24]) ^ v0 ^ c0, (^sample0[23:0]) ^ v0 ^ c0};
+wire v0 = 1'b0; //~present[0];
+wire [1:0] p0 = {(^sample0[47:24]) ^ v0 ^ c0[1], (^sample0[23:0]) ^ v0 ^ c0[0]};
 assign subpacket0[47:0] = sample0[47:0];
 assign subpacket0[48] = v0;
 assign subpacket0[49] = 1'b0; //u0
-assign subpacket0[50] = c0;
+assign subpacket0[50] = c0[0];
 assign subpacket0[51] = p0[0];
 assign subpacket0[52] = v0;
 assign subpacket0[53] = 1'b0; //u0
-assign subpacket0[54] = c0;
+assign subpacket0[54] = c0[1];
 assign subpacket0[55] = p0[1];
 
-wire v1 = ~present[1];
-wire [1:0] p1 = {(^sample1[47:24]) ^ v1 ^ c1, (^sample1[23:0]) ^ v1 ^ c1};
+wire v1 = 1'b0; //~present[1];
+wire [1:0] p1 = {(^sample1[47:24]) ^ v1 ^ c1[1], (^sample1[23:0]) ^ v1 ^ c1[0]};
 assign subpacket1[47:0] = sample1[47:0];
 assign subpacket1[48] = v1;
 assign subpacket1[49] = 1'b0; //u1
-assign subpacket1[50] = c1;
+assign subpacket1[50] = c1[0];
 assign subpacket1[51] = p1[0];
 assign subpacket1[52] = v1;
 assign subpacket1[53] = 1'b0; //u1
-assign subpacket1[54] = c1;
+assign subpacket1[54] = c1[1];
 assign subpacket1[55] = p1[1];
 
-wire v2 = ~present[2];
-wire [1:0] p2 = {(^sample2[47:24]) ^ v2 ^ c2, (^sample2[23:0]) ^ v2 ^ c2};
+wire v2 = 1'b0; //~present[2];
+wire [1:0] p2 = {(^sample2[47:24]) ^ v2 ^ c2[1], (^sample2[23:0]) ^ v2 ^ c2[0]};
 assign subpacket2[47:0] = sample2[47:0];
 assign subpacket2[48] = v2;
 assign subpacket2[49] = 1'b0; //u2
-assign subpacket2[50] = c2;
+assign subpacket2[50] = c2[0];
 assign subpacket2[51] = p2[0];
 assign subpacket2[52] = v2;
 assign subpacket2[53] = 1'b0; //u2
-assign subpacket2[54] = c2;
+assign subpacket2[54] = c2[1];
 assign subpacket2[55] = p2[1];
 
-wire v3 = ~present[3];
-wire [1:0] p3 = {(^sample3[47:24]) ^ v3 ^ c3, (^sample3[23:0]) ^ v3 ^ c3};
+wire v3 = 1'b0; //~present[3];
+wire [1:0] p3 = {(^sample3[47:24]) ^ v3 ^ c3[1], (^sample3[23:0]) ^ v3 ^ c3[0]};
 assign subpacket3[47:0] = sample3[47:0];
 assign subpacket3[48] = v3;
 assign subpacket3[49] = 1'b0; //u3
-assign subpacket3[50] = c3;
+assign subpacket3[50] = c3[0];
 assign subpacket3[51] = p3[0];
 assign subpacket3[52] = v3;
 assign subpacket3[53] = 1'b0; //u3
-assign subpacket3[54] = c3;
+assign subpacket3[54] = c3[1];
 assign subpacket3[55] = p3[1];
 
 

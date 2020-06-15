@@ -38,6 +38,7 @@ find_program(NGDBUILD ngdbuild PATHS C:\\Xilinx\\14.7\\ISE_DS\\ISE\\bin\\nt64 NO
 find_program(MAP map PATHS C:\\Xilinx\\14.7\\ISE_DS\\ISE\\bin\\nt64 NO_DEFAULT_PATH)
 find_program(PAR par PATHS C:\\Xilinx\\14.7\\ISE_DS\\ISE\\bin\\nt64 NO_DEFAULT_PATH)
 find_program(BITGEN bitgen PATHS C:\\Xilinx\\14.7\\ISE_DS\\ISE\\bin\\nt64 NO_DEFAULT_PATH)
+find_program(TRCE trce PATHS C:\\Xilinx\\14.7\\ISE_DS\\ISE\\bin\\nt64 NO_DEFAULT_PATH)
 
 # Common ISE options
 set(ISE_COMMON_OPTS -intstyle ise)

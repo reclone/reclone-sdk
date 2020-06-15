@@ -292,7 +292,7 @@ Sine1kHzTone sineTone
 wire sampleFifoReadEnable;
 wire sampleFifoEmpty;
 wire [31:0] sampleFifoReadData;
-AsyncFifo #(.DATA_WIDTH(32), .ADDR_WIDTH(3)) sampleFifo
+AsyncFifo #(.DATA_WIDTH(32), .ADDR_WIDTH(3)) sampleAsyncFifo
 (
     .asyncReset(1'b0),
     
@@ -327,9 +327,9 @@ HdmiEncoder hdmi
     .n(20'd6144),
     .cts(20'd74250),
     .samplesPerRegenPacket(8'd48),
-    .spdifCategoryCode(8'h00),  // ADC without copyright
+    .spdifCategoryCode(8'h00),  // General
     .spdifSamplingFreq(4'd2),   // 48 kHz
-    .spdifWordLength(4'd0),     // 16-bit samples
+    .spdifWordLength(4'd2),     // 16-bit samples
     .sampleFifoEmpty(sampleFifoEmpty),
     .sampleFifoReadData(sampleFifoReadData),
     .sampleFifoReadEnable(sampleFifoReadEnable),

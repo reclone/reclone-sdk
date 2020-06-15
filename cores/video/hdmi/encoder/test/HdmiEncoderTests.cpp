@@ -79,6 +79,14 @@ TEST_F(HdmiEncoderTests, EncoderWith720pTiming)
     _uut.blueOrCb = 255;
     _uut.greenOrY = 0;
     _uut.redOrCr = 0;
+    _uut.samplesPerRegenPacket = 48;
+    _uut.spdifCategoryCode = 0x00;  // ADC without copyright
+    _uut.spdifSamplingFreq = 2;     // 48 kHz
+    _uut.spdifWordLength = 2;       // 16 bits
+    _uut.sampleFifoEmpty = 0;
+    _uut.sampleFifoReadData = 0x5545AABA;
+    _uut.n = 6144;
+    _uut.cts = 74250;
     _uut.eval();
     vcd_trace.dump(_tickCount++);
     vcd_trace.flush();

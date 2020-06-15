@@ -52,6 +52,7 @@ set(XST_OPTS "\
 set(NGDBUILD_OPTS "-dd _ngo -nt timestamp")
 set(MAP_OPTS "-logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off")
 set(PAR_OPTS "-ol high -mt off")
+set(TRCE_OPTS "-v 12 -fastpaths")
 set(BITGEN_OPTS "\
 -g Binary:no
 -g Compress
