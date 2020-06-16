@@ -226,7 +226,7 @@ always @ (posedge pixelClock) begin
             channel0 <= 10'd0;
             channel1 <= 10'd0;
             channel2 <= 10'd0;
-        end else if (hSyncLatched && characterCount < 7'd42) begin
+        end else if (hSyncLatched && characterCount < 7'd82) begin
             // Wait 42 clocks after hsync is released to start the preamble
             hSyncLatched <= 1'b1;
             isFirstPacketClock <= 1'b0;
@@ -235,7 +235,7 @@ always @ (posedge pixelClock) begin
             channel0 <= 10'd0;
             channel1 <= 10'd0;
             channel2 <= 10'd0;
-        end else if ((hSyncLatched || dataIslandActive) && characterCount < 7'd50) begin
+        end else if ((hSyncLatched || dataIslandActive) && characterCount < 7'd90) begin
             // 8 characters of preamble
             hSyncLatched <= 1'b0;
             isFirstPacketClock <= 1'b0;
@@ -245,20 +245,20 @@ always @ (posedge pixelClock) begin
             channel1 <= ch1PreambleDataEncoded;
             channel2 <= ch2PreambleDataEncoded;
         end else if (dataIslandActive &&
-                     ((characterCount < 7'd52) || ((characterCount >= 7'd84) && (characterCount < 7'd86)))) begin
+                     ((characterCount < 7'd92) || ((characterCount >= 7'd124) && (characterCount < 7'd126)))) begin
             // Data island leading or trailing guard band - 2 characters
             hSyncLatched <= 1'b0;
-            isFirstPacketClock <= (characterCount == 7'd51) ? 1'b1 : 1'b0;
+            isFirstPacketClock <= (characterCount == 7'd91) ? 1'b1 : 1'b0;
             dataIslandActive <= 1'b1;
             characterCount <= characterCount + 7'd1;
             channel0 <= ch0GuardBand;
             channel1 <= ch1GuardBand;
             channel2 <= ch2GuardBand;
-        end else if (dataIslandActive && (characterCount >= 7'd52) && (characterCount < 7'd84)) begin
+        end else if (dataIslandActive && (characterCount >= 7'd92) && (characterCount < 7'd124)) begin
             // Data island packet - 32 characters
             hSyncLatched <= 1'b0;
             isFirstPacketClock <= 1'b0;
-            packetCount <= packetCount + ((characterCount == 7'd83) ? 2'd1 : 2'd0);
+            packetCount <= packetCount + ((characterCount == 7'd123) ? 2'd1 : 2'd0);
             dataIslandActive <= 1'b1;
             characterCount <= characterCount + 7'd1;
             channel0 <= ch0PacketDataEncoded;

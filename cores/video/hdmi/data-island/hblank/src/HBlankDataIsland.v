@@ -83,6 +83,8 @@ module HBlankDataIsland
     output reg [9:0] channel2 = 10'd0
 );
 
+reg hSyncLatched = 1'b0;
+
 reg isFirstPacketClock = 1'b0;
 
 reg sampleAvailable = 1'b0;
@@ -229,29 +231,62 @@ wire [9:0] ch2GuardBand = 10'b0100110011;
 
 always @ (posedge pixelClock) begin
     if ((hSync ^ syncIsActiveLow) && !dataIslandActive) begin
-        if (characterCount == 7'd0) begin
-            // First pixel clock of the hSync interval; start the data island
-            dataIslandActive <= 1'b1;
-            isFirstPacketClock <= 1'b0;
-            channel0 <= ch0PreambleDataEncoded;
-            channel1 <= ch1PreambleDataEncoded;
-            channel2 <= ch2PreambleDataEncoded;
-            characterCount <= 7'd1;
+        // HSync is active; start data island period once HSync goes inactive
+        hSyncLatched <= 1'b1;
+        isFirstPacketClock <= 1'b0;
+        characterCount <= 7'd0;
+        dataIslandActive <= 1'b0;
+        channel0 <= 10'd0;
+        channel1 <= 10'd0;
+        channel2 <= 10'd0;
+        
+        // When in hSync, read up to four samples from the FIFO into the latchedSamples array
+        if ((sampleFifoReadEnable == 1'b0) && (sampleFifoEmpty == 1'b0) && (sampleAvailable == 1'b0) && (latchedSampleCount < 3'd4)) begin
+            // Read a sample from the FIFO
+            sampleFifoReadEnable <= 1'b1;
+        end else if (sampleFifoReadEnable == 1'b1) begin
+            // Sample will be available on sampleFifoReadData next clock
+            sampleFifoReadEnable <= 1'b0;
+            sampleAvailable <= 1'b1;
+        end else if (sampleAvailable == 1'b1) begin
+            // Save the sample in latchedSamples
+            sampleAvailable <= 1'b0;
+            latchedSamples[latchedSampleCount[1:0]] <=
+                {channelStatusIndex == 8'd0, channelStatusRightWord[channelStatusIndex], channelStatusLeftWord[channelStatusIndex], sampleFifoReadData};
+            latchedSampleCount <= latchedSampleCount + 3'd1;
+            regenSampleCount <= regenSampleCount + 8'd1;
+            if (channelStatusIndex >= 8'd191) begin
+                channelStatusIndex <= 8'd0;
+            end else begin
+                channelStatusIndex <= channelStatusIndex + 8'd1;
+            end
         end
-        // Otherwise, done with the data island but still in hSync interval
-    end else if (dataIslandActive) begin
-        if (characterCount < 7'd8) begin
+        // Reset the character count
+        characterCount <= 7'd0;
+    end else if (hSyncLatched && characterCount < 7'd2) begin
+            // Wait 2 clocks after hsync is released to start the preamble
+            hSyncLatched <= 1'b1;
+            isFirstPacketClock <= 1'b0;
+            characterCount <= characterCount + 7'd1;
+            dataIslandActive <= 1'b0;
+            channel0 <= 10'd0;
+            channel1 <= 10'd0;
+            channel2 <= 10'd0;
+    end else if (hSyncLatched || dataIslandActive) begin
+        hSyncLatched <= 1'b0;
+        dataIslandActive <= 1'b1;
+        if (characterCount < 7'd10) begin
             // 8 characters of preamble
             channel0 <= ch0PreambleDataEncoded;
             channel1 <= ch1PreambleDataEncoded;
             channel2 <= ch2PreambleDataEncoded;
-        end else if (characterCount < 7'd10 || (characterCount >= 7'd42 && characterCount < 7'd44)) begin
+        end else if (characterCount < 7'd12 || (characterCount >= 7'd44 && characterCount < 7'd46)) begin
             // Data island leading or trailing guard band - 2 characters
-            isFirstPacketClock <= (characterCount == 7'd9) ? 1'b1 : 1'b0;
+            isFirstPacketClock <= (characterCount == 7'd11) ? 1'b1 : 1'b0;
             channel0 <= ch0GuardBand;
             channel1 <= ch1GuardBand;
             channel2 <= ch2GuardBand;
-        end else if (characterCount < 7'd42) begin
+        end else if (characterCount < 7'd44) begin
             // Data island packet - 32 characters
             isFirstPacketClock <= 1'b0;
             channel0 <= ch0PacketDataEncoded;
@@ -279,30 +314,6 @@ always @ (posedge pixelClock) begin
             end
         end
         characterCount <= characterCount + 7'd1;
-    end else begin
-        // When not in hSync, read up to four samples from the FIFO into the latchedSamples array
-        if ((sampleFifoReadEnable == 1'b0) && (sampleFifoEmpty == 1'b0) && (sampleAvailable == 1'b0) && (latchedSampleCount < 3'd4)) begin
-            // Read a sample from the FIFO
-            sampleFifoReadEnable <= 1'b1;
-        end else if (sampleFifoReadEnable == 1'b1) begin
-            // Sample will be available on sampleFifoReadData next clock
-            sampleFifoReadEnable <= 1'b0;
-            sampleAvailable <= 1'b1;
-        end else if (sampleAvailable == 1'b1) begin
-            // Save the sample in latchedSamples
-            sampleAvailable <= 1'b0;
-            latchedSamples[latchedSampleCount[1:0]] <=
-                {channelStatusIndex == 8'd0, channelStatusRightWord[channelStatusIndex], channelStatusLeftWord[channelStatusIndex], sampleFifoReadData};
-            latchedSampleCount <= latchedSampleCount + 3'd1;
-            regenSampleCount <= regenSampleCount + 8'd1;
-            if (channelStatusIndex >= 8'd191) begin
-                channelStatusIndex <= 8'd0;
-            end else begin
-                channelStatusIndex <= channelStatusIndex + 8'd1;
-            end
-        end
-        // Reset the character count for the next hSync interval
-        characterCount <= 7'd0;
     end
 
 end
