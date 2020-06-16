@@ -1,0 +1,5 @@
+add_executable(testGeneralControlPacket GeneralControlPacketTests.cpp)
+
+target_link_libraries(testGeneralControlPacket VGeneralControlPacket gtest gtest_main)
+
+add_test(NAME testGeneralControlPacket COMMAND testGeneralControlPacket)
