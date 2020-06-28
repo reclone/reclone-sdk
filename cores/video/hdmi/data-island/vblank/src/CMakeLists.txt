@@ -7,9 +7,11 @@ add_custom_command (
           VVBlankDataIsland__Trace.cpp
           VVBlankDataIsland__Trace__Slow.cpp
   DEPENDS VBlankDataIsland.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/general-control/src/GeneralControlPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/avi-infoframe/src/AviInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-infoframe/src/AudioInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-content-protection/src/AudioContentProtectionPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v
@@ -18,9 +20,11 @@ add_custom_command (
     ${PROJECT_SOURCE_DIR}/video/tmds/ctl-encoder-2to10/src/CtlEncoder2to10.v
   COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
     ${CMAKE_CURRENT_SOURCE_DIR}/VBlankDataIsland.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/general-control/src/GeneralControlPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/avi-infoframe/src/AviInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-infoframe/src/AudioInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-content-protection/src/AudioContentProtectionPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v

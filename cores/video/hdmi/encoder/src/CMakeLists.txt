@@ -17,6 +17,9 @@ add_custom_command (
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-sample/src/AudioSamplePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-clock-regen/src/AudioClockRegenPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-content-protection/src/AudioContentProtectionPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/general-control/src/GeneralControlPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/null/src/NullDataIslandPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v
@@ -36,7 +39,10 @@ add_library (VHdmiEncoder STATIC
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/vblank/src/VBlankDataIsland.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/avi-infoframe/src/AviInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-infoframe/src/AudioInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-content-protection/src/AudioContentProtectionPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/general-control/src/GeneralControlPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/null/src/NullDataIslandPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v

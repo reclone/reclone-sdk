@@ -67,7 +67,7 @@ reg hSyncLatched = 1'b0;
 
 reg isFirstPacketClock = 1'b0;
 
-reg [1:0] packetCount = 2'd0;
+reg [2:0] packetCount = 3'd0;
 
 reg [6:0] characterCount = 7'd0;
 
@@ -145,25 +145,59 @@ SpdInfoFramePacket spdPacket
     .subpacket3(spdSubpacket3)
 );
 
+wire [23:0] gcHeader;
+wire [55:0] gcSubpacket0;
+wire [55:0] gcSubpacket1;
+wire [55:0] gcSubpacket2;
+wire [55:0] gcSubpacket3;
+GeneralControlPacket gcPacket
+(
+    .avmute(0),
+    .cd(0),
+    .pp(0),
+    .defaultPhase(0),
+
+    .header(gcHeader),
+    .subpacket0(gcSubpacket0),
+    .subpacket1(gcSubpacket1),
+    .subpacket2(gcSubpacket2),
+    .subpacket3(gcSubpacket3)
+);
+
+wire [23:0] acpHeader;
+wire [55:0] acpSubpacket0;
+wire [55:0] acpSubpacket1;
+wire [55:0] acpSubpacket2;
+wire [55:0] acpSubpacket3;
+AudioContentProtectionPacket acpPacket
+(
+    .header(acpHeader),
+    .subpacket0(acpSubpacket0),
+    .subpacket1(acpSubpacket1),
+    .subpacket2(acpSubpacket2),
+    .subpacket3(acpSubpacket3)
+);
+
 wire [3:0] ch0PacketData;
 wire [3:0] ch1PacketData;
 wire [3:0] ch2PacketData;
+reg [23:0] serializeHeader;
+reg [55:0] serializeSubpacket0;
+reg [55:0] serializeSubpacket1;
+reg [55:0] serializeSubpacket2;
+reg [55:0] serializeSubpacket3;
 DataIslandPacketSerializer serializer
 (
     .clock(pixelClock),
     .isFirstPacketClock(isFirstPacketClock),
+    .isFirstIslandPacket(1'b1),
     .hsync(hSync),
     .vsync(vSync),
-    .header((packetCount == 2'd0) ? aviHeader : ((packetCount == 2'd1) ? audioHeader : spdHeader)),
-    .subpacket0((packetCount == 2'd0) ? aviSubpacket0 : ((packetCount == 2'd1) ? audioSubpacket0 : spdSubpacket0)),
-    .subpacket1((packetCount == 2'd0) ? aviSubpacket1 : ((packetCount == 2'd1) ? audioSubpacket1 : spdSubpacket1)),
-    .subpacket2((packetCount == 2'd0) ? aviSubpacket2 : ((packetCount == 2'd1) ? audioSubpacket2 : spdSubpacket2)),
-    .subpacket3((packetCount == 2'd0) ? aviSubpacket3 : ((packetCount == 2'd1) ? audioSubpacket3 : spdSubpacket3)),
-    /*.header(24'h000000),
-    .subpacket0(56'h00000000000000),
-    .subpacket1(56'h00000000000000),
-    .subpacket2(56'h00000000000000),
-    .subpacket3(56'h00000000000000),*/
+    .header(serializeHeader),
+    .subpacket0(serializeSubpacket0),
+    .subpacket1(serializeSubpacket1),
+    .subpacket2(serializeSubpacket2),
+    .subpacket3(serializeSubpacket3),
     .terc4channel0(ch0PacketData),
     .terc4channel1(ch1PacketData),
     .terc4channel2(ch2PacketData)
@@ -214,10 +248,58 @@ CtlEncoder2to10 ch2PreambleEncoder
 wire [9:0] ch1GuardBand = 10'b0100110011;
 wire [9:0] ch2GuardBand = 10'b0100110011;
 
+always @ (*) begin
+    // Determine which packet to serialize based on packetCount
+    case (packetCount)
+        3'd0 : begin
+            serializeHeader = gcHeader;
+            serializeSubpacket0 = gcSubpacket0;
+            serializeSubpacket1 = gcSubpacket1;
+            serializeSubpacket2 = gcSubpacket2;
+            serializeSubpacket3 = gcSubpacket3;
+        end
+        3'd1 : begin
+            serializeHeader = audioHeader;
+            serializeSubpacket0 = audioSubpacket0;
+            serializeSubpacket1 = audioSubpacket1;
+            serializeSubpacket2 = audioSubpacket2;
+            serializeSubpacket3 = audioSubpacket3;
+        end
+        3'd2 : begin
+            serializeHeader = aviHeader;
+            serializeSubpacket0 = aviSubpacket0;
+            serializeSubpacket1 = aviSubpacket1;
+            serializeSubpacket2 = aviSubpacket2;
+            serializeSubpacket3 = aviSubpacket3;
+        end
+        3'd3 : begin
+            serializeHeader = spdHeader;
+            serializeSubpacket0 = spdSubpacket0;
+            serializeSubpacket1 = spdSubpacket1;
+            serializeSubpacket2 = spdSubpacket2;
+            serializeSubpacket3 = spdSubpacket3;
+        end
+        3'd4 : begin
+            serializeHeader = acpHeader;
+            serializeSubpacket0 = acpSubpacket0;
+            serializeSubpacket1 = acpSubpacket1;
+            serializeSubpacket2 = acpSubpacket2;
+            serializeSubpacket3 = acpSubpacket3;
+        end
+        default : begin
+            serializeHeader = {24{1'bx}};
+            serializeSubpacket0 = {56{1'bx}};
+            serializeSubpacket1 = {56{1'bx}};
+            serializeSubpacket2 = {56{1'bx}};
+            serializeSubpacket3 = {56{1'bx}};
+        end
+    endcase
+end
+
 always @ (posedge pixelClock) begin
     if (vSync ^ syncIsActiveLow) begin
         // VSync is active
-        if ((hSync ^ syncIsActiveLow) && (packetCount < 2'd3)) begin
+        if ((hSync ^ syncIsActiveLow) && (packetCount < 3'd5)) begin
             // HSync is active; start data island period once HSync goes inactive
             hSyncLatched <= 1'b1;
             isFirstPacketClock <= 1'b0;
@@ -258,7 +340,7 @@ always @ (posedge pixelClock) begin
             // Data island packet - 32 characters
             hSyncLatched <= 1'b0;
             isFirstPacketClock <= 1'b0;
-            packetCount <= packetCount + ((characterCount == 7'd123) ? 2'd1 : 2'd0);
+            packetCount <= packetCount + ((characterCount == 7'd123) ? 3'd1 : 3'd0);
             dataIslandActive <= 1'b1;
             characterCount <= characterCount + 7'd1;
             channel0 <= ch0PacketDataEncoded;
@@ -279,7 +361,7 @@ always @ (posedge pixelClock) begin
         hSyncLatched <= 1'b0;
         isFirstPacketClock <= 1'b0;
         characterCount <= 7'd0;
-        packetCount <= 2'd0;
+        packetCount <= 3'd0;
         dataIslandActive <= 1'b0;
         channel0 <= 10'd0;
         channel1 <= 10'd0;

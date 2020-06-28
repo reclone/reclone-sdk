@@ -10,6 +10,7 @@ add_custom_command (
     ${PROJECT_SOURCE_DIR}/audio/spdif/channel-status/src/SpdifChannelStatus.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-sample/src/AudioSamplePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-clock-regen/src/AudioClockRegenPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/null/src/NullDataIslandPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v
@@ -21,6 +22,7 @@ add_custom_command (
     ${PROJECT_SOURCE_DIR}/audio/spdif/channel-status/src/SpdifChannelStatus.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-sample/src/AudioSamplePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-clock-regen/src/AudioClockRegenPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/null/src/NullDataIslandPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccStep.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/ecc/src/BchEccSingleBitEncoder.v

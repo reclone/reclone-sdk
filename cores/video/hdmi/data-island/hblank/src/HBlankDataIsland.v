@@ -83,16 +83,22 @@ module HBlankDataIsland
     output reg [9:0] channel2 = 10'd0
 );
 
-reg hSyncLatched = 1'b0;
+// Counter values at which to start each phase of the data island
+localparam [6:0] PREAMBLE_START = 7'd16;
+localparam [6:0] LEADING_GUARD_BAND_START = PREAMBLE_START + 7'd8;
+localparam [6:0] SAMPLE_PACKET_START = LEADING_GUARD_BAND_START + 7'd2;
+localparam [6:0] REGEN_PACKET_START = SAMPLE_PACKET_START + 7'd32;
+localparam [6:0] TRAILING_GUARD_BAND_START = REGEN_PACKET_START + 7'd32;
+localparam [6:0] ISLAND_FINISHED = TRAILING_GUARD_BAND_START + 7'd2;
 
-reg isFirstPacketClock = 1'b0;
+reg hSyncArmed = 1'b0;
 
 reg sampleAvailable = 1'b0;
 reg [2:0] latchedSampleCount = 3'd0;
 reg [7:0] regenSampleCount = 8'd0;
 reg [34:0] latchedSamples [0:3]; //{B, cR, cL, sampleR[15:0], sampleL[15:0]}
 
-reg [6:0] characterCount = 7'd0;
+reg [6:0] characterCount = ISLAND_FINISHED;
 reg[7:0] channelStatusIndex = 8'd0;
 
 wire[191:0] channelStatusLeftWord;
@@ -123,7 +129,7 @@ wire [55:0] sampleSubpacket3;
 AudioSamplePacket samplePacket
 (
     .layout(1'b0),
-    .present({(latchedSampleCount >= 3'd4), (latchedSampleCount >= 3'd3), (latchedSampleCount >= 3'd2), (latchedSampleCount >= 3'd1)}),
+    .present({latchedSampleCount > 3'd3, latchedSampleCount > 3'd2, latchedSampleCount > 3'd1, latchedSampleCount > 3'd0}),
     .flat(4'd0),
     .B({latchedSamples[3][34], latchedSamples[2][34], latchedSamples[1][34], latchedSamples[0][34]}),
     .sample0({latchedSamples[0][31:16], 8'd0, latchedSamples[0][15:0], 8'd0}),
@@ -159,20 +165,36 @@ AudioClockRegenPacket regenPacket
 
 wire regenPacketDue = (regenSampleCount >= samplesPerRegenPacket);
 
+wire [23:0] nullHeader;
+wire [55:0] nullSubpacket0;
+wire [55:0] nullSubpacket1;
+wire [55:0] nullSubpacket2;
+wire [55:0] nullSubpacket3;
+NullDataIslandPacket nullPacket
+(
+    .header(nullHeader),
+    .subpacket0(nullSubpacket0),
+    .subpacket1(nullSubpacket1),
+    .subpacket2(nullSubpacket2),
+    .subpacket3(nullSubpacket3)
+);
+
 wire [3:0] ch0PacketData;
 wire [3:0] ch1PacketData;
 wire [3:0] ch2PacketData;
+wire isFirstIslandPacket = (characterCount < REGEN_PACKET_START);
 DataIslandPacketSerializer serializer
 (
     .clock(pixelClock),
-    .isFirstPacketClock(isFirstPacketClock),
+    .isFirstPacketClock(characterCount == SAMPLE_PACKET_START || characterCount == REGEN_PACKET_START),
+    .isFirstIslandPacket(isFirstIslandPacket),
     .hsync(hSync),
     .vsync(vSync),
-    .header(regenPacketDue ? regenHeader : sampleHeader),
-    .subpacket0(regenPacketDue ? regenSubpacket0 : sampleSubpacket0),
-    .subpacket1(regenPacketDue ? regenSubpacket1 : sampleSubpacket1),
-    .subpacket2(regenPacketDue ? regenSubpacket2 : sampleSubpacket2),
-    .subpacket3(regenPacketDue ? regenSubpacket3 : sampleSubpacket3),
+    .header(isFirstIslandPacket ? sampleHeader : (regenPacketDue ? regenHeader : nullHeader)),
+    .subpacket0(isFirstIslandPacket ? sampleSubpacket0 : (regenPacketDue ? regenSubpacket0 : nullSubpacket0)),
+    .subpacket1(isFirstIslandPacket ? sampleSubpacket1 : (regenPacketDue ? regenSubpacket1 : nullSubpacket1)),
+    .subpacket2(isFirstIslandPacket ? sampleSubpacket2 : (regenPacketDue ? regenSubpacket2 : nullSubpacket2)),
+    .subpacket3(isFirstIslandPacket ? sampleSubpacket3 : (regenPacketDue ? regenSubpacket3 : nullSubpacket3)),
     .terc4channel0(ch0PacketData),
     .terc4channel1(ch1PacketData),
     .terc4channel2(ch2PacketData)
@@ -230,7 +252,89 @@ wire [9:0] ch1GuardBand = 10'b0100110011;
 wire [9:0] ch2GuardBand = 10'b0100110011;
 
 always @ (posedge pixelClock) begin
-    if ((hSync ^ syncIsActiveLow) && !dataIslandActive) begin
+    if (hSync == syncIsActiveLow) begin
+        // HSync deasserted; start data island on next active edge of HSync
+        hSyncArmed <= 1'b1;
+    end
+
+    if (hSyncArmed && (hSync ^ syncIsActiveLow)) begin
+        // HSync asserted; start data island asap by resetting characterCount
+        characterCount <= 7'd0;
+        dataIslandActive <= 1'b0;
+        channel0 <= 10'd0;
+        channel1 <= 10'd0;
+        channel2 <= 10'd0;
+        hSyncArmed <= 1'b0;
+    end else if (characterCount < PREAMBLE_START) begin
+        // After HSync goes active, wait 16 cycles before starting the preamble
+        characterCount <= characterCount + 7'd1;
+        
+        // While we're waiting, read up to four samples from the FIFO into the latchedSamples array
+        if ((sampleFifoReadEnable == 1'b0) && (sampleFifoEmpty == 1'b0) && (sampleAvailable == 1'b0) && (latchedSampleCount < 3'd4)) begin
+            // Read a sample from the FIFO
+            sampleFifoReadEnable <= 1'b1;
+        end else if (sampleFifoReadEnable == 1'b1) begin
+            // Sample will be available on sampleFifoReadData next clock
+            sampleFifoReadEnable <= 1'b0;
+            sampleAvailable <= 1'b1;
+        end else if (sampleAvailable == 1'b1) begin
+            // Save the sample in latchedSamples
+            sampleAvailable <= 1'b0;
+            latchedSamples[latchedSampleCount[1:0]] <=
+                {channelStatusIndex == 8'd0, channelStatusRightWord[channelStatusIndex], channelStatusLeftWord[channelStatusIndex], sampleFifoReadData};
+            latchedSampleCount <= latchedSampleCount + 3'd1;
+            regenSampleCount <= regenSampleCount + 8'd1;
+            if (channelStatusIndex >= 8'd191) begin
+                channelStatusIndex <= 8'd0;
+            end else begin
+                channelStatusIndex <= channelStatusIndex + 8'd1;
+            end
+        end
+    // Sending a data island (including preamble and guard bands)
+    end else if (characterCount < LEADING_GUARD_BAND_START) begin
+        characterCount <= characterCount + 7'd1;
+        // Indicate to HdmiEncoder that it should start using my channel0..2 outputs
+        dataIslandActive <= 1'b1;
+        // 8 characters of preamble
+        channel0 <= ch0PreambleDataEncoded;
+        channel1 <= ch1PreambleDataEncoded;
+        channel2 <= ch2PreambleDataEncoded;
+    end else if (characterCount < SAMPLE_PACKET_START || 
+                 (characterCount >= TRAILING_GUARD_BAND_START && characterCount < ISLAND_FINISHED)) begin
+        characterCount <= characterCount + 7'd1;
+        // Data island leading or trailing guard band - 2 characters
+        channel0 <= ch0GuardBand;
+        channel1 <= ch1GuardBand;
+        channel2 <= ch2GuardBand;
+    end else if (characterCount < TRAILING_GUARD_BAND_START) begin
+        characterCount <= characterCount + 7'd1;
+        // Data island packet data from serializer
+        // 2 packets * 32 characters each = 64 characters of packet data
+        channel0 <= ch0PacketDataEncoded;
+        channel1 <= ch1PacketDataEncoded;
+        channel2 <= ch2PacketDataEncoded;
+    end else begin
+        // Indicate to HdmiEncoder that it should stop using my channel0..2 outputs
+        dataIslandActive <= 1'b0;
+        channel0 <= 10'd0;
+        channel1 <= 10'd0;
+        channel2 <= 10'd0;
+        
+        // We just finished sending an audio sample packet, so reset the latched sample counter
+        latchedSampleCount <= 3'd0;
+        // Zero out the latched samples (as a debugging aid for simulation)
+        latchedSamples[0] <= 35'd0;
+        latchedSamples[1] <= 35'd0;
+        latchedSamples[2] <= 35'd0;
+        latchedSamples[3] <= 35'd0;
+        
+        if (regenPacketDue) begin
+            // We just finished sending an audio clock regen packet, so reset the regen counter
+            regenSampleCount <= regenSampleCount - samplesPerRegenPacket;
+        end
+    end
+    
+    /*if ((hSync ^ syncIsActiveLow) && !dataIslandActive) begin
         // HSync is active; start data island period once HSync goes inactive
         hSyncLatched <= 1'b1;
         isFirstPacketClock <= 1'b0;
@@ -314,7 +418,7 @@ always @ (posedge pixelClock) begin
             end
         end
         characterCount <= characterCount + 7'd1;
-    end
+    end */
 
 end
 

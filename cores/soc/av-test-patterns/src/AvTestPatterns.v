@@ -316,7 +316,7 @@ HdmiEncoder hdmi
     .activeVideoGuardBand(activeVideoGuardBandDelayed),
     .activeVideoPreamble(activeVideoPreambleDelayed),
     .syncIsActiveLow(1'b0),
-    .useYCbCr(1'b0),
+    .useYCbCr(1'b1),
     .videoFormatCode(7'd4),
     .vendorName("Reclone"),
     .productDescription("Rise SBRC"),
@@ -327,9 +327,9 @@ HdmiEncoder hdmi
     .n(20'd6144),
     .cts(20'd74250),
     .samplesPerRegenPacket(8'd48),
-    .spdifCategoryCode(8'h00),  // General
+    .spdifCategoryCode(8'h40),  // Digital-digital converter
     .spdifSamplingFreq(4'd2),   // 48 kHz
-    .spdifWordLength(4'd2),     // 16-bit samples
+    .spdifWordLength(4'd0),     // not indicated
     .sampleFifoEmpty(sampleFifoEmpty),
     .sampleFifoReadData(sampleFifoReadData),
     .sampleFifoReadEnable(sampleFifoReadEnable),

@@ -84,6 +84,7 @@ TEST_F(DataIslandPacketSerializerTests, FixedValues)
     for (unsigned int i = 0; i < 32; ++i)
     {
         _uut.isFirstPacketClock = (i == 0) ? 1 : 0;
+        _uut.isFirstIslandPacket = 1;
         _uut.vsync = (i >= 16) ? 1 : 0;
         _uut.hsync = ((i % 8) >= 4) ? 1 : 0;
         _uut.clock = 0;
@@ -154,6 +155,7 @@ TEST_F(DataIslandPacketSerializerTests, RandomValues)
     for (unsigned int i = 0; i < 32; ++i)
     {
         _uut.isFirstPacketClock = (i == 0) ? 1 : 0;
+        _uut.isFirstIslandPacket = 1;
         _uut.vsync = 0;
         _uut.hsync = 1;
         _uut.clock = 0;
@@ -227,6 +229,7 @@ TEST_F(DataIslandPacketSerializerTests, AviInfoframe)
     for (unsigned int i = 0; i < 32; ++i)
     {
         _uut.isFirstPacketClock = (i == 0) ? 1 : 0;
+        _uut.isFirstIslandPacket = 1;
         _uut.vsync = 0;
         _uut.hsync = 1;
         _uut.clock = 0;

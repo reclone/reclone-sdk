@@ -1,4 +1,5 @@
 add_subdirectory(audio-clock-regen)
+add_subdirectory(audio-content-protection)
 add_subdirectory(audio-infoframe)
 add_subdirectory(audio-sample)
 add_subdirectory(avi-infoframe)

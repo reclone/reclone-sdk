@@ -57,17 +57,17 @@ module SpdifChannelStatus
     output wire [191:0] channelStatus
 );
 
-assign channelStatus[2:0] = 3'b100;     //c,b,a
+assign channelStatus[2:0] = 3'b000;     //c,b,a
 assign channelStatus[5:3] = 3'd0;       //d = 2 audio channels without pre-emphasis
 assign channelStatus[7:6] = 2'b00;      //mode
 assign channelStatus[15:8] = categoryCode;
-assign channelStatus[19:16] = 4'd0;     //sourceNum: do not take into account
+assign channelStatus[19:16] = 4'd0;     //sourceNum: hard coded to 0
 assign channelStatus[23:20] = channelNum;
 assign channelStatus[27:24] = samplingFreq;
 assign channelStatus[29:28] = 2'b00;    //clock accuracy = Level II
 assign channelStatus[31:30] = 2'b00;    //reserved
 assign channelStatus[35:32] = wordLength;
-assign channelStatus[39:36] = 4'd0;     //original sampling freq not indicated
+assign channelStatus[39:36] = ~samplingFreq; //original sampling freq = sampling frequency
 assign channelStatus[191:40] = 152'd0;  //reserved
 
 endmodule

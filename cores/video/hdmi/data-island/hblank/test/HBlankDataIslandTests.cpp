@@ -360,6 +360,16 @@ TEST_F(HBlankDataIslandTests, RegenPackets)
     
     for (unsigned int packetCount = 0; packetCount < 400; ++packetCount)
     {
+        // Start HSync interval
+        _uut.hSync = 1;
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 1;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
         // Pass in a sample from the FIFO
         _uut.sampleFifoEmpty = 0;
         _uut.pixelClock = 0;
@@ -392,27 +402,25 @@ TEST_F(HBlankDataIslandTests, RegenPackets)
         vcd_trace.dump(_tickCount++);
         
         // Should have just latched the sample
-        _uut.sampleFifoReadData = 0;
+        // Burn 13 more cycles
+        for (unsigned int count = 0; count < 13; ++count)
+        {
+            _uut.sampleFifoReadData = 0;
+            _uut.pixelClock = 0;
+            _uut.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _uut.pixelClock = 1;
+            _uut.eval();
+            vcd_trace.dump(_tickCount++);
+            EXPECT_EQ(0, _uut.sampleFifoReadEnable);
+        }
+        
         _uut.pixelClock = 0;
         _uut.eval();
         vcd_trace.dump(_tickCount++);
         
-        _uut.pixelClock = 1;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-        EXPECT_EQ(0, _uut.sampleFifoReadEnable);
-        
-        // Start HSync interval
-        _uut.hSync = 1;
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 1;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-        
-        // Should have started an audio sample data island
+        // Should have started a data island
         // Preamble
         for (unsigned int count = 0; count < 8; ++count)
         {
@@ -446,7 +454,7 @@ TEST_F(HBlankDataIslandTests, RegenPackets)
         }
         
         // Packet data
-        for (unsigned int count = 0; count < 32; ++count)
+        for (unsigned int count = 0; count < 64; ++count)
         {
             _uut.pixelClock = 1;
             _uut.eval();
@@ -500,6 +508,10 @@ TEST_F(HBlankDataIslandTests, RegenPackets)
             vcd_trace.dump(_tickCount++);
         }
         
+        _uut.pixelClock = 1;
+        _uut.eval();
+        EXPECT_EQ(0, _uut.dataIslandActive);
+        vcd_trace.dump(_tickCount++);
     }
 }
 

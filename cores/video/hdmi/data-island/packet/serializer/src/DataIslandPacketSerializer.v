@@ -41,6 +41,7 @@ module DataIslandPacketSerializer
 (
     input wire clock,
     input wire isFirstPacketClock,
+    input wire isFirstIslandPacket,
 
     input wire hsync,
     input wire vsync,
@@ -76,18 +77,18 @@ always @ (posedge clock) begin
     end
 end
 
-wire headerUseEcc = (count >= 6'd24);
-wire subpacketUseEcc = (count >= 6'd28);
+wire headerUseEcc = (count >= 6'd24) && !isFirstPacketClock;
+wire subpacketUseEcc = (count >= 6'd28) && !isFirstPacketClock;
 
 assign terc4channel0[0] = hsync;
 assign terc4channel0[1] = vsync;
-assign terc4channel0[3] = ~isFirstPacketClock;
+assign terc4channel0[3] = !(isFirstPacketClock && isFirstIslandPacket);
 
 wire headerEcc;
 BchEccSingleBitEncoder headerEccEncoder
 (
     .clock(clock),
-    .data(headerUseEcc ? 1'b0 : (isFirstPacketClock ? header[5'd0] : headerReg[count[4:0]])),
+    .data(isFirstPacketClock ? header[5'd0] : (headerUseEcc ? 1'b0 : headerReg[count[4:0]])),
     .isFirstDataClock(isFirstPacketClock),
     .syndrome(headerUseEcc),
     .ecc(headerEcc)
@@ -98,7 +99,7 @@ wire [1:0] subpacket0Ecc;
 BchEccDualBitEncoder subpacket0EccEncoder
 (
     .clock(clock),
-    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket0[1:0] : {subpacket0Reg[{count[4:0], 1'b1}], subpacket0Reg[{count[4:0], 1'b0}]})),
+    .data(isFirstPacketClock ? subpacket0[1:0] : (subpacketUseEcc ? 2'b00 : {subpacket0Reg[{count[4:0], 1'b1}], subpacket0Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .syndrome(subpacketUseEcc),
     .ecc(subpacket0Ecc)
@@ -110,7 +111,7 @@ wire [1:0] subpacket1Ecc;
 BchEccDualBitEncoder subpacket1EccEncoder
 (
     .clock(clock),
-    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket1[1:0] : {subpacket1Reg[{count[4:0], 1'b1}], subpacket1Reg[{count[4:0], 1'b0}]})),
+    .data(isFirstPacketClock ? subpacket1[1:0] : (subpacketUseEcc ? 2'b00 : {subpacket1Reg[{count[4:0], 1'b1}], subpacket1Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .syndrome(subpacketUseEcc),
     .ecc(subpacket1Ecc)
@@ -122,7 +123,7 @@ wire [1:0] subpacket2Ecc;
 BchEccDualBitEncoder subpacket2EccEncoder
 (
     .clock(clock),
-    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket2[1:0] : {subpacket2Reg[{count[4:0], 1'b1}], subpacket2Reg[{count[4:0], 1'b0}]})),
+    .data(isFirstPacketClock ? subpacket2[1:0] : (subpacketUseEcc ? 2'b00 : {subpacket2Reg[{count[4:0], 1'b1}], subpacket2Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .syndrome(subpacketUseEcc),
     .ecc(subpacket2Ecc)
@@ -134,7 +135,7 @@ wire [1:0] subpacket3Ecc;
 BchEccDualBitEncoder subpacket3EccEncoder
 (
     .clock(clock),
-    .data(subpacketUseEcc ? 2'b00 : (isFirstPacketClock ? subpacket3[1:0] : {subpacket3Reg[{count[4:0], 1'b1}], subpacket3Reg[{count[4:0], 1'b0}]})),
+    .data(isFirstPacketClock ? subpacket3[1:0] : (subpacketUseEcc ? 2'b00 : {subpacket3Reg[{count[4:0], 1'b1}], subpacket3Reg[{count[4:0], 1'b0}]})),
     .isFirstDataClock(isFirstPacketClock),
     .syndrome(subpacketUseEcc),
     .ecc(subpacket3Ecc)
