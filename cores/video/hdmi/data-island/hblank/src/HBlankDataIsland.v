@@ -18,16 +18,18 @@
 // Considering the horizontal line frequency ranges from 33 to 45 kHz, at least one sample is
 // queued per horizontal line.
 //
-// This module watches the horizontal sync signal to determine when to send a data island during
-// horizontal blanking.  To keep the design simple, only one packet is sent per data island.
-// Because sending an Audio Clock Regeneration packet delays transmission of an Audio Sample packet,
-// two to four audio samples may be queued by the time the next HSync occurs.  This is fine
-// because the Audio Sample packet can hold up to four stereo sample subpackets.
+// This module "gets" audio samples by watching one side of a FIFO buffer.  We recommend that a
+// 4-sample or larger asynchronous (multi-rate) FIFO is used, so that audio samples can get queued
+// up from the audio clock domain, and then the samples get processed and sent in the HDMI pixel
+// clock domain later, during horizontal blanking.
 //
-// This module "gets" samples by watching one side of a FIFO buffer.  We recommend that a 4-sample
-// or larger asynchronous (multi-rate) FIFO is used, so that audio samples can get queued up
-// from the audio clock domain, and then the samples get processed and sent in the HDMI pixel clock
-// domain later, during horizontal blanking.
+// This module watches the horizontal sync signal to determine when to send a data island during
+// horizontal blanking.  At the beginning of HSync and prior to sending the data island, up to
+// four audio sample packets are obtained from the sample FIFO and saved into packet registers
+// along with bits from the channel status words.  Then, exactly two packets are sent.  The first
+// packet is an Audio Sample packet that sends the saved samples and channel status data.  The
+// second packet is either the Audio Clock Regeneration (ACR) packet, if we are due to send it, or
+// a Null packet if ACR is not due to be sent.  In this way, audio samples always take priority.
 //
 // The dataIslandActive signal is asserted when a data island is being transmitted, to tell
 // the encoder that it should send a data island period instead of a control period.
@@ -333,93 +335,6 @@ always @ (posedge pixelClock) begin
             regenSampleCount <= regenSampleCount - samplesPerRegenPacket;
         end
     end
-    
-    /*if ((hSync ^ syncIsActiveLow) && !dataIslandActive) begin
-        // HSync is active; start data island period once HSync goes inactive
-        hSyncLatched <= 1'b1;
-        isFirstPacketClock <= 1'b0;
-        characterCount <= 7'd0;
-        dataIslandActive <= 1'b0;
-        channel0 <= 10'd0;
-        channel1 <= 10'd0;
-        channel2 <= 10'd0;
-        
-        // When in hSync, read up to four samples from the FIFO into the latchedSamples array
-        if ((sampleFifoReadEnable == 1'b0) && (sampleFifoEmpty == 1'b0) && (sampleAvailable == 1'b0) && (latchedSampleCount < 3'd4)) begin
-            // Read a sample from the FIFO
-            sampleFifoReadEnable <= 1'b1;
-        end else if (sampleFifoReadEnable == 1'b1) begin
-            // Sample will be available on sampleFifoReadData next clock
-            sampleFifoReadEnable <= 1'b0;
-            sampleAvailable <= 1'b1;
-        end else if (sampleAvailable == 1'b1) begin
-            // Save the sample in latchedSamples
-            sampleAvailable <= 1'b0;
-            latchedSamples[latchedSampleCount[1:0]] <=
-                {channelStatusIndex == 8'd0, channelStatusRightWord[channelStatusIndex], channelStatusLeftWord[channelStatusIndex], sampleFifoReadData};
-            latchedSampleCount <= latchedSampleCount + 3'd1;
-            regenSampleCount <= regenSampleCount + 8'd1;
-            if (channelStatusIndex >= 8'd191) begin
-                channelStatusIndex <= 8'd0;
-            end else begin
-                channelStatusIndex <= channelStatusIndex + 8'd1;
-            end
-        end
-        // Reset the character count
-        characterCount <= 7'd0;
-    end else if (hSyncLatched && characterCount < 7'd2) begin
-            // Wait 2 clocks after hsync is released to start the preamble
-            hSyncLatched <= 1'b1;
-            isFirstPacketClock <= 1'b0;
-            characterCount <= characterCount + 7'd1;
-            dataIslandActive <= 1'b0;
-            channel0 <= 10'd0;
-            channel1 <= 10'd0;
-            channel2 <= 10'd0;
-    end else if (hSyncLatched || dataIslandActive) begin
-        hSyncLatched <= 1'b0;
-        dataIslandActive <= 1'b1;
-        if (characterCount < 7'd10) begin
-            // 8 characters of preamble
-            channel0 <= ch0PreambleDataEncoded;
-            channel1 <= ch1PreambleDataEncoded;
-            channel2 <= ch2PreambleDataEncoded;
-        end else if (characterCount < 7'd12 || (characterCount >= 7'd44 && characterCount < 7'd46)) begin
-            // Data island leading or trailing guard band - 2 characters
-            isFirstPacketClock <= (characterCount == 7'd11) ? 1'b1 : 1'b0;
-            channel0 <= ch0GuardBand;
-            channel1 <= ch1GuardBand;
-            channel2 <= ch2GuardBand;
-        end else if (characterCount < 7'd44) begin
-            // Data island packet - 32 characters
-            isFirstPacketClock <= 1'b0;
-            channel0 <= ch0PacketDataEncoded;
-            channel1 <= ch1PacketDataEncoded;
-            channel2 <= ch2PacketDataEncoded;
-        end else begin
-            // Finished sending the data island
-            dataIslandActive <= 1'b0;
-            channel0 <= 10'd0;
-            channel1 <= 10'd0;
-            channel2 <= 10'd0;
-            
-            if (regenPacketDue) begin
-                // We just finished sending an audio clock regen packet, so reset the regen counter
-                regenSampleCount <= 8'd0;
-            end else begin
-                // We just finished sending an audio sample packet, so reset the latched sample counter
-                latchedSampleCount <= 3'd0;
-                
-                // Zero out the latched samples
-                latchedSamples[0] <= 35'd0;
-                latchedSamples[1] <= 35'd0;
-                latchedSamples[2] <= 35'd0;
-                latchedSamples[3] <= 35'd0;
-            end
-        end
-        characterCount <= characterCount + 7'd1;
-    end */
-
 end
 
 endmodule

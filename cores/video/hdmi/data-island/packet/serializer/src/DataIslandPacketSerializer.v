@@ -6,11 +6,11 @@
 // three TERC4 channels used during a data island period.  This includes calculating the 
 // BCH ECC parity byte for the header and each subpacket.
 //
-// A key assumption and simplification made by this module is that each data island contains
-// exactly one packet.  This allows "isFirstPacketClock" to always specify the high bit of
-// terc4channel0.  If this assumption were not in place, the module would need an additional
-// signal to tell it whether it is the first packet in the island, while also requiring more
-// complex upstream logic to handle longer data islands.
+// One or multiple packets per data island can be sent using this serializer.  The signal
+// "isFirstPacketClock" indicates that this is the first clock period of the packet, and
+// "isFirstIslandPacket" indicates that this is the first packet in the data island.  These
+// signals are used to populate the high bit of terc4channel0, and to reset the ECC calculations
+// as needed.
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>

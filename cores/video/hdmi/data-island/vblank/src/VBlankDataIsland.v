@@ -6,18 +6,15 @@
 // the active video data and audio sample data, accordingly.
 //
 // This module watches the vertical sync and horizontal sync signals to determine when to send
-// a data island during vertical blanking.  If VSync is active, the module waits for an inactive
-// edge of HSync, then starts sending a data island.  On even lines, it will send an
-// AVI Infoframe data island, whereas on odd lines it will send an Audio Infoframe data island.
+// a data island during vertical blanking.  Once VSync is active, the module waits for an inactive
+// edge of HSync, then starts sending a data island.  After the active edge of VSync, one data
+// island packet will get sent per line until all required packets are sent.
 //
 // The dataIslandActive signal is asserted when a data island is being transmitted, to tell
 // the encoder that it should send a data island period instead of a control period.
 //
 // The VBlankDataIsland must wait until HSync is inactive, to avoid potential timing conflicts
 // with HBlankDataIsland.
-//
-// Because all supported timings include at least three VSync lines, we are guaranteed that each
-// type of Infoframe will get sent at least once for each video field.
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
@@ -63,13 +60,19 @@ module VBlankDataIsland
     output reg [9:0] channel2 = 10'd0
 );
 
-reg hSyncLatched = 1'b0;
+localparam NUM_VBLANK_ISLANDS = 3'd5;
+localparam [7:0] PREAMBLE_START = 8'd100;
+localparam [7:0] LEADING_GUARD_BAND_START = PREAMBLE_START + 8'd8;
+localparam [7:0] PACKET_START = LEADING_GUARD_BAND_START + 8'd2;
+localparam [7:0] TRAILING_GUARD_BAND_START = PACKET_START + 8'd32;
+localparam [7:0] ISLAND_FINISHED = TRAILING_GUARD_BAND_START + 8'd2;
 
-reg isFirstPacketClock = 1'b0;
+reg hSyncArmed = 1'b0;
+reg vSyncLatched = 1'b0;
 
 reg [2:0] packetCount = 3'd0;
 
-reg [6:0] characterCount = 7'd0;
+reg [7:0] characterCount = ISLAND_FINISHED;
 
 wire [9:0] ch0GuardBand;
 Terc4Encoder4to10 ch0GuardBandEncoder
@@ -189,7 +192,7 @@ reg [55:0] serializeSubpacket3;
 DataIslandPacketSerializer serializer
 (
     .clock(pixelClock),
-    .isFirstPacketClock(isFirstPacketClock),
+    .isFirstPacketClock(characterCount == PACKET_START),
     .isFirstIslandPacket(1'b1),
     .hsync(hSync),
     .vsync(vSync),
@@ -297,60 +300,59 @@ always @ (*) begin
 end
 
 always @ (posedge pixelClock) begin
-    if (vSync ^ syncIsActiveLow) begin
-        // VSync is active
-        if ((hSync ^ syncIsActiveLow) && (packetCount < 3'd5)) begin
-            // HSync is active; start data island period once HSync goes inactive
-            hSyncLatched <= 1'b1;
-            isFirstPacketClock <= 1'b0;
-            characterCount <= 7'd0;
+    if ((vSync ^ syncIsActiveLow) || vSyncLatched) begin
+        // VSync is active, or was active
+        
+        if (hSync == syncIsActiveLow) begin
+            // HSync deasserted; start data island on next active edge of HSync
+            hSyncArmed <= 1'b1;
+        end
+        
+        if (vSyncLatched && (packetCount >= NUM_VBLANK_ISLANDS)) begin
+            // Done sending all of the data islands
+            vSyncLatched <= 1'b0;
+        end else if (hSyncArmed && (hSync ^ syncIsActiveLow) && (packetCount < NUM_VBLANK_ISLANDS)) begin
+            // HSync asserted; start data island asap by resetting characterCount
+            hSyncArmed <= 1'b0;
+            characterCount <= 8'd0;
             dataIslandActive <= 1'b0;
             channel0 <= 10'd0;
             channel1 <= 10'd0;
             channel2 <= 10'd0;
-        end else if (hSyncLatched && characterCount < 7'd82) begin
-            // Wait 42 clocks after hsync is released to start the preamble
-            hSyncLatched <= 1'b1;
-            isFirstPacketClock <= 1'b0;
-            characterCount <= characterCount + 7'd1;
-            dataIslandActive <= 1'b0;
-            channel0 <= 10'd0;
-            channel1 <= 10'd0;
-            channel2 <= 10'd0;
-        end else if ((hSyncLatched || dataIslandActive) && characterCount < 7'd90) begin
-            // 8 characters of preamble
-            hSyncLatched <= 1'b0;
-            isFirstPacketClock <= 1'b0;
-            characterCount <= characterCount + 7'd1;
+            if (vSync ^ syncIsActiveLow) begin
+                // VSync is active
+                vSyncLatched <= 1'b1;
+            end
+        end else if (characterCount < PREAMBLE_START) begin
+            // After HSync goes active, wait PREAMBLE_START cycles before starting the preamble
+            characterCount <= characterCount + 8'd1;
+
+        // Sending a data island (including preamble and guard bands)
+        end else if (characterCount < LEADING_GUARD_BAND_START) begin
+            characterCount <= characterCount + 8'd1;
+            // Indicate to HdmiEncoder that it should start using my channel0..2 outputs
             dataIslandActive <= 1'b1;
+            // 8 characters of preamble
             channel0 <= ch0PreambleDataEncoded;
             channel1 <= ch1PreambleDataEncoded;
             channel2 <= ch2PreambleDataEncoded;
-        end else if (dataIslandActive &&
-                     ((characterCount < 7'd92) || ((characterCount >= 7'd124) && (characterCount < 7'd126)))) begin
+        end else if (characterCount < PACKET_START ||
+                     (characterCount >= TRAILING_GUARD_BAND_START && characterCount < ISLAND_FINISHED)) begin
+            characterCount <= characterCount + 8'd1;
             // Data island leading or trailing guard band - 2 characters
-            hSyncLatched <= 1'b0;
-            isFirstPacketClock <= (characterCount == 7'd91) ? 1'b1 : 1'b0;
-            dataIslandActive <= 1'b1;
-            characterCount <= characterCount + 7'd1;
             channel0 <= ch0GuardBand;
             channel1 <= ch1GuardBand;
             channel2 <= ch2GuardBand;
-        end else if (dataIslandActive && (characterCount >= 7'd92) && (characterCount < 7'd124)) begin
-            // Data island packet - 32 characters
-            hSyncLatched <= 1'b0;
-            isFirstPacketClock <= 1'b0;
-            packetCount <= packetCount + ((characterCount == 7'd123) ? 3'd1 : 3'd0);
-            dataIslandActive <= 1'b1;
-            characterCount <= characterCount + 7'd1;
+            packetCount <= packetCount + ((characterCount == TRAILING_GUARD_BAND_START) ? 3'd1 : 3'd0);
+        end else if (characterCount < TRAILING_GUARD_BAND_START) begin
+            characterCount <= characterCount + 8'd1;
+            // Data island packet data from serializer
+            // 32 characters of packet data
             channel0 <= ch0PacketDataEncoded;
             channel1 <= ch1PacketDataEncoded;
             channel2 <= ch2PacketDataEncoded;
         end else begin
-            // Finished sending the data island
-            hSyncLatched <= 1'b0;
-            isFirstPacketClock <= 1'b0;
-            characterCount <= 7'd0;
+            // Indicate to HdmiEncoder that it should stop using my channel0..2 outputs
             dataIslandActive <= 1'b0;
             channel0 <= 10'd0;
             channel1 <= 10'd0;
@@ -358,9 +360,9 @@ always @ (posedge pixelClock) begin
         end
     end else begin
         // Not in VSync
-        hSyncLatched <= 1'b0;
-        isFirstPacketClock <= 1'b0;
-        characterCount <= 7'd0;
+        hSyncArmed <= 1'b0;
+        vSyncLatched <= 1'b0;
+        characterCount <= ISLAND_FINISHED;
         packetCount <= 3'd0;
         dataIslandActive <= 1'b0;
         channel0 <= 10'd0;

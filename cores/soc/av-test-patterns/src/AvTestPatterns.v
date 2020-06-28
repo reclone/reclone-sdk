@@ -319,7 +319,7 @@ HdmiEncoder hdmi
     .useYCbCr(1'b0),
     .videoFormatCode(7'd4),
     .vendorName("Reclone"),
-    .productDescription("Rise SBRC"),
+    .productDescription("SBRC"),
     .sourceDeviceInformation(8'h08),
     .blueOrCb(dviB),
     .greenOrY(dviG),
