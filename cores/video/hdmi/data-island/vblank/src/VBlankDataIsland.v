@@ -1,14 +1,28 @@
 //
-// VBlankDataIsland - Output AVI Infoframe and Audio Infoframe packets during vertical blanking
+// VBlankDataIsland - Output Infoframes and other infrequent packets during vertical blanking
 //
-// The HDMI standard requires a source to transmit the AVI Infoframe and Audio Infoframe packets
-// at least once per two video fields.  These packets tell the HDMI sink device how to handle
-// the active video data and audio sample data, accordingly.
+// These HDMI data island packets are sent once per video field, during vertical blanking:
+//
+//  General Control             AV Mute and deep color control
+//                              Must be sent near start of vertical blanking
+//
+//  Audio Infoframe             Describes format of the audio stream being sent in sample packets
+//                              Must be sent at least once per two video fields
+//
+//  AVI Infoframe               Specifies video format and color space
+//                              Must be sent at least once per two video fields
+//
+//  SPD Infoframe               Describes vendor, model, and category of the source device
+//                              Sent at least once per second
+//
+//  Audio Content Protection    Specifies what type of audio copy protection is employed (if any)
+//                              Must be sent at least every 300ms if audio protection is being used
 //
 // This module watches the vertical sync and horizontal sync signals to determine when to send
-// a data island during vertical blanking.  Once VSync is active, the module waits for an inactive
-// edge of HSync, then starts sending a data island.  After the active edge of VSync, one data
-// island packet will get sent per line until all required packets are sent.
+// a data island during vertical blanking.  Once VSync is active, the module waits for an active
+// edge of HSync, delays until HBlankDataIsland is done sending, then starts sending a data island.
+// After the active edge of VSync, one data island packet will get sent per line until all required
+// packets are sent.
 //
 // The dataIslandActive signal is asserted when a data island is being transmitted, to tell
 // the encoder that it should send a data island period instead of a control period.
