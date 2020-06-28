@@ -329,7 +329,7 @@ HdmiEncoder hdmi
     .samplesPerRegenPacket(8'd48),
     .spdifCategoryCode(8'h40),  // Digital-digital converter
     .spdifSamplingFreq(4'd2),   // 48 kHz
-    .spdifWordLength(4'd0),     // not indicated
+    .spdifWordLength(4'd2),     // 16 bits
     .sampleFifoEmpty(sampleFifoEmpty),
     .sampleFifoReadData(sampleFifoReadData),
     .sampleFifoReadEnable(sampleFifoReadEnable),

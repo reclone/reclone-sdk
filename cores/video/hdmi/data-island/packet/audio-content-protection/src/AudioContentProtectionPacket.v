@@ -5,9 +5,9 @@
 // audio data.
 //
 // Normally, this packet is not required for unprotected audio.  If a sink receives no ACP packet
-// for 600ms, the sink should revert to AcpType=0 behavior (generic audio).  However, some
-// stubborn televisions (e.g. Samsung UN22D5003) refuse to play any audio until it receives
-// this packet.
+// for 600ms, the sink should revert to AcpType=0 behavior (generic audio).  However, this packet
+// is included out of paranoia that some stubborn sink devices may refuse to play any audio until
+// it receives this packet for the first time.
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
