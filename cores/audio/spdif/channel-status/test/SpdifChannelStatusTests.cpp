@@ -42,11 +42,12 @@ class SpdifChannelStatusTests : public ::testing::Test
 
 TEST_F(SpdifChannelStatusTests, TypicalValues)
 {
+    _uut.channelNum = 1; // Left channel
     _uut.categoryCode = 0x60; // Analog-to-digital converter without copyright info
     _uut.samplingFreq = 2; // 48 kHz
     _uut.wordLength = 2; // 16 bits
     _uut.eval();
-    EXPECT_EQ(0x02006004U, _uut.channelStatus[0]);
+    EXPECT_EQ(0x02106004U, _uut.channelStatus[0]);
     EXPECT_EQ(0x00000002U, _uut.channelStatus[1]);
     EXPECT_EQ(0x00000000U, _uut.channelStatus[2]);
     EXPECT_EQ(0x00000000U, _uut.channelStatus[3]);
@@ -60,11 +61,12 @@ TEST_F(SpdifChannelStatusTests, RandomValues)
     srand(time(nullptr));
     for (unsigned int i = 0; i < 1000000; ++i)
     {
+        _uut.channelNum = rand() % 0x10;
         _uut.categoryCode = rand() % 0x100;
         _uut.samplingFreq = rand() % 0x10;
         _uut.wordLength = rand() % 0x10;
         _uut.eval();
-        EXPECT_EQ(0x00000004U | _uut.categoryCode << 8 | _uut.samplingFreq << 24, _uut.channelStatus[0]);
+        EXPECT_EQ(0x00000004U | _uut.categoryCode << 8 | _uut.samplingFreq << 24 | _uut.channelNum << 20, _uut.channelStatus[0]);
         EXPECT_EQ(0x00000000U | _uut.wordLength, _uut.channelStatus[1]);
         EXPECT_EQ(0x00000000U, _uut.channelStatus[2]);
         EXPECT_EQ(0x00000000U, _uut.channelStatus[3]);
