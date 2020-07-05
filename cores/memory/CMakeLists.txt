@@ -1,1 +1,1 @@
-add_subdirectory (async-fifo)
+add_subdirectory (fifo)
