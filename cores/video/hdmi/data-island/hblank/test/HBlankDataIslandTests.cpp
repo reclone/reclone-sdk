@@ -99,6 +99,16 @@ TEST_F(HBlankDataIslandTests, OneSample)
     _uut.eval();
     vcd_trace.dump(_tickCount++);
     
+    // Start HSync interval
+    _uut.hSync = 1;
+    _uut.pixelClock = 0;
+    _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    
+    _uut.pixelClock = 1;
+    _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    
     // Pass in a sample from the FIFO
     _uut.sampleFifoEmpty = 0;
     _uut.pixelClock = 0;
@@ -140,14 +150,23 @@ TEST_F(HBlankDataIslandTests, OneSample)
     _uut.eval();
     vcd_trace.dump(_tickCount++);
     EXPECT_EQ(0, _uut.sampleFifoReadEnable);
+
+    // 12 cycle delay before starting data island
+    // This is when more audio samples can get collected from the fifo
+    for (unsigned int count = 0; count < 12; ++count)
+    {
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 1;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
+        EXPECT_EQ(0, _uut.dataIslandActive) << count;
+    }
     
-    // Start HSync interval
-    _uut.hSync = 1;
     _uut.pixelClock = 0;
-    _uut.eval();
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 1;
     _uut.eval();
     vcd_trace.dump(_tickCount++);
     
@@ -184,8 +203,8 @@ TEST_F(HBlankDataIslandTests, OneSample)
         vcd_trace.dump(_tickCount++);
     }
     
-    // Packet data
-    for (unsigned int count = 0; count < 32; ++count)
+    // Packet data (2 packets * 32 clocks per packet)
+    for (unsigned int count = 0; count < 64; ++count)
     {
         _uut.pixelClock = 1;
         _uut.eval();
@@ -260,13 +279,32 @@ TEST_F(HBlankDataIslandTests, NoSamples)
     _uut.eval();
     vcd_trace.dump(_tickCount++);
     
+    // 16 cycle delay before starting data island
+    // This is when audio samples normally get collected from the fifo
+    for (unsigned int count = 0; count < 16; ++count)
+    {
+        _uut.pixelClock = 0;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
+        _uut.pixelClock = 1;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+        
+        EXPECT_EQ(0, _uut.dataIslandActive) << count;
+    }
+    
+    _uut.pixelClock = 0;
+    _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    
     // Should have started an audio sample data island
     // Preamble
     for (unsigned int count = 0; count < 8; ++count)
     {
         _uut.pixelClock = 1;
         _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
+        EXPECT_EQ(1, _uut.dataIslandActive) << count;
         EXPECT_EQ(0x0AB, _uut.channel0);
         EXPECT_EQ(0x0AB, _uut.channel1);
         EXPECT_EQ(0x0AB, _uut.channel2);
@@ -293,8 +331,8 @@ TEST_F(HBlankDataIslandTests, NoSamples)
         vcd_trace.dump(_tickCount++);
     }
     
-    // Packet data
-    for (unsigned int count = 0; count < 32; ++count)
+    // Packet data (2 packets * 32 clocks per packet)
+    for (unsigned int count = 0; count < 64; ++count)
     {
         _uut.pixelClock = 1;
         _uut.eval();
@@ -514,168 +552,5 @@ TEST_F(HBlankDataIslandTests, RegenPackets)
         vcd_trace.dump(_tickCount++);
     }
 }
-
-/* TEST_F(HBlankDataIslandTests, NoVSync)
-{
-    _uut.pixelClock = 0;
-    _uut.hSync = 0;
-    _uut.vSync = 0;
-    _uut.syncIsActiveLow = 0;
-    _uut.videoFormatCode = 4; //720p
-    _uut.rgbOrYCbCrCode = 0;
-    _uut.yccQuantizationRange = 0;
-    _uut.eval();
-    
-    for (unsigned int i = 0; i < 100; ++i)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-    }
-    
-    _uut.hSync = 1;
-    
-    for (unsigned int i = 0; i < 100; ++i)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-    }
-    
-    _uut.hSync = 0;
-    
-    for (unsigned int i = 0; i < 100; ++i)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-    }
-}
-
-TEST_F(HBlankDataIslandTests, Infoframe)
-{
-    VerilatedVcdC vcd_trace;
-    _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("DataIslandInfoframes.vcd");
-    
-    _uut.pixelClock = 0;
-    _uut.hSync = 1;
-    _uut.vSync = 1;
-    _uut.syncIsActiveLow = 0;
-    _uut.videoFormatCode = 4; //720p
-    _uut.rgbOrYCbCrCode = 0;
-    _uut.yccQuantizationRange = 0;
-    _uut.eval();
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 1;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 0;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.hSync = 0;
-    _uut.eval();
-    
-    // Margin of safety from the HBlank data island
-    for (unsigned int count = 0; count < 42; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(0, _uut.dataIslandActive);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-    
-    // Preamble
-    for (unsigned int count = 0; count < 8; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        EXPECT_EQ(0x154, _uut.channel0);
-        EXPECT_EQ(0x0AB, _uut.channel1);
-        EXPECT_EQ(0x0AB, _uut.channel2);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-    
-    // Leading guard band
-    for (unsigned int count = 0; count < 2; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        EXPECT_EQ(0x163, _uut.channel0);
-        EXPECT_EQ(0x133, _uut.channel1);
-        EXPECT_EQ(0x133, _uut.channel2);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-
-    // Packet data
-    for (unsigned int count = 0; count < 32; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-
-    // Trailing guard band
-    for (unsigned int count = 0; count < 2; ++count)
-    {
-        _uut.pixelClock = 1;
-        _uut.eval();
-        EXPECT_EQ(1, _uut.dataIslandActive);
-        EXPECT_EQ(0x163, _uut.channel0);
-        EXPECT_EQ(0x133, _uut.channel1);
-        EXPECT_EQ(0x133, _uut.channel2);
-        vcd_trace.dump(_tickCount++);
-        
-        _uut.pixelClock = 0;
-        _uut.eval();
-        vcd_trace.dump(_tickCount++);
-    }
-    
-    _uut.pixelClock = 1;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-    
-    _uut.pixelClock = 0;
-    _uut.eval();
-    EXPECT_EQ(0, _uut.dataIslandActive);
-    vcd_trace.dump(_tickCount++);
-} */
 
 
