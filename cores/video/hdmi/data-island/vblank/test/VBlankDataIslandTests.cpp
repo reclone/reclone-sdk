@@ -101,6 +101,25 @@ TEST_F(VBlankDataIslandTests, Infoframe)
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("DataIslandInfoframes.vcd");
     
+    _uut.vSync = 0;
+    _uut.pixelClock = 0;
+    _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    _uut.pixelClock = 1;
+    _uut.eval();
+    EXPECT_EQ(0, _uut.dataIslandActive);
+    vcd_trace.dump(_tickCount++);
+    
+    _uut.vSync = 1;
+    _uut.hSync = 0;
+    _uut.pixelClock = 0;
+    _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    _uut.pixelClock = 1;
+    _uut.eval();
+    EXPECT_EQ(0, _uut.dataIslandActive);
+    vcd_trace.dump(_tickCount++);
+    
     _uut.pixelClock = 0;
     _uut.hSync = 1;
     _uut.vSync = 1;
@@ -125,7 +144,7 @@ TEST_F(VBlankDataIslandTests, Infoframe)
     _uut.eval();
     
     // Margin of safety from the HBlank data island
-    for (unsigned int count = 0; count < 42; ++count)
+    for (unsigned int count = 0; count < 100; ++count)
     {
         _uut.pixelClock = 1;
         _uut.eval();
