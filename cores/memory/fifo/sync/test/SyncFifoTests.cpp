@@ -1,5 +1,5 @@
 //
-// AsyncFifoTests - Unit tests for verilated AsyncFifo module
+// SyncFifoTests - Unit tests for verilated SyncFifo module
 //
 //
 // Copyright 2019 Reclone Labs <reclonelabs.com>
@@ -25,27 +25,26 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
-#include "VAsyncFifo.h"
+#include "VSyncFifo.h"
 
-class AsyncFifoTests : public ::testing::Test
+class SyncFifoTests : public ::testing::Test
 {
     public:
-        AsyncFifoTests() { }
-        virtual ~AsyncFifoTests()
+        SyncFifoTests() { }
+        virtual ~SyncFifoTests()
         {
             _uut.final();
         }
         
     protected:
-        VAsyncFifo _uut;
+        VSyncFifo _uut;
 };
 
-TEST_F(AsyncFifoTests, InitialDefaults)
+TEST_F(SyncFifoTests, InitialDefaults)
 {
     _uut.asyncReset = 0;
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.readEnable = 0;
-    _uut.writeClock = 0;
     _uut.writeEnable = 0;
     _uut.eval();
     
@@ -53,48 +52,39 @@ TEST_F(AsyncFifoTests, InitialDefaults)
     ASSERT_EQ(0U, _uut.full);
 }
 
-TEST_F(AsyncFifoTests, OneWriteOneRead)
+TEST_F(SyncFifoTests, OneWriteOneRead)
 {
     _uut.asyncReset = 0;
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.readEnable = 0;
-    _uut.writeClock = 0;
     _uut.writeEnable = 1;
     _uut.writeData = 0xA9;
     _uut.eval();
     ASSERT_EQ(1U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
     
-    _uut.writeClock = 1;
+    _uut.clock = 1;
     _uut.eval();
     _uut.writeEnable = 0;
-    _uut.writeClock = 0;
-    _uut.readClock = 1;
-    _uut.eval();
-    _uut.readClock = 0;
-    _uut.eval();
-    _uut.readClock = 1;
-    _uut.eval();
     ASSERT_EQ(0U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
     
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.readEnable = 1;
     _uut.eval();
-    _uut.readClock = 1;
+    _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xA9, _uut.readData);
     ASSERT_EQ(1U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
 }
 
-TEST_F(AsyncFifoTests, CircularBuffer)
+TEST_F(SyncFifoTests, CircularBuffer)
 {
     _uut.asyncReset = 0;
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.readEnable = 0;
     _uut.writeEnable = 0;
-    _uut.writeClock = 0;
     _uut.eval();
     ASSERT_EQ(1U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
@@ -102,78 +92,65 @@ TEST_F(AsyncFifoTests, CircularBuffer)
     for (unsigned int i = 0; i < 1000; ++i)
     {
         _uut.writeEnable = 1;
-        _uut.eval();
         _uut.writeData = (i ^ 0xAA) % 0x100;
-        _uut.writeClock = 1;
+        _uut.eval();
+        _uut.clock = 1;
         _uut.eval();
         _uut.writeEnable = 0;
-        _uut.writeClock = 0;
-        _uut.readClock = 1;
-        _uut.eval();
-        _uut.readClock = 0;
-        _uut.eval();
-        _uut.readClock = 1;
+        _uut.clock = 0;
         _uut.eval();
         ASSERT_EQ(0U, _uut.empty);
         ASSERT_EQ(0U, _uut.full);
 
-        _uut.readClock = 0;
         _uut.readEnable = 1;
         _uut.eval();
-        _uut.readClock = 1;
+        _uut.clock = 1;
         _uut.eval();
         ASSERT_EQ((i ^ 0xAA) % 0x100, _uut.readData);
         ASSERT_EQ(1U, _uut.empty);
         ASSERT_EQ(0U, _uut.full);
         _uut.readEnable = 0;
-        _uut.readClock = 0;
+        _uut.clock = 0;
         _uut.eval();
     }
 
 }
 
-TEST_F(AsyncFifoTests, TwoWritesTwoReads)
+TEST_F(SyncFifoTests, TwoWritesTwoReads)
 {
     _uut.asyncReset = 0;
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.readEnable = 0;
-    _uut.writeClock = 0;
     _uut.writeEnable = 1;
     _uut.writeData = 0xA9;
     _uut.eval();
     ASSERT_EQ(1U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
     
-    _uut.writeClock = 1;
+    _uut.clock = 1;
     _uut.eval();
-    _uut.writeClock = 0;
+    _uut.clock = 0;
     _uut.writeData = 0x56;
     _uut.eval();
-    _uut.writeClock = 1;
+    _uut.clock = 1;
     _uut.eval();
     _uut.writeEnable = 0;
     
-    _uut.readClock = 1;
-    _uut.eval();
-    _uut.readClock = 0;
-    _uut.eval();
-    _uut.readClock = 1;
-    _uut.eval();
     ASSERT_EQ(0U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
     
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.readEnable = 1;
     _uut.eval();
-    _uut.readClock = 1;
+    _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0xA9, _uut.readData);
     ASSERT_EQ(0U, _uut.empty);
     ASSERT_EQ(0U, _uut.full);
     
-    _uut.readClock = 0;
+    _uut.clock = 0;
     _uut.eval();
-    _uut.readClock = 1;
+    _uut.clock = 1;
     _uut.eval();
     ASSERT_EQ(0x56, _uut.readData);
     ASSERT_EQ(1U, _uut.empty);
@@ -181,12 +158,12 @@ TEST_F(AsyncFifoTests, TwoWritesTwoReads)
 }
 
 /*
-TEST_F(AsyncFifoTests, AttemptReadWhenEmpty)
+TEST_F(SyncFifoTests, AttemptReadWhenEmpty)
 {
     
 }
 
-TEST_F(AsyncFifoTests, AttemptWriteWhenFull)
+TEST_F(SyncFifoTests, AttemptWriteWhenFull)
 {
     
 }
