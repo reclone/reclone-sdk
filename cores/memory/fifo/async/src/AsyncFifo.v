@@ -75,6 +75,7 @@ reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
 wire pushEnable = writeEnable && !full;
 wire popEnable = readEnable && !empty;
 
+wire [ADDR_WIDTH-1:0] writePointerNext;
 wire [ADDR_WIDTH-1:0] writePointerNextNext;
 reg [ADDR_WIDTH-1:0] writePointerSync1 = {ADDR_WIDTH{1'b0}};
 reg [ADDR_WIDTH-1:0] writePointerSync2 = {ADDR_WIDTH{1'b0}};
@@ -94,7 +95,7 @@ GrayCounter #(.WIDTH(ADDR_WIDTH)) writeGrayCounter
     .enable(pushEnable),
     .reset(writeSyncReset),
     .grayCount(writePointer),
-    .grayCountNext(),
+    .grayCountNext(writePointerNext),
     .grayCountNextNext(writePointerNextNext)
 );
 
@@ -119,9 +120,12 @@ always @ (posedge writeClock) begin
         
         if (pushEnable == 1'b1) begin
             mem[writePointer] <= writeData;
+            full <= (writePointerNextNext == readPointerSync2);
+        end else begin
+            full <= (writePointerNext == readPointerSync2);
         end
         
-        full <= (writePointerNextNext == readPointerSync2);
+        
     end
 end
 
@@ -136,9 +140,10 @@ always @ (posedge readClock) begin
         
         if (popEnable == 1'b1) begin
             readData <= mem[readPointer];
+            empty <= (readPointerNext == writePointerSync2);
+        end else begin
+            empty <= (readPointer == writePointerSync2);
         end
-        
-        empty <= (readPointerNext == writePointerSync2);
     end
 end
 
