@@ -79,8 +79,8 @@ wire vLastLine = (vCount + 11'd1 + {10'd0, isInterlaced}) >= vTotal;
 wire [11:0] hCountNext = hLastPixel ? 12'd0 : hCount + 1'd1;
 wire [10:0] vCountNext = hLastPixel ? (vLastLine ? {10'd0, isInterlaced & ~vCount[0]} : vCount + 11'd1 + {10'd0, isInterlaced}) : vCount;
 
-always @ (posedge clock) begin
-    if (reset == 1'b1) begin
+always @ (posedge clock or posedge reset) begin
+    if (reset) begin
         hCount <= 12'd0;
         vCount <= 11'd0;
         hSync <= syncIsActiveLow;
