@@ -65,21 +65,21 @@ module VideoTimingSink #(parameter CHUNK_BITS = 5)
     input wire [6:0] hFrontPorch,
     input wire [7:0] hSyncPulse,
     input wire [7:0] hBackPorch,
-    input wire [10:0] hActive,
+    input wire [HACTIVE_BITS-1:0] hActive,
     input wire [5:0] vFrontPorch,
     input wire [3:0] vSyncPulse,
     input wire [5:0] vBackPorch,
-    input wire [10:0] vActive,
+    input wire [VACTIVE_BITS-1:0] vActive,
     input wire syncIsActiveLow,
     input wire isInterlaced,
     
     input wire requestFifoReadEnable,
     output wire requestFifoEmpty,
-    output wire [11+CHUNK_BITS-1:0] requestFifoReadData,
+    output wire [REQUEST_BITS-1:0] requestFifoReadData,
     
     input wire responseFifoWriteEnable,
     output wire responseFifoFull,
-    input wire [15:0] responseFifoWriteData,
+    input wire [BITS_PER_PIXEL-1:0] responseFifoWriteData,
 
     output reg dataEnable = 1'b0,
     output reg hSync = 1'b0,
@@ -94,13 +94,18 @@ module VideoTimingSink #(parameter CHUNK_BITS = 5)
 );
 
 localparam CHUNK_SIZE = 1 << CHUNK_BITS;
+localparam HACTIVE_BITS = 11;
+localparam VACTIVE_BITS = 11;
+localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;
+localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
+localparam BITS_PER_PIXEL = 16;
 
 wire timingDataEnable;
 wire timingHSync;
 wire timingVSync;
 wire timingActiveVideoPreamble;
 wire timingActiveVideoGuardBand;
-wire [10:0] timingVPos;
+wire [VACTIVE_BITS-1:0] timingVPos;
 VideoFormatTiming timing
 (
     .clock(pixelClock),
@@ -124,11 +129,11 @@ VideoFormatTiming timing
     .activeVideoGuardBand(timingActiveVideoGuardBand)
 );
 
-reg [CHUNK_BITS-1:0] requestedChunk = 5'd0;
+reg [HACTIVE_BITS-CHUNK_BITS-1:0] requestedChunk = {(CHUNKNUM_BITS){1'b0}};
 // Write a request to the FIFO for each chunk in the line, as soon as timingDataEnable goes to 0
 wire requestFifoWriteEnable = !timingDataEnable && (requestedChunk < chunksPerLine);
 wire requestFifoFull;
-AsyncFifo #(.DATA_WIDTH(11+CHUNK_BITS), .ADDR_WIDTH(5)) requestFifo
+AsyncFifo #(.DATA_WIDTH(REQUEST_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) requestFifo
 (
     .asyncReset(reset),
     .readClock(scalerClock),
@@ -146,7 +151,7 @@ reg clearResponseFifo = 1'b0;
 wire responseFifoReadEnable = timingDataEnable;
 wire responseFifoEmpty;
 wire [15:0] responseFifoReadData;
-AsyncFifo #(.DATA_WIDTH(16), .ADDR_WIDTH(10)) responseFifo
+AsyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) responseFifo
 (
     .asyncReset(clearResponseFifo || reset),
     .readClock(pixelClock),
@@ -159,7 +164,7 @@ AsyncFifo #(.DATA_WIDTH(16), .ADDR_WIDTH(10)) responseFifo
     .writeData(responseFifoWriteData)
 );
 
-wire [10-CHUNK_BITS-1:0] chunksPerLine = hActive[10:10-CHUNK_BITS+1];
+wire [CHUNKNUM_BITS-1:0] chunksPerLine = hActive[HACTIVE_BITS-1:CHUNK_BITS];
 
 // Extend 5 or 6 bits to 8 bits for each color component
 assign red   = timingDataEnable ? {responseFifoReadData[15:11], responseFifoReadData[15:13]} : 8'd0;
@@ -174,7 +179,7 @@ always @ (posedge pixelClock or posedge reset) begin
         vSync <= 1'b0;
         activeVideoPreamble <= 1'b0;
         activeVideoGuardBand <= 1'b0;
-        requestedChunk <= {CHUNK_BITS{1'b0}};
+        requestedChunk <= {CHUNKNUM_BITS{1'b0}};
         late <= 1'b0;
         clearResponseFifo <= 1'b0;
     end else begin
@@ -187,7 +192,7 @@ always @ (posedge pixelClock or posedge reset) begin
         activeVideoGuardBand <= timingActiveVideoGuardBand;
         
         if (timingDataEnable) begin
-            requestedChunk <= {CHUNK_BITS{1'b0}};
+            requestedChunk <= {CHUNKNUM_BITS{1'b0}};
             late <= responseFifoEmpty;
             clearResponseFifo <= 1'b0;
         end else begin
@@ -200,7 +205,7 @@ always @ (posedge pixelClock or posedge reset) begin
                 late <= 1'b0;
             end
             // Clear the response FIFO as the first chunk is requested
-            clearResponseFifo <= (requestedChunk == {CHUNK_BITS{1'b0}}) ? 1'b1 : 1'b0;
+            clearResponseFifo <= (requestedChunk == {CHUNKNUM_BITS{1'b0}}) ? 1'b1 : 1'b0;
         end
     end
 end

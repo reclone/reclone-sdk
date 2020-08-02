@@ -1,0 +1,7 @@
+add_subdirectory(scanlines2bmp)
+
+add_executable(testVideoTimingSink VideoTimingSinkTests.cpp)
+
+target_link_libraries(testVideoTimingSink VVideoTimingSink scanlines2bmp gtest gtest_main)
+
+add_test(NAME testVideoTimingSink COMMAND testVideoTimingSink)
