@@ -106,8 +106,8 @@ bool ScanlineBuffer::writeBitmap(const char * bmpFilename)
     const unsigned int infoHeaderSize = 40;
     const unsigned int headersSize = fileHeaderSize + infoHeaderSize;
     const unsigned int bytesPerPixel = 3;
-    const unsigned int totalPixels = _hPixels * _vPixels;
-    const unsigned int imageSize = totalPixels * bytesPerPixel;
+    const unsigned int hPadding = (((_hPixels * bytesPerPixel) % 4) == 0) ? 0 : (4 - ((_hPixels * bytesPerPixel) % 4));
+    const unsigned int imageSize = ((_hPixels * bytesPerPixel) + hPadding) * _vPixels;
     const uint32_t fileSize = headersSize + imageSize;
     const uint32_t width = _hPixels;
     const uint32_t height = _vPixels;
@@ -176,14 +176,25 @@ bool ScanlineBuffer::writeBitmap(const char * bmpFilename)
     headers[53] = static_cast<uint8_t>(importantColors >> 24);
     fwrite(headers, headersSize, 1, fptr);
     
-    for (unsigned int pixelIdx = 0; pixelIdx < totalPixels; ++pixelIdx)
+    for (unsigned int vPos = 0; vPos < _vPixels; ++vPos)
     {
-        uint8_t red   = static_cast<uint8_t>(_frameBuffer[pixelIdx] >> 16);
-        uint8_t green = static_cast<uint8_t>(_frameBuffer[pixelIdx] >> 8);
-        uint8_t blue  = static_cast<uint8_t>(_frameBuffer[pixelIdx] >> 0);
-        fwrite(&blue, 1, 1, fptr);
-        fwrite(&green, 1, 1, fptr);
-        fwrite(&red, 1, 1, fptr);
+        for (unsigned int hPos = 0; hPos < _hPixels; ++hPos)
+        {
+            unsigned int pixelIdx = vPos * _hPixels + hPos;
+            uint8_t red   = static_cast<uint8_t>(_frameBuffer[pixelIdx] >> 16);
+            uint8_t green = static_cast<uint8_t>(_frameBuffer[pixelIdx] >> 8);
+            uint8_t blue  = static_cast<uint8_t>(_frameBuffer[pixelIdx] >> 0);
+            fwrite(&blue, 1, 1, fptr);
+            fwrite(&green, 1, 1, fptr);
+            fwrite(&red, 1, 1, fptr);
+        }
+        
+        // Each scan line is zero padded to the nearest 4-byte boundary
+        const uint8_t padByte = 0x00;
+        for (unsigned int padCount = 0; padCount < hPadding; ++padCount)
+        {
+            fwrite(&padByte, 1, 1, fptr);
+        }
     }
     
     if (0 != fclose(fptr))
