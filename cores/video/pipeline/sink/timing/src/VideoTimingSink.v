@@ -167,9 +167,9 @@ AsyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) responseFifo
 wire [CHUNKNUM_BITS-1:0] chunksPerLine = hActive[HACTIVE_BITS-1:CHUNK_BITS];
 
 // Extend 5 or 6 bits to 8 bits for each color component
-assign red   = timingDataEnable ? {responseFifoReadData[15:11], responseFifoReadData[15:13]} : 8'd0;
-assign green = timingDataEnable ? {responseFifoReadData[10: 5], responseFifoReadData[10: 9]} : 8'd0;
-assign blue  = timingDataEnable ? {responseFifoReadData[ 4: 0], responseFifoReadData[ 4: 2]} : 8'd0;
+assign red   = dataEnable ? {responseFifoReadData[15:11], responseFifoReadData[15:13]} : 8'd0;
+assign green = dataEnable ? {responseFifoReadData[10: 5], responseFifoReadData[10: 9]} : 8'd0;
+assign blue  = dataEnable ? {responseFifoReadData[ 4: 0], responseFifoReadData[ 4: 2]} : 8'd0;
 
 always @ (posedge pixelClock or posedge reset) begin
     if (reset) begin
