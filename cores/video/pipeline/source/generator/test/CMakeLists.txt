@@ -1,6 +1,7 @@
 add_subdirectory(bmp2generator)
 
 configure_file(greenscreen.bmp ${CMAKE_CURRENT_BINARY_DIR}/greenscreen.bmp COPYONLY)
+configure_file(redbluepattern.bmp ${CMAKE_CURRENT_BINARY_DIR}/redbluepattern.bmp COPYONLY)
 
 add_executable(testVideoGeneratorSource VideoGeneratorSourceTests.cpp)
 

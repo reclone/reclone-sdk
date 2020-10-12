@@ -64,5 +64,22 @@ TEST_F(VideoGeneratorSourceTests, LoadGreenScreenTestBitmap)
     }
 }
 
+TEST_F(VideoGeneratorSourceTests, LoadRedBluePatternTestBitmap)
+{
+    GeneratorBuffer bmp;
+    ASSERT_TRUE(bmp.readBitmap("redbluepattern.bmp"));
+    
+    for (int32_t vPos = 0; vPos < bmp.getHeight(); ++vPos)
+    {
+        for (int32_t hPos = 0; hPos < bmp.getWidth(); ++hPos)
+        {
+            GeneratorBuffer::RgbPixel pix = bmp.getPixel(hPos, vPos);
+            EXPECT_EQ(((hPos % 0x20) << 3) | ((hPos % 0x20) >> 2), pix.red);
+            EXPECT_EQ(0, pix.green);
+            EXPECT_EQ(((vPos % 0x20) << 3) | ((vPos % 0x20) >> 2), pix.blue);
+        }
+    }
+}
+
 
 
