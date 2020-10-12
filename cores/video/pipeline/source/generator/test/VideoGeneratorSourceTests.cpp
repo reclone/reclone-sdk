@@ -81,5 +81,138 @@ TEST_F(VideoGeneratorSourceTests, LoadRedBluePatternTestBitmap)
     }
 }
 
+TEST_F(VideoGeneratorSourceTests, InitialConditions)
+{
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    _uut.requestFifoEmpty = 1;
+    _uut.requestFifoReadData = 0;
+    _uut.responseFifoFull = 0;
+    _uut.r = 0;
+    _uut.g = 0;
+    _uut.b = 0;
+    _uut.dataEnableDelayed = 0;
+    _uut.eval();
+    
+    for (unsigned int i = 0; i < 10; ++i)
+    {
+        _uut.scalerClock = 1;
+        _uut.eval();
+        _uut.scalerClock = 0;
+        _uut.eval();
+        
+        ASSERT_EQ(0, _uut.requestFifoReadEnable);
+        ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+        ASSERT_EQ(0, _uut.responseFifoWriteData);
+        ASSERT_EQ(0, _uut.hPos);
+        ASSERT_EQ(0, _uut.vPos);
+        ASSERT_EQ(0, _uut.dataEnable);
+    }
+}
 
+TEST_F(VideoGeneratorSourceTests, RequestOneChunk)
+{
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    _uut.requestFifoEmpty = 1;
+    _uut.requestFifoReadData = 0;
+    _uut.responseFifoFull = 0;
+    _uut.r = 0;
+    _uut.g = 0;
+    _uut.b = 0;
+    _uut.dataEnableDelayed = 0;
+    _uut.eval();
+    
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteData);
+    ASSERT_EQ(0, _uut.hPos);
+    ASSERT_EQ(0, _uut.vPos);
+    ASSERT_EQ(0, _uut.dataEnable);
+    
+    // Indicate there is a pending request
+    _uut.requestFifoEmpty = 0;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(1, _uut.requestFifoReadEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteData);
+    ASSERT_EQ(0, _uut.hPos);
+    ASSERT_EQ(0, _uut.vPos);
+    ASSERT_EQ(0, _uut.dataEnable);
+    
+    // Say the request is for row 1, chunk number 2
+    // Chunks are 32 pixels wide, so chunk 2 starts at hPos of 64
+    _uut.requestFifoReadData = (1 << 6) | 2;
+    _uut.requestFifoEmpty = 1;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteData);
+    ASSERT_EQ(2*32, _uut.hPos);
+    ASSERT_EQ(1, _uut.vPos);
+    ASSERT_EQ(1, _uut.dataEnable);
+    _uut.r = 0;
+    _uut.g = 255;
+    _uut.b = 255;
+    
+    
+    for (unsigned int i = 1; i < 32; ++i)
+    {
+        _uut.dataEnableDelayed = 1;
+        _uut.scalerClock = 1;
+        _uut.eval();
+        _uut.scalerClock = 0;
+        _uut.eval();
+        ASSERT_EQ(0, _uut.requestFifoReadEnable);
+        ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+        ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+        ASSERT_EQ(2*32+i, _uut.hPos);
+        ASSERT_EQ(1, _uut.vPos);
+        ASSERT_EQ(1, _uut.dataEnable);
+    }
+
+    _uut.dataEnableDelayed = 1;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+    ASSERT_EQ(0, _uut.hPos);
+    ASSERT_EQ(0, _uut.vPos);
+    ASSERT_EQ(0, _uut.dataEnable);
+    _uut.r = 0;
+    _uut.g = 0;
+    _uut.b = 0;
+    _uut.dataEnableDelayed = 0;
+    
+    // No more requests, so no more activity
+    for (unsigned int i = 0; i < 100; ++i)
+    {
+        _uut.scalerClock = 1;
+        _uut.eval();
+        _uut.scalerClock = 0;
+        _uut.eval();
+        
+        ASSERT_EQ(0, _uut.requestFifoReadEnable);
+        ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+        ASSERT_EQ(0, _uut.responseFifoWriteData);
+        ASSERT_EQ(0, _uut.hPos);
+        ASSERT_EQ(0, _uut.vPos);
+        ASSERT_EQ(0, _uut.dataEnable);
+    }
+
+}
 

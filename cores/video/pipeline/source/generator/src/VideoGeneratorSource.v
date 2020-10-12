@@ -44,12 +44,10 @@ module VideoGeneratorSource #(parameter CHUNK_BITS = 5)
     output wire [HACTIVE_BITS-1:0] hPos,
     output wire [VACTIVE_BITS-1:0] vPos,
     output reg dataEnable = 1'b0,
-    //output reg activeVideoGuardBand = 1'b0,
     input wire [7:0] r,
     input wire [7:0] g,
     input wire [7:0] b,
     input wire dataEnableDelayed
-   // input wire activeVideoGuardBandDelayed
 );
 
 localparam CHUNK_SIZE = 1 << CHUNK_BITS;
@@ -94,6 +92,7 @@ always @ (posedge scalerClock or posedge reset) begin
             end else begin
                 // De-assert dataEnable because there are no more chunk requests to handle
                 dataEnable <= 1'b0;
+                latchedRequest <= {REQUEST_BITS{1'b0}};
             end
             // Reset pixel counter to the first pixel of the chunk
             pixelCount <= {CHUNK_BITS{1'b0}};
