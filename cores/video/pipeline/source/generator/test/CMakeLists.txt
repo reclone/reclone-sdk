@@ -1,0 +1,9 @@
+add_subdirectory(bmp2generator)
+
+configure_file(greenscreen.bmp ${CMAKE_CURRENT_BINARY_DIR}/greenscreen.bmp COPYONLY)
+
+add_executable(testVideoGeneratorSource VideoGeneratorSourceTests.cpp)
+
+target_link_libraries(testVideoGeneratorSource VVideoGeneratorSource bmp2generator gtest gtest_main)
+
+add_test(NAME testVideoGeneratorSource COMMAND testVideoGeneratorSource)
