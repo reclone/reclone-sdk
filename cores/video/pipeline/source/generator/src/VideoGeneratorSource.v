@@ -1,7 +1,29 @@
 //
 // VideoGeneratorSource - Supply pixel chunks from a video generation module to a video pipeline
 //
-// 
+// A video generation module takes as inputs the row and column of a desired pixel, and outputs
+// the color values of the pixel at that position.  This module converts a video generation module
+// into a video pipeline source, so that requested pixel chunks from the generator can be provided
+// to downstream pipeline modules.
+//
+// Given hPos and vPos, the generator module will respond with color data on r, g, and b some number
+// of cycles later (generator modules can be pipelined).  It is expected that dataEnableDelayed is
+// delayed the same number of cycles, such that dataEnableDelayed is kept in sync with r, g, and b.
+//
+// This module is useful for testing a video pipeline without the added complexity of a
+// framebuffer.  Or, an application can render its display directly in a generator module, and
+// utilize downstream video pipeline modules to scale, transform, filter, or otherwise manipulate
+// the video frames, as needed.
+//
+// This module does not contain its own FIFOs for handling requests.  Rather, it interacts with the
+// request and response FIFO signals directly to handle requests one at a time, and "stream"
+// requested pixel data into the response FIFO.  Because of this oversimplified design,
+// flow control is broken, and this module does not currently pay attention to responseFifoFull
+// when responding in mid-chunk.  Just ensure that downstream modules have enough response FIFO
+// space to handle each burst of requests (usually at least one scanline worth of buffer).
+// I say this weakness is a small price to pay to keep the module lean and mean!
+//
+// Assumes 16-bit RGB pixel data (5-6-5 red-green-blue).
 //
 //
 // Copyright 2020 Reclone Labs <reclonelabs.com>
@@ -38,7 +60,7 @@ module VideoGeneratorSource #(parameter CHUNK_BITS = 5)
     input wire [REQUEST_BITS-1:0] requestFifoReadData,
     
     output wire responseFifoWriteEnable,
-    input wire responseFifoFull,
+    input wire responseFifoFull, // <-- not really respected... see above description
     output wire [BITS_PER_PIXEL-1:0] responseFifoWriteData,
     
     output wire [HACTIVE_BITS-1:0] hPos,
