@@ -27,7 +27,9 @@
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VVideoGeneratorSource.h"
+#include "VVideoTimingSink.h"
 #include "GeneratorBuffer.h"
+#include "ScanlineBuffer.h"
 
 class VideoGeneratorSourceTests : public ::testing::Test
 {
@@ -40,10 +42,12 @@ class VideoGeneratorSourceTests : public ::testing::Test
         virtual ~VideoGeneratorSourceTests()
         {
             _uut.final();
+            _sink.final();
         }
         
     protected:
         VVideoGeneratorSource _uut;
+        VVideoTimingSink _sink;
         unsigned int _tickCount;
 };
 
@@ -166,7 +170,7 @@ TEST_F(VideoGeneratorSourceTests, RequestOneChunk)
     _uut.g = 255;
     _uut.b = 255;
     
-    
+    // Provide each of the chunk's pixels to the response FIFO
     for (unsigned int i = 1; i < 32; ++i)
     {
         _uut.dataEnableDelayed = 1;
@@ -182,6 +186,7 @@ TEST_F(VideoGeneratorSourceTests, RequestOneChunk)
         ASSERT_EQ(1, _uut.dataEnable);
     }
 
+    // Provide last pixel and confirm that no more pixels are requested or provided
     _uut.dataEnableDelayed = 1;
     _uut.scalerClock = 1;
     _uut.eval();
@@ -190,8 +195,6 @@ TEST_F(VideoGeneratorSourceTests, RequestOneChunk)
     ASSERT_EQ(0, _uut.requestFifoReadEnable);
     ASSERT_EQ(1, _uut.responseFifoWriteEnable);
     ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
-    ASSERT_EQ(0, _uut.hPos);
-    ASSERT_EQ(0, _uut.vPos);
     ASSERT_EQ(0, _uut.dataEnable);
     _uut.r = 0;
     _uut.g = 0;
@@ -209,10 +212,321 @@ TEST_F(VideoGeneratorSourceTests, RequestOneChunk)
         ASSERT_EQ(0, _uut.requestFifoReadEnable);
         ASSERT_EQ(0, _uut.responseFifoWriteEnable);
         ASSERT_EQ(0, _uut.responseFifoWriteData);
-        ASSERT_EQ(0, _uut.hPos);
-        ASSERT_EQ(0, _uut.vPos);
         ASSERT_EQ(0, _uut.dataEnable);
     }
 
 }
 
+TEST_F(VideoGeneratorSourceTests, RequestTwoChunks)
+{
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    _uut.requestFifoEmpty = 1;
+    _uut.requestFifoReadData = 0;
+    _uut.responseFifoFull = 0;
+    _uut.r = 0;
+    _uut.g = 0;
+    _uut.b = 0;
+    _uut.dataEnableDelayed = 0;
+    _uut.eval();
+    
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteData);
+    ASSERT_EQ(0, _uut.hPos);
+    ASSERT_EQ(0, _uut.vPos);
+    ASSERT_EQ(0, _uut.dataEnable);
+    
+    // Indicate there is a pending request
+    _uut.requestFifoEmpty = 0;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(1, _uut.requestFifoReadEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteData);
+    ASSERT_EQ(0, _uut.hPos);
+    ASSERT_EQ(0, _uut.vPos);
+    ASSERT_EQ(0, _uut.dataEnable);
+    
+    // Say the request is for row 1, chunk number 2
+    // Chunks are 32 pixels wide, so chunk 2 starts at hPos of 64
+    _uut.requestFifoReadData = (1 << 6) | 2;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0, _uut.responseFifoWriteData);
+    ASSERT_EQ(2*32, _uut.hPos);
+    ASSERT_EQ(1, _uut.vPos);
+    ASSERT_EQ(1, _uut.dataEnable);
+    _uut.r = 0;
+    _uut.g = 255;
+    _uut.b = 255;
+    
+    // Provide each of the chunk's pixels to the response FIFO
+    for (unsigned int i = 1; i < 31; ++i)
+    {
+        _uut.dataEnableDelayed = 1;
+        _uut.scalerClock = 1;
+        _uut.eval();
+        _uut.scalerClock = 0;
+        _uut.eval();
+        ASSERT_EQ(0, _uut.requestFifoReadEnable);
+        ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+        ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+        ASSERT_EQ(2*32+i, _uut.hPos);
+        ASSERT_EQ(1, _uut.vPos);
+        ASSERT_EQ(1, _uut.dataEnable);
+    }
+
+    // Provide second to last pixel and confirm read of second request
+    _uut.dataEnableDelayed = 1;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(1, _uut.requestFifoReadEnable);
+    ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+    ASSERT_EQ(2*32+31, _uut.hPos);
+    ASSERT_EQ(1, _uut.vPos);
+    ASSERT_EQ(1, _uut.dataEnable);
+
+    // Provide last pixel and provide the next request for row 1, chunk 3
+    _uut.dataEnableDelayed = 1;
+    _uut.requestFifoReadData = (1 << 6) | 3;
+    _uut.requestFifoEmpty = 1;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+    ASSERT_EQ(3*32, _uut.hPos);
+    ASSERT_EQ(1, _uut.vPos);
+    ASSERT_EQ(1, _uut.dataEnable);
+    _uut.r = 0;
+    _uut.g = 255;
+    _uut.b = 255;
+
+    // Provide each of the chunk's pixels to the response FIFO
+    for (unsigned int i = 1; i < 32; ++i)
+    {
+        _uut.dataEnableDelayed = 1;
+        _uut.scalerClock = 1;
+        _uut.eval();
+        _uut.scalerClock = 0;
+        _uut.eval();
+        ASSERT_EQ(0, _uut.requestFifoReadEnable);
+        ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+        ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+        ASSERT_EQ(3*32+i, _uut.hPos);
+        ASSERT_EQ(1, _uut.vPos);
+        ASSERT_EQ(1, _uut.dataEnable);
+    }
+
+    // Provide last pixel and confirm that no more pixels are requested or provided
+    _uut.dataEnableDelayed = 1;
+    _uut.scalerClock = 1;
+    _uut.eval();
+    _uut.scalerClock = 0;
+    _uut.eval();
+    ASSERT_EQ(0, _uut.requestFifoReadEnable);
+    ASSERT_EQ(1, _uut.responseFifoWriteEnable);
+    ASSERT_EQ(0x07FF, _uut.responseFifoWriteData);
+    ASSERT_EQ(0, _uut.dataEnable);
+    _uut.r = 0;
+    _uut.g = 0;
+    _uut.b = 0;
+    _uut.dataEnableDelayed = 0;
+    
+    // No more requests, so no more activity
+    for (unsigned int i = 0; i < 100; ++i)
+    {
+        _uut.scalerClock = 1;
+        _uut.eval();
+        _uut.scalerClock = 0;
+        _uut.eval();
+        
+        ASSERT_EQ(0, _uut.requestFifoReadEnable);
+        ASSERT_EQ(0, _uut.responseFifoWriteEnable);
+        ASSERT_EQ(0, _uut.responseFifoWriteData);
+        ASSERT_EQ(0, _uut.dataEnable);
+    }
+}
+
+TEST_F(VideoGeneratorSourceTests, ReplicateBitmap)
+{
+    VerilatedVcdC vcd_trace;
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("ReplicateBitmap.vcd");
+
+    GeneratorBuffer sourceBitmap;
+    ASSERT_TRUE(sourceBitmap.readBitmap("rainbowswirls.bmp"));
+    ScanlineBuffer scanlines(1280, 720, false);
+    
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    _uut.requestFifoEmpty = 1;
+    _uut.requestFifoReadData = 0;
+    _uut.responseFifoFull = 0;
+    _uut.r = 0;
+    _uut.g = 0;
+    _uut.b = 0;
+    _uut.dataEnableDelayed = 0;
+    _uut.eval();
+    vcd_trace.dump(_tickCount++);
+    
+    _sink.pixelClock = 0;
+    _sink.scalerClock = 0;
+    _sink.reset = 0;
+    _sink.hFrontPorch = 110;
+    _sink.hSyncPulse = 40;
+    _sink.hBackPorch = 220;
+    _sink.hActive = 1280;
+    _sink.vFrontPorch = 5;
+    _sink.vSyncPulse = 5;
+    _sink.vBackPorch = 20;
+    _sink.vActive = 720;
+    _sink.syncIsActiveLow = 0;
+    _sink.isInterlaced = 0;
+    _sink.requestFifoReadEnable = 0;
+    _sink.responseFifoWriteEnable = 0;
+    _sink.responseFifoWriteData = 0;
+    _sink.eval();
+    
+    // Burn one cycle because the sink module adds a one cycle delay
+    _sink.pixelClock = 1;
+    _sink.eval();
+    
+    _sink.pixelClock = 0;
+    _sink.eval();
+    
+    for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_sink.vFrontPorch + _sink.vSyncPulse + _sink.vBackPorch + _sink.vActive); ++vCount)
+    {
+        for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_sink.hFrontPorch + _sink.hSyncPulse + _sink.hBackPorch + _sink.hActive); ++hCount)
+        {
+            // One pixel clock and two scaler clocks
+            
+            _sink.pixelClock = 1;
+            _sink.eval();
+            scanlines.processPixel(_sink.dataEnable, _sink.hSync, _sink.vSync, _sink.red, _sink.green, _sink.blue);
+            
+            _sink.scalerClock = 1;
+            _sink.eval();
+            _uut.scalerClock = 1;
+            _uut.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _uut.requestFifoEmpty = _sink.requestFifoEmpty;
+            _uut.requestFifoReadData = _sink.requestFifoReadData;
+            _uut.responseFifoFull = _sink.responseFifoFull;
+            GeneratorBuffer::RgbPixel pix = sourceBitmap.getPixel(_uut.hPos, _uut.vPos);
+            _uut.r = pix.red;
+            _uut.g = pix.green;
+            _uut.b = pix.blue;
+            _uut.dataEnableDelayed = _uut.dataEnable;
+            _uut.eval();
+            _sink.requestFifoReadEnable = _uut.requestFifoReadEnable;
+            _sink.responseFifoWriteEnable = _uut.responseFifoWriteEnable;
+            _sink.responseFifoWriteData = _uut.responseFifoWriteData;
+            _sink.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _sink.scalerClock = 0;
+            _sink.eval();
+            _uut.scalerClock = 0;
+            _uut.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _uut.requestFifoEmpty = _sink.requestFifoEmpty;
+            _uut.requestFifoReadData = _sink.requestFifoReadData;
+            _uut.responseFifoFull = _sink.responseFifoFull;
+            pix = sourceBitmap.getPixel(_uut.hPos, _uut.vPos);
+            _uut.r = pix.red;
+            _uut.g = pix.green;
+            _uut.b = pix.blue;
+            _uut.dataEnableDelayed = _uut.dataEnable;
+            _uut.eval();
+            _sink.requestFifoReadEnable = _uut.requestFifoReadEnable;
+            _sink.responseFifoWriteEnable = _uut.responseFifoWriteEnable;
+            _sink.responseFifoWriteData = _uut.responseFifoWriteData;
+            _sink.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _sink.pixelClock = 0;
+            _sink.eval();
+            _sink.scalerClock = 1;
+            _sink.eval();
+            _uut.scalerClock = 1;
+            _uut.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _uut.requestFifoEmpty = _sink.requestFifoEmpty;
+            _uut.requestFifoReadData = _sink.requestFifoReadData;
+            _uut.responseFifoFull = _sink.responseFifoFull;
+            pix = sourceBitmap.getPixel(_uut.hPos, _uut.vPos);
+            _uut.r = pix.red;
+            _uut.g = pix.green;
+            _uut.b = pix.blue;
+            _uut.dataEnableDelayed = _uut.dataEnable;
+            _uut.eval();
+            _sink.requestFifoReadEnable = _uut.requestFifoReadEnable;
+            _sink.responseFifoWriteEnable = _uut.responseFifoWriteEnable;
+            _sink.responseFifoWriteData = _uut.responseFifoWriteData;
+            _sink.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _sink.scalerClock = 0;
+            _sink.eval();
+            _uut.scalerClock = 0;
+            _uut.eval();
+            vcd_trace.dump(_tickCount++);
+            
+            _uut.requestFifoEmpty = _sink.requestFifoEmpty;
+            _uut.requestFifoReadData = _sink.requestFifoReadData;
+            _uut.responseFifoFull = _sink.responseFifoFull;
+            pix = sourceBitmap.getPixel(_uut.hPos, _uut.vPos);
+            _uut.r = pix.red;
+            _uut.g = pix.green;
+            _uut.b = pix.blue;
+            _uut.dataEnableDelayed = _uut.dataEnable;
+            _uut.eval();
+            _sink.requestFifoReadEnable = _uut.requestFifoReadEnable;
+            _sink.responseFifoWriteEnable = _uut.responseFifoWriteEnable;
+            _sink.responseFifoWriteData = _uut.responseFifoWriteData;
+            _sink.eval();
+            vcd_trace.dump(_tickCount++);
+        }
+    }
+    
+    EXPECT_TRUE(scanlines.writeBitmap("rainbowswirlsout.bmp"));
+
+    GeneratorBuffer sinkBitmap;
+    ASSERT_TRUE(sinkBitmap.readBitmap("rainbowswirlsout.bmp"));
+    
+    // Verify pixel data is identical (accounting for the 16-bit color truncation)
+    for (unsigned int vPos = 0; vPos < _sink.vActive; ++vPos)
+    {
+        for (unsigned int hPos = 0; hPos < _sink.hActive; ++hPos)
+        {
+            GeneratorBuffer::RgbPixel sourcePix = sourceBitmap.getPixel(hPos, vPos);
+            GeneratorBuffer::RgbPixel sinkPix = sinkBitmap.getPixel(hPos, vPos);
+            ASSERT_NEAR(sourcePix.red, sinkPix.red, 15);
+            ASSERT_NEAR(sourcePix.green, sinkPix.green, 7);
+            ASSERT_NEAR(sourcePix.blue, sinkPix.blue, 15);
+        }
+    }
+
+    vcd_trace.close();
+}

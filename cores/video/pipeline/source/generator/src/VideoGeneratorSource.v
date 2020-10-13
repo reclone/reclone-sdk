@@ -70,16 +70,14 @@ assign responseFifoWriteData = {rTruncated, gTruncated, bTruncated};
 assign responseFifoWriteEnable = dataEnableDelayed;
 
 // Request is {vPos, chunkNum}.  hPos will be (chunkNum << CHUNK_BITS + pixelCount).
-reg [REQUEST_BITS-1:0] latchedRequest = {REQUEST_BITS{1'b0}};
 reg [CHUNK_BITS-1:0] pixelCount = {CHUNK_BITS{1'b0}};
-assign vPos = latchedRequest[REQUEST_BITS-1:CHUNKNUM_BITS];
-assign hPos = {latchedRequest[CHUNKNUM_BITS-1:0], pixelCount};
+assign vPos = requestFifoReadData[REQUEST_BITS-1:CHUNKNUM_BITS];
+assign hPos = {requestFifoReadData[CHUNKNUM_BITS-1:0], pixelCount};
 
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         requestFifoReadEnable <= 1'b0;
         dataEnable <= 1'b0;
-        latchedRequest <= {REQUEST_BITS{1'b0}};
         pixelCount <= {CHUNK_BITS{1'b0}};
     end else if (dataEnable) begin
         // dataEnable is active, indicating that we ARE trying to get pixels out of the generator
@@ -88,11 +86,9 @@ always @ (posedge scalerClock or posedge reset) begin
             if (requestFifoReadEnable) begin
                 // Next requested chunk number is now present on requestFifoReadData
                 requestFifoReadEnable <= 1'b0;
-                latchedRequest <= requestFifoReadData;
             end else begin
                 // De-assert dataEnable because there are no more chunk requests to handle
                 dataEnable <= 1'b0;
-                latchedRequest <= {REQUEST_BITS{1'b0}};
             end
             // Reset pixel counter to the first pixel of the chunk
             pixelCount <= {CHUNK_BITS{1'b0}};
@@ -115,7 +111,6 @@ always @ (posedge scalerClock or posedge reset) begin
         end else if (requestFifoReadEnable) begin
             // Requested chunk number is now present on requestFifoReadData
             requestFifoReadEnable <= 1'b0;
-            latchedRequest <= requestFifoReadData;
             // Assert dataEnable which is our flag that we are requesting pixel data out of the generator
             dataEnable <= 1'b1;
             // Start with the first pixel of the chunk
