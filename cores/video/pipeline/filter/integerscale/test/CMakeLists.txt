@@ -3,6 +3,6 @@ configure_file(../src/integerScaleReciprocalFactors.mem ${CMAKE_CURRENT_BINARY_D
 
 add_executable(testVideoIntegerScale VideoIntegerScaleTests.cpp)
 
-target_link_libraries(testVideoIntegerScale VVideoIntegerScale gtest gtest_main)
+target_link_libraries(testVideoIntegerScale VVideoIntegerScale gtest gmock gmock_main)
 
 add_test(NAME testVideoIntegerScale COMMAND testVideoIntegerScale)
