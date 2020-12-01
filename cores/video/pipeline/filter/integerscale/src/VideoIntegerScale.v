@@ -110,7 +110,7 @@ reg [BITS_PER_PIXEL-1:0] cache [0:HACTIVE_COLUMNS-1];
 // floor(x / idx) == floor((x * reciprocalFactors[idx]) >> 15)
 reg [HACTIVE_BITS+SCALE_BITS:0] reciprocalFactors [0:(1 << SCALE_BITS)-1];
 initial begin
-    $readmemh("reciprocalFactors.mem", reciprocalFactors);
+    $readmemh("integerScaleReciprocalFactors.mem", reciprocalFactors);
 end
 
 function [HACTIVE_BITS-1:0] divideCoordBy;
