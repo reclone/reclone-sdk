@@ -156,6 +156,7 @@ TEST_F(VideoIntegerScaleTests, OneRequestOneResponse)
     // We should get one upstream request for row 3, chunk 3
     EXPECT_CALL(*this, requestUpstreamChunk(3,3)).WillOnce(InvokeWithoutArgs([&]()
     {
+        // Upstream chunk contains 0..31 for pixel color values
         for (uint16_t i = 0; i < 32U; ++i)
         {
             _upstreamResponses.push(i);

@@ -84,6 +84,15 @@ module AggregateVideoScaler #(parameter CHUNK_BITS = 5, SCALE_BITS = 4)
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 
+localparam CHUNK_SIZE = 1 << CHUNK_BITS;
+localparam HACTIVE_BITS = 11;
+localparam HACTIVE_COLUMNS = 1 << HACTIVE_BITS;
+localparam VACTIVE_BITS = 11;
+localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;
+localparam MAX_CHUNKS_PER_ROW = 1 << CHUNKNUM_BITS;
+localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
+localparam BITS_PER_PIXEL = 16;
+
 // TODO add other elements as they are developed (for now this aggregate is just integer scaler)
 VideoIntegerScale #(.CHUNK_BITS(CHUNK_BITS), .SCALE_BITS(SCALE_BITS)) integerScale
 (
@@ -104,3 +113,5 @@ VideoIntegerScale #(.CHUNK_BITS(CHUNK_BITS), .SCALE_BITS(SCALE_BITS)) integerSca
     .upstreamResponseFifoFull(upstreamResponseFifoFull),
     .upstreamResponseFifoWriteData(upstreamResponseFifoWriteData)
 );
+
+endmodule
