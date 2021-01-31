@@ -1,0 +1,2 @@
+add_subdirectory(bmp2pipelinesrc)
+add_subdirectory(pipelinesink2bmp)
