@@ -209,7 +209,8 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
     
     sink.requestFrame();
 
-    for (unsigned int i = 0; i < 10000; ++i)
+    unsigned int responseNum = 0;
+    for (unsigned int i = 0; i < 2000; ++i)
     {
         _uut.scalerClock = 0;
         
@@ -258,6 +259,12 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
         _uut.eval();
         sink.eval();
         source.eval();
+        
+        if (_uut.upstreamResponseFifoWriteEnable)
+        {
+            printf("Upstream response %u: 0x%04X\n", responseNum, _uut.upstreamResponseFifoWriteData);
+            ++responseNum;
+        }
     }
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_3x.bmp"));

@@ -38,8 +38,6 @@ BmpPipelineSource::~BmpPipelineSource()
 
 void BmpPipelineSource::eval()
 {
-    // Evaluate the generator source module.  This should update hPos, vPos, and dataEnable
-    _source.eval();
     
     if (_source.scalerClock && !_lastScalerClock)
     {
@@ -56,4 +54,9 @@ void BmpPipelineSource::eval()
             _source.b = pixel.blue;
         }
     }
+    
+    // Evaluate the generator source module.  This should update hPos, vPos, and dataEnable
+    _source.eval();
+    
+    _lastScalerClock = _source.scalerClock;
 }

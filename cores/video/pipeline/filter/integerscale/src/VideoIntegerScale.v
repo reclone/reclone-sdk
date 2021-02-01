@@ -421,6 +421,7 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_RESPONSE_READ: begin
                 // Pending downstream response should be available next cycle
                 pendingDownstreamResponseFifoReadEnable <= 1'b0;
+                //TODO downstreamResponseFifoWriteEnable <= 1'b0;
                 downstreamResponseState <= DOWNSTREAM_RESPONSE_STORE;
             end
 
@@ -430,12 +431,14 @@ always @ (posedge scalerClock or posedge reset) begin
                         && !downstreamResponseFifoFull) begin
                     // Copy the cached pixel into the response FIFO
                     downstreamResponseFifoWriteData <= cache[downstreamCacheColumn];
-                    downstreamResponseFifoWriteEnable <= 1'b1;
+                    
                     
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
                     if (downstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                         // Reset pixel counter
                         downstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
+                        // Do not write to response fifo next time
+                        downstreamResponseFifoWriteEnable <= 1'b0;
                         
                         // If there is another pending downstream response
                         if (pendingDownstreamResponseFifoEmpty) begin
@@ -448,7 +451,8 @@ always @ (posedge scalerClock or posedge reset) begin
                             downstreamResponseState <= DOWNSTREAM_RESPONSE_READ;
                         end
                     end else begin
-                        // Not the last pixel in the chunk, so increment pixel counter
+                        // Not the last pixel in the chunk, so increment pixel counter and write to response fifo next time
+                        downstreamResponseFifoWriteEnable <= 1'b1;
                         downstreamResponsePixelCount <= downstreamResponsePixelCount + {{(CHUNK_BITS-1){1'b0}}, 1'b1};
                         
                         // Not the last pixel of the chunk, so do not retrieve the next chunk
