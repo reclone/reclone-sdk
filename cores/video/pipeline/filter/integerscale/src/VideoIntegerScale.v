@@ -108,6 +108,7 @@ wire [HACTIVE_BITS-1:0] requestedColumn = {requestedChunk, {CHUNK_BITS{1'b0}}}; 
 
 reg [VACTIVE_BITS-1:0] cachedRow = {VACTIVE_BITS{1'b1}};
 reg [MAX_CHUNKS_PER_ROW-1:0] cachedChunkValid = {MAX_CHUNKS_PER_ROW{1'b0}};
+reg [MAX_CHUNKS_PER_ROW-1:0] cachedChunkPending = {MAX_CHUNKS_PER_ROW{1'b0}};
 reg [BITS_PER_PIXEL-1:0] cache [0:HACTIVE_COLUMNS-1];
 
 // Lookup table of fractions of 32768, index is denominator (except for index 0 which repeats 1)
@@ -135,7 +136,6 @@ wire [HACTIVE_BITS-1:0] upstreamRequestColumn = divideCoordBy(requestedColumn, h
 /* verilator lint_on UNUSED */
 wire [CHUNKNUM_BITS-1:0] upstreamRequestChunk = upstreamRequestColumn[HACTIVE_BITS-1:CHUNK_BITS];
 wire [REQUEST_BITS-1:0] upstreamRequest = {upstreamRequestRow, upstreamRequestChunk};
-reg [REQUEST_BITS-1:0] lastUpstreamRequest = {REQUEST_BITS{1'b1}};
 
 wire [VACTIVE_BITS-1:0] upstreamResponseRow = pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
 wire [CHUNKNUM_BITS-1:0] upstreamResponseChunk = pendingUpstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
@@ -237,8 +237,8 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamResponseState <= DOWNSTREAM_RESPONSE_IDLE;
         cachedRow <= {VACTIVE_BITS{1'b1}};
         cachedChunkValid <= {MAX_CHUNKS_PER_ROW{1'b0}};
+        cachedChunkPending <= {MAX_CHUNKS_PER_ROW{1'b0}};
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
-        lastUpstreamRequest <= {REQUEST_BITS{1'b1}};
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -271,12 +271,12 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Determine if the required upstream chunk is already cached in the line buffer
                 if (upstreamRequestRow == cachedRow) begin
                     // If we do not already have the requested chunk cached, and we are not repeating the previous request
-                    if (!cachedChunkValid[upstreamRequestChunk] && upstreamRequest != lastUpstreamRequest) begin
+                    if (!cachedChunkValid[upstreamRequestChunk] && !cachedChunkPending[upstreamRequestChunk]) begin
                         // Enqueue the upstream request
                         upstreamRequestFifoWriteData <= upstreamRequest;
                         upstreamRequestFifoWriteEnable <= 1'b1;
-                        // Do not repeat the previous request e.g. if hScaleFactor > 1
-                        lastUpstreamRequest <= upstreamRequest;
+                        // Do not repeat this request while it is in progress
+                        cachedChunkPending[upstreamRequestChunk] <= 1'b1;
                     end
                     
                     // Remember to service the downstream request later, when the pixel data is cached
@@ -305,8 +305,8 @@ always @ (posedge scalerClock or posedge reset) begin
                     upstreamRequestFifoWriteEnable <= 1'b1;
                     // Remember to service the downstream request later, when the pixel data is cached
                     pendingDownstreamResponseFifoWriteEnable <= 1'b1;
-                    // Do not repeat this request e.g. if hScaleFactor > 1
-                    lastUpstreamRequest <= upstreamRequest;
+                    // Do not repeat this request while it is in progress
+                    cachedChunkPending[upstreamRequestChunk] <= 1'b1;
                     
                     downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
                 end
@@ -353,8 +353,9 @@ always @ (posedge scalerClock or posedge reset) begin
                     
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
                     if (upstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
-                        // Mark the current chunk's cache as valid
+                        // Mark the current chunk's cache as valid and no longer pending
                         cachedChunkValid[upstreamResponseChunk] <= 1'b1;
+                        cachedChunkPending[upstreamResponseChunk] <= 1'b0;
                         // Reset pixel counter
                         upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
                         
