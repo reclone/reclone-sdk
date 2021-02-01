@@ -52,11 +52,11 @@ class BmpPipelineSink
         
         void setRequestFifoReadEnable(bool readEnable) { _requestFifoReadEnable = readEnable; }
         bool getRequestFifoEmpty() const { return _requestQueue.empty(); }
-        uint32_t getRequestFifoReadData() const;
+        uint32_t getRequestFifoReadData() const { return _requestFifoReadData; }
         
         void setResponseFifoWriteEnable(bool writeEnable) { _responseFifoWriteEnable = writeEnable; }
         bool getResponseFifoFull() const { return false; }
-        void setResponseFifoWriteData(uint16_t responseData);
+        void setResponseFifoWriteData(uint16_t responseData) { _responseFifoWriteData = responseData; }
         
         void eval();
         void requestFrame();

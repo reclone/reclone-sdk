@@ -2,7 +2,7 @@
 // VideoIntegerScaleTests - Unit tests for verilated VideoIntegerScale module
 //
 //
-// Copyright 2019 Reclone Labs <reclonelabs.com>
+// Copyright 2019 - 2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -29,6 +29,8 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "VVideoIntegerScale.h"
+#include "BmpPipelineSource.h"
+#include "BmpPipelineSink.h"
 
 using namespace ::testing;
 
@@ -181,5 +183,85 @@ TEST_F(VideoIntegerScaleTests, OneRequestOneResponse)
     _vcdTrace.close();
 }
 
+TEST_F(VideoIntegerScaleTests, TestImage3x)
+{
+    _uut.trace(&_vcdTrace, 99);
+    _vcdTrace.open("VideoIntegerScale_TestImage3x.vcd");
+    
+    BmpPipelineSource source;
+    ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
+    
+    BmpPipelineSink sink(source.getWidth()*3, source.getHeight()*3);
+    
+    // Initialize inputs
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    // Scale 3x
+    _uut.hScaleFactor = 3;
+    _uut.vScaleFactor = 3;
+    _uut.downstreamRequestFifoEmpty = 1;
+    _uut.downstreamRequestFifoReadData = 0;
+    _uut.downstreamResponseFifoFull = 0;
+    _uut.upstreamRequestFifoReadEnable = 0;
+    _uut.upstreamResponseFifoWriteEnable = 0;
+    _uut.upstreamResponseFifoWriteData = 0;
+    _uut.eval();
+    
+    sink.requestFrame();
 
+    for (unsigned int i = 0; i < 10000; ++i)
+    {
+        _uut.scalerClock = 0;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        
+        source.setScalerClock(_uut.scalerClock);
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+
+        _vcdTrace.dump(_tickCount++);
+        
+        _uut.eval();
+        sink.eval();
+        source.eval();
+        
+        _uut.scalerClock = 1;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        
+        source.setScalerClock(_uut.scalerClock);
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        _uut.eval();
+        sink.eval();
+        source.eval();
+    }
+
+    ASSERT_TRUE(sink.writeBitmap("openclipart_327413_3x.bmp"));
+    
+    _vcdTrace.close();
+}
 

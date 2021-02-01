@@ -82,9 +82,10 @@ void BmpPipelineSink::eval()
             
             uint32_t frameBufIdx = static_cast<uint32_t>(_vPixels - vPos - 1) * _hPixels + hPos;
             RgbPixel pix;
-            pix.red = (_responseFifoWriteData >> 11) & 0x001F;
-            pix.green = (_responseFifoWriteData >> 5) & 0x003F;
-            pix.blue = _responseFifoWriteData & 0x001F;
+            pix.red = ((_responseFifoWriteData >> 8) & 0xF8) | ((_responseFifoWriteData >> 13) & 0x07);
+            pix.green = ((_responseFifoWriteData >> 3) & 0xFC) | ((_responseFifoWriteData >> 9) & 0x03);
+            pix.blue = ((_responseFifoWriteData << 3) & 0xF8) | ((_responseFifoWriteData >> 2) & 0x07);
+            printf("Pixel at (%u,%u) 0x%04X has red=%u green=%u blue=%u\n", hPos, vPos, _responseFifoWriteData, pix.red, pix.green, pix.blue);
             _frameBuffer[frameBufIdx] = pix;
         }
     }

@@ -24,6 +24,9 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef SCANLINEBUFFER_H_
+#define SCANLINEBUFFER_H_
+
 #include <stdint.h>
 
 class ScanlineBuffer
@@ -45,3 +48,5 @@ class ScanlineBuffer
         
         uint32_t * _frameBuffer;
 };
+
+#endif //SCANLINEBUFFER_H_

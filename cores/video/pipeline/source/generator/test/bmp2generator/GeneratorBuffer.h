@@ -24,6 +24,9 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef GENERATORBUFFER_H_
+#define GENERATORBUFFER_H_
+
 #include <stdint.h>
 
 class GeneratorBuffer
@@ -51,3 +54,5 @@ class GeneratorBuffer
         
         RgbPixel * _frameBuffer;
 };
+
+#endif //GENERATORBUFFER_H_
