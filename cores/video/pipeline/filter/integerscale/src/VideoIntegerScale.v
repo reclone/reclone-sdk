@@ -6,6 +6,8 @@
 // is repeated but never interpolated.  This allows VideoIntegerScale to use just one line buffer
 // to implement the scaling without unnecessary duplication of upstream memory bandwidth.
 //
+// Integer scaling can be used to upscale pixel art while keeping sharp pixel edges.
+//
 // For scaling factors greater than 1x, a very crude scanline effect can optionally be added while
 // scaling horizontally and/or vertically.  All this does is blend the background color into the 
 // first row and/or column of a scaled-up pixel, for a lean but admittedly inaccurate attempt at
@@ -13,10 +15,29 @@
 // color is blended with the pixel color to create the final scanline color.
 //      Enable/disable options: hScanlineEnable, vScanlineEnable
 //      Intensity options: 0 (25% bg color), 1 (50% bg color), 2 (75% bg color), 3 (100% bg color)
+//      Horizontal scanlines: Useful for mimicking the look of "fake progressive" on a CRT
+//      Vertical scanlines: Mimics the look of "fake progressive" with CRT in portrait orientation
+//      Both scanlines: Mimics the look of LCDs that have a small gap between pixels
 //
+// This scaling module is implemented as three state machines that operate in parallel:
+
+//  - Downstream Request State Machine
+//      This state machine watches a FIFO that receives pixel chunk requests from the downstream
+//      pipeline element.  For each downstream request received, an upstream request is created
+//      based on the calculated upstream pixel position, if it has not already been requested.
+//      This state machine also pushes the downstream request into a pending downstream response
+//      FIFO, so that the request is handled later when cached pixel data is available.
 //
+//  - Upstream Response State Machine
+//      This state machine is responsible for copying requested upstream pixel data into the
+//      line cache, and then setting bits in cachedChunkValid to indicate that those pixels are
+//      received and ready to be upscaled.
 //
-// Integer scaling can be used to upscale pixel art while keeping sharp pixel edges.
+//  - Downstream Response State Machine
+//      This state machine actually handles the downstream chunk requests as soon as the required
+//      pixel data is available in the line cache.  For each pixel, once the required
+//      cachedChunkValid bit is set, the pixel color is copied from the cache to the response FIFO,
+//      optionally blending with the backgroundColor for a scanline effect.
 //
 // Assumes 16-bit RGB pixel data (5-6-5 red-green-blue).
 //
