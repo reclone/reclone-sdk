@@ -55,10 +55,10 @@ module VideoIntegerScale #(parameter CHUNK_BITS = 5, SCALE_BITS = 4)
     input wire [SCALE_BITS-1:0] vScaleFactor, // 1 to 15
     
     // Scanline effect configuration
-    //input wire [BITS_PER_PIXEL-1:0] backgroundColor,
+    input wire [BITS_PER_PIXEL-1:0] backgroundColor,
     //input wire hScanlineEnable,
-    //input wire vScanlineEnable,
-    //input wire [1:0] scanlineIntensity, // 0=25%, 1=50%, 2=75%, 3=100%
+    input wire vScanlineEnable,
+    input wire [1:0] scanlineIntensity, // 0=25%, 1=50%, 2=75%, 3=100%
 
     // Filter module reads from the downstream request FIFO...
     output reg downstreamRequestFifoReadEnable = 1'b0,
@@ -151,6 +151,9 @@ wire [VACTIVE_BITS-1:0] downstreamCacheRow  = divideCoordBy(downstreamResponseRo
 wire [HACTIVE_BITS-1:0] downstreamCacheColumn = divideCoordBy(downstreamResponseColumn, hScaleFactor);
 wire [CHUNKNUM_BITS-1:0] downstreamCacheChunk = downstreamCacheColumn[HACTIVE_BITS-1:CHUNK_BITS];
 
+// lastDownstreamCacheColumn is used to detect the first downstream column of a widened pixel (hScaleFactor > 1)
+reg [HACTIVE_BITS-1:0] lastDownstreamCacheColumn = {HACTIVE_BITS{1'b1}};
+
 // upstreamRequests FIFO provides chunk requests to the upstream pipeline element
 reg upstreamRequestFifoWriteEnable = 1'b0;
 wire upstreamRequestFifoFull;
@@ -221,6 +224,65 @@ SyncFifo #(.DATA_WIDTH(REQUEST_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstr
     .writeData(downstreamRequestFifoReadData)
 );
 
+function [BITS_PER_PIXEL-1:0] scanlineBlend;
+    input [BITS_PER_PIXEL-1:0] fgColor;
+    input [BITS_PER_PIXEL-1:0] bgColor;
+    input [1:0] intensity;
+    
+    /* verilator lint_off UNUSED */
+    reg [4:0] fgRed = 5'd0;
+    reg [5:0] fgGreen = 6'd0;
+    reg [4:0] fgBlue = 5'd0;
+    reg [4:0] bgRed = 5'd0;
+    reg [5:0] bgGreen = 6'd0;
+    reg [4:0] bgBlue = 5'd0;
+    /* verilator lint_on UNUSED */
+    
+    reg [4:0] blendedRed = 5'd0;
+    reg [5:0] blendedGreen = 6'd0;
+    reg [4:0] blendedBlue = 5'd0;
+    begin
+        fgRed = fgColor[15:11];
+        fgGreen = fgColor[10:5];
+        fgBlue = fgColor[4:0];
+        bgRed = bgColor[15:11];
+        bgGreen = bgColor[10:5];
+        bgBlue = bgColor[4:0];
+        
+        case (intensity)
+            // 25% background color, 75% foreground color
+            2'b00  : begin
+                blendedRed = {2'b00, bgRed[4:2]} + {1'b0, fgRed[4:1]} + {2'b00, fgRed[4:2]};
+                blendedGreen = {2'b00, bgGreen[5:2]} + {1'b0, fgGreen[5:1]} + {2'b00, fgGreen[5:2]};
+                blendedBlue = {2'b00, bgBlue[4:2]} + {1'b0, fgBlue[4:1]} + {2'b00, fgBlue[4:2]};
+            end
+            
+            // 50% background color, 50% foreground color
+            2'b01  : begin
+                blendedRed = {1'b0, bgRed[4:1]} + {1'b0, fgRed[4:1]};
+                blendedGreen = {1'b0, bgGreen[5:1]} + {1'b0, fgGreen[5:1]};
+                blendedBlue = {1'b0, bgBlue[4:1]} + {1'b0, fgBlue[4:1]};
+            end
+            
+            // 75% background color, 25% foreground color
+            2'b10  : begin
+                blendedRed = {1'b0, bgRed[4:1]} + {2'b00, bgRed[4:2]} + {2'b00, fgRed[4:2]};
+                blendedGreen = {1'b0, bgGreen[5:1]} + {2'b00, bgGreen[5:2]} + {2'b00, fgGreen[5:2]};
+                blendedBlue = {1'b0, bgBlue[4:1]} + {2'b00, bgBlue[4:2]} + {2'b00, fgBlue[4:2]};
+            end
+            
+            // 100% background color
+            default : begin
+                blendedRed = bgRed;
+                blendedGreen = bgGreen;
+                blendedBlue = bgBlue;
+            end
+        endcase
+        
+        scanlineBlend = {blendedRed, blendedGreen, blendedBlue};
+    end
+endfunction
+
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
@@ -239,6 +301,7 @@ always @ (posedge scalerClock or posedge reset) begin
         cachedChunkValid <= {MAX_CHUNKS_PER_ROW{1'b0}};
         cachedChunkPending <= {MAX_CHUNKS_PER_ROW{1'b0}};
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+        lastDownstreamCacheColumn <= {HACTIVE_BITS{1'b1}};
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -436,8 +499,17 @@ always @ (posedge scalerClock or posedge reset) begin
                 // If the source pixel is present in the cache, and the downstream response FIFO is not full
                 if (downstreamCacheRow == cachedRow && cachedChunkValid[downstreamCacheChunk]
                         && !downstreamResponseFifoFull) begin
+                        
                     // Copy the cached pixel into the response FIFO
-                    downstreamResponseFifoWriteData <= cache[downstreamCacheColumn];
+                    if (vScanlineEnable && (lastDownstreamCacheColumn != downstreamCacheColumn)) begin
+                        // This is a vertical scanline pixel, so blend the pixel color with the background color
+                        downstreamResponseFifoWriteData <= scanlineBlend(cache[downstreamCacheColumn], backgroundColor, scanlineIntensity);
+                        lastDownstreamCacheColumn <= downstreamCacheColumn;
+                    end else begin
+                        // Just copy the cached pixel in its entirety
+                        downstreamResponseFifoWriteData <= cache[downstreamCacheColumn];
+                    end
+                    
                     // Write to response fifo next cycle
                     downstreamResponseFifoWriteEnable <= 1'b1;
                     
