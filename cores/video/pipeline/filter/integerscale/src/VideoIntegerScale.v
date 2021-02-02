@@ -21,7 +21,7 @@
 // Assumes 16-bit RGB pixel data (5-6-5 red-green-blue).
 //
 //
-// Copyright 2020 Reclone Labs <reclonelabs.com>
+// Copyright 2020 - 2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -56,7 +56,7 @@ module VideoIntegerScale #(parameter CHUNK_BITS = 5, SCALE_BITS = 4)
     
     // Scanline effect configuration
     input wire [BITS_PER_PIXEL-1:0] backgroundColor,
-    //input wire hScanlineEnable,
+    input wire hScanlineEnable,
     input wire vScanlineEnable,
     input wire [1:0] scanlineIntensity, // 0=25%, 1=50%, 2=75%, 3=100%
 
@@ -153,6 +153,11 @@ wire [CHUNKNUM_BITS-1:0] downstreamCacheChunk = downstreamCacheColumn[HACTIVE_BI
 
 // lastDownstreamCacheColumn is used to detect the first downstream column of a widened pixel (hScaleFactor > 1)
 reg [HACTIVE_BITS-1:0] lastDownstreamCacheColumn = {HACTIVE_BITS{1'b1}};
+
+// lastDownstreamResponseRow and lastDownstreamCacheRow are used to detect the first row of a heightened pixel (vScaleFactor > 1)
+reg [VACTIVE_BITS-1:0] lastDownstreamResponseRow = {VACTIVE_BITS{1'b1}};
+reg [VACTIVE_BITS-1:0] lastDownstreamCacheRow = {VACTIVE_BITS{1'b1}};
+reg hScanlineRow = 1'b0;
 
 // upstreamRequests FIFO provides chunk requests to the upstream pipeline element
 reg upstreamRequestFifoWriteEnable = 1'b0;
@@ -302,6 +307,9 @@ always @ (posedge scalerClock or posedge reset) begin
         cachedChunkPending <= {MAX_CHUNKS_PER_ROW{1'b0}};
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         lastDownstreamCacheColumn <= {HACTIVE_BITS{1'b1}};
+        lastDownstreamResponseRow <= {VACTIVE_BITS{1'b1}};
+        lastDownstreamCacheRow <= {VACTIVE_BITS{1'b1}};
+        hScanlineRow <= 1'b0;
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -505,6 +513,22 @@ always @ (posedge scalerClock or posedge reset) begin
                         // This is a vertical scanline pixel, so blend the pixel color with the background color
                         downstreamResponseFifoWriteData <= scanlineBlend(cache[downstreamCacheColumn], backgroundColor, scanlineIntensity);
                         lastDownstreamCacheColumn <= downstreamCacheColumn;
+                    end else if (hScanlineEnable && (lastDownstreamResponseRow != downstreamResponseRow)) begin
+                        lastDownstreamResponseRow <= downstreamResponseRow;
+                        if (lastDownstreamCacheRow != downstreamCacheRow) begin
+                            // Just detected that we are on a horizontal scanline row
+                            lastDownstreamCacheRow <= downstreamCacheRow;
+                            hScanlineRow <= 1'b1;
+                            // Blend the pixel color with the background color
+                            downstreamResponseFifoWriteData <= scanlineBlend(cache[downstreamCacheColumn], backgroundColor, scanlineIntensity);
+                        end else begin
+                            // No longer on a horizontal scanline row
+                            hScanlineRow <= 1'b0;
+                            downstreamResponseFifoWriteData <= cache[downstreamCacheColumn];
+                        end
+                    end else if (hScanlineEnable && hScanlineRow) begin
+                        // Still on a horizontal scanline row, so blend the pixel color with the background color
+                        downstreamResponseFifoWriteData <= scanlineBlend(cache[downstreamCacheColumn], backgroundColor, scanlineIntensity);
                     end else begin
                         // Just copy the cached pixel in its entirety
                         downstreamResponseFifoWriteData <= cache[downstreamCacheColumn];
