@@ -60,10 +60,10 @@ module AggregateVideoScaler #(parameter CHUNK_BITS = 5, SCALE_BITS = 4)
     input wire [SCALE_BITS-1:0] vScaleFactor, // 1 to 15
     
     // Scanline effect configuration
-    //input wire [BITS_PER_PIXEL-1:0] backgroundColor,
-    //input wire hScanlineEnable,
-    //input wire vScanlineEnable,
-    //input wire [1:0] scanlineIntensity, // 0=25%, 1=50%, 2=75%, 3=100%
+    input wire [BITS_PER_PIXEL-1:0] backgroundColor,
+    input wire hScanlineEnable,
+    input wire vScanlineEnable,
+    input wire [1:0] scanlineIntensity, // 0=25%, 1=50%, 2=75%, 3=100%
 
     // Filter module reads from the downstream request FIFO...
     output reg downstreamRequestFifoReadEnable = 1'b0,
@@ -100,6 +100,10 @@ VideoIntegerScale #(.CHUNK_BITS(CHUNK_BITS), .SCALE_BITS(SCALE_BITS)) integerSca
     .reset(reset),
     .hScaleFactor(hScaleFactor),
     .vScaleFactor(vScaleFactor),
+    .backgroundColor(backgroundColor),
+    .hScanlineEnable(hScanlineEnable),
+    .vScanlineEnable(vScanlineEnable),
+    .scanlineIntensity(scanlineIntensity),
     .downstreamRequestFifoReadEnable(downstreamRequestFifoReadEnable),
     .downstreamRequestFifoEmpty(downstreamRequestFifoEmpty),
     .downstreamRequestFifoReadData(downstreamRequestFifoReadData),

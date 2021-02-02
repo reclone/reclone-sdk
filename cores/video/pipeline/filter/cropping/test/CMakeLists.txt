@@ -1,0 +1,8 @@
+configure_file(openclipart_327550.bmp ${CMAKE_BINARY_DIR}/openclipart_327550.bmp COPYONLY)
+configure_file(openclipart_327550.bmp ${CMAKE_CURRENT_BINARY_DIR}/openclipart_327550.bmp COPYONLY)
+
+add_executable(testVideoCroppingFilter VideoCroppingFilterTests.cpp)
+
+target_link_libraries(testVideoCroppingFilter VVideoCroppingFilter pipelinesink2bmp bmp2pipelinesrc gtest gmock_main gmock)
+
+add_test(NAME testVideoCroppingFilter COMMAND testVideoCroppingFilter)

@@ -25,7 +25,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdint.h>
-#include "VVideoGeneratorSource.h"
+#include <queue>
 #include "GeneratorBuffer.h"
 
 class BmpPipelineSource
@@ -38,21 +38,36 @@ class BmpPipelineSource
         int32_t getWidth() const { return _buffer.getWidth(); }
         int32_t getHeight() const { return _buffer.getHeight(); }
         
-        void setScalerClock(bool clock) { _lastScalerClock = _source.scalerClock; _source.scalerClock = clock; }
+        void setScalerClock(bool clock) { _scalerClock = clock; }
         
-        bool getRequestFifoReadEnable() { return _source.requestFifoReadEnable; }
-        void setRequestFifoEmpty(bool fifoEmpty) { _source.requestFifoEmpty = fifoEmpty; }
-        void setRequestFifoReadData(uint16_t readData) { _source.requestFifoReadData = readData; }
+        bool getRequestFifoReadEnable() const { return _requestFifoReadEnable; }
+        void setRequestFifoEmpty(bool fifoEmpty) { _requestFifoEmpty = fifoEmpty; }
+        void setRequestFifoReadData(uint32_t readData) { _requestFifoReadData = readData; }
         
-        bool getResponseFifoWriteEnable() { return _source.responseFifoWriteEnable; }
-        void setResponseFifoFull(bool fifoFull) { _source.responseFifoFull = fifoFull; }
-        uint16_t getResponseFifoWriteData() { return _source.responseFifoWriteData; }
+        bool getResponseFifoWriteEnable() const { return _responseFifoWriteEnable; }
+        void setResponseFifoFull(bool fifoFull) { _responseFifoFull = fifoFull; }
+        uint16_t getResponseFifoWriteData() const { return _responseFifoWriteData; }
         
         void eval();
 
     private:
-        VVideoGeneratorSource _source;
+        static const unsigned int VACTIVE_BITS = 11U;
+        static const unsigned int CHUNKNUM_BITS = 6U;
+        static const unsigned int CHUNK_SIZE = 32U;
+    
         GeneratorBuffer _buffer;
         
+        bool _scalerClock;
         bool _lastScalerClock;
+        
+        std::queue<uint16_t> _responseQueue;
+        
+        bool _requestFifoReadEnable;
+        bool _requestFifoEmpty;
+        uint32_t _requestFifoReadData;
+        bool _responseFifoWriteEnable;
+        bool _responseFifoFull;
+        uint16_t _responseFifoWriteData;
+        
+        
 };

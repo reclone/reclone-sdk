@@ -24,9 +24,18 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <stdio.h>
 #include "BmpPipelineSource.h"
 
-BmpPipelineSource::BmpPipelineSource() : _lastScalerClock(false)
+BmpPipelineSource::BmpPipelineSource() :
+    _scalerClock(false),
+    _lastScalerClock(false),
+    _requestFifoReadEnable(false),
+    _requestFifoEmpty(true),
+    _requestFifoReadData(0),
+    _responseFifoWriteEnable(false),
+    _responseFifoFull(false),
+    _responseFifoWriteData(0)
 {
     
 }
@@ -38,25 +47,43 @@ BmpPipelineSource::~BmpPipelineSource()
 
 void BmpPipelineSource::eval()
 {
-    
-    if (_source.scalerClock && !_lastScalerClock)
+    if (_scalerClock && !_lastScalerClock)
     {
         // Rising edge of scaler clock
-        // Update dataEnableDelayed
-        _source.dataEnableDelayed = _source.dataEnable;
         
-        if (_source.dataEnable)
+        if (_requestFifoReadEnable)
         {
-            // Get RGB data for the selected pixel
-            GeneratorBuffer::RgbPixel pixel = _buffer.getPixel(_source.hPos, _source.vPos);
-            _source.r = pixel.red;
-            _source.g = pixel.green;
-            _source.b = pixel.blue;
+            // Should be a new request available on _requestFifoReadData, so handle it
+            // Get the row and chunk numbers
+            uint32_t row = _requestFifoReadData >> CHUNKNUM_BITS;
+            uint32_t chunk = _requestFifoReadData & ((1 << CHUNKNUM_BITS) - 1);
+            //printf("Row %u, chunk %u\n", row, chunk);
+            
+            // For each pixel in the chunk, push its color value into the response queue
+            for (uint32_t col = chunk * CHUNK_SIZE; col < (chunk+1) * CHUNK_SIZE; ++col)
+            {
+                //printf("(%u,%u)\n", col, row);
+                GeneratorBuffer::RgbPixel pix = _buffer.getPixel(col, row);
+                _responseQueue.push(((pix.red >> 3) << 11) | ((pix.green >> 2) << 5) | (pix.blue >> 3));
+            }
+        }
+        
+        // If the request FIFO is not empty, read the next request
+        _requestFifoReadEnable = !_requestFifoEmpty;
+        
+        // If the response FIFO is not empty, and the downstream response FIFO is not full,
+        // then write the next response
+        if (!_responseQueue.empty() && !_responseFifoFull)
+        {
+            _responseFifoWriteData = _responseQueue.front();
+            _responseFifoWriteEnable = true;
+            _responseQueue.pop();
+        }
+        else
+        {
+            _responseFifoWriteEnable = false;
         }
     }
     
-    // Evaluate the generator source module.  This should update hPos, vPos, and dataEnable
-    _source.eval();
-    
-    _lastScalerClock = _source.scalerClock;
+    _lastScalerClock = _scalerClock;
 }

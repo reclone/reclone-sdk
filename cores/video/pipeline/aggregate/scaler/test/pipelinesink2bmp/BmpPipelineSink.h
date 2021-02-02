@@ -62,9 +62,9 @@ class BmpPipelineSink
         void requestFrame();
     
     private:
-        const unsigned int VACTIVE_BITS = 11U;
-        const unsigned int CHUNKNUM_BITS = 6U;
-        const unsigned int CHUNK_SIZE = 32U;
+        static const unsigned int VACTIVE_BITS = 11U;
+        static const unsigned int CHUNKNUM_BITS = 6U;
+        static const unsigned int CHUNK_SIZE = 32U;
     
         uint32_t _hPixels;
         uint32_t _vPixels;
