@@ -224,49 +224,60 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -317,49 +328,60 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -410,49 +432,60 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarkest)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -503,49 +536,60 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarker)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -596,49 +640,60 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesMedium)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -689,49 +744,60 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesLight)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -782,49 +848,60 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarkest)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -875,49 +952,60 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarker)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -968,49 +1056,60 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesMedium)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -1061,49 +1160,60 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesLight)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -1154,49 +1264,60 @@ TEST_F(VideoIntegerScaleTests, TestImageBothScanlinesMedium)
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-
-        _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
         source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
         sink.setScalerClock(_uut.scalerClock);
         sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
-        
-        source.setScalerClock(_uut.scalerClock);
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
         
         _vcdTrace.dump(_tickCount++);
-        
-        _uut.eval();
-        sink.eval();
-        source.eval();
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
