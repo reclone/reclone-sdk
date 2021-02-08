@@ -16,7 +16,9 @@
 //          |
 //          --> VideoNonIntegerScale
 //              |
-//              --> VideoPaddingFilter
+//              --> VideoCroppingFilter
+//                  |
+//                  --> VideoPaddingFilter
 //
 // Here are some use cases that this aggregate scaler element should be able to handle:
 //  - Upscaling low-resolution video content for rendering on higher-resolution displays

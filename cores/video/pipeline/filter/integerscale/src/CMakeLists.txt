@@ -6,7 +6,7 @@ add_custom_command (
           VVideoIntegerScale__Syms.h
           VVideoIntegerScale__Trace.cpp
           VVideoIntegerScale__Trace__Slow.cpp
-  DEPENDS VideoIntegerScale.v
+  DEPENDS VideoIntegerScale.v ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
   COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
     ${CMAKE_CURRENT_SOURCE_DIR}/VideoIntegerScale.v
     ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v

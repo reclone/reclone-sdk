@@ -20,7 +20,7 @@
 //      Both scanlines: Mimics the look of LCDs that have a small gap between pixels
 //
 // This scaling module is implemented as three state machines that operate in parallel:
-
+//
 //  - Downstream Request State Machine
 //      This state machine watches a FIFO that receives pixel chunk requests from the downstream
 //      pipeline element.  For each downstream request received, an upstream request is created
