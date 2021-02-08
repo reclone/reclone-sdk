@@ -1,0 +1,8 @@
+configure_file(openclipart_327895.bmp ${CMAKE_BINARY_DIR}/openclipart_327895.bmp COPYONLY)
+configure_file(openclipart_327895.bmp ${CMAKE_CURRENT_BINARY_DIR}/openclipart_327895.bmp COPYONLY)
+
+add_executable(testVideoPaddingFilter VideoPaddingFilterTests.cpp)
+
+target_link_libraries(testVideoPaddingFilter VVideoPaddingFilter pipelinesink2bmp bmp2pipelinesrc gtest gmock_main gmock)
+
+add_test(NAME testVideoPaddingFilter COMMAND testVideoPaddingFilter)

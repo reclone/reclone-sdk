@@ -29,9 +29,8 @@
 //
 //  - Downstream Response State Machine
 //      This state machine actually handles the downstream chunk requests as soon as the required
-//      pixel data is available in the line cache.  For each pixel, once the required
-//      cachedChunkValid bit is set, the pixel color is copied from the cache to the response FIFO,
-//      optionally blending with the backgroundColor for a scanline effect.
+//      pixel data is available.  For each pixel, if the chunk is inside the source video rectangle,
+//      write the upstream response to the downstream response, otherwise write the padding color.
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
 //
@@ -257,10 +256,6 @@ always @ (posedge scalerClock or posedge reset) begin
                         downstreamResponseChunk >= padLeftChunks &&
                         downstreamResponseChunk < (padLeftChunks + sourceChunks)) begin
                         
-                        // If downstream response fifo is not full, show our upstream response "fifo"
-                        // as not full, so we can start receiving response pixels
-                        upstreamResponseFifoFull <= 1'b0;
-                        
                         // If the upstream element is writing a response
                         if (!upstreamResponseFifoFull && upstreamResponseFifoWriteEnable) begin
                             // Write it to the downstream response
@@ -272,6 +267,8 @@ always @ (posedge scalerClock or posedge reset) begin
                             if (downstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                                 // Reset pixel counter
                                 downstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
+                                // Do not receive another response from upstream next cycle
+                                upstreamResponseFifoFull <= 1'b1;
                                 
                                 // If there is no pending downstream response
                                 if (pendingDownstreamResponseFifoEmpty) begin
@@ -291,7 +288,11 @@ always @ (posedge scalerClock or posedge reset) begin
                                 pendingDownstreamResponseFifoReadEnable <= 1'b0;
                             end
                         end else begin
+                            // Do not write a downstream response
                             downstreamResponseFifoWriteEnable <= 1'b0;
+                            // Since downstream response fifo is not full, show our upstream response "fifo"
+                            // as not full, so we can start receiving response pixels
+                            upstreamResponseFifoFull <= 1'b0;
                         end
                     end else begin
                         // This downstream chunk is padding
