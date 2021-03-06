@@ -7662,7 +7662,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
 <part name="BUSPWR" library="reclone-rise" deviceset="M1X02" device=""/>
-<part name="BOOT" library="reclone-rise" deviceset="PTS636" device=""/>
+<part name="DFU" library="reclone-rise" deviceset="PTS636" device=""/>
 <part name="RESET" library="reclone-rise" deviceset="PTS636" device=""/>
 </parts>
 <sheets>
@@ -7888,19 +7888,19 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" x="180.34" y="246.38" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
 <instance part="SUPPLY7" gate="GND" x="187.96" y="236.22"/>
-<instance part="R37" gate="G$1" x="297.18" y="218.44" smashed="yes">
-<attribute name="NAME" x="291.338" y="216.3826" size="1.778" layer="95"/>
-<attribute name="VALUE" x="299.466" y="218.694" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="297.18" y="218.44" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="297.18" y="218.44" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="297.18" y="218.44" size="1.778" layer="96" display="off"/>
+<instance part="R37" gate="G$1" x="297.18" y="218.44" smashed="yes" rot="R180">
+<attribute name="NAME" x="303.022" y="220.4974" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="294.894" y="218.186" size="1.778" layer="96" rot="R180"/>
+<attribute name="DIGIKEY#" x="297.18" y="218.44" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="297.18" y="218.44" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="297.18" y="218.44" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="R38" gate="G$1" x="297.18" y="215.9" smashed="yes">
-<attribute name="NAME" x="291.338" y="213.8426" size="1.778" layer="95"/>
-<attribute name="VALUE" x="299.466" y="216.154" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="297.18" y="215.9" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="297.18" y="215.9" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="297.18" y="215.9" size="1.778" layer="96" display="off"/>
+<instance part="R38" gate="G$1" x="297.18" y="215.9" smashed="yes" rot="R180">
+<attribute name="NAME" x="303.022" y="217.9574" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="294.894" y="215.646" size="1.778" layer="96" rot="R180"/>
+<attribute name="DIGIKEY#" x="297.18" y="215.9" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="297.18" y="215.9" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="297.18" y="215.9" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="R39" gate="G$1" x="297.18" y="210.82" smashed="yes">
 <attribute name="NAME" x="291.338" y="208.7626" size="1.778" layer="95"/>
@@ -8215,7 +8215,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" x="208.28" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="BUSPWR" gate="G$1" x="76.2" y="231.14" rot="R270"/>
-<instance part="BOOT" gate="G$1" x="233.68" y="236.22" rot="MR0"/>
+<instance part="DFU" gate="G$1" x="233.68" y="236.22" rot="MR0"/>
 <instance part="RESET" gate="G$1" x="121.92" y="17.78" smashed="yes" rot="MR0">
 <attribute name="NAME" x="124.46" y="15.24" size="1.778" layer="95" rot="MR0"/>
 </instance>
@@ -8744,7 +8744,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </segment>
 <segment>
 <pinref part="+3V22" gate="G$1" pin="+3V3"/>
-<pinref part="BOOT" gate="G$1" pin="A"/>
+<pinref part="DFU" gate="G$1" pin="A"/>
 <wire x1="238.76" y1="236.22" x2="243.84" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="243.84" y1="236.22" x2="243.84" y2="241.3" width="0.1524" layer="91"/>
 </segment>
@@ -8954,7 +8954,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <junction x="226.06" y="231.14"/>
 <pinref part="MCU" gate="_PWR" pin="BOOT0"/>
 <label x="228.6" y="231.14" size="1.778" layer="95"/>
-<pinref part="BOOT" gate="G$1" pin="B"/>
+<pinref part="DFU" gate="G$1" pin="B"/>
 <wire x1="226.06" y1="236.22" x2="228.6" y2="236.22" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -9034,7 +9034,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <label x="48.26" y="233.68" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R38" gate="G$1" pin="2"/>
+<pinref part="R38" gate="G$1" pin="1"/>
 <wire x1="304.8" y1="215.9" x2="302.26" y2="215.9" width="0.1524" layer="91"/>
 <label x="304.8" y="215.9" size="1.778" layer="95"/>
 </segment>
@@ -9046,7 +9046,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <label x="48.26" y="231.14" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R37" gate="G$1" pin="2"/>
+<pinref part="R37" gate="G$1" pin="1"/>
 <wire x1="302.26" y1="218.44" x2="304.8" y2="218.44" width="0.1524" layer="91"/>
 <label x="304.8" y="218.44" size="1.778" layer="95"/>
 </segment>
@@ -9091,14 +9091,14 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="R37" gate="G$1" pin="1"/>
+<pinref part="R37" gate="G$1" pin="2"/>
 <wire x1="289.56" y1="218.44" x2="292.1" y2="218.44" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_USB" pin="USB_FS_DP"/>
 </segment>
 </net>
 <net name="N$2" class="0">
 <segment>
-<pinref part="R38" gate="G$1" pin="1"/>
+<pinref part="R38" gate="G$1" pin="2"/>
 <wire x1="289.56" y1="215.9" x2="292.1" y2="215.9" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_USB" pin="USB_FS_DM"/>
 </segment>
