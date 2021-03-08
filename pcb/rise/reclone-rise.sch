@@ -852,17 +852,19 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <text x="-1.6" y="-1.1" size="0.8" layer="27" font="vector" ratio="19" align="top-left">&gt;VALUE</text>
 <text x="-1.6" y="1.1" size="0.8" layer="27" font="vector" ratio="19">&gt;NAME</text>
 </package>
-<package name="60-FBGA-8X10">
-<wire x1="-4" y1="-5" x2="-4" y2="5" width="0.127" layer="21"/>
-<wire x1="-4" y1="5" x2="-1.025" y2="5" width="0.127" layer="21"/>
-<wire x1="-1.025" y1="5" x2="1.025" y2="5" width="0.127" layer="21"/>
-<wire x1="1.025" y1="5" x2="4" y2="5" width="0.127" layer="21"/>
-<wire x1="4" y1="5" x2="4" y2="-5" width="0.127" layer="21"/>
-<wire x1="4" y1="-5" x2="1.025" y2="-5" width="0.127" layer="21"/>
-<wire x1="1.025" y1="-5" x2="-1.025" y2="-5" width="0.127" layer="21"/>
-<wire x1="-1.025" y1="-5" x2="-4" y2="-5" width="0.127" layer="21"/>
-<wire x1="1.025" y1="5" x2="1.025" y2="-5" width="0.127" layer="21"/>
-<wire x1="-1.025" y1="5" x2="-1.025" y2="-5" width="0.127" layer="21"/>
+<package name="60-FBGA-9X11.5">
+<wire x1="-4.5" y1="-5.75" x2="-4.5" y2="5.25" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="5.25" x2="-4.5" y2="5.75" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="5.75" x2="-4" y2="5.75" width="0.127" layer="21"/>
+<wire x1="-4" y1="5.75" x2="-1.025" y2="5.75" width="0.127" layer="21"/>
+<wire x1="-1.025" y1="5.75" x2="1.025" y2="5.75" width="0.127" layer="21"/>
+<wire x1="1.025" y1="5.75" x2="4.5" y2="5.75" width="0.127" layer="21"/>
+<wire x1="4.5" y1="5.75" x2="4.5" y2="-5.75" width="0.127" layer="21"/>
+<wire x1="4.5" y1="-5.75" x2="1.025" y2="-5.75" width="0.127" layer="21"/>
+<wire x1="1.025" y1="-5.75" x2="-1.025" y2="-5.75" width="0.127" layer="21"/>
+<wire x1="-1.025" y1="-5.75" x2="-4.5" y2="-5.75" width="0.127" layer="21"/>
+<wire x1="1.025" y1="5.75" x2="1.025" y2="-5.75" width="0.127" layer="21"/>
+<wire x1="-1.025" y1="5.75" x2="-1.025" y2="-5.75" width="0.127" layer="21"/>
 <smd name="F7" x="1.6" y="0" dx="0.34" dy="0.34" layer="1" roundness="100"/>
 <smd name="F8" x="2.4" y="0" dx="0.34" dy="0.34" layer="1" roundness="100"/>
 <smd name="F9" x="3.2" y="0" dx="0.34" dy="0.34" layer="1" roundness="100"/>
@@ -923,9 +925,26 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="G1" x="-3.2" y="-0.8" dx="0.34" dy="0.34" layer="1" roundness="100"/>
 <smd name="G2" x="-2.4" y="-0.8" dx="0.34" dy="0.34" layer="1" roundness="100"/>
 <smd name="G3" x="-1.6" y="-0.8" dx="0.34" dy="0.34" layer="1" roundness="100"/>
-<text x="-4.25" y="-5" size="0.8" layer="27" font="vector" ratio="19" rot="R90">&gt;VALUE</text>
-<text x="-3.75" y="5.25" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
+<text x="-4.75" y="-5.25" size="0.8" layer="27" font="vector" ratio="19" rot="R90">&gt;VALUE</text>
+<text x="-4.45" y="6" size="0.8" layer="25" font="vector" ratio="19">&gt;NAME</text>
 <circle x="-3.2" y="4" radius="0.4" width="0.1" layer="21"/>
+<wire x1="4" y1="-5.25" x2="4" y2="-5" width="0.127" layer="21"/>
+<wire x1="4" y1="-5" x2="4" y2="-4" width="0.127" layer="21"/>
+<wire x1="3" y1="-5.25" x2="4" y2="-5.25" width="0.127" layer="21"/>
+<wire x1="3" y1="-5" x2="4" y2="-5" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="5.25" x2="-4" y2="5.75" width="0.127" layer="21"/>
+<wire x1="-4" y1="-5.25" x2="-3" y2="-5.25" width="0.127" layer="21"/>
+<wire x1="-4" y1="-5" x2="-3" y2="-5" width="0.127" layer="21"/>
+<wire x1="-4" y1="-5" x2="-4" y2="-4" width="0.127" layer="21"/>
+<wire x1="-4" y1="-5.25" x2="-4" y2="-5" width="0.127" layer="21"/>
+<wire x1="-4" y1="5.25" x2="-3" y2="5.25" width="0.127" layer="21"/>
+<wire x1="-4" y1="5" x2="-3" y2="5" width="0.127" layer="21"/>
+<wire x1="-4" y1="5" x2="-4" y2="5.25" width="0.127" layer="21"/>
+<wire x1="-4" y1="4" x2="-4" y2="5" width="0.127" layer="21"/>
+<wire x1="3" y1="5.25" x2="4" y2="5.25" width="0.127" layer="21"/>
+<wire x1="3" y1="5" x2="4" y2="5" width="0.127" layer="21"/>
+<wire x1="4" y1="4" x2="4" y2="5" width="0.127" layer="21"/>
+<wire x1="4" y1="5" x2="4" y2="5.25" width="0.127" layer="21"/>
 </package>
 <package name="OSC-5X3.2">
 <smd name="4" x="-1.27" y="1.125" dx="1.24" dy="1.29" layer="1"/>
@@ -1025,16 +1044,27 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <wire x1="3.8" y1="7.7" x2="4.6" y2="7.7" width="0.127" layer="21"/>
 <wire x1="5.65" y1="5.2" x2="5.65" y2="6.2" width="0.127" layer="21"/>
 </package>
-<package name="PB_TACT_SMT_4.5X4.5">
-<smd name="4" x="3.6" y="1.5" dx="1.6" dy="1.4" layer="1"/>
-<smd name="2" x="3.6" y="-1.5" dx="1.6" dy="1.4" layer="1"/>
-<smd name="3" x="-3.6" y="1.5" dx="1.6" dy="1.4" layer="1"/>
-<smd name="1" x="-3.6" y="-1.5" dx="1.6" dy="1.4" layer="1"/>
-<wire x1="-2.25" y1="2.25" x2="2.25" y2="2.25" width="0.127" layer="21"/>
-<wire x1="-2.25" y1="-2.25" x2="2.25" y2="-2.25" width="0.127" layer="21"/>
-<wire x1="2.25" y1="2.25" x2="2.25" y2="-2.25" width="0.127" layer="21"/>
-<wire x1="-2.25" y1="2.25" x2="-2.25" y2="-2.25" width="0.127" layer="21"/>
-<text x="-4.8" y="-2.2" size="0.8" layer="25" font="vector" ratio="19" rot="R90">&gt;NAME</text>
+<package name="PB_TACT_PTH_6X6">
+<pad name="1" x="3.25" y="2.25" drill="1"/>
+<pad name="2" x="3.25" y="-2.25" drill="1"/>
+<pad name="4" x="-3.25" y="-2.25" drill="1"/>
+<pad name="3" x="-3.25" y="2.25" drill="1"/>
+<wire x1="-2.5" y1="3" x2="2.5" y2="3" width="0.127" layer="21"/>
+<wire x1="-3" y1="1.25" x2="-3" y2="-1.25" width="0.127" layer="21"/>
+<wire x1="-2.5" y1="-3" x2="2.5" y2="-3" width="0.127" layer="21"/>
+<wire x1="3" y1="1.25" x2="3" y2="-1.25" width="0.127" layer="21"/>
+<text x="-3" y="-3.25" size="0.8" layer="25" font="vector" ratio="19" align="top-left">&gt;NAME</text>
+<wire x1="-2.25" y1="-2.25" x2="-1.75" y2="-2.25" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="-2.25" x2="-1.75" y2="0" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="0" x2="-1.75" y2="2.25" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="2.25" x2="-2.25" y2="2.25" width="0.127" layer="21"/>
+<wire x1="2.25" y1="-2.25" x2="1.75" y2="-2.25" width="0.127" layer="21"/>
+<wire x1="1.75" y1="-2.25" x2="1.75" y2="0" width="0.127" layer="21"/>
+<wire x1="1.75" y1="0" x2="1.75" y2="2.25" width="0.127" layer="21"/>
+<wire x1="1.75" y1="2.25" x2="2.25" y2="2.25" width="0.127" layer="21"/>
+<wire x1="-1.75" y1="0" x2="-0.75" y2="0" width="0.127" layer="21"/>
+<wire x1="1.75" y1="0" x2="0.75" y2="0" width="0.127" layer="21"/>
+<wire x1="-0.75" y1="0" x2="0.75" y2="0.75" width="0.127" layer="21"/>
 </package>
 <package name="MEANDER_ANTENNA_2.4GHZ">
 <rectangle x1="-2.8" y1="0.5" x2="-2.3" y2="4.9" layer="1" rot="R180"/>
@@ -1056,14 +1086,14 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 <smd name="GND" x="-0.45" y="0.25" dx="0.9" dy="0.5" layer="1" stop="no" cream="no"/>
 </package>
 <package name="CRYSTAL-32KHZ-SMD">
-<smd name="4" x="-2.75" y="1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
-<smd name="1" x="-2.75" y="-1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
-<smd name="NC2" x="2.75" y="-1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
-<smd name="NC3" x="2.75" y="1.6" dx="1.5" dy="1.3" layer="1" rot="R90"/>
-<wire x1="-4" y1="1.9" x2="4" y2="1.9" width="0.127" layer="21"/>
-<wire x1="-4" y1="-1.9" x2="4" y2="-1.9" width="0.127" layer="21"/>
-<wire x1="4" y1="1.9" x2="4" y2="-1.9" width="0.127" layer="21"/>
-<wire x1="-4" y1="1.9" x2="-4" y2="-1.9" width="0.127" layer="21"/>
+<smd name="4" x="-2.75" y="1.6" dx="1.9" dy="1.3" layer="1" rot="R90"/>
+<smd name="1" x="-2.75" y="-1.6" dx="1.9" dy="1.3" layer="1" rot="R90"/>
+<smd name="NC2" x="2.75" y="-1.6" dx="1.9" dy="1.3" layer="1" rot="R90"/>
+<smd name="NC3" x="2.75" y="1.6" dx="1.9" dy="1.3" layer="1" rot="R90"/>
+<wire x1="-4.35" y1="1.9" x2="4.35" y2="1.9" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="-1.9" x2="4.35" y2="-1.9" width="0.127" layer="21"/>
+<wire x1="4.35" y1="1.9" x2="4.35" y2="-1.9" width="0.127" layer="21"/>
+<wire x1="-4.35" y1="1.9" x2="-4.35" y2="-1.9" width="0.127" layer="21"/>
 <wire x1="1.9" y1="-1" x2="1.5" y2="-1" width="0.127" layer="21"/>
 <wire x1="1.5" y1="-1" x2="1.5" y2="1" width="0.127" layer="21"/>
 <wire x1="1.5" y1="1" x2="1.9" y2="1" width="0.127" layer="21"/>
@@ -2590,12 +2620,12 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="AS4C128M8D2">
+<deviceset name="DDR2_X8">
 <gates>
 <gate name="G$1" symbol="DDR2_128MX8" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="60-FBGA-8X10">
+<device name="" package="60-FBGA-9X11.5">
 <connects>
 <connect gate="G$1" pin="A0" pad="H8"/>
 <connect gate="G$1" pin="A1" pad="H3"/>
@@ -2772,15 +2802,15 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="P010471">
+<deviceset name="SPST_TACT_6X6">
 <gates>
-<gate name="G$1" symbol="SPST_NO" x="0" y="0"/>
+<gate name="SW$1" symbol="SPST_NO" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="PB_TACT_SMT_4.5X4.5">
+<device name="" package="PB_TACT_PTH_6X6">
 <connects>
-<connect gate="G$1" pin="A" pad="1"/>
-<connect gate="G$1" pin="B" pad="3"/>
+<connect gate="SW$1" pin="A" pad="1"/>
+<connect gate="SW$1" pin="B" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -2907,9 +2937,9 @@ Used for STM32F417VGT6&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="DIGIKEY#" value="497-11605-ND"/>
+<attribute name="DIGIKEY#" value="497-11910-ND"/>
 <attribute name="MANF" value="STMicroelectronics"/>
-<attribute name="MANF#" value="STM32F407VGT6"/>
+<attribute name="MANF#" value="STM32F405VGT6"/>
 </technology>
 </technologies>
 </device>
@@ -6957,7 +6987,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10029449-111RLF"/>
 </part>
-<part name="PERIPH" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
+<part name="DEVICE" library="reclone-rise" deviceset="USB-MICRO-B-SMD" device="">
 <attribute name="DIGIKEY#" value="609-4618-1-ND"/>
 <attribute name="MANF" value="FCI"/>
 <attribute name="MANF#" value="10118194-0001LF"/>
@@ -6978,9 +7008,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </part>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 <part name="A/V" library="reclone-rise" deviceset="AV-JACK-4COND" device="">
-<attribute name="DIGIKEY#" value="CP-43514SJCT-ND"/>
-<attribute name="MANF" value="CUI Inc."/>
-<attribute name="MANF#" value="SJ-43514-SMT-TR"/>
+<attribute name="DIGIKEY#" value="CP-43516SJCT-ND"/>
+<attribute name="MANF" value="CUI Devices"/>
+<attribute name="MANF#" value="SJ-43516-SMT-TR"/>
 </part>
 <part name="P+3" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY12" library="supply2" deviceset="GND" device=""/>
@@ -7034,16 +7064,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="SUPPLY28" library="supply2" deviceset="GND" device=""/>
 <part name="+3V23" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY29" library="supply2" deviceset="GND" device=""/>
-<part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="2u2">
-<attribute name="DIGIKEY#" value="1276-2017-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10B225KQ8NFNC"/>
-</part>
-<part name="C13" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="2u2">
-<attribute name="DIGIKEY#" value="1276-2017-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10B225KQ8NFNC"/>
-</part>
 <part name="SUPPLY26" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY27" library="supply2" deviceset="GND" device=""/>
 <part name="P+7" library="supply1" deviceset="+5V" device=""/>
@@ -7058,7 +7078,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-07160RL"/>
 </part>
 <part name="SUPPLY30" library="supply2" deviceset="GND" device=""/>
-<part name="F1" library="reclone-rise" deviceset="POLYFUSE" device="">
+<part name="FUSE" library="reclone-rise" deviceset="POLYFUSE" device="">
 <attribute name="DIGIKEY#" value="MF-NSMF150-2CT-ND"/>
 <attribute name="MANF" value="Bourns Inc."/>
 <attribute name="MANF#" value="MF-NSMF150-2"/>
@@ -7342,10 +7362,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="Murata Electronics North America"/>
 <attribute name="MANF#" value="GRM31CR60J107ME39K"/>
 </part>
-<part name="RAM" library="reclone-rise" deviceset="AS4C128M8D2" device="">
-<attribute name="DIGIKEY#" value="1450-1141-ND"/>
-<attribute name="MANF" value="Alliance Memory, Inc."/>
-<attribute name="MANF#" value="AS4C128M8D2-25BCN"/>
+<part name="RAM" library="reclone-rise" deviceset="DDR2_X8" device="">
+<attribute name="DIGIKEY#" value="706-1574-ND"/>
+<attribute name="MANF" value="ISSI, Integrated Silicon Solution Inc"/>
+<attribute name="MANF#" value="IS43DR81280C-25DBL"/>
 </part>
 <part name="R20" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
 <attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
@@ -7430,7 +7450,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </part>
 <part name="MICROSD" library="reclone-rise" deviceset="MICROSD_PUSHPULL" device="">
 <attribute name="DIGIKEY#" value="WM14405CT-ND"/>
-<attribute name="MANF" value="Molex, LLC"/>
+<attribute name="MANF" value="Molex"/>
 <attribute name="MANF#" value="1051620001"/>
 </part>
 <part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47K">
@@ -7517,9 +7537,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="CL10A475MP5LNNC"/>
 </part>
 <part name="RTC" library="reclone-rise" deviceset="CRYSTAL" device="" value="32K768">
-<attribute name="DIGIKEY#" value="XC1195CT-ND"/>
-<attribute name="MANF" value="ECS Inc."/>
-<attribute name="MANF#" value="ECS-.327-12.5-17X-TR"/>
+<attribute name="DIGIKEY#" value="370-1056-1-ND"/>
+<attribute name="MANF" value="Cardinal Components Inc."/>
+<attribute name="MANF#" value="CPFBZ-A2C4-32.768KD12.5"/>
 </part>
 <part name="VREG12" library="reclone-rise" deviceset="AP3429A" device="" value=" AP3429AKTTR-G1">
 <attribute name="DIGIKEY#" value="AP3429AKTTR-G1DICT-ND"/>
@@ -7599,18 +7619,34 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CIGT201610LH2R2MNE"/>
 </part>
-<part name="USER" library="reclone-rise" deviceset="P010471" device="">
-<attribute name="DIGIKEY#" value="EG5353CT-ND"/>
-<attribute name="MANF" value="E-Switch"/>
-<attribute name="MANF#" value="TL3305AF260QG"/>
+<part name="USER" library="reclone-rise" deviceset="SPST_TACT_6X6" device="">
+<attribute name="DIGIKEY#" value="450-1649-ND"/>
+<attribute name="MANF" value="TE Connectivity ALCOSWITCH Switches"/>
+<attribute name="MANF#" value="1825910-2"/>
 </part>
 <part name="PIXEL" library="adafruit" deviceset="WS2812B" device=""/>
 <part name="CASCADE" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
 <part name="SUPPLY1" library="supply2" deviceset="GND" device=""/>
-<part name="JTAG-FPGA" library="reclone-rise" deviceset="XILINX-JTAG" device=""/>
-<part name="JTAG-MCU" library="reclone-rise" deviceset="STDC14" device=""/>
-<part name="HOST" library="reclone-rise" deviceset="USB_A_1H" device=""/>
-<part name="PWRSW" library="reclone-rise" deviceset="AP2171D" device=""/>
+<part name="JTAG-FPGA" library="reclone-rise" deviceset="XILINX-JTAG" device="">
+<attribute name="DIGIKEY#" value="WM18641-ND"/>
+<attribute name="MANF" value="Molex"/>
+<attribute name="MANF#" value="0878321420"/>
+</part>
+<part name="JTAG-MCU" library="reclone-rise" deviceset="STDC14" device="">
+<attribute name="DIGIKEY#" value="1175-1630-ND"/>
+<attribute name="MANF" value="CNC Tech"/>
+<attribute name="MANF#" value="3220-14-0100-00"/>
+</part>
+<part name="HOST" library="reclone-rise" deviceset="USB_A_1H" device="">
+<attribute name="DIGIKEY#" value="AE11191-ND"/>
+<attribute name="MANF" value="Assmann WSW Components"/>
+<attribute name="MANF#" value="AU-Y1005-2"/>
+</part>
+<part name="PWRSW" library="reclone-rise" deviceset="AP2171D" device="">
+<attribute name="DIGIKEY#" value="AP2171DWG-7DICT-ND"/>
+<attribute name="MANF" value="Diodes Incorporated"/>
+<attribute name="MANF#" value="AP2171DWG-7"/>
+</part>
 <part name="C1" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
 <attribute name="DIGIKEY#" value="490-7217-1-ND"/>
 <attribute name="MANF" value="Murata Electronics North America"/>
@@ -7661,9 +7697,31 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="Yageo"/>
 <attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
-<part name="BUSPWR" library="reclone-rise" deviceset="M1X02" device=""/>
-<part name="DFU" library="reclone-rise" deviceset="PTS636" device=""/>
-<part name="RESET" library="reclone-rise" deviceset="PTS636" device=""/>
+<part name="BUSPWR" library="reclone-rise" deviceset="M1X02" device="">
+<attribute name="DIGIKEY#" value="S1112EC-02-ND"/>
+<attribute name="MANF" value="Sullins Connector Solutions"/>
+<attribute name="MANF#" value="PREC002SBAN-M71RC"/>
+</part>
+<part name="DFU" library="reclone-rise" deviceset="PTS636" device="">
+<attribute name="DIGIKEY#" value="CKN12301-ND"/>
+<attribute name="MANF" value="C&amp;K"/>
+<attribute name="MANF#" value="PTS636 SL43 LFS"/>
+</part>
+<part name="RESET" library="reclone-rise" deviceset="PTS636" device="">
+<attribute name="DIGIKEY#" value="CKN12301-ND"/>
+<attribute name="MANF" value="C&amp;K"/>
+<attribute name="MANF#" value="PTS636 SL43 LFS"/>
+</part>
+<part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
+<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+</part>
+<part name="C8" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
+<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -7671,7 +7729,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <plain>
 </plain>
 <instances>
-<instance part="PERIPH" gate="G$1" x="43.18" y="238.76" rot="R180">
+<instance part="DEVICE" gate="G$1" x="43.18" y="238.76" rot="R180">
 <attribute name="DIGIKEY#" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="43.18" y="238.76" size="1.778" layer="96" rot="R180" display="off"/>
@@ -7680,7 +7738,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="SUPPLY13" gate="GND" x="226.06" y="78.74"/>
 <instance part="+3V8" gate="G$1" x="172.72" y="127"/>
 <instance part="SUPPLY14" gate="GND" x="177.8" y="101.6"/>
-<instance part="SUPPLY15" gate="GND" x="236.22" y="193.04"/>
+<instance part="SUPPLY15" gate="GND" x="233.68" y="193.04"/>
 <instance part="+3V9" gate="G$1" x="228.6" y="218.44"/>
 <instance part="FPGA" gate="BNA" x="101.6" y="58.42"/>
 <instance part="SUPPLY16" gate="GND" x="111.76" y="68.58"/>
@@ -7699,16 +7757,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="SUPPLY28" gate="GND" x="45.72" y="86.36"/>
 <instance part="+3V23" gate="G$1" x="20.32" y="134.62"/>
 <instance part="SUPPLY29" gate="GND" x="17.78" y="223.52"/>
-<instance part="C7" gate="G$1" x="228.6" y="203.2" rot="R180">
-<attribute name="DIGIKEY#" x="228.6" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
-<attribute name="MANF" x="228.6" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
-<attribute name="MANF#" x="228.6" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
-</instance>
-<instance part="C13" gate="G$1" x="236.22" y="205.74" rot="R180">
-<attribute name="DIGIKEY#" x="236.22" y="205.74" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="236.22" y="205.74" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="236.22" y="205.74" size="1.778" layer="96" display="off"/>
-</instance>
 <instance part="SUPPLY26" gate="GND" x="243.84" y="215.9"/>
 <instance part="SUPPLY27" gate="GND" x="236.22" y="215.9"/>
 <instance part="P+7" gate="1" x="114.3" y="241.3"/>
@@ -7725,7 +7773,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" x="182.88" y="83.82" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY30" gate="GND" x="200.66" y="81.28"/>
-<instance part="F1" gate="F1" x="86.36" y="236.22">
+<instance part="FUSE" gate="F1" x="86.36" y="236.22">
 <attribute name="DIGIKEY#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
@@ -7741,7 +7789,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="SUPPLY39" gate="GND" x="40.64" y="195.58"/>
 <instance part="SUPPLY40" gate="GND" x="40.64" y="172.72"/>
 <instance part="SUPPLY41" gate="GND" x="40.64" y="149.86"/>
-<instance part="+3V27" gate="G$1" x="73.66" y="167.64"/>
+<instance part="+3V27" gate="G$1" x="73.66" y="167.64" rot="MR0"/>
 <instance part="C17" gate="G$1" x="17.78" y="157.48" rot="R180">
 <attribute name="DIGIKEY#" x="17.78" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="17.78" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
@@ -7943,8 +7991,8 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </instance>
 <instance part="SUPPLY21" gate="GND" x="187.96" y="215.9"/>
 <instance part="+3V15" gate="G$1" x="187.96" y="223.52"/>
-<instance part="U$2" gate="G$1" x="73.66" y="190.5"/>
-<instance part="U$3" gate="G$1" x="73.66" y="213.36"/>
+<instance part="U$2" gate="G$1" x="73.66" y="190.5" rot="MR0"/>
+<instance part="U$3" gate="G$1" x="73.66" y="213.36" rot="MR0"/>
 <instance part="R14" gate="G$1" x="35.56" y="99.06" rot="R90">
 <attribute name="DIGIKEY#" x="35.56" y="99.06" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF" x="35.56" y="99.06" size="1.778" layer="96" rot="R180" display="off"/>
@@ -8134,10 +8182,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="83.82" y="203.2" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="83.82" y="203.2" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="L4" gate="G$1" x="60.96" y="208.28" rot="R270">
-<attribute name="DIGIKEY#" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
-<attribute name="MANF" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
-<attribute name="MANF#" x="60.96" y="208.28" size="1.778" layer="96" rot="R270" display="off"/>
+<instance part="L4" gate="G$1" x="63.5" y="208.28" rot="MR90">
+<attribute name="DIGIKEY#" x="63.5" y="208.28" size="1.778" layer="96" rot="MR90" display="off"/>
+<attribute name="MANF" x="63.5" y="208.28" size="1.778" layer="96" rot="MR90" display="off"/>
+<attribute name="MANF#" x="63.5" y="208.28" size="1.778" layer="96" rot="MR90" display="off"/>
 </instance>
 <instance part="L5" gate="G$1" x="63.5" y="185.42" rot="R90">
 <attribute name="DIGIKEY#" x="63.5" y="185.42" size="1.778" layer="96" rot="R270" display="off"/>
@@ -8149,7 +8197,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="63.5" y="162.56" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="MANF#" x="63.5" y="162.56" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
-<instance part="USER" gate="G$1" x="231.14" y="66.04">
+<instance part="USER" gate="SW$1" x="231.14" y="66.04">
 <attribute name="DIGIKEY#" x="231.14" y="66.04" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="231.14" y="66.04" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="231.14" y="66.04" size="1.778" layer="96" display="off"/>
@@ -8157,19 +8205,35 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="PIXEL" gate="G$1" x="218.44" y="83.82"/>
 <instance part="CASCADE" gate="G$1" x="238.76" y="83.82" rot="R180"/>
 <instance part="SUPPLY1" gate="GND" x="218.44" y="73.66"/>
-<instance part="JTAG-FPGA" gate="G$1" x="48.26" y="60.96"/>
-<instance part="JTAG-MCU" gate="G$1" x="48.26" y="25.4"/>
-<instance part="HOST" gate="G$1" x="363.22" y="205.74"/>
-<instance part="PWRSW" gate="G$1" x="322.58" y="233.68"/>
-<instance part="C1" gate="G$1" x="353.06" y="231.14">
-<attribute name="DIGIKEY#" x="353.06" y="231.14" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="353.06" y="231.14" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="353.06" y="231.14" size="1.778" layer="96" display="off"/>
+<instance part="JTAG-FPGA" gate="G$1" x="48.26" y="60.96">
+<attribute name="DIGIKEY#" x="48.26" y="60.96" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="48.26" y="60.96" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="48.26" y="60.96" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C3" gate="G$1" x="373.38" y="231.14" rot="R180">
-<attribute name="DIGIKEY#" x="373.38" y="231.14" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="373.38" y="231.14" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="373.38" y="231.14" size="1.778" layer="96" display="off"/>
+<instance part="JTAG-MCU" gate="G$1" x="48.26" y="25.4">
+<attribute name="DIGIKEY#" x="48.26" y="25.4" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="48.26" y="25.4" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="48.26" y="25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="HOST" gate="G$1" x="363.22" y="205.74">
+<attribute name="DIGIKEY#" x="363.22" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="363.22" y="205.74" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="363.22" y="205.74" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="PWRSW" gate="G$1" x="327.66" y="233.68">
+<attribute name="DIGIKEY#" x="327.66" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="327.66" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="327.66" y="233.68" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C1" gate="G$1" x="358.14" y="231.14">
+<attribute name="DIGIKEY#" x="358.14" y="231.14" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="358.14" y="231.14" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="358.14" y="231.14" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C3" gate="G$1" x="378.46" y="231.14" rot="R180">
+<attribute name="DIGIKEY#" x="378.46" y="231.14" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="378.46" y="231.14" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="378.46" y="231.14" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY2" gate="GND" x="358.14" y="187.96"/>
 <instance part="C4" gate="G$1" x="17.78" y="233.68" rot="R180">
@@ -8178,23 +8242,23 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" x="17.78" y="233.68" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY8" gate="GND" x="48.26" y="241.3"/>
-<instance part="P+2" gate="1" x="312.42" y="241.3"/>
-<instance part="SUPPLY9" gate="GND" x="312.42" y="226.06"/>
-<instance part="C2" gate="G$1" x="365.76" y="231.14" rot="R180">
-<attribute name="DIGIKEY#" x="365.76" y="231.14" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="365.76" y="231.14" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="365.76" y="231.14" size="1.778" layer="96" display="off"/>
+<instance part="P+2" gate="1" x="317.5" y="241.3"/>
+<instance part="SUPPLY9" gate="GND" x="317.5" y="226.06"/>
+<instance part="C2" gate="G$1" x="370.84" y="231.14" rot="R180">
+<attribute name="DIGIKEY#" x="370.84" y="231.14" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="370.84" y="231.14" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="370.84" y="231.14" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="SUPPLY10" gate="GND" x="353.06" y="220.98"/>
+<instance part="SUPPLY10" gate="GND" x="358.14" y="220.98"/>
 <instance part="C5" gate="G$1" x="114.3" y="231.14" rot="R180">
 <attribute name="DIGIKEY#" x="114.3" y="231.14" size="1.778" layer="96" display="off"/>
 <attribute name="MANF" x="114.3" y="231.14" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="114.3" y="231.14" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C6" gate="G$1" x="299.72" y="233.68" rot="R180">
-<attribute name="DIGIKEY#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="299.72" y="233.68" size="1.778" layer="96" display="off"/>
+<instance part="C6" gate="G$1" x="304.8" y="233.68" rot="R180">
+<attribute name="DIGIKEY#" x="304.8" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="304.8" y="233.68" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="304.8" y="233.68" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SUPPLY11" gate="GND" x="114.3" y="220.98"/>
 <instance part="MCU" gate="_GPIO" x="165.1" y="68.58"/>
@@ -8214,10 +8278,31 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="208.28" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="208.28" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="BUSPWR" gate="G$1" x="76.2" y="231.14" rot="R270"/>
-<instance part="DFU" gate="G$1" x="233.68" y="236.22" rot="MR0"/>
+<instance part="BUSPWR" gate="G$1" x="76.2" y="231.14" rot="R270">
+<attribute name="DIGIKEY#" x="76.2" y="231.14" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF" x="76.2" y="231.14" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="MANF#" x="76.2" y="231.14" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="DFU" gate="G$1" x="233.68" y="236.22" rot="MR0">
+<attribute name="DIGIKEY#" x="233.68" y="236.22" size="1.778" layer="96" rot="MR0" display="off"/>
+<attribute name="MANF" x="233.68" y="236.22" size="1.778" layer="96" rot="MR0" display="off"/>
+<attribute name="MANF#" x="233.68" y="236.22" size="1.778" layer="96" rot="MR0" display="off"/>
+</instance>
 <instance part="RESET" gate="G$1" x="121.92" y="17.78" smashed="yes" rot="MR0">
 <attribute name="NAME" x="124.46" y="15.24" size="1.778" layer="95" rot="MR0"/>
+<attribute name="DIGIKEY#" x="121.92" y="17.78" size="1.778" layer="96" rot="MR0" display="off"/>
+<attribute name="MANF" x="121.92" y="17.78" size="1.778" layer="96" rot="MR0" display="off"/>
+<attribute name="MANF#" x="121.92" y="17.78" size="1.778" layer="96" rot="MR0" display="off"/>
+</instance>
+<instance part="C7" gate="G$1" x="228.6" y="203.2" rot="R180">
+<attribute name="DIGIKEY#" x="228.6" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="228.6" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="228.6" y="203.2" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C8" gate="G$1" x="233.68" y="203.2">
+<attribute name="DIGIKEY#" x="233.68" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="233.68" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="233.68" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 </instances>
 <busses>
@@ -8284,11 +8369,11 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <segment>
 <pinref part="PWRSW" gate="G$1" pin="IN"/>
 <pinref part="P+2" gate="1" pin="+5V"/>
-<wire x1="314.96" y1="236.22" x2="312.42" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="312.42" y1="236.22" x2="312.42" y2="238.76" width="0.1524" layer="91"/>
+<wire x1="320.04" y1="236.22" x2="317.5" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="317.5" y1="236.22" x2="317.5" y2="238.76" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="2"/>
-<wire x1="299.72" y1="236.22" x2="312.42" y2="236.22" width="0.1524" layer="91"/>
-<junction x="312.42" y="236.22"/>
+<wire x1="304.8" y1="236.22" x2="317.5" y2="236.22" width="0.1524" layer="91"/>
+<junction x="317.5" y="236.22"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -8304,26 +8389,26 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="223.52" y1="200.66" x2="223.52" y2="198.12" width="0.1524" layer="91"/>
 <wire x1="223.52" y1="198.12" x2="223.52" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="223.52" y1="195.58" x2="228.6" y2="195.58" width="0.1524" layer="91"/>
-<wire x1="228.6" y1="195.58" x2="236.22" y2="195.58" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="195.58" x2="233.68" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="220.98" y1="195.58" x2="223.52" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="220.98" y1="198.12" x2="223.52" y2="198.12" width="0.1524" layer="91"/>
 <wire x1="220.98" y1="200.66" x2="223.52" y2="200.66" width="0.1524" layer="91"/>
 <junction x="223.52" y="200.66"/>
 <junction x="223.52" y="198.12"/>
 <junction x="223.52" y="195.58"/>
-<pinref part="C13" gate="G$1" pin="1"/>
-<wire x1="236.22" y1="200.66" x2="236.22" y2="195.58" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="1"/>
+<wire x1="233.68" y1="200.66" x2="233.68" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="228.6" y1="198.12" x2="228.6" y2="195.58" width="0.1524" layer="91"/>
 <junction x="228.6" y="195.58"/>
-<junction x="236.22" y="195.58"/>
+<junction x="233.68" y="195.58"/>
 <pinref part="BAT" gate="G$1" pin="-"/>
 <wire x1="246.38" y1="200.66" x2="246.38" y2="195.58" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="195.58" x2="236.22" y2="195.58" width="0.1524" layer="91"/>
+<wire x1="246.38" y1="195.58" x2="233.68" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_PWR" pin="VSS@10"/>
 <pinref part="MCU" gate="_PWR" pin="VSS@27"/>
 <pinref part="MCU" gate="_PWR" pin="VSS@74"/>
 <pinref part="MCU" gate="_PWR" pin="VSS@99"/>
+<pinref part="C7" gate="G$1" pin="1"/>
+<pinref part="C8" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="R36" gate="G$1" pin="1"/>
@@ -8554,7 +8639,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <pinref part="SUPPLY2" gate="GND" pin="GND"/>
 </segment>
 <segment>
-<pinref part="PERIPH" gate="G$1" pin="GND"/>
+<pinref part="DEVICE" gate="G$1" pin="GND"/>
 <wire x1="45.72" y1="243.84" x2="45.72" y2="238.76" width="0.1524" layer="91"/>
 <pinref part="SUPPLY8" gate="GND" pin="GND"/>
 <wire x1="45.72" y1="243.84" x2="48.26" y2="243.84" width="0.1524" layer="91"/>
@@ -8567,24 +8652,24 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <segment>
 <pinref part="C1" gate="G$1" pin="-"/>
 <pinref part="SUPPLY10" gate="GND" pin="GND"/>
-<wire x1="353.06" y1="226.06" x2="353.06" y2="223.52" width="0.1524" layer="91"/>
-<wire x1="353.06" y1="223.52" x2="365.76" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="226.06" x2="358.14" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="223.52" x2="370.84" y2="223.52" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="1"/>
-<wire x1="365.76" y1="223.52" x2="373.38" y2="223.52" width="0.1524" layer="91"/>
-<wire x1="373.38" y1="223.52" x2="373.38" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="370.84" y1="223.52" x2="378.46" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="223.52" x2="378.46" y2="226.06" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="1"/>
-<wire x1="365.76" y1="226.06" x2="365.76" y2="223.52" width="0.1524" layer="91"/>
-<junction x="353.06" y="223.52"/>
-<junction x="365.76" y="223.52"/>
+<wire x1="370.84" y1="226.06" x2="370.84" y2="223.52" width="0.1524" layer="91"/>
+<junction x="358.14" y="223.52"/>
+<junction x="370.84" y="223.52"/>
 </segment>
 <segment>
 <pinref part="PWRSW" gate="G$1" pin="GND"/>
 <pinref part="SUPPLY9" gate="GND" pin="GND"/>
-<wire x1="314.96" y1="231.14" x2="312.42" y2="231.14" width="0.1524" layer="91"/>
-<wire x1="312.42" y1="231.14" x2="312.42" y2="228.6" width="0.1524" layer="91"/>
+<wire x1="320.04" y1="231.14" x2="317.5" y2="231.14" width="0.1524" layer="91"/>
+<wire x1="317.5" y1="231.14" x2="317.5" y2="228.6" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="1"/>
-<wire x1="312.42" y1="228.6" x2="299.72" y2="228.6" width="0.1524" layer="91"/>
-<junction x="312.42" y="228.6"/>
+<wire x1="317.5" y1="228.6" x2="304.8" y2="228.6" width="0.1524" layer="91"/>
+<junction x="317.5" y="228.6"/>
 </segment>
 <segment>
 <pinref part="C5" gate="G$1" pin="1"/>
@@ -8660,7 +8745,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="236.22" y1="66.04" x2="241.3" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="+3V14" gate="G$1" pin="+3V3"/>
 <wire x1="241.3" y1="68.58" x2="241.3" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="USER" gate="G$1" pin="B"/>
+<pinref part="USER" gate="SW$1" pin="B"/>
 </segment>
 <segment>
 <pinref part="+3V15" gate="G$1" pin="+3V3"/>
@@ -8902,7 +8987,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="USB_DEVICE_VBUS" class="0">
 <segment>
-<pinref part="PERIPH" gate="G$1" pin="VBUS"/>
+<pinref part="DEVICE" gate="G$1" pin="VBUS"/>
 <label x="48.26" y="236.22" size="1.778" layer="95"/>
 <wire x1="45.72" y1="236.22" x2="73.66" y2="236.22" width="0.1524" layer="91"/>
 <pinref part="BUSPWR" gate="G$1" pin="2"/>
@@ -8974,16 +9059,16 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="VCAP_1" class="0">
 <segment>
-<pinref part="C7" gate="G$1" pin="2"/>
 <wire x1="220.98" y1="205.74" x2="228.6" y2="205.74" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_PWR" pin="VCAP_1"/>
+<pinref part="C7" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="VCAP_2" class="0">
 <segment>
-<pinref part="C13" gate="G$1" pin="2"/>
-<wire x1="220.98" y1="208.28" x2="236.22" y2="208.28" width="0.1524" layer="91"/>
+<wire x1="220.98" y1="208.28" x2="233.68" y2="208.28" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_PWR" pin="VCAP_2"/>
+<pinref part="C8" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="BOOT1" class="0">
@@ -8995,20 +9080,20 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </segment>
 <segment>
 <pinref part="PWRSW" gate="G$1" pin="EN"/>
-<wire x1="314.96" y1="233.68" x2="304.8" y2="233.68" width="0.1524" layer="91"/>
-<label x="304.8" y="233.68" size="1.778" layer="95"/>
+<wire x1="320.04" y1="233.68" x2="309.88" y2="233.68" width="0.1524" layer="91"/>
+<label x="309.88" y="233.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$59" class="0">
 <segment>
 <wire x1="81.28" y1="236.22" x2="76.2" y2="236.22" width="0.1524" layer="91"/>
-<pinref part="F1" gate="F1" pin="1"/>
+<pinref part="FUSE" gate="F1" pin="1"/>
 <pinref part="BUSPWR" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$76" class="0">
 <segment>
-<pinref part="F1" gate="F1" pin="2"/>
+<pinref part="FUSE" gate="F1" pin="2"/>
 <pinref part="L1" gate="G$1" pin="1"/>
 <wire x1="93.98" y1="236.22" x2="91.44" y2="236.22" width="0.1524" layer="91"/>
 </segment>
@@ -9029,7 +9114,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="USB_DEVICE_DM" class="0">
 <segment>
-<pinref part="PERIPH" gate="G$1" pin="D-"/>
+<pinref part="DEVICE" gate="G$1" pin="D-"/>
 <wire x1="45.72" y1="233.68" x2="50.8" y2="233.68" width="0.1524" layer="91"/>
 <label x="48.26" y="233.68" size="1.778" layer="95"/>
 </segment>
@@ -9041,7 +9126,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="USB_DEVICE_DP" class="0">
 <segment>
-<pinref part="PERIPH" gate="G$1" pin="D+"/>
+<pinref part="DEVICE" gate="G$1" pin="D+"/>
 <wire x1="45.72" y1="231.14" x2="50.8" y2="231.14" width="0.1524" layer="91"/>
 <label x="48.26" y="231.14" size="1.778" layer="95"/>
 </segment>
@@ -9124,7 +9209,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <pinref part="R27" gate="G$1" pin="1"/>
 <wire x1="220.98" y1="63.5" x2="220.98" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="220.98" y1="66.04" x2="226.06" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="USER" gate="G$1" pin="A"/>
+<pinref part="USER" gate="SW$1" pin="A"/>
 <wire x1="170.18" y1="66.04" x2="220.98" y2="66.04" width="0.1524" layer="91"/>
 <junction x="220.98" y="66.04"/>
 </segment>
@@ -9467,13 +9552,14 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="83.82" y1="205.74" x2="83.82" y2="208.28" width="0.1524" layer="91"/>
 <junction x="83.82" y="208.28"/>
 <pinref part="L4" gate="G$1" pin="1"/>
-<wire x1="68.58" y1="208.28" x2="73.66" y2="208.28" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="208.28" x2="73.66" y2="208.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
 <pinref part="VREG12" gate="G$1" pin="LX"/>
 <pinref part="L4" gate="G$1" pin="2"/>
+<wire x1="55.88" y1="208.28" x2="53.34" y2="208.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="FPGA_I2S_WS" class="0">
@@ -9525,8 +9611,8 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </segment>
 <segment>
 <pinref part="PWRSW" gate="G$1" pin="FLG"/>
-<wire x1="332.74" y1="233.68" x2="340.36" y2="233.68" width="0.1524" layer="91"/>
-<label x="332.74" y="233.68" size="1.778" layer="95"/>
+<wire x1="337.82" y1="233.68" x2="345.44" y2="233.68" width="0.1524" layer="91"/>
+<label x="337.82" y="233.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+5V_HOST" class="0">
@@ -9538,35 +9624,35 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </segment>
 <segment>
 <pinref part="PWRSW" gate="G$1" pin="OUT"/>
-<wire x1="332.74" y1="236.22" x2="345.44" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="337.82" y1="236.22" x2="350.52" y2="236.22" width="0.1524" layer="91"/>
 <pinref part="HOST" gate="G$1" pin="VBUS"/>
-<wire x1="345.44" y1="236.22" x2="345.44" y2="213.36" width="0.1524" layer="91"/>
-<wire x1="345.44" y1="213.36" x2="360.68" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="350.52" y1="236.22" x2="350.52" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="350.52" y1="213.36" x2="360.68" y2="213.36" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="2"/>
-<wire x1="373.38" y1="233.68" x2="373.38" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="373.38" y1="236.22" x2="365.76" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="233.68" x2="378.46" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="236.22" x2="370.84" y2="236.22" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="2"/>
-<wire x1="365.76" y1="236.22" x2="353.06" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="353.06" y1="236.22" x2="345.44" y2="236.22" width="0.1524" layer="91"/>
-<wire x1="365.76" y1="233.68" x2="365.76" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="370.84" y1="236.22" x2="358.14" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="236.22" x2="350.52" y2="236.22" width="0.1524" layer="91"/>
+<wire x1="370.84" y1="233.68" x2="370.84" y2="236.22" width="0.1524" layer="91"/>
 <pinref part="C1" gate="G$1" pin="+"/>
-<wire x1="353.06" y1="233.68" x2="353.06" y2="236.22" width="0.1524" layer="91"/>
-<junction x="345.44" y="236.22"/>
-<junction x="353.06" y="236.22"/>
-<junction x="365.76" y="236.22"/>
-<label x="332.74" y="236.22" size="1.778" layer="95"/>
+<wire x1="358.14" y1="233.68" x2="358.14" y2="236.22" width="0.1524" layer="91"/>
+<junction x="350.52" y="236.22"/>
+<junction x="358.14" y="236.22"/>
+<junction x="370.84" y="236.22"/>
+<label x="337.82" y="236.22" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="PERIPH" gate="G$1" pin="SH1"/>
+<pinref part="DEVICE" gate="G$1" pin="SH1"/>
 <wire x1="25.4" y1="231.14" x2="25.4" y2="233.68" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="233.68" x2="25.4" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="236.22" x2="25.4" y2="238.76" width="0.1524" layer="91"/>
-<pinref part="PERIPH" gate="G$1" pin="SH4"/>
-<pinref part="PERIPH" gate="G$1" pin="SH3"/>
+<pinref part="DEVICE" gate="G$1" pin="SH4"/>
+<pinref part="DEVICE" gate="G$1" pin="SH3"/>
 <junction x="25.4" y="236.22"/>
-<pinref part="PERIPH" gate="G$1" pin="SH2"/>
+<pinref part="DEVICE" gate="G$1" pin="SH2"/>
 <junction x="25.4" y="233.68"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="17.78" y1="236.22" x2="25.4" y2="236.22" width="0.1524" layer="91"/>
@@ -9859,12 +9945,12 @@ within 0.254mm</text>
 <attribute name="MANF" x="175.26" y="149.86" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="175.26" y="149.86" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R60" gate="G$1" x="175.26" y="144.78" smashed="yes">
-<attribute name="NAME" x="167.64" y="143.9926" size="1.778" layer="95"/>
-<attribute name="VALUE" x="177.546" y="145.034" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="175.26" y="144.78" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="175.26" y="144.78" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="175.26" y="144.78" size="1.778" layer="96" display="off"/>
+<instance part="R60" gate="G$1" x="172.72" y="144.78" smashed="yes" rot="R180">
+<attribute name="NAME" x="180.34" y="145.5674" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="170.434" y="144.526" size="1.778" layer="96" rot="R180"/>
+<attribute name="DIGIKEY#" x="172.72" y="144.78" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="172.72" y="144.78" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="172.72" y="144.78" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="SUPPLY35" gate="GND" x="182.88" y="142.24"/>
 <instance part="C16" gate="G$1" x="190.5" y="175.26" rot="R180">
@@ -10576,9 +10662,9 @@ within 0.254mm</text>
 <junction x="175.26" y="180.34"/>
 </segment>
 <segment>
-<pinref part="R60" gate="G$1" pin="2"/>
+<pinref part="R60" gate="G$1" pin="1"/>
 <pinref part="SUPPLY35" gate="GND" pin="GND"/>
-<wire x1="180.34" y1="144.78" x2="182.88" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="144.78" x2="182.88" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY36" gate="GND" pin="GND"/>
@@ -11372,9 +11458,9 @@ within 0.254mm</text>
 <pinref part="R55" gate="G$1" pin="2"/>
 <wire x1="180.34" y1="149.86" x2="180.34" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="147.32" x2="165.1" y2="147.32" width="0.1524" layer="91"/>
-<pinref part="R60" gate="G$1" pin="1"/>
+<pinref part="R60" gate="G$1" pin="2"/>
 <wire x1="165.1" y1="147.32" x2="165.1" y2="144.78" width="0.1524" layer="91"/>
-<wire x1="165.1" y1="144.78" x2="170.18" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="144.78" x2="167.64" y2="144.78" width="0.1524" layer="91"/>
 <junction x="165.1" y="147.32"/>
 </segment>
 </net>
@@ -11930,18 +12016,21 @@ within 0.254mm</text>
 <label x="101.6" y="88.9" size="1.778" layer="95"/>
 </segment>
 </net>
+<net name="M3A14" class="0">
+<segment>
+<pinref part="FPGA" gate="B3" pin="IO_L55N_M3A14_3"/>
+<wire x1="271.78" y1="15.24" x2="276.86" y2="15.24" width="0.1524" layer="91"/>
+<label x="274.32" y="15.24" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="RAM" gate="G$1" pin="RFU/A14"/>
+<wire x1="243.84" y1="205.74" x2="238.76" y2="205.74" width="0.1524" layer="91"/>
+<label x="236.22" y="205.74" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
-<errors>
-<approved hash="104,1,223.52,198.12,BAT,-,GND,,,"/>
-<approved hash="104,1,223.52,208.28,BAT,+,VBAT,,,"/>
-<approved hash="111,1,40.64,35.56,N$13,,,,,"/>
-<approved hash="111,1,45.72,30.48,N$11,,,,,"/>
-<approved hash="111,1,45.72,35.56,N$13,,,,,"/>
-<approved hash="111,1,53.34,121.92,N$18,,,,,"/>
-<approved hash="111,1,60.96,121.92,N$18,,,,,"/>
-</errors>
 </schematic>
 </drawing>
 <compatibility>
