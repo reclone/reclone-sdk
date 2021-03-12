@@ -7022,10 +7022,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="+3V9" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY16" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY17" library="supply2" deviceset="GND" device=""/>
-<part name="R13" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R13" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
+<attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
 <part name="SUPPLY18" library="supply2" deviceset="GND" device=""/>
 <part name="R17" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2">
@@ -7050,15 +7050,15 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="+3V19" library="supply1" deviceset="+3V3" device=""/>
 <part name="+3V20" library="supply1" deviceset="+3V3" device=""/>
 <part name="+3V21" library="supply1" deviceset="+3V3" device=""/>
-<part name="R35" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R35" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
+<attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
-<part name="R36" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R36" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
+<attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
 <part name="+3V22" library="supply1" deviceset="+3V3" device=""/>
 <part name="SUPPLY28" library="supply2" deviceset="GND" device=""/>
@@ -7072,11 +7072,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="Wurth Electronics Inc."/>
 <attribute name="MANF#" value="150060RS75000"/>
 </part>
-<part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="160">
-<attribute name="DIGIKEY#" value="311-160HRCT-ND"/>
-<attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07160RL"/>
-</part>
 <part name="SUPPLY30" library="supply2" deviceset="GND" device=""/>
 <part name="FUSE" library="reclone-rise" deviceset="POLYFUSE" device="">
 <attribute name="DIGIKEY#" value="MF-NSMF150-2CT-ND"/>
@@ -7084,9 +7079,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="MF-NSMF150-2"/>
 </part>
 <part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="BEAD">
-<attribute name="DIGIKEY#" value="1276-6353-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CIS10P300AC"/>
+<attribute name="DIGIKEY#" value="490-13960-1-ND"/>
+<attribute name="MANF" value="Murata Electronics"/>
+<attribute name="MANF#" value="BLM18SN220TZ1D"/>
 </part>
 <part name="SUPPLY33" library="supply2" deviceset="GND" device=""/>
 <part name="R16" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="165">
@@ -7101,12 +7096,12 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </part>
 <part name="C14" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="47n">
 <attribute name="DIGIKEY#" value="1276-1063-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B473KB8NNNC"/>
 </part>
 <part name="C15" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="47n">
 <attribute name="DIGIKEY#" value="1276-1063-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B473KB8NNNC"/>
 </part>
 <part name="R51" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="330">
@@ -7162,9 +7157,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </part>
 <part name="SUPPLY35" library="supply2" deviceset="GND" device=""/>
 <part name="C16" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
-<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+<attribute name="DIGIKEY#" value="399-9053-1-ND"/>
+<attribute name="MANF" value="KEMET"/>
+<attribute name="MANF#" value="C0603C270J3GACTU"/>
 </part>
 <part name="SUPPLY36" library="supply2" deviceset="GND" device=""/>
 <part name="R61" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="2K2">
@@ -7187,134 +7182,134 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="SUPPLY41" library="supply2" deviceset="GND" device=""/>
 <part name="+3V27" library="supply1" deviceset="+3V3" device=""/>
 <part name="C17" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C18" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C19" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C23" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C24" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C25" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C26" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C28" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C29" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C30" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C31" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C33" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C36" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C37" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C38" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C39" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C42" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C43" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C44" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C45" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C46" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C47" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C48" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C49" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C50" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C54" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="BAT" library="SparkFun-Electromechanical" deviceset="BATTERY" device="12MM" value="CR1225">
 <attribute name="DIGIKEY#" value="36-3000-ND"/>
@@ -7353,18 +7348,18 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-0722RL"/>
 </part>
 <part name="C34" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
-<attribute name="DIGIKEY#" value="490-7217-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="GRM31CR60J107ME39K"/>
+<attribute name="DIGIKEY#" value="1276-1782-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL31A107MQHNNNE"/>
 </part>
 <part name="C35" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
-<attribute name="DIGIKEY#" value="490-7217-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="GRM31CR60J107ME39K"/>
+<attribute name="DIGIKEY#" value="1276-1782-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL31A107MQHNNNE"/>
 </part>
 <part name="RAM" library="reclone-rise" deviceset="DDR2_X8" device="">
 <attribute name="DIGIKEY#" value="706-1574-ND"/>
-<attribute name="MANF" value="ISSI, Integrated Silicon Solution Inc"/>
+<attribute name="MANF" value="ISSI Integrated Silicon Solution Inc"/>
 <attribute name="MANF#" value="IS43DR81280C-25DBL"/>
 </part>
 <part name="R20" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
@@ -7379,10 +7374,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="+3V14" library="supply1" deviceset="+3V3" device=""/>
-<part name="R27" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10K">
-<attribute name="DIGIKEY#" value="311-10.0KHRCT-ND"/>
+<part name="R27" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="4K7">
+<attribute name="DIGIKEY#" value="311-4.70KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0710KL"/>
+<attribute name="MANF#" value="RC0603FR-074K7L"/>
 </part>
 <part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
 <part name="OSC10M" library="reclone-rise" deviceset="OSC_ENABLED_SMD" device="" value="10M">
@@ -7430,19 +7425,19 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="C9" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
-<attribute name="DIGIKEY#" value="490-7217-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="GRM31CR60J107ME39K"/>
+<attribute name="DIGIKEY#" value="1276-1782-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL31A107MQHNNNE"/>
 </part>
 <part name="C10" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
-<attribute name="DIGIKEY#" value="490-7217-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="GRM31CR60J107ME39K"/>
+<attribute name="DIGIKEY#" value="1276-1782-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL31A107MQHNNNE"/>
 </part>
 <part name="C11" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
-<attribute name="DIGIKEY#" value="490-7217-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="GRM31CR60J107ME39K"/>
+<attribute name="DIGIKEY#" value="1276-1782-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL31A107MQHNNNE"/>
 </part>
 <part name="WIFI/BT" library="reclone-rise" deviceset="RL-SM02BD-RTL8723BS" device="">
 <attribute name="MANF" value="Realtek"/>
@@ -7469,15 +7464,15 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-0747KL"/>
 </part>
 <part name="C12" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="SUPPLY24" library="supply2" deviceset="GND" device=""/>
 <part name="R34" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="0">
-<attribute name="DIGIKEY#" value="311-0.0HRTR-ND"/>
+<attribute name="DIGIKEY#" value="311-0.0GRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-070RL"/>
+<attribute name="MANF#" value="RC0603JR-070RL"/>
 </part>
 <part name="SUPPLY25" library="supply2" deviceset="GND" device=""/>
 <part name="MCU" library="reclone-rise" deviceset="STM32F405VGT6" device=""/>
@@ -7532,9 +7527,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="ANTENNA" library="reclone-rise" deviceset="ANTENNA_MEANDER_2.4GHZ" device=""/>
 <part name="SUPPLY32" library="supply2" deviceset="GND" device=""/>
 <part name="C20" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="RTC" library="reclone-rise" deviceset="CRYSTAL" device="" value="32K768">
 <attribute name="DIGIKEY#" value="370-1056-1-ND"/>
@@ -7556,53 +7551,53 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="Diodes Incorporated"/>
 <attribute name="MANF#" value="AP3429AKTTR-G1"/>
 </part>
-<part name="R49" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="536K">
-<attribute name="DIGIKEY#" value="311-536KHRCT-ND"/>
+<part name="R49" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="115K">
+<attribute name="DIGIKEY#" value="311-115KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07536KL"/>
+<attribute name="MANF#" value="RC0603FR-07115KL"/>
 </part>
-<part name="R63" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="120K">
-<attribute name="DIGIKEY#" value="311-120KHRCT-ND"/>
+<part name="R63" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="25K5">
+<attribute name="DIGIKEY#" value="311-25.5KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07120KL"/>
+<attribute name="MANF#" value="RC0603FR-0725K5L"/>
 </part>
 <part name="SUPPLY38" library="supply2" deviceset="GND" device=""/>
-<part name="R64" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K">
-<attribute name="DIGIKEY#" value="311-100KHRCT-ND"/>
+<part name="R64" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="75K">
+<attribute name="DIGIKEY#" value="311-75.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07100KL"/>
+<attribute name="MANF#" value="RC0603FR-0775KL"/>
 </part>
-<part name="R65" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="200K">
-<attribute name="DIGIKEY#" value="311-200KHRCT-ND"/>
+<part name="R65" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="150K">
+<attribute name="DIGIKEY#" value="311-150KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07200KL"/>
+<attribute name="MANF#" value="RC0603FR-07150KL"/>
 </part>
 <part name="SUPPLY42" library="supply2" deviceset="GND" device=""/>
-<part name="R66" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K">
-<attribute name="DIGIKEY#" value="311-100KHRCT-ND"/>
+<part name="R66" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="75K">
+<attribute name="DIGIKEY#" value="311-75.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07100KL"/>
+<attribute name="MANF#" value="RC0603FR-0775KL"/>
 </part>
-<part name="R67" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="100K">
-<attribute name="DIGIKEY#" value="311-100KHRCT-ND"/>
+<part name="R67" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="75K">
+<attribute name="DIGIKEY#" value="311-75.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-07100KL"/>
+<attribute name="MANF#" value="RC0603FR-0775KL"/>
 </part>
 <part name="SUPPLY43" library="supply2" deviceset="GND" device=""/>
 <part name="C21" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
-<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+<attribute name="DIGIKEY#" value="399-9053-1-ND"/>
+<attribute name="MANF" value="KEMET"/>
+<attribute name="MANF#" value="C0603C270J3GACTU"/>
 </part>
 <part name="C22" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
-<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+<attribute name="DIGIKEY#" value="399-9053-1-ND"/>
+<attribute name="MANF" value="KEMET"/>
+<attribute name="MANF#" value="C0603C270J3GACTU"/>
 </part>
 <part name="C51" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
-<attribute name="DIGIKEY#" value="1276-2246-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10C270GB8NNNC"/>
+<attribute name="DIGIKEY#" value="399-9053-1-ND"/>
+<attribute name="MANF" value="KEMET"/>
+<attribute name="MANF#" value="C0603C270J3GACTU"/>
 </part>
 <part name="L4" library="SparkFun-Passives" deviceset="INDUCTOR" device="0805" value="2u2">
 <attribute name="DIGIKEY#" value="1276-6911-1-ND"/>
@@ -7624,7 +7619,11 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" value="TE Connectivity ALCOSWITCH Switches"/>
 <attribute name="MANF#" value="1825910-2"/>
 </part>
-<part name="PIXEL" library="adafruit" deviceset="WS2812B" device=""/>
+<part name="PIXEL" library="adafruit" deviceset="WS2812B" device="">
+<attribute name="DIGIKEY#" value="1568-COM-16347CT-ND"/>
+<attribute name="MANF" value="SparkFun Electronics"/>
+<attribute name="MANF#" value="COM-16347"/>
+</part>
 <part name="CASCADE" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
 <part name="SUPPLY1" library="supply2" deviceset="GND" device=""/>
 <part name="JTAG-FPGA" library="reclone-rise" deviceset="XILINX-JTAG" device="">
@@ -7638,9 +7637,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="3220-14-0100-00"/>
 </part>
 <part name="HOST" library="reclone-rise" deviceset="USB_A_1H" device="">
-<attribute name="DIGIKEY#" value="AE11191-ND"/>
-<attribute name="MANF" value="Assmann WSW Components"/>
-<attribute name="MANF#" value="AU-Y1005-2"/>
+<attribute name="DIGIKEY#" value="609-87520-0012BLF-ND"/>
+<attribute name="MANF" value="Amphenol ICC (FCI)"/>
+<attribute name="MANF#" value="87520-0012BLF"/>
 </part>
 <part name="PWRSW" library="reclone-rise" deviceset="AP2171D" device="">
 <attribute name="DIGIKEY#" value="AP2171DWG-7DICT-ND"/>
@@ -7648,38 +7647,38 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="AP2171DWG-7"/>
 </part>
 <part name="C1" library="SparkFun-Passives" deviceset="CAP_POL" device="1206" value="100u">
-<attribute name="DIGIKEY#" value="490-7217-1-ND"/>
-<attribute name="MANF" value="Murata Electronics North America"/>
-<attribute name="MANF#" value="GRM31CR60J107ME39K"/>
+<attribute name="DIGIKEY#" value="1276-1782-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL31A107MQHNNNE"/>
 </part>
 <part name="C3" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="SUPPLY2" library="supply2" deviceset="GND" device=""/>
 <part name="C4" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="SUPPLY8" library="supply2" deviceset="GND" device=""/>
 <part name="P+2" library="supply1" deviceset="+5V" device=""/>
 <part name="SUPPLY9" library="supply2" deviceset="GND" device=""/>
 <part name="C2" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="SUPPLY10" library="supply2" deviceset="GND" device=""/>
 <part name="C5" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="C6" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="0u47">
 <attribute name="DIGIKEY#" value="1276-2082-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
 <attribute name="MANF#" value="CL10B474KA8NFNC"/>
 </part>
 <part name="SUPPLY11" library="supply2" deviceset="GND" device=""/>
@@ -7713,14 +7712,29 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="PTS636 SL43 LFS"/>
 </part>
 <part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
 </part>
 <part name="C8" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="4u7">
-<attribute name="DIGIKEY#" value="1276-6684-1-ND"/>
-<attribute name="MANF" value="Samsung Electro-Mechanics America, Inc."/>
-<attribute name="MANF#" value="CL10A475MP5LNNC"/>
+<attribute name="DIGIKEY#" value="1276-1044-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10A475KP8NNNC"/>
+</part>
+<part name="R3" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="165">
+<attribute name="DIGIKEY#" value="311-165HRCT-ND"/>
+<attribute name="MANF" value="Yageo"/>
+<attribute name="MANF#" value="RC0603FR-07165RL"/>
+</part>
+<part name="C13" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="47n">
+<attribute name="DIGIKEY#" value="1276-1063-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10B473KB8NNNC"/>
+</part>
+<part name="C27" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="47n">
+<attribute name="DIGIKEY#" value="1276-1063-1-ND"/>
+<attribute name="MANF" value="Samsung Electro-Mechanics"/>
+<attribute name="MANF#" value="CL10B473KB8NNNC"/>
 </part>
 </parts>
 <sheets>
@@ -7765,13 +7779,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="193.04" y="83.82" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="MANF#" x="193.04" y="83.82" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="R9" gate="G$1" x="182.88" y="83.82" smashed="yes">
-<attribute name="NAME" x="177.292" y="84.0486" size="1.778" layer="95"/>
-<attribute name="VALUE" x="185.166" y="84.074" size="1.778" layer="96"/>
-<attribute name="DIGIKEY#" x="182.88" y="83.82" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="182.88" y="83.82" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="182.88" y="83.82" size="1.778" layer="96" display="off"/>
-</instance>
 <instance part="SUPPLY30" gate="GND" x="200.66" y="81.28"/>
 <instance part="FUSE" gate="F1" x="86.36" y="236.22">
 <attribute name="DIGIKEY#" x="86.36" y="236.22" size="1.778" layer="96" display="off"/>
@@ -7800,15 +7807,15 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="17.78" y="177.8" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="17.78" y="177.8" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="C19" gate="G$1" x="17.78" y="200.66">
-<attribute name="DIGIKEY#" x="17.78" y="200.66" size="1.778" layer="96" rot="R180" display="off"/>
-<attribute name="MANF" x="17.78" y="200.66" size="1.778" layer="96" rot="R180" display="off"/>
-<attribute name="MANF#" x="17.78" y="200.66" size="1.778" layer="96" rot="R180" display="off"/>
+<instance part="C19" gate="G$1" x="17.78" y="203.2" rot="R180">
+<attribute name="DIGIKEY#" x="17.78" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="17.78" y="203.2" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="17.78" y="203.2" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C23" gate="G$1" x="104.14" y="160.02" rot="R180">
-<attribute name="DIGIKEY#" x="104.14" y="160.02" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="104.14" y="160.02" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="104.14" y="160.02" size="1.778" layer="96" display="off"/>
+<instance part="C23" gate="G$1" x="99.06" y="157.48">
+<attribute name="DIGIKEY#" x="99.06" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="99.06" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="99.06" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="C24" gate="G$1" x="111.76" y="160.02" rot="R180">
 <attribute name="DIGIKEY#" x="111.76" y="160.02" size="1.778" layer="96" display="off"/>
@@ -7845,10 +7852,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="165.1" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="165.1" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="C33" gate="G$1" x="157.48" y="160.02" rot="R180">
-<attribute name="DIGIKEY#" x="157.48" y="160.02" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="157.48" y="160.02" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="157.48" y="160.02" size="1.778" layer="96" display="off"/>
+<instance part="C33" gate="G$1" x="154.94" y="157.48">
+<attribute name="DIGIKEY#" x="154.94" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="154.94" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="154.94" y="157.48" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="C36" gate="G$1" x="106.68" y="182.88" rot="R180">
 <attribute name="DIGIKEY#" x="106.68" y="182.88" size="1.778" layer="96" display="off"/>
@@ -8027,15 +8034,15 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="27.94" y="121.92" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="27.94" y="121.92" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R32" gate="G$1" x="20.32" y="121.92" rot="R270">
-<attribute name="DIGIKEY#" x="20.32" y="121.92" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="20.32" y="121.92" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="20.32" y="121.92" size="1.778" layer="96" display="off"/>
+<instance part="R32" gate="G$1" x="20.32" y="121.92" rot="R90">
+<attribute name="DIGIKEY#" x="20.32" y="121.92" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="20.32" y="121.92" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="20.32" y="121.92" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="R33" gate="G$1" x="12.7" y="121.92" rot="R270">
-<attribute name="DIGIKEY#" x="12.7" y="121.92" size="1.778" layer="96" display="off"/>
-<attribute name="MANF" x="12.7" y="121.92" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="12.7" y="121.92" size="1.778" layer="96" display="off"/>
+<instance part="R33" gate="G$1" x="12.7" y="121.92" rot="R90">
+<attribute name="DIGIKEY#" x="12.7" y="121.92" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="12.7" y="121.92" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="12.7" y="121.92" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="C12" gate="G$1" x="73.66" y="127" rot="R180">
 <attribute name="DIGIKEY#" x="73.66" y="127" size="1.778" layer="96" display="off"/>
@@ -8048,7 +8055,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="43.18" y="132.08" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="MANF#" x="43.18" y="132.08" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="SUPPLY25" gate="GND" x="134.62" y="15.24"/>
+<instance part="SUPPLY25" gate="GND" x="132.08" y="7.62"/>
 <instance part="MCU" gate="_PWR" x="215.9" y="215.9"/>
 <instance part="MCU" gate="_CLK" x="147.32" y="223.52"/>
 <instance part="MCU" gate="_AN" x="165.1" y="111.76"/>
@@ -8161,10 +8168,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="DIGIKEY#" x="60.96" y="198.12" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="60.96" y="198.12" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R67" gate="G$1" x="73.66" y="203.2" rot="R90">
-<attribute name="MANF" x="73.66" y="203.2" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY#" x="73.66" y="203.2" size="1.778" layer="96" display="off"/>
-<attribute name="MANF#" x="73.66" y="203.2" size="1.778" layer="96" display="off"/>
+<instance part="R67" gate="G$1" x="73.66" y="203.2" rot="R270">
+<attribute name="MANF" x="73.66" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="DIGIKEY#" x="73.66" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="73.66" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="SUPPLY43" gate="GND" x="91.44" y="195.58"/>
 <instance part="C21" gate="G$1" x="83.82" y="157.48" rot="R180">
@@ -8202,7 +8209,11 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="231.14" y="66.04" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="231.14" y="66.04" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="PIXEL" gate="G$1" x="218.44" y="83.82"/>
+<instance part="PIXEL" gate="G$1" x="218.44" y="83.82">
+<attribute name="DIGIKEY#" x="218.44" y="83.82" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="218.44" y="83.82" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="218.44" y="83.82" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="CASCADE" gate="G$1" x="238.76" y="83.82" rot="R180"/>
 <instance part="SUPPLY1" gate="GND" x="218.44" y="73.66"/>
 <instance part="JTAG-FPGA" gate="G$1" x="48.26" y="60.96">
@@ -8304,6 +8315,18 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF" x="233.68" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="MANF#" x="233.68" y="203.2" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
+<instance part="R3" gate="G$1" x="180.34" y="83.82" smashed="yes">
+<attribute name="NAME" x="174.752" y="84.0486" size="1.778" layer="95"/>
+<attribute name="VALUE" x="182.626" y="84.074" size="1.778" layer="96"/>
+<attribute name="DIGIKEY#" x="180.34" y="83.82" size="1.778" layer="96" display="off"/>
+<attribute name="MANF" x="180.34" y="83.82" size="1.778" layer="96" display="off"/>
+<attribute name="MANF#" x="180.34" y="83.82" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C13" gate="G$1" x="124.46" y="12.7" rot="MR270">
+<attribute name="DIGIKEY#" x="124.46" y="12.7" size="1.778" layer="96" rot="MR270" display="off"/>
+<attribute name="MANF" x="124.46" y="12.7" size="1.778" layer="96" rot="MR270" display="off"/>
+<attribute name="MANF#" x="124.46" y="12.7" size="1.778" layer="96" rot="MR270" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -8324,7 +8347,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="25.4" y1="208.28" x2="25.4" y2="203.2" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="208.28" x2="25.4" y2="208.28" width="0.1524" layer="91"/>
 <junction x="25.4" y="208.28"/>
-<pinref part="C19" gate="G$1" pin="1"/>
+<pinref part="C19" gate="G$1" pin="2"/>
 <wire x1="17.78" y1="205.74" x2="17.78" y2="208.28" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="208.28" x2="25.4" y2="208.28" width="0.1524" layer="91"/>
 <pinref part="VREG12" gate="G$1" pin="VIN"/>
@@ -8423,7 +8446,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <pinref part="SUPPLY39" gate="GND" pin="GND"/>
 <junction x="40.64" y="198.12"/>
 <pinref part="VREG12" gate="G$1" pin="GND"/>
-<pinref part="C19" gate="G$1" pin="2"/>
+<pinref part="C19" gate="G$1" pin="1"/>
 <wire x1="17.78" y1="198.12" x2="40.64" y2="198.12" width="0.1524" layer="91"/>
 <pinref part="R66" gate="G$1" pin="1"/>
 <wire x1="40.64" y1="198.12" x2="55.88" y2="198.12" width="0.1524" layer="91"/>
@@ -8492,8 +8515,13 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </segment>
 <segment>
 <pinref part="SUPPLY25" gate="GND" pin="GND"/>
-<wire x1="134.62" y1="17.78" x2="127" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="10.16" x2="132.08" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="12.7" x2="132.08" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="17.78" x2="127" y2="17.78" width="0.1524" layer="91"/>
 <pinref part="RESET" gate="G$1" pin="A"/>
+<pinref part="C13" gate="G$1" pin="2"/>
+<wire x1="127" y1="12.7" x2="132.08" y2="12.7" width="0.1524" layer="91"/>
+<junction x="132.08" y="12.7"/>
 </segment>
 <segment>
 <pinref part="SUPPLY3" gate="GND" pin="GND"/>
@@ -8528,14 +8556,14 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="355.6" y1="121.92" x2="358.14" y2="121.92" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C23" gate="G$1" pin="1"/>
-<junction x="104.14" y="154.94"/>
-<wire x1="91.44" y1="154.94" x2="104.14" y2="154.94" width="0.1524" layer="91"/>
+<pinref part="C23" gate="G$1" pin="2"/>
+<junction x="99.06" y="154.94"/>
+<wire x1="91.44" y1="154.94" x2="99.06" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="154.94" x2="134.62" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="154.94" x2="127" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="127" y1="154.94" x2="119.38" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="154.94" x2="111.76" y2="154.94" width="0.1524" layer="91"/>
-<wire x1="111.76" y1="154.94" x2="104.14" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="154.94" x2="99.06" y2="154.94" width="0.1524" layer="91"/>
 <pinref part="C24" gate="G$1" pin="1"/>
 <junction x="111.76" y="154.94"/>
 <pinref part="C25" gate="G$1" pin="1"/>
@@ -8549,14 +8577,14 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <pinref part="SUPPLY38" gate="GND" pin="GND"/>
 <wire x1="91.44" y1="154.94" x2="91.44" y2="152.4" width="0.1524" layer="91"/>
 <junction x="91.44" y="154.94"/>
-<pinref part="C33" gate="G$1" pin="1"/>
+<pinref part="C33" gate="G$1" pin="2"/>
 <pinref part="C31" gate="G$1" pin="2"/>
 <junction x="165.1" y="154.94"/>
-<wire x1="165.1" y1="154.94" x2="157.48" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="154.94" x2="154.94" y2="154.94" width="0.1524" layer="91"/>
 <pinref part="C30" gate="G$1" pin="1"/>
-<wire x1="157.48" y1="154.94" x2="149.86" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="154.94" x2="149.86" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="154.94" x2="149.86" y2="154.94" width="0.1524" layer="91"/>
-<junction x="157.48" y="154.94"/>
+<junction x="154.94" y="154.94"/>
 <junction x="149.86" y="154.94"/>
 <junction x="142.24" y="154.94"/>
 <pinref part="C29" gate="G$1" pin="2"/>
@@ -8783,10 +8811,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="35.56" y1="127" x2="35.56" y2="129.54" width="0.1524" layer="91"/>
 <pinref part="R31" gate="G$1" pin="1"/>
 <wire x1="27.94" y1="127" x2="27.94" y2="129.54" width="0.1524" layer="91"/>
-<pinref part="R32" gate="G$1" pin="1"/>
+<pinref part="R32" gate="G$1" pin="2"/>
 <wire x1="20.32" y1="127" x2="20.32" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="129.54" x2="27.94" y2="129.54" width="0.1524" layer="91"/>
-<pinref part="R33" gate="G$1" pin="1"/>
+<pinref part="R33" gate="G$1" pin="2"/>
 <wire x1="12.7" y1="127" x2="12.7" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="12.7" y1="129.54" x2="20.32" y2="129.54" width="0.1524" layer="91"/>
 <junction x="20.32" y="129.54"/>
@@ -8857,10 +8885,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <junction x="73.66" y="162.56"/>
 <pinref part="+3V27" gate="G$1" pin="+3V3"/>
 <wire x1="73.66" y1="162.56" x2="73.66" y2="165.1" width="0.1524" layer="91"/>
-<wire x1="91.44" y1="162.56" x2="104.14" y2="162.56" width="0.1524" layer="91"/>
-<pinref part="C23" gate="G$1" pin="2"/>
-<junction x="104.14" y="162.56"/>
-<wire x1="104.14" y1="162.56" x2="111.76" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="162.56" x2="99.06" y2="162.56" width="0.1524" layer="91"/>
+<pinref part="C23" gate="G$1" pin="1"/>
+<junction x="99.06" y="162.56"/>
+<wire x1="99.06" y1="162.56" x2="111.76" y2="162.56" width="0.1524" layer="91"/>
 <pinref part="C24" gate="G$1" pin="2"/>
 <junction x="111.76" y="162.56"/>
 <wire x1="111.76" y1="162.56" x2="119.38" y2="162.56" width="0.1524" layer="91"/>
@@ -8883,16 +8911,16 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="83.82" y1="160.02" x2="83.82" y2="162.56" width="0.1524" layer="91"/>
 <junction x="83.82" y="162.56"/>
 <pinref part="L6" gate="G$1" pin="2"/>
-<pinref part="C33" gate="G$1" pin="2"/>
+<pinref part="C33" gate="G$1" pin="1"/>
 <pinref part="C31" gate="G$1" pin="1"/>
 <junction x="165.1" y="162.56"/>
 <pinref part="C30" gate="G$1" pin="2"/>
-<wire x1="149.86" y1="162.56" x2="157.48" y2="162.56" width="0.1524" layer="91"/>
-<wire x1="157.48" y1="162.56" x2="165.1" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="162.56" x2="154.94" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="162.56" x2="165.1" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="162.56" x2="149.86" y2="162.56" width="0.1524" layer="91"/>
 <junction x="142.24" y="162.56"/>
 <junction x="149.86" y="162.56"/>
-<junction x="157.48" y="162.56"/>
+<junction x="154.94" y="162.56"/>
 <pinref part="C29" gate="G$1" pin="1"/>
 <wire x1="165.1" y1="162.56" x2="172.72" y2="162.56" width="0.1524" layer="91"/>
 </segment>
@@ -9012,10 +9040,15 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="/RESET" class="0">
 <segment>
-<wire x1="106.68" y1="17.78" x2="116.84" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="17.78" x2="114.3" y2="17.78" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="_JTAG" pin="NRST"/>
 <label x="109.22" y="17.78" size="1.778" layer="95"/>
 <pinref part="RESET" gate="G$1" pin="B"/>
+<pinref part="C13" gate="G$1" pin="1"/>
+<wire x1="114.3" y1="17.78" x2="116.84" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="12.7" x2="114.3" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="12.7" x2="114.3" y2="17.78" width="0.1524" layer="91"/>
+<junction x="114.3" y="17.78"/>
 </segment>
 <segment>
 <pinref part="JTAG-MCU" gate="G$1" pin="T_NRST"/>
@@ -9047,7 +9080,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <segment>
 <label x="38.1" y="106.68" size="1.778" layer="95"/>
 <pinref part="MICROSD" gate="G$1" pin="DETECT"/>
-<pinref part="R33" gate="G$1" pin="2"/>
+<pinref part="R33" gate="G$1" pin="1"/>
 <wire x1="48.26" y1="106.68" x2="12.7" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="12.7" y1="106.68" x2="12.7" y2="116.84" width="0.1524" layer="91"/>
 </segment>
@@ -9138,9 +9171,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="N$60" class="0">
 <segment>
-<pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="ACTIVITY" gate="G$1" pin="A"/>
-<wire x1="187.96" y1="83.82" x2="190.5" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="83.82" x2="190.5" y2="83.82" width="0.1524" layer="91"/>
+<pinref part="R3" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="VBAT" class="0">
@@ -9250,7 +9283,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <segment>
 <label x="38.1" y="109.22" size="1.778" layer="95"/>
 <pinref part="MICROSD" gate="G$1" pin="DO"/>
-<pinref part="R32" gate="G$1" pin="2"/>
+<pinref part="R32" gate="G$1" pin="1"/>
 <wire x1="48.26" y1="109.22" x2="20.32" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="109.22" x2="20.32" y2="116.84" width="0.1524" layer="91"/>
 </segment>
@@ -9406,10 +9439,10 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <segment>
 <wire x1="170.18" y1="78.74" x2="172.72" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="172.72" y1="78.74" x2="172.72" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="172.72" y1="83.82" x2="177.8" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="172.72" y1="83.82" x2="175.26" y2="83.82" width="0.1524" layer="91"/>
 <label x="172.72" y="78.74" size="1.778" layer="95"/>
 <pinref part="MCU" gate="_GPIO" pin="PB0"/>
+<pinref part="R3" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="AP_CTS" class="0">
@@ -9512,7 +9545,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="68.58" y1="203.2" x2="68.58" y2="198.12" width="0.1524" layer="91"/>
 <pinref part="R66" gate="G$1" pin="2"/>
 <wire x1="68.58" y1="198.12" x2="66.04" y2="198.12" width="0.1524" layer="91"/>
-<pinref part="R67" gate="G$1" pin="1"/>
+<pinref part="R67" gate="G$1" pin="2"/>
 <wire x1="73.66" y1="198.12" x2="68.58" y2="198.12" width="0.1524" layer="91"/>
 <junction x="68.58" y="198.12"/>
 <pinref part="C51" gate="G$1" pin="1"/>
@@ -9524,7 +9557,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <segment>
 <pinref part="U$3" gate="G$1" pin="+1V2"/>
 <wire x1="73.66" y1="208.28" x2="73.66" y2="210.82" width="0.1524" layer="91"/>
-<pinref part="R67" gate="G$1" pin="2"/>
+<pinref part="R67" gate="G$1" pin="1"/>
 <junction x="73.66" y="208.28"/>
 <junction x="73.66" y="208.28"/>
 <pinref part="C50" gate="G$1" pin="2"/>
@@ -9969,7 +10002,7 @@ within 0.254mm</text>
 <attribute name="MANF" x="294.64" y="137.16" size="1.778" layer="96" display="off"/>
 <attribute name="MANF#" x="294.64" y="137.16" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="SUPPLY37" gate="GND" x="294.64" y="129.54"/>
+<instance part="SUPPLY37" gate="GND" x="294.64" y="124.46"/>
 <instance part="+3V26" gate="G$1" x="342.9" y="205.74"/>
 <instance part="C34" gate="G$1" x="165.1" y="182.88" rot="R90">
 <attribute name="DIGIKEY#" x="165.1" y="182.88" size="1.778" layer="96" display="off"/>
@@ -10017,6 +10050,11 @@ within 0.254mm</text>
 </instance>
 <instance part="+3V24" gate="G$1" x="193.04" y="35.56"/>
 <instance part="MCU" gate="_FSMC" x="88.9" y="170.18"/>
+<instance part="C27" gate="G$1" x="304.8" y="139.7" rot="R180">
+<attribute name="DIGIKEY#" x="304.8" y="139.7" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF" x="304.8" y="139.7" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="MANF#" x="304.8" y="139.7" size="1.778" layer="96" rot="R180" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -10674,6 +10712,12 @@ within 0.254mm</text>
 <segment>
 <pinref part="R62" gate="G$1" pin="1"/>
 <pinref part="SUPPLY37" gate="GND" pin="GND"/>
+<wire x1="294.64" y1="127" x2="294.64" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="294.64" y1="129.54" x2="294.64" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="304.8" y1="134.62" x2="304.8" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="304.8" y1="129.54" x2="294.64" y2="129.54" width="0.1524" layer="91"/>
+<junction x="294.64" y="129.54"/>
+<pinref part="C27" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="SUPPLY33" gate="GND" pin="GND"/>
@@ -11533,6 +11577,8 @@ within 0.254mm</text>
 <pinref part="R61" gate="G$1" pin="1"/>
 <wire x1="294.64" y1="142.24" x2="294.64" y2="144.78" width="0.1524" layer="91"/>
 <junction x="294.64" y="142.24"/>
+<wire x1="294.64" y1="142.24" x2="304.8" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="C27" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="FPGA" gate="B3" pin="IO_L83N_VREF_3"/>
