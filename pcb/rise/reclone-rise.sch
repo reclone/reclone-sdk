@@ -7573,15 +7573,15 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MANF#" value="RC0603FR-07150KL"/>
 </part>
 <part name="SUPPLY42" library="supply2" deviceset="GND" device=""/>
-<part name="R66" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="75K">
-<attribute name="DIGIKEY#" value="311-75.0KHRCT-ND"/>
+<part name="R66" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="34K">
+<attribute name="DIGIKEY#" value="311-34.0KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0775KL"/>
+<attribute name="MANF#" value="RC0603FR-0734KL"/>
 </part>
-<part name="R67" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="75K">
-<attribute name="DIGIKEY#" value="311-75.0KHRCT-ND"/>
+<part name="R67" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="35K7">
+<attribute name="DIGIKEY#" value="311-35.7KHRCT-ND"/>
 <attribute name="MANF" value="Yageo"/>
-<attribute name="MANF#" value="RC0603FR-0775KL"/>
+<attribute name="MANF#" value="RC0603FR-0735K7L"/>
 </part>
 <part name="SUPPLY43" library="supply2" deviceset="GND" device=""/>
 <part name="C21" library="SparkFun-Passives" deviceset="CAP" device="0603-CAP" value="27p">
@@ -7741,6 +7741,7 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <sheet>
 <description>MCU, Power, uSD, USB, JTAG, Serial, RTC</description>
 <plain>
+<text x="78.74" y="210.82" size="1.778" layer="91">Actually 1.23 V to achieve DDR2/FPGA Vccint extended performance</text>
 </plain>
 <instances>
 <instance part="DEVICE" gate="G$1" x="43.18" y="238.76" rot="R180">
@@ -10168,7 +10169,7 @@ within 0.254mm</text>
 <label x="236.22" y="236.22" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="M3WE" class="0">
+<net name="M3WEN" class="0">
 <segment>
 <wire x1="271.78" y1="43.18" x2="276.86" y2="43.18" width="0.1524" layer="91"/>
 <label x="274.32" y="43.18" size="1.778" layer="95"/>
