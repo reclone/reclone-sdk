@@ -73,7 +73,7 @@ class BmpPipelineSink
         bool _lastClock;
         bool _clock;
         bool _requestFifoReadEnable;
-        uint16_t _requestFifoReadData;
+        uint32_t _requestFifoReadData;
         std::queue<std::pair<uint32_t,uint32_t>> _responsePixelQueue; //{hPos,vPos}
         bool _responseFifoWriteEnable;
         uint16_t _responseFifoWriteData;
