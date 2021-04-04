@@ -79,7 +79,7 @@ TEST_F(VideoBinningFilterTests, TestImageNoBin)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 4000000; ++i)
+    for (unsigned int i = 0; i < 2500000; ++i)
     {
         _uut.scalerClock = 0;
         
@@ -178,7 +178,7 @@ TEST_F(VideoBinningFilterTests, TestImageBinned)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 4000000; ++i)
+    for (unsigned int i = 0; i < 2500000; ++i)
     {
         _uut.scalerClock = 0;
         
