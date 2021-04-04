@@ -152,7 +152,6 @@ function [BITS_PER_PIXEL-1:0] binningBlend;
     input [BITS_PER_PIXEL-1:0] pixelC;
     input [BITS_PER_PIXEL-1:0] pixelD;
     
-    /* verilator lint_off UNUSED */
     reg [4:0] pixelARed = 5'd0;
     reg [5:0] pixelAGreen = 6'd0;
     reg [4:0] pixelABlue = 5'd0;
@@ -165,11 +164,13 @@ function [BITS_PER_PIXEL-1:0] binningBlend;
     reg [4:0] pixelDRed = 5'd0;
     reg [5:0] pixelDGreen = 6'd0;
     reg [4:0] pixelDBlue = 5'd0;
+    
+    /* verilator lint_off UNUSED */
+    reg [6:0] blendedRed = 7'd0;
+    reg [7:0] blendedGreen = 8'd0;
+    reg [6:0] blendedBlue = 7'd0;
     /* verilator lint_on UNUSED */
     
-    reg [4:0] blendedRed = 5'd0;
-    reg [5:0] blendedGreen = 6'd0;
-    reg [4:0] blendedBlue = 5'd0;
     begin
         pixelARed = pixelA[15:11];
         pixelAGreen = pixelA[10:5];
@@ -184,11 +185,11 @@ function [BITS_PER_PIXEL-1:0] binningBlend;
         pixelDGreen = pixelD[10:5];
         pixelDBlue = pixelD[4:0];
         
-        blendedRed = {2'b00, pixelARed[4:2]} + {2'b00, pixelBRed[4:2]} + {2'b00, pixelCRed[4:2]} + {2'b00, pixelDRed[4:2]};
-        blendedGreen = {2'b00, pixelAGreen[5:2]} + {2'b00, pixelBGreen[5:2]} + {2'b00, pixelCGreen[5:2]} + {2'b00, pixelDGreen[5:2]};
-        blendedBlue = {2'b00, pixelABlue[4:2]} + {2'b00, pixelBBlue[4:2]} + {2'b00, pixelCBlue[4:2]} + {2'b00, pixelDBlue[4:2]};
+        blendedRed = {2'b00, pixelARed} + {2'b00, pixelBRed} + {2'b00, pixelCRed} + {2'b00, pixelDRed};
+        blendedGreen = {2'b00, pixelAGreen} + {2'b00, pixelBGreen} + {2'b00, pixelCGreen} + {2'b00, pixelDGreen};
+        blendedBlue = {2'b00, pixelABlue} + {2'b00, pixelBBlue} + {2'b00, pixelCBlue} + {2'b00, pixelDBlue};
         
-        binningBlend = {blendedRed, blendedGreen, blendedBlue};
+        binningBlend = {blendedRed[6:2], blendedGreen[7:2], blendedBlue[6:2]};
     end
 endfunction
 
@@ -228,13 +229,15 @@ SyncFifo #(.DATA_WIDTH(REQUEST_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) upstreamReques
 reg downstreamRequestFifoReadEnableBinning = 1'b0;
 reg downstreamResponseFifoWriteEnableBinning = 1'b0;
 
+wire upstreamResponseFifoFullBinning = ((responseRowOdd && oddRowBufferFull) || (!responseRowOdd && evenRowBufferFull));
+
 assign downstreamResponseFifoWriteData = enableBinning ? blendedPixel : upstreamResponseFifoWriteData;
 assign downstreamResponseFifoWriteEnable = enableBinning ? downstreamResponseFifoWriteEnableBinning : upstreamResponseFifoWriteEnable;
 assign upstreamRequestFifoReadData = enableBinning ? upstreamRequestFifoReadDataBinning : downstreamRequestFifoReadData;
 assign upstreamRequestFifoEmpty = enableBinning ? upstreamRequestFifoEmptyBinning : downstreamRequestFifoEmpty;
 assign upstreamRequestFifoReadEnableBinning = enableBinning ? upstreamRequestFifoReadEnable : 1'b0;
 assign downstreamRequestFifoReadEnable = enableBinning ? downstreamRequestFifoReadEnableBinning : upstreamRequestFifoReadEnable;
-assign upstreamResponseFifoFull = enableBinning ? (evenRowBufferFull || oddRowBufferFull) : downstreamResponseFifoFull;
+assign upstreamResponseFifoFull = enableBinning ? upstreamResponseFifoFullBinning : downstreamResponseFifoFull;
 
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
@@ -310,7 +313,7 @@ always @ (posedge scalerClock or posedge reset) begin
         case (upstreamResponseState)
 
             UPSTREAM_RESPONSE_FIRST_PIXEL: begin
-                if (upstreamResponseFifoWriteEnable && !upstreamResponseFifoFull) begin
+                if (upstreamResponseFifoWriteEnable && !upstreamResponseFifoFullBinning) begin
                     // Save the first pixel into the appropriate write data register
                     if (responseRowOdd) begin
                         // Odd row
@@ -328,7 +331,7 @@ always @ (posedge scalerClock or posedge reset) begin
             end
             
             UPSTREAM_RESPONSE_SECOND_PIXEL: begin
-                if (upstreamResponseFifoWriteEnable && !upstreamResponseFifoFull) begin
+                if (upstreamResponseFifoWriteEnable && !upstreamResponseFifoFullBinning) begin
                     // Save the second pixel into the appropriate write data register, and write the two-pixel word into the FIFO
                     if (responseRowOdd) begin
                         // Odd row
