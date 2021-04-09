@@ -593,26 +593,38 @@ always @ (posedge scalerClock or posedge reset) begin
                     // Write to response fifo next cycle
                     downstreamResponseFifoWriteEnable <= 1'b1;
                     
+                    // If second to last pixel of the chunk, then start reading the next pending response, if there is one
+                    if (downstreamResponsePixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
+                        // Not the last pixel in the chunk, so increment pixel counter
+                        downstreamResponsePixelCount <= downstreamResponsePixelCount + {{(CHUNK_BITS-1){1'b0}}, 1'b1};
+                        
+                        if (!pendingDownstreamResponseFifoEmpty) begin
+                            // Read the next chunk
+                            pendingDownstreamResponseFifoReadEnable <= 1'b1;
+                        end
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
-                    if (downstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
+                    end else if (downstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                         // Reset pixel counter
                         downstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
                         
-                        // If there is another pending downstream response
-                        if (pendingDownstreamResponseFifoEmpty) begin
-                            // No pending response chunk at this point, so return to idle
+                        if (pendingDownstreamResponseFifoReadEnable) begin
+                            // If there is another pending downstream response being read, stay in DOWNSTREAM_RESPONSE_STORE
                             pendingDownstreamResponseFifoReadEnable <= 1'b0;
-                            downstreamResponseState <= DOWNSTREAM_RESPONSE_IDLE;
-                        end else begin
+                            downstreamResponseState <= DOWNSTREAM_RESPONSE_STORE;
+                        end else if (!pendingDownstreamResponseFifoEmpty) begin
                             // Read the next chunk
                             pendingDownstreamResponseFifoReadEnable <= 1'b1;
                             downstreamResponseState <= DOWNSTREAM_RESPONSE_READ;
+                        end else begin
+                            // No pending response chunk at this point, so return to idle
+                            pendingDownstreamResponseFifoReadEnable <= 1'b0;
+                            downstreamResponseState <= DOWNSTREAM_RESPONSE_IDLE;
                         end
                     end else begin
                         // Not the last pixel in the chunk, so increment pixel counter
                         downstreamResponsePixelCount <= downstreamResponsePixelCount + {{(CHUNK_BITS-1){1'b0}}, 1'b1};
                         
-                        // Not the last pixel of the chunk, so do not retrieve the next chunk
+                        // Not the second to last pixel of the chunk, so do not retrieve the next chunk
                         pendingDownstreamResponseFifoReadEnable <= 1'b0;
                     end
                 end else begin
