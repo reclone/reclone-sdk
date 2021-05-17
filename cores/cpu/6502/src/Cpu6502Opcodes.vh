@@ -27,156 +27,156 @@
 `ifndef __CPU6502OPCODES_VH_
 `define __CPU6502OPCODES_VH_
 
-`define BRK         8'h00
-`define ORA_X_IND   8'h01
-`define ORA_ZPG     8'h05
-`define ASL_ZPG     8'h06
-`define PHP         8'h08
-`define ORA_IMM     8'h09
-`define ASL_A       8'h0A
-`define ORA_ABS     8'h0D
-`define ASL_ABS     8'h0E
-`define BPL         8'h10
-`define ORA_IND_Y   8'h11
-`define ORA_ZPG_X   8'h15
-`define ASL_ZPG_X   8'h16
-`define CLC         8'h18
-`define ORA_ABS_Y   8'h19
-`define ORA_ABS_X   8'h1D
-`define ASL_ABS_X   8'h1E
-`define JSR         8'h20
-`define AND_X_IND   8'h21
-`define BIT_ZPG     8'h24
-`define AND_ZPG     8'h25
-`define ROL_ZPG     8'h26
-`define PLP         8'h28
-`define AND_IMM     8'h29
-`define ROL_A       8'h2A
-`define BIT_ABS     8'h2C
-`define AND_ABS     8'h2D
-`define ROL_ABS     8'h2E
-`define BMI         8'h30
-`define AND_IND_Y   8'h31
-`define AND_ZPG_X   8'h35
-`define ROL_ZPG_X   8'h36
-`define SEC         8'h38
-`define AND_ABS_Y   8'h39
-`define AND_ABS_X   8'h3D
-`define ROL_ABS_X   8'h3E
-`define RTI         8'h40
-`define EOR_X_IND   8'h41
-`define EOR_ZPG     8'h45
-`define LSR_ZPG     8'h46
-`define PHA         8'h48
-`define EOR_IMM     8'h49
-`define LSR_A       8'h4A
-`define JMP_ABS     8'h4C
-`define EOR_ABS     8'h4D
-`define LSR_ABS     8'h4E
-`define BVC         8'h50
-`define EOR_IND_Y   8'h51
-`define EOR_ZPG_X   8'h55
-`define LSR_ZPG_X   8'h56
-`define CLI         8'h58
-`define EOR_ABS_Y   8'h59
-`define EOR_ABS_X   8'h5D
-`define LSR_ABS_X   8'h5E
-`define RTS         8'h60
-`define ADC_X_IND   8'h61
-`define ADC_ZPG     8'h65
-`define ROR_ZPG     8'h66
-`define PLA         8'h68
-`define ADC_IMM     8'h69
-`define ROR_A       8'h6A
-`define JMP_IND     8'h6C
-`define ADC_ABS     8'h6D
-`define ROR_ABS     8'h6E
-`define BVS         8'h70
-`define ADC_IND_Y   8'h71
-`define ADC_ZPG_X   8'h75
-`define ROR_ZPG_X   8'h76
-`define SEI         8'h78
-`define ADC_ABS_Y   8'h79
-`define ADC_ABS_X   8'h7D
-`define ROR_ABS_X   8'h7E
-`define STA_X_IND   8'h81
-`define STY_ZPG     8'h84
-`define STA_ZPG     8'h85
-`define STX_ZPG     8'h86
-`define DEY         8'h88
-`define TXA         8'h8A
-`define STY_ABS     8'h8C
-`define STA_ABS     8'h8D
-`define STX_ABS     8'h8E
-`define BCC         8'h90
-`define STA_IND_Y   8'h91
-`define STY_ZPG_X   8'h94
-`define STA_ZPG_X   8'h95
-`define STX_ZPG_Y   8'h96
-`define TYA         8'h98
-`define STA_ABS_Y   8'h99
-`define TXS         8'h9A
-`define STA_ABS_X   8'h9D
-`define LDY_IMM     8'hA0
-`define LDA_X_IND   8'hA1
-`define LDX_IMM     8'hA2
-`define LDY_ZPG     8'hA4
-`define LDA_ZPG     8'hA5
-`define LDX_ZPG     8'hA6
-`define TAY         8'hA8
-`define LDA_IMM     8'hA9
-`define TAX         8'hAA
-`define LDY_ABS     8'hAC
-`define LDA_ABS     8'hAD
-`define LDX_ABS     8'hAE
-`define BCS         8'hB0
-`define LDA_IND_Y   8'hB1
-`define LDY_ZPG_X   8'hB4
-`define LDA_ZPG_X   8'hB5
-`define LDX_ZPG_Y   8'hB6
-`define CLV         8'hB8
-`define LDA_ABS_Y   8'hB9
-`define TSX         8'hBA
-`define LDY_ABS_X   8'hBC
-`define LDA_ABS_X   8'hBD
-`define LDX_ABS_Y   8'hBE
-`define CPY_IMM     8'hC0
-`define CMP_X_IND   8'hC1
-`define CPY_ZPG     8'hC4
-`define CMP_ZPG     8'hC5
-`define DEC_ZPG     8'hC6
-`define INY         8'hC8
-`define CMP_IMM     8'hC9
-`define DEX         8'hCA
-`define CPY_ABS     8'hCC
-`define CMP_ABS     8'hCD
-`define DEC_ABS     8'hCE
-`define BNE         8'hD0
-`define CMP_IND_Y   8'hD1
-`define CMP_ZPG_X   8'hD5
-`define DEC_ZPG_X   8'hD6
-`define CLD         8'hD8
-`define CMP_ABS_Y   8'hD9
-`define CMP_ABS_X   8'hDD
-`define DEC_ABS_X   8'hDE
-`define CPX_IMM     8'hE0
-`define SBC_X_IND   8'hE1
-`define CPX_ZPG     8'hE4
-`define SBC_ZPG     8'hE5
-`define INC_ZPG     8'hE6
-`define INX         8'hE8
-`define SBC_IMM     8'hE9
-`define NOP         8'hEA
-`define CPX_ABS     8'hEC
-`define SBC_ABS     8'hED
-`define INC_ABS     8'hEE
-`define BEQ         8'hF0
-`define SBC_IND_Y   8'hF1
-`define SBC_ZPG_X   8'hF5
-`define INC_ZPG_X   8'hF6
-`define SED         8'hF8
-`define SBC_ABS_Y   8'hF9
-`define SBC_ABS_X   8'hFD
-`define INC_ABS_X   8'hFE
+localparam BRK          = 8'h00;
+localparam ORA_X_IND    = 8'h01;
+localparam ORA_ZPG      = 8'h05;
+localparam ASL_ZPG      = 8'h06;
+localparam PHP          = 8'h08;
+localparam ORA_IMM      = 8'h09;
+localparam ASL_A        = 8'h0A;
+localparam ORA_ABS      = 8'h0D;
+localparam ASL_ABS      = 8'h0E;
+localparam BPL          = 8'h10;
+localparam ORA_IND_Y    = 8'h11;
+localparam ORA_ZPG_X    = 8'h15;
+localparam ASL_ZPG_X    = 8'h16;
+localparam CLC          = 8'h18;
+localparam ORA_ABS_Y    = 8'h19;
+localparam ORA_ABS_X    = 8'h1D;
+localparam ASL_ABS_X    = 8'h1E;
+localparam JSR          = 8'h20;
+localparam AND_X_IND    = 8'h21;
+localparam BIT_ZPG      = 8'h24;
+localparam AND_ZPG      = 8'h25;
+localparam ROL_ZPG      = 8'h26;
+localparam PLP          = 8'h28;
+localparam AND_IMM      = 8'h29;
+localparam ROL_A        = 8'h2A;
+localparam BIT_ABS      = 8'h2C;
+localparam AND_ABS      = 8'h2D;
+localparam ROL_ABS      = 8'h2E;
+localparam BMI          = 8'h30;
+localparam AND_IND_Y    = 8'h31;
+localparam AND_ZPG_X    = 8'h35;
+localparam ROL_ZPG_X    = 8'h36;
+localparam SEC          = 8'h38;
+localparam AND_ABS_Y    = 8'h39;
+localparam AND_ABS_X    = 8'h3D;
+localparam ROL_ABS_X    = 8'h3E;
+localparam RTI          = 8'h40;
+localparam EOR_X_IND    = 8'h41;
+localparam EOR_ZPG      = 8'h45;
+localparam LSR_ZPG      = 8'h46;
+localparam PHA          = 8'h48;
+localparam EOR_IMM      = 8'h49;
+localparam LSR_A        = 8'h4A;
+localparam JMP_ABS      = 8'h4C;
+localparam EOR_ABS      = 8'h4D;
+localparam LSR_ABS      = 8'h4E;
+localparam BVC          = 8'h50;
+localparam EOR_IND_Y    = 8'h51;
+localparam EOR_ZPG_X    = 8'h55;
+localparam LSR_ZPG_X    = 8'h56;
+localparam CLI          = 8'h58;
+localparam EOR_ABS_Y    = 8'h59;
+localparam EOR_ABS_X    = 8'h5D;
+localparam LSR_ABS_X    = 8'h5E;
+localparam RTS          = 8'h60;
+localparam ADC_X_IND    = 8'h61;
+localparam ADC_ZPG      = 8'h65;
+localparam ROR_ZPG      = 8'h66;
+localparam PLA          = 8'h68;
+localparam ADC_IMM      = 8'h69;
+localparam ROR_A        = 8'h6A;
+localparam JMP_IND      = 8'h6C;
+localparam ADC_ABS      = 8'h6D;
+localparam ROR_ABS      = 8'h6E;
+localparam BVS          = 8'h70;
+localparam ADC_IND_Y    = 8'h71;
+localparam ADC_ZPG_X    = 8'h75;
+localparam ROR_ZPG_X    = 8'h76;
+localparam SEI          = 8'h78;
+localparam ADC_ABS_Y    = 8'h79;
+localparam ADC_ABS_X    = 8'h7D;
+localparam ROR_ABS_X    = 8'h7E;
+localparam STA_X_IND    = 8'h81;
+localparam STY_ZPG      = 8'h84;
+localparam STA_ZPG      = 8'h85;
+localparam STX_ZPG      = 8'h86;
+localparam DEY          = 8'h88;
+localparam TXA          = 8'h8A;
+localparam STY_ABS      = 8'h8C;
+localparam STA_ABS      = 8'h8D;
+localparam STX_ABS      = 8'h8E;
+localparam BCC          = 8'h90;
+localparam STA_IND_Y    = 8'h91;
+localparam STY_ZPG_X    = 8'h94;
+localparam STA_ZPG_X    = 8'h95;
+localparam STX_ZPG_Y    = 8'h96;
+localparam TYA          = 8'h98;
+localparam STA_ABS_Y    = 8'h99;
+localparam TXS          = 8'h9A;
+localparam STA_ABS_X    = 8'h9D;
+localparam LDY_IMM      = 8'hA0;
+localparam LDA_X_IND    = 8'hA1;
+localparam LDX_IMM      = 8'hA2;
+localparam LDY_ZPG      = 8'hA4;
+localparam LDA_ZPG      = 8'hA5;
+localparam LDX_ZPG      = 8'hA6;
+localparam TAY          = 8'hA8;
+localparam LDA_IMM      = 8'hA9;
+localparam TAX          = 8'hAA;
+localparam LDY_ABS      = 8'hAC;
+localparam LDA_ABS      = 8'hAD;
+localparam LDX_ABS      = 8'hAE;
+localparam BCS          = 8'hB0;
+localparam LDA_IND_Y    = 8'hB1;
+localparam LDY_ZPG_X    = 8'hB4;
+localparam LDA_ZPG_X    = 8'hB5;
+localparam LDX_ZPG_Y    = 8'hB6;
+localparam CLV          = 8'hB8;
+localparam LDA_ABS_Y    = 8'hB9;
+localparam TSX          = 8'hBA;
+localparam LDY_ABS_X    = 8'hBC;
+localparam LDA_ABS_X    = 8'hBD;
+localparam LDX_ABS_Y    = 8'hBE;
+localparam CPY_IMM      = 8'hC0;
+localparam CMP_X_IND    = 8'hC1;
+localparam CPY_ZPG      = 8'hC4;
+localparam CMP_ZPG      = 8'hC5;
+localparam DEC_ZPG      = 8'hC6;
+localparam INY          = 8'hC8;
+localparam CMP_IMM      = 8'hC9;
+localparam DEX          = 8'hCA;
+localparam CPY_ABS      = 8'hCC;
+localparam CMP_ABS      = 8'hCD;
+localparam DEC_ABS      = 8'hCE;
+localparam BNE          = 8'hD0;
+localparam CMP_IND_Y    = 8'hD1;
+localparam CMP_ZPG_X    = 8'hD5;
+localparam DEC_ZPG_X    = 8'hD6;
+localparam CLD          = 8'hD8;
+localparam CMP_ABS_Y    = 8'hD9;
+localparam CMP_ABS_X    = 8'hDD;
+localparam DEC_ABS_X    = 8'hDE;
+localparam CPX_IMM      = 8'hE0;
+localparam SBC_X_IND    = 8'hE1;
+localparam CPX_ZPG      = 8'hE4;
+localparam SBC_ZPG      = 8'hE5;
+localparam INC_ZPG      = 8'hE6;
+localparam INX          = 8'hE8;
+localparam SBC_IMM      = 8'hE9;
+localparam NOP          = 8'hEA;
+localparam CPX_ABS      = 8'hEC;
+localparam SBC_ABS      = 8'hED;
+localparam INC_ABS      = 8'hEE;
+localparam BEQ          = 8'hF0;
+localparam SBC_IND_Y    = 8'hF1;
+localparam SBC_ZPG_X    = 8'hF5;
+localparam INC_ZPG_X    = 8'hF6;
+localparam SED          = 8'hF8;
+localparam SBC_ABS_Y    = 8'hF9;
+localparam SBC_ABS_X    = 8'hFD;
+localparam INC_ABS_X    = 8'hFE;
 
 `endif //__CPU6502OPCODES_VH_
