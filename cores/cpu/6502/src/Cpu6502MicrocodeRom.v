@@ -137,7 +137,7 @@ begin
                 
             {UPAGE_OP, LDA_IMM}:
                 // A <= (PC), PC <= PC + 1
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_A, PC_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO_FLG, ALU_O_A, PC_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             {UPAGE_OP, LDA_ABS}:
                 // INDL <= (PC), PC <= PC + 1
@@ -147,7 +147,7 @@ begin
                 d <= {ADDR_PC, DATA_READ, DATA_INDH, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, PC_INC, USEQ_BR_IF_CLR, USEQ_ADDR_LDA_ABS + 10'd1};
             USEQ_ADDR_LDA_ABS + 10'd1:
                 // A <= (IND)
-                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_A, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO_FLG, ALU_O_A, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             default: // Halt
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_HALT};

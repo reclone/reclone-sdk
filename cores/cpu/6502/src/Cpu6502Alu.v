@@ -31,6 +31,7 @@ module Cpu6502Alu
     input   [7:0]   operandA,
     input   [7:0]   operandB,
     input           carryIn,
+    input           overflowIn,
     input   [2:0]   operation,
     input   [2:0]   opExtension,
     input           decimalMode,
@@ -38,7 +39,7 @@ module Cpu6502Alu
     output          carryOut,
     output          zero,
     output          negative,
-    output          overflow,
+    output          overflowOut,
     output          branchCondition
 );
 
@@ -55,7 +56,7 @@ wire [7:0] finalSum = {finalSumH, finalSumL};
 
 assign zero = ~|result;
 assign negative = result[7];
-assign overflow = addend1[7] ^ addend2[7] ^ result[7] ^ fullCarry;
+wire adderOverflow = addend1[7] ^ addend2[7] ^ finalSum[7] ^ fullCarry;
 
 always @ (*) begin
     case ({decimalMode, subtract, halfCarry})
@@ -78,24 +79,28 @@ always @ (*) begin
         ALU_OP_AND: begin
             result = operandA & operandB;
             carryOut = carryIn;
+            overflowOut = overflowIn;
             branchCondition = 1'b0;
         end
         
         ALU_OP_OR: begin
             result = operandA | operandB;
             carryOut = carryIn;
+            overflowOut = overflowIn;
             branchCondition = 1'b0;
         end
         
         ALU_OP_EOR: begin
             result = operandA ^ operandB;
             carryOut = carryIn;
+            overflowOut = overflowIn;
             branchCondition = 1'b0;
         end
         
         ALU_OP_ADC, ALU_OP_SBC: begin
             result = finalSum;
             carryOut = fullCarry;
+            overflowOut = adderOverflow;
             branchCondition = fullCarry;
         end
         
@@ -104,62 +109,86 @@ always @ (*) begin
                 ALU_SOP_ASL: begin
                     result = {operandA[6:0], 1'b0};
                     carryOut = operandA[7];
+                    overflowOut = overflowIn;
                     branchCondition = 1'b0;
                 end
                 
                 ALU_SOP_LSR: begin
                     result = {1'b0, operandA[7:1]};
                     carryOut = operandA[0];
+                    overflowOut = overflowIn;
                     branchCondition = 1'b0;
                 end
                 
                 ALU_SOP_ROL: begin
                     result = {operandA[6:0], carryIn};
                     carryOut = operandA[7];
+                    overflowOut = overflowIn;
                     branchCondition = 1'b0;
                 end
                 
                 ALU_SOP_ROR: begin
                     result = {carryIn, operandA[7:1]};
                     carryOut = operandA[0];
+                    overflowOut = overflowIn;
                     branchCondition = 1'b0;
                 end
                 
                 ALU_SOP_TEST_N: begin
                     result = operandA;
                     carryOut = carryIn;
+                    overflowOut = overflowIn;
                     branchCondition = operandA[N_BIT_IN_P];
                 end
                 
                 ALU_SOP_TEST_C: begin
                     result = operandA;
                     carryOut = carryIn;
+                    overflowOut = overflowIn;
                     branchCondition = operandA[C_BIT_IN_P];
                 end
                 
                 ALU_SOP_TEST_V: begin
                     result = operandA;
                     carryOut = carryIn;
+                    overflowOut = overflowIn;
                     branchCondition = operandA[V_BIT_IN_P];
                 end
                 
                 ALU_SOP_TEST_Z: begin
                     result = operandA;
                     carryOut = carryIn;
+                    overflowOut = overflowIn;
                     branchCondition = operandA[Z_BIT_IN_P];
                 end
                 
                 default: begin
                     result = 8'hXX;
                     carryOut = carryIn;
+                    overflowOut = overflowIn;
                     branchCondition = 1'b0;
                 end
             endcase
         end
 
+        ALU_OP_SETBIT: begin // Set a single bit to 1
+            result = operandA | (8'd1 << opExtension);
+            carryOut = carryIn;
+            overflowOut = overflowIn;
+            branchCondition = 1'b0;
+        end
+        
+        ALU_OP_CLRBIT: begin // Clear a single bit to 0
+            result = operandA & ~(8'd1 << opExtension);
+            carryOut = carryIn;
+            overflowOut = overflowIn;
+            branchCondition = 1'b0;
+        end
+
         default: begin
             result = 8'hXX;
             carryOut = carryIn;
+            overflowOut = overflowIn;
             branchCondition = 1'b0;
         end
     endcase

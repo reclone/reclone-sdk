@@ -47,8 +47,10 @@ localparam DATA_PCL         = 4'h2;
 localparam DATA_PCH         = 4'h3;
 localparam DATA_P           = 4'h4;
 localparam DATA_A           = 4'h5;
-localparam DATA_INDL        = 4'h6;
-localparam DATA_INDH        = 4'h7;
+localparam DATA_X           = 4'h6;
+localparam DATA_Y           = 4'h7;
+localparam DATA_INDL        = 4'h8;
+localparam DATA_INDH        = 4'h9;
 
 // ALU Operations
 localparam ALU_OP_SBC       = 3'h0;
@@ -77,10 +79,16 @@ localparam ALU_A_FE         = 4'hE;
 localparam ALU_A_FF         = 4'hF; 
 
 // ALU Operand B Sources
+// Low bit: whether to save resulting flags to P
 localparam ALU_B_ZERO       = 3'h0;
-localparam ALU_B_ONE        = 3'h1;
+localparam ALU_B_ZERO_FLG   = 3'h1;
+localparam ALU_B_ONE        = 3'h2;
+localparam ALU_B_ONE_FLG    = 3'h3;
+localparam ALU_B_DI         = 3'h4;
+localparam ALU_B_DI_FLG     = 3'h5;
 
 // Bit positions (used as Operand B for ALU_OP_SETBIT and ALU_OP_CLRBIT)
+// Never save resulting flags to P for ALU_OP_SETBIT or ALU_OP_CLRBIT
 localparam C_BIT_IN_P       = 3'h0;
 localparam Z_BIT_IN_P       = 3'h1;
 localparam I_BIT_IN_P       = 3'h2;
@@ -90,14 +98,15 @@ localparam V_BIT_IN_P       = 3'h6;
 localparam N_BIT_IN_P       = 3'h7;
 
 // Single-operand operations (used as Operand B for ALU_OP_SGL)
-localparam ALU_SOP_ASL      = 3'h0;
-localparam ALU_SOP_LSR      = 3'h1;
-localparam ALU_SOP_ROL      = 3'h2;
-localparam ALU_SOP_ROR      = 3'h3;
-localparam ALU_SOP_TEST_N   = 3'h4;
-localparam ALU_SOP_TEST_C   = 3'h5;
-localparam ALU_SOP_TEST_V   = 3'h6;
-localparam ALU_SOP_TEST_Z   = 3'h7;
+// Low bit: whether to save resulting flags to P
+localparam ALU_SOP_TEST_N   = 3'h0; // Never save flags to P
+localparam ALU_SOP_TEST_C   = 3'h2; // "
+localparam ALU_SOP_TEST_V   = 3'h4; // "
+localparam ALU_SOP_TEST_Z   = 3'h6; // "
+localparam ALU_SOP_ASL      = 3'h1; // Always save flags to P
+localparam ALU_SOP_LSR      = 3'h3; // "
+localparam ALU_SOP_ROL      = 3'h5; // "
+localparam ALU_SOP_ROR      = 3'h7; // "
 
 // ALU Output Storage
 localparam ALU_O_NULL       = 3'h0;
