@@ -1,8 +1,8 @@
 //
-// Cpu6502Alu - 6502 Arithmetic Logic Unit
+// Cpu6502Alu - 6502 Arithmetic and Logic Unit
 //
 //
-// Copyright 2018 Reclone Labs <reclonelabs.com>
+// Copyright 2018 - 2021 Reclone Labs <reclonelabs.com>
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -24,73 +24,145 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+`include "Cpu6502MicrocodeConstants.vh"
+
 module Cpu6502Alu
 (
-    input   [7:0]   operand1,
-    input   [7:0]   operand2,
+    input   [7:0]   operandA,
+    input   [7:0]   operandB,
     input           carryIn,
     input   [2:0]   operation,
+    input   [2:0]   opExtension,
     input           decimalMode,
     output  [7:0]   result,
     output          carryOut,
     output          zero,
     output          negative,
-    output          overflow
+    output          overflow,
+    output          branchCondition
 );
 
-wire subtract = (operation == `ALU_OPERATION_SBC);
-wire [7:0] addend1 = operand1;
-wire [7:0] addend2 = subtract ? ~operand2 : operand2;
-wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + carryIn;
+wire subtract = (operation == ALU_OP_SBC);
+wire [7:0] addend1 = operandA;
+wire [7:0] addend2 = subtract ? ~operandB : operandB;
+wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + {3'd0, carryIn};
 wire halfCarry = rawSumL[4] | (decimalMode & (rawSumL[3:1] >= 3'd5));
-wire [4:0] rawSumH = addend1[7:4] + addend2[3:0] + halfCarry;
+wire [4:0] rawSumH = addend1[7:4] + addend2[7:4] + {3'd0, halfCarry};
 wire fullCarry = rawSumH[4] | (decimalMode & (rawSumH[3:1] >= 3'd5));
-wire finalSum[7:0];
+wire [3:0] finalSumL;
+wire [3:0] finalSumH;
+wire [7:0] finalSum = {finalSumH, finalSumL};
 
 assign zero = ~|result;
 assign negative = result[7];
 assign overflow = addend1[7] ^ addend2[7] ^ result[7] ^ fullCarry;
 
-always @* begin
+always @ (*) begin
     case ({decimalMode, subtract, halfCarry})
-        case 3'b110:    finalSum[3:0] = rawSumL[3:0] + 4'd10;
-        case 3'b101:    finalSum[3:0] = rawSumL[3:0] + 4'd6;
-        default:        finalSum[3:0] = rawSumL[3:0];
+        3'b110:    finalSumL = rawSumL[3:0] + 4'd10;
+        3'b101:    finalSumL = rawSumL[3:0] + 4'd6;
+        default:   finalSumL = rawSumL[3:0];
     endcase
 end
 
-always @* begin
+always @ (*) begin
     case ({decimalMode, subtract, fullCarry})
-        case 3'b110:    finalSum[7:4] = rawSumL[7:4] + 4'd10;
-        case 3'b101:    finalSum[7:4] = rawSumL[7:4] + 4'd6;
-        default:        finalSum[7:4] = rawSumL[7:4];
+        3'b110:    finalSumH = rawSumH[3:0] + 4'd10;
+        3'b101:    finalSumH = rawSumH[3:0] + 4'd6;
+        default:   finalSumH = rawSumH[3:0];
     endcase
 end
 
-always @* begin
+always @ (*) begin
     case (operation)
-        `ALU_OPERATION_COPY:
-            result = operand1;
-            carryOut = 1'bX;
-        `ALU_OPERATION_AND:
-            result = operand1 & operand2;
-            carryOut = 1'bX;
-        `ALU_OPERATION_OR:
-            result = operand1 | operand2;
-            carryOut = 1'bX;
-        `ALU_OPERATION_EOR:
-            result = operand1 ^ operand2;
-            carryOut = 1'bX;
-        `ALU_OPERATION_ADC, `ALU_OPERATION_SBC:
+        ALU_OP_AND: begin
+            result = operandA & operandB;
+            carryOut = carryIn;
+            branchCondition = 1'b0;
+        end
+        
+        ALU_OP_OR: begin
+            result = operandA | operandB;
+            carryOut = carryIn;
+            branchCondition = 1'b0;
+        end
+        
+        ALU_OP_EOR: begin
+            result = operandA ^ operandB;
+            carryOut = carryIn;
+            branchCondition = 1'b0;
+        end
+        
+        ALU_OP_ADC, ALU_OP_SBC: begin
             result = finalSum;
             carryOut = fullCarry;
-        `ALU_OPERATION_ROR:
-            result = {carryIn, operand1[7:1]};
-            carryOut = operand1[0];
-        default:
+            branchCondition = fullCarry;
+        end
+        
+        ALU_OP_SGL: begin // Single operand - opExtension is the operation
+            case (opExtension)
+                ALU_SOP_ASL: begin
+                    result = {operandA[6:0], 1'b0};
+                    carryOut = operandA[7];
+                    branchCondition = 1'b0;
+                end
+                
+                ALU_SOP_LSR: begin
+                    result = {1'b0, operandA[7:1]};
+                    carryOut = operandA[0];
+                    branchCondition = 1'b0;
+                end
+                
+                ALU_SOP_ROL: begin
+                    result = {operandA[6:0], carryIn};
+                    carryOut = operandA[7];
+                    branchCondition = 1'b0;
+                end
+                
+                ALU_SOP_ROR: begin
+                    result = {carryIn, operandA[7:1]};
+                    carryOut = operandA[0];
+                    branchCondition = 1'b0;
+                end
+                
+                ALU_SOP_TEST_N: begin
+                    result = operandA;
+                    carryOut = carryIn;
+                    branchCondition = operandA[N_BIT_IN_P];
+                end
+                
+                ALU_SOP_TEST_C: begin
+                    result = operandA;
+                    carryOut = carryIn;
+                    branchCondition = operandA[C_BIT_IN_P];
+                end
+                
+                ALU_SOP_TEST_V: begin
+                    result = operandA;
+                    carryOut = carryIn;
+                    branchCondition = operandA[V_BIT_IN_P];
+                end
+                
+                ALU_SOP_TEST_Z: begin
+                    result = operandA;
+                    carryOut = carryIn;
+                    branchCondition = operandA[Z_BIT_IN_P];
+                end
+                
+                default: begin
+                    result = 8'hXX;
+                    carryOut = carryIn;
+                    branchCondition = 1'b0;
+                end
+            endcase
+        end
+
+        default: begin
             result = 8'hXX;
-            carryOut = 1'bX;
+            carryOut = carryIn;
+            branchCondition = 1'b0;
+        end
     endcase
 end
 
-endmodule //6502_alu
+endmodule //Cpu6502Alu
