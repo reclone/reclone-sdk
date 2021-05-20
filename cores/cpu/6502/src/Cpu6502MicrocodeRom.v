@@ -61,7 +61,7 @@ assign uSeqBranchAddr = d[9:0];
 
 // Microsequencer branch addresses
 localparam USEQ_ADDR_FETCH  = 10'h005;
-localparam USEQ_ADDR_LDA_ABS = 10'h015;
+localparam USEQ_ADDR_LDA_ABS = 10'h016;
 localparam USEQ_ADDR_HALT   = 10'h2FF;
 localparam USEQ_ADDR_NONE   = USEQ_ADDR_HALT;
 
@@ -76,11 +76,11 @@ begin
         
             /* RESET - Load PC with vector at $FFFC, and set I - normally takes 6 cycles */
             USEQ_ADDR_RESET:
-                // PCL <= ($FFFC)
-                d <= {ADDR_VEC, DATA_READ, DATA_PCL, ALU_OP_CLRBIT, ALU_A_FE, 3'd1, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd1};
+                // PCH <= ($FFFD), PCL <= $FD
+                d <= {ADDR_ALU, DATA_READ, DATA_PCH, ALU_OP_ADC, ALU_A_FE, ALU_B_FF, ALU_O_PCL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd1};
             USEQ_ADDR_RESET + 10'd1:
-                // PCH <= ($FFFD)
-                d <= {ADDR_VEC, DATA_READ, DATA_PCH, ALU_OP_CLRBIT, ALU_A_FF, 3'd1, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd2};
+                // PCL <= ($FFFC)
+                d <= {ADDR_ALU, DATA_READ, DATA_PCL, ALU_OP_ADC, ALU_A_PCL, ALU_B_FF, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd2};
             USEQ_ADDR_RESET + 10'd2:
                 // OP <= (PC), I <= 1
                 d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_SETBIT, ALU_A_P, I_BIT_IN_P, ALU_O_P, PC_INC, USEQ_BR_IF_CLR, USEQ_OP};
@@ -97,10 +97,10 @@ begin
                 d <= {ADDR_SP, DATA_WRITE, DATA_P, ALU_OP_SBC, ALU_A_S, ALU_B_ONE, ALU_O_S, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ + 10'd3};
             USEQ_ADDR_IRQ + 10'd3:
                 // PCL <= ($FFFE)
-                d <= {ADDR_VEC, DATA_READ, DATA_PCL, ALU_OP_OR, ALU_A_FE, ALU_B_ZERO, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ + 10'd4};
+                d <= {ADDR_ALU, DATA_READ, DATA_PCL, ALU_OP_AND, ALU_A_FE, ALU_B_FF, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ + 10'd4};
             USEQ_ADDR_IRQ + 10'd4:
                 // PCH <= ($FFFF)
-                d <= {ADDR_VEC, DATA_READ, DATA_PCH, ALU_OP_OR, ALU_A_FF, ALU_B_ZERO, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ + 10'd5};
+                d <= {ADDR_ALU, DATA_READ, DATA_PCH, ALU_OP_AND, ALU_A_FF, ALU_B_FF, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ + 10'd5};
             USEQ_ADDR_IRQ + 10'd5:
                 // OP <= (PC), PC <= PC + 1, I <= 1
                 d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_SETBIT, ALU_A_P, I_BIT_IN_P, ALU_O_P, PC_INC, USEQ_BR_IF_CLR, USEQ_OP};
@@ -116,11 +116,14 @@ begin
                 // ($0100,S) <= P, S <= S - 1
                 d <= {ADDR_SP, DATA_WRITE, DATA_P, ALU_OP_SBC, ALU_A_S, ALU_B_ONE, ALU_O_S, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_NMI + 10'd3};
             USEQ_ADDR_NMI + 10'd3:
-                // PCL <= ($FFFA)
-                d <= {ADDR_VEC, DATA_READ, DATA_PCL, ALU_OP_CLRBIT, ALU_A_FE, 3'h2, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_NMI + 10'd4};
+                // PCL <= $FB
+                d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_CLRBIT, ALU_A_FF, 3'h2, ALU_O_PCL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_NMI + 10'd4};
             USEQ_ADDR_NMI + 10'd4:
-                // PCH <= ($FFFB)
-                d <= {ADDR_VEC, DATA_READ, DATA_PCH, ALU_OP_CLRBIT, ALU_A_FF, 3'h2, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                // PCH <= ($FFFB), PCL <= $FA
+                d <= {ADDR_ALU, DATA_READ, DATA_PCH, ALU_OP_ADC, ALU_A_PCL, ALU_B_FF, ALU_O_PCL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_NMI + 10'd5};
+            USEQ_ADDR_NMI + 10'd5:
+                // PCL <= ($FFFA)
+                d <= {ADDR_ALU, DATA_READ, DATA_PCL, ALU_OP_AND, ALU_A_PCL, ALU_B_FF, ALU_O_NULL, PC_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             /* FETCH - Load OP with byte at (PC), increment PC, then decode opcode next */
             USEQ_ADDR_FETCH:

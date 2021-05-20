@@ -133,7 +133,13 @@ end
 always @ (*) begin
     case (aluOperandBMuxOrOpExtension)
         ALU_B_ZERO:     aluOperandB = 8'h00;
+        ALU_B_ZERO_FLG: aluOperandB = 8'h00;
         ALU_B_ONE:      aluOperandB = 8'h01;
+        ALU_B_ONE_FLG:  aluOperandB = 8'h01;
+        ALU_B_DI:       aluOperandB = dataIn;
+        ALU_B_DI_FLG:   aluOperandB = dataIn;
+        ALU_B_FF:       aluOperandB = 8'hFF;
+        ALU_B_FF_FLG:   aluOperandB = 8'hFF;
         default:        aluOperandB = 8'h00;
     endcase
 end
@@ -162,7 +168,7 @@ always @ (*) begin
         ADDR_PC:    address = regPC;
         ADDR_SP:    address = {8'h01, regS};
         ADDR_IND:   address = regIND;
-        ADDR_VEC:   address = {8'hFF, aluResult};
+        ADDR_ALU:   address = {aluOperandB, aluResult};
         default:    address = 16'hFFFF;
     endcase
 end

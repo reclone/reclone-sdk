@@ -31,10 +31,10 @@
 `define __CPU6502MICROCODECONSTANTS_VH_
 
 // Address bus mux selector
-localparam ADDR_PC          = 2'h0;
-localparam ADDR_SP          = 2'h1;
-localparam ADDR_IND         = 2'h2;
-localparam ADDR_VEC         = 2'h3;
+localparam ADDR_PC          = 2'h0; // addr <= PC
+localparam ADDR_SP          = 2'h1; // addr <= {$01, SP}
+localparam ADDR_IND         = 2'h2; // addr <= {INDH, INDL}
+localparam ADDR_ALU         = 2'h3; // addr <= {aluOperandB, aluResult}
 
 // Data bus read/write
 localparam DATA_READ        = 1'b0;
@@ -76,7 +76,7 @@ localparam ALU_A_X          = 4'h9;
 localparam ALU_A_Y          = 4'hA;
 localparam ALU_A_ZERO       = 4'hD;
 localparam ALU_A_FE         = 4'hE;
-localparam ALU_A_FF         = 4'hF; 
+localparam ALU_A_FF         = 4'hF;
 
 // ALU Operand B Sources
 // Low bit: whether to save resulting flags to P
@@ -86,6 +86,8 @@ localparam ALU_B_ONE        = 3'h2;
 localparam ALU_B_ONE_FLG    = 3'h3;
 localparam ALU_B_DI         = 3'h4;
 localparam ALU_B_DI_FLG     = 3'h5;
+localparam ALU_B_FF         = 3'h6;
+localparam ALU_B_FF_FLG     = 3'h7;
 
 // Bit positions (used as Operand B for ALU_OP_SETBIT and ALU_OP_CLRBIT)
 // Never save resulting flags to P for ALU_OP_SETBIT or ALU_OP_CLRBIT
