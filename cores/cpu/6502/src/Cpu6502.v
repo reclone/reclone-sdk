@@ -54,8 +54,8 @@ module Cpu6502
 );
 
 wire [1:0]  addrBusMux;
-wire [3:0]  dataBusMux;
-wire [2:0]  aluOperation;
+wire [2:0]  dataBusMux;
+wire [3:0]  aluOperation;
 wire [3:0]  aluOperandAMux;
 wire [2:0]  aluOperandBMuxOrOpExtension;
 wire [2:0]  aluResultStorage;
@@ -67,7 +67,7 @@ reg [9:0]   uCodeAddress = USEQ_ADDR_RESET;
 
 reg [15:0]  regPC = 16'hFFFF;
 reg [15:0]  regIND = 16'hFFFF;
-reg [7:0]   regIDX = 8'hFF;
+reg [7:0]   regIMM = 8'hFF;
 reg [7:0]   regS = 8'hFF;
 reg [7:0]   regOP = NOP;
 reg [7:0]   regP = 8'h00;
@@ -114,7 +114,7 @@ always @ (*) begin
         ALU_A_PCL:      aluOperandA = regPC[7:0];
         ALU_A_INDL:     aluOperandA = regIND[7:0];
         ALU_A_S:        aluOperandA = regS;
-        ALU_A_IDX:      aluOperandA = regIDX;
+        ALU_A_IMM:      aluOperandA = regIMM;
         ALU_A_PCH:      aluOperandA = regPC[15:8];
         ALU_A_INDH:     aluOperandA = regIND[15:8];
         ALU_A_DI:       aluOperandA = dataIn;
@@ -181,7 +181,7 @@ always @ (*) begin
         DATA_PCL:   dataOut = regPC[7:0];
         DATA_PCH:   dataOut = regPC[15:8];
         DATA_P:     dataOut = regP;
-        DATA_A:     dataOut = regA;
+        DATA_IMM:   dataOut = regIMM;
         DATA_INDL:  dataOut = regIND[7:0];
         DATA_INDH:  dataOut = regIND[15:8];
         default:    dataOut = 8'hFF;
@@ -200,7 +200,7 @@ always @ (negedge clock or posedge reset) begin
         regOP <= NOP;
         regP <= 8'h00;
         regA <= 8'h00;
-        regIDX <= 8'h00;
+        regIMM <= 8'h00;
         regX <= 8'h00;
         regY <= 8'h00;
     end else if (enable) begin
@@ -227,21 +227,15 @@ always @ (negedge clock or posedge reset) begin
             regOP <= dataIn;
         
         // Update accumulator register A
-        if (!dataWriteEnable && dataBusMux == DATA_A)
-            regA <= dataIn;
-        else if (aluResultStorage == ALU_O_A)
+        if (aluResultStorage == ALU_O_A)
             regA <= aluResult;
         
         // Update index register X
-        if (!dataWriteEnable && dataBusMux == DATA_X)
-            regX <= dataIn;
-        else if (aluResultStorage == ALU_O_X)
+        if (aluResultStorage == ALU_O_X)
             regX <= aluResult;
         
         // Update index register Y
-        if (!dataWriteEnable && dataBusMux == DATA_Y)
-            regY <= dataIn;
-        else if (aluResultStorage == ALU_O_Y)
+        if (aluResultStorage == ALU_O_Y)
             regY <= aluResult;
         
         // Update status register P
@@ -265,6 +259,10 @@ always @ (negedge clock or posedge reset) begin
             regIND[7:0] <= dataIn;
         if (!dataWriteEnable && dataBusMux == DATA_INDH)
             regIND[15:8] <= dataIn;
+        
+        // Update immediate/index register IMM
+        if (!dataWriteEnable && dataBusMux == DATA_IMM)
+            regIMM <= dataIn;
         
         // Determine the next microcode address
         if (uSeqBranchCondition == aluBranchCondition) begin

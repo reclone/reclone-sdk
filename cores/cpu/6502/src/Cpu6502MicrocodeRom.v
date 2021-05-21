@@ -36,8 +36,8 @@ module Cpu6502MicrocodeRom
     input [9:0]         address,
     output wire [1:0]   addrBusMux,
     output wire         dataBusWriteEnable,
-    output wire [3:0]   dataBusMux,
-    output wire [2:0]   aluOperation,
+    output wire [2:0]   dataBusMux,
+    output wire [3:0]   aluOperation,
     output wire [3:0]   aluOperandA,
     output wire [2:0]   aluOperandB,
     output wire [2:0]   aluResultStorage,
@@ -50,8 +50,8 @@ reg [31:0] d = 32'h00000000;
 
 assign addrBusMux = d[31:30];
 assign dataBusWriteEnable = d[29];
-assign dataBusMux = d[28:25];
-assign aluOperation = d[24:22];
+assign dataBusMux = d[28:26];
+assign aluOperation = d[25:22];
 assign aluOperandA = d[21:18];
 assign aluOperandB = d[17:15];
 assign aluResultStorage = d[14:12];
