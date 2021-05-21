@@ -75,6 +75,8 @@ reg [7:0]   regA = 8'h00;
 reg [7:0]   regX = 8'h00;
 reg [7:0]   regY = 8'h00;
 
+wire [7:0] OP = (!dataWriteEnable && dataBusMux == DATA_OP) ? dataIn : regOP;
+
 Cpu6502MicrocodeRom microcode
 (
     .clock(clock),
@@ -265,7 +267,10 @@ always @ (negedge clock or posedge reset) begin
             regIMM <= dataIn;
         
         // Determine the next microcode address
-        if (uSeqBranchCondition == aluBranchCondition) begin
+        if (uSeqBranchAddr[9:8] == UPAGE_OP) begin
+            // Use the new opcode to form the new address
+            uCodeAddress <= {UPAGE_OP, OP};
+        end else if (uSeqBranchCondition == aluBranchCondition) begin
             // Branch conditions match, so set uCodeAddress to the branch address
             uCodeAddress <= uSeqBranchAddr;
         end else begin
