@@ -54,11 +54,11 @@ module Cpu6502
 );
 
 wire [1:0]  addrBusMux;
-wire [2:0]  dataBusMux;
+wire [1:0]  dataBusMux;
 wire [3:0]  aluOperation;
 wire [3:0]  aluOperandAMux;
 wire [2:0]  aluOperandBMuxOrOpExtension;
-wire [2:0]  aluResultStorage;
+wire [3:0]  aluResultStorage;
 wire        incrementPC;
 wire        uSeqBranchCondition;
 wire [9:0]  uSeqBranchAddr;
@@ -125,7 +125,8 @@ always @ (*) begin
         ALU_A_X:        aluOperandA = regX;
         ALU_A_Y:        aluOperandA = regY;
         ALU_A_ZERO:     aluOperandA = 8'h00;
-        ALU_A_FE:       aluOperandA = 8'hFE;
+        ALU_A_FB:       aluOperandA = 8'hFB;
+        ALU_A_FD:       aluOperandA = 8'hFD;
         ALU_A_FF:       aluOperandA = 8'hFF;
         default:        aluOperandA = 8'h00;
     endcase
@@ -134,15 +135,11 @@ end
 // ALU Operand B multiplexer
 always @ (*) begin
     case (aluOperandBMuxOrOpExtension)
-        ALU_B_ZERO:     aluOperandB = 8'h00;
-        ALU_B_ZERO_FLG: aluOperandB = 8'h00;
-        ALU_B_ONE:      aluOperandB = 8'h01;
-        ALU_B_ONE_FLG:  aluOperandB = 8'h01;
-        ALU_B_DI:       aluOperandB = dataIn;
-        ALU_B_DI_FLG:   aluOperandB = dataIn;
-        ALU_B_FF:       aluOperandB = 8'hFF;
-        ALU_B_FF_FLG:   aluOperandB = 8'hFF;
-        default:        aluOperandB = 8'h00;
+        ALU_B_ZERO, ALU_B_ZERO_FLG: aluOperandB = 8'h00;
+        ALU_B_ONE, ALU_B_ONE_FLG:   aluOperandB = 8'h01;
+        ALU_B_DI, ALU_B_DI_FLG:     aluOperandB = dataIn;
+        ALU_B_FF, ALU_B_FF_FLG:     aluOperandB = 8'hFF;
+        default:                    aluOperandB = 8'h00;
     endcase
 end
 
@@ -166,28 +163,32 @@ Cpu6502Alu alu
 
 // Address bus multiplexer
 always @ (*) begin
-    case (addrBusMux)
-        ADDR_PC:    address = regPC;
-        ADDR_SP:    address = {8'h01, regS};
-        ADDR_IND:   address = regIND;
-        ADDR_ALU:   address = {aluOperandB, aluResult};
-        default:    address = 16'hFFFF;
-    endcase
+    if (aluResultStorage == ALU_O_ADDR) begin
+        address = {aluOperandB, aluResult};
+    end else begin
+        case (addrBusMux)
+            ADDR_PC:    address = regPC;
+            ADDR_SP:    address = {8'h01, regS};
+            ADDR_IND:   address = regIND;
+            ADDR_ZPG:   address = {8'h0, regIMM};
+            default:    address = 16'hFFFF;
+        endcase
+    end
 end
 
 // Data write multiplexer
 always @ (*) begin
-    case (dataBusMux)
-        DATA_NULL:  dataOut = 8'h00;
-        DATA_OP:    dataOut = regOP;
-        DATA_PCL:   dataOut = regPC[7:0];
-        DATA_PCH:   dataOut = regPC[15:8];
-        DATA_P:     dataOut = regP;
-        DATA_IMM:   dataOut = regIMM;
-        DATA_INDL:  dataOut = regIND[7:0];
-        DATA_INDH:  dataOut = regIND[15:8];
-        default:    dataOut = 8'hFF;
-    endcase
+    if (aluResultStorage == ALU_O_DO) begin
+        dataOut = aluResult;
+    end else begin
+        case (dataBusMux)
+            DATA_IMM:   dataOut = regIMM;
+            DATA_OP:    dataOut = regOP;
+            DATA_PCL:   dataOut = regPC[7:0];
+            DATA_PCH:   dataOut = regPC[15:8];
+            default:    dataOut = 8'hFF;
+        endcase
+    end
 end
 
 // Address/Data bus accesses occur on positive edges, but CPU microinstructions
@@ -212,13 +213,13 @@ always @ (negedge clock or posedge reset) begin
             regPC <= regPC + 16'd1;
         else begin
             // Update PCL
-            if (dataBusMux == DATA_PCL)
+            if (!dataWriteEnable && dataBusMux == DATA_PCL)
                 regPC[7:0] <= dataIn;
             else if (aluResultStorage == ALU_O_PCL)
                 regPC[7:0] <= aluResult;
             
             // Update PCH
-            if (dataBusMux == DATA_PCH)
+            if (!dataWriteEnable && dataBusMux == DATA_PCH)
                 regPC[15:8] <= dataIn;
             else if (aluResultStorage == ALU_O_PCH)
                 regPC[15:8] <= aluResult;
@@ -241,9 +242,7 @@ always @ (negedge clock or posedge reset) begin
             regY <= aluResult;
         
         // Update status register P
-        if (!dataWriteEnable && dataBusMux == DATA_P)
-            regP <= dataIn;
-        else if (aluResultStorage == ALU_O_P)
+        if (aluResultStorage == ALU_O_P)
             regP <= aluResult;
         else if (aluStoreFlags && aluOperation != ALU_OP_SETBIT && aluOperation != ALU_OP_CLRBIT) begin
             regP[C_BIT_IN_P] <= aluCarryOut;
@@ -257,13 +256,15 @@ always @ (negedge clock or posedge reset) begin
             regS <= aluResult;
         
         // Update indirect register IND
-        if (!dataWriteEnable && dataBusMux == DATA_INDL)
-            regIND[7:0] <= dataIn;
-        if (!dataWriteEnable && dataBusMux == DATA_INDH)
+        if (aluResultStorage == ALU_O_INDL)
+            regIND[7:0] <= aluResult;
+        if (aluResultStorage == ALU_O_INDH)
             regIND[15:8] <= dataIn;
         
         // Update immediate/index register IMM
-        if (!dataWriteEnable && dataBusMux == DATA_IMM)
+        if (aluResultStorage == ALU_O_IMM)
+            regIMM <= aluResult;
+        else if (!dataWriteEnable && dataBusMux == DATA_IMM)
             regIMM <= dataIn;
         
         // Determine the next microcode address

@@ -34,21 +34,17 @@
 localparam ADDR_PC          = 2'h0; // addr <= PC
 localparam ADDR_SP          = 2'h1; // addr <= {$01, SP}
 localparam ADDR_IND         = 2'h2; // addr <= {INDH, INDL}
-localparam ADDR_ALU         = 2'h3; // addr <= {aluOperandB, aluResult}
+localparam ADDR_ZPG         = 2'h3; // addr <= {$00, IMM}
 
 // Data bus read/write
 localparam DATA_READ        = 1'b0;
 localparam DATA_WRITE       = 1'b1;
 
 // Data bus mux selector
-localparam DATA_NULL        = 3'h0;
-localparam DATA_OP          = 3'h1;
-localparam DATA_IMM         = 3'h2;
-localparam DATA_P           = 3'h3;
-localparam DATA_PCL         = 3'h4;
-localparam DATA_PCH         = 3'h5;
-localparam DATA_INDL        = 3'h6;
-localparam DATA_INDH        = 3'h7;
+localparam DATA_IMM         = 2'h0;
+localparam DATA_OP          = 2'h1;
+localparam DATA_PCL         = 2'h2;
+localparam DATA_PCH         = 2'h3;
 
 // ALU Operations
 localparam ALU_OP_SBC       = 4'h0;
@@ -69,7 +65,7 @@ localparam ALU_OP_CLRBIT    = 4'hF; // Clear single bit - Operand B is bit posit
 localparam ALU_A_PCL        = 4'h0;
 localparam ALU_A_INDL       = 4'h1;
 localparam ALU_A_S          = 4'h2;
-localparam ALU_A_IDX        = 4'h3;
+localparam ALU_A_IMM        = 4'h3;
 localparam ALU_A_PCH        = 4'h4;
 localparam ALU_A_INDH       = 4'h5;
 localparam ALU_A_DI         = 4'h6;
@@ -77,9 +73,9 @@ localparam ALU_A_P          = 4'h7;
 localparam ALU_A_A          = 4'h8;
 localparam ALU_A_X          = 4'h9;
 localparam ALU_A_Y          = 4'hA;
-localparam ALU_A_IMM        = 4'hB;
-localparam ALU_A_ZERO       = 4'hD;
-localparam ALU_A_FE         = 4'hE;
+localparam ALU_A_ZERO       = 4'hC;
+localparam ALU_A_FB         = 4'hD;
+localparam ALU_A_FD         = 4'hE;
 localparam ALU_A_FF         = 4'hF;
 
 // ALU Operand B Sources
@@ -115,14 +111,19 @@ localparam ALU_SOP_ROL      = 3'h5; // "
 localparam ALU_SOP_ROR      = 3'h7; // "
 
 // ALU Output Storage
-localparam ALU_O_NULL       = 3'h0;
-localparam ALU_O_PCH        = 3'h1;
-localparam ALU_O_PCL        = 3'h2;
-localparam ALU_O_A          = 3'h3;
-localparam ALU_O_S          = 3'h4;
-localparam ALU_O_X          = 3'h5;
-localparam ALU_O_Y          = 3'h6;
-localparam ALU_O_P          = 3'h7;
+localparam ALU_O_NULL       = 4'h0;
+localparam ALU_O_PCH        = 4'h1;
+localparam ALU_O_PCL        = 4'h2;
+localparam ALU_O_A          = 4'h3;
+localparam ALU_O_S          = 4'h4;
+localparam ALU_O_X          = 4'h5;
+localparam ALU_O_Y          = 4'h6;
+localparam ALU_O_P          = 4'h7;
+localparam ALU_O_INDL       = 4'h8;
+localparam ALU_O_INDH       = 4'h9;
+localparam ALU_O_IMM        = 4'hA;
+localparam ALU_O_DO         = 4'hB;
+localparam ALU_O_ADDR       = 4'hC; // addr <= {aluOperandB, aluResult}
 
 // Whether to increment the Program Counter (PC)
 localparam PC_INC           = 1'b1;
