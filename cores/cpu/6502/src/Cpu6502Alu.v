@@ -43,10 +43,12 @@ module Cpu6502Alu
     output          branchCondition
 );
 
-wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_SUB);
+wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_SUB || operation == ALU_OP_DEC);
 wire withCarry = (operation == ALU_OP_SBC || operation == ALU_OP_ADC);
+wire incDec = (operation == ALU_OP_DEC || operation == ALU_OP_INC);
+wire [7:0] adderOperandB = incDec ? 8'd1 : operandB;
 wire [7:0] addend1 = operandA;
-wire [7:0] addend2 = subtract ? ~operandB : operandB;
+wire [7:0] addend2 = subtract ? ~adderOperandB : adderOperandB;
 wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + (withCarry ? {4'd0, carryIn} : 5'd0);
 wire halfCarry = rawSumL[4] | (decimalMode & (rawSumL[3:1] >= 3'd5));
 wire [4:0] rawSumH = addend1[7:4] + addend2[7:4] + {3'd0, halfCarry};
@@ -142,6 +144,22 @@ always @ (*) begin
         
         ALU_OP_CLRBIT: begin // Clear a single bit to 0
             result = operandA & ~(8'd1 << opExtension);
+            carryOut = carryIn;
+            overflowOut = overflowIn;
+            branchCondition = 1'b0;
+            negative = result[7];
+        end
+        
+        ALU_OP_COPY: begin // Just copy operand A to result
+            result = operandA;
+            carryOut = carryIn;
+            overflowOut = overflowIn;
+            branchCondition = 1'b0;
+            negative = result[7];
+        end
+        
+        ALU_OP_INC, ALU_OP_DEC: begin
+            result = finalSum;
             carryOut = carryIn;
             overflowOut = overflowIn;
             branchCondition = 1'b0;

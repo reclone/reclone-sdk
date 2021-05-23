@@ -59,7 +59,7 @@ wire [3:0]  aluOperation;
 wire [3:0]  aluOperandAMux;
 wire [2:0]  aluOperandBMuxOrOpExtension;
 wire [3:0]  aluResultStorage;
-wire        incrementPC;
+wire        incrementAddr;
 wire        uSeqBranchCondition;
 wire [9:0]  uSeqBranchAddr;
 
@@ -67,6 +67,7 @@ reg [9:0]   uCodeAddress = USEQ_ADDR_RESET;
 
 reg [15:0]  regPC = 16'hFFFF;
 reg [15:0]  regIND = 16'hFFFF;
+reg [7:0]   regZPG = 8'hFF;
 reg [7:0]   regIMM = 8'hFF;
 reg [7:0]   regS = 8'hFF;
 reg [7:0]   regOP = NOP;
@@ -89,7 +90,7 @@ Cpu6502MicrocodeRom microcode
     .aluOperandA(aluOperandAMux),
     .aluOperandB(aluOperandBMuxOrOpExtension),
     .aluResultStorage(aluResultStorage),
-    .incrementPC(incrementPC),
+    .incrementAddr(incrementAddr),
     .uSeqBranchCondition(uSeqBranchCondition),
     .uSeqBranchAddr(uSeqBranchAddr)
 );
@@ -103,14 +104,12 @@ wire aluOverflowOut;
 wire aluZero;
 wire aluNegative;
 wire aluBranchCondition;
-wire isAddressCalculation = 1'b0; //TODO expression for address calculations
-wire aluCarryIn = isAddressCalculation ? 1'b0 : regP[C_BIT_IN_P];
+wire aluCarryIn = regP[C_BIT_IN_P];
 wire aluOverflowIn = regP[V_BIT_IN_P];
-wire aluDecimalMode = isAddressCalculation ? 1'b0 : regP[D_BIT_IN_P];
+wire aluDecimalMode = regP[D_BIT_IN_P];
 wire aluStoreFlags = aluOperandBMuxOrOpExtension[0];
 
 // ALU Operand A multiplexer
-// Do not allow P in if operation is ADC or SBC, as it can form a logic loop with overflow/carry
 always @ (*) begin
     case (aluOperandAMux)
         ALU_A_PCL:      aluOperandA = regPC[7:0];
@@ -124,6 +123,7 @@ always @ (*) begin
         ALU_A_A:        aluOperandA = regA;
         ALU_A_X:        aluOperandA = regX;
         ALU_A_Y:        aluOperandA = regY;
+        ALU_A_ZPG:      aluOperandA = regZPG;
         ALU_A_ZERO:     aluOperandA = 8'h00;
         ALU_A_FB:       aluOperandA = 8'hFB;
         ALU_A_FD:       aluOperandA = 8'hFD;
@@ -137,7 +137,7 @@ always @ (*) begin
     case (aluOperandBMuxOrOpExtension)
         ALU_B_ZERO, ALU_B_ZERO_FLG: aluOperandB = 8'h00;
         ALU_B_ONE, ALU_B_ONE_FLG:   aluOperandB = 8'h01;
-        ALU_B_DI, ALU_B_DI_FLG:     aluOperandB = dataIn;
+        ALU_B_IMM, ALU_B_IMM_FLG:   aluOperandB = regIMM;
         ALU_B_FF, ALU_B_FF_FLG:     aluOperandB = 8'hFF;
         default:                    aluOperandB = 8'h00;
     endcase
@@ -199,6 +199,7 @@ always @ (negedge clock or posedge reset) begin
         uCodeAddress <= USEQ_ADDR_RESET;
         regPC <= 16'hFFFF;
         regIND <= 16'hFFFF;
+        regZPG <= 8'hFF;
         regS <= 8'hFF;
         regOP <= NOP;
         regP <= 8'h00;
@@ -209,7 +210,7 @@ always @ (negedge clock or posedge reset) begin
     end else if (enable) begin
 
         // Update PC
-        if (incrementPC)
+        if (incrementAddr && addrBusMux == ADDR_PC)
             regPC <= regPC + 16'd1;
         else begin
             // Update PCL
@@ -256,10 +257,22 @@ always @ (negedge clock or posedge reset) begin
             regS <= aluResult;
         
         // Update indirect register IND
-        if (aluResultStorage == ALU_O_INDL)
-            regIND[7:0] <= aluResult;
-        if (aluResultStorage == ALU_O_INDH)
-            regIND[15:8] <= dataIn;
+        if (incrementAddr && addrBusMux == ADDR_IND)
+            regIND <= regIND + 16'd1;
+        else begin
+            if (aluResultStorage == ALU_O_INDL)
+                regIND[7:0] <= aluResult;
+            if (aluResultStorage == ALU_O_INDH)
+                regIND[15:8] <= dataIn;
+        end
+        
+        // Update zero page register ZPG
+        if (incrementAddr && addrBusMux == ADDR_ZPG)
+            regZPG <= regZPG + 8'd1;
+        else begin
+            if (aluResultStorage == ALU_O_ZPG)
+                regZPG <= aluResult;
+        end
         
         // Update immediate/index register IMM
         if (aluResultStorage == ALU_O_IMM)
@@ -268,9 +281,9 @@ always @ (negedge clock or posedge reset) begin
             regIMM <= dataIn;
         
         // Determine the next microcode address
-        if (uSeqBranchAddr[9:8] == UPAGE_OP) begin
+        if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
             // Use the new opcode to form the new address
-            uCodeAddress <= {UPAGE_OP, OP};
+            uCodeAddress <= {UPAGE_OP, OP, 1'b0};
         end else if (uSeqBranchCondition == aluBranchCondition) begin
             // Branch conditions match, so set uCodeAddress to the branch address
             uCodeAddress <= uSeqBranchAddr;

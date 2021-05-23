@@ -34,7 +34,7 @@
 localparam ADDR_PC          = 2'h0; // addr <= PC
 localparam ADDR_SP          = 2'h1; // addr <= {$01, SP}
 localparam ADDR_IND         = 2'h2; // addr <= {INDH, INDL}
-localparam ADDR_ZPG         = 2'h3; // addr <= {$00, IMM}
+localparam ADDR_ZPG         = 2'h3; // addr <= {$00, ZPG}
 
 // Data bus read/write
 localparam DATA_READ        = 1'b0;
@@ -56,6 +56,9 @@ localparam ALU_OP_CMP       = 4'h5;
 localparam ALU_OP_ADD       = 4'h6;
 localparam ALU_OP_OR        = 4'h7;
 localparam ALU_OP_EOR       = 4'h8;
+localparam ALU_OP_COPY      = 4'h9;
+localparam ALU_OP_INC       = 4'hA;
+localparam ALU_OP_DEC       = 4'hB;
 
 localparam ALU_OP_SGL       = 4'hD; // Single operand - Operand B is the operation
 localparam ALU_OP_SETBIT    = 4'hE; // Set single bit - Operand B is bit position
@@ -73,6 +76,7 @@ localparam ALU_A_P          = 4'h7;
 localparam ALU_A_A          = 4'h8;
 localparam ALU_A_X          = 4'h9;
 localparam ALU_A_Y          = 4'hA;
+localparam ALU_A_ZPG        = 4'hB;
 localparam ALU_A_ZERO       = 4'hC;
 localparam ALU_A_FB         = 4'hD;
 localparam ALU_A_FD         = 4'hE;
@@ -84,8 +88,8 @@ localparam ALU_B_ZERO       = 3'h0;
 localparam ALU_B_ZERO_FLG   = 3'h1;
 localparam ALU_B_ONE        = 3'h2;
 localparam ALU_B_ONE_FLG    = 3'h3;
-localparam ALU_B_DI         = 3'h4;
-localparam ALU_B_DI_FLG     = 3'h5;
+localparam ALU_B_IMM        = 3'h4;
+localparam ALU_B_IMM_FLG    = 3'h5;
 localparam ALU_B_FF         = 3'h6;
 localparam ALU_B_FF_FLG     = 3'h7;
 
@@ -124,18 +128,20 @@ localparam ALU_O_INDH       = 4'h9;
 localparam ALU_O_IMM        = 4'hA;
 localparam ALU_O_DO         = 4'hB;
 localparam ALU_O_ADDR       = 4'hC; // addr <= {aluOperandB, aluResult}
+localparam ALU_O_ZPG        = 4'hD;
 
-// Whether to increment the Program Counter (PC)
-localparam PC_INC           = 1'b1;
-localparam PC_NOP           = 1'b0;
+// Whether to increment the register selected on the address mux,
+// i.e. PC, ZPG, or IND
+localparam ADDR_INC         = 1'b1;
+localparam ADDR_NOP         = 1'b0;
 
-// Opcode table - contains the first microinstruction of each opcode
-// First two bits of the microcode address
-localparam UPAGE_OP         = 2'b11;
+// Opcode table - contains the first two microinstructions of each opcode
+// First bit of the microcode address
+localparam UPAGE_OP         = 1'b1;
 
 // Special address to tell the microsequencer to use
 // the new opcode as an address within UPAGE_OP
-localparam USEQ_OP          = {UPAGE_OP, 8'h00};
+localparam USEQ_OP          = {UPAGE_OP, 9'h0};
 
 // Microsequencer branch condition polarity
 // Use ALU_OP_SGL:ALU_A_P:ALU_SOP_TEST_* to set which flag in P to check,
