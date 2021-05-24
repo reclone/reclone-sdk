@@ -136,7 +136,7 @@ end
 always @ (*) begin
     case (aluOperandBMuxOrOpExtension)
         ALU_B_ZERO, ALU_B_ZERO_FLG: aluOperandB = 8'h00;
-        ALU_B_ONE, ALU_B_ONE_FLG:   aluOperandB = 8'h01;
+        ALU_B_DI, ALU_B_DI_FLG:     aluOperandB = dataIn;
         ALU_B_IMM, ALU_B_IMM_FLG:   aluOperandB = regIMM;
         ALU_B_FF, ALU_B_FF_FLG:     aluOperandB = 8'hFF;
         default:                    aluOperandB = 8'h00;

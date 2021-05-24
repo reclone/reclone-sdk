@@ -86,8 +86,8 @@ localparam ALU_A_FF         = 4'hF;
 // Low bit: whether to save resulting flags to P
 localparam ALU_B_ZERO       = 3'h0;
 localparam ALU_B_ZERO_FLG   = 3'h1;
-localparam ALU_B_ONE        = 3'h2;
-localparam ALU_B_ONE_FLG    = 3'h3;
+localparam ALU_B_DI         = 3'h2;
+localparam ALU_B_DI_FLG     = 3'h3;
 localparam ALU_B_IMM        = 3'h4;
 localparam ALU_B_IMM_FLG    = 3'h5;
 localparam ALU_B_FF         = 3'h6;
