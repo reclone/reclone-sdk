@@ -43,9 +43,10 @@ module Cpu6502Alu
     output          branchCondition
 );
 
-wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_SUB || operation == ALU_OP_DEC);
+wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_SUB || operation == ALU_OP_DEC || 
+                 (operation == ALU_OP_FIXUP && operandB[7] == 1'b1));
 wire withCarry = (operation == ALU_OP_SBC || operation == ALU_OP_ADC);
-wire incDec = (operation == ALU_OP_DEC || operation == ALU_OP_INC);
+wire incDec = (operation == ALU_OP_DEC || operation == ALU_OP_INC || operation == ALU_OP_FIXUP);
 wire [7:0] adderOperandB = incDec ? 8'd1 : operandB;
 wire [7:0] addend1 = operandA;
 wire [7:0] addend2 = subtract ? ~adderOperandB : adderOperandB;
@@ -158,7 +159,7 @@ always @ (*) begin
             negative = result[7];
         end
         
-        ALU_OP_INC, ALU_OP_DEC: begin
+        ALU_OP_INC, ALU_OP_DEC, ALU_OP_FIXUP: begin
             result = finalSum;
             carryOut = carryIn;
             overflowOut = overflowIn;

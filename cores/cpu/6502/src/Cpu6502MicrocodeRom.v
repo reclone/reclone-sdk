@@ -72,7 +72,7 @@ localparam USEQ_ADDR_LDA_IMM_INDL = {UPAGE_OP, LDA_ABS_X, 1'b1};
 localparam USEQ_ADDR_LDA_IMM_FETCH = {UPAGE_OP, LDA_ABS_Y, 1'b1};
 localparam USEQ_ADDR_LDA_X_IND = USEQ_ADDR_LDA_ABS_Y + 10'd2;
 localparam USEQ_ADDR_LDA_IND_Y = USEQ_ADDR_LDA_X_IND + 10'd3;
-
+localparam USEQ_ADDR_BR_REL = USEQ_ADDR_LDA_IND_Y + 10'd4;
 
 // Microcode ROM is updated on the negative edge of the clock, so that
 // if the ALU and data bus operate on the positive edge of the clock, then
@@ -153,7 +153,72 @@ begin
             {UPAGE_OP, BRK, 1'b0}:
                 //  B <= 1, PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SETBIT, ALU_A_P, B_BIT_IN_P, ALU_O_P, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ};
-                
+
+            {UPAGE_OP, BCC, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if carry flag is clear
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_C, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BCC, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BCS, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if carry flag is set
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_C, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BCS, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BNE, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if zero flag is clear
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_Z, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BNE, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BEQ, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if zero flag is set
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_Z, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BEQ, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BPL, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if negative flag is clear
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_N, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BPL, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BMI, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if negative flag is set
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_N, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BMI, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BVC, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if overflow flag is clear
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_V, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BVC, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            {UPAGE_OP, BVS, 1'b0}:
+                // IMM <= (PC), PC <= PC + 1, branch if overflow flag is set
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SGL, ALU_A_P, ALU_SOP_TEST_V, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_BR_REL};
+            {UPAGE_OP, BVS, 1'b1}:
+                // OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
+            USEQ_ADDR_BR_REL:
+                // OP <= PC (dummy), PCL <= PCL + IMM, if no carry skip PCH fixup and goto fetch
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_ADD, ALU_A_PCL, ALU_B_IMM, ALU_O_PCL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+            USEQ_ADDR_BR_REL + 10'd1:
+                // Fix PCH:
+                //  If IMM[7] == 1: PCH <= PCH - 1
+                //  If IMM[7] == 0: PCH <= PCH + 1
+                d <= {ADDR_PC, DATA_READ, DATA_OP, ALU_OP_FIXUP, ALU_A_PCH, ALU_B_IMM, ALU_O_PCH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
             {UPAGE_OP, LDA_IMM, 1'b0}:
                 // A <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO_FLG, ALU_O_A, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
@@ -250,15 +315,6 @@ begin
                 // A <= (IND)
                 d <= {ADDR_IND, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO_FLG, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
             
-                
-                // ZPG <= (PC), PC <= PC + 1
-                // INDL <= ({$00,ZPG}) + Y, detect page crossing with carry
-                // No page crossing:    INDH <= ({$00,ZPG})
-                // With page crossing:  INDH <= ({$00,ZPG})
-                //                      INDH <= INDH + 1
-                // A <= (IND)
-                
-                
             default: // Halt
                 d <= {ADDR_SP, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_HALT};
         endcase

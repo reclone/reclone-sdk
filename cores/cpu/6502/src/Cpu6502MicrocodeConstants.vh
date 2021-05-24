@@ -59,7 +59,7 @@ localparam ALU_OP_EOR       = 4'h8;
 localparam ALU_OP_COPY      = 4'h9;
 localparam ALU_OP_INC       = 4'hA;
 localparam ALU_OP_DEC       = 4'hB;
-
+localparam ALU_OP_FIXUP     = 4'hC;
 localparam ALU_OP_SGL       = 4'hD; // Single operand - Operand B is the operation
 localparam ALU_OP_SETBIT    = 4'hE; // Set single bit - Operand B is bit position
 localparam ALU_OP_CLRBIT    = 4'hF; // Clear single bit - Operand B is bit position
