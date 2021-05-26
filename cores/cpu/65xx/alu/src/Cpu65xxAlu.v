@@ -1,5 +1,5 @@
 //
-// Cpu6502Alu - 6502 Arithmetic and Logic Unit
+// Cpu65xxAlu - 6502 Family Arithmetic and Logic Unit (ALU)
 //
 //
 // Copyright 2018 - 2021 Reclone Labs <reclonelabs.com>
@@ -24,9 +24,9 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-`include "Cpu6502MicrocodeConstants.vh"
+`include "Cpu65xxMicrocodeConstants.vh"
 
-module Cpu6502Alu
+module Cpu65xxAlu
 (
     input   [7:0]   operandA,
     input   [7:0]   operandB,
