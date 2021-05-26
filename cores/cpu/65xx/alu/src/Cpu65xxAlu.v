@@ -107,7 +107,7 @@ always @ (*) begin
             result = finalSum;
             carryOut = fullCarry;
             overflowOut = adderOverflow;
-            branchCondition = fullCarry;
+            branchCondition = 1'b0;
             negative = result[7];
         end
         
