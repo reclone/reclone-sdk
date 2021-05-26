@@ -70,13 +70,10 @@ reg [15:0]  regIND = 16'hFFFF;
 reg [7:0]   regZPG = 8'hFF;
 reg [7:0]   regIMM = 8'hFF;
 reg [7:0]   regS = 8'hFF;
-reg [7:0]   regOP = NOP;
 reg [7:0]   regP = 8'h00;
 reg [7:0]   regA = 8'h00;
 reg [7:0]   regX = 8'h00;
 reg [7:0]   regY = 8'h00;
-
-wire [7:0] OP = (!dataWriteEnable && dataBusMux == DATA_OP) ? dataIn : regOP;
 
 Cpu6502MicrocodeRom microcode
 (
@@ -182,8 +179,8 @@ always @ (*) begin
         dataOut = aluResult;
     end else begin
         case (dataBusMux)
+            DATA_NULL:  dataOut = 8'h00;
             DATA_IMM:   dataOut = regIMM;
-            DATA_OP:    dataOut = regOP;
             DATA_PCL:   dataOut = regPC[7:0];
             DATA_PCH:   dataOut = regPC[15:8];
             default:    dataOut = 8'hFF;
@@ -201,7 +198,6 @@ always @ (negedge clock or posedge reset) begin
         regIND <= 16'hFFFF;
         regZPG <= 8'hFF;
         regS <= 8'hFF;
-        regOP <= NOP;
         regP <= 8'h00;
         regA <= 8'h00;
         regIMM <= 8'h00;
@@ -225,10 +221,6 @@ always @ (negedge clock or posedge reset) begin
             else if (aluResultStorage == ALU_O_PCH)
                 regPC[15:8] <= aluResult;
         end
-        
-        // Update opcode register
-        if (!dataWriteEnable && dataBusMux == DATA_OP)
-            regOP <= dataIn;
         
         // Update accumulator register A
         if (aluResultStorage == ALU_O_A)
@@ -282,8 +274,8 @@ always @ (negedge clock or posedge reset) begin
         
         // Determine the next microcode address
         if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
-            // Use the new opcode to form the new address
-            uCodeAddress <= {UPAGE_OP, OP, 1'b0};
+            // Use the new opcode on dataIn to form the new address
+            uCodeAddress <= {UPAGE_OP, dataIn, 1'b0};
         end else if (uSeqBranchCondition == aluBranchCondition) begin
             // Branch conditions match, so set uCodeAddress to the branch address
             uCodeAddress <= uSeqBranchAddr;

@@ -41,8 +41,8 @@ localparam DATA_READ        = 1'b0;
 localparam DATA_WRITE       = 1'b1;
 
 // Data bus mux selector
-localparam DATA_IMM         = 2'h0;
-localparam DATA_OP          = 2'h1;
+localparam DATA_NULL        = 2'h0;
+localparam DATA_IMM         = 2'h1;
 localparam DATA_PCL         = 2'h2;
 localparam DATA_PCH         = 2'h3;
 
