@@ -1,12 +1,5 @@
 //
-// Cpu6502 - Top-level module for a 6502 work-alike CPU
-//
-// This top-level module is responsible for performing memory and register accesses,
-// handling interrupts and reset, and integrating the lower-level ALU, addressing, and
-// opcode decoding modules.  This CPU attempts to be cycle-accurate to the MOS 6502, and does NOT
-// require a higher-speed clock (e.g. to execute microcode or perform in-time memory accesses).
-// All stable undocumented opcodes are implemented accurately, with possible unavoidable 
-// inaccuracies in the 'unstable' or 'kill' opcodes.
+// Cpu65xxMicroArchitecture - Microarchitecture shared by 6502, 6507, 6510, etc. CPU cores
 //
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
@@ -33,12 +26,9 @@
 
 `default_nettype none
 
-`include "Cpu6502MicrocodeConstants.vh"
-`include "Cpu6502Opcodes.vh"
+`include "Cpu65xxMicrocodeConstants.vh"
 
-/* verilator lint_off UNUSED */
-
-module Cpu6502
+module Cpu65xxMicroArchitecture
 (
     input clock,
     input enable,
@@ -50,20 +40,22 @@ module Cpu6502
     output wire [15:0] address,
 
     input wire nNMI,
-    input wire nIRQ
+    input wire nIRQ,
+    input wire nRESET,
+
+    // Microcode ROM interface
+    output reg [9:0]  uCodeAddress = USEQ_ADDR_RESET,
+    input wire [1:0]  uCodeAddrBusMux,
+    input wire        uCodeDataWriteEnable,
+    input wire [1:0]  uCodeDataBusMux,
+    input wire [3:0]  uCodeAluOperation,
+    input wire [3:0]  uCodeAluOperandAMux,
+    input wire [2:0]  uCodeAluOperandBMuxOrOpExtension,
+    input wire [3:0]  uCodeAluResultStorage,
+    input wire        uCodeIncrementAddr,
+    input wire        uSeqBranchCondition,
+    input wire [9:0]  uSeqBranchAddr
 );
-
-wire [1:0]  addrBusMux;
-wire [1:0]  dataBusMux;
-wire [3:0]  aluOperation;
-wire [3:0]  aluOperandAMux;
-wire [2:0]  aluOperandBMuxOrOpExtension;
-wire [3:0]  aluResultStorage;
-wire        incrementAddr;
-wire        uSeqBranchCondition;
-wire [9:0]  uSeqBranchAddr;
-
-reg [9:0]   uCodeAddress = USEQ_ADDR_RESET;
 
 reg [15:0]  regPC = 16'hFFFF;
 reg [15:0]  regIND = 16'hFFFF;
@@ -74,24 +66,10 @@ reg [7:0]   regP = 8'h00;
 reg [7:0]   regA = 8'h00;
 reg [7:0]   regX = 8'h00;
 reg [7:0]   regY = 8'h00;
-
-Cpu6502MicrocodeRom microcode
-(
-    .clock(clock),
-    .enable(enable),
-    .address(uCodeAddress),
-    .addrBusMux(addrBusMux),
-    .dataBusWriteEnable(dataWriteEnable),
-    .dataBusMux(dataBusMux),
-    .aluOperation(aluOperation),
-    .aluOperandA(aluOperandAMux),
-    .aluOperandB(aluOperandBMuxOrOpExtension),
-    .aluResultStorage(aluResultStorage),
-    .incrementAddr(incrementAddr),
-    .uSeqBranchCondition(uSeqBranchCondition),
-    .uSeqBranchAddr(uSeqBranchAddr)
-);
-
+reg lastNMI = 1'b1;
+reg latchedNMI = 1'b1;
+reg latchedIRQ = 1'b1;
+reg latchedRESET = 1'b1;
 
 wire [7:0] aluOperandA;
 wire [7:0] aluOperandB;
@@ -104,11 +82,11 @@ wire aluBranchCondition;
 wire aluCarryIn = regP[C_BIT_IN_P];
 wire aluOverflowIn = regP[V_BIT_IN_P];
 wire aluDecimalMode = regP[D_BIT_IN_P];
-wire aluStoreFlags = aluOperandBMuxOrOpExtension[0];
+wire aluStoreFlags = uCodeAluOperandBMuxOrOpExtension[0];
 
 // ALU Operand A multiplexer
 always @ (*) begin
-    case (aluOperandAMux)
+    case (uCodeAluOperandAMux)
         ALU_A_PCL:      aluOperandA = regPC[7:0];
         ALU_A_INDL:     aluOperandA = regIND[7:0];
         ALU_A_S:        aluOperandA = regS;
@@ -131,7 +109,7 @@ end
 
 // ALU Operand B multiplexer
 always @ (*) begin
-    case (aluOperandBMuxOrOpExtension)
+    case (uCodeAluOperandBMuxOrOpExtension)
         ALU_B_ZERO, ALU_B_ZERO_FLG: aluOperandB = 8'h00;
         ALU_B_DI, ALU_B_DI_FLG:     aluOperandB = dataIn;
         ALU_B_IMM, ALU_B_IMM_FLG:   aluOperandB = regIMM;
@@ -140,14 +118,14 @@ always @ (*) begin
     endcase
 end
 
-Cpu6502Alu alu
+Cpu65xxAlu alu
 (
     .operandA(aluOperandA),
     .operandB(aluOperandB),
     .carryIn(aluCarryIn),
     .overflowIn(aluOverflowIn),
-    .operation(aluOperation),
-    .opExtension(aluOperandBMuxOrOpExtension),
+    .operation(uCodeAluOperation),
+    .opExtension(uCodeAluOperandBMuxOrOpExtension),
     .decimalMode(aluDecimalMode),
     .result(aluResult),
     .carryOut(aluCarryOut),
@@ -160,10 +138,10 @@ Cpu6502Alu alu
 
 // Address bus multiplexer
 always @ (*) begin
-    if (aluResultStorage == ALU_O_ADDR) begin
+    if (uCodeAluResultStorage == ALU_O_ADDR) begin
         address = {aluOperandB, aluResult};
     end else begin
-        case (addrBusMux)
+        case (uCodeAddrBusMux)
             ADDR_PC:    address = regPC;
             ADDR_SP:    address = {8'h01, regS};
             ADDR_IND:   address = regIND;
@@ -175,10 +153,10 @@ end
 
 // Data write multiplexer
 always @ (*) begin
-    if (aluResultStorage == ALU_O_DO) begin
+    if (uCodeAluResultStorage == ALU_O_DO) begin
         dataOut = aluResult;
     end else begin
-        case (dataBusMux)
+        case (uCodeDataBusMux)
             DATA_NULL:  dataOut = 8'h00;
             DATA_IMM:   dataOut = regIMM;
             DATA_PCL:   dataOut = regPC[7:0];
@@ -187,6 +165,7 @@ always @ (*) begin
         endcase
     end
 end
+assign dataWriteEnable = uCodeDataWriteEnable;
 
 // Address/Data bus accesses occur on positive edges, but CPU microinstructions
 // execute on negative edges, so that a microinstruction can set up the address
@@ -203,41 +182,45 @@ always @ (negedge clock or posedge reset) begin
         regIMM <= 8'h00;
         regX <= 8'h00;
         regY <= 8'h00;
+        lastNMI <= 1'b1;
+        latchedNMI <= 1'b1;
+        latchedIRQ <= 1'b1;
+        latchedRESET <= 1'b1;
     end else if (enable) begin
 
         // Update PC
-        if (incrementAddr && addrBusMux == ADDR_PC)
+        if (uCodeIncrementAddr && uCodeAddrBusMux == ADDR_PC)
             regPC <= regPC + 16'd1;
         else begin
             // Update PCL
-            if (!dataWriteEnable && dataBusMux == DATA_PCL)
+            if (!dataWriteEnable && uCodeDataBusMux == DATA_PCL)
                 regPC[7:0] <= dataIn;
-            else if (aluResultStorage == ALU_O_PCL)
+            else if (uCodeAluResultStorage == ALU_O_PCL)
                 regPC[7:0] <= aluResult;
             
             // Update PCH
-            if (!dataWriteEnable && dataBusMux == DATA_PCH)
+            if (!dataWriteEnable && uCodeDataBusMux == DATA_PCH)
                 regPC[15:8] <= dataIn;
-            else if (aluResultStorage == ALU_O_PCH)
+            else if (uCodeAluResultStorage == ALU_O_PCH)
                 regPC[15:8] <= aluResult;
         end
         
         // Update accumulator register A
-        if (aluResultStorage == ALU_O_A)
+        if (uCodeAluResultStorage == ALU_O_A)
             regA <= aluResult;
         
         // Update index register X
-        if (aluResultStorage == ALU_O_X)
+        if (uCodeAluResultStorage == ALU_O_X)
             regX <= aluResult;
         
         // Update index register Y
-        if (aluResultStorage == ALU_O_Y)
+        if (uCodeAluResultStorage == ALU_O_Y)
             regY <= aluResult;
         
         // Update status register P
-        if (aluResultStorage == ALU_O_P)
+        if (uCodeAluResultStorage == ALU_O_P)
             regP <= aluResult;
-        else if (aluStoreFlags && aluOperation != ALU_OP_SETBIT && aluOperation != ALU_OP_CLRBIT) begin
+        else if (aluStoreFlags && uCodeAluOperation != ALU_OP_SETBIT && uCodeAluOperation != ALU_OP_CLRBIT) begin
             regP[C_BIT_IN_P] <= aluCarryOut;
             regP[V_BIT_IN_P] <= aluOverflowOut;
             regP[Z_BIT_IN_P] <= aluZero;
@@ -245,47 +228,79 @@ always @ (negedge clock or posedge reset) begin
         end
         
         // Update stack pointer register S
-        if (aluResultStorage == ALU_O_S)
+        if (uCodeAluResultStorage == ALU_O_S)
             regS <= aluResult;
         
         // Update indirect register IND
-        if (incrementAddr && addrBusMux == ADDR_IND)
+        if (uCodeIncrementAddr && uCodeAddrBusMux == ADDR_IND)
             regIND <= regIND + 16'd1;
         else begin
-            if (aluResultStorage == ALU_O_INDL)
+            if (uCodeAluResultStorage == ALU_O_INDL)
                 regIND[7:0] <= aluResult;
-            if (aluResultStorage == ALU_O_INDH)
+            if (uCodeAluResultStorage == ALU_O_INDH)
                 regIND[15:8] <= dataIn;
         end
         
         // Update zero page register ZPG
-        if (incrementAddr && addrBusMux == ADDR_ZPG)
+        if (uCodeIncrementAddr && uCodeAddrBusMux == ADDR_ZPG)
             regZPG <= regZPG + 8'd1;
         else begin
-            if (aluResultStorage == ALU_O_ZPG)
+            if (uCodeAluResultStorage == ALU_O_ZPG)
                 regZPG <= aluResult;
         end
         
         // Update immediate/index register IMM
-        if (aluResultStorage == ALU_O_IMM)
+        if (uCodeAluResultStorage == ALU_O_IMM)
             regIMM <= aluResult;
-        else if (!dataWriteEnable && dataBusMux == DATA_IMM)
+        else if (!dataWriteEnable && uCodeDataBusMux == DATA_IMM)
             regIMM <= dataIn;
+        
+
         
         // Determine the next microcode address
         if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
-            // Use the new opcode on dataIn to form the new address
-            uCodeAddress <= {UPAGE_OP, dataIn, 1'b0};
-        end else if (uSeqBranchCondition == aluBranchCondition) begin
-            // Branch conditions match, so set uCodeAddress to the branch address
-            uCodeAddress <= uSeqBranchAddr;
+            if (!nRESET || !latchedRESET) begin
+                // Proceed to reset vector
+                latchedRESET <= 1'b1;
+                uCodeAddress <= USEQ_ADDR_RESET;
+            end else if (!latchedNMI || (lastNMI && !nNMI)) begin
+                // Proceed to NMI vector
+                latchedNMI <= 1'b1;
+                uCodeAddress <= USEQ_ADDR_NMI;
+            end else if (!latchedIRQ || (!nIRQ && !regP[I_BIT_IN_P])) begin
+                // Proceed to IRQ vector
+                latchedIRQ <= 1'b1;
+                uCodeAddress <= USEQ_ADDR_IRQ;
+            end else begin
+                // Use the new opcode on dataIn to form the new address
+                uCodeAddress <= {UPAGE_OP, dataIn, 1'b0};
+            end
         end else begin
-            // Branch conditions do not match, so increment uCodeAddress
-            uCodeAddress <= uCodeAddress + 10'd1;
+            // Latch low level on nRESET
+            if (!nRESET) begin
+                latchedRESET <= 1'b0;
+            end
+            
+            // Detect falling edge on nNMI
+            if (lastNMI && !nNMI) begin
+                latchedNMI <= 1'b0;
+            end
+            
+            // Latch low level on nIRQ, if interrupt disable I bit is clear (0)
+            if (!nIRQ && !regP[I_BIT_IN_P]) begin
+                latchedIRQ <= 1'b0;
+            end
+        
+            if (uSeqBranchCondition == aluBranchCondition) begin
+                // Branch conditions match, so set uCodeAddress to the branch address
+                uCodeAddress <= uSeqBranchAddr;
+            end else begin
+                // Branch conditions do not match, so increment uCodeAddress
+                uCodeAddress <= uCodeAddress + 10'd1;
+            end
         end
+        lastNMI <= nNMI;
     end
 end
 
 endmodule
-
-/* verilator lint_on UNUSED */
