@@ -98,6 +98,82 @@ TEST_F(Cpu65xxAluTests, SbcBinary)
     //_vcdTrace.close();
 }
 
+TEST_F(Cpu65xxAluTests, SbcDecimal)
+{
+    // Verifying against the NMOS 6502 decimal mode documentation here:
+    // http://6502.org/tutorials/decimal_mode.html#A
+    // This ALU implements the decimal mode behavior of the original NMOS 6502,
+    // NOT the 65C02 or 65816, because NMOS 6502 is what the perfect6502 project
+    // simulates, and therefore it is easiest to validate completely.
+    
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("alu.vcd");
+    
+    for (unsigned int a = 0; a <= 0xFF; ++a)
+    {
+        for (unsigned int b = 0; b <= 0xFF; ++b)
+        {
+            for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
+            {
+                for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
+                {
+                    _uut.operandA = a;
+                    _uut.operandB = b;
+                    _uut.carryIn = carryIn;
+                    _uut.overflowIn = overflowIn;
+                    _uut.operation = 0x0; //ALU_OP_SBC
+                    _uut.opExtension = 0;
+                    _uut.decimalMode = 1;
+                    
+                    _uut.eval();
+                    //_vcdTrace.dump(_tickCount++);
+                    
+                    // Seq. 3 (used for result on NMOS 6502):
+                    // 3a. AL = (A & $0F) - (B & $0F) + C-1
+                    int al = static_cast<int>(a & 0x0F) - static_cast<int>(b & 0x0F) + static_cast<int>(carryIn) - 1;
+                    // 3b. If AL < 0, then AL = ((AL - $06) & $0F) - $10
+                    if (al < 0)
+                    {
+                        al = ((al - 6) & 0x0F) - 0x10;
+                    }
+                    // 3c. A = (A & $F0) - (B & $F0) + AL
+                    int result = static_cast<int>(a & 0xF0) - static_cast<int>(b & 0xF0) + al;
+                    // 3d. If A < 0, then A = A - $60
+                    if (result < 0)
+                    {
+                        result = result - 0x60;
+                    }
+                    // 3e. The accumulator result is the lower 8 bits of A
+                    
+                    // Binary subtraction (used for Z,V,N,C flags on NMOS 6502)
+                    uint8_t differenceByte = static_cast<uint8_t>(a) + static_cast<uint8_t>(~b) + static_cast<uint8_t>(carryIn);
+                    int signedA = (a < 0x80) ? static_cast<int>(a) : static_cast<int>(a) - 0x100;
+                    int signedB = (b < 0x80) ? static_cast<int>(b) : static_cast<int>(b) - 0x100;
+                    int differenceSigned = signedA - signedB - static_cast<int>(!carryIn);
+                    int differenceUnsigned = static_cast<int>(a) - static_cast<int>(b) - static_cast<int>(!carryIn);
+                    unsigned int z = !(static_cast<unsigned int>(differenceSigned) & 0xFF);
+                    unsigned int v = (differenceSigned < -128 || differenceSigned > 127) ? 1 : 0;
+                    unsigned int c = (differenceUnsigned < 0) ? 0 : 1;
+                    unsigned int n = (differenceByte & 0x80) >> 7;
+                    
+                    ASSERT_EQ(static_cast<unsigned int>(result & 0xFF), _uut.result)
+                        << "a=" << a << " b=" << b << " carryIn=" << carryIn << std::endl
+                        << "al=" << al << " result=" << result << std::endl;
+                    ASSERT_EQ(c, _uut.carryOut);
+                    ASSERT_EQ(z, _uut.zero);
+                    ASSERT_EQ(n, _uut.negative);
+                    ASSERT_EQ(v, _uut.overflowOut)
+                        << "a=" << a << " b=" << b << " carryIn=" << carryIn << std::endl
+                        << "al=" << al << " differenceSigned=" << differenceSigned << " result=" << result << std::endl;
+                    ASSERT_EQ(0, _uut.branchCondition);
+                }
+            }
+        }
+    }
+    
+    //_vcdTrace.close();
+}
+
 TEST_F(Cpu65xxAluTests, AdcBinary)
 {
     //_uut.trace(&_vcdTrace, 99);
@@ -150,8 +226,8 @@ TEST_F(Cpu65xxAluTests, AdcDecimal)
     // NOT the 65C02 or 65816, because NMOS 6502 is what the perfect6502 project
     // simulates, and therefore it is easiest to validate completely.
     
-    _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("alu.vcd");
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("alu.vcd");
     
     for (unsigned int a = 0; a <= 0xFF; ++a)
     {
@@ -170,7 +246,7 @@ TEST_F(Cpu65xxAluTests, AdcDecimal)
                     _uut.decimalMode = 1;
                     
                     _uut.eval();
-                    _vcdTrace.dump(_tickCount++);
+                    //_vcdTrace.dump(_tickCount++);
                     
                     // Seq. 1 (used for result and C flag on NMOS 6502):
                     // 1a. AL = (A & $0F) + (B & $0F) + C
@@ -226,7 +302,7 @@ TEST_F(Cpu65xxAluTests, AdcDecimal)
         }
     }
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
 }
 
 TEST_F(Cpu65xxAluTests, And)
