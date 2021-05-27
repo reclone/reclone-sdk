@@ -60,12 +60,12 @@ assign uSeqBranchCondition = d[10];
 assign uSeqBranchAddr = d[9:0];
 
 // Microsequencer branch addresses
-localparam USEQ_ADDR_FETCH  = 10'h007;
-localparam USEQ_ADDR_WASTE1  = 10'h006;
+localparam USEQ_ADDR_FETCH  = USEQ_ADDR_NMI + 10'd7;
+localparam USEQ_ADDR_WASTE1  = USEQ_ADDR_NMI + 10'd6;
 localparam USEQ_ADDR_LDA_ABS = {UPAGE_OP, LDA_IMM, 1'b1};
 localparam USEQ_ADDR_HALT   = 10'h2FF;
 localparam USEQ_ADDR_NONE   = USEQ_ADDR_HALT;
-localparam USEQ_ADDR_LDA_ZPG_X = USEQ_ADDR_NMI + 10'd6;
+localparam USEQ_ADDR_LDA_ZPG_X = USEQ_ADDR_NMI + 10'd8;
 localparam USEQ_ADDR_LDA_ABS_X = USEQ_ADDR_LDA_ZPG_X + 10'd2;
 localparam USEQ_ADDR_LDA_ABS_Y = USEQ_ADDR_LDA_ABS_X + 10'd2;
 localparam USEQ_ADDR_LDA_IMM_INDL = {UPAGE_OP, LDA_ABS_X, 1'b1};
@@ -88,16 +88,31 @@ begin
     begin
         case (address)
         
-            /* RESET - Load PC with vector at $FFFC, and set I - normally takes 6 cycles */
+            /* RESET - Read PC for 3 cycles, read/dec SP for 3 cycles, Load PC with vector at $FFFC, set B, and set I */
             USEQ_ADDR_RESET:
-                // PCH <= ($FFFD)
-                d <= {ADDR_IND, DATA_READ, DATA_PCH, ALU_OP_AND, ALU_A_FD, ALU_B_FF, ALU_O_ADDR, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd1};
+                // (PC), Z <= 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_SETBIT, ALU_A_P, Z_BIT_IN_P, ALU_O_P, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd1};
             USEQ_ADDR_RESET + 10'd1:
-                // PCL <= ($FFFC)
-                d <= {ADDR_IND, DATA_READ, DATA_PCL, ALU_OP_IADD, ALU_A_FD, ALU_B_FF, ALU_O_ADDR, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd2};
+                // (PC), INDL <= $FC
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_DEC, ALU_A_FD, ALU_B_ZERO, ALU_O_INDL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd2};
             USEQ_ADDR_RESET + 10'd2:
-                // OP <= (PC), I <= 1
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_SETBIT, ALU_A_P, I_BIT_IN_P, ALU_O_P, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+                // (PC), INDH <= $FF
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_FF, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd3};
+            USEQ_ADDR_RESET + 10'd3:
+                // ($0100,S), S <= S - 1
+                d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_DEC, ALU_A_S, ALU_B_ZERO, ALU_O_S, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd4};
+            USEQ_ADDR_RESET + 10'd4:
+                // ($0100,S), S <= S - 1
+                d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_DEC, ALU_A_S, ALU_B_ZERO, ALU_O_S, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd5};
+            USEQ_ADDR_RESET + 10'd5:
+                // ($0100,S), S <= S - 1
+                d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_DEC, ALU_A_S, ALU_B_ZERO, ALU_O_S, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd6};
+            USEQ_ADDR_RESET + 10'd6:
+                // PCL <= (IND), IND <= IND + 1, I <= 1
+                d <= {ADDR_IND, DATA_READ, DATA_PCL, ALU_OP_SETBIT, ALU_A_P, I_BIT_IN_P, ALU_O_P, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RESET + 10'd7};
+            USEQ_ADDR_RESET + 10'd7:
+                // PCH <= (IND), B <= 1
+                d <= {ADDR_IND, DATA_READ, DATA_PCH, ALU_OP_SETBIT, ALU_A_P, B_BIT_IN_P, ALU_O_P, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             /* IRQ - push PC and P onto stack, then fetch IRQ vector at ($FFFE) into PC and set I */
             USEQ_ADDR_IRQ:

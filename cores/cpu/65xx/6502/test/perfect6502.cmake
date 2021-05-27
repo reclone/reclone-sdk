@@ -9,6 +9,9 @@ ExternalProject_Add(
     # Disable install step
     INSTALL_COMMAND ""
 )
+ExternalProject_Get_property(perfect6502_external SOURCE_DIR)
+
+include_directories(${SOURCE_DIR})
 
 # Create a perfect6502 target to be used as a dependency by test programs
 add_library(perfect6502 IMPORTED STATIC GLOBAL)
@@ -24,3 +27,4 @@ else()
       "IMPORTED_LOCATION" "${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external/src/perfect6502_external-build/libperfect6502.a"
   )
 endif(MSVC)
+

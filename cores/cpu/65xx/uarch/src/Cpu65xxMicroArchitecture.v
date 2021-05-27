@@ -44,7 +44,7 @@ module Cpu65xxMicroArchitecture
     input wire nRESET,
 
     // Microcode ROM interface
-    output reg [9:0]  uCodeAddress = USEQ_ADDR_RESET,
+    output wire [9:0] uCodeAddress,
     input wire [1:0]  uCodeAddrBusMux,
     input wire        uCodeDataWriteEnable,
     input wire [1:0]  uCodeDataBusMux,
@@ -69,7 +69,8 @@ reg [7:0]   regY = 8'h00;
 reg lastNMI = 1'b1;
 reg latchedNMI = 1'b1;
 reg latchedIRQ = 1'b1;
-reg latchedRESET = 1'b1;
+reg latchedRESET = 1'b0;
+reg [9:0] uCodeAddressLast = 10'd0;
 
 wire [7:0] aluOperandA;
 wire [7:0] aluOperandB;
@@ -167,12 +168,38 @@ always @ (*) begin
 end
 assign dataWriteEnable = uCodeDataWriteEnable;
 
+// Microcode address
+always @ (*) begin
+    if (!nRESET || !latchedRESET) begin
+        // Proceed immediately to reset vector
+        uCodeAddress = USEQ_ADDR_RESET;
+    end else if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
+        if (!latchedNMI || (lastNMI && !nNMI)) begin
+            // Proceed to NMI vector
+            uCodeAddress = USEQ_ADDR_NMI;
+        end else if (!latchedIRQ || (!nIRQ && !regP[I_BIT_IN_P])) begin
+            // Proceed to IRQ vector
+            uCodeAddress = USEQ_ADDR_IRQ;
+        end else begin
+            // Use the new opcode on dataIn to form the new address
+            uCodeAddress = {UPAGE_OP, dataIn, 1'b0};
+        end
+    end else begin
+        if (uSeqBranchCondition == aluBranchCondition) begin
+            // Branch conditions match, so set uCodeAddress to the branch address
+            uCodeAddress = uSeqBranchAddr;
+        end else begin
+            // Branch conditions do not match, so increment uCodeAddress
+            uCodeAddress = uCodeAddressLast + 10'd1;
+        end
+    end
+end
+
 // Address/Data bus accesses occur on positive edges, but CPU microinstructions
 // execute on negative edges, so that a microinstruction can set up the address
 // and also use the data within the same cycle.
 always @ (negedge clock or posedge reset) begin
     if (reset) begin
-        uCodeAddress <= USEQ_ADDR_RESET;
         regPC <= 16'hFFFF;
         regIND <= 16'hFFFF;
         regZPG <= 8'hFF;
@@ -185,7 +212,8 @@ always @ (negedge clock or posedge reset) begin
         lastNMI <= 1'b1;
         latchedNMI <= 1'b1;
         latchedIRQ <= 1'b1;
-        latchedRESET <= 1'b1;
+        latchedRESET <= 1'b0;
+        uCodeAddressLast <= USEQ_ADDR_RESET;
     end else if (enable) begin
 
         // Update PC
@@ -238,7 +266,7 @@ always @ (negedge clock or posedge reset) begin
             if (uCodeAluResultStorage == ALU_O_INDL)
                 regIND[7:0] <= aluResult;
             if (uCodeAluResultStorage == ALU_O_INDH)
-                regIND[15:8] <= dataIn;
+                regIND[15:8] <= aluResult;
         end
         
         // Update zero page register ZPG
@@ -255,51 +283,35 @@ always @ (negedge clock or posedge reset) begin
         else if (!dataWriteEnable && uCodeDataBusMux == DATA_IMM)
             regIMM <= dataIn;
         
+        // Handle latched flags
+        if (!nRESET || !latchedRESET) begin
+            // Proceed immediately to reset vector
+            latchedRESET <= 1'b1;
+        end else if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
 
-        
-        // Determine the next microcode address
-        if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
-            if (!nRESET || !latchedRESET) begin
-                // Proceed to reset vector
-                latchedRESET <= 1'b1;
-                uCodeAddress <= USEQ_ADDR_RESET;
-            end else if (!latchedNMI || (lastNMI && !nNMI)) begin
+            if (!latchedNMI || (lastNMI && !nNMI)) begin
                 // Proceed to NMI vector
                 latchedNMI <= 1'b1;
-                uCodeAddress <= USEQ_ADDR_NMI;
             end else if (!latchedIRQ || (!nIRQ && !regP[I_BIT_IN_P])) begin
                 // Proceed to IRQ vector
                 latchedIRQ <= 1'b1;
-                uCodeAddress <= USEQ_ADDR_IRQ;
-            end else begin
-                // Use the new opcode on dataIn to form the new address
-                uCodeAddress <= {UPAGE_OP, dataIn, 1'b0};
             end
+
         end else begin
-            // Latch low level on nRESET
-            if (!nRESET) begin
-                latchedRESET <= 1'b0;
-            end
-            
+
             // Detect falling edge on nNMI
             if (lastNMI && !nNMI) begin
                 latchedNMI <= 1'b0;
             end
-            
+
             // Latch low level on nIRQ, if interrupt disable I bit is clear (0)
             if (!nIRQ && !regP[I_BIT_IN_P]) begin
                 latchedIRQ <= 1'b0;
             end
-        
-            if (uSeqBranchCondition == aluBranchCondition) begin
-                // Branch conditions match, so set uCodeAddress to the branch address
-                uCodeAddress <= uSeqBranchAddr;
-            end else begin
-                // Branch conditions do not match, so increment uCodeAddress
-                uCodeAddress <= uCodeAddress + 10'd1;
-            end
+
         end
         lastNMI <= nNMI;
+        uCodeAddressLast <= uCodeAddress;
     end
 end
 
