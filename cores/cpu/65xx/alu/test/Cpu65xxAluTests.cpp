@@ -50,7 +50,7 @@ class Cpu65xxAluTests : public Test
         unsigned int _tickCount;
 };
 
-TEST_F(Cpu65xxAluTests, SbcInteger)
+TEST_F(Cpu65xxAluTests, SbcBinary)
 {
     //_uut.trace(&_vcdTrace, 99);
     //_vcdTrace.open("alu.vcd");
@@ -98,7 +98,7 @@ TEST_F(Cpu65xxAluTests, SbcInteger)
     //_vcdTrace.close();
 }
 
-TEST_F(Cpu65xxAluTests, AdcInteger)
+TEST_F(Cpu65xxAluTests, AdcBinary)
 {
     //_uut.trace(&_vcdTrace, 99);
     //_vcdTrace.open("alu.vcd");
@@ -140,6 +140,93 @@ TEST_F(Cpu65xxAluTests, AdcInteger)
     }
     
     //_vcdTrace.close();
+}
+
+TEST_F(Cpu65xxAluTests, AdcDecimal)
+{
+    // Verifying against the NMOS 6502 decimal mode documentation here:
+    // http://6502.org/tutorials/decimal_mode.html#A
+    // This ALU implements the decimal mode behavior of the original NMOS 6502,
+    // NOT the 65C02 or 65816, because NMOS 6502 is what the perfect6502 project
+    // simulates, and therefore it is easiest to validate completely.
+    
+    _uut.trace(&_vcdTrace, 99);
+    _vcdTrace.open("alu.vcd");
+    
+    for (unsigned int a = 0; a <= 0xFF; ++a)
+    {
+        for (unsigned int b = 0; b <= 0xFF; ++b)
+        {
+            for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
+            {
+                for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
+                {
+                    _uut.operandA = a;
+                    _uut.operandB = b;
+                    _uut.carryIn = carryIn;
+                    _uut.overflowIn = overflowIn;
+                    _uut.operation = 0x1; //ALU_OP_ADC
+                    _uut.opExtension = 0;
+                    _uut.decimalMode = 1;
+                    
+                    _uut.eval();
+                    _vcdTrace.dump(_tickCount++);
+                    
+                    // Seq. 1 (used for result and C flag on NMOS 6502):
+                    // 1a. AL = (A & $0F) + (B & $0F) + C
+                    unsigned int al = (a & 0x0F) + (b & 0x0F) + carryIn;
+                    // 1b. If AL >= $0A, then AL = ((AL + $06) & $0F) + $10
+                    if (al >= 0x0A)
+                    {
+                        al = ((al + 0x06) & 0x0F) + 0x10;
+                    }
+                    // 1c. A = (A & $F0) + (B & $F0) + AL
+                    // 1d. Note that A can be >= $100 at this point
+                    unsigned int result = (a & 0xF0) + (b & 0xF0) + al;
+                    // 1e. If (A >= $A0), then A = A + $60
+                    if (result >= 0xA0)
+                    {
+                        result = result + 0x60;
+                    }
+                    // 1f. The accumulator result is the lower 8 bits of A
+                    // 1g. The carry result is 1 if A >= $100, and is 0 if A < $100
+
+                    // Seq. 2 (used for N and V flag on NMOS 6502):
+                    // 2a. AL = (A & $0F) + (B & $0F) + C
+                    al = (a & 0x0F) + (b & 0x0F) + carryIn;
+                    // 2b. If AL >= $0A, then AL = ((AL + $06) & $0F) + $10
+                    if (al >= 0x0A)
+                    {
+                        al = ((al + 0x06) & 0x0F) + 0x10;
+                    }
+                    // 2c. A = (A & $F0) + (B & $F0) + AL, using signed (twos complement) arithmetic
+                    int ahSigned = (a & 0x80) ? static_cast<int>(a & 0xF0) - 0x100 : static_cast<int>(a & 0xF0);
+                    int bhSigned = (b & 0x80) ? static_cast<int>(b & 0xF0) - 0x100 : static_cast<int>(b & 0xF0);
+                    int resultSigned = ahSigned + bhSigned + static_cast<int>(al);
+                    // 2e. The N flag result is 1 if bit 7 of A is 1, and is 0 if bit 7 if A is 0
+                    unsigned int n = (resultSigned & 0x80) ? 1 : 0;
+                    // 2f. The V flag result is 1 if A < -128 or A > 127, and is 0 if -128 <= A <= 127
+                    unsigned int v = (resultSigned < -128 || resultSigned > 127) ? 1 : 0;
+                    
+                    // Binary addition (used for Z flag on NMOS 6502)
+                    unsigned int resultUnsigned = a + b + carryIn;
+                    unsigned int z = !(resultUnsigned & 0xFF);
+                    
+                    ASSERT_EQ(result & 0xFF, _uut.result);
+                    ASSERT_EQ((result >= 0x100) ? 1 : 0, _uut.carryOut);
+                    ASSERT_EQ(z, _uut.zero);
+                    ASSERT_EQ(n, _uut.negative);
+                    ASSERT_EQ(v, _uut.overflowOut)
+                        << "a=" << a << " b=" << b << " carryIn=" << carryIn << std::endl
+                        << "al=" << al << " ahSigned=" << ahSigned << " bhSigned=" << bhSigned
+                        << " resultSigned=" << resultSigned << std::endl;
+                    ASSERT_EQ(0, _uut.branchCondition);
+                }
+            }
+        }
+    }
+    
+    _vcdTrace.close();
 }
 
 TEST_F(Cpu65xxAluTests, And)
@@ -511,32 +598,29 @@ TEST_F(Cpu65xxAluTests, SetBit)
 {
     for (unsigned int a = 0; a <= 0xFF; ++a)
     {
-        for (unsigned int b = 0; b <= 0xFF; ++b)
+        for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
         {
-            for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
+            for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
             {
-                for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
+                for (unsigned int bitNum = 0; bitNum <= 7; ++bitNum)
                 {
-                    for (unsigned int bitNum = 0; bitNum <= 7; ++bitNum)
-                    {
-                        _uut.operandA = a;
-                        _uut.operandB = b;
-                        _uut.carryIn = carryIn;
-                        _uut.overflowIn = overflowIn;
-                        _uut.operation = 0xE; //ALU_OP_SETBIT
-                        _uut.opExtension = bitNum;
-                        _uut.decimalMode = 0;
-                        
-                        _uut.eval();
-                        
-                        uint8_t setbitA = static_cast<uint8_t>(a | (1U << bitNum));
-                        ASSERT_EQ(setbitA, _uut.result) << "a=" << a << " b=" << b;
-                        ASSERT_EQ(carryIn, _uut.carryOut);
-                        ASSERT_EQ(overflowIn, _uut.overflowOut);
-                        ASSERT_EQ(!setbitA, _uut.zero);
-                        ASSERT_EQ(((setbitA & 0x80) >> 7), _uut.negative);
-                        ASSERT_EQ(0, _uut.branchCondition);
-                    }
+                    _uut.operandA = a;
+                    _uut.operandB = 0xA5;
+                    _uut.carryIn = carryIn;
+                    _uut.overflowIn = overflowIn;
+                    _uut.operation = 0xE; //ALU_OP_SETBIT
+                    _uut.opExtension = bitNum;
+                    _uut.decimalMode = 0;
+                    
+                    _uut.eval();
+                    
+                    uint8_t setbitA = static_cast<uint8_t>(a | (1U << bitNum));
+                    ASSERT_EQ(setbitA, _uut.result);
+                    ASSERT_EQ(carryIn, _uut.carryOut);
+                    ASSERT_EQ(overflowIn, _uut.overflowOut);
+                    ASSERT_EQ(!setbitA, _uut.zero);
+                    ASSERT_EQ(((setbitA & 0x80) >> 7), _uut.negative);
+                    ASSERT_EQ(0, _uut.branchCondition);
                 }
             }
         }
@@ -547,32 +631,29 @@ TEST_F(Cpu65xxAluTests, ClrBit)
 {
     for (unsigned int a = 0; a <= 0xFF; ++a)
     {
-        for (unsigned int b = 0; b <= 0xFF; ++b)
+        for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
         {
-            for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
+            for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
             {
-                for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
+                for (unsigned int bitNum = 0; bitNum <= 7; ++bitNum)
                 {
-                    for (unsigned int bitNum = 0; bitNum <= 7; ++bitNum)
-                    {
-                        _uut.operandA = a;
-                        _uut.operandB = b;
-                        _uut.carryIn = carryIn;
-                        _uut.overflowIn = overflowIn;
-                        _uut.operation = 0xF; //ALU_OP_CLRBIT
-                        _uut.opExtension = bitNum;
-                        _uut.decimalMode = 0;
-                        
-                        _uut.eval();
-                        
-                        uint8_t clrbitA = static_cast<uint8_t>(a & ~(1U << bitNum));
-                        ASSERT_EQ(clrbitA, _uut.result) << "a=" << a << " b=" << b;
-                        ASSERT_EQ(carryIn, _uut.carryOut);
-                        ASSERT_EQ(overflowIn, _uut.overflowOut);
-                        ASSERT_EQ(!clrbitA, _uut.zero);
-                        ASSERT_EQ(((clrbitA & 0x80) >> 7), _uut.negative);
-                        ASSERT_EQ(0, _uut.branchCondition);
-                    }
+                    _uut.operandA = a;
+                    _uut.operandB = 0x5A;
+                    _uut.carryIn = carryIn;
+                    _uut.overflowIn = overflowIn;
+                    _uut.operation = 0xF; //ALU_OP_CLRBIT
+                    _uut.opExtension = bitNum;
+                    _uut.decimalMode = 0;
+                    
+                    _uut.eval();
+                    
+                    uint8_t clrbitA = static_cast<uint8_t>(a & ~(1U << bitNum));
+                    ASSERT_EQ(clrbitA, _uut.result);
+                    ASSERT_EQ(carryIn, _uut.carryOut);
+                    ASSERT_EQ(overflowIn, _uut.overflowOut);
+                    ASSERT_EQ(!clrbitA, _uut.zero);
+                    ASSERT_EQ(((clrbitA & 0x80) >> 7), _uut.negative);
+                    ASSERT_EQ(0, _uut.branchCondition);
                 }
             }
         }

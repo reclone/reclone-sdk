@@ -54,12 +54,14 @@ wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + (withCarry ? {4'd0, carryIn} 
 wire halfCarry = rawSumL[4] | (decimalMode & (rawSumL[3:1] >= 3'd5));
 wire [4:0] rawSumH = addend1[7:4] + addend2[7:4] + {3'd0, halfCarry};
 wire fullCarry = rawSumH[4] | (decimalMode & (rawSumH[3:1] >= 3'd5));
+wire [7:0] rawSum = {rawSumH[3:0], rawSumL[3:0]};
 wire [3:0] finalSumL;
 wire [3:0] finalSumH;
 wire [7:0] finalSum = {finalSumH, finalSumL};
 
-assign zero = ~|result;
-wire adderOverflow = addend1[7] ^ addend2[7] ^ finalSum[7] ^ fullCarry;
+// NMOS 6502 quirk - Z and V flags reflect the result of binary addition, even in decimal mode
+assign zero = (withCarry && decimalMode) ? ~|rawSum : ~|result;
+wire adderOverflow = addend1[7] ^ addend2[7] ^ rawSum[7] ^ rawSumH[4];
 
 always @ (*) begin
     case ({decimalMode && withCarry, subtract, halfCarry})
@@ -108,7 +110,7 @@ always @ (*) begin
             carryOut = fullCarry;
             overflowOut = adderOverflow;
             branchCondition = 1'b0;
-            negative = result[7];
+            negative = rawSum[7];
         end
         
         ALU_OP_IADD: begin
