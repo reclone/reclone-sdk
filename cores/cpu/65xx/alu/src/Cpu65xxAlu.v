@@ -43,14 +43,14 @@ module Cpu65xxAlu
     output          branchCondition
 );
 
-wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_SUB || operation == ALU_OP_DEC || 
+wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_CMP || operation == ALU_OP_DEC || 
                  (operation == ALU_OP_FIXUP && operandB[7] == 1'b1));
 wire withCarry = (operation == ALU_OP_SBC || operation == ALU_OP_ADC);
 wire incDec = (operation == ALU_OP_DEC || operation == ALU_OP_INC || operation == ALU_OP_FIXUP);
 wire [7:0] adderOperandB = incDec ? 8'd1 : operandB;
 wire [7:0] addend1 = operandA;
 wire [7:0] addend2 = subtract ? ~adderOperandB : adderOperandB;
-wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + (withCarry ? {4'd0, carryIn} : 5'd0);
+wire [4:0] rawSumL = addend1[3:0] + addend2[3:0] + (withCarry ? {4'd0, carryIn} : (subtract ? 5'd1 : 5'd0));
 wire halfCarry = rawSumL[4] | (decimalMode & (rawSumL[3:1] >= 3'd5));
 wire [4:0] rawSumH = addend1[7:4] + addend2[7:4] + {3'd0, halfCarry};
 wire fullCarry = rawSumH[4] | (decimalMode & (rawSumH[3:1] >= 3'd5));
@@ -111,11 +111,25 @@ always @ (*) begin
             negative = result[7];
         end
         
-        ALU_OP_ADD, ALU_OP_SUB: begin
+        ALU_OP_IADD: begin
             result = finalSum;
             carryOut = carryIn;
             overflowOut = overflowIn;
+            // Branch if a page crossing was detected (in indexed addressing)
+            // Unsigned addition: branch condition is 1 when full adder carry is 1
             branchCondition = fullCarry;
+            negative = result[7];
+        end
+        
+        ALU_OP_RADD: begin
+            result = finalSum;
+            carryOut = carryIn;
+            overflowOut = overflowIn;
+            // Branch if a page crossing was detected (in relative addressing)
+            // Signed addition:
+            //  If operandB is positive: branch condition is 1 when full adder carry is 1
+            //  If operandB is negative: branch condition is 1 when full adder carry is 0
+            branchCondition = fullCarry ^ operandB[7];
             negative = result[7];
         end
         
@@ -132,7 +146,7 @@ always @ (*) begin
             carryOut = fullCarry;
             overflowOut = overflowIn;
             branchCondition = 1'b0;
-            negative = operandB[7];
+            negative = finalSum[7];
         end
         
         ALU_OP_SETBIT: begin // Set a single bit to 1
