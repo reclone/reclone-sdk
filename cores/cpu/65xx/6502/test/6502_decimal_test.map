@@ -1,0 +1,28 @@
+Modules list:
+-------------
+6502_decimal_test.o:
+    CODE              Offs=000000  Size=000102  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000011  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+ZEROPAGE              000000  000010  000011  00001
+CODE                  000400  000501  000102  00001
+
+
+Exports list by name:
+---------------------
+
+
+
+Exports list by value:
+----------------------
+
+
+
+Imports list:
+-------------
+

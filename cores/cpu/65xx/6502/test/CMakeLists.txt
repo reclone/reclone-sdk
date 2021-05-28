@@ -1,3 +1,6 @@
+configure_file(6502_functional_test.bin ${CMAKE_BINARY_DIR}/6502_functional_test.bin COPYONLY)
+configure_file(6502_functional_test.bin ${CMAKE_CURRENT_BINARY_DIR}/6502_functional_test.bin COPYONLY)
+
 include(perfect6502.cmake)
 
 add_executable(testCpu6502 Cpu6502Tests.cpp)

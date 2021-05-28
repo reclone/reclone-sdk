@@ -24,6 +24,8 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <iostream>
+#include <fstream>
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -149,4 +151,72 @@ TEST_F(Cpu6502Tests, Startup)
     _vcdTrace.close();
 }
 
+// WARNING: This test will take >3 hours and 192482763 half-cycles, therefore
+// it is disabled by default.
+TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_Perfect6502Only)
+{
+    // Load the functional test program into 6502 memory
+    std::ifstream fin;
+    fin.open ("6502_functional_test.bin", std::ios::in | std::ios::binary);
+    fin.read(reinterpret_cast<char*>(memory),65536);
+    ASSERT_TRUE(fin.good());
+    fin.close();
+    
+    // Check nothing first 6 cycles
+    for (unsigned int i = 0; i < 12; ++i)
+    {
+        step(_perfect6502state);
+    }
+    
+    // Load the first byte of the reset vector
 
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
+
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
+    
+    // Load the second byte of the reset vector
+    
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x04);
+    ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
+    
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x04);
+    ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
+    
+    uint16_t pc = 0xFFFF;
+    uint16_t addr = 0xFFFF;
+    int rw = 1;
+    const uint16_t SUCCESS = 0x3469;
+    //const uint16_t BINARY_ADD_INC_AD1 = 0x3345;
+    //const uint16_t BINARY_ADD_INC_AD2 = 0x3350;
+    //const uint16_t AD1 = 0x000D;
+    const uint16_t AD2 = 0x000E;
+    for (int i = 0; i < 200000000 && pc != SUCCESS; ++i)
+    {
+        step(_perfect6502state);
+        pc = readPC(_perfect6502state);
+        addr = readAddressBus(_perfect6502state);
+        rw = readRW(_perfect6502state);
+        if (rw == 0 && addr == AD2)
+        {
+            // This is printed as a progress indicator for the ADC/SBC tests
+            // that cover every possible combination of operands and carry flag
+            chipStatus(_perfect6502state);
+        }
+    }
+    
+    EXPECT_EQ(SUCCESS, pc);
+    
+    for (int i = 0; i < 20; ++i)
+    {
+        step(_perfect6502state);
+        chipStatus(_perfect6502state);
+    }
+    
+    chipStatus(_perfect6502state);
+}
