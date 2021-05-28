@@ -219,7 +219,9 @@ TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_Perfect6502Only)
     }
 }
 
-TEST_F(Cpu6502Tests, DecimalModeTest_Perfect6502Only)
+// WARNING: This test will take >1.5 hours and 107907644 half-cycles, therefore
+// it is disabled by default.
+TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_Perfect6502Only)
 {
     // Load the decimal mode test program into 6502 memory
     std::ifstream fin;
@@ -260,7 +262,7 @@ TEST_F(Cpu6502Tests, DecimalModeTest_Perfect6502Only)
     const uint16_t DONE = 0x024B;
     const uint16_t N2 = 0x0001;
 
-    for (int i = 0; i < 200000000 && pc != DONE; ++i)
+    for (int i = 0; i < 120000000 && pc != DONE; ++i)
     {
         step(_perfect6502state);
         pc = readPC(_perfect6502state);
