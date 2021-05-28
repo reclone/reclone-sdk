@@ -217,6 +217,64 @@ TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_Perfect6502Only)
         step(_perfect6502state);
         chipStatus(_perfect6502state);
     }
+}
+
+TEST_F(Cpu6502Tests, DecimalModeTest_Perfect6502Only)
+{
+    // Load the decimal mode test program into 6502 memory
+    std::ifstream fin;
+    fin.open ("6502_decimal_test.bin", std::ios::in | std::ios::binary);
+    fin.read(reinterpret_cast<char*>(memory),65536);
+    ASSERT_TRUE(fin.good());
+    fin.close();
     
-    chipStatus(_perfect6502state);
+    // Check nothing first 6 cycles
+    for (unsigned int i = 0; i < 12; ++i)
+    {
+        step(_perfect6502state);
+    }
+    
+    // Load the first byte of the reset vector
+
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
+
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
+    
+    // Load the second byte of the reset vector
+    
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x02);
+    ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
+    
+    step(_perfect6502state);
+    writeDataBus(_perfect6502state, 0x02);
+    ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
+    
+    uint16_t pc = 0xFFFF;
+    uint16_t addr = 0xFFFF;
+    int rw = 1;
+    const uint16_t DONE = 0x024B;
+    const uint16_t N2 = 0x0001;
+
+    for (int i = 0; i < 200000000 && pc != DONE; ++i)
+    {
+        step(_perfect6502state);
+        pc = readPC(_perfect6502state);
+        addr = readAddressBus(_perfect6502state);
+        rw = readRW(_perfect6502state);
+        //chipStatus(_perfect6502state);
+        if (rw == 0 && addr == N2)
+        {
+            // This is printed as a progress indicator for the decimal tests
+            // that cover every possible combination of operands and carry flag
+            chipStatus(_perfect6502state);
+        }
+    }
+    
+    EXPECT_EQ(DONE, pc);
+    EXPECT_EQ(0x00, readA(_perfect6502state));
 }

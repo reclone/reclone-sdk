@@ -10,7 +10,7 @@ Segment list:
 Name                   Start     End    Size  Align
 ----------------------------------------------------
 ZEROPAGE              000000  000010  000011  00001
-CODE                  000400  000501  000102  00001
+CODE                  000200  000301  000102  00001
 
 
 Exports list by name:
