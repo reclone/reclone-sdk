@@ -36,7 +36,7 @@ module Cpu65xxMicroArchitecture
 
     input wire [7:0] dataIn,
     output wire [7:0] dataOut,
-    output wire dataWriteEnable,
+    output wire nWrite,
     output wire [15:0] address,
 
     input wire nNMI,
@@ -71,6 +71,7 @@ reg latchedNMI = 1'b1;
 reg latchedIRQ = 1'b1;
 reg latchedRESET = 1'b0;
 reg [9:0] uCodeAddressLast = 10'd0;
+reg [7:0] dataOutReg = 8'hFF;
 
 wire [7:0] aluOperandA;
 wire [7:0] aluOperandB;
@@ -153,20 +154,22 @@ always @ (*) begin
 end
 
 // Data write multiplexer
+wire [7:0] dataWriteMuxOut;
 always @ (*) begin
     if (uCodeAluResultStorage == ALU_O_DO) begin
-        dataOut = aluResult;
+        dataWriteMuxOut = aluResult;
     end else begin
         case (uCodeDataBusMux)
-            DATA_NULL:  dataOut = 8'h00;
-            DATA_IMM:   dataOut = regIMM;
-            DATA_PCL:   dataOut = regPC[7:0];
-            DATA_PCH:   dataOut = regPC[15:8];
-            default:    dataOut = 8'hFF;
+            DATA_NULL:  dataWriteMuxOut = 8'h00;
+            DATA_IMM:   dataWriteMuxOut = regIMM;
+            DATA_PCL:   dataWriteMuxOut = regPC[7:0];
+            DATA_PCH:   dataWriteMuxOut = regPC[15:8];
+            default:    dataWriteMuxOut = 8'hFF;
         endcase
     end
 end
-assign dataWriteEnable = uCodeDataWriteEnable;
+assign nWrite = uCodeDataWriteEnable;
+assign dataOut = dataOutReg;
 
 // Microcode address
 always @ (*) begin
@@ -192,6 +195,18 @@ always @ (*) begin
             // Branch conditions do not match, so increment uCodeAddress
             uCodeAddress = uCodeAddressLast + 10'd1;
         end
+    end
+end
+
+// Update dataOut on positive clock edges for better accuracy to real 6502
+always @ (posedge clock or posedge reset) begin
+    if (reset) begin
+        dataOutReg <= 8'hFF;
+    end else begin
+        if (nWrite)
+            dataOutReg <= dataIn;
+        else
+            dataOutReg <= dataWriteMuxOut;
     end
 end
 
@@ -221,13 +236,13 @@ always @ (negedge clock or posedge reset) begin
             regPC <= regPC + 16'd1;
         else begin
             // Update PCL
-            if (!dataWriteEnable && uCodeDataBusMux == DATA_PCL)
+            if (nWrite && uCodeDataBusMux == DATA_PCL)
                 regPC[7:0] <= dataIn;
             else if (uCodeAluResultStorage == ALU_O_PCL)
                 regPC[7:0] <= aluResult;
             
             // Update PCH
-            if (!dataWriteEnable && uCodeDataBusMux == DATA_PCH)
+            if (nWrite && uCodeDataBusMux == DATA_PCH)
                 regPC[15:8] <= dataIn;
             else if (uCodeAluResultStorage == ALU_O_PCH)
                 regPC[15:8] <= aluResult;
@@ -280,7 +295,7 @@ always @ (negedge clock or posedge reset) begin
         // Update immediate/index register IMM
         if (uCodeAluResultStorage == ALU_O_IMM)
             regIMM <= aluResult;
-        else if (!dataWriteEnable && uCodeDataBusMux == DATA_IMM)
+        else if (nWrite && uCodeDataBusMux == DATA_IMM)
             regIMM <= dataIn;
         
         // Handle latched flags

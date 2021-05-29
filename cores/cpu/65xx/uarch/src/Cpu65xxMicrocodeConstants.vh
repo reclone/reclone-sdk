@@ -37,8 +37,8 @@ localparam ADDR_IND         = 2'h2; // addr <= {INDH, INDL}
 localparam ADDR_ZPG         = 2'h3; // addr <= {$00, ZPG}
 
 // Data bus read/write
-localparam DATA_READ        = 1'b0;
-localparam DATA_WRITE       = 1'b1;
+localparam DATA_READ        = 1'b1;
+localparam DATA_WRITE       = 1'b0;
 
 // Data bus mux selector
 localparam DATA_NULL        = 2'h0;

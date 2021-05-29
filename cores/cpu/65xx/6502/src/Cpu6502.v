@@ -34,7 +34,7 @@ module Cpu6502
 
     input wire [7:0] dataIn,
     output wire [7:0] dataOut,
-    output wire dataWriteEnable,
+    output wire nWrite,
     output wire [15:0] address,
 
     input wire nNMI,
@@ -61,7 +61,7 @@ Cpu65xxMicroArchitecture uArch
     .reset(reset),
     .dataIn(dataIn),
     .dataOut(dataOut),
-    .dataWriteEnable(dataWriteEnable),
+    .nWrite(nWrite),
     .address(address),
     .nNMI(nNMI),
     .nIRQ(nIRQ),
