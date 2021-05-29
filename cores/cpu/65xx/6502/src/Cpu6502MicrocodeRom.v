@@ -79,6 +79,7 @@ localparam USEQ_ADDR_RTI = USEQ_ADDR_RTS + 10'd3;
 localparam USEQ_ADDR_PLA = USEQ_ADDR_RTI + 10'd3;
 localparam USEQ_ADDR_PLP = USEQ_ADDR_PLA + 10'd1;
 localparam USEQ_ADDR_STA_ABS = USEQ_ADDR_PLP + 10'd1;
+localparam USEQ_ADDR_CMP_ABS = USEQ_ADDR_STA_ABS + 10'd1;
 
 // Microcode ROM is updated on the negative edge of the clock, so that
 // if the ALU and data bus operate on the positive edge of the clock, then
@@ -174,10 +175,6 @@ begin
             {UPAGE_OP, BRK, 1'b0}:
                 // B <= 1, PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SETBIT, ALU_A_P, B_BIT_IN_P, ALU_O_P, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ};
-
-            {UPAGE_OP, CMP_IMM, 1'b0}:
-                // A - (PC), PC <= PC + 1
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_CMP, ALU_A_A, ALU_B_DI_FLG, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             {UPAGE_OP, BCC, 1'b0}:
                 // IMM <= (PC), PC <= PC + 1, branch if carry flag is clear
@@ -512,11 +509,33 @@ begin
                 // S <= X
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_X, ALU_B_ZERO, ALU_O_S, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-/* MATHEMATICS - ADC SBC */
+/* MATHEMATICS - ADC SBC CMP CPX CPY */
 
             {UPAGE_OP, ADC_IMM, 1'b0}:
                 // A <= A + (PC) + C, PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_ADC, ALU_A_A, ALU_B_DI_FLG, ALU_O_A, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, CMP_IMM, 1'b0}:
+                // A - (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_CMP, ALU_A_A, ALU_B_DI_FLG, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, CMP_ABS, 1'b0}:
+                // INDL <= (PC), PC = PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, CMP_ABS, 1'b1}};
+            {UPAGE_OP, CMP_ABS, 1'b1}:
+                // INDH <= (PC), PC = PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_CMP_ABS};
+            USEQ_ADDR_CMP_ABS:
+                // A - (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_CMP, ALU_A_A, ALU_B_DI_FLG, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, CPX_IMM, 1'b0}:
+                // X - (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_CMP, ALU_A_X, ALU_B_DI_FLG, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, CPY_IMM, 1'b0}:
+                // Y - (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_CMP, ALU_A_Y, ALU_B_DI_FLG, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
 /* LOGICAL - EOR */
 
