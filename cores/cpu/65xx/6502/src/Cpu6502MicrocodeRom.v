@@ -80,6 +80,7 @@ localparam USEQ_ADDR_PLA = USEQ_ADDR_RTI + 10'd3;
 localparam USEQ_ADDR_PLP = USEQ_ADDR_PLA + 10'd1;
 localparam USEQ_ADDR_STA_ABS = USEQ_ADDR_PLP + 10'd1;
 localparam USEQ_ADDR_CMP_ABS = USEQ_ADDR_STA_ABS + 10'd1;
+localparam USEQ_ADDR_JMP_IND = USEQ_ADDR_CMP_ABS + 10'd1;
 
 // Microcode ROM is updated on the negative edge of the clock, so that
 // if the ALU and data bus operate on the positive edge of the clock, then
@@ -273,12 +274,27 @@ begin
                 // Y <= Y + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_INC, ALU_A_Y, ALU_B_ZERO_FLG, ALU_O_Y, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
+/* JUMP - JMP */
+
             {UPAGE_OP, JMP_ABS, 1'b0}:
                 // IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, JMP_ABS, 1'b1}};
             {UPAGE_OP, JMP_ABS, 1'b1}:
                 // PCH <= (PC), PCL <= IMM
                 d <= {ADDR_PC, DATA_READ, DATA_PCH, ALU_OP_COPY, ALU_A_IMM, ALU_B_ZERO, ALU_O_PCL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, JMP_IND, 1'b0}:
+                // INDL <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, JMP_IND, 1'b1}};
+            {UPAGE_OP, JMP_IND, 1'b1}:
+                // INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_JMP_IND};
+            USEQ_ADDR_JMP_IND:
+                // IMM <= (IND), IND <= IND + 1
+                d <= {ADDR_IND, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_JMP_IND + 10'd1};
+            USEQ_ADDR_JMP_IND + 10'd1:
+                // PCH <= (IND), PCL <= IMM
+                d <= {ADDR_IND, DATA_READ, DATA_PCH, ALU_OP_COPY, ALU_A_IMM, ALU_B_ZERO, ALU_O_PCL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             {UPAGE_OP, JSR, 1'b0}:
                 // INDL <= (PC), PC <= PC + 1
