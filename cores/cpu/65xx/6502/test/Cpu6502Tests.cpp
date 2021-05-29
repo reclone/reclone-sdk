@@ -324,6 +324,8 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
         if (rw == 0)
         {
             // Write
+            _uutMem[_uut.address] = _uut.dataOut;
+            
             // Validate written data
             ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut);
             
