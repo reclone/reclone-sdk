@@ -96,7 +96,7 @@ always @ (*) begin
         ALU_A_PCH:      aluOperandA = regPC[15:8];
         ALU_A_INDH:     aluOperandA = regIND[15:8];
         ALU_A_DI:       aluOperandA = dataIn;
-        ALU_A_P:        aluOperandA = regP;
+        ALU_A_P:        aluOperandA = regP | (8'd1 << R_BIT_IN_P); // reserved bit always 1
         ALU_A_A:        aluOperandA = regA;
         ALU_A_X:        aluOperandA = regX;
         ALU_A_Y:        aluOperandA = regY;

@@ -100,6 +100,7 @@ localparam Z_BIT_IN_P       = 3'h1;
 localparam I_BIT_IN_P       = 3'h2;
 localparam D_BIT_IN_P       = 3'h3;
 localparam B_BIT_IN_P       = 3'h4;
+localparam R_BIT_IN_P       = 3'h5; // reserved bit always 1 on 6502
 localparam V_BIT_IN_P       = 3'h6;
 localparam N_BIT_IN_P       = 3'h7;
 

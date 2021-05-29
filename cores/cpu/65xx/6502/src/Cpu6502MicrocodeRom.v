@@ -335,9 +335,9 @@ begin
                 // ($0100,S) <= IMM, S <= S - 1
                 d <= {ADDR_SP, DATA_WRITE, DATA_IMM, ALU_OP_DEC, ALU_A_S, ALU_B_ZERO, ALU_O_S, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, PHP, 1'b0}:
+            {UPAGE_OP, PHP, 1'b0}: //PHP always pushes the Break (B) flag as a '1' to the stack.
                 // IMM <= P, (PC) Dummy read
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_P, ALU_B_ZERO, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, {UPAGE_OP, PHA, 1'b1}};
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_SETBIT, ALU_A_P, B_BIT_IN_P, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, {UPAGE_OP, PHA, 1'b1}};
 
             {UPAGE_OP, PLA, 1'b0}:
                 // (PC) Dummy read
@@ -347,7 +347,7 @@ begin
                 d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_INC, ALU_A_S, ALU_B_ZERO, ALU_O_S, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_PLA};
             USEQ_ADDR_PLA:
                 // A <= ($0100,S)
-                d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                d <= {ADDR_SP, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO_FLG, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             {UPAGE_OP, PLP, 1'b0}:
                 // (PC) Dummy read
