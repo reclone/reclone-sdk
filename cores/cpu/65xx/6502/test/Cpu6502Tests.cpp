@@ -316,18 +316,24 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
         pc = readPC(_perfect6502state);
         addr = readAddressBus(_perfect6502state);
         rw = readRW(_perfect6502state);
-        ASSERT_EQ(addr, _uut.address) << _uut.Cpu6502__DOT__uCodeAddress;
+        ASSERT_EQ(addr, _uut.address) << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress;
         ASSERT_EQ(rw, _uut.nWrite);
         // Supply data from memory
         _uut.dataIn = _uutMem[_uut.address];
         
         if (rw == 0)
         {
-            // Write
-            _uutMem[_uut.address] = _uut.dataOut;
-            
-            // Validate written data
-            ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut);
+            // Write on clock rising edge
+            if (_uut.clock == 1)
+            {
+                // Write
+                _uutMem[_uut.address] = _uut.dataOut;
+                
+                // Validate written data on clock rising edge only
+                ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut)
+                    << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress
+                    << " clock=" << _uut.clock;
+            }
             
             if (addr == AD2)
             {
