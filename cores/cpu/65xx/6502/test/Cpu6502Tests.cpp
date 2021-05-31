@@ -25,6 +25,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <array>
 #include <verilated_vcd_c.h>
@@ -311,6 +312,13 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
         
         //TODO comment this out later
         chipStatus(_perfect6502state);
+/*         std::cout   << std::hex << std::setw(2) << std::setfill('0') << std::uppercase
+                    << "A:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regA)
+                    << " X:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regX)
+                    << " Y:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regY)
+                    << " SP:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regS)
+                    << " P:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regP)
+                    << "\n"; */
         
         // Grab register values from perfect6502
         pc = readPC(_perfect6502state);
