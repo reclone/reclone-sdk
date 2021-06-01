@@ -225,8 +225,8 @@ TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_Perfect6502Only)
 
 TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
 {
-    _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("6502.vcd");
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("6502.vcd");
     
     // Load the functional test program into 6502 memory
     std::ifstream fin;
@@ -245,7 +245,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     _uut.enable = 1;
     _uut.clock = 1;
     _uut.eval();
-    _vcdTrace.dump(_tickCount++);
+    //_vcdTrace.dump(_tickCount++);
     
     // Check nothing first 6 cycles
     for (unsigned int i = 0; i < 12; ++i)
@@ -253,7 +253,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
         step(_perfect6502state);
         _uut.clock = !_uut.clock;
         _uut.eval();
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
     }
     
     // Load the first byte of the reset vector
@@ -261,7 +261,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     step(_perfect6502state);
     _uut.clock = !_uut.clock;
     _uut.eval();
-    _vcdTrace.dump(_tickCount++);
+    //_vcdTrace.dump(_tickCount++);
     writeDataBus(_perfect6502state, 0x00);
     ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
     ASSERT_EQ(0xFFFC, _uut.address);
@@ -269,7 +269,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     step(_perfect6502state);
     _uut.clock = !_uut.clock;
     _uut.eval();
-    _vcdTrace.dump(_tickCount++);
+    //_vcdTrace.dump(_tickCount++);
     writeDataBus(_perfect6502state, 0x00);
     ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
     ASSERT_EQ(0xFFFC, _uut.address);
@@ -280,7 +280,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     step(_perfect6502state);
     _uut.clock = !_uut.clock;
     _uut.eval();
-    _vcdTrace.dump(_tickCount++);
+    //_vcdTrace.dump(_tickCount++);
     writeDataBus(_perfect6502state, 0x04);
     ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
     ASSERT_EQ(0xFFFD, _uut.address);
@@ -288,7 +288,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     step(_perfect6502state);
     _uut.clock = !_uut.clock;
     _uut.eval();
-    _vcdTrace.dump(_tickCount++);
+    //_vcdTrace.dump(_tickCount++);
     writeDataBus(_perfect6502state, 0x04);
     ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
     ASSERT_EQ(0xFFFD, _uut.address);
@@ -308,10 +308,9 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
         step(_perfect6502state);
         _uut.clock = !_uut.clock;
         _uut.eval();
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
-        //TODO comment this out later
-        chipStatus(_perfect6502state);
+        //chipStatus(_perfect6502state);
 /*         std::cout   << std::hex << std::setw(2) << std::setfill('0') << std::uppercase
                     << "A:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regA)
                     << " X:" << static_cast<unsigned int>(_uut.Cpu6502__DOT__uArch__DOT__regX)
@@ -355,7 +354,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     EXPECT_EQ(SUCCESS, pc);
     chipStatus(_perfect6502state);
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
 }
 
 // WARNING: This test will take >1.5 hours and 107907644 half-cycles, therefore
