@@ -64,6 +64,8 @@ class Cpu6502Tests : public Test
         unsigned int _tickCount;
         state_t * _perfect6502state;
         std::array<uint8_t, 0x10000> _uutMem;
+        
+        
 };
 
 TEST_F(Cpu6502Tests, Startup)
@@ -223,7 +225,9 @@ TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_Perfect6502Only)
     }
 }
 
-TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
+// WARNING: This test will take >3 hours and 192482763 half-cycles, therefore
+// it is disabled by default.
+TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_LockStep)
 {
     //_uut.trace(&_vcdTrace, 99);
     //_vcdTrace.open("6502.vcd");
@@ -357,6 +361,95 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Lockstep)
     //_vcdTrace.close();
 }
 
+TEST_F(Cpu6502Tests, FunctionalSelfTest_Cpu6502Only)
+{
+    // Load the functional test program into 6502 memory
+    std::ifstream fin;
+    fin.open ("6502_functional_test.bin", std::ios::in | std::ios::binary);
+    fin.read(reinterpret_cast<char*>(memory),65536);
+    ASSERT_TRUE(fin.good());
+    fin.close();
+    std::copy(std::begin(memory), std::end(memory), _uutMem.begin());
+    
+    // Initialize _uut inputs
+    _uut.reset = 0;
+    _uut.nRESET = 1;
+    _uut.nNMI = 1;
+    _uut.nIRQ = 1;
+    _uut.dataIn = 0;
+    _uut.enable = 1;
+    _uut.clock = 1;
+    _uut.eval();
+    
+    // Check nothing first 6 cycles
+    for (unsigned int i = 0; i < 12; ++i)
+    {
+        _uut.clock = !_uut.clock;
+        _uut.eval();
+    }
+    
+    // Load the first byte of the reset vector
+
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFC, _uut.address);
+
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFC, _uut.address);
+    _uut.dataIn = 0x00;
+    
+    // Load the second byte of the reset vector
+    
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFD, _uut.address);
+    
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFD, _uut.address);
+    _uut.dataIn = 0x04;
+    
+    uint16_t pc = 0xFFFF;
+    uint16_t addr = 0xFFFF;
+    int rw = 1;
+    const uint16_t SUCCESS = 0x3469;
+    const uint16_t AD2 = 0x000E;
+    for (int i = 0; i < 200000000 && pc != SUCCESS; ++i)
+    {
+        // Run the half cycles
+        _uut.clock = !_uut.clock;
+        _uut.eval();
+        
+        pc = _uut.Cpu6502__DOT__uArch__DOT__regPC;
+        addr = _uut.address;
+        rw = _uut.nWrite;
+        
+        // Supply data from memory
+        _uut.dataIn = _uutMem[_uut.address];
+        
+        if (rw == 0)
+        {
+            // Write on clock rising edge
+            if (_uut.clock == 1)
+            {
+                // Write
+                _uutMem[_uut.address] = _uut.dataOut;
+            }
+            
+            if (addr == AD2)
+            {
+                // This can be printed as a progress indicator for the ADC/SBC tests
+                // that cover every possible combination of operands and carry flag
+                //std::cout << std::hex << std::setw(2) << std::setfill('0') << std::uppercase
+                //          << static_cast<unsigned int>(_uut.dataOut) << " ";
+            }
+        }
+    }
+    
+    EXPECT_EQ(SUCCESS, pc);
+}
+
 // WARNING: This test will take >1.5 hours and 107907644 half-cycles, therefore
 // it is disabled by default.
 TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_Perfect6502Only)
@@ -419,3 +512,130 @@ TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_Perfect6502Only)
     EXPECT_EQ(0x00, readA(_perfect6502state));
 }
 
+// WARNING: This test will take >1.5 hours and 107907644 half-cycles, therefore
+// it is disabled by default.
+TEST_F(Cpu6502Tests, DecimalModeTest_LockStep)
+{
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("6502.vcd");
+    
+    // Load the functional test program into 6502 memory
+    std::ifstream fin;
+    fin.open ("6502_decimal_test.bin", std::ios::in | std::ios::binary);
+    fin.read(reinterpret_cast<char*>(memory),65536);
+    ASSERT_TRUE(fin.good());
+    fin.close();
+    std::copy(std::begin(memory), std::end(memory), _uutMem.begin());
+    
+    // Initialize _uut inputs
+    _uut.reset = 0;
+    _uut.nRESET = 1;
+    _uut.nNMI = 1;
+    _uut.nIRQ = 1;
+    _uut.dataIn = 0;
+    _uut.enable = 1;
+    _uut.clock = 1;
+    _uut.eval();
+    //_vcdTrace.dump(_tickCount++);
+    
+    // Check nothing first 6 cycles
+    for (unsigned int i = 0; i < 12; ++i)
+    {
+        step(_perfect6502state);
+        _uut.clock = !_uut.clock;
+        _uut.eval();
+        //_vcdTrace.dump(_tickCount++);
+    }
+    
+    // Load the first byte of the reset vector
+
+    step(_perfect6502state);
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    //_vcdTrace.dump(_tickCount++);
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
+    ASSERT_EQ(0xFFFC, _uut.address);
+
+    step(_perfect6502state);
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    //_vcdTrace.dump(_tickCount++);
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, readAddressBus(_perfect6502state));
+    ASSERT_EQ(0xFFFC, _uut.address);
+    _uut.dataIn = 0x00;
+    
+    // Load the second byte of the reset vector
+    
+    step(_perfect6502state);
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    //_vcdTrace.dump(_tickCount++);
+    writeDataBus(_perfect6502state, 0x02);
+    ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
+    ASSERT_EQ(0xFFFD, _uut.address);
+    
+    step(_perfect6502state);
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    //_vcdTrace.dump(_tickCount++);
+    writeDataBus(_perfect6502state, 0x02);
+    ASSERT_EQ(0xFFFD, readAddressBus(_perfect6502state));
+    ASSERT_EQ(0xFFFD, _uut.address);
+    _uut.dataIn = 0x02;
+    
+    // Sync the stack pointer
+    _uut.Cpu6502__DOT__uArch__DOT__regS = readSP(_perfect6502state);
+    
+    uint16_t pc = 0xFFFF;
+    uint16_t addr = 0xFFFF;
+    int rw = 1;
+    const uint16_t DONE = 0x024B;
+    const uint16_t N2 = 0x0001;
+    
+    for (int i = 0; i < 120000000 && pc != DONE; ++i)
+    {
+        step(_perfect6502state);
+        _uut.clock = !_uut.clock;
+        _uut.eval();
+        
+        pc = readPC(_perfect6502state);
+        addr = readAddressBus(_perfect6502state);
+        rw = readRW(_perfect6502state);
+        ASSERT_EQ(addr, _uut.address) << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress;
+        ASSERT_EQ(rw, _uut.nWrite);
+        // Supply data from memory
+        _uut.dataIn = _uutMem[_uut.address];
+        
+        //_vcdTrace.dump(_tickCount++);
+        //chipStatus(_perfect6502state);
+        
+        if (rw == 0)
+        {
+            // Write on clock rising edge
+            if (_uut.clock == 1)
+            {
+                // Write
+                _uutMem[_uut.address] = _uut.dataOut;
+                
+                // Validate written data on clock rising edge only
+                ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut)
+                    << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress
+                    << " clock=" << _uut.clock;
+            }
+            
+            if (addr == N2)
+            {
+                // This is printed as a progress indicator for the decimal tests
+                // that cover every possible combination of operands and carry flag
+                chipStatus(_perfect6502state);
+            }
+        }
+    }
+    
+    EXPECT_EQ(DONE, pc);
+    EXPECT_EQ(0x00, readA(_perfect6502state));
+    
+    //_vcdTrace.close();
+}

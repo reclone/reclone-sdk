@@ -240,9 +240,12 @@ begin
             USEQ_ADDR_HALT:
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_HALT};
 
+            /* BRK - Set B flag then proceed to IRQ vector */
             {UPAGE_OP, BRK, 1'b0}:
                 // B <= 1, PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_SETBIT, ALU_A_P, B_BIT_IN_P, ALU_O_P, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_IRQ};
+
+/* BRANCH RELATIVE - BCC, BCS, BNE, BEQ, BPL, BMI, BVC, BVS */
 
             {UPAGE_OP, BCC, 1'b0}:
                 // IMM <= (PC), PC <= PC + 1, branch if carry flag is clear
