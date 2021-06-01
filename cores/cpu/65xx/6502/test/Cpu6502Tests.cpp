@@ -514,7 +514,7 @@ TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_Perfect6502Only)
 
 // WARNING: This test will take >1.5 hours and 107907644 half-cycles, therefore
 // it is disabled by default.
-TEST_F(Cpu6502Tests, DecimalModeTest_LockStep)
+TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_LockStep)
 {
     //_uut.trace(&_vcdTrace, 99);
     //_vcdTrace.open("6502.vcd");
@@ -630,6 +630,99 @@ TEST_F(Cpu6502Tests, DecimalModeTest_LockStep)
                 // This is printed as a progress indicator for the decimal tests
                 // that cover every possible combination of operands and carry flag
                 chipStatus(_perfect6502state);
+            }
+        }
+    }
+    
+    EXPECT_EQ(DONE, pc);
+    EXPECT_EQ(0x00, readA(_perfect6502state));
+    
+    //_vcdTrace.close();
+}
+
+TEST_F(Cpu6502Tests, DecimalModeTest_Cpu6502Only)
+{
+    // Load the functional test program into 6502 memory
+    std::ifstream fin;
+    fin.open ("6502_decimal_test.bin", std::ios::in | std::ios::binary);
+    fin.read(reinterpret_cast<char*>(memory),65536);
+    ASSERT_TRUE(fin.good());
+    fin.close();
+    std::copy(std::begin(memory), std::end(memory), _uutMem.begin());
+    
+    // Initialize _uut inputs
+    _uut.reset = 0;
+    _uut.nRESET = 1;
+    _uut.nNMI = 1;
+    _uut.nIRQ = 1;
+    _uut.dataIn = 0;
+    _uut.enable = 1;
+    _uut.clock = 1;
+    _uut.eval();
+    
+    // Check nothing first 6 cycles
+    for (unsigned int i = 0; i < 12; ++i)
+    {
+        _uut.clock = !_uut.clock;
+        _uut.eval();
+    }
+    
+    // Load the first byte of the reset vector
+
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    writeDataBus(_perfect6502state, 0x00);
+    ASSERT_EQ(0xFFFC, _uut.address);
+
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFC, _uut.address);
+    _uut.dataIn = 0x00;
+    
+    // Load the second byte of the reset vector
+    
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFD, _uut.address);
+    
+    _uut.clock = !_uut.clock;
+    _uut.eval();
+    ASSERT_EQ(0xFFFD, _uut.address);
+    _uut.dataIn = 0x02;
+    
+    uint16_t pc = 0xFFFF;
+    uint16_t addr = 0xFFFF;
+    int rw = 1;
+    const uint16_t DONE = 0x024B;
+    const uint16_t N2 = 0x0001;
+    
+    for (int i = 0; i < 120000000 && pc != DONE; ++i)
+    {
+        _uut.clock = !_uut.clock;
+        _uut.eval();
+        
+        pc = _uut.Cpu6502__DOT__uArch__DOT__regPC;
+        addr = _uut.address;
+        rw = _uut.nWrite;
+        
+        // Supply data from memory
+        _uut.dataIn = _uutMem[_uut.address];
+        
+        if (rw == 0)
+        {
+            // Write on clock rising edge
+            if (_uut.clock == 1)
+            {
+                // Write
+                _uutMem[_uut.address] = _uut.dataOut;
+            }
+            
+            if (addr == N2)
+            {
+                // This can be printed as a progress indicator for the ADC/SBC tests
+                // that cover every possible combination of operands and carry flag
+                //std::cout << std::hex << std::setw(2) << std::setfill('0') << std::uppercase
+                //          << static_cast<unsigned int>(_uut.dataOut) << " ";
             }
         }
     }
