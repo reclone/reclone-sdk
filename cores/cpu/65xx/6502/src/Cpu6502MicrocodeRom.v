@@ -164,6 +164,13 @@ localparam USEQ_ADDR_SLO_ABS_X = USEQ_ADDR_SLO_IND + 10'd3;
 localparam USEQ_ADDR_SLO_ABS_Y = USEQ_ADDR_SLO_ABS_X + 10'd3;
 localparam USEQ_ADDR_SLO_X_IND = USEQ_ADDR_SLO_ABS_Y + 10'd3;
 localparam USEQ_ADDR_SLO_IND_Y = USEQ_ADDR_SLO_X_IND + 10'd2;
+localparam USEQ_ADDR_RLA_ZPG = USEQ_ADDR_SLO_IND_Y + 10'd3;
+localparam USEQ_ADDR_RLA_ZPG_X = USEQ_ADDR_RLA_ZPG + 10'd2;
+localparam USEQ_ADDR_RLA_IND = USEQ_ADDR_RLA_ZPG_X + 10'd3;
+localparam USEQ_ADDR_RLA_ABS_X = USEQ_ADDR_RLA_IND + 10'd3;
+localparam USEQ_ADDR_RLA_ABS_Y = USEQ_ADDR_RLA_ABS_X + 10'd3;
+localparam USEQ_ADDR_RLA_X_IND = USEQ_ADDR_RLA_ABS_Y + 10'd3;
+localparam USEQ_ADDR_RLA_IND_Y = USEQ_ADDR_RLA_X_IND + 10'd2;
 
 // Microcode ROM is updated on the negative edge of the clock, so that
 // if the ALU and data bus operate on the positive edge of the clock, then
@@ -1838,57 +1845,57 @@ begin
 
             // NOPs with implied addressing - 1 byte, 2 cycles
 
-            {UPAGE_OP, NOP_1A, 1'b0}:
+            {UPAGE_OP, NOP_IPL_1A, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_3A, 1'b0}:
+            {UPAGE_OP, NOP_IPL_3A, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_5A, 1'b0}:
+            {UPAGE_OP, NOP_IPL_5A, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_7A, 1'b0}:
+            {UPAGE_OP, NOP_IPL_7A, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_DA, 1'b0}:
+            {UPAGE_OP, NOP_IPL_DA, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_FA, 1'b0}:
+            {UPAGE_OP, NOP_IPL_FA, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             // NOPs with immediate addressing - 2 bytes, 2 cycles
 
-            {UPAGE_OP, NOP_80, 1'b0}:
+            {UPAGE_OP, NOP_IMM_80, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_82, 1'b0}:
+            {UPAGE_OP, NOP_IMM_82, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_C2, 1'b0}:
+            {UPAGE_OP, NOP_IMM_C2, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_E2, 1'b0}:
+            {UPAGE_OP, NOP_IMM_E2, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_89, 1'b0}:
+            {UPAGE_OP, NOP_IMM_89, 1'b0}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             // NOPs with zero-page addressing - 2 bytes, 3 cycles
 
-            {UPAGE_OP, NOP_04, 1'b0}:
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_04, 1'b1}};
-            {UPAGE_OP, NOP_04, 1'b1}:
+            {UPAGE_OP, NOP_ZPG_04, 1'b0}:
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_ZPG_04, 1'b1}};
+            {UPAGE_OP, NOP_ZPG_04, 1'b1}:
                 d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_44, 1'b0}:
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_04, 1'b1}};
+            {UPAGE_OP, NOP_ZPG_44, 1'b0}:
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_ZPG_04, 1'b1}};
 
-            {UPAGE_OP, NOP_64, 1'b0}:
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_04, 1'b1}};
+            {UPAGE_OP, NOP_ZPG_64, 1'b0}:
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_ZPG_04, 1'b1}};
 
             // NOPs with zero-page indexed addressing - 2 bytes, 4 cycles
 
-            {UPAGE_OP, NOP_14, 1'b0}:
+            {UPAGE_OP, NOP_ZPG_X_14, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ZPG_X};
             USEQ_ADDR_NOP_ZPG_X:
@@ -1898,41 +1905,41 @@ begin
                 // (ZPG)
                 d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_34, 1'b0}:
+            {UPAGE_OP, NOP_ZPG_X_34, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ZPG_X};
 
-            {UPAGE_OP, NOP_54, 1'b0}:
+            {UPAGE_OP, NOP_ZPG_X_54, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ZPG_X};
 
-            {UPAGE_OP, NOP_74, 1'b0}:
+            {UPAGE_OP, NOP_ZPG_X_74, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ZPG_X};
 
-            {UPAGE_OP, NOP_D4, 1'b0}:
+            {UPAGE_OP, NOP_ZPG_X_D4, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ZPG_X};
 
-            {UPAGE_OP, NOP_F4, 1'b0}:
+            {UPAGE_OP, NOP_ZPG_X_F4, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ZPG_X};
 
             // NOP with absolute addressing - 3 bytes, 4 cycles
 
-            {UPAGE_OP, NOP_0C, 1'b0}:
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_0C, 1'b1}};
-            {UPAGE_OP, NOP_0C, 1'b1}:
+            {UPAGE_OP, NOP_ABS_0C, 1'b0}:
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, NOP_ABS_0C, 1'b1}};
+            {UPAGE_OP, NOP_ABS_0C, 1'b1}:
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS};
             USEQ_ADDR_NOP_ABS:
                 d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             // NOPs with absolute indexed addressing - 3 bytes, 4 cycles (+1 cycle upon page crossing)
 
-            {UPAGE_OP, NOP_1C, 1'b0}:
+            {UPAGE_OP, NOP_ABS_X_1C, 1'b0}:
                 // INDL <= (PC) + X [check for carry], PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_NOP_ABS_X};
-            {UPAGE_OP, NOP_1C, 1'b1}:
+            {UPAGE_OP, NOP_ABS_X_1C, 1'b1}:
                 // [no carry] INDH <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS_X + 10'd2};
             USEQ_ADDR_NOP_ABS_X:
@@ -1945,38 +1952,38 @@ begin
                 // (IND)
                 d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
-            {UPAGE_OP, NOP_3C, 1'b0}:
+            {UPAGE_OP, NOP_ABS_X_3C, 1'b0}:
                 // INDL <= (PC) + X [check for carry], PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_NOP_ABS_X};
-            {UPAGE_OP, NOP_3C, 1'b1}:
+            {UPAGE_OP, NOP_ABS_X_3C, 1'b1}:
                 // [no carry] INDH <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS_X + 10'd2};
 
-            {UPAGE_OP, NOP_5C, 1'b0}:
+            {UPAGE_OP, NOP_ABS_X_5C, 1'b0}:
                 // INDL <= (PC) + X [check for carry], PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_NOP_ABS_X};
-            {UPAGE_OP, NOP_5C, 1'b1}:
+            {UPAGE_OP, NOP_ABS_X_5C, 1'b1}:
                 // [no carry] INDH <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS_X + 10'd2};
 
-            {UPAGE_OP, NOP_7C, 1'b0}:
+            {UPAGE_OP, NOP_ABS_X_7C, 1'b0}:
                 // INDL <= (PC) + X [check for carry], PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_NOP_ABS_X};
-            {UPAGE_OP, NOP_7C, 1'b1}:
+            {UPAGE_OP, NOP_ABS_X_7C, 1'b1}:
                 // [no carry] INDH <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS_X + 10'd2};
 
-            {UPAGE_OP, NOP_DC, 1'b0}:
+            {UPAGE_OP, NOP_ABS_X_DC, 1'b0}:
                 // INDL <= (PC) + X [check for carry], PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_NOP_ABS_X};
-            {UPAGE_OP, NOP_DC, 1'b1}:
+            {UPAGE_OP, NOP_ABS_X_DC, 1'b1}:
                 // [no carry] INDH <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS_X + 10'd2};
 
-            {UPAGE_OP, NOP_FC, 1'b0}:
+            {UPAGE_OP, NOP_ABS_X_FC, 1'b0}:
                 // INDL <= (PC) + X [check for carry], PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_NOP_ABS_X};
-            {UPAGE_OP, NOP_FC, 1'b1}:
+            {UPAGE_OP, NOP_ABS_X_FC, 1'b1}:
                 // [no carry] INDH <= (PC), PC <= PC + 1
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_NOP_ABS_X + 10'd2};
 
@@ -2125,6 +2132,116 @@ begin
             {UPAGE_OP, SLO_IND_Y, 1'b1}:
                 // [no carry] INDH <= (ZPG)
                 d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SLO_IND};
+
+            // RLA - ROL then AND
+
+            {UPAGE_OP, RLA_ZPG, 1'b0}:
+                // ZPG <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, RLA_ZPG, 1'b1}};
+            {UPAGE_OP, RLA_ZPG, 1'b1}:
+                // IMM <= (ZPG)
+                d <= {ADDR_ZPG, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ZPG};
+            USEQ_ADDR_RLA_ZPG:
+                // (ZPG) <= IMM, IMM <= IMM << 1
+                d <= {ADDR_ZPG, DATA_WRITE, DATA_IMM, ALU_OP_SGL, ALU_A_IMM, ALU_SOP_ROL, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ZPG + 10'd1};
+            USEQ_ADDR_RLA_ZPG + 10'd1:
+                // (ZPG) <= IMM, A <= A & IMM
+                d <= {ADDR_ZPG, DATA_WRITE, DATA_IMM, ALU_OP_AND, ALU_A_A, ALU_B_IMM_FLG, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, RLA_ZPG_X, 1'b0}:
+                // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ZPG_X};
+            USEQ_ADDR_RLA_ZPG_X:
+                // (ZPG), ZPG <= X + IMM
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_IMM, ALU_O_ZPG, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ZPG_X + 10'd1};
+            USEQ_ADDR_RLA_ZPG_X + 10'd1:
+                // IMM <= (ZPG)
+                d <= {ADDR_ZPG, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ZPG_X + 10'd2};
+            USEQ_ADDR_RLA_ZPG_X + 10'd2:
+                // (ZPG) <= IMM, IMM <= IMM << 1
+                d <= {ADDR_ZPG, DATA_WRITE, DATA_IMM, ALU_OP_SGL, ALU_A_IMM, ALU_SOP_ROL, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, {UPAGE_OP, RLA_ZPG_X, 1'b1}};
+            {UPAGE_OP, RLA_ZPG_X, 1'b1}:
+                // (ZPG) <= IMM, A <= A & IMM
+                d <= {ADDR_ZPG, DATA_WRITE, DATA_IMM, ALU_OP_AND, ALU_A_A, ALU_B_IMM_FLG, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, RLA_ABS, 1'b0}:
+                // INDL <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, RLA_ABS, 1'b1}};
+            {UPAGE_OP, RLA_ABS, 1'b1}:
+                // INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+            USEQ_ADDR_RLA_IND:
+                // IMM <= (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND + 10'd1};
+            USEQ_ADDR_RLA_IND + 10'd1:
+                // (IND) <= IMM, IMM <= IMM << 1
+                d <= {ADDR_IND, DATA_WRITE, DATA_IMM, ALU_OP_SGL, ALU_A_IMM, ALU_SOP_ROL, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND + 10'd2};
+            USEQ_ADDR_RLA_IND + 10'd2:
+                // (IND) <= IMM, A <= A & IMM
+                d <= {ADDR_IND, DATA_WRITE, DATA_IMM, ALU_OP_AND, ALU_A_A, ALU_B_IMM_FLG, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, RLA_ABS_X, 1'b0}:
+                // INDL <= (PC) + X [check for carry], PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_RLA_ABS_X + 10'd1};
+            {UPAGE_OP, RLA_ABS_X, 1'b1}:
+                // [no carry] INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ABS_X};
+            USEQ_ADDR_RLA_ABS_X:
+                // [no carry] (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+            USEQ_ADDR_RLA_ABS_X + 10'd1:
+                // [carry] INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ABS_X + 10'd2};
+            USEQ_ADDR_RLA_ABS_X + 10'd2:
+                // [carry] (IND), INDH <= INDH + 1
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_INC, ALU_A_INDH, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+
+            {UPAGE_OP, RLA_ABS_Y, 1'b0}:
+                // INDL <= (PC) + X [check for carry], PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_RLA_ABS_Y + 10'd1};
+            {UPAGE_OP, RLA_ABS_Y, 1'b1}:
+                // [no carry] INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ABS_Y};
+            USEQ_ADDR_RLA_ABS_Y:
+                // [no carry] (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+            USEQ_ADDR_RLA_ABS_Y + 10'd1:
+                // [carry] INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_ABS_Y + 10'd2};
+            USEQ_ADDR_RLA_ABS_Y + 10'd2:
+                // [carry] (IND), INDH <= INDH + 1
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_INC, ALU_A_INDH, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+
+            {UPAGE_OP, RLA_X_IND, 1'b0}:
+                // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_IMM, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_X_IND};
+            USEQ_ADDR_RLA_X_IND:
+                // (ZPG), ZPG <= X + IMM
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_IMM, ALU_O_ZPG, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_X_IND + 10'd1};
+            USEQ_ADDR_RLA_X_IND + 10'd1:
+                // INDL <= (ZPG), ZPG <= ZPG + 1
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, RLA_X_IND, 1'b1}};
+            {UPAGE_OP, RLA_X_IND, 1'b1}:
+                // INDH <= (ZPG)
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+
+            {UPAGE_OP, RLA_IND_Y, 1'b0}:
+                // ZPG <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND_Y};
+            USEQ_ADDR_RLA_IND_Y:
+                // INDL <= (ZPG) + Y [check for carry], ZPG <= ZPG + 1
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, RLA_IND_Y, 1'b1}};
+            USEQ_ADDR_RLA_IND_Y + 10'd1:
+                // [carry] INDH <= (ZPG)
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND_Y + 10'd2};
+            USEQ_ADDR_RLA_IND_Y + 10'd2:
+                // [carry] (IND), INDH <= INDH + 1
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_INC, ALU_A_INDH, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+            {UPAGE_OP, RLA_IND_Y, 1'b1}:
+                // [no carry] INDH <= (ZPG)
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_RLA_IND};
+
+
 
             default: // Halt
                 d <= {ADDR_SP, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_HALT};
