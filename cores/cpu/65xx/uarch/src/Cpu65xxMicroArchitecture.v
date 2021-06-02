@@ -57,11 +57,12 @@ module Cpu65xxMicroArchitecture
     input wire [9:0]  uSeqBranchAddr
 );
 
-reg [15:0]  regPC = 16'hFFFF;
+// Initial values of PC and S selected to match perfect6502
+reg [15:0]  regPC = 16'h00FF;
 reg [15:0]  regIND = 16'hFFFF;
 reg [7:0]   regZPG = 8'hFF;
 reg [7:0]   regIMM = 8'hFF;
-reg [7:0]   regS = 8'hFF;
+reg [7:0]   regS = 8'hC0;
 reg [7:0]   regP = 8'h00;
 reg [7:0]   regA = 8'h00;
 reg [7:0]   regX = 8'h00;
@@ -200,10 +201,10 @@ end
 // and also use the data within the same cycle.
 always @ (negedge clock or posedge reset) begin
     if (reset) begin
-        regPC <= 16'hFFFF;
+        regPC <= 16'h00FF;
         regIND <= 16'hFFFF;
         regZPG <= 8'hFF;
-        regS <= 8'hFF;
+        regS <= 8'hC0;
         regP <= 8'h00;
         regA <= 8'h00;
         regIMM <= 8'h00;

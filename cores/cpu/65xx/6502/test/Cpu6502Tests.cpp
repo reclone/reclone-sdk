@@ -28,6 +28,7 @@
 #include <iomanip>
 #include <fstream>
 #include <array>
+#include <vector>
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -58,6 +59,87 @@ class Cpu6502Tests : public Test
             _uut.final();
         }
         
+        // Run a small 6502 program on both Cpu6502 and perfect6502 in lock-step,
+        // verifying that address and data busses behave the same
+        void lockStepExec(const std::vector<uint8_t>& program, uint16_t org)
+        {
+            _uut.trace(&_vcdTrace, 99);
+            _vcdTrace.open("6502.vcd");
+            
+            // Initialize memory to zeros (BRK)
+            for (unsigned int i = 0; i < _uutMem.size(); ++i)
+            {
+                memory[i] = 0;
+                _uutMem[i] = 0;
+            }
+            
+            // Load program to org address
+            for (unsigned int i = 0; i < program.size(); ++i)
+            {
+                memory[i + org] = program[i];
+                _uutMem[i + org] = program[i];
+            }
+            
+            // Set reset vector to org address
+            memory[0xFFFC] = org & 0xFF;
+            _uutMem[0xFFFC] = org & 0xFF;
+            memory[0xFFFD] = (org >> 8) & 0xFF;
+            _uutMem[0xFFFD] = (org >> 8) & 0xFF;
+            
+            // Initialize _uut inputs
+            _uut.reset = 0;
+            _uut.nRESET = 1;
+            _uut.nNMI = 1;
+            _uut.nIRQ = 1;
+            _uut.dataIn = 0;
+            _uut.enable = 1;
+            _uut.clock = 1;
+            _uut.eval();
+            _vcdTrace.dump(_tickCount++);
+            
+            //uint16_t pc = 0xFFFF;
+            uint16_t addr = 0xFFFF;
+            int rw = 1;
+            const uint16_t IRQ_VECTOR = 0xFFFE;
+            
+            for (int i = 0; i < 120000000 && addr != IRQ_VECTOR; ++i)
+            {
+                step(_perfect6502state);
+                _uut.clock = !_uut.clock;
+                _uut.eval();
+                
+                //pc = readPC(_perfect6502state);
+                addr = readAddressBus(_perfect6502state);
+                rw = readRW(_perfect6502state);
+                ASSERT_EQ(addr, _uut.address);
+                ASSERT_EQ(rw, _uut.nWrite);
+                
+                // Supply data from memory
+                _uut.dataIn = _uutMem[_uut.address];
+                
+                _vcdTrace.dump(_tickCount++);
+                chipStatus(_perfect6502state);
+                
+                if (rw == 0)
+                {
+                    // Write on clock rising edge
+                    if (_uut.clock == 1)
+                    {
+                        // Write
+                        _uutMem[_uut.address] = _uut.dataOut;
+                        
+                        // Validate written data on clock rising edge only
+                        ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut);
+                    }
+                }
+            }
+
+            EXPECT_TRUE(IRQ_VECTOR == addr);
+            EXPECT_EQ(0x00, readA(_perfect6502state));
+
+            //_vcdTrace.close();
+        }
+        
     protected:
         VerilatedVcdC _vcdTrace;
         VCpu6502 _uut;
@@ -65,7 +147,7 @@ class Cpu6502Tests : public Test
         state_t * _perfect6502state;
         std::array<uint8_t, 0x10000> _uutMem;
         
-        
+
 };
 
 TEST_F(Cpu6502Tests, Startup)
@@ -732,3 +814,330 @@ TEST_F(Cpu6502Tests, DecimalModeTest_Cpu6502Only)
     
     //_vcdTrace.close();
 }
+
+TEST_F(Cpu6502Tests, Opcode_NOP)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xEA                // NOP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_1A)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x1A                // NOP_1A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_3A)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x3A                // NOP_3A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_5A)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x5A                // NOP_5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_7A)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x7A                // NOP_7A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_DA)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xDA                // NOP_DA
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_FA)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xFA                // NOP_FA
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_80)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x80, 0x5A          // NOP_80 #$5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_82)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x82, 0x5A          // NOP_82 #$5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_C2)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xC2, 0x5A          // NOP_C2 #$5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_E2)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xE2, 0x5A          // NOP_E2 #$5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_89)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x89, 0x5A          // NOP_89 #$5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_04)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x04, 0x5A          // NOP_04 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_44)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x44, 0x5A          // NOP_44 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_64)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x64, 0x5A          // NOP_64 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_14)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x14, 0x5A          // NOP_14 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_34)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x34, 0x5A          // NOP_34 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_54)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x54, 0x5A          // NOP_54 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_74)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x74, 0x5A          // NOP_74 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_D4)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0xD4, 0x5A          // NOP_D4 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_F4)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0xF4, 0x5A          // NOP_F4 $5A
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_0C)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x0C, 0x0D, 0xDC    // NOP_0C $DC0D
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_1C)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x1C, 0xA0, 0x0A,   // NOP_1C $0AA0
+        0x1C, 0x0B, 0xB0    // NOP_1C $B00B
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_3C)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x3C, 0xA0, 0x0A,   // NOP_3C $0AA0
+        0x3C, 0x0B, 0xB0    // NOP_3C $B00B
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_5C)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x5C, 0xA0, 0x0A,   // NOP_5C $0AA0
+        0x5C, 0x0B, 0xB0    // NOP_5C $B00B
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_7C)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0x7C, 0xA0, 0x0A,   // NOP_7C $0AA0
+        0x7C, 0x0B, 0xB0    // NOP_7C $B00B
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_DC)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0xDC, 0xA0, 0x0A,   // NOP_DC $0AA0
+        0xDC, 0x0B, 0xB0    // NOP_DC $B00B
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_NOP_FC)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x83,         // LDX #$83
+        0xFC, 0xA0, 0x0A,   // NOP_FC $0AA0
+        0xFC, 0x0B, 0xB0    // NOP_FC $B00B
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
