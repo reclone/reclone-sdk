@@ -1681,4 +1681,78 @@ TEST_F(Cpu6502Tests, Opcode_RRA_IND_Y)
     lockStepExec(testProgram, org);
 }
 
+TEST_F(Cpu6502Tests, Opcode_SAX_ZPG)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x5A,         // LDX #$5A
+        0xA9, 0x0F,         // LDA #$0F
+        0x87, 0x04,         // SAX $04
+        0x85, 0x05,         // STA $05
+        0x86, 0x06,         // STX $06
+        0x84, 0x07,         // STY $07
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SAX_ZPG_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA0, 0xFE,         // LDY #$FE
+        0xA2, 0x5A,         // LDX #$5A
+        0xA9, 0x0F,         // LDA #$0F
+        0x97, 0x04,         // SAX $04,Y
+        0x85, 0x05,         // STA $05
+        0x86, 0x06,         // STX $06
+        0x84, 0x07,         // STY $07
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SAX_ABS)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x5A,         // LDX #$5A
+        0xA9, 0x0F,         // LDA #$0F
+        0x8F, 0x04, 0x02,   // SAX $0204
+        0x85, 0x05,         // STA $05
+        0x86, 0x06,         // STX $06
+        0x84, 0x07,         // STY $07
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SAX_X_IND)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0x5A,         // LDX #$5A
+        0xA9, 0xBB,         // LDA #$BB
+        0x95, 0x10,         // STA $10,X
+        0xA9, 0x02,         // LDA #$02
+        0x95, 0x11,         // STA $11,X
+        0xA9, 0x0F,         // LDA #$0F
+        0x83, 0x10,         // SAX ($10,X)
+        0x85, 0x05,         // STA $05
+        0x86, 0x06,         // STX $06
+        0x84, 0x07,         // STY $07
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+
 
