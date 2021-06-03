@@ -2513,6 +2513,42 @@ begin
                 // INDH <= (ZPG)
                 d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SAX_ABS};
 
+            // LAX - Load both A and X from memory
+            
+            // DCP - DEC then CMP
+            
+            // ISC - INC then SBC
+            
+            // ANC - AND A with immediate, then set carry flag to match bit 7 of A
+            
+            // ALR - AND A with immediate, then LSR A
+            
+            // ARR - AND A with immediate, then ROR A with weird flags
+            
+            // SBX - AND A with X, subtract immediate (like CMP), and store the result in X
+            
+            // LAS - AND S with memory, then transfer result to A X and S
+            
+            // SHA - Store A & X & (ADH + 1) in memory (unstable)
+            
+            // SHX - Store X & (ADH + 1) in memory (unstable)
+            
+            // SHY - Store Y & (ADH + 1) in memory (unstable)
+            
+            // TAS
+            
+            // ANE - http://visual6502.org/wiki/index.php?title=6502_Opcode_8B_(XAA,_ANE)
+            //       A = (A | {CONST}) & X & #{imm}   [where CONST is unstable and may vary based on temperature and voltage]
+            //       Assuming a stable CONST value of $FF which simplifies the operation to: A = X & #{imm}
+            //       $FF is a common stable value for CONST in early 6502/6510, however it could break programs that
+            //       use it in an unstable manner and expect a specific different CONST (e.g. C64 Turrican 3 could be broken).
+            {UPAGE_OP, ANE_IMM, 1'b0}:
+                // A <= X & (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_DI_FLG, ALU_O_A, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            // LAX #IMM - 
+
+
             default: // Halt
                 d <= {ADDR_SP, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_HALT};
         endcase

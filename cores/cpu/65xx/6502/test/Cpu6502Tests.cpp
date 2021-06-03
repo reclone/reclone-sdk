@@ -1754,5 +1754,33 @@ TEST_F(Cpu6502Tests, Opcode_SAX_X_IND)
     lockStepExec(testProgram, org);
 }
 
-
+TEST_F(Cpu6502Tests, Opcode_ANE_IMM)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Stable usage of ANE opcode
+        // Set A to $00
+        0xA2, 0xFF,         // LDX #$FF
+        0xA9, 0x1A,         // LDA #$1A
+        0x8B, 0x00,         // ANE #$00
+        0x85, 0x05,         // STA $05  [should be $00]
+        0x08,               // PHP
+        // A <= X & imm
+        0xA9, 0xFF,         // LDA #$FF
+        0x8B, 0x0F,         // ANE #$5F
+        0x85, 0x06,         // STA $06  [should be $0F]
+        0x08,               // PHP
+        
+        // Unstable usage of the ANE opcode
+        // Determine 'magic' constant: A = ($00 | const) & $FF & $FF
+        //0xA9, 0x00,         // LDA #$00
+        //0x8B, 0xFF,         // ANE #$FF
+        //0x85, 0x07,         // STA $07  [unstable - perfect6502 reports $00;
+        //                    //           should probably be $EF for best compatibility;
+        //                    //           Cpu6502 assumes $FF for simplicity of logic]
+    };
+    
+    lockStepExec(testProgram, org);
+}
 
