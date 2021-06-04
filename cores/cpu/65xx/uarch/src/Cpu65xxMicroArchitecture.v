@@ -72,6 +72,7 @@ reg latchedNMI = 1'b1;
 reg latchedIRQ = 1'b1;
 reg latchedRESET = 1'b0;
 reg [9:0] uCodeAddressLast = 10'd0;
+reg [7:0] unstableConst = 8'h00;
 
 wire [7:0] aluOperandA;
 wire [7:0] aluOperandB;
@@ -115,7 +116,7 @@ always @ (*) begin
         ALU_B_ZERO, ALU_B_ZERO_FLG: aluOperandB = 8'h00;
         ALU_B_DI, ALU_B_DI_FLG:     aluOperandB = dataIn;
         ALU_B_IMM, ALU_B_IMM_FLG:   aluOperandB = regIMM;
-        ALU_B_A:                    aluOperandB = regA;
+        ALU_B_A_UNSTABLE:           aluOperandB = regA | unstableConst;
         ALU_B_FF_FLG:               aluOperandB = 8'hFF;
         default:                    aluOperandB = 8'h00;
     endcase
@@ -216,6 +217,7 @@ always @ (negedge clock or posedge reset) begin
         latchedIRQ <= 1'b1;
         latchedRESET <= 1'b0;
         uCodeAddressLast <= USEQ_ADDR_RESET;
+        unstableConst <= 8'h00;
     end else if (enable) begin
 
         // Update PC
@@ -236,11 +238,11 @@ always @ (negedge clock or posedge reset) begin
         end
         
         // Update accumulator register A
-        if (uCodeAluResultStorage == ALU_O_A)
+        if (uCodeAluResultStorage == ALU_O_A || uCodeAluResultStorage == ALU_O_A_X)
             regA <= aluResult;
         
         // Update index register X
-        if (uCodeAluResultStorage == ALU_O_X)
+        if (uCodeAluResultStorage == ALU_O_X || uCodeAluResultStorage == ALU_O_A_X)
             regX <= aluResult;
         
         // Update index register Y
@@ -290,6 +292,19 @@ always @ (negedge clock or posedge reset) begin
             regIMM <= aluResult;
         else if (nWrite && uCodeDataBusMux == DATA_IMM)
             regIMM <= dataIn;
+        
+        // Update unstable constant value when there is a new opcode
+        // This constant is OR'd with A in specific undocumented opcodes
+        // Values were chosen in an attempt to maximize compatibility with known games that use these opcodes
+        if (uSeqBranchAddr[9] == UPAGE_OP && uSeqBranchAddr[0] == 1'b0) begin
+            if (dataIn == ANE_IMM) begin
+                unstableConst <= 8'hEF;
+            end else if (dataIn == LAX_IMM) begin
+                unstableConst <= 8'hEE;
+            end else begin
+                unstableConst <= 8'h00;
+            end
+        end
         
         // Handle latched flags
         if (!nRESET || !latchedRESET) begin

@@ -188,6 +188,8 @@ localparam USEQ_ADDR_RRA_IND_Y = USEQ_ADDR_RRA_X_IND + 10'd2;
 localparam USEQ_ADDR_SAX_ABS = USEQ_ADDR_RRA_IND_Y + 10'd3;
 localparam USEQ_ADDR_SAX_ZPG_Y = USEQ_ADDR_SAX_ABS + 10'd1;
 localparam USEQ_ADDR_SAX_X_IND = USEQ_ADDR_SAX_ZPG_Y + 10'd2;
+localparam USEQ_ADDR_LAS_ABS_Y = USEQ_ADDR_SAX_X_IND + 10'd2;
+localparam USEQ_ADDR_LAX_FETCH = USEQ_ADDR_LAS_ABS_Y + 10'd4;
 
 // Microcode ROM is updated on the negative edge of the clock, so that
 // if the ALU and data bus operate on the positive edge of the clock, then
@@ -2478,7 +2480,7 @@ begin
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, SAX_ZPG, 1'b1}};
             {UPAGE_OP, SAX_ZPG, 1'b1}:
                 // (ZPG) <= A & X
-                d <= {ADDR_ZPG, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_A, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                d <= {ADDR_ZPG, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_A_UNSTABLE, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             {UPAGE_OP, SAX_ABS, 1'b0}:
                 // INDL <= (PC), PC <= PC + 1
@@ -2488,7 +2490,7 @@ begin
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SAX_ABS};
             USEQ_ADDR_SAX_ABS:
                 // (IND) <= A & X
-                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_A, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_A_UNSTABLE, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             {UPAGE_OP, SAX_ZPG_Y, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
@@ -2498,7 +2500,7 @@ begin
                 d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_IMM, ALU_O_ZPG, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SAX_ZPG_Y + 10'd1};
             USEQ_ADDR_SAX_ZPG_Y + 10'd1:
                 // (ZPG) <= A & X
-                d <= {ADDR_ZPG, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_A, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                d <= {ADDR_ZPG, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_A_UNSTABLE, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
                 
             {UPAGE_OP, SAX_X_IND, 1'b0}:
                 // ZPG <= (PC), IMM <= (PC), PC <= PC + 1
@@ -2514,6 +2516,17 @@ begin
                 d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SAX_ABS};
 
             // LAX - Load both A and X from memory
+
+            {UPAGE_OP, LAX_ZPG, 1'b0}:
+                // ZPG <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, LAX_ZPG, 1'b1}};
+            {UPAGE_OP, LAX_ZPG, 1'b1}:
+                // A <= ({$00,ZPG})
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO_FLG, ALU_O_A, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_LAX_FETCH};
+            USEQ_ADDR_LAX_FETCH:
+                // OP <= (PC), X <= A, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_A, ALU_B_ZERO, ALU_O_X, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+
             
             // DCP - DEC then CMP
             
@@ -2529,6 +2542,25 @@ begin
             
             // LAS - AND S with memory, then transfer result to A X and S
             
+            {UPAGE_OP, LAS_ABS_Y, 1'b0}:
+                // INDL <= (PC) + Y [check for carry], PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_LAS_ABS_Y};
+            {UPAGE_OP, LAS_ABS_Y, 1'b1}:
+                // [no carry] INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_LAS_ABS_Y + 10'd2};
+            USEQ_ADDR_LAS_ABS_Y:
+                // [carry] INDH <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_LAS_ABS_Y + 10'd1};
+            USEQ_ADDR_LAS_ABS_Y + 10'd1:
+                // [carry] (IND), INDH <= INDH + 1
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_INC, ALU_A_INDH, ALU_B_ZERO, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_LAS_ABS_Y + 10'd2};
+            USEQ_ADDR_LAS_ABS_Y + 10'd2:
+                // A,X <= S & (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_S, ALU_B_DI_FLG, ALU_O_A_X, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_LAS_ABS_Y + 10'd3};
+            USEQ_ADDR_LAS_ABS_Y + 10'd3:
+                // S <= X, OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_X, ALU_B_ZERO, ALU_O_S, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
+            
             // SHA - Store A & X & (ADH + 1) in memory (unstable)
             
             // SHX - Store X & (ADH + 1) in memory (unstable)
@@ -2538,16 +2570,25 @@ begin
             // TAS
             
             // ANE - http://visual6502.org/wiki/index.php?title=6502_Opcode_8B_(XAA,_ANE)
-            //       A = (A | {CONST}) & X & #{imm}   [where CONST is unstable and may vary based on temperature and voltage]
-            //       Assuming a stable CONST value of $FF which simplifies the operation to: A = X & #{imm}
-            //       $FF is a common stable value for CONST in early 6502/6510, however it could break programs that
-            //       use it in an unstable manner and expect a specific different CONST (e.g. C64 Turrican 3 could be broken).
+            //       A = (A | {CONST}) & X & #{imm}     [where CONST is unstable and may vary based on temperature and voltage]
+            //       Assuming a stable CONST value of $EF which seems to have the best compatibility.
+            
             {UPAGE_OP, ANE_IMM, 1'b0}:
-                // A <= X & (PC), PC <= PC + 1
-                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_DI_FLG, ALU_O_A, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+                // IMM <= (A | CONST) & (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_DI, ALU_B_A_UNSTABLE, ALU_O_IMM, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, ANE_IMM, 1'b1}};
+            {UPAGE_OP, ANE_IMM, 1'b1}:
+                // OP <= (PC), A <= X & IMM, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM_FLG, ALU_O_A, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
 
-            // LAX #IMM - 
-
+            // LAX #IMM - A,X = (A | {CONST}) & #{imm}  [where CONST is unstable and may vary based on temperature and voltage]
+            //            Assuming a stable CONST value of $EE which seems to have the best compatibility.
+            
+            {UPAGE_OP, LAX_IMM, 1'b0}:
+                // X <= (PC) & (A | {CONST}), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_DI, ALU_B_A_UNSTABLE, ALU_O_X, ADDR_INC, USEQ_BR_IF_CLR, {UPAGE_OP, LAX_IMM, 1'b1}};
+            {UPAGE_OP, LAX_IMM, 1'b1}:
+                // A <= X, OP <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_COPY, ALU_A_X, ALU_B_ZERO_FLG, ALU_O_A, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
 
             default: // Halt
                 d <= {ADDR_SP, DATA_READ, DATA_IMM, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_HALT};

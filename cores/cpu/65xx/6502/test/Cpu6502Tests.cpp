@@ -129,7 +129,7 @@ class Cpu6502Tests : public Test
                         _uutMem[_uut.address] = _uut.dataOut;
                         
                         // Validate written data on clock rising edge only
-                        ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut);
+                        EXPECT_EQ(readDataBus(_perfect6502state), _uut.dataOut);
                     }
                 }
             }
@@ -1772,13 +1772,74 @@ TEST_F(Cpu6502Tests, Opcode_ANE_IMM)
         0x85, 0x06,         // STA $06  [should be $0F]
         0x08,               // PHP
         
-        // Unstable usage of the ANE opcode
+        // Unstable usage of the ANE opcode - this will fail due to differences with perfect6502
         // Determine 'magic' constant: A = ($00 | const) & $FF & $FF
         //0xA9, 0x00,         // LDA #$00
         //0x8B, 0xFF,         // ANE #$FF
         //0x85, 0x07,         // STA $07  [unstable - perfect6502 reports $00;
-        //                    //           should probably be $EF for best compatibility;
-        //                    //           Cpu6502 assumes $FF for simplicity of logic]
+        //                    //           should probably be $EF for best compatibility]
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_LAX_IMM)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Stable usage of LAX opcode with immediate addressing
+        // Set A and X to $00
+        0xA2, 0xFF,         // LDX #$FF
+        0xA9, 0x1A,         // LDA #$1A
+        0xAB, 0x00,         // LAX #$00
+        0x85, 0x05,         // STA $05  [should be $00]
+        0x86, 0x06,         // STX $06  [should be $00]
+        0x08,               // PHP
+        // Load A and X with same value
+        0xA9, 0xFF,         // LDA #$FF
+        0xAB, 0xA5,         // LAX #$A5
+        0x85, 0x07,         // STA $07  [should be $A5]
+        0x86, 0x08,         // STX $08  [should be $A5]
+        0x08,               // PHP
+        
+        // Unstable usage of the LAX opcode - this will fail due to differences with perfect6502
+        // Determine the 'magic' constant: A,X = ($00 | {CONST}) & $FF
+        //0xA9, 0x00,         // LDA #$00
+        //0xAB, 0xFF,         // LAX #$FF
+        //0x85, 0x09,         // STA $09  [unstable - perfect6502 reports $00;
+        //0x86, 0x0A,         // STX $0A   should probably be $EE for best compatibility]
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_LAS_ABS_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Unstable - Perfect 6502 does not exhibit same documented behavior as a real 6502/6510,
+        // namely A gets the wrong value and X and SP only hold their value for a half-cycle
+        /*
+        // No page crossing
+        0xA0, 0x90,         // LDY #$90
+        0xA2, 0xFF,         // LDX #$FF
+        0x9A,               // TXS
+        0xA9, 0x5A,         // LDA #$5A
+        0x8D, 0xA0, 0x02,   // STA $02A0
+        0xBB, 0x10, 0x02,   // LAS $0210,Y
+        0x85, 0x05,         // STA $05
+
+        // With page crossing
+        0xA0, 0x90,         // LDY #$90
+        0xA2, 0xFF,         // LDX #$FF
+        0x9A,               // TXS
+        0xA9, 0x5A,         // LDA #$5A
+        0x8D, 0x40, 0x03,   // STA $0340
+        0xBB, 0xB0, 0x02,   // LAS $02B0,Y
+        0x85, 0x05,         // STA $05
+        */
     };
     
     lockStepExec(testProgram, org);

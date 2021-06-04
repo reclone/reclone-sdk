@@ -90,7 +90,7 @@ localparam ALU_B_DI         = 3'h2;
 localparam ALU_B_DI_FLG     = 3'h3;
 localparam ALU_B_IMM        = 3'h4;
 localparam ALU_B_IMM_FLG    = 3'h5;
-localparam ALU_B_A          = 3'h6;
+localparam ALU_B_A_UNSTABLE = 3'h6;
 localparam ALU_B_FF_FLG     = 3'h7;
 
 // Bit positions (used as Operand B for ALU_OP_SETBIT and ALU_OP_CLRBIT)
@@ -130,6 +130,7 @@ localparam ALU_O_IMM        = 4'hA;
 localparam ALU_O_DO         = 4'hB;
 localparam ALU_O_ADDR       = 4'hC; // addr <= {aluOperandB, aluResult}
 localparam ALU_O_ZPG        = 4'hD;
+localparam ALU_O_A_X        = 4'hE;
 
 // Whether to increment the register selected on the address mux,
 // i.e. PC, ZPG, or IND
