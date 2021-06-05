@@ -56,7 +56,7 @@ localparam ALU_OP_CMP       = 4'h5;
 localparam ALU_OP_IADD      = 4'h6;
 localparam ALU_OP_OR        = 4'h7;
 localparam ALU_OP_EOR       = 4'h8;
-localparam ALU_OP_COPY      = 4'h9;
+localparam ALU_OP_ARR       = 4'h9;
 localparam ALU_OP_INC       = 4'hA;
 localparam ALU_OP_DEC       = 4'hB;
 localparam ALU_OP_FIXUP     = 4'hC;
@@ -128,9 +128,8 @@ localparam ALU_O_INDL       = 4'h8;
 localparam ALU_O_INDH       = 4'h9;
 localparam ALU_O_IMM        = 4'hA;
 localparam ALU_O_DO         = 4'hB;
-localparam ALU_O_ADDR       = 4'hC; // addr <= {aluOperandB, aluResult}
-localparam ALU_O_ZPG        = 4'hD;
-localparam ALU_O_A_X        = 4'hE;
+localparam ALU_O_ZPG        = 4'hC;
+localparam ALU_O_A_X        = 4'hD;
 
 // Whether to increment the register selected on the address mux,
 // i.e. PC, ZPG, or IND

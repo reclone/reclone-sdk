@@ -539,7 +539,7 @@ TEST_F(Cpu65xxAluTests, Eor)
     }
 }
 
-TEST_F(Cpu65xxAluTests, Copy)
+TEST_F(Cpu65xxAluTests, Arr)
 {
     for (unsigned int a = 0; a <= 0xFF; ++a)
     {
@@ -553,21 +553,93 @@ TEST_F(Cpu65xxAluTests, Copy)
                     _uut.operandB = b;
                     _uut.carryIn = carryIn;
                     _uut.overflowIn = overflowIn;
-                    _uut.operation = 0x9; //ALU_OP_COPY
+                    _uut.operation = 0x9; //ALU_OP_ARR
                     _uut.opExtension = 0;
                     _uut.decimalMode = 0;
                     
                     _uut.eval();
-                    ASSERT_EQ(a, _uut.result);
-                    ASSERT_EQ(carryIn, _uut.carryOut);
-                    ASSERT_EQ(overflowIn, _uut.overflowOut);
-                    ASSERT_EQ(!a, _uut.zero);
-                    ASSERT_EQ(((a & 0x80) >> 7), _uut.negative);
+                    
+                    unsigned int arrAnd = a & b;
+                    unsigned int arrAndBit7 = (arrAnd >> 7) & 1;
+                    unsigned int arrAndBit6 = (arrAnd >> 6) & 1;
+                    unsigned int arrResult = arrAnd >> 1;
+                    if (carryIn)
+                    {
+                        arrResult |= 0x80;
+                    }
+                    
+                    ASSERT_EQ(arrResult, _uut.result);
+                    ASSERT_EQ(arrAndBit7, _uut.carryOut);
+                    ASSERT_EQ(arrAndBit7 ^ arrAndBit6, _uut.overflowOut);
+                    ASSERT_EQ(!arrResult, _uut.zero);
+                    ASSERT_EQ(((arrResult & 0x80) >> 7), _uut.negative);
                     ASSERT_EQ(0, _uut.branchCondition);
                 }
             }
         }
     }
+}
+
+TEST_F(Cpu65xxAluTests, ArrDecimal)
+{
+    _uut.trace(&_vcdTrace, 99);
+    _vcdTrace.open("alu.vcd");
+    
+    for (unsigned int a = 0; a <= 0xFF; ++a)
+    {
+        for (unsigned int b = 0; b <= 0xFF; ++b)
+        {
+            for (unsigned int carryIn = 0; carryIn <= 1; ++carryIn)
+            {
+                for (unsigned int overflowIn = 0; overflowIn <= 1; ++overflowIn)
+                {
+                    _uut.operandA = a;
+                    _uut.operandB = b;
+                    _uut.carryIn = carryIn;
+                    _uut.overflowIn = overflowIn;
+                    _uut.operation = 0x9; //ALU_OP_ARR
+                    _uut.opExtension = 0;
+                    _uut.decimalMode = 1;
+                    
+                    _uut.eval();
+                    _vcdTrace.dump(_tickCount++);
+
+                    unsigned int arrAnd = a & b;
+                    unsigned int arrResult = (arrAnd >> 1) | (carryIn << 7);
+                    unsigned int arrNegative = carryIn;
+                    unsigned int arrZero = (arrResult == 0) ? 1 : 0;
+                    unsigned int arrOverflow = ((arrAnd ^ arrResult) >> 6) & 1;
+                    unsigned int arrCarry;
+                    
+                    // fixup for low nibble
+                    if (((arrAnd & 0xf) + (arrAnd & 0x1)) > 0x5)
+                    {
+                        arrResult = (arrResult & 0xf0) | ((arrResult + 0x6) & 0xf);
+                    }
+                    // fixup for high nibble, set carry
+                    if (((arrAnd & 0xf0) + (arrAnd & 0x10)) > 0x50)
+                    {
+                        arrResult = (arrResult & 0x0f) | ((arrResult + 0x60) & 0xf0);
+                        arrCarry = 1;
+                    }
+                    else
+                    {
+                        arrCarry = 0;
+                    }
+                    
+                    ASSERT_EQ(arrResult, _uut.result)
+                        << "a=" << a << " b=" << b << " carryIn=" << carryIn << std::endl;
+                    ASSERT_EQ(arrCarry, _uut.carryOut);
+                    ASSERT_EQ(arrOverflow, _uut.overflowOut);
+                    ASSERT_EQ(arrZero, _uut.zero);
+                    ASSERT_EQ(arrNegative, _uut.negative);
+                    ASSERT_EQ(0, _uut.branchCondition);
+                }
+            }
+        }
+    }
+    
+    _vcdTrace.close();
 }
 
 TEST_F(Cpu65xxAluTests, Inc)

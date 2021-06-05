@@ -107,18 +107,20 @@ class Cpu6502Tests : public Test
                 step(_perfect6502state);
                 _uut.clock = !_uut.clock;
                 _uut.eval();
+                chipStatus(_perfect6502state);
                 
                 //pc = readPC(_perfect6502state);
                 addr = readAddressBus(_perfect6502state);
                 rw = readRW(_perfect6502state);
-                ASSERT_EQ(addr, _uut.address);
+                if (i >= 6) // perfect6502 address is unreliable for the first few cycles
+                {
+                    ASSERT_EQ(addr, _uut.address);
+                }
                 ASSERT_EQ(rw, _uut.nWrite);
                 
                 // Supply data from memory
                 _uut.dataIn = _uutMem[_uut.address];
-                
                 _vcdTrace.dump(_tickCount++);
-                chipStatus(_perfect6502state);
                 
                 if (rw == 0)
                 {
@@ -1814,14 +1816,14 @@ TEST_F(Cpu6502Tests, Opcode_LAX_IMM)
     lockStepExec(testProgram, org);
 }
 
-TEST_F(Cpu6502Tests, Opcode_LAS_ABS_Y)
+TEST_F(Cpu6502Tests, DISABLED_Opcode_LAS_ABS_Y)
 {
     const uint16_t org = 0x0400;
     const std::vector<uint8_t> testProgram
     {
         // Unstable - Perfect 6502 does not exhibit same documented behavior as a real 6502/6510,
         // namely A gets the wrong value and X and SP only hold their value for a half-cycle
-        /*
+        
         // No page crossing
         0xA0, 0x90,         // LDY #$90
         0xA2, 0xFF,         // LDX #$FF
@@ -1839,9 +1841,366 @@ TEST_F(Cpu6502Tests, Opcode_LAS_ABS_Y)
         0x8D, 0x40, 0x03,   // STA $0340
         0xBB, 0xB0, 0x02,   // LAS $02B0,Y
         0x85, 0x05,         // STA $05
-        */
     };
     
     lockStepExec(testProgram, org);
 }
 
+TEST_F(Cpu6502Tests, Opcode_DCP_ZPG)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA9, 0xC7,         // LDA #$C7
+        0x85, 0x04,         // STA $04
+        0xA9, 0x1F,         // LDA #$1F
+        0xC7, 0x04,         // DCP $04
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_DCP_ZPG_X)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x95, 0x04,         // STA $04,X
+        0xA9, 0x1F,         // LDA #$1F
+        0xD7, 0x04,         // DCP $04,X
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_DCP_ABS)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x8D, 0x04, 0x02,   // STA $0204
+        0xA9, 0x1F,         // LDA #$1F
+        0xCF, 0x04, 0x02,   // DCP $0204
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_DCP_ABS_X)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x9D, 0x04, 0x02,   // STA $0204,X
+        0xA9, 0x1F,         // LDA #$1F
+        0xDF, 0x04, 0x02,   // DCP $0204,X
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_DCP_ABS_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA0, 0xFE,         // LDY #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x99, 0x04, 0x02,   // STA $0204,Y
+        0xA9, 0x1F,         // LDA #$1F
+        0xDB, 0x04, 0x02,   // DCP $0204,Y
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_DCP_X_IND)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0x95, 0x10,         // STA $10,X
+        0xA9, 0x02,         // LDA #$02
+        0x95, 0x11,         // STA $11,X
+        0xA9, 0xC0,         // LDA #$C0
+        0x81, 0x10,         // STA ($10,X)
+        0xA9, 0x0F,         // LDA #$0F
+        0xC3, 0x10,         // DCP ($10,X)
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_DCP_IND_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA0, 0xFE,         // LDY #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0x85, 0x10,         // STA $10
+        0xA9, 0x02,         // LDA #$02
+        0x85, 0x11,         // STA $11
+        0xA9, 0xC0,         // LDA #$C0
+        0x91, 0x10,         // STA ($10),Y
+        0xA9, 0x0F,         // LDA #$0F
+        0xD3, 0x10,         // DCP ($10),Y
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_ZPG)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA9, 0xC7,         // LDA #$C7
+        0x85, 0x04,         // STA $04
+        0xA9, 0x1F,         // LDA #$1F
+        0xE7, 0x04,         // ISC $04
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_ZPG_X)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x95, 0x04,         // STA $04,X
+        0xA9, 0x1F,         // LDA #$1F
+        0xF7, 0x04,         // ISC $04,X
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_ABS)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x8D, 0x04, 0x02,   // STA $0204
+        0xA9, 0x1F,         // LDA #$1F
+        0xEF, 0x04, 0x02,   // ISC $0204
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_ABS_X)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x9D, 0x04, 0x02,   // STA $0204,X
+        0xA9, 0x1F,         // LDA #$1F
+        0xFF, 0x04, 0x02,   // ISC $0204,X
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_ABS_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0x38,               // SEC
+        0xA0, 0xFE,         // LDY #$FE
+        0xA9, 0xC7,         // LDA #$C7
+        0x99, 0x04, 0x02,   // STA $0204,Y
+        0xA9, 0x1F,         // LDA #$1F
+        0xFB, 0x04, 0x02,   // ISC $0204,Y
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_X_IND)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0x95, 0x10,         // STA $10,X
+        0xA9, 0x02,         // LDA #$02
+        0x95, 0x11,         // STA $11,X
+        0xA9, 0xC0,         // LDA #$C0
+        0x81, 0x10,         // STA ($10,X)
+        0xA9, 0x0F,         // LDA #$0F
+        0xE3, 0x10,         // ISC ($10,X)
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_ISC_IND_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA0, 0xFE,         // LDY #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0x85, 0x10,         // STA $10
+        0xA9, 0x02,         // LDA #$02
+        0x85, 0x11,         // STA $11
+        0xA9, 0xC0,         // LDA #$C0
+        0x91, 0x10,         // STA ($10),Y
+        0xA9, 0x0F,         // LDA #$0F
+        0xF3, 0x10,         // ISC ($10),Y
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, DISABLED_Opcode_ALR_IMM)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Unstable? perfect6502 does not match this documented behavior
+        // http://forum.6502.org/viewtopic.php?f=8&t=4164
+        0x18,               // CLC
+        0xA9, 0xC7,         // LDA #$C7
+        0x4B, 0x83,         // ALR #$83
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, DISABLED_Opcode_ARR_IMM)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Unstable? perfect6502 does not match this documented behavior
+        // http://forum.6502.org/viewtopic.php?f=8&t=4164
+        0x18,               // CLC
+        0xA9, 0xC7,         // LDA #$C7
+        0x6B, 0x83,         // ARR #$83
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, DISABLED_Opcode_ANC_IMM_0B)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Unstable? perfect6502 does not match this documented behavior
+        // http://forum.6502.org/viewtopic.php?f=8&t=4164
+        0x18,               // CLC
+        0xA9, 0xC7,         // LDA #$C7
+        0x0B, 0x83,         // ANC #$83
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, DISABLED_Opcode_ANC_IMM_2B)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Unstable? perfect6502 does not match this documented behavior
+        // http://forum.6502.org/viewtopic.php?f=8&t=4164
+        0x18,               // CLC
+        0xA9, 0xC7,         // LDA #$C7
+        0x2B, 0x83,         // ANC #$83
+        0x85, 0x05,         // STA $05
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+
+TEST_F(Cpu6502Tests, Opcode_SBX_IMM)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Zero
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0xCB, 0xBA,         // SBX #$BA
+        0x86, 0x05,         // STX $05
+        0x08,               // PHP
+        // Positive
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0xCB, 0x7A,         // SBX #$7A
+        0x86, 0x06,         // STX $06
+        0x08,               // PHP
+        // Negative
+        0xA2, 0xFE,         // LDX #$FE
+        0xA9, 0xBB,         // LDA #$BB
+        0xCB, 0xCA,         // SBX #$CA
+        0x86, 0x07,         // STX $07
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}

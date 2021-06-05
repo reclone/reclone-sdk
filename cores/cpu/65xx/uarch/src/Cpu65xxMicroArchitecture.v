@@ -142,17 +142,13 @@ Cpu65xxAlu alu
 
 // Address bus multiplexer
 always @ (*) begin
-    if (uCodeAluResultStorage == ALU_O_ADDR) begin
-        address = {aluOperandB, aluResult};
-    end else begin
-        case (uCodeAddrBusMux)
-            ADDR_PC:    address = regPC;
-            ADDR_SP:    address = {8'h01, regS};
-            ADDR_IND:   address = regIND;
-            ADDR_ZPG:   address = {8'h0, regZPG};
-            default:    address = 16'hFFFF;
-        endcase
-    end
+    case (uCodeAddrBusMux)
+        ADDR_PC:    address = regPC;
+        ADDR_SP:    address = {8'h01, regS};
+        ADDR_IND:   address = regIND;
+        ADDR_ZPG:   address = {8'h0, regZPG};
+        default:    address = 16'hFFFF;
+    endcase
 end
 
 // Data write multiplexer

@@ -60,7 +60,7 @@ wire [3:0] finalSumH;
 wire [7:0] finalSum = {finalSumH, finalSumL};
 
 // NMOS 6502 quirk - Z and V flags reflect the result of binary addition, even in decimal mode
-assign zero = (withCarry && decimalMode) ? ~|rawSum : ~|result;
+//assign zero = (withCarry && decimalMode) ? ~|rawSum : ~|result;
 wire adderOverflow = addend1[7] ^ addend2[7] ^ rawSum[7] ^ rawSumH[4];
 
 always @ (*) begin
@@ -79,6 +79,18 @@ always @ (*) begin
     endcase
 end
 
+wire [7:0] arrAnd = operandA & operandB;
+wire [7:0] arrResultBinary = {carryIn, arrAnd[7:1]};
+wire [7:0] arrResultDecimal;
+wire arrHalfCarryDecimal = (({1'b0,arrAnd[3:0]} + {4'd0,arrAnd[0]}) > 5'd5);
+assign arrResultDecimal[3:0] = arrHalfCarryDecimal ? (arrResultBinary[3:0] + 4'd6) : arrResultBinary[3:0];
+wire arrFullCarryDecimal = (({1'b0,arrAnd[7:4]} + {4'd0,arrAnd[4]}) > 5'd5);
+assign arrResultDecimal[7:4] = arrFullCarryDecimal ? (arrResultBinary[7:4] + 4'd6) : arrResultBinary[7:4];
+wire [7:0] arrResult = decimalMode ? arrResultDecimal : arrResultBinary;
+wire arrOverflow = arrResultBinary[6] ^ arrResultBinary[5];
+wire arrCarry = decimalMode ? arrFullCarryDecimal : arrResultBinary[6];
+wire arrZero = ~|arrResultBinary;
+
 always @ (*) begin
     case (operation)
         ALU_OP_AND: begin
@@ -87,6 +99,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_OR: begin
@@ -95,6 +108,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_EOR: begin
@@ -103,6 +117,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_ADC, ALU_OP_SBC: begin
@@ -111,6 +126,7 @@ always @ (*) begin
             overflowOut = adderOverflow;
             branchCondition = 1'b0;
             negative = rawSum[7];
+            zero = decimalMode ? ~|rawSum : ~|result;
         end
         
         ALU_OP_IADD: begin
@@ -121,6 +137,7 @@ always @ (*) begin
             // Unsigned addition: branch condition is 1 when full adder carry is 1
             branchCondition = fullCarry;
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_RADD: begin
@@ -133,6 +150,7 @@ always @ (*) begin
             //  If operandB is negative: branch condition is 1 when full adder carry is 0
             branchCondition = fullCarry ^ operandB[7];
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_BIT: begin
@@ -141,6 +159,7 @@ always @ (*) begin
             overflowOut = operandB[6];
             branchCondition = 1'b0;
             negative = operandB[7];
+            zero = ~|result;
         end
         
         ALU_OP_CMP: begin
@@ -149,6 +168,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = finalSum[7];
+            zero = ~|result;
         end
         
         ALU_OP_SETBIT: begin // Set a single bit to 1
@@ -157,6 +177,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_CLRBIT: begin // Clear a single bit to 0
@@ -165,14 +186,16 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
         
-        ALU_OP_COPY: begin // Just copy operand A to result
-            result = operandA;
-            carryOut = carryIn;
-            overflowOut = overflowIn;
+        ALU_OP_ARR: begin // Unintended opcode that is a strange combination of AND and ROR
+            result = arrResult;
+            carryOut = arrCarry;
+            overflowOut = arrOverflow;
             branchCondition = 1'b0;
-            negative = result[7];
+            negative = carryIn;
+            zero = arrZero;
         end
         
         ALU_OP_INC, ALU_OP_DEC, ALU_OP_FIXUP: begin
@@ -181,6 +204,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
         
         ALU_OP_SGL: begin // Single operand - opExtension is the operation
@@ -191,6 +215,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = 1'b0;
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_LSR: begin
@@ -199,6 +224,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = 1'b0;
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_ROL: begin
@@ -207,6 +233,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = 1'b0;
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_ROR: begin
@@ -215,6 +242,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = 1'b0;
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_TEST_N: begin
@@ -223,6 +251,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = operandA[N_BIT_IN_P];
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_TEST_C: begin
@@ -231,6 +260,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = operandA[C_BIT_IN_P];
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_TEST_V: begin
@@ -239,6 +269,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = operandA[V_BIT_IN_P];
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 ALU_SOP_TEST_Z: begin
@@ -247,6 +278,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = operandA[Z_BIT_IN_P];
                     negative = result[7];
+                    zero = ~|result;
                 end
                 
                 default: begin
@@ -255,6 +287,7 @@ always @ (*) begin
                     overflowOut = overflowIn;
                     branchCondition = 1'b0;
                     negative = result[7];
+                    zero = ~|result;
                 end
             endcase
         end
@@ -265,6 +298,7 @@ always @ (*) begin
             overflowOut = overflowIn;
             branchCondition = 1'b0;
             negative = result[7];
+            zero = ~|result;
         end
     endcase
 end
