@@ -108,6 +108,7 @@ class Cpu6502Tests : public Test
                 _uut.clock = !_uut.clock;
                 _uut.eval();
                 chipStatus(_perfect6502state);
+                _vcdTrace.dump(_tickCount++);
                 
                 //pc = readPC(_perfect6502state);
                 addr = readAddressBus(_perfect6502state);
@@ -120,7 +121,7 @@ class Cpu6502Tests : public Test
                 
                 // Supply data from memory
                 _uut.dataIn = _uutMem[_uut.address];
-                _vcdTrace.dump(_tickCount++);
+
                 
                 if (rw == 0)
                 {
@@ -139,7 +140,7 @@ class Cpu6502Tests : public Test
             // Program should end when it hits a BRK ($00) instruction
             EXPECT_TRUE(IRQ_VECTOR == addr);
 
-            //_vcdTrace.close();
+            _vcdTrace.close();
         }
         
     protected:
@@ -2199,6 +2200,93 @@ TEST_F(Cpu6502Tests, Opcode_SBX_IMM)
         0xA9, 0xBB,         // LDA #$BB
         0xCB, 0xCA,         // SBX #$CA
         0x86, 0x07,         // STX $07
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SHX_ABS_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Same page
+        0xA0, 0x07,         // LDY #$07
+        0xA2, 0x1F,         // LDX #$1F
+        0x9E, 0x04, 0x02,   // SHX $0204,Y
+        0x08,               // PHP
+        // Page crossing
+        0xA0, 0xFD,         // LDY #$FD
+        0xA2, 0x1F,         // LDX #$1F
+        0x9E, 0x04, 0x02,   // SHX $0204,Y
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SHY_ABS_X)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        // Same page
+        0xA2, 0x07,         // LDX #$07
+        0xA0, 0x1F,         // LDY #$1F
+        0x9C, 0x04, 0x02,   // SHY $0204,X
+        0x08,               // PHP
+        // Page crossing
+        0xA2, 0xFD,         // LDX #$FD
+        0xA0, 0x1F,         // LDY #$1F
+        0x9C, 0x04, 0x02,   // SHY $0204,X
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SHA_ABS_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA9, 0xFE,         // LDA #$FE
+        // Same page
+        0xA0, 0x07,         // LDY #$07
+        0xA2, 0x1F,         // LDX #$1F
+        0x9F, 0x04, 0x02,   // SHA $0204,Y
+        0x08,               // PHP
+        // Page crossing
+        0xA0, 0xFD,         // LDY #$FD
+        0xA2, 0x1F,         // LDX #$1F
+        0x9F, 0x04, 0x02,   // SHA $0204,Y
+        0x08,               // PHP
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+TEST_F(Cpu6502Tests, Opcode_SHA_IND_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA9, 0xBB,         // LDA #$BB
+        0x85, 0x10,         // STA $10
+        0xA9, 0x02,         // LDA #$02
+        0x85, 0x11,         // STA $11
+
+        0xA9, 0xFE,         // LDA #$FE
+        // Same page
+        0xA0, 0x07,         // LDY #$07
+        0xA2, 0x1F,         // LDX #$1F
+        0x93, 0x10,         // SHA ($10),Y
+        0x08,               // PHP
+        // Page crossing
+        0xA0, 0xFD,         // LDY #$FD
+        0xA2, 0x1F,         // LDX #$1F
+        0x93, 0x10,         // SHA ($10),Y
         0x08,               // PHP
     };
     

@@ -271,8 +271,10 @@ always @ (negedge clock or posedge reset) begin
         else begin
             if (uCodeAluResultStorage == ALU_O_INDL)
                 regIND[7:0] <= aluResult;
-            if (uCodeAluResultStorage == ALU_O_INDH)
+            if (uCodeAluResultStorage == ALU_O_INDH || uCodeAluResultStorage == ALU_O_INDH_INCIMM)
                 regIND[15:8] <= aluResult;
+            else if (uCodeAluResultStorage == ALU_O_ANDA_INDH)
+                regIND[15:8] <= aluResult & regA;
         end
         
         // Update zero page register ZPG
@@ -286,6 +288,8 @@ always @ (negedge clock or posedge reset) begin
         // Update immediate/index register IMM
         if (uCodeAluResultStorage == ALU_O_IMM)
             regIMM <= aluResult;
+        else if (uCodeAluResultStorage == ALU_O_INDH_INCIMM)
+            regIMM <= aluResult + 8'd1;
         else if (nWrite && uCodeDataBusMux == DATA_IMM)
             regIMM <= dataIn;
         

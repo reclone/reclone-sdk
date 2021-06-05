@@ -200,7 +200,10 @@ localparam USEQ_ADDR_ISC_ABS_X = USEQ_ADDR_ISC_IND + 10'd3;
 localparam USEQ_ADDR_ISC_ABS_Y = USEQ_ADDR_ISC_ABS_X + 10'd3;
 localparam USEQ_ADDR_ISC_X_IND = USEQ_ADDR_ISC_ABS_Y + 10'd3;
 localparam USEQ_ADDR_ISC_IND_Y = USEQ_ADDR_ISC_X_IND + 10'd2;
-
+localparam USEQ_ADDR_SHX_ABS_Y = USEQ_ADDR_ISC_IND_Y + 10'd3;
+localparam USEQ_ADDR_SHY_ABS_X = USEQ_ADDR_SHX_ABS_Y + 10'd4;
+localparam USEQ_ADDR_SHA_ABS_Y = USEQ_ADDR_SHY_ABS_X + 10'd4;
+localparam USEQ_ADDR_SHA_IND_Y = USEQ_ADDR_SHA_ABS_Y + 10'd5;
 
 // Microcode ROM is updated on the negative edge of the clock, so that
 // if the ALU and data bus operate on the positive edge of the clock, then
@@ -2809,13 +2812,95 @@ begin
                 d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_X, ALU_B_ZERO, ALU_O_S, ADDR_INC, USEQ_BR_IF_CLR, USEQ_OP};
 
             // SHA - Store A & X & [ADH + 1] in memory (unstable)
-            //       Simplifying this to (mem) <= A & X to avoid adding lots of complexity to the microarchitecture
+
+            {UPAGE_OP, SHA_ABS_Y, 1'b0}:
+                // INDL <= (PC) + Y [check carry], PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_SHA_ABS_Y + 10'd2};
+            {UPAGE_OP, SHA_ABS_Y, 1'b1}:
+                // [no carry] INDH <= (PC), IMM <= (PC) + 1, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_ABS_Y};
+            USEQ_ADDR_SHA_ABS_Y:
+                // [no carry] (IND), IMM <= A & IMM
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_A, ALU_B_IMM, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_ABS_Y + 10'd1};
+            USEQ_ADDR_SHA_ABS_Y + 10'd1:
+                // [no carry] (IND) <= X & IMM
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+            USEQ_ADDR_SHA_ABS_Y + 10'd2:
+                // [carry] INDH <= (PC), IMM <= (PC) + 1, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_ABS_Y + 10'd3};
+            USEQ_ADDR_SHA_ABS_Y + 10'd3:
+                // [carry] (IND), INDH <= X & IMM & A
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM, ALU_O_ANDA_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_ABS_Y + 10'd4};
+            USEQ_ADDR_SHA_ABS_Y + 10'd4:
+                // [carry] (IND) <= INDH
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_OR, ALU_A_INDH, ALU_B_ZERO, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+
+            {UPAGE_OP, SHA_IND_Y, 1'b0}:
+                // ZPG <= (PC), PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_ZPG, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_IND_Y};
+            USEQ_ADDR_SHA_IND_Y:
+                // INDL <= (ZPG) + Y [check for carry], ZPG <= ZPG + 1
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_SHA_IND_Y + 10'd4};
+            USEQ_ADDR_SHA_IND_Y + 10'd1:
+                // [no carry] INDH <= (ZPG), IMM <= (ZPG) + 1
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_IND_Y + 10'd2};
+            USEQ_ADDR_SHA_IND_Y + 10'd2:
+                // [no carry] (IND), IMM <= A & IMM
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_A, ALU_B_IMM, ALU_O_IMM, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_IND_Y + 10'd3};
+            USEQ_ADDR_SHA_IND_Y + 10'd3:
+                // [no carry] (IND) <= X & IMM
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
+            USEQ_ADDR_SHA_IND_Y + 10'd4:
+                // [carry] INDH <= (ZPG), IMM <= (ZPG) + 1
+                d <= {ADDR_ZPG, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHA_IND_Y + 10'd5};
+            USEQ_ADDR_SHA_IND_Y + 10'd5:
+                // [carry] (IND), INDH <= X & IMM & A
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM, ALU_O_ANDA_INDH, ADDR_NOP, USEQ_BR_IF_CLR, {UPAGE_OP, SHA_IND_Y, 1'b1}};
+            {UPAGE_OP, SHA_IND_Y, 1'b1}:
+                // [carry] (IND) <= INDH
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_OR, ALU_A_INDH, ALU_B_ZERO, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             // SHX - Store X & [ADH + 1] in memory (unstable)
-            //       Simplifying this to (mem) <= X to avoid adding lots of complexity to the microarchitecture
+
+            {UPAGE_OP, SHX_ABS_Y, 1'b0}:
+                // INDL <= (PC) + Y [check carry], PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_Y, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_SHX_ABS_Y + 10'd1};
+            {UPAGE_OP, SHX_ABS_Y, 1'b1}:
+                // [no carry] INDH <= (PC), IMM <= (PC) + 1, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHX_ABS_Y};
+            USEQ_ADDR_SHX_ABS_Y:
+                // [no carry] (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHX_ABS_Y + 10'd3};
+            USEQ_ADDR_SHX_ABS_Y + 10'd1:
+                // [carry] INDH <= (PC), IMM <= (PC) + 1, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHX_ABS_Y + 10'd2};
+            USEQ_ADDR_SHX_ABS_Y + 10'd2:
+                // [carry] (IND), INDH <= IMM & X
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHX_ABS_Y + 10'd3};
+            USEQ_ADDR_SHX_ABS_Y + 10'd3:
+                // (IND) <= X & IMM
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_X, ALU_B_IMM, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             // SHY - Store Y & [ADH + 1] in memory (unstable)
-            //       Simplifying this to (mem) <= Y to avoid adding lots of complexity to the microarchitecture
+
+            {UPAGE_OP, SHY_ABS_X, 1'b0}:
+                // INDL <= (PC) + X [check carry], PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_IADD, ALU_A_X, ALU_B_DI, ALU_O_INDL, ADDR_INC, USEQ_BR_IF_SET, USEQ_ADDR_SHY_ABS_X + 10'd1};
+            {UPAGE_OP, SHY_ABS_X, 1'b1}:
+                // [no carry] INDH <= (PC), IMM <= (PC) + 1, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHY_ABS_X};
+            USEQ_ADDR_SHY_ABS_X:
+                // [no carry] (IND)
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_ZERO, ALU_B_ZERO, ALU_O_NULL, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHY_ABS_X + 10'd3};
+            USEQ_ADDR_SHY_ABS_X + 10'd1:
+                // [carry] INDH <= (PC), IMM <= (PC) + 1, PC <= PC + 1
+                d <= {ADDR_PC, DATA_READ, DATA_NULL, ALU_OP_OR, ALU_A_DI, ALU_B_ZERO, ALU_O_INDH_INCIMM, ADDR_INC, USEQ_BR_IF_CLR, USEQ_ADDR_SHY_ABS_X + 10'd2};
+            USEQ_ADDR_SHY_ABS_X + 10'd2:
+                // [carry] (IND), INDH <= IMM & Y
+                d <= {ADDR_IND, DATA_READ, DATA_NULL, ALU_OP_AND, ALU_A_Y, ALU_B_IMM, ALU_O_INDH, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_SHY_ABS_X + 10'd3};
+            USEQ_ADDR_SHY_ABS_X + 10'd3:
+                // (IND) <= Y & IMM
+                d <= {ADDR_IND, DATA_WRITE, DATA_NULL, ALU_OP_AND, ALU_A_Y, ALU_B_IMM, ALU_O_DO, ADDR_NOP, USEQ_BR_IF_CLR, USEQ_ADDR_FETCH};
 
             // TAS - Set S to A & X, and store A & X & [ADH + 1] in memory (unstable)
             //       Simplifying this to S <= A & X, (mem) <= A & X to avoid adding lots of complexity to the microarchitecture

@@ -130,6 +130,8 @@ localparam ALU_O_IMM        = 4'hA;
 localparam ALU_O_DO         = 4'hB;
 localparam ALU_O_ZPG        = 4'hC;
 localparam ALU_O_A_X        = 4'hD;
+localparam ALU_O_INDH_INCIMM = 4'hE;
+localparam ALU_O_ANDA_INDH  = 4'hF;
 
 // Whether to increment the register selected on the address mux,
 // i.e. PC, ZPG, or IND
