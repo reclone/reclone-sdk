@@ -2292,3 +2292,28 @@ TEST_F(Cpu6502Tests, Opcode_SHA_IND_Y)
     
     lockStepExec(testProgram, org);
 }
+
+TEST_F(Cpu6502Tests, Opcode_TAS_ABS_Y)
+{
+    const uint16_t org = 0x0400;
+    const std::vector<uint8_t> testProgram
+    {
+        0xA9, 0xFE,         // LDA #$FE
+        // Same page
+        0xA0, 0x07,         // LDY #$07
+        0xA2, 0x1F,         // LDX #$1F
+        0x9B, 0x04, 0x02,   // TAS $0204,Y
+        0xBA,               // TSX
+        0x86, 0x05,         // STX $05
+        // Page crossing
+        0xA0, 0xFD,         // LDY #$FD
+        0xA2, 0x1F,         // LDX #$1F
+        0x9B, 0x04, 0x02,   // TAS $0204,Y
+        0xBA,               // TSX
+        0x86, 0x06,         // STX $06
+    };
+    
+    lockStepExec(testProgram, org);
+}
+
+
