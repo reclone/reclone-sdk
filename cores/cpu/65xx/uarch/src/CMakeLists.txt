@@ -9,7 +9,10 @@ add_custom_command (
   DEPENDS Cpu65xxMicroArchitecture.v
           ${PROJECT_SOURCE_DIR}/cpu/65xx/uarch/src/Cpu65xxMicrocodeConstants.vh
           ${PROJECT_SOURCE_DIR}/cpu/65xx/alu/src/Cpu65xxAlu.v
-  COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -I${CMAKE_CURRENT_SOURCE_DIR} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
+  COMMAND perl ${VERILATOR} ${VERILATOR_OPTS}
+    -I${CMAKE_CURRENT_SOURCE_DIR}
+    -I${PROJECT_SOURCE_DIR}/cpu/65xx/6502/src
+    -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Cpu65xxMicroArchitecture.v
     ${PROJECT_SOURCE_DIR}/cpu/65xx/alu/src/Cpu65xxAlu.v
 )

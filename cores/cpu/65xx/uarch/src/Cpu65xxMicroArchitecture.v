@@ -27,6 +27,7 @@
 `default_nettype none
 
 `include "Cpu65xxMicrocodeConstants.vh"
+`include "Cpu6502Opcodes.vh"
 
 module Cpu65xxMicroArchitecture
 (
