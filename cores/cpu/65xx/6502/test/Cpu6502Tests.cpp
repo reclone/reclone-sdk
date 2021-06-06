@@ -107,7 +107,7 @@ class Cpu6502Tests : public Test
                 step(_perfect6502state);
                 _uut.clock = !_uut.clock;
                 _uut.eval();
-                chipStatus(_perfect6502state);
+                //chipStatus(_perfect6502state);
                 _vcdTrace.dump(_tickCount++);
                 
                 //pc = readPC(_perfect6502state);
