@@ -129,7 +129,7 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 1000000; ++i)
+    for (unsigned int i = 0; i < 1500000; ++i)
     {
         _uut.scalerClock = 0;
         
@@ -201,3 +201,103 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
     
     _vcdTrace.close();
 }
+
+TEST_F(VideoHorizontalStretchTests, TestImageHalf)
+{
+    _uut.trace(&_vcdTrace, 99);
+    _vcdTrace.open("VideoHorizontalStretch_TestImageHalf.vcd");
+    
+    BmpPipelineSource source;
+    ASSERT_TRUE(source.readBitmap("openclipart_330518.bmp"));
+    
+    BmpPipelineSink sink(source.getWidth()/2, source.getHeight());
+    
+    // Initialize inputs
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    // Scale 0.5x (shrink by 1.999)
+    _uut.hShrinkFactor = 127;
+    _uut.downstreamRequestFifoEmpty = 1;
+    _uut.downstreamRequestFifoReadData = 0;
+    _uut.downstreamResponseFifoFull = 0;
+    _uut.upstreamRequestFifoReadEnable = 0;
+    _uut.upstreamResponseFifoWriteEnable = 0;
+    _uut.upstreamResponseFifoWriteData = 0;
+    _uut.eval();
+    
+    sink.requestFrame();
+
+    unsigned int responseNum = 0;
+    for (unsigned int i = 0; i < 1500000; ++i)
+    {
+        _uut.scalerClock = 0;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        _uut.scalerClock = 1;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        if (_uut.upstreamResponseFifoWriteEnable)
+        {
+            //printf("Upstream response %u: 0x%04X\n", responseNum, _uut.upstreamResponseFifoWriteData);
+            ++responseNum;
+        }
+    }
+
+    ASSERT_TRUE(sink.writeBitmap("openclipart_330518_half.bmp"));
+    
+    _vcdTrace.close();
+}
+

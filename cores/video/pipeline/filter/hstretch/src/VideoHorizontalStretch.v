@@ -210,7 +210,7 @@ SyncFifo #(.DATA_WIDTH(HCOORD_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstre
     .readEnable(pendingDownstreamResponseFifoReadEnable),
     .empty(pendingDownstreamResponseFifoEmpty),
     .readData(pendingDownstreamResponseFifoReadData),
-    .writeEnable(pendingDownstreamResponseFifoWriteEnable),
+    .writeEnable(pendingDownstreamResponseFifoWriteEnable && !pendingDownstreamResponseFifoFull),
     .full(pendingDownstreamResponseFifoFull),
     .writeData(pendingDownstreamResponseFifoWriteData)
 );
@@ -251,6 +251,8 @@ wire downstreamCoordBAvailable = (downstreamCoordBLeftColumn == leftPixelColumn)
 reg [1:0] downstreamCoordPreFetchCount = 2'd0;
 
 reg inboundUpstreamRequest = 1'b0;
+
+reg [15:0] totalDownstreamResponses = 16'd0;
 
 assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoEmpty &&
     (downstreamCoordPreFetchCount < 2'd2 || (downstreamCoordBAvailable && !downstreamResponseFifoFull));
@@ -386,7 +388,6 @@ always @ (posedge scalerClock or posedge reset) begin
                     
                 end else begin
                     upstreamRequestFifoWriteEnable <= 1'b0;
-                    pendingDownstreamResponseFifoWriteEnable <= 1'b0;
                 end
             end
 
@@ -418,7 +419,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 if (upstreamResponseFifoReadEnable) begin
                     // Combinatorial logic says we are about to read an upstream response pixel, so
                     // store its column and update the pixel counter
-                    rightPixelColumn[CHUNK_BITS-1:0] <= upstreamResponsePixelCount; //{pendingUpstreamRequestFifoReadData, upstreamResponsePixelCount};
+                    rightPixelColumn[CHUNK_BITS-1:0] <= upstreamResponsePixelCount;
                     // Shift right pixel color and column to left pixel
                     leftPixelColumn <= rightPixelColumn;
                     leftPixelColor <= rightPixelColor;
@@ -509,6 +510,9 @@ always @ (posedge scalerClock or posedge reset) begin
             end
         end
         
+        // Counter for debugging TODO REMOVE
+        if (downstreamResponseFifoWriteEnable)
+            totalDownstreamResponses <= totalDownstreamResponses + 16'd1;
     end
 end
 
