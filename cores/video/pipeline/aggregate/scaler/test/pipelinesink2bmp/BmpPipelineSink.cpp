@@ -80,13 +80,16 @@ void BmpPipelineSink::eval()
             uint32_t vPos = _responsePixelQueue.front().second;
             _responsePixelQueue.pop();
             
-            uint32_t frameBufIdx = static_cast<uint32_t>(_vPixels - vPos - 1) * _hPixels + hPos;
-            RgbPixel pix;
-            pix.red = ((_responseFifoWriteData >> 8) & 0xF8) | ((_responseFifoWriteData >> 13) & 0x07);
-            pix.green = ((_responseFifoWriteData >> 3) & 0xFC) | ((_responseFifoWriteData >> 9) & 0x03);
-            pix.blue = ((_responseFifoWriteData << 3) & 0xF8) | ((_responseFifoWriteData >> 2) & 0x07);
-            //printf("Pixel at (%u,%u) 0x%04X has red=%u green=%u blue=%u\n", hPos, vPos, _responseFifoWriteData, pix.red, pix.green, pix.blue);
-            _frameBuffer[frameBufIdx] = pix;
+            if (hPos < _hPixels)
+            {
+                uint32_t frameBufIdx = static_cast<uint32_t>(_vPixels - vPos - 1) * _hPixels + hPos;
+                RgbPixel pix;
+                pix.red = ((_responseFifoWriteData >> 8) & 0xF8) | ((_responseFifoWriteData >> 13) & 0x07);
+                pix.green = ((_responseFifoWriteData >> 3) & 0xFC) | ((_responseFifoWriteData >> 9) & 0x03);
+                pix.blue = ((_responseFifoWriteData << 3) & 0xF8) | ((_responseFifoWriteData >> 2) & 0x07);
+                //printf("Pixel at (%u,%u) 0x%04X has red=%u green=%u blue=%u\n", hPos, vPos, _responseFifoWriteData, pix.red, pix.green, pix.blue);
+                _frameBuffer[frameBufIdx] = pix;
+            }
         }
     }
     _lastClock = _clock;
@@ -100,7 +103,8 @@ void BmpPipelineSink::requestFrame()
     {
         // Queue up requests for whole row
         
-        for (unsigned int hChunk = 0; hChunk < _hPixels / CHUNK_SIZE; hChunk++)
+        unsigned int numChunks = _hPixels / CHUNK_SIZE + ((_hPixels % CHUNK_SIZE) ? 1 : 0);
+        for (unsigned int hChunk = 0; hChunk < numChunks; hChunk++)
         {
             // Queue up request for single chunk
             

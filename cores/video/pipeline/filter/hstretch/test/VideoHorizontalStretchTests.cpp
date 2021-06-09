@@ -129,7 +129,7 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 1500000; ++i)
+    for (unsigned int i = 0; i < 1600000; ++i)
     {
         _uut.scalerClock = 0;
         
@@ -327,7 +327,7 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoUpscale)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 1600000; ++i)
+    for (unsigned int i = 0; i < 1700000; ++i)
     {
         _uut.scalerClock = 0;
         

@@ -252,8 +252,6 @@ reg [1:0] downstreamCoordPreFetchCount = 2'd0;
 
 reg inboundUpstreamRequest = 1'b0;
 
-reg [15:0] totalDownstreamResponses = 16'd0;
-
 assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoEmpty &&
     (downstreamCoordPreFetchCount < 2'd2 || (downstreamCoordBAvailable && !downstreamResponseFifoFull));
 
@@ -509,10 +507,6 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamCoordPreFetchCount <= 2'd1;
             end
         end
-        
-        // Counter for debugging TODO REMOVE
-        if (downstreamResponseFifoWriteEnable)
-            totalDownstreamResponses <= totalDownstreamResponses + 16'd1;
     end
 end
 
