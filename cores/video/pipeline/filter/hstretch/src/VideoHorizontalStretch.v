@@ -233,16 +233,16 @@ wire [BITS_PER_PIXEL-1:0] rightPixelColor = upstreamResponseFifoReadData;
 reg [HACTIVE_BITS-1:0] rightPixelColumn = {HACTIVE_BITS{1'b1}};
 
 wire [HCOORD_BITS-1:0] downstreamCoordA = pendingDownstreamResponseFifoReadData;
-wire [SCALE_FRACTION_BITS-1:0] downstreamCoordARightCoeff = downstreamCoordA[SCALE_FRACTION_BITS-1:0];
-wire [SCALE_FRACTION_BITS-1:0] downstreamCoordALeftCoeff = ~downstreamCoordARightCoeff + {{(SCALE_FRACTION_BITS-1){1'b0}}, 1'b1};
+wire [SCALE_BITS-1:0] downstreamCoordARightCoeff = {1'b0, downstreamCoordA[SCALE_FRACTION_BITS-1:0]};
+wire [SCALE_BITS-1:0] downstreamCoordALeftCoeff = {1'b0, ~downstreamCoordA[SCALE_FRACTION_BITS-1:0]} + {{(SCALE_BITS-1){1'b0}}, 1'b1};
 wire [HACTIVE_BITS-1:0] downstreamCoordALeftColumn  = downstreamCoordA[HCOORD_BITS-1:HCOORD_BITS-HACTIVE_BITS];
 wire [HACTIVE_BITS-1:0] downstreamCoordARightColumn = downstreamCoordA[HCOORD_BITS-1:HCOORD_BITS-HACTIVE_BITS] + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
 wire downstreamCoordAAvailable = (downstreamCoordALeftColumn == leftPixelColumn) &&
                                  (~|downstreamCoordARightCoeff || downstreamCoordARightColumn == rightPixelColumn);
 
 reg  [HCOORD_BITS-1:0] downstreamCoordB = {HCOORD_BITS{1'b1}};
-wire [SCALE_FRACTION_BITS-1:0] downstreamCoordBRightCoeff = downstreamCoordB[SCALE_FRACTION_BITS-1:0];
-wire [SCALE_FRACTION_BITS-1:0] downstreamCoordBLeftCoeff = ~downstreamCoordBRightCoeff + {{(SCALE_FRACTION_BITS-1){1'b0}}, 1'b1};
+wire [SCALE_BITS-1:0] downstreamCoordBRightCoeff = {1'b0, downstreamCoordB[SCALE_FRACTION_BITS-1:0]};
+wire [SCALE_BITS-1:0] downstreamCoordBLeftCoeff = {1'b0, ~downstreamCoordB[SCALE_FRACTION_BITS-1:0]} + {{(SCALE_BITS-1){1'b0}}, 1'b1};
 wire [HACTIVE_BITS-1:0] downstreamCoordBLeftColumn  = downstreamCoordB[HCOORD_BITS-1:HCOORD_BITS-HACTIVE_BITS];
 wire [HACTIVE_BITS-1:0] downstreamCoordBRightColumn = downstreamCoordB[HCOORD_BITS-1:HCOORD_BITS-HACTIVE_BITS] + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
 wire downstreamCoordBAvailable = (downstreamCoordBLeftColumn == leftPixelColumn) &&
@@ -263,9 +263,9 @@ assign upstreamResponseFifoReadEnable = !upstreamResponseFifoEmpty &&
 
 function [BITS_PER_PIXEL-1:0] blend;
     input [BITS_PER_PIXEL-1:0]      lColor;
-    input [SCALE_FRACTION_BITS-1:0] lCoeff;
+    input [SCALE_BITS-1:0] lCoeff;
     input [BITS_PER_PIXEL-1:0]      rColor;
-    input [SCALE_FRACTION_BITS-1:0] rCoeff;
+    input [SCALE_BITS-1:0] rCoeff;
     
     
     reg [4:0] lRed = 5'd0;
