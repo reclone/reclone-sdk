@@ -301,3 +301,201 @@ TEST_F(VideoHorizontalStretchTests, TestImageHalf)
     _vcdTrace.close();
 }
 
+TEST_F(VideoHorizontalStretchTests, TestPhotoUpscale)
+{
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("VideoHorizontalStretch_TestPhotoUpscale.vcd");
+    
+    BmpPipelineSource source;
+    ASSERT_TRUE(source.readBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash.bmp"));
+    
+    BmpPipelineSink sink(source.getWidth()*64/39, source.getHeight());
+    
+    // Initialize inputs
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    // Scale 1.64x (shrink by 39/64)
+    _uut.hShrinkFactor = 39;
+    _uut.downstreamRequestFifoEmpty = 1;
+    _uut.downstreamRequestFifoReadData = 0;
+    _uut.downstreamResponseFifoFull = 0;
+    _uut.upstreamRequestFifoReadEnable = 0;
+    _uut.upstreamResponseFifoWriteEnable = 0;
+    _uut.upstreamResponseFifoWriteData = 0;
+    _uut.eval();
+    
+    sink.requestFrame();
+
+    unsigned int responseNum = 0;
+    for (unsigned int i = 0; i < 1600000; ++i)
+    {
+        _uut.scalerClock = 0;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        //_vcdTrace.dump(_tickCount++);
+        
+        _uut.scalerClock = 1;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        
+        //_vcdTrace.dump(_tickCount++);
+        
+        if (_uut.upstreamResponseFifoWriteEnable)
+        {
+            //printf("Upstream response %u: 0x%04X\n", responseNum, _uut.upstreamResponseFifoWriteData);
+            ++responseNum;
+        }
+    }
+
+    ASSERT_TRUE(sink.writeBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash_upscale.bmp"));
+    
+    //_vcdTrace.close();
+}
+
+TEST_F(VideoHorizontalStretchTests, TestPhotoDownscale)
+{
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("VideoHorizontalStretch_TestPhotoDownscale.vcd");
+    
+    BmpPipelineSource source;
+    ASSERT_TRUE(source.readBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash.bmp"));
+    
+    BmpPipelineSink sink(source.getWidth()*64/103, source.getHeight());
+    
+    // Initialize inputs
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    // Scale 0.62x (shrink by 103/64)
+    _uut.hShrinkFactor = 103;
+    _uut.downstreamRequestFifoEmpty = 1;
+    _uut.downstreamRequestFifoReadData = 0;
+    _uut.downstreamResponseFifoFull = 0;
+    _uut.upstreamRequestFifoReadEnable = 0;
+    _uut.upstreamResponseFifoWriteEnable = 0;
+    _uut.upstreamResponseFifoWriteData = 0;
+    _uut.eval();
+    
+    sink.requestFrame();
+
+    unsigned int responseNum = 0;
+    for (unsigned int i = 0; i < 1600000; ++i)
+    {
+        _uut.scalerClock = 0;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        //_vcdTrace.dump(_tickCount++);
+        
+        _uut.scalerClock = 1;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        
+        //_vcdTrace.dump(_tickCount++);
+        
+        if (_uut.upstreamResponseFifoWriteEnable)
+        {
+            //printf("Upstream response %u: 0x%04X\n", responseNum, _uut.upstreamResponseFifoWriteData);
+            ++responseNum;
+        }
+    }
+
+    ASSERT_TRUE(sink.writeBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash_downscale.bmp"));
+    
+    //_vcdTrace.close();
+}
+
