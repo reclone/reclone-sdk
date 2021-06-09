@@ -136,6 +136,11 @@ reg[2:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
 localparam UPSTREAM_RESPONSE_IDLE = 3'b001, UPSTREAM_RESPONSE_READ = 3'b010, UPSTREAM_RESPONSE_STORE = 3'b100;
 reg [2:0] upstreamResponseState = UPSTREAM_RESPONSE_IDLE;
 
+// Downstream request read enable is gated to avoid glitches due to state machine design
+reg downstreamRequestFifoReadEnableReg = 1'b0;
+assign downstreamRequestFifoReadEnable = downstreamRequestFifoReadEnableReg &&
+    !pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull;
+
 // upstreamRequests FIFO provides chunk requests to the upstream pipeline element
 reg upstreamRequestFifoWriteEnable = 1'b0;
 wire upstreamRequestFifoFull;
@@ -211,11 +216,12 @@ SyncFifo #(.DATA_WIDTH(HCOORD_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstre
 );
 
 reg [REQUEST_BITS-1:0] lastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
+reg [REQUEST_BITS-1:0] lastlastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 
 reg [CHUNK_BITS:0] downstreamRequestPixelCount = {(CHUNK_BITS+1){1'b0}};
 wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
 wire [HACTIVE_BITS-1:0] downstreamRequestCoord = {downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
-wire [HCOORD_BITS-1:0] upstreamRequestCoord = downstreamRequestCoord * hShrinkFactor;
+wire [HCOORD_BITS-1:0] upstreamRequestCoord = downstreamRequestCoord * hShrinkFactor + {{(HCOORD_BITS-SCALE_BITS){1'b0}}, hShrinkFactor[SCALE_BITS-1:1]};
 wire needsNextChunkToo = (upstreamRequestCoord[HCOORD_BITS-CHUNKNUM_BITS-1:HCOORD_BITS-HACTIVE_BITS] == {CHUNK_BITS{1'b1}}) &&
                          (|upstreamRequestCoord[SCALE_FRACTION_BITS-1:0]);
 wire [REQUEST_BITS-1:0] upstreamChunkRequest = {downstreamRequestRow, upstreamRequestCoord[HCOORD_BITS-1:HCOORD_BITS-CHUNKNUM_BITS]};
@@ -243,6 +249,8 @@ wire downstreamCoordBAvailable = (downstreamCoordBLeftColumn == leftPixelColumn)
                                  (~|downstreamCoordBRightCoeff || downstreamCoordBRightColumn == rightPixelColumn);
 
 reg [1:0] downstreamCoordPreFetchCount = 2'd0;
+
+reg inboundUpstreamRequest = 1'b0;
 
 assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoEmpty &&
     (downstreamCoordPreFetchCount < 2'd2 || (downstreamCoordBAvailable && !downstreamResponseFifoFull));
@@ -294,6 +302,7 @@ endfunction
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
+        // TODO
 
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -304,13 +313,14 @@ always @ (posedge scalerClock or posedge reset) begin
                 upstreamRequestFifoWriteEnable <= 1'b0;
                 pendingDownstreamResponseFifoWriteEnable <= 1'b0;
                 lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
+                lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
             
                 // Wait for a request
                 if (!downstreamRequestFifoEmpty && !pendingUpstreamRequestFifoFull &&
                     !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
                     // Read the request
                     // It should be available during DOWNSTREAM_REQUEST_STORE
-                    downstreamRequestFifoReadEnable <= 1'b1;
+                    downstreamRequestFifoReadEnableReg <= 1'b1;
                     
                     downstreamRequestState <= DOWNSTREAM_REQUEST_READ;
                 end
@@ -318,7 +328,7 @@ always @ (posedge scalerClock or posedge reset) begin
 
             DOWNSTREAM_REQUEST_READ: begin
                 // Request should be available next cycle
-                downstreamRequestFifoReadEnable <= 1'b0;
+                downstreamRequestFifoReadEnableReg <= 1'b0;
                 
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
@@ -331,14 +341,17 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_STORE: begin
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
                     // Request chunks from upstream
-                    if (lastUpstreamChunkRequest != upstreamChunkRequest) begin
+                    if (lastUpstreamChunkRequest != upstreamChunkRequest && lastlastUpstreamChunkRequest != upstreamChunkRequest) begin
                         // Submit upstreamChunkRequest
                         lastUpstreamChunkRequest <= upstreamChunkRequest;
+                        lastlastUpstreamChunkRequest <= lastUpstreamChunkRequest;
                         upstreamRequestFifoWriteData <= upstreamChunkRequest;
                         upstreamRequestFifoWriteEnable <= 1'b1;
-                    end else if (needsNextChunkToo) begin
+                    end else if (lastUpstreamChunkRequest != upstreamChunkRequestNext && lastlastUpstreamChunkRequest != upstreamChunkRequestNext
+                                 && needsNextChunkToo) begin
                         // Need the first pixel of next chunk too, so submit upstreamChunkRequest + 1
                         lastUpstreamChunkRequest <= upstreamChunkRequestNext;
+                        lastlastUpstreamChunkRequest <= lastUpstreamChunkRequest;
                         upstreamRequestFifoWriteData <= upstreamChunkRequestNext;
                         upstreamRequestFifoWriteEnable <= 1'b1;
                     end else begin
@@ -354,14 +367,14 @@ always @ (posedge scalerClock or posedge reset) begin
                     if (downstreamRequestPixelCount == {1'b0, {(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
                         downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
                         if (!downstreamRequestFifoEmpty) begin
-                            downstreamRequestFifoReadEnable <= 1'b1;
+                            downstreamRequestFifoReadEnableReg <= 1'b1;
                         end
                     // If that was the last pixel of the chunk
                     end else if (downstreamRequestPixelCount == {1'b0, {CHUNK_BITS{1'b1}}}) begin
-                        if (downstreamRequestFifoReadEnable) begin
+                        if (downstreamRequestFifoReadEnableReg) begin
                             // Start working the next request
                             downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
-                            downstreamRequestFifoReadEnable <= 1'b0;
+                            downstreamRequestFifoReadEnableReg <= 1'b0;
                         end else begin
                             // Do not process another request
                             downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
@@ -374,7 +387,6 @@ always @ (posedge scalerClock or posedge reset) begin
                 end else begin
                     upstreamRequestFifoWriteEnable <= 1'b0;
                     pendingDownstreamResponseFifoWriteEnable <= 1'b0;
-                    downstreamRequestFifoReadEnable <= 1'b0;
                 end
             end
 
@@ -391,6 +403,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
                     upstreamResponseState <= UPSTREAM_RESPONSE_READ;
                 end
+                inboundUpstreamRequest <= 1'b0;
             end
 
             UPSTREAM_RESPONSE_READ: begin
@@ -405,7 +418,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 if (upstreamResponseFifoReadEnable) begin
                     // Combinatorial logic says we are about to read an upstream response pixel, so
                     // store its column and update the pixel counter
-                    rightPixelColumn <= {pendingUpstreamRequestFifoReadData, upstreamResponsePixelCount};
+                    rightPixelColumn[CHUNK_BITS-1:0] <= upstreamResponsePixelCount; //{pendingUpstreamRequestFifoReadData, upstreamResponsePixelCount};
                     // Shift right pixel color and column to left pixel
                     leftPixelColumn <= rightPixelColumn;
                     leftPixelColor <= rightPixelColor;
@@ -415,19 +428,24 @@ always @ (posedge scalerClock or posedge reset) begin
                         // Reset pixel counter
                         upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
                         
-                        if (pendingUpstreamRequestFifoReadEnable) begin
+                        if (inboundUpstreamRequest) begin
                             // Another chunk is incoming, and its request will be ready next cycle
                             pendingUpstreamRequestFifoReadEnable <= 1'b0;
+                            inboundUpstreamRequest <= 1'b0;
                         end else begin
                             // No incoming chunk at this point, so return to idle
                             upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
                         end
                     end else begin
-                        if (upstreamResponsePixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
+                        if (upstreamResponsePixelCount == {(CHUNK_BITS){1'b0}}) begin
+                            // First pixel in the chunk, so update the chunk part of rightPixelColumn
+                            rightPixelColumn[HACTIVE_BITS-1:CHUNK_BITS] <= pendingUpstreamRequestFifoReadData;
+                        end else if (upstreamResponsePixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
                             // Second to last pixel in the chunk, so start reading the next pending request if there is one
                             if (!pendingUpstreamRequestFifoEmpty) begin
                                 // Another chunk is incoming, so retrieve its request
                                 pendingUpstreamRequestFifoReadEnable <= 1'b1;
+                                inboundUpstreamRequest <= 1'b1;
                             end
                         end
                         
