@@ -255,9 +255,13 @@ reg inboundUpstreamRequest = 1'b0;
 assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoEmpty &&
     (downstreamCoordPreFetchCount < 2'd2 || (downstreamCoordBAvailable && !downstreamResponseFifoFull));
 
+// Read the next upstream response pixel if we do not have the right upstream
+// pixel columns to form the current downstream pixel, OR if we anticipate
+// needing different needing new upstream pixel columns next cycle.
 assign upstreamResponseFifoReadEnable = !upstreamResponseFifoEmpty &&
     ((downstreamCoordPreFetchCount == 2'd1 && !downstreamCoordAAvailable) ||
-     (downstreamCoordPreFetchCount == 2'd2 && !downstreamCoordBAvailable));
+     (downstreamCoordPreFetchCount == 2'd2 && !downstreamCoordBAvailable) ||
+     (downstreamCoordPreFetchCount == 2'd2 && downstreamCoordBAvailable && !downstreamCoordAAvailable));
 
 function [BITS_PER_PIXEL-1:0] blend;
     input [BITS_PER_PIXEL-1:0]      lColor;
