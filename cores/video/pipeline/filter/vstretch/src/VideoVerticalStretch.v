@@ -359,6 +359,7 @@ always @ (posedge scalerClock or posedge reset) begin
                             cachedRowB <= upstreamRequestRowUpper;
                         end
                         cachedChunkValidB <= {MAX_CHUNKS_PER_ROW{1'b0}};
+                        cachedRowBIsOlder <= 1'b0;
                     end else begin
                         if (cachedRowB == upstreamRequestRowUpper) begin
                             cachedRowA <= upstreamRequestRowLower;
@@ -366,6 +367,7 @@ always @ (posedge scalerClock or posedge reset) begin
                             cachedRowA <= upstreamRequestRowUpper;
                         end
                         cachedChunkValidA <= {MAX_CHUNKS_PER_ROW{1'b0}};
+                        cachedRowBIsOlder <= 1'b1;
                     end
                     
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
