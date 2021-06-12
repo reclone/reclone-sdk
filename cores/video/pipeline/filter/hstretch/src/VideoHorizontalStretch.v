@@ -32,7 +32,7 @@
 // a two-pixel upstream pre-fetch to keep up the downstream burst speed.  To look ahead and know when
 // an upstream pixel can be discarded (and a new pixel can be read from the FIFO), the next
 // downstream request (if available) is pre-fetched.
-//      Cycle   Upstream0   Upstream1       Downstream0 Downstream1
+//      Cycle   UpstreamR   UpstreamL       DownstreamA DownstreamB
 //      0                                   0.25
 //      1       0                           0.75        0.25
 //      2       1           0               0.75        0.25
@@ -101,6 +101,7 @@ module VideoHorizontalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 
     output wire downstreamRequestFifoReadEnable,
     input wire downstreamRequestFifoEmpty,
     input wire [REQUEST_BITS-1:0] downstreamRequestFifoReadData,
+    
     // ...and writes to the downstream response FIFO.
     output reg downstreamResponseFifoWriteEnable = 1'b0,
     input wire downstreamResponseFifoFull,
@@ -252,22 +253,24 @@ reg [1:0] downstreamCoordPreFetchCount = 2'd0;
 
 reg inboundUpstreamRequest = 1'b0;
 
+// Read a new pending downstream response (horizontal coordinate) if we have not yet
+// filled the two lookahead slots, or if we have the upstream pixels needed to satisfy slot B.
 assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoEmpty &&
     (downstreamCoordPreFetchCount < 2'd2 || (downstreamCoordBAvailable && !downstreamResponseFifoFull));
 
 // Read the next upstream response pixel if we do not have the right upstream
 // pixel columns to form the current downstream pixel, OR if we anticipate
-// needing different needing new upstream pixel columns next cycle.
+// needing fresh upstream pixel columns next cycle.
 assign upstreamResponseFifoReadEnable = !upstreamResponseFifoEmpty &&
     ((downstreamCoordPreFetchCount == 2'd1 && !downstreamCoordAAvailable) ||
      (downstreamCoordPreFetchCount == 2'd2 && !downstreamCoordBAvailable) ||
      (downstreamCoordPreFetchCount == 2'd2 && downstreamCoordBAvailable && !downstreamCoordAAvailable));
 
 function [BITS_PER_PIXEL-1:0] blend;
-    input [BITS_PER_PIXEL-1:0]      lColor;
-    input [SCALE_BITS-1:0] lCoeff;
-    input [BITS_PER_PIXEL-1:0]      rColor;
-    input [SCALE_BITS-1:0] rCoeff;
+    input [BITS_PER_PIXEL-1:0]  lColor;
+    input [SCALE_BITS-1:0]      lCoeff;
+    input [BITS_PER_PIXEL-1:0]  rColor;
+    input [SCALE_BITS-1:0]      rCoeff;
     
     
     reg [4:0] lRed = 5'd0;

@@ -20,7 +20,7 @@
 //
 // Two line buffers are used to implement the scaling without unnecessary duplication of upstream
 // memory bandwidth.  While in theory only one line buffer is required, in practice a filter like
-// VideoNonIntegerScale may be placed downstream which commonly alternates requests between
+// VideoVerticalStretch may be placed downstream which commonly alternates requests between
 // two adjacent rows.  Having two line buffers instead of one keeps both rows cached, and
 // prevents "thrashing" which would add unacceptable latency and duplication of upstream requests.
 //
@@ -102,7 +102,7 @@ module VideoIntegerScale #(parameter CHUNK_BITS = 5)
     
     // ...and exposes upstream response FIFO for writing.
     input wire upstreamResponseFifoWriteEnable,
-    output reg upstreamResponseFifoFull = 1'b0,
+    output wire upstreamResponseFifoFull,
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 
