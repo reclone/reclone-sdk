@@ -177,7 +177,8 @@ SyncFifo #(.DATA_WIDTH(REQUEST_BITS+SCALE_FRACTION_BITS), .ADDR_WIDTH(CHUNKNUM_B
 wire [VACTIVE_BITS-1:0] requestedRow = downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
 wire [CHUNKNUM_BITS-1:0] requestedChunk = downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
 
-wire [VCOORD_BITS-1:0] upstreamRequestCoord = requestedRow * vShrinkFactor + {{(VACTIVE_BITS){1'b0}}, vShrinkFactor[SCALE_BITS-1:1]};
+wire [VCOORD_BITS-1:0] upstreamRequestCoord = requestedRow * vShrinkFactor + {{(VACTIVE_BITS){1'b0}}, vShrinkFactor[SCALE_BITS-1:1]}
+    - (vShrinkFactor[SCALE_BITS-1] ? {{VACTIVE_BITS{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}} : {VCOORD_BITS{1'b0}});
 wire [VACTIVE_BITS-1:0] upstreamRequestCoordWhole = upstreamRequestCoord[VCOORD_BITS-1:SCALE_FRACTION_BITS];
 wire [SCALE_FRACTION_BITS-1:0] upstreamRequestCoordFraction = upstreamRequestCoord[SCALE_FRACTION_BITS-1:0];
 wire [VACTIVE_BITS-1:0] upstreamRequestRowUpper = upstreamRequestCoordWhole;
@@ -337,11 +338,14 @@ always @ (posedge scalerClock or posedge reset) begin
                     end else begin
                         // Save the downstream response for processing later, and return to idle
                         pendingDownstreamResponseFifoWriteEnable <= 1'b1;
+                        upstreamRequestFifoWriteEnable <= 1'b0;
                         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
                     end
                 end else begin
                     // Cached rows are different from requested rows, so stall until all pending requests are complete
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STALL;
+                    upstreamRequestFifoWriteEnable <= 1'b0;
+                    pendingDownstreamResponseFifoWriteEnable <= 1'b0;
                 end
             end
             

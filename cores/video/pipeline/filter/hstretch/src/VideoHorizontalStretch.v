@@ -222,7 +222,8 @@ reg [REQUEST_BITS-1:0] lastlastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 reg [CHUNK_BITS:0] downstreamRequestPixelCount = {(CHUNK_BITS+1){1'b0}};
 wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
 wire [HACTIVE_BITS-1:0] downstreamRequestCoord = {downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
-wire [HCOORD_BITS-1:0] upstreamRequestCoord = downstreamRequestCoord * hShrinkFactor + {{(HCOORD_BITS-SCALE_BITS){1'b0}}, hShrinkFactor[SCALE_BITS-1:1]};
+wire [HCOORD_BITS-1:0] upstreamRequestCoord = downstreamRequestCoord * hShrinkFactor + {{(HCOORD_BITS-SCALE_BITS){1'b0}}, hShrinkFactor[SCALE_BITS-1:1]}
+    - (hShrinkFactor[SCALE_BITS-1] ? {{HACTIVE_BITS{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}} : {HCOORD_BITS{1'b0}});
 wire needsNextChunkToo = (upstreamRequestCoord[HCOORD_BITS-CHUNKNUM_BITS-1:HCOORD_BITS-HACTIVE_BITS] == {CHUNK_BITS{1'b1}}) &&
                          (|upstreamRequestCoord[SCALE_FRACTION_BITS-1:0]);
 wire [REQUEST_BITS-1:0] upstreamChunkRequest = {downstreamRequestRow, upstreamRequestCoord[HCOORD_BITS-1:HCOORD_BITS-CHUNKNUM_BITS]};

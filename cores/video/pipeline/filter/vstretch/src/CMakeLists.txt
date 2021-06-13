@@ -6,10 +6,11 @@ add_custom_command (
           VVideoVerticalStretch__Syms.h
           VVideoVerticalStretch__Trace.cpp
           VVideoVerticalStretch__Trace__Slow.cpp
-  DEPENDS VideoVerticalStretch.v ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
+  DEPENDS VideoVerticalStretch.v
+          ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
   COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/VideoVerticalStretch.v
-    ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
+          ${CMAKE_CURRENT_SOURCE_DIR}/VideoVerticalStretch.v
+          ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
 )
 
 

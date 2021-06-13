@@ -193,6 +193,9 @@ wire isDownstreamResponseScanlineCol = ((downstreamCacheColumn * hScaleFactor) =
 wire isDownstreamResponseScanlinePixel = ((hScanlineEnable && isDownstreamResponseScanlineRow) || 
                                           (vScanlineEnable && isDownstreamResponseScanlineCol));
 
+reg downstreamResponseFifoWriteEnableReg = 1'b0;
+assign downstreamResponseFifoWriteEnable = downstreamResponseFifoFull ? 1'b0 : downstreamResponseFifoWriteEnableReg;
+
 // upstreamRequests FIFO provides chunk requests to the upstream pipeline element
 reg upstreamRequestFifoWriteEnable = 1'b0;
 wire upstreamRequestFifoFull;
@@ -344,6 +347,7 @@ always @ (posedge scalerClock or posedge reset) begin
         cachedChunkPendingB <= {MAX_CHUNKS_PER_ROW{1'b0}};
         cachedRowBIsOlder <= 1'b0;
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+        downstreamResponseFifoWriteEnableReg <= 1'b0;
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -544,7 +548,7 @@ always @ (posedge scalerClock or posedge reset) begin
 
             DOWNSTREAM_RESPONSE_IDLE: begin
                 // Do not write any pixels into the response FIFO
-                downstreamResponseFifoWriteEnable <= 1'b0;
+                downstreamResponseFifoWriteEnableReg <= 1'b0;
                 
                 // Wait until we can grab a pending downstream response
                 if (!pendingDownstreamResponseFifoEmpty) begin
@@ -556,7 +560,7 @@ always @ (posedge scalerClock or posedge reset) begin
             
             DOWNSTREAM_RESPONSE_READ: begin
                 // Do not write any pixels into the response FIFO
-                downstreamResponseFifoWriteEnable <= 1'b0;
+                downstreamResponseFifoWriteEnableReg <= 1'b0;
                 // Pending downstream response should be available next cycle
                 pendingDownstreamResponseFifoReadEnable <= 1'b0;
 
@@ -590,8 +594,8 @@ always @ (posedge scalerClock or posedge reset) begin
                         end
                     end
                     
-                    // Write to response fifo next cycle
-                    downstreamResponseFifoWriteEnable <= 1'b1;
+                    // Write to response fifo next cycle (as soon as the response fifo is not full)
+                    downstreamResponseFifoWriteEnableReg <= 1'b1;
                     
                     // If second to last pixel of the chunk, then start reading the next pending response, if there is one
                     if (downstreamResponsePixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
@@ -628,9 +632,6 @@ always @ (posedge scalerClock or posedge reset) begin
                         pendingDownstreamResponseFifoReadEnable <= 1'b0;
                     end
                 end else begin
-                    // Do not write any pixels into the response FIFO
-                    downstreamResponseFifoWriteEnable <= 1'b0;
-                    
                     // Do not grab another pending downstream response
                     pendingDownstreamResponseFifoReadEnable <= 1'b0;
                 end
