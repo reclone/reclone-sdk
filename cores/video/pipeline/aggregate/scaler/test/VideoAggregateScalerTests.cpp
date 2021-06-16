@@ -117,15 +117,13 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
     _uut.scalerClock = 0;
     _uut.reset = 0;
     
-    _uut.hShrinkFactor = 64;
-    _uut.vShrinkFactor = 64;
     _uut.cropRows = 0;
     _uut.cropChunks = 0;
-    _uut.padTopRows = 8;
-    _uut.padLeftChunks = 0;
-    _uut.sourceRows = 224;
-    _uut.sourceChunks = 8;
-    _uut.padColor = 0;
+    // _uut.padTopRows = 8;
+    // _uut.padLeftChunks = 2;
+    // _uut.sourceRows = 672;
+    // _uut.sourceChunks = 24;
+    // _uut.padColor = 0x1F;
     _uut.enableBinning = 0;
     _uut.hScaleFactor = 3;
     _uut.vScaleFactor = 3;
@@ -147,7 +145,7 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 1600000; ++i)
+    for (unsigned int i = 0; i < 1800000; ++i)
     {
         _uut.scalerClock = 0;
         
@@ -216,6 +214,236 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
     }
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesPixelPerfect720p.bmp"));
+    
+    _vcdTrace.close();
+}
+
+TEST_F(VideoAggregateScalerTests, NesWider720p)
+{
+    _uut.trace(&_vcdTrace, 99);
+    _vcdTrace.open("VideoAggregateScaler_NesWider720p.vcd");
+    
+    BmpPipelineSource source;
+    ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
+    
+    BmpPipelineSink sink(1280, 720);
+    
+    // Initialize inputs
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    
+    _uut.cropRows = 0;
+    _uut.cropChunks = 0;
+    // _uut.padTopRows = 8;
+    // _uut.padLeftChunks = 2;
+    // _uut.sourceRows = 672;
+    // _uut.sourceChunks = 24;
+    // _uut.padColor = 0x1F;
+    _uut.enableBinning = 0;
+    _uut.hScaleFactor = 4;
+    _uut.vScaleFactor = 3;
+    _uut.hShrinkFactor = 64;
+    _uut.vShrinkFactor = 64;
+    _uut.backgroundColor = 0;
+    _uut.hScanlineEnable = 0;
+    _uut.vScanlineEnable = 0;
+    _uut.scanlineIntensity = 0;
+    
+    _uut.downstreamRequestFifoEmpty = 1;
+    _uut.downstreamRequestFifoReadData = 0;
+    _uut.downstreamResponseFifoFull = 0;
+    _uut.upstreamRequestFifoReadEnable = 0;
+    _uut.upstreamResponseFifoWriteEnable = 0;
+    _uut.upstreamResponseFifoWriteData = 0;
+    _uut.eval();
+    
+    sink.requestFrame();
+
+    unsigned int responseNum = 0;
+    for (unsigned int i = 0; i < 1800000; ++i)
+    {
+        _uut.scalerClock = 0;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        _uut.scalerClock = 1;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        if (_uut.upstreamResponseFifoWriteEnable)
+        {
+            //printf("Upstream response %u: 0x%04X\n", responseNum, _uut.upstreamResponseFifoWriteData);
+            ++responseNum;
+        }
+    }
+
+    ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesWider720p.bmp"));
+    
+    _vcdTrace.close();
+}
+
+TEST_F(VideoAggregateScalerTests, NesScanlines720p)
+{
+    _uut.trace(&_vcdTrace, 99);
+    _vcdTrace.open("VideoAggregateScaler_NesScanlines720p.vcd");
+    
+    BmpPipelineSource source;
+    ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
+    
+    BmpPipelineSink sink(1280, 720);
+    
+    // Initialize inputs
+    _uut.scalerClock = 0;
+    _uut.reset = 0;
+    
+    _uut.cropRows = 0;
+    _uut.cropChunks = 0;
+    // _uut.padTopRows = 8;
+    // _uut.padLeftChunks = 2;
+    // _uut.sourceRows = 672;
+    // _uut.sourceChunks = 24;
+    // _uut.padColor = 0x1F;
+    _uut.enableBinning = 0;
+    _uut.hScaleFactor = 1;
+    _uut.vScaleFactor = 2;
+    _uut.hShrinkFactor = 20;
+    _uut.vShrinkFactor = 40;
+    _uut.backgroundColor = 0;
+    _uut.hScanlineEnable = 1;
+    _uut.vScanlineEnable = 0;
+    _uut.scanlineIntensity = 0;
+    
+    _uut.downstreamRequestFifoEmpty = 1;
+    _uut.downstreamRequestFifoReadData = 0;
+    _uut.downstreamResponseFifoFull = 0;
+    _uut.upstreamRequestFifoReadEnable = 0;
+    _uut.upstreamResponseFifoWriteEnable = 0;
+    _uut.upstreamResponseFifoWriteData = 0;
+    _uut.eval();
+    
+    sink.requestFrame();
+
+    unsigned int responseNum = 0;
+    for (unsigned int i = 0; i < 1800000; ++i)
+    {
+        _uut.scalerClock = 0;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        _uut.scalerClock = 1;
+        
+        sink.setScalerClock(_uut.scalerClock);
+        sink.setRequestFifoReadEnable(_uut.downstreamRequestFifoReadEnable);
+        sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
+        sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
+        sink.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        source.setScalerClock(_uut.scalerClock);
+        source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
+        source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
+        source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
+        source.eval();
+        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
+        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
+        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
+        _uut.eval();
+        
+        _vcdTrace.dump(_tickCount++);
+        
+        if (_uut.upstreamResponseFifoWriteEnable)
+        {
+            //printf("Upstream response %u: 0x%04X\n", responseNum, _uut.upstreamResponseFifoWriteData);
+            ++responseNum;
+        }
+    }
+
+    ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesScanlines720p.bmp"));
     
     _vcdTrace.close();
 }

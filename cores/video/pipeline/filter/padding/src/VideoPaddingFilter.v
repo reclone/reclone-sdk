@@ -232,7 +232,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 if (!pendingDownstreamResponseFifoEmpty) begin
                     pendingDownstreamResponseFifoReadEnable <= 1'b1;
                     downstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
-                    downstreamResponseState <= DOWNSTREAM_RESPONSE_STORE;
+                    downstreamResponseState <= DOWNSTREAM_RESPONSE_READ;
                 end
             end
             

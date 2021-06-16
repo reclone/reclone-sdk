@@ -9,7 +9,7 @@ add_custom_command (
   DEPENDS VideoAggregateScaler.v
           ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/cropping/src/VideoCroppingFilter.v
-          ${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
+          #${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/binning/src/VideoBinningFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/integerscale/src/VideoIntegerScale.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/vstretch/src/VideoVerticalStretch.v
@@ -19,7 +19,7 @@ add_custom_command (
           ${CMAKE_CURRENT_SOURCE_DIR}/VideoAggregateScaler.v
           ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/cropping/src/VideoCroppingFilter.v
-          ${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
+          #${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/binning/src/VideoBinningFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/integerscale/src/VideoIntegerScale.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/vstretch/src/VideoVerticalStretch.v
@@ -36,7 +36,7 @@ add_library (VVideoAggregateScaler STATIC
     VideoAggregateScaler.v
     ${PROJECT_SOURCE_DIR}/memory/fifo/sync/src/SyncFifo.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/cropping/src/VideoCroppingFilter.v
-    ${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
+    #${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/binning/src/VideoBinningFilter.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/integerscale/src/VideoIntegerScale.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/vstretch/src/VideoVerticalStretch.v

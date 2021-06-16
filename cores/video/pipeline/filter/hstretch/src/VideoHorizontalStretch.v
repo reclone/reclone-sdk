@@ -103,7 +103,7 @@ module VideoHorizontalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 
     input wire [REQUEST_BITS-1:0] downstreamRequestFifoReadData,
     
     // ...and writes to the downstream response FIFO.
-    output reg downstreamResponseFifoWriteEnable = 1'b0,
+    output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
     output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
     
@@ -254,6 +254,9 @@ reg [1:0] downstreamCoordPreFetchCount = 2'd0;
 
 reg inboundUpstreamRequest = 1'b0;
 
+reg downstreamResponseFifoWriteEnableReg = 1'b0;
+assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseFifoFull;
+
 // Read a new pending downstream response (horizontal coordinate) if we have not yet
 // filled the two lookahead slots, or if we have the upstream pixels needed to satisfy slot B.
 assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoEmpty &&
@@ -262,10 +265,12 @@ assign pendingDownstreamResponseFifoReadEnable = !pendingDownstreamResponseFifoE
 // Read the next upstream response pixel if we do not have the right upstream
 // pixel columns to form the current downstream pixel, OR if we anticipate
 // needing fresh upstream pixel columns next cycle.
-assign upstreamResponseFifoReadEnable = !upstreamResponseFifoEmpty &&
+assign upstreamResponseFifoReadEnable = !upstreamResponseFifoEmpty && !downstreamResponseFifoFull &&
     ((downstreamCoordPreFetchCount == 2'd1 && !downstreamCoordAAvailable) ||
      (downstreamCoordPreFetchCount == 2'd2 && !downstreamCoordBAvailable) ||
      (downstreamCoordPreFetchCount == 2'd2 && downstreamCoordBAvailable && !downstreamCoordAAvailable));
+     
+reg [31:0] totalUpstreamResponses = 32'd0;
 
 function [BITS_PER_PIXEL-1:0] blend;
     input [BITS_PER_PIXEL-1:0]  lColor;
@@ -313,6 +318,10 @@ always @ (posedge scalerClock or posedge reset) begin
         // TODO
 
     end else begin
+        if (upstreamResponseFifoReadEnable)
+            totalUpstreamResponses <= totalUpstreamResponses + 32'd1;
+
+    
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
         case (downstreamRequestState)
@@ -474,7 +483,7 @@ always @ (posedge scalerClock or posedge reset) begin
         if (downstreamCoordPreFetchCount == 2'd1) begin
             if (downstreamCoordAAvailable && !downstreamResponseFifoFull) begin
                 // Write a pixel to the downstream response based on coordinate A
-                downstreamResponseFifoWriteEnable <= 1'b1;
+                downstreamResponseFifoWriteEnableReg <= 1'b1;
                 downstreamResponseFifoWriteData <= blend(leftPixelColor, downstreamCoordALeftCoeff, rightPixelColor, downstreamCoordARightCoeff);
                 if (pendingDownstreamResponseFifoReadEnable) begin
                     downstreamCoordB <= downstreamCoordA;
@@ -484,7 +493,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 end
             end else begin
                 // Cannot write the response yet
-                downstreamResponseFifoWriteEnable <= 1'b0;
+                downstreamResponseFifoWriteEnableReg <= 1'b0;
                 if (pendingDownstreamResponseFifoReadEnable) begin
                     downstreamCoordB <= downstreamCoordA;
                     downstreamCoordPreFetchCount <= 2'd2;
@@ -495,7 +504,7 @@ always @ (posedge scalerClock or posedge reset) begin
         end else if (downstreamCoordPreFetchCount == 2'd2) begin
             if (downstreamCoordBAvailable && !downstreamResponseFifoFull) begin
                 // Write a pixel to the downstream response based on coordinate B
-                downstreamResponseFifoWriteEnable <= 1'b1;
+                downstreamResponseFifoWriteEnableReg <= 1'b1;
                 downstreamResponseFifoWriteData <= blend(leftPixelColor, downstreamCoordBLeftCoeff, rightPixelColor, downstreamCoordBRightCoeff);
                 if (pendingDownstreamResponseFifoReadEnable) begin
                     downstreamCoordB <= downstreamCoordA;
@@ -505,12 +514,12 @@ always @ (posedge scalerClock or posedge reset) begin
                 end
             end else begin
                 // Cannot write the response yet
-                downstreamResponseFifoWriteEnable <= 1'b0;
+                downstreamResponseFifoWriteEnableReg <= 1'b0;
                 // Count remains at 2
             end
         end else begin
             // Nothing to do
-            downstreamResponseFifoWriteEnable <= 1'b0;
+            downstreamResponseFifoWriteEnableReg <= 1'b0;
             if (pendingDownstreamResponseFifoReadEnable) begin
                 downstreamCoordPreFetchCount <= 2'd1;
             end

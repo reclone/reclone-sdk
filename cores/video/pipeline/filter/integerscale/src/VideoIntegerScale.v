@@ -634,6 +634,12 @@ always @ (posedge scalerClock or posedge reset) begin
                 end else begin
                     // Do not grab another pending downstream response
                     pendingDownstreamResponseFifoReadEnable <= 1'b0;
+                    
+                    // Set downstream write enable according to the cache status, so that the response is written
+                    // as soon as the downstream response fifo is not full
+                    downstreamResponseFifoWriteEnableReg <= 
+                        ((downstreamCacheRow == cachedRowA && cachedChunkValidA[downstreamCacheChunk]) ||
+                         (downstreamCacheRow == cachedRowB && cachedChunkValidB[downstreamCacheChunk]));
                 end
             end
 

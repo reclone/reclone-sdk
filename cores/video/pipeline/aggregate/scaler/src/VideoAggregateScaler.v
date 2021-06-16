@@ -10,15 +10,15 @@
 //
 //  VideoCroppingFilter
 //  |
-//  --> VideoPaddingFilter
+//  --> VideoBinningFilter
 //      |
-//      --> VideoBinningFilter
+//      --> VideoIntegerScale
 //          |
-//          --> VideoIntegerScale
+//          --> VideoVerticalStretch
 //              |
-//              --> VideoVerticalStretch
+//              --> VideoHorizontalStretch
 //                  |
-//                  --> VideoHorizontalStretch
+//                  --> VideoPaddingFilter
 //
 // Here are some use cases that this aggregate scaler element should be able to handle:
 //  - Upscaling low-resolution video content for rendering on higher-resolution displays
@@ -62,11 +62,11 @@ module VideoAggregateScaler #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     input wire [CHUNKNUM_BITS-1:0] cropChunks,
 
     // Padding configuration
-    input wire [VACTIVE_BITS-1:0] padTopRows,
-    input wire [CHUNKNUM_BITS-1:0] padLeftChunks,
-    input wire [VACTIVE_BITS-1:0] sourceRows,
-    input wire [CHUNKNUM_BITS-1:0] sourceChunks,
-    input wire [BITS_PER_PIXEL-1:0] padColor,
+    // input wire [VACTIVE_BITS-1:0] padTopRows,
+    // input wire [CHUNKNUM_BITS-1:0] padLeftChunks,
+    // input wire [VACTIVE_BITS-1:0] sourceRows,
+    // input wire [CHUNKNUM_BITS-1:0] sourceChunks,
+    // input wire [BITS_PER_PIXEL-1:0] padColor,
 
     // Binning configuration
     input wire enableBinning,
@@ -142,38 +142,6 @@ VideoCroppingFilter #(.CHUNK_BITS(CHUNK_BITS)) croppingFilter
     .downstreamResponseFifoWriteData(croppingDownstreamResponseFifoWriteData)
 );
 
-wire paddingDownstreamRequestFifoReadEnable;
-wire paddingDownstreamRequestFifoEmpty;
-wire [REQUEST_BITS-1:0] paddingDownstreamRequestFifoReadData;
-wire paddingDownstreamResponseFifoWriteEnable;
-wire paddingDownstreamResponseFifoFull;
-wire [BITS_PER_PIXEL-1:0] paddingDownstreamResponseFifoWriteData;
-VideoPaddingFilter #(.CHUNK_BITS(CHUNK_BITS)) paddingFilter
-(
-    .scalerClock(scalerClock),
-    .reset(reset),
-    
-    .padTopRows(padTopRows),
-    .padLeftChunks(padLeftChunks),
-    .sourceRows(sourceRows),
-    .sourceChunks(sourceChunks),
-    .padColor(padColor),
-    
-    .upstreamRequestFifoReadEnable(croppingDownstreamRequestFifoReadEnable),
-    .upstreamRequestFifoEmpty(croppingDownstreamRequestFifoEmpty),
-    .upstreamRequestFifoReadData(croppingDownstreamRequestFifoReadData),
-    .upstreamResponseFifoWriteEnable(croppingDownstreamResponseFifoWriteEnable),
-    .upstreamResponseFifoFull(croppingDownstreamResponseFifoFull),
-    .upstreamResponseFifoWriteData(croppingDownstreamResponseFifoWriteData),
-    
-    .downstreamRequestFifoReadEnable(paddingDownstreamRequestFifoReadEnable),
-    .downstreamRequestFifoEmpty(paddingDownstreamRequestFifoEmpty),
-    .downstreamRequestFifoReadData(paddingDownstreamRequestFifoReadData),
-    .downstreamResponseFifoWriteEnable(paddingDownstreamResponseFifoWriteEnable),
-    .downstreamResponseFifoFull(paddingDownstreamResponseFifoFull),
-    .downstreamResponseFifoWriteData(paddingDownstreamResponseFifoWriteData)
-);
-
 wire binningDownstreamRequestFifoReadEnable;
 wire binningDownstreamRequestFifoEmpty;
 wire [REQUEST_BITS-1:0] binningDownstreamRequestFifoReadData;
@@ -187,12 +155,12 @@ VideoBinningFilter #(.CHUNK_BITS(CHUNK_BITS)) binningFilter
     
     .enableBinning(enableBinning),
     
-    .upstreamRequestFifoReadEnable(paddingDownstreamRequestFifoReadEnable),
-    .upstreamRequestFifoEmpty(paddingDownstreamRequestFifoEmpty),
-    .upstreamRequestFifoReadData(paddingDownstreamRequestFifoReadData),
-    .upstreamResponseFifoWriteEnable(paddingDownstreamResponseFifoWriteEnable),
-    .upstreamResponseFifoFull(paddingDownstreamResponseFifoFull),
-    .upstreamResponseFifoWriteData(paddingDownstreamResponseFifoWriteData),
+    .upstreamRequestFifoReadEnable(croppingDownstreamRequestFifoReadEnable),
+    .upstreamRequestFifoEmpty(croppingDownstreamRequestFifoEmpty),
+    .upstreamRequestFifoReadData(croppingDownstreamRequestFifoReadData),
+    .upstreamResponseFifoWriteEnable(croppingDownstreamResponseFifoWriteEnable),
+    .upstreamResponseFifoFull(croppingDownstreamResponseFifoFull),
+    .upstreamResponseFifoWriteData(croppingDownstreamResponseFifoWriteData),
     
     .downstreamRequestFifoReadEnable(binningDownstreamRequestFifoReadEnable),
     .downstreamRequestFifoEmpty(binningDownstreamRequestFifoEmpty),
@@ -263,6 +231,12 @@ VideoVerticalStretch #(.CHUNK_BITS(CHUNK_BITS), .SCALE_FRACTION_BITS(SCALE_FRACT
     .downstreamResponseFifoWriteData(vStretchDownstreamResponseFifoWriteData)
 );
 
+/* wire hStretchDownstreamRequestFifoReadEnable;
+wire hStretchDownstreamRequestFifoEmpty;
+wire [REQUEST_BITS-1:0] hStretchDownstreamRequestFifoReadData;
+wire hStretchDownstreamResponseFifoWriteEnable;
+wire hStretchDownstreamResponseFifoFull;
+wire [BITS_PER_PIXEL-1:0] hStretchDownstreamResponseFifoWriteData; */
 VideoHorizontalStretch #(.CHUNK_BITS(CHUNK_BITS), .SCALE_FRACTION_BITS(SCALE_FRACTION_BITS)) horizontalStretch
 (
     .scalerClock(scalerClock),
@@ -277,6 +251,12 @@ VideoHorizontalStretch #(.CHUNK_BITS(CHUNK_BITS), .SCALE_FRACTION_BITS(SCALE_FRA
     .upstreamResponseFifoFull(vStretchDownstreamResponseFifoFull),
     .upstreamResponseFifoWriteData(vStretchDownstreamResponseFifoWriteData),
     
+/*     .downstreamRequestFifoReadEnable(hStretchDownstreamRequestFifoReadEnable),
+    .downstreamRequestFifoEmpty(hStretchDownstreamRequestFifoEmpty),
+    .downstreamRequestFifoReadData(hStretchDownstreamRequestFifoReadData),
+    .downstreamResponseFifoWriteEnable(hStretchDownstreamResponseFifoWriteEnable),
+    .downstreamResponseFifoFull(hStretchDownstreamResponseFifoFull),
+    .downstreamResponseFifoWriteData(hStretchDownstreamResponseFifoWriteData) */
     .downstreamRequestFifoReadEnable(downstreamRequestFifoReadEnable),
     .downstreamRequestFifoEmpty(downstreamRequestFifoEmpty),
     .downstreamRequestFifoReadData(downstreamRequestFifoReadData),
@@ -285,6 +265,30 @@ VideoHorizontalStretch #(.CHUNK_BITS(CHUNK_BITS), .SCALE_FRACTION_BITS(SCALE_FRA
     .downstreamResponseFifoWriteData(downstreamResponseFifoWriteData)
 );
 
-
+/* VideoPaddingFilter #(.CHUNK_BITS(CHUNK_BITS)) paddingFilter
+(
+    .scalerClock(scalerClock),
+    .reset(reset),
+    
+    .padTopRows(padTopRows),
+    .padLeftChunks(padLeftChunks),
+    .sourceRows(sourceRows),
+    .sourceChunks(sourceChunks),
+    .padColor(padColor),
+    
+    .upstreamRequestFifoReadEnable(hStretchDownstreamRequestFifoReadEnable),
+    .upstreamRequestFifoEmpty(hStretchDownstreamRequestFifoEmpty),
+    .upstreamRequestFifoReadData(hStretchDownstreamRequestFifoReadData),
+    .upstreamResponseFifoWriteEnable(hStretchDownstreamResponseFifoWriteEnable),
+    .upstreamResponseFifoFull(hStretchDownstreamResponseFifoFull),
+    .upstreamResponseFifoWriteData(hStretchDownstreamResponseFifoWriteData),
+    
+    .downstreamRequestFifoReadEnable(downstreamRequestFifoReadEnable),
+    .downstreamRequestFifoEmpty(downstreamRequestFifoEmpty),
+    .downstreamRequestFifoReadData(downstreamRequestFifoReadData),
+    .downstreamResponseFifoWriteEnable(downstreamResponseFifoWriteEnable),
+    .downstreamResponseFifoFull(downstreamResponseFifoFull),
+    .downstreamResponseFifoWriteData(downstreamResponseFifoWriteData)
+); */
 
 endmodule
