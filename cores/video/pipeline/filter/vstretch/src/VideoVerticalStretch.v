@@ -549,25 +549,12 @@ always @ (posedge scalerClock or posedge reset) begin
                     // Write to response fifo next cycle
                     downstreamResponseFifoWriteEnableReg <= 1'b1;
                     
-                    // If second to last pixel of the chunk, then start reading the next pending response, if there is one
-                    if (downstreamResponsePixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
-                        // Not the last pixel in the chunk, so increment pixel counter
-                        downstreamResponsePixelCount <= downstreamResponsePixelCount + {{(CHUNK_BITS-1){1'b0}}, 1'b1};
-                        
-                        if (!pendingDownstreamResponseFifoEmpty) begin
-                            // Read the next chunk
-                            pendingDownstreamResponseFifoReadEnableReg <= 1'b1;
-                        end
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
-                    end else if (downstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
+                    if (downstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                         // Reset pixel counter
                         downstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
                         
-                        if (pendingDownstreamResponseFifoReadEnableReg) begin
-                            // If there is another pending downstream response being read, stay in DOWNSTREAM_RESPONSE_STORE
-                            pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
-                            downstreamResponseState <= DOWNSTREAM_RESPONSE_STORE;
-                        end else if (!pendingDownstreamResponseFifoEmpty) begin
+                        if (!pendingDownstreamResponseFifoEmpty) begin
                             // Read the next chunk
                             pendingDownstreamResponseFifoReadEnableReg <= 1'b1;
                             downstreamResponseState <= DOWNSTREAM_RESPONSE_READ;

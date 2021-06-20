@@ -111,7 +111,7 @@ TEST_F(VideoVerticalStretchTests, TestImage50PercentTaller)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("pexels-pixabay-163822.bmp"));
     
-    BmpPipelineSink sink(source.getWidth(), source.getHeight() * 64 / 43);
+    BmpPipelineSink sink(source.getWidth(), source.getHeight() * 64 / 43, 0.8f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -210,7 +210,7 @@ TEST_F(VideoVerticalStretchTests, TestImage25PercentShorter)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("pexels-pixabay-163822.bmp"));
     
-    BmpPipelineSink sink(source.getWidth(), source.getHeight() * 64 / 85);
+    BmpPipelineSink sink(source.getWidth(), source.getHeight() * 64 / 85, 0.8f);
     
     // Initialize inputs
     _uut.scalerClock = 0;

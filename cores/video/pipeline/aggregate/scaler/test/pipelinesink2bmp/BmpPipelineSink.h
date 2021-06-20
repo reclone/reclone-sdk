@@ -29,6 +29,7 @@
 
 #include <stdint.h>
 #include <queue>
+#include <random>
 #include <utility>
 
 class BmpPipelineSink
@@ -43,6 +44,7 @@ class BmpPipelineSink
         };
     
         BmpPipelineSink(uint32_t width, uint32_t height);
+        BmpPipelineSink(uint32_t width, uint32_t height, float fullProbability);
         virtual ~BmpPipelineSink();
         
         RgbPixel getPixel(uint32_t hPos, uint32_t vPos);
@@ -55,7 +57,7 @@ class BmpPipelineSink
         uint32_t getRequestFifoReadData() const { return _requestFifoReadData; }
         
         void setResponseFifoWriteEnable(bool writeEnable) { _responseFifoWriteEnable = writeEnable; }
-        bool getResponseFifoFull() const { return false; }
+        bool getResponseFifoFull() const { return _responseFifoFull; }
         void setResponseFifoWriteData(uint16_t responseData) { _responseFifoWriteData = responseData; }
         
         void eval();
@@ -77,6 +79,10 @@ class BmpPipelineSink
         std::queue<std::pair<uint32_t,uint32_t>> _responsePixelQueue; //{hPos,vPos}
         bool _responseFifoWriteEnable;
         uint16_t _responseFifoWriteData;
+        float _fullProbability;
+        bool _responseFifoFull;
+        std::mt19937 _randomEngine;
+        std::uniform_real_distribution<float> _randomDistribution;
 };
 
 

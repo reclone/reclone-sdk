@@ -25,6 +25,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstdio>
+#include <random>
 #include "BmpPipelineSink.h"
 
 BmpPipelineSink::BmpPipelineSink(uint32_t width, uint32_t height) :
@@ -36,7 +37,29 @@ BmpPipelineSink::BmpPipelineSink(uint32_t width, uint32_t height) :
     _requestFifoReadEnable(false),
     _requestFifoReadData(0),
     _responseFifoWriteEnable(false),
-    _responseFifoWriteData(0)
+    _responseFifoWriteData(0),
+    _fullProbability(0.0),
+    _responseFifoFull(false),
+    _randomEngine(1337),
+    _randomDistribution(0.0, 1.0)
+{
+    
+}
+
+BmpPipelineSink::BmpPipelineSink(uint32_t width, uint32_t height, float fullProbability) :
+    _hPixels(width),
+    _vPixels(height),
+    _frameBuffer(new BmpPipelineSink::RgbPixel[width * height]()),
+    _lastClock(false),
+    _clock(false),
+    _requestFifoReadEnable(false),
+    _requestFifoReadData(0),
+    _responseFifoWriteEnable(false),
+    _responseFifoWriteData(0),
+    _fullProbability(fullProbability),
+    _responseFifoFull(false),
+    _randomEngine(1337),
+    _randomDistribution(0.0, 1.0)
 {
     
 }
@@ -73,8 +96,11 @@ void BmpPipelineSink::eval()
             _requestQueue.pop();
         }
         
-        if (_responseFifoWriteEnable && !_responsePixelQueue.empty())
+        if (_responseFifoWriteEnable && !_responseFifoFull && !_responsePixelQueue.empty())
         {
+            // Get a random number to decide whether to say the response fifo became full
+            float rnd = _randomDistribution(_randomEngine);
+            
             // Store the pixel color value into the frame buffer
             uint32_t hPos = _responsePixelQueue.front().first;
             uint32_t vPos = _responsePixelQueue.front().second;
@@ -90,6 +116,15 @@ void BmpPipelineSink::eval()
                 //printf("Pixel at (%u,%u) 0x%04X has red=%u green=%u blue=%u\n", hPos, vPos, _responseFifoWriteData, pix.red, pix.green, pix.blue);
                 _frameBuffer[frameBufIdx] = pix;
             }
+            
+            if (rnd < _fullProbability)
+            {
+                _responseFifoFull = true;
+            }
+        }
+        else if (_responseFifoFull)
+        {
+            _responseFifoFull = false;
         }
     }
     _lastClock = _clock;
