@@ -219,7 +219,7 @@ wire [VACTIVE_BITS-1:0] downstreamCacheRowLower = ~|downstreamResponseCoordFract
                             downstreamCacheRowUpper : downstreamCacheRowUpper + {{(VACTIVE_BITS-1){1'b0}}, 1'b1};
 
 wire [SCALE_BITS-1:0] downstreamCoordLowerCoeff = {1'b0, downstreamResponseCoord[SCALE_FRACTION_BITS-1:0]};
-wire [SCALE_BITS-1:0] downstreamCoordUpperCoeff = {1'b0, ~downstreamResponseCoord[SCALE_FRACTION_BITS-1:0]} + {{(SCALE_BITS-1){1'b0}}, 1'b1};
+wire [SCALE_BITS-1:0] downstreamCoordUpperCoeff = {1'b0, ~downstreamResponseCoord[SCALE_FRACTION_BITS-1:0]};
 
 
 reg downstreamResponseFifoWriteEnableReg = 1'b0;

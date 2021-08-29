@@ -255,13 +255,13 @@ reg [CHUNK_BITS-1:0] storeUpstreamResponsePixelCount = {CHUNK_BITS{1'b1}};
 wire [HACTIVE_BITS-1:0] downstreamLeftPixelColumn = pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS];
 wire [CHUNKNUM_BITS-1:0] downstreamLeftPixelChunk = downstreamLeftPixelColumn[HACTIVE_BITS-1:CHUNK_BITS];
 wire [CHUNK_BITS-1:0] downstreamLeftPixelWhole = downstreamLeftPixelColumn[CHUNK_BITS-1:0];
-wire [SCALE_BITS-1:0] downstreamLeftPixelCoeff = {1'b0, pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};
+wire [SCALE_BITS-1:0] downstreamLeftPixelCoeff = {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};// + {{(SCALE_BITS-1){1'b0}}, 1'b1};
 
-wire [HACTIVE_BITS-1:0] downstreamRightPixelColumn = ~|downstreamLeftPixelCoeff ?
+wire [HACTIVE_BITS-1:0] downstreamRightPixelColumn = ~|downstreamRightPixelCoeff ?
                             downstreamLeftPixelColumn : downstreamLeftPixelColumn + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
 wire [CHUNKNUM_BITS-1:0] downstreamRightPixelChunk = downstreamRightPixelColumn[HACTIVE_BITS-1:CHUNK_BITS];
 wire [CHUNK_BITS-1:0] downstreamRightPixelWhole = downstreamRightPixelColumn[CHUNK_BITS-1:0];
-wire [SCALE_BITS-1:0] downstreamRightPixelCoeff = {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]} + {{(SCALE_BITS-1){1'b0}}, 1'b1};
+wire [SCALE_BITS-1:0] downstreamRightPixelCoeff = {1'b0, pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};
 
 
 // Flags to track whether the downstream state machine still needs cached chunk A or B
