@@ -347,7 +347,7 @@ always @ (posedge scalerClock or posedge reset) begin
         //                         and enqueue upstream chunk requests
         case (downstreamRequestState)
             DOWNSTREAM_REQUEST_IDLE: begin
-                // Reset write enables if coming from DOWNSTREAM_REQUEST_STORE or DOWNSTREAM_REQUEST_STALL
+                // Reset write enables if coming from DOWNSTREAM_REQUEST_STORE
                 upstreamRequestFifoWriteEnable <= 1'b0;
                 pendingDownstreamResponseFifoWriteEnable <= 1'b0;
                 lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};

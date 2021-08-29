@@ -68,9 +68,9 @@ TEST_F(VideoPaddingFilterTests, TestImageNoPad)
     _uut.reset = 0;
     // No padding
     _uut.padTopRows = 0;
-    _uut.padLeftChunks = 0;
+    _uut.padLeftColumns = 0;
     _uut.sourceRows = source.getHeight();
-    _uut.sourceChunks = source.getWidth() / 32;
+    _uut.sourceColumns = source.getWidth();
     _uut.padColor = 0;
     _uut.downstreamRequestFifoEmpty = 1;
     _uut.downstreamRequestFifoReadData = 0;
@@ -164,16 +164,16 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
     
-    BmpPipelineSink sink(source.getWidth() + 128, source.getHeight() + 128);
+    BmpPipelineSink sink(source.getWidth() + 128, source.getHeight() + 128, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
     _uut.reset = 0;
     // No padding
     _uut.padTopRows = 64;
-    _uut.padLeftChunks = 2;
+    _uut.padLeftColumns = 64;
     _uut.sourceRows = source.getHeight();
-    _uut.sourceChunks = source.getWidth() / 32;
+    _uut.sourceColumns = source.getWidth();
     _uut.padColor = 0x07FF;
     _uut.downstreamRequestFifoEmpty = 1;
     _uut.downstreamRequestFifoReadData = 0;
@@ -274,9 +274,9 @@ TEST_F(VideoPaddingFilterTests, TestImagePadLetterbox)
     _uut.reset = 0;
     // No padding
     _uut.padTopRows = 43;
-    _uut.padLeftChunks = 0;
+    _uut.padLeftColumns = 0;
     _uut.sourceRows = source.getHeight();
-    _uut.sourceChunks = source.getWidth() / 32;
+    _uut.sourceColumns = source.getWidth();
     _uut.padColor = 0;
     _uut.downstreamRequestFifoEmpty = 1;
     _uut.downstreamRequestFifoReadData = 0;
@@ -370,16 +370,16 @@ TEST_F(VideoPaddingFilterTests, TestImagePadPillarbox)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
     
-    BmpPipelineSink sink(source.getWidth() + 64, source.getHeight());
+    BmpPipelineSink sink(source.getWidth() + 54, source.getHeight());
     
     // Initialize inputs
     _uut.scalerClock = 0;
     _uut.reset = 0;
     // No padding
     _uut.padTopRows = 0;
-    _uut.padLeftChunks = 1;
+    _uut.padLeftColumns = 27;
     _uut.sourceRows = source.getHeight();
-    _uut.sourceChunks = source.getWidth() / 32;
+    _uut.sourceColumns = source.getWidth();
     _uut.padColor = 0;
     _uut.downstreamRequestFifoEmpty = 1;
     _uut.downstreamRequestFifoReadData = 0;
@@ -480,9 +480,9 @@ TEST_F(VideoPaddingFilterTests, TestImagePadTrimRed)
     _uut.reset = 0;
     // No padding
     _uut.padTopRows = 0;
-    _uut.padLeftChunks = 0;
+    _uut.padLeftColumns = 0;
     _uut.sourceRows = source.getHeight() - 7;
-    _uut.sourceChunks = source.getWidth() / 32 - 4;
+    _uut.sourceColumns = source.getWidth() - 128;
     _uut.padColor = 0xF800;
     _uut.downstreamRequestFifoEmpty = 1;
     _uut.downstreamRequestFifoReadData = 0;
