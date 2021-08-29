@@ -230,14 +230,6 @@ wire [REQUEST_BITS-1:0] upstreamChunkRequest = {downstreamRequestRow, upstreamRe
 wire [REQUEST_BITS-1:0] upstreamChunkRequestNext = {downstreamRequestRow, upstreamRequestCoord[HCOORD_BITS-1:HCOORD_BITS-CHUNKNUM_BITS] + {{(CHUNKNUM_BITS-1){1'b0}}, 1'b1}};
 
 
-
-//reg inboundUpstreamRequest = 1'b0;
-
-//reg downstreamResponseFifoWriteEnableReg = 1'b0;
-//assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseFifoFull;
-
-
-
 // Two upstream chunk caches, so that we can read from one while filling the other
 reg [CHUNKNUM_BITS-1:0] cachedChunkNumA = {CHUNKNUM_BITS{1'b1}};
 reg [CHUNKNUM_BITS-1:0] cachedChunkNumB = {CHUNKNUM_BITS{1'b1}};
@@ -249,7 +241,6 @@ reg cachedChunkBIsOlder = 1'b0;
 // Flags indicating whether the cached chunks are valid (filled completely with pixel data
 reg cachedChunkAValid = 1'b0;
 reg cachedChunkBValid = 1'b0;
-
 
 
 
@@ -290,21 +281,21 @@ wire [BITS_PER_PIXEL-1:0] downstreamPixelColor = blend(downstreamLeftPixelColor,
 wire downstreamLeftPixelIsCached = (downstreamLeftPixelInCacheA && cachedChunkAValid) || (downstreamLeftPixelInCacheB && cachedChunkBValid);
 wire downstreamRightPixelIsCached = (downstreamRightPixelInCacheA && cachedChunkAValid) || (downstreamRightPixelInCacheB && cachedChunkBValid);
 
-// Read the next pending downstream response coord as long as the downstream response fifo can receive it
-assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseFifoFull && !pendingDownstreamResponseFifoEmpty;
-// Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
-reg pendingDownstreamResponseAvailable = 1'b0;
-
 // Write the response if we just grabbed a pending downstream response coord and the cache has the upstream pixels we need
 assign downstreamResponseFifoWriteEnable =  !downstreamResponseFifoFull &&
                                             downstreamLeftPixelIsCached &&
                                             downstreamRightPixelIsCached &&
                                             pendingDownstreamResponseAvailable;
 
+// Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
+reg pendingDownstreamResponseAvailable = 1'b0;
+// Read the next pending downstream response coord as long as the downstream response fifo can receive it
+assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseFifoFull && !pendingDownstreamResponseFifoEmpty &&
+    (!pendingDownstreamResponseAvailable || downstreamResponseFifoWriteEnable);
+
+
 assign downstreamResponseFifoWriteData = downstreamPixelColor;
 
-// TODO remove debug counter
-reg [31:0] totalUpstreamResponses = 32'd0;
 
 function [BITS_PER_PIXEL-1:0] blend;
     input [BITS_PER_PIXEL-1:0]  lColor;
@@ -352,11 +343,6 @@ always @ (posedge scalerClock or posedge reset) begin
         // TODO implement
 
     end else begin
-        // TODO remove this debug counter
-        if (upstreamResponseFifoReadEnable)
-            totalUpstreamResponses <= totalUpstreamResponses + 32'd1;
-
-    
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
         case (downstreamRequestState)
@@ -486,13 +472,6 @@ always @ (posedge scalerClock or posedge reset) begin
                     storeUpstreamResponseToCacheB <= cachedChunkBIsOlder;
                     storeUpstreamResponsePixelCount <= upstreamResponsePixelCount;
                     
-                    // Mark the cache being updated with the chunk number
-                    if (!cachedChunkBIsOlder) begin
-                        cachedChunkNumA <= pendingUpstreamRequestFifoReadData;
-                    end else begin
-                        cachedChunkNumB <= pendingUpstreamRequestFifoReadData;
-                    end
-                    
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
                     if (upstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                         // Reset pixel counter
@@ -530,6 +509,8 @@ always @ (posedge scalerClock or posedge reset) begin
             if (!storeUpstreamResponseToCacheB) begin
                 // Store upstream pixel to cache A
                 cachedChunkA[storeUpstreamResponsePixelCount] <= upstreamResponseFifoReadData;
+                // Mark the cache being updated with the chunk number
+                cachedChunkNumA <= pendingUpstreamRequestFifoReadData;
                 
                 if (storeUpstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                     // Last pixel in chunk is stored, so mark the cache valid
@@ -541,6 +522,8 @@ always @ (posedge scalerClock or posedge reset) begin
             end else begin
                 // Store upstream pixel to cache B
                 cachedChunkB[storeUpstreamResponsePixelCount] <= upstreamResponseFifoReadData;
+                // Mark the cache being updated with the chunk number
+                cachedChunkNumB <= pendingUpstreamRequestFifoReadData;
                 
                 if (storeUpstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                     // Last pixel in chunk is stored, so mark the cache valid
@@ -553,7 +536,11 @@ always @ (posedge scalerClock or posedge reset) begin
         end
         
         // "Available" flag indicates whether a pending downstream response was read last cycle
-        pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnable;
+        if (pendingDownstreamResponseFifoReadEnable) begin
+            pendingDownstreamResponseAvailable <= 1'b1;
+        end else if (downstreamResponseFifoWriteEnable) begin
+            pendingDownstreamResponseAvailable <= 1'b0;
+        end
 
     end
 end
