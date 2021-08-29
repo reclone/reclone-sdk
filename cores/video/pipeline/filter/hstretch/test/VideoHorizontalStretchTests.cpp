@@ -501,8 +501,8 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoDownscale)
 
 TEST_F(VideoHorizontalStretchTests, TestPhotoIdentity)
 {
-    _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoHorizontalStretch_TestPhotoIdentity.vcd");
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("VideoHorizontalStretch_TestPhotoIdentity.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash.bmp"));
@@ -555,7 +555,7 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoIdentity)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -584,7 +584,7 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoIdentity)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -595,6 +595,6 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoIdentity)
 
     ASSERT_TRUE(sink.writeBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash_identity.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
 }
 
