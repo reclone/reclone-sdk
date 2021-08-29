@@ -111,7 +111,7 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_330518.bmp"));
     
-    BmpPipelineSink sink(source.getWidth()*4/3, source.getHeight());
+    BmpPipelineSink sink(source.getWidth()*4/3, source.getHeight(), 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -210,7 +210,7 @@ TEST_F(VideoHorizontalStretchTests, TestImageHalf)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_330518.bmp"));
     
-    BmpPipelineSink sink(source.getWidth()/2, source.getHeight());
+    BmpPipelineSink sink(source.getWidth()/2, source.getHeight(), 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
