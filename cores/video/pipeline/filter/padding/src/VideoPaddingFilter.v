@@ -253,7 +253,7 @@ always @ (posedge scalerClock or posedge reset) begin
         storeUpstreamResponse <= 1'b0;
         storeUpstreamResponseToCacheB <= 1'b0;
         storeUpstreamResponsePixelCount <= {CHUNK_BITS{1'b1}};
-        pendingDownstreamResponseAvailable = 1'b0;
+        pendingDownstreamResponseAvailable <= 1'b0;
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate chunk coordinates,

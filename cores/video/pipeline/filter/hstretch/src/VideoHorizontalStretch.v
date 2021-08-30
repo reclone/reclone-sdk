@@ -132,7 +132,7 @@ SyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(CHUNK_BITS)) upstreamRespons
 // so that the received pixel data can be processed accordingly
 wire pendingUpstreamRequestFifoFull;
 wire pendingUpstreamRequestFifoEmpty;
-reg pendingUpstreamRequestFifoReadEnable <= 1'b0;
+reg pendingUpstreamRequestFifoReadEnable = 1'b0;
 wire [CHUNKNUM_BITS-1:0] pendingUpstreamRequestFifoReadData;
 SyncFifo #(.DATA_WIDTH(CHUNKNUM_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingUpstreamRequests
 (
