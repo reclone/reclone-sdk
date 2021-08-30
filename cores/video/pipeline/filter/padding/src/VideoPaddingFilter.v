@@ -4,7 +4,7 @@
 // This padding filter adds bars of a solid color to any side of the video frame.  To do this,
 // it requires the dimensions of the source video frame, the amount to pad the left and top sides,
 // and the desired padding color.  The source video frame is effectively shifted down and right
-// by the specified padding amounts.  Any pixel chunk requested outside of the shifted source
+// by the specified padding amounts.  Any pixel requested outside of the shifted source
 // frame rectangle is filled with the padding color.
 //
 // If the source video frame dimensions are specified as smaller than its actual dimensions,
@@ -14,20 +14,6 @@
 // The padding filter is useful for pillarboxing and/or letterboxing a smaller video frame
 // inside a larger output resolution, without scaling.
 //
-// This padding module is implemented as two state machines that operate in parallel:
-//
-//  - Downstream Request State Machine
-//      This state machine watches a FIFO that receives pixel chunk requests from the downstream
-//      pipeline element.  For each downstream request received, if the request is within the
-//      video source rectangle, an upstream request is created based on the calculated upstream
-//      chunk position.  This state machine also pushes the downstream request into a pending
-//      downstream response FIFO, so that each request is handled in order later when pixel data
-//      is available.
-//
-//  - Downstream Response State Machine
-//      This state machine actually handles the downstream chunk requests as soon as the required
-//      pixel data is available.  For each pixel, if the chunk is inside the source video rectangle,
-//      write the upstream response to the downstream response, otherwise write the padding color.
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
 //
@@ -73,7 +59,7 @@ module VideoPaddingFilter #(parameter CHUNK_BITS = 5)
     // ...and writes to the downstream response FIFO.
     output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
-    output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
+    output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
     
     // Filter module exposes upstream request FIFO for reading...
     input wire upstreamRequestFifoReadEnable,
@@ -82,7 +68,7 @@ module VideoPaddingFilter #(parameter CHUNK_BITS = 5)
     
     // ...and exposes upstream response FIFO for writing.
     input wire upstreamResponseFifoWriteEnable,
-    output reg upstreamResponseFifoFull = 1'b1,
+    output wire upstreamResponseFifoFull,
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 
@@ -144,7 +130,7 @@ SyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(CHUNK_BITS)) upstreamRespons
 // so that the received pixel data can be processed accordingly
 wire pendingUpstreamRequestFifoFull;
 wire pendingUpstreamRequestFifoEmpty;
-reg pendingUpstreamRequestFifoReadEnable;
+reg pendingUpstreamRequestFifoReadEnable = 1'b0;
 wire [CHUNKNUM_BITS-1:0] pendingUpstreamRequestFifoReadData;
 SyncFifo #(.DATA_WIDTH(CHUNKNUM_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingUpstreamRequests
 (
@@ -246,10 +232,28 @@ assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseFifoFull && 
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
-        // TODO complete this
+        downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+        upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
+        downstreamRequestFifoReadEnableReg <= 1'b0;
+        upstreamRequestFifoWriteEnable <= 1'b0;
+        upstreamRequestFifoWriteData <= {REQUEST_BITS{1'b0}};
+        pendingUpstreamRequestFifoReadEnable <= 1'b0;
+        upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
+        pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+        pendingDownstreamResponseFifoWriteData <= {(HACTIVE_BITS+1){1'b0}};
         lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
         lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
-        
+        downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
+        cachedChunkNumA <= {CHUNKNUM_BITS{1'b1}};
+        cachedChunkNumB <= {CHUNKNUM_BITS{1'b1}};
+        cachedChunkBIsOlder <= 1'b0;
+        cachedChunkAValid <= 1'b0;
+        cachedChunkBValid <= 1'b0;
+        upstreamResponseFifoReadEnableReg <= 1'b0;
+        storeUpstreamResponse <= 1'b0;
+        storeUpstreamResponseToCacheB <= 1'b0;
+        storeUpstreamResponsePixelCount <= {CHUNK_BITS{1'b1}};
+        pendingDownstreamResponseAvailable = 1'b0;
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate chunk coordinates,

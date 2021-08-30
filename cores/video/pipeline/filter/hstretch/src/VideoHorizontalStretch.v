@@ -3,61 +3,15 @@
 //
 // This module uses linear interpolation to perform non-integer scaling of a scanline.
 // Since it is operating on one line at a time, this module can scale horizontally
-// "just in time" as upstream pixel data comes in, without using full line or chunk buffers.
-// However, this makes the timing complicated, as the same upstream pixel may be needed to
-// calculate more than one downstream pixel, and each downstream pixel must blend one or two
-// upstream pixels.
+// using only two chunk buffer caches.
 //
 // Each downstream pixel coordinate is multiplied by the shrink factor to determine the coordinate
 // of the blended pixel in the upstream coordinate frame.
 //
-// The game here is to buffer enough upstream pixels and enough downstream pixel requests so that
-// we spend little time waiting to pull data from the FIFOs, and hopefully achieve burst speeds
-// close to one downstream pixel per shader clock, at least for shrink factors < 1.0.
-//
-// Consider a scale factor of 2x (shrink factor of 0.5).  The FIFO reads should resemble this:
-//
-//      Upstream Column     Downstream Request
-//          0                   0.25
-//          1                   
-//                              0.75
-//          2                   1.25
-//                              1.75
-//          3                   2.25
-//                              2.75
-//          4                   3.25
-//          ...                 ...
-//
-// Since it takes up to two upstream pixels to produce each downstream pixel, this module implements
-// a two-pixel upstream pre-fetch to keep up the downstream burst speed.  To look ahead and know when
-// an upstream pixel can be discarded (and a new pixel can be read from the FIFO), the next
-// downstream request (if available) is pre-fetched.
-//      Cycle   UpstreamR   UpstreamL       DownstreamA DownstreamB
-//      0                                   0.25
-//      1       0                           0.75        0.25
-//      2       1           0               0.75        0.25
-//      3       1           0               1.25        0.75
-//      4       2           1               1.75        1.25
-//      5       2           1               2.25        1.75
-//      6       3           2               2.75        2.25
-//      ...
-//
-// Rules for cycling the upstream pre-fetch (i.e. fetch a new pixel from upstreamResponses):
-//  1. Never cycle the upstream pre-fetch if the downstream pre-fetch contains zero items.
-//  2. If the downstream pre-fetch contains one item, cycle the upstream pre-fetch if it does not
-//     contain the pixels that the downstream item needs.
-//  3. If the downstream pre-fetch contains two items, and the upstream pre-fetch *cannot* satisfy
-//     the oldest downstream item, then cycle the upstream pre-fetch.
-//  4. If the downstream pre-fetch contains two items, and the upstream pre-fetch *can* satisfy the
-//     oldest downstream item, but youngest downstream item cannot be satisfied, then cycle the
-//     upstream pre-fetch.
-//
-// Rules for cycling the downstream pre-fetch (i.e. fetch a new coord from pendingDownstreamResponses):
-//  1. If the downstream pre-fetch contains less than two items, then attempt to read more items
-//     from the FIFO to fill the two-item pre-fetch.
-//  2. If the oldest item in the downstream pre-fetch can be satisfied using the upstream pre-fetch,
-//     then calculate the interpolated pixel, discard the oldest downstream item and attempt
-//     to read a new downstream item.
+// While pixel data in one cache is being used for interpolation, the other cache can store
+// upstream pixel data needed for later interpolation.  The goal is to achieve a burst efficiency
+// of delivering one interpolated pixel downstream per scaler clock, at least for "upscaling"
+// shrink factors <= 1.0 (hShrinkFactor <= 64).
 //
 // This filter can be used to adjust or distort the aspect ratio of a video frame, for example:
 // to display a non-square-pixel video source on a display with square pixels.
@@ -178,7 +132,7 @@ SyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(CHUNK_BITS)) upstreamRespons
 // so that the received pixel data can be processed accordingly
 wire pendingUpstreamRequestFifoFull;
 wire pendingUpstreamRequestFifoEmpty;
-reg pendingUpstreamRequestFifoReadEnable;
+reg pendingUpstreamRequestFifoReadEnable <= 1'b0;
 wire [CHUNKNUM_BITS-1:0] pendingUpstreamRequestFifoReadData;
 SyncFifo #(.DATA_WIDTH(CHUNKNUM_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingUpstreamRequests
 (
@@ -340,10 +294,28 @@ endfunction
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
-        // TODO implement
+        downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+        upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
+        downstreamRequestFifoReadEnableReg <= 1'b0;
+        upstreamRequestFifoWriteEnable <= 1'b0;
+        pendingUpstreamRequestFifoReadEnable <= 1'b0;
+        upstreamRequestFifoWriteData <= {REQUEST_BITS{1'b0}};
+        upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
+        pendingDownstreamResponseFifoWriteEnable <= 1'b0;
+        pendingDownstreamResponseFifoWriteData <= {HCOORD_BITS{1'b0}};
         lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
         lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
-
+        downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
+        cachedChunkNumA <= {CHUNKNUM_BITS{1'b1}};
+        cachedChunkNumB <= {CHUNKNUM_BITS{1'b1}};
+        cachedChunkBIsOlder <= 1'b0;
+        cachedChunkAValid <= 1'b0;
+        cachedChunkBValid <= 1'b0;
+        upstreamResponseFifoReadEnableReg <= 1'b0;
+        storeUpstreamResponse <= 1'b0;
+        storeUpstreamResponseToCacheB <= 1'b0;
+        storeUpstreamResponsePixelCount <= {CHUNK_BITS{1'b1}};
+        pendingDownstreamResponseAvailable <= 1'b0;
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
