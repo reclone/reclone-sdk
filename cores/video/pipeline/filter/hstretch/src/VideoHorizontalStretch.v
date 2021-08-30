@@ -341,6 +341,8 @@ always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
         // TODO implement
+        lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
+        lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
 
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -350,9 +352,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Reset write enables if coming from DOWNSTREAM_REQUEST_STORE
                 upstreamRequestFifoWriteEnable <= 1'b0;
                 pendingDownstreamResponseFifoWriteEnable <= 1'b0;
-                lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
-                lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
-            
+
                 // Wait for a request
                 if (!downstreamRequestFifoEmpty && !pendingUpstreamRequestFifoFull &&
                     !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin

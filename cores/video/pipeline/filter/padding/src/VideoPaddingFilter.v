@@ -168,7 +168,8 @@ wire pendingDownstreamResponseFifoFull;
 wire pendingDownstreamResponseFifoEmpty;
 wire pendingDownstreamResponseFifoReadEnable;
 wire [HACTIVE_BITS:0] pendingDownstreamResponseFifoReadData;
-reg pendingDownstreamResponseFifoWriteEnable = 1'b0;
+reg pendingDownstreamResponseFifoWriteEnableReg = 1'b0;
+wire pendingDownstreamResponseFifoWriteEnable = pendingDownstreamResponseFifoWriteEnableReg && !pendingDownstreamResponseFifoFull;
 reg [HACTIVE_BITS:0] pendingDownstreamResponseFifoWriteData = {(HACTIVE_BITS+1){1'b0}};
 SyncFifo #(.DATA_WIDTH(HACTIVE_BITS+1), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstreamResponses
 (
@@ -177,7 +178,7 @@ SyncFifo #(.DATA_WIDTH(HACTIVE_BITS+1), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDowns
     .readEnable(pendingDownstreamResponseFifoReadEnable),
     .empty(pendingDownstreamResponseFifoEmpty),
     .readData(pendingDownstreamResponseFifoReadData),
-    .writeEnable(pendingDownstreamResponseFifoWriteEnable && !pendingDownstreamResponseFifoFull),
+    .writeEnable(pendingDownstreamResponseFifoWriteEnable),
     .full(pendingDownstreamResponseFifoFull),
     .writeData(pendingDownstreamResponseFifoWriteData)
 );
@@ -246,7 +247,9 @@ always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
         // TODO complete this
-
+        lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
+        lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
+        
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate chunk coordinates,
@@ -255,9 +258,7 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_IDLE: begin
                 // Reset write enables if coming from DOWNSTREAM_REQUEST_STORE
                 upstreamRequestFifoWriteEnable <= 1'b0;
-                pendingDownstreamResponseFifoWriteEnable <= 1'b0;
-                lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
-                lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
+                pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
             
                 // Wait for a request
                 if (!downstreamRequestFifoEmpty && !pendingUpstreamRequestFifoFull &&
@@ -299,7 +300,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     // Save horizontal column as pending downstream response,
                     // and set flag for whether the padding color should be used
                     pendingDownstreamResponseFifoWriteData <= {downstreamRequestIsPadding, upstreamRequestColumn};
-                    pendingDownstreamResponseFifoWriteEnable <= 1'b1;
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b1;
                     
                     // If second to last pixel of the chunk, then start reading the next request, if there is one
                     if (downstreamRequestPixelCount == {1'b0, {(CHUNK_BITS-1){1'b1}}, 1'b0}) begin

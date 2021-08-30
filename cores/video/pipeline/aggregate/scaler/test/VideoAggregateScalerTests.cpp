@@ -105,8 +105,8 @@ class VideoAggregateScalerTests : public Test
 
 TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
 {
-    _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoAggregateScaler_NesPixelPerfect720p.vcd");
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("VideoAggregateScaler_NesPixelPerfect720p.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
@@ -119,11 +119,11 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
     
     _uut.cropRows = 0;
     _uut.cropChunks = 0;
-    // _uut.padTopRows = 8;
-    // _uut.padLeftChunks = 2;
-    // _uut.sourceRows = 672;
-    // _uut.sourceChunks = 24;
-    // _uut.padColor = 0x1F;
+    _uut.padTopRows = 21;
+    _uut.padLeftColumns = 256;
+    _uut.sourceRows = 224*3;
+    _uut.sourceColumns = 256*3;
+    _uut.padColor = 0;
     _uut.enableBinning = 0;
     _uut.hScaleFactor = 3;
     _uut.vScaleFactor = 3;
@@ -175,7 +175,7 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -204,7 +204,7 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -215,13 +215,13 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesPixelPerfect720p.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
 }
 
 TEST_F(VideoAggregateScalerTests, NesWider720p)
 {
-    _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoAggregateScaler_NesWider720p.vcd");
+    //_uut.trace(&_vcdTrace, 99);
+    //_vcdTrace.open("VideoAggregateScaler_NesWider720p.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
@@ -234,11 +234,11 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
     
     _uut.cropRows = 0;
     _uut.cropChunks = 0;
-    // _uut.padTopRows = 8;
-    // _uut.padLeftChunks = 2;
-    // _uut.sourceRows = 672;
-    // _uut.sourceChunks = 24;
-    // _uut.padColor = 0x1F;
+    _uut.padTopRows = 21;
+    _uut.padLeftColumns = 128;
+    _uut.sourceRows = 224*3;
+    _uut.sourceColumns = 256*4;
+    _uut.padColor = 0;
     _uut.enableBinning = 0;
     _uut.hScaleFactor = 4;
     _uut.vScaleFactor = 3;
@@ -290,7 +290,7 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -319,7 +319,7 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -330,7 +330,7 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesWider720p.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
 }
 
 TEST_F(VideoAggregateScalerTests, NesScanlines720p)
@@ -349,11 +349,11 @@ TEST_F(VideoAggregateScalerTests, NesScanlines720p)
     
     _uut.cropRows = 0;
     _uut.cropChunks = 0;
-    // _uut.padTopRows = 8;
-    // _uut.padLeftChunks = 2;
-    // _uut.sourceRows = 672;
-    // _uut.sourceChunks = 24;
-    // _uut.padColor = 0x1F;
+    _uut.padTopRows = 1;
+    _uut.padLeftColumns = 230;
+    _uut.sourceRows = 720;
+    _uut.sourceColumns = 1280;
+    _uut.padColor = 0;
     _uut.enableBinning = 0;
     _uut.hScaleFactor = 1;
     _uut.vScaleFactor = 2;

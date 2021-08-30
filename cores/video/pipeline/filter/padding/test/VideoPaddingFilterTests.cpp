@@ -164,7 +164,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
     
-    BmpPipelineSink sink(source.getWidth() + 128, source.getHeight() + 128, 0.5f);
+    BmpPipelineSink sink(source.getWidth() + 128, source.getHeight() + 128, 0.9f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -186,7 +186,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 1000000; ++i)
+    for (unsigned int i = 0; i < 1200000; ++i)
     {
         _uut.scalerClock = 0;
         
