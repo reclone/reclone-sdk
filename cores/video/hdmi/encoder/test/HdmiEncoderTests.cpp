@@ -64,14 +64,12 @@ TEST_F(HdmiEncoderTests, EncoderWith720pTiming)
     _timing.vSyncPulse = 5;
     _timing.vBackPorch = 20;
     _timing.vActive = 720;
-    _timing.syncIsActiveLow = 0;
     _timing.isInterlaced = 0;
     _timing.eval();
     _uut.pixelClock = _timing.clock;
     _uut.dataEnable = _timing.dataEnable;
     _uut.hSync = _timing.hSync;
     _uut.vSync = _timing.vSync;
-    _uut.syncIsActiveLow = _timing.syncIsActiveLow;
     _uut.activeVideoPreamble = _timing.activeVideoPreamble;
     _uut.activeVideoGuardBand = _timing.activeVideoGuardBand;
     _uut.useYCbCr = 1;
@@ -103,7 +101,6 @@ TEST_F(HdmiEncoderTests, EncoderWith720pTiming)
                 _uut.dataEnable = _timing.dataEnable;
                 _uut.hSync = _timing.hSync;
                 _uut.vSync = _timing.vSync;
-                _uut.syncIsActiveLow = _timing.syncIsActiveLow;
                 _uut.activeVideoPreamble = _timing.activeVideoPreamble;
                 _uut.activeVideoGuardBand = _timing.activeVideoGuardBand;
                 _uut.eval();
@@ -115,7 +112,6 @@ TEST_F(HdmiEncoderTests, EncoderWith720pTiming)
                 _uut.dataEnable = _timing.dataEnable;
                 _uut.hSync = _timing.hSync;
                 _uut.vSync = _timing.vSync;
-                _uut.syncIsActiveLow = _timing.syncIsActiveLow;
                 _uut.activeVideoPreamble = _timing.activeVideoPreamble;
                 _uut.activeVideoGuardBand = _timing.activeVideoGuardBand;
                 _uut.eval();

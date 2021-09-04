@@ -60,7 +60,6 @@ module VBlankDataIsland
     input wire pixelClock,
     input wire hSync,
     input wire vSync,
-    input wire syncIsActiveLow,
     input wire [6:0] videoFormatCode,
     input wire [1:0] rgbOrYCbCrCode,
     input wire [1:0] yccQuantizationRange,
@@ -314,10 +313,10 @@ always @ (*) begin
 end
 
 always @ (posedge pixelClock) begin
-    if ((vSync ^ syncIsActiveLow) || vSyncLatched) begin
+    if (vSync || vSyncLatched) begin
         // VSync is active, or was active
         
-        if (hSync == syncIsActiveLow) begin
+        if (!hSync) begin
             // HSync deasserted; start data island on next active edge of HSync
             hSyncArmed <= 1'b1;
         end
@@ -325,7 +324,7 @@ always @ (posedge pixelClock) begin
         if (vSyncLatched && (packetCount >= NUM_VBLANK_ISLANDS)) begin
             // Done sending all of the data islands
             vSyncLatched <= 1'b0;
-        end else if (hSyncArmed && (hSync ^ syncIsActiveLow) && (packetCount < NUM_VBLANK_ISLANDS)) begin
+        end else if (hSyncArmed && hSync && (packetCount < NUM_VBLANK_ISLANDS)) begin
             // HSync asserted; start data island asap by resetting characterCount
             hSyncArmed <= 1'b0;
             characterCount <= 8'd0;
@@ -333,7 +332,7 @@ always @ (posedge pixelClock) begin
             channel0 <= 10'd0;
             channel1 <= 10'd0;
             channel2 <= 10'd0;
-            if (vSync ^ syncIsActiveLow) begin
+            if (vSync) begin
                 // VSync is active
                 vSyncLatched <= 1'b1;
             end

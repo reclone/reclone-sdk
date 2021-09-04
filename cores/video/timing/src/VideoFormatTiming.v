@@ -11,8 +11,11 @@
 // Since the HDMI encoder cannot predict when an active video region is about to begin, the
 // two signals indicate when to send the active video preamble or guard band characters.
 //
+// For consistency, hSync, vSync, and dataEnable are all active high.  Depending on the video mode,
+// these signals can be inverted as needed outside of the VideoFormatTiming module.
 //
-// Copyright 2019 Reclone Labs <reclonelabs.com>
+//
+// Copyright 2019 - 2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -48,12 +51,11 @@ module VideoFormatTiming
     input wire [3:0] vSyncPulse,
     input wire [5:0] vBackPorch,
     input wire [10:0] vActive,
-    input wire syncIsActiveLow,
     input wire isInterlaced,
     
     output reg dataEnable,
-    output reg hSync,
-    output reg vSync,
+    output reg hSync, //active-high
+    output reg vSync, //active-high
     output reg [11:0] hPos,
     output reg [10:0] vPos,
     output reg activeVideoPreamble,
@@ -83,8 +85,8 @@ always @ (posedge clock or posedge reset) begin
     if (reset) begin
         hCount <= 12'd0;
         vCount <= 11'd0;
-        hSync <= syncIsActiveLow;
-        vSync <= syncIsActiveLow;
+        hSync <= 1'b0;
+        vSync <= 1'b0;
         dataEnable <= 1'b0;
         hPos <= 12'd0;
         vPos <= 11'd0;
@@ -93,13 +95,11 @@ always @ (posedge clock or posedge reset) begin
     end else begin
         hCount <= hCountNext;
         vCount <= vCountNext;
-        hSync <= ((hCountNext >= {5'd0, hFrontPorch}) && (hCountNext < {5'd0, hFrontPorch} + {4'd0, hSyncPulse})) 
-                ^ syncIsActiveLow;
+        hSync <= ((hCountNext >= {5'd0, hFrontPorch}) && (hCountNext < {5'd0, hFrontPorch} + {4'd0, hSyncPulse}));
         vSync <= ( (vCountNext > {5'd0, vSyncStartLine} || 
                     (vCountNext == {5'd0, vSyncStartLine} && hCountNext >= ({5'd0, hFrontPorch} + vSyncInterlaceDelay))) 
                 && (vCountNext < {5'd0, vSyncEndLine} || 
-                    (vCountNext == {5'd0, vSyncEndLine} && hCountNext < ({5'd0, hFrontPorch} + vSyncInterlaceDelay)) ))
-                ^ syncIsActiveLow;
+                    (vCountNext == {5'd0, vSyncEndLine} && hCountNext < ({5'd0, hFrontPorch} + vSyncInterlaceDelay)) ));
         dataEnable <= !hBlankNext && !vBlankNext;
         hPos <= hBlankNext ? 12'd0 : (hCountNext - {3'd0, hBlank});
         vPos <= vBlankNext ? 11'd0 : (vCountNext - {4'd0, vBlank});

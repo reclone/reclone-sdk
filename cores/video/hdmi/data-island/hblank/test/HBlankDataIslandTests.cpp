@@ -51,7 +51,6 @@ TEST_F(HBlankDataIslandTests, NoHSync)
     _uut.pixelClock = 0;
     _uut.hSync = 0;
     _uut.vSync = 0;
-    _uut.syncIsActiveLow = 0;
     _uut.n = 6144;
     _uut.cts = 74250;
     _uut.samplesPerRegenPacket = 48;
@@ -83,7 +82,6 @@ TEST_F(HBlankDataIslandTests, OneSample)
     _uut.pixelClock = 0;
     _uut.hSync = 0;
     _uut.vSync = 0;
-    _uut.syncIsActiveLow = 0;
     _uut.n = 6144;
     _uut.cts = 74250;
     _uut.samplesPerRegenPacket = 48;
@@ -252,7 +250,6 @@ TEST_F(HBlankDataIslandTests, NoSamples)
     _uut.pixelClock = 0;
     _uut.hSync = 0;
     _uut.vSync = 0;
-    _uut.syncIsActiveLow = 0;
     _uut.n = 6144;
     _uut.cts = 74250;
     _uut.samplesPerRegenPacket = 48;
@@ -380,7 +377,6 @@ TEST_F(HBlankDataIslandTests, RegenPackets)
     _uut.pixelClock = 0;
     _uut.hSync = 0;
     _uut.vSync = 0;
-    _uut.syncIsActiveLow = 0;
     _uut.n = 6144;
     _uut.cts = 74250;
     _uut.samplesPerRegenPacket = 48;

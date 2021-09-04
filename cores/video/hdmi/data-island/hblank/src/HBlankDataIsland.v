@@ -67,7 +67,6 @@ module HBlankDataIsland
     input wire pixelClock,
     input wire hSync,
     input wire vSync,
-    input wire syncIsActiveLow,
     input wire [19:0] n,
     input wire [19:0] cts,
     input wire [7:0] samplesPerRegenPacket,
@@ -254,12 +253,12 @@ wire [9:0] ch1GuardBand = 10'b0100110011;
 wire [9:0] ch2GuardBand = 10'b0100110011;
 
 always @ (posedge pixelClock) begin
-    if (hSync == syncIsActiveLow) begin
+    if (!hSync) begin
         // HSync deasserted; start data island on next active edge of HSync
         hSyncArmed <= 1'b1;
     end
 
-    if (hSyncArmed && (hSync ^ syncIsActiveLow)) begin
+    if (hSyncArmed && hSync) begin
         // HSync asserted; start data island asap by resetting characterCount
         characterCount <= 7'd0;
         dataIslandActive <= 1'b0;

@@ -62,7 +62,6 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
     _uut.vSyncPulse = 5;
     _uut.vBackPorch = 20;
     _uut.vActive = 720;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.eval();
     vcd_trace.dump(_tickCount++);
@@ -90,21 +89,21 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(1U, _uut.hSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(0U, _uut.hSync);
                 }
                 
                 if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(1U, _uut.vSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(0U, _uut.vSync);
                 }
                 
                 if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -159,7 +158,6 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
     _uut.vSyncPulse = 10;
     _uut.vBackPorch = 30;
     _uut.vActive = 1080;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 1;
     _uut.eval();
     
@@ -191,21 +189,21 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(1U, _uut.hSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(0U, _uut.hSync);
                 }
                 
                 if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(1U, _uut.vSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(0U, _uut.vSync);
                 }
                 
                 if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -262,21 +260,21 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(1U, _uut.hSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(0U, _uut.hSync);
                 }
                 
                 if ((vCount > _uut.vFrontPorch + 1U || (vCount == _uut.vFrontPorch + 1U && hCount >= _uut.hFrontPorch + hHalfLine)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse + 1U) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse + 1U) && hCount < _uut.hFrontPorch + hHalfLine)))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(1U, _uut.vSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(0U, _uut.vSync);
                 }
                 
                 if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -328,7 +326,6 @@ TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
     _uut.vSyncPulse = 2;
     _uut.vBackPorch = 31;
     _uut.vActive = 480;
-    _uut.syncIsActiveLow = 1;
     _uut.isInterlaced = 0;
     _uut.eval();
     
@@ -361,21 +358,21 @@ TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(1U, _uut.hSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(0U, _uut.hSync);
                 }
                 
                 if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(1U, _uut.vSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(0U, _uut.vSync);
                 }
                 
                 if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -418,7 +415,6 @@ TEST_F(VideoFormatTimingTests, Svga800x600at72Hz)
     _uut.vSyncPulse = 6;
     _uut.vBackPorch = 23;
     _uut.vActive = 600;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.eval();
     
@@ -444,21 +440,21 @@ TEST_F(VideoFormatTimingTests, Svga800x600at72Hz)
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(1U, _uut.hSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(0U, _uut.hSync);
                 }
                 
                 if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(1U, _uut.vSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(0U, _uut.vSync);
                 }
                 
                 if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -501,7 +497,6 @@ TEST_F(VideoFormatTimingTests, Xga1024x768at85Hz)
     _uut.vSyncPulse = 3;
     _uut.vBackPorch = 36;
     _uut.vActive = 768;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.eval();
     
@@ -527,21 +522,21 @@ TEST_F(VideoFormatTimingTests, Xga1024x768at85Hz)
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(1U, _uut.hSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                    ASSERT_EQ(0U, _uut.hSync);
                 }
                 
                 if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                     (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
                 {
-                    ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(1U, _uut.vSync);
                 }
                 else
                 {
-                    ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                    ASSERT_EQ(0U, _uut.vSync);
                 }
                 
                 if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))

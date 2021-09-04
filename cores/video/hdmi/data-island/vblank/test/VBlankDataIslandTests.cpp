@@ -51,7 +51,6 @@ TEST_F(VBlankDataIslandTests, NoVSync)
     _uut.pixelClock = 0;
     _uut.hSync = 0;
     _uut.vSync = 0;
-    _uut.syncIsActiveLow = 0;
     _uut.videoFormatCode = 4; //720p
     _uut.rgbOrYCbCrCode = 0;
     _uut.yccQuantizationRange = 0;
@@ -123,7 +122,6 @@ TEST_F(VBlankDataIslandTests, Infoframe)
     _uut.pixelClock = 0;
     _uut.hSync = 1;
     _uut.vSync = 1;
-    _uut.syncIsActiveLow = 0;
     _uut.videoFormatCode = 4; //720p
     _uut.rgbOrYCbCrCode = 0;
     _uut.yccQuantizationRange = 0;
