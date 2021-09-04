@@ -224,7 +224,6 @@ reg [COLORNUM_BITS-1:0] fgColorAttribute = {COLORNUM_BITS{1'b0}};
 reg [ALPHA_BITS-1:0] fgAlpha = {ALPHA_BITS{1'b0}};
 reg textForegroundIsVisible = 1'b0;
 reg isVisibleCursorPixel = 1'b0;
-reg isPaddingPixelDelayed = 1'b0;
 
 function [BITS_PER_COLOR_COMPONENT-1:0] blend;
     input [BITS_PER_COLOR_COMPONENT-1:0] topColor;
@@ -323,7 +322,6 @@ always @ (posedge pixelClock or posedge reset) begin
         
         textForegroundIsVisible <= 1'b0;
         isVisibleCursorPixel <= 1'b0;
-        isPaddingPixelDelayed <= 1'b0;
     end else begin
         
         // STAGE 1 - Calculate positions
@@ -335,6 +333,7 @@ always @ (posedge pixelClock or posedge reset) begin
             // vPos has incremented by 1 (progressive) or is the second line after padding (interlaced); assume start of new line
             hScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
+            screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
             
             // If vPos is past the top padding, increment the vertical counters
             if (vPosIn > topPadding) begin
@@ -359,6 +358,7 @@ always @ (posedge pixelClock or posedge reset) begin
             // vPos has incremented by 2 (interlaced); assume start of new line
             hScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
+            screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
             
             // If vPos is past the top padding, increment the vertical counters
             if (vPosIn > topPadding) begin
@@ -386,6 +386,8 @@ always @ (posedge pixelClock or posedge reset) begin
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
             vScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             vGlyphCounter <= {GLYPH_HEIGHT_BITS{1'b0}};
+            screenRow <= {SCREEN_HEIGHT_BITS{1'b0}};
+            screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
             
         end else if (hPosIn == (hPosInDelayed[0] + {{(HACTIVE_BITS-1){1'b0}}, 1'b1})) begin
             // vPos has remained the same, hPos has incremented by 1
@@ -436,11 +438,12 @@ always @ (posedge pixelClock or posedge reset) begin
         
         // Save foreground color and background color attributes for next stage
         bgColorAttribute <= blinkIsBackgroundIntensity ? screenRamData[15:12] : {1'b0, screenRamData[14:12]};
-        bgAlpha <= colorAlphasByNumber[blinkIsBackgroundIntensity ? screenRamData[15:12] : {1'b0, screenRamData[14:12]}];
-        
         fgColorAttribute <= screenRamData[11:8];
-        fgAlpha <= colorAlphasByNumber[screenRamData[11:8]];
         
+        // Determine alpha values, which are forced to zero if this is a padding pixel
+        bgAlpha <= isPaddingPixel ? {ALPHA_BITS{1'b0}} :
+            colorAlphasByNumber[blinkIsBackgroundIntensity ? screenRamData[15:12] : {1'b0, screenRamData[14:12]}];
+        fgAlpha <= isPaddingPixel ? {ALPHA_BITS{1'b0}} : colorAlphasByNumber[screenRamData[11:8]];
         
         // Determine whether text foreground should be visible (text might be blinking)
         textForegroundIsVisible <= frameCounter[5] || !screenRamData[15] || blinkIsBackgroundIntensity;
@@ -448,30 +451,23 @@ always @ (posedge pixelClock or posedge reset) begin
         // Determine whether this is a visible cursor pixel
         isVisibleCursorPixel <= isCursorPixel && frameCounter[4];
         
-        // Delay isPaddingPixeland glyphColumn
-        isPaddingPixelDelayed <= isPaddingPixel;
+        // Delay glyphColumn so that we can select foreground vs. background in next stage
         glyphColumnDelayed <= glyphColumn;
+        
         
         // STAGE 4 - Determine final pixel color and write outputs
         
-        if (isPaddingPixelDelayed) begin
-            // Padding pixel, so just show the upstream color
-            red <= upstreamRed;
-            green <= upstreamGreen;
-            blue <= upstreamBlue;
+        // Blend the foreground or background color with the upstream color
+        if (isVisibleCursorPixel || (glyphRamData[glyphColumnDelayed] && textForegroundIsVisible)) begin
+            // Foreground pixel
+            red <= blend(colorRom[fgColorAttribute][23:16], upstreamRedDelayed[2], fgAlpha);
+            green <= blend(colorRom[fgColorAttribute][15:8], upstreamGreenDelayed[2], fgAlpha);
+            blue <= blend(colorRom[fgColorAttribute][7:0], upstreamBlueDelayed[2], fgAlpha);
         end else begin
-            // Not a padding pixel, so blend the foreground or background color with the upstream color
-            if (isVisibleCursorPixel || (glyphRamData[glyphColumnDelayed] && textForegroundIsVisible)) begin
-                // Foreground pixel
-                red <= blend(colorRom[fgColorAttribute][23:16], upstreamRedDelayed[2], fgAlpha);
-                green <= blend(colorRom[fgColorAttribute][15:8], upstreamGreenDelayed[2], fgAlpha);
-                blue <= blend(colorRom[fgColorAttribute][7:0], upstreamBlueDelayed[2], fgAlpha);
-            end else begin
-                // Background pixel
-                red <= blend(colorRom[bgColorAttribute][23:16], upstreamRedDelayed[2], bgAlpha);
-                green <= blend(colorRom[bgColorAttribute][15:8], upstreamGreenDelayed[2], bgAlpha);
-                blue <= blend(colorRom[bgColorAttribute][7:0], upstreamBlueDelayed[2], bgAlpha);
-            end
+            // Background pixel
+            red <= blend(colorRom[bgColorAttribute][23:16], upstreamRedDelayed[2], bgAlpha);
+            green <= blend(colorRom[bgColorAttribute][15:8], upstreamGreenDelayed[2], bgAlpha);
+            blue <= blend(colorRom[bgColorAttribute][7:0], upstreamBlueDelayed[2], bgAlpha);
         end
         
         // Delayed video signals
