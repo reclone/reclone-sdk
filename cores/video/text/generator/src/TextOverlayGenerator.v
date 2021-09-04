@@ -37,6 +37,7 @@
 // The screen RAM supports a screen of 80x25 characters, so it must store 2000 16-bit words
 // (4000 bytes).  Since this is very close to 2048 words (4096 bytes), the remaining
 // 48 characters can be displayed on a partial line 26, for some creative visual effects.
+// The last entry in screen RAM is repeated for the rightmost 33 characters of screen row 26.
 // Consider 8x14 text being displayed at 720p resolution: if the characters are doubled in size
 // to 16x28, that means 25 rows take up 700 pixels in height, leaving an extra 20 pixels of height
 // to partially display our sneaky 26th row.
@@ -328,8 +329,7 @@ always @ (posedge pixelClock or posedge reset) begin
         
         // Update hScaleCounter, vScaleCounter, hGlyphCounter, vGlyphCounter, screenColumn, screenRow
         // (This will also update screenRamAddress via combinatorial logic)
-        if (vPosIn == (vPosInDelayed[0] + {{(VACTIVE_BITS-1){1'b0}},1'b1}) ||
-            vPosIn == (topPadding + {{(VACTIVE_BITS-1){1'b0}},1'b1})) begin
+        if (vPosIn == (vPosInDelayed[0] + {{(VACTIVE_BITS-1){1'b0}},1'b1})) begin //FIXME interlaced?
             // vPos has incremented by 1 (progressive) or is the second line after padding (interlaced); assume start of new line
             hScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
@@ -387,6 +387,12 @@ always @ (posedge pixelClock or posedge reset) begin
             vScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             vGlyphCounter <= {GLYPH_HEIGHT_BITS{1'b0}};
             screenRow <= {SCREEN_HEIGHT_BITS{1'b0}};
+            screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
+            
+        end else if (hSyncIn) begin
+            // Horizontal sync asserted, so reset all horizontal counters
+            hScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
+            hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
             screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
             
         end else if (hPosIn == (hPosInDelayed[0] + {{(HACTIVE_BITS-1){1'b0}}, 1'b1})) begin
@@ -458,7 +464,8 @@ always @ (posedge pixelClock or posedge reset) begin
         // STAGE 4 - Determine final pixel color and write outputs
         
         // Blend the foreground or background color with the upstream color
-        if (isVisibleCursorPixel || (glyphRamData[glyphColumnDelayed] && textForegroundIsVisible)) begin
+        if (isVisibleCursorPixel ||
+            (textForegroundIsVisible && glyphRamData[{GLYPH_WIDTH_BITS{1'b1}} - glyphColumnDelayed])) begin
             // Foreground pixel
             red <= blend(colorRom[fgColorAttribute][23:16], upstreamRedDelayed[2], fgAlpha);
             green <= blend(colorRom[fgColorAttribute][15:8], upstreamGreenDelayed[2], fgAlpha);
