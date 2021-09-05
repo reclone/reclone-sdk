@@ -24,6 +24,10 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <iostream>
+#include <fstream>
+#include <array>
+#include <string>
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VTextOverlayGenerator.h"
@@ -36,6 +40,7 @@ class TextOverlayGeneratorTests : public ::testing::Test
         TextOverlayGeneratorTests() : _tickCount(1)
         {
             Verilated::traceEverOn(true);
+            _glyphRam.fill(0U);
         }
         
         virtual ~TextOverlayGeneratorTests()
@@ -47,7 +52,64 @@ class TextOverlayGeneratorTests : public ::testing::Test
         VTextOverlayGenerator _uut;
         VVideoFormatTiming _timing;
         unsigned int _tickCount;
+        std::array<uint8_t,4096> _glyphRam;
+        std::array<uint16_t,2048> _screenRam;
+        
+        bool loadGlyphRam(std::string filename);
+        bool loadScreenRam(std::string filename);
 };
+
+bool TextOverlayGeneratorTests::loadGlyphRam(std::string filename)
+{
+    std::ifstream infile(filename);
+    if (!infile.is_open())
+    {
+        return false;
+    }
+    
+    std::string line;
+    uint8_t parsedByte;
+    uint32_t idx = 0;
+    while (std::getline(infile, line))
+    {
+        parsedByte = static_cast<uint8_t>(stoi(line, nullptr, 2));
+        _glyphRam[idx] = parsedByte;
+        ++idx;
+    }
+    infile.close();
+    if (idx != _glyphRam.size())
+    {
+        return false;
+    }
+    
+    return true;
+}
+
+bool TextOverlayGeneratorTests::loadScreenRam(std::string filename)
+{
+    std::ifstream infile(filename);
+    if (!infile.is_open())
+    {
+        return false;
+    }
+    
+    std::string line;
+    uint16_t parsedByte;
+    uint32_t idx = 0;
+    while (std::getline(infile, line))
+    {
+        parsedByte = static_cast<uint16_t>(stoi(line, nullptr, 16));
+        _screenRam[idx] = parsedByte;
+        ++idx;
+    }
+    infile.close();
+    if (idx != _screenRam.size())
+    {
+        return false;
+    }
+    
+    return true;
+}
 
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
 {
@@ -56,6 +118,9 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("TextCharacterSet720p.vcd");
+    
+    ASSERT_TRUE(loadGlyphRam("CP437_8x16.mem"));
+    ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
 
     _timing.clock = 0;
     _timing.reset = 0;
@@ -95,7 +160,7 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     _uut.topPadding = 0;
     _uut.colorAlphas = 0xFFFFFFFF;
     _uut.glyphRamData = 0xAA;
-    _uut.screenRamData = 0x0700;
+    _uut.screenRamData = 0x0741;
     _uut.eval();
     
     vcd_trace.dump(_tickCount++);
@@ -122,7 +187,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
                 
                 scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
                 
-                //TODO service screen and glyph ram requests
+                _uut.glyphRamData = _glyphRam[_uut.glyphRamAddress];
+                _uut.screenRamData = _screenRam[_uut.screenRamAddress];
                 
                 _timing.clock = 0;
                 _timing.eval();
