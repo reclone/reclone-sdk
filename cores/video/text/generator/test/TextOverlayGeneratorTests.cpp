@@ -172,6 +172,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
         {
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_timing.hFrontPorch + _timing.hSyncPulse + _timing.hBackPorch + _timing.hActive); ++hCount)
             {
+                scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
+
                 _timing.clock = 1;
                 _timing.eval();
                 _uut.pixelClock = _timing.clock;
@@ -182,13 +184,12 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
                 _uut.activeVideoGuardBandIn = _timing.activeVideoGuardBand;
                 _uut.hPosIn = _timing.hPos;
                 _uut.vPosIn = _timing.vPos;
+                uint32_t glyphRamAddress = _uut.glyphRamAddress;
+                uint32_t screenRamAddress = _uut.screenRamAddress;
                 _uut.eval();
+                _uut.glyphRamData = _glyphRam[glyphRamAddress];
+                _uut.screenRamData = _screenRam[screenRamAddress];
                 vcd_trace.dump(_tickCount++);
-                
-                scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
-                
-                _uut.glyphRamData = _glyphRam[_uut.glyphRamAddress];
-                _uut.screenRamData = _screenRam[_uut.screenRamAddress];
                 
                 _timing.clock = 0;
                 _timing.eval();

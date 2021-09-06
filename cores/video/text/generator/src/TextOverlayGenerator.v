@@ -215,7 +215,7 @@ reg [SCREEN_HEIGHT_BITS-1:0] screenRow = {SCREEN_HEIGHT_BITS{1'b0}};
 
 reg [GLYPH_HEIGHT_BITS-1:0] glyphRow = {GLYPH_HEIGHT_BITS{1'b0}};
 reg [GLYPH_WIDTH_BITS-1:0] glyphColumn = {GLYPH_WIDTH_BITS{1'b0}};
-reg [GLYPH_WIDTH_BITS-1:0] glyphColumnDelayed = {GLYPH_WIDTH_BITS{1'b0}};
+reg [GLYPH_WIDTH_BITS-1:0] glyphColumnReversed = {GLYPH_WIDTH_BITS{1'b0}};
 reg isPaddingPixel = 1'b0;
 reg isCursorPixel = 1'b0;
 
@@ -268,16 +268,6 @@ assign colorAlphasByNumber[13] = colorAlphas[27:26];
 assign colorAlphasByNumber[14] = colorAlphas[29:28];
 assign colorAlphasByNumber[15] = colorAlphas[31:30];
 
-
-// function [ALPHA_BITS-1:0] getAlphaForColor;
-    // input [COLORNUM_BITS-1:0] colorNum;
-    // input [ALPHA_SETTINGS_BITS-1:0] colorAlphasIn;
-    
-    // begin
-        // getAlphaForColor = colorAlphasIn[{colorNum, 1'b1}:{colorNum, 1'b0}];
-    // end
-// endfunction
-
 integer k;
 
 always @ (posedge pixelClock or posedge reset) begin
@@ -313,7 +303,7 @@ always @ (posedge pixelClock or posedge reset) begin
         screenRow <= {SCREEN_HEIGHT_BITS{1'b0}};
         glyphRow <= {GLYPH_HEIGHT_BITS{1'b0}};
         glyphColumn <= {GLYPH_WIDTH_BITS{1'b0}};
-        glyphColumnDelayed <= {GLYPH_WIDTH_BITS{1'b0}};
+        glyphColumnReversed <= {GLYPH_WIDTH_BITS{1'b0}};
         
         isPaddingPixel <= 1'b0;
         isCursorPixel <= 1'b0;
@@ -458,14 +448,14 @@ always @ (posedge pixelClock or posedge reset) begin
         isVisibleCursorPixel <= isCursorPixel && frameCounter[4];
         
         // Delay glyphColumn so that we can select foreground vs. background in next stage
-        glyphColumnDelayed <= glyphColumn;
+        glyphColumnReversed <= {GLYPH_WIDTH_BITS{1'b1}} - glyphColumn;
         
         
         // STAGE 4 - Determine final pixel color and write outputs
         
         // Blend the foreground or background color with the upstream color
         if (isVisibleCursorPixel ||
-            (textForegroundIsVisible && glyphRamData[{GLYPH_WIDTH_BITS{1'b1}} - glyphColumnDelayed])) begin
+            (textForegroundIsVisible && glyphRamData[glyphColumnReversed])) begin
             // Foreground pixel
             red <= blend(colorRom[fgColorAttribute][23:16], upstreamRedDelayed[2], fgAlpha);
             green <= blend(colorRom[fgColorAttribute][15:8], upstreamGreenDelayed[2], fgAlpha);
