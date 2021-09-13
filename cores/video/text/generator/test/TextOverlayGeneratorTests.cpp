@@ -115,11 +115,11 @@ bool TextOverlayGeneratorTests::loadScreenRam(std::string filename)
 
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
 {
-    VerilatedVcdC vcd_trace;
+    //VerilatedVcdC vcd_trace;
     ScanlineBuffer scanlines(1280, 720, false, false);
     
-    _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("TextCharacterSet720p.vcd");
+    //_uut.trace(&vcd_trace, 99);
+    //vcd_trace.open("TextCharacterSet720p.vcd");
     
     ASSERT_TRUE(loadGlyphRam("CP437_8x14.mem"));
     ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
@@ -168,8 +168,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     _uut.screenRamData = 0x0741;
     _uut.eval();
     
-    vcd_trace.dump(_tickCount++);
-    vcd_trace.flush();
+    //vcd_trace.dump(_tickCount++);
+    //vcd_trace.flush();
 
     for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
@@ -194,7 +194,7 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
                 _uut.eval();
                 _uut.glyphRamData = _glyphRam[glyphRamAddress];
                 _uut.screenRamData = _screenRam[screenRamAddress];
-                vcd_trace.dump(_tickCount++);
+                //vcd_trace.dump(_tickCount++);
                 
                 _timing.clock = 0;
                 _timing.eval();
@@ -207,26 +207,26 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
                 _uut.hPosIn = _timing.hPos;
                 _uut.vPosIn = _timing.vPos;
                 _uut.eval();
-                vcd_trace.dump(_tickCount++);
+                //vcd_trace.dump(_tickCount++);
                 
                 //vcd_trace.flush();
             }
         }
-        vcd_trace.flush();
+        //vcd_trace.flush();
     }
     
     EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet720p.bmp"));
     
-    vcd_trace.close();
+    //vcd_trace.close();
 }
 
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
 {
-    VerilatedVcdC vcd_trace;
+    //VerilatedVcdC vcd_trace;
     ScanlineBuffer scanlines(720, 486, true, true);
     
-    _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("TextCharacterSet480iNtsc.vcd");
+    //_uut.trace(&vcd_trace, 99);
+    //vcd_trace.open("TextCharacterSet480iNtsc.vcd");
     
     ASSERT_TRUE(loadGlyphRam("CP437_8x16.mem"));
     ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
@@ -267,8 +267,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
     _uut.screenRamData = 0x0741;
     _uut.eval();
     
-    vcd_trace.dump(_tickCount++);
-    vcd_trace.flush();
+    //vcd_trace.dump(_tickCount++);
+    //vcd_trace.flush();
 
     for (unsigned int phaseCount = 0; phaseCount < 4000000; ++phaseCount)
     {
@@ -294,7 +294,7 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
         {
             _uut.screenRamData = _screenRam[screenRamAddress];
         }
-        vcd_trace.dump(_tickCount++);
+        //vcd_trace.dump(_tickCount++);
         
         if (_ntsc.pixelEnable)
         {
@@ -314,21 +314,21 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
         _uut.hPosIn = _ntsc.hPos;
         _uut.vPosIn = _ntsc.vPos;
         _uut.eval();
-        vcd_trace.dump(_tickCount++);
+        //vcd_trace.dump(_tickCount++);
     }
     
     EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet480iNtsc.bmp"));
     
-    vcd_trace.close();
+    //vcd_trace.close();
 }
 
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet240pNtsc)
 {
-    VerilatedVcdC vcd_trace;
+    //VerilatedVcdC vcd_trace;
     ScanlineBuffer scanlines(720, 242, false, false);
     
-    _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("TextCharacterSet240pNtsc.vcd");
+    //_uut.trace(&vcd_trace, 99);
+    //vcd_trace.open("TextCharacterSet240pNtsc.vcd");
     
     ASSERT_TRUE(loadGlyphRam("CP437_8x8.mem"));
     ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
@@ -369,8 +369,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet240pNtsc)
     _uut.screenRamData = 0x0741;
     _uut.eval();
     
-    vcd_trace.dump(_tickCount++);
-    vcd_trace.flush();
+    //vcd_trace.dump(_tickCount++);
+    //vcd_trace.flush();
 
     for (unsigned int phaseCount = 0; phaseCount < 4000000; ++phaseCount)
     {
@@ -396,7 +396,7 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet240pNtsc)
         {
             _uut.screenRamData = _screenRam[screenRamAddress];
         }
-        vcd_trace.dump(_tickCount++);
+        //vcd_trace.dump(_tickCount++);
         
         if (_ntsc.pixelEnable)
         {
@@ -416,12 +416,12 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet240pNtsc)
         _uut.hPosIn = _ntsc.hPos;
         _uut.vPosIn = _ntsc.vPos;
         _uut.eval();
-        vcd_trace.dump(_tickCount++);
+        //vcd_trace.dump(_tickCount++);
     }
     
     EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet240pNtsc.bmp"));
     
-    vcd_trace.close();
+    //vcd_trace.close();
 }
 
 
