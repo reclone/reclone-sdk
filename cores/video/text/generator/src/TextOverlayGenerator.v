@@ -322,7 +322,7 @@ always @ (posedge pixelClock or posedge reset) begin
         
         // Update hScaleCounter, vScaleCounter, hGlyphCounter, vGlyphCounter, screenColumn, screenRow
         // (This will also update screenRamAddress via combinatorial logic)
-        if (vPosIn == (vPosInDelayed[0] + {{(VACTIVE_BITS-1){1'b0}},1'b1})) begin //FIXME interlaced?
+        if (vPosIn == (vPosInDelayed[0] + {{(VACTIVE_BITS-1){1'b0}},1'b1})) begin
             // vPos has incremented by 1 (progressive) or is the second line after padding (interlaced); assume start of new line
             hScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
@@ -379,6 +379,8 @@ always @ (posedge pixelClock or posedge reset) begin
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
             screenRow <= {SCREEN_HEIGHT_BITS{1'b0}};
             screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
+            // For interlaced scanning, vScaleCounter and vGlyphCounter start at
+            // 0 (even frames) or 1 (odd frames).
             vScaleCounter <= {{(INTEGER_SCALE_BITS-1){1'b0}}, vPosIn[0]};
             vGlyphCounter <= {{(GLYPH_HEIGHT_BITS-1){1'b0}}, vPosIn[0]};
             

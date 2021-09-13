@@ -322,5 +322,107 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
     vcd_trace.close();
 }
 
+TEST_F(TextOverlayGeneratorTests, TextCharacterSet240pNtsc)
+{
+    VerilatedVcdC vcd_trace;
+    ScanlineBuffer scanlines(720, 242, false, false);
+    
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("TextCharacterSet240pNtsc.vcd");
+    
+    ASSERT_TRUE(loadGlyphRam("CP437_8x8.mem"));
+    ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
+
+    _ntsc.phaseClock = 0;
+    _ntsc.reset = 0;
+    _ntsc.progressive = 1;
+    _ntsc.eval();
+    
+    _uut.reset = 0;
+    _uut.pixelClock = 0;
+    _uut.pixelEnable = 0;
+    _uut.videoDataEnableIn = 0;
+    _uut.hSyncIn = 0;
+    _uut.vSyncIn = 0;
+    _uut.hPosIn = 0;
+    _uut.vPosIn = 0;
+    _uut.activeVideoPreambleIn = 0;
+    _uut.activeVideoGuardBandIn = 0;
+    _uut.upstreamRed = 0x80;
+    _uut.upstreamGreen = 0x00;
+    _uut.upstreamBlue = 0x00;
+    _uut.blinkIsBackgroundIntensity = 1;
+    _uut.enableCursor = 0;
+    _uut.cursorScanLineStart = 11;
+    _uut.cursorScanLineEnd = 13;
+    _uut.cursorPositionColumn = 0;
+    _uut.cursorPositionRow = 0;
+    _uut.glyphHeight = 8;
+    _uut.hScaleFactor = 1;
+    _uut.vScaleFactor = 1;
+    _uut.leftPadding = 40;
+    _uut.topPadding = 20;
+    _uut.numColumns = 80;
+    _uut.numRows = 25;
+    _uut.colorAlphas = 0xFFFFFFFF;
+    _uut.glyphRamData = 0xAA;
+    _uut.screenRamData = 0x0741;
+    _uut.eval();
+    
+    vcd_trace.dump(_tickCount++);
+    vcd_trace.flush();
+
+    for (unsigned int phaseCount = 0; phaseCount < 4000000; ++phaseCount)
+    {
+        _ntsc.phaseClock = 1;
+        _ntsc.eval();
+        _uut.pixelClock = _ntsc.phaseClock;
+        _uut.pixelEnable = _ntsc.pixelEnable;
+        _uut.videoDataEnableIn = !_ntsc.blank;
+        _uut.hSyncIn = _ntsc.hSync;
+        _uut.vSyncIn = _ntsc.vSync;
+        _uut.activeVideoPreambleIn = 0;
+        _uut.activeVideoGuardBandIn = 0;
+        _uut.hPosIn = _ntsc.hPos;
+        _uut.vPosIn = _ntsc.vPos;
+        uint32_t glyphRamAddress = _uut.glyphRamAddress;
+        uint32_t screenRamAddress = _uut.screenRamAddress;
+        _uut.eval();
+        if (_uut.glyphRamEnable)
+        {
+            _uut.glyphRamData = _glyphRam[glyphRamAddress];
+        }
+        if (_uut.screenRamEnable)
+        {
+            _uut.screenRamData = _screenRam[screenRamAddress];
+        }
+        vcd_trace.dump(_tickCount++);
+        
+        if (_ntsc.pixelEnable)
+        {
+            // Grab pixel when pixelEnable signal is asserted
+            scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
+        }
+        
+        _ntsc.phaseClock = 0;
+        _ntsc.eval();
+        _uut.pixelClock = _ntsc.phaseClock;
+        _uut.pixelEnable = _ntsc.pixelEnable;
+        _uut.videoDataEnableIn = !_ntsc.blank;
+        _uut.hSyncIn = _ntsc.hSync;
+        _uut.vSyncIn = _ntsc.vSync;
+        _uut.activeVideoPreambleIn = 0;
+        _uut.activeVideoGuardBandIn = 0;
+        _uut.hPosIn = _ntsc.hPos;
+        _uut.vPosIn = _ntsc.vPos;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
+    }
+    
+    EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet240pNtsc.bmp"));
+    
+    vcd_trace.close();
+}
+
 
 
