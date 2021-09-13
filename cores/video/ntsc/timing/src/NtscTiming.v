@@ -77,6 +77,7 @@ module NtscTiming # (parameter PHASE_BITS = 4)
     input wire progressive,
     
     output reg [PHASE_BITS-1:0] phase = {2'h1, {(PHASE_BITS-2){1'b0}}},
+    output reg pixelEnable = 1'b0,
     output reg blank = 1'b1,
     output reg hSync = 1'b0,
     output reg vSync = 1'b0,
@@ -154,9 +155,11 @@ wire [9:0] vPosProgressiveNext = vBlankNext ? 10'd0 : (vCountNext - vPreEqualiza
 
 wire [9:0] vPosNext = progressive ? vPosProgressiveNext : vPosInterlacedNext;
 
+
 always @ (posedge phaseClock) begin
     if (reset == 1'b1) begin
         phase <= {2'h1, {(PHASE_BITS-2){1'b0}}};
+        pixelEnable <= 1'b0;
         hCount <= 10'd0;
         vCount <= 10'd0;
         hPos <= 10'd0;
@@ -178,6 +181,9 @@ always @ (posedge phaseClock) begin
             burst <= burstNext;
             hPos <= hPosNext;
             vPos <= vPosNext;
+            pixelEnable <= 1'b1;
+        end else begin
+            pixelEnable <= 1'b0;
         end
 
         // Increment phase counter

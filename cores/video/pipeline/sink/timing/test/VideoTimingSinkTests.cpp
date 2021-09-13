@@ -60,7 +60,7 @@ TEST_F(VideoTimingSinkTests, Hd720p60GreenScreen)
     VerilatedVcdC vcd_trace;
     RequestHandlingState reqState = RequestHandlingState::IDLE;
     unsigned int reqCount = 0;
-    ScanlineBuffer scanlines(1280, 720, false);
+    ScanlineBuffer scanlines(1280, 720, false, false);
     
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("Hd720p60GreenScreen.vcd");
@@ -213,7 +213,7 @@ TEST_F(VideoTimingSinkTests, Hd720p60RedBluePattern)
     unsigned int requestedRow = 0;
     unsigned int requestedChunk = 0;
     unsigned int reqCount = 0;
-    ScanlineBuffer scanlines(1280, 720, false);
+    ScanlineBuffer scanlines(1280, 720, false, false);
     
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("Hd720p60RedBluePattern.vcd");
@@ -372,7 +372,7 @@ TEST_F(VideoTimingSinkTests, Hd720p60RedWipe)
     //unsigned int requestedRow = 0;
     unsigned int requestedChunk = 0;
     unsigned int reqCount = 0;
-    ScanlineBuffer scanlines(1280, 720, false);
+    ScanlineBuffer scanlines(1280, 720, false, false);
     
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("Hd720p60RedWipe.vcd");

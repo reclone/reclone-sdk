@@ -32,7 +32,7 @@
 #include "gtest/gtest.h"
 #include "VTextOverlayGenerator.h"
 #include "VVideoFormatTiming.h"
-//#include "VNtscTiming.h"
+#include "VNtscTiming.h"
 #include "ScanlineBuffer.h"
 
 class TextOverlayGeneratorTests : public ::testing::Test
@@ -52,7 +52,7 @@ class TextOverlayGeneratorTests : public ::testing::Test
     protected:
         VTextOverlayGenerator _uut;
         VVideoFormatTiming _timing;
-        //VNtscTiming _ntsc;
+        VNtscTiming _ntsc;
         unsigned int _tickCount;
         std::array<uint8_t,4096> _glyphRam;
         std::array<uint16_t,2048> _screenRam;
@@ -116,7 +116,7 @@ bool TextOverlayGeneratorTests::loadScreenRam(std::string filename)
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
 {
     VerilatedVcdC vcd_trace;
-    ScanlineBuffer scanlines(1280, 720, false);
+    ScanlineBuffer scanlines(1280, 720, false, false);
     
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("TextCharacterSet720p.vcd");
@@ -139,6 +139,7 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     
     _uut.reset = 0;
     _uut.pixelClock = 0;
+    _uut.pixelEnable = 1;
     _uut.videoDataEnableIn = 0;
     _uut.hSyncIn = 0;
     _uut.vSyncIn = 0;
@@ -217,12 +218,10 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     vcd_trace.close();
 }
 
-
-/* TODO
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
 {
     VerilatedVcdC vcd_trace;
-    ScanlineBuffer scanlines(1280, 720, false);
+    ScanlineBuffer scanlines(720, 486, true, true);
     
     _uut.trace(&vcd_trace, 99);
     vcd_trace.open("TextCharacterSet480iNtsc.vcd");
@@ -230,21 +229,14 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
     ASSERT_TRUE(loadGlyphRam("CP437_8x16.mem"));
     ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
 
-    _timing.clock = 0;
-    _timing.reset = 0;
-    _timing.hFrontPorch = 110;
-    _timing.hSyncPulse = 40;
-    _timing.hBackPorch = 220;
-    _timing.hActive = 1280;
-    _timing.vFrontPorch = 5;
-    _timing.vSyncPulse = 5;
-    _timing.vBackPorch = 20;
-    _timing.vActive = 720;
-    _timing.isInterlaced = 0;
-    _timing.eval();
+    _ntsc.phaseClock = 0;
+    _ntsc.reset = 0;
+    _ntsc.progressive = 0;
+    _ntsc.eval();
     
     _uut.reset = 0;
     _uut.pixelClock = 0;
+    _uut.pixelEnable = 0;
     _uut.videoDataEnableIn = 0;
     _uut.hSyncIn = 0;
     _uut.vSyncIn = 0;
@@ -262,10 +254,10 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
     _uut.cursorPositionColumn = 0;
     _uut.cursorPositionRow = 0;
     _uut.glyphHeight = 16;
-    _uut.hScaleFactor = 2;
-    _uut.vScaleFactor = 2;
-    _uut.leftPadding = 0;
-    _uut.topPadding = 0;
+    _uut.hScaleFactor = 1;
+    _uut.vScaleFactor = 1;
+    _uut.leftPadding = 40;
+    _uut.topPadding = 40;
     _uut.colorAlphas = 0xFFFFFFFF;
     _uut.glyphRamData = 0xAA;
     _uut.screenRamData = 0x0741;
@@ -274,54 +266,57 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
     vcd_trace.dump(_tickCount++);
     vcd_trace.flush();
 
-    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
+    for (unsigned int phaseCount = 0; phaseCount < 4000000; ++phaseCount)
     {
-        for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_timing.vFrontPorch + _timing.vSyncPulse + _timing.vBackPorch + _timing.vActive); ++vCount)
+        _ntsc.phaseClock = 1;
+        _ntsc.eval();
+        _uut.pixelClock = _ntsc.phaseClock;
+        _uut.pixelEnable = _ntsc.pixelEnable;
+        _uut.videoDataEnableIn = !_ntsc.blank;
+        _uut.hSyncIn = _ntsc.hSync;
+        _uut.vSyncIn = _ntsc.vSync;
+        _uut.activeVideoPreambleIn = 0;
+        _uut.activeVideoGuardBandIn = 0;
+        _uut.hPosIn = _ntsc.hPos;
+        _uut.vPosIn = _ntsc.vPos;
+        uint32_t glyphRamAddress = _uut.glyphRamAddress;
+        uint32_t screenRamAddress = _uut.screenRamAddress;
+        _uut.eval();
+        if (_uut.glyphRamEnable)
         {
-            for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_timing.hFrontPorch + _timing.hSyncPulse + _timing.hBackPorch + _timing.hActive); ++hCount)
-            {
-                scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
-
-                _timing.clock = 1;
-                _timing.eval();
-                _uut.pixelClock = _timing.clock;
-                _uut.videoDataEnableIn = _timing.dataEnable;
-                _uut.hSyncIn = _timing.hSync;
-                _uut.vSyncIn = _timing.vSync;
-                _uut.activeVideoPreambleIn = _timing.activeVideoPreamble;
-                _uut.activeVideoGuardBandIn = _timing.activeVideoGuardBand;
-                _uut.hPosIn = _timing.hPos;
-                _uut.vPosIn = _timing.vPos;
-                uint32_t glyphRamAddress = _uut.glyphRamAddress;
-                uint32_t screenRamAddress = _uut.screenRamAddress;
-                _uut.eval();
-                _uut.glyphRamData = _glyphRam[glyphRamAddress];
-                _uut.screenRamData = _screenRam[screenRamAddress];
-                vcd_trace.dump(_tickCount++);
-                
-                _timing.clock = 0;
-                _timing.eval();
-                _uut.pixelClock = _timing.clock;
-                _uut.videoDataEnableIn = _timing.dataEnable;
-                _uut.hSyncIn = _timing.hSync;
-                _uut.vSyncIn = _timing.vSync;
-                _uut.activeVideoPreambleIn = _timing.activeVideoPreamble;
-                _uut.activeVideoGuardBandIn = _timing.activeVideoGuardBand;
-                _uut.hPosIn = _timing.hPos;
-                _uut.vPosIn = _timing.vPos;
-                _uut.eval();
-                vcd_trace.dump(_tickCount++);
-                
-                //vcd_trace.flush();
-            }
+            _uut.glyphRamData = _glyphRam[glyphRamAddress];
         }
-        vcd_trace.flush();
+        if (_uut.screenRamEnable)
+        {
+            _uut.screenRamData = _screenRam[screenRamAddress];
+        }
+        vcd_trace.dump(_tickCount++);
+        
+        if (_ntsc.pixelEnable)
+        {
+            // Grab pixel when pixelEnable signal is asserted
+            scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
+        }
+        
+        _ntsc.phaseClock = 0;
+        _ntsc.eval();
+        _uut.pixelClock = _ntsc.phaseClock;
+        _uut.pixelEnable = _ntsc.pixelEnable;
+        _uut.videoDataEnableIn = !_ntsc.blank;
+        _uut.hSyncIn = _ntsc.hSync;
+        _uut.vSyncIn = _ntsc.vSync;
+        _uut.activeVideoPreambleIn = 0;
+        _uut.activeVideoGuardBandIn = 0;
+        _uut.hPosIn = _ntsc.hPos;
+        _uut.vPosIn = _ntsc.vPos;
+        _uut.eval();
+        vcd_trace.dump(_tickCount++);
     }
     
     EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet480iNtsc.bmp"));
     
     vcd_trace.close();
-} */
+}
 
 
 

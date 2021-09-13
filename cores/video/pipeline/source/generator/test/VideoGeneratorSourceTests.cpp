@@ -373,7 +373,7 @@ TEST_F(VideoGeneratorSourceTests, ReplicateBitmap)
 
     GeneratorBuffer sourceBitmap;
     ASSERT_TRUE(sourceBitmap.readBitmap("rainbowswirls.bmp"));
-    ScanlineBuffer scanlines(1280, 720, false);
+    ScanlineBuffer scanlines(1280, 720, false, false);
     
     _uut.scalerClock = 0;
     _uut.reset = 0;

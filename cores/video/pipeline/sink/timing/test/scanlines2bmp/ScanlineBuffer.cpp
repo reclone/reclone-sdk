@@ -24,19 +24,24 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <iostream>
 #include <cstdio>
 #include "ScanlineBuffer.h"
 
 
-ScanlineBuffer::ScanlineBuffer(uint16_t hPixels, uint16_t vPixels, bool interlaced) :
+ScanlineBuffer::ScanlineBuffer(uint16_t hPixels, uint16_t vPixels, bool interlaced, bool oddFieldFirst) :
     _hPixels(hPixels),
     _vPixels(vPixels),
     _interlaced(interlaced),
+    _oddFieldFirst(oddFieldFirst),
     _hPos(0),
-    _vPos(0),
+    _vPos(oddFieldFirst ? 1U : 0U),
     _frameBuffer(new uint32_t[static_cast<uint32_t>(hPixels) * static_cast<uint32_t>(vPixels)]())
 {
-    
+    for (uint32_t i = 0; i < static_cast<uint32_t>(hPixels * vPixels); ++i)
+    {
+        _frameBuffer[i] = 0U;
+    }
 }
 
 ScanlineBuffer::~ScanlineBuffer()
@@ -69,6 +74,7 @@ void ScanlineBuffer::processPixel(bool dataEnable, bool hSync, bool vSync, uint8
             {
                 ++_vPos;
             }
+            //std::cout << "_vPos = " << _vPos << std::endl;
         }
         
         if (vSync)
@@ -86,10 +92,11 @@ void ScanlineBuffer::processPixel(bool dataEnable, bool hSync, bool vSync, uint8
                     _vPos = 1;
                 }
             }
-            else
+            else if (!_interlaced && _vPos > 0)
             {
                 _vPos = 0;
             }
+            //std::cout << "_vPos = " << _vPos << std::endl;
         }
     }
 }

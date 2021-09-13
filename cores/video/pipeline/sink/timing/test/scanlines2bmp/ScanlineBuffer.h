@@ -32,7 +32,7 @@
 class ScanlineBuffer
 {
     public:
-        ScanlineBuffer(uint16_t hPixels, uint16_t vPixels, bool interlaced);
+        ScanlineBuffer(uint16_t hPixels, uint16_t vPixels, bool interlaced, bool oddFieldFirst);
         virtual ~ScanlineBuffer();
     
         void processPixel(bool dataEnable, bool hSync, bool vSync, uint8_t red, uint8_t green, uint8_t blue);
@@ -42,6 +42,7 @@ class ScanlineBuffer
         const uint16_t _hPixels;
         const uint16_t _vPixels;
         const bool _interlaced;
+        const bool _oddFieldFirst;
         
         uint16_t _hPos;
         uint16_t _vPos;

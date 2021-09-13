@@ -9,6 +9,6 @@ configure_file(../../screenram/src/CharSet_ColorSet.mem ${CMAKE_CURRENT_BINARY_D
 
 add_executable(testTextOverlayGenerator TextOverlayGeneratorTests.cpp)
 
-target_link_libraries(testTextOverlayGenerator VTextOverlayGenerator VVideoFormatTiming scanlines2bmp gtest gtest_main)
+target_link_libraries(testTextOverlayGenerator VTextOverlayGenerator VVideoFormatTiming VNtscTiming scanlines2bmp gtest gtest_main)
 
 add_test(NAME testTextOverlayGenerator COMMAND testTextOverlayGenerator)

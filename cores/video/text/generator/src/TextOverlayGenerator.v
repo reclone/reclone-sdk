@@ -84,6 +84,7 @@ module TextOverlayGenerator
 (
     input wire reset,
     input wire pixelClock,
+    input wire pixelEnable,
     
     // Video timing info - inputs and delayed outputs
     input wire videoDataEnableIn,
@@ -163,9 +164,9 @@ localparam SCREEN_HEIGHT_BITS = 5;
 localparam SCREEN_MAX_WIDTH = 7'd80;
 localparam SCREEN_MAX_HEIGHT = 5'd26;
 
-// Always read something from the glyph and screen rams
-assign glyphRamEnable = 1'b1;
-assign screenRamEnable = 1'b1;
+// Read something from the glyph and screen rams every pixel clock
+assign glyphRamEnable = pixelEnable;
+assign screenRamEnable = pixelEnable;
 
 // Screen ram address is screenRow * 80 + screenColumn (saturating at 0x7FF)
 wire [SCREEN_RAM_ADDR_WIDTH:0] screenRamAddressExtended =
@@ -313,7 +314,7 @@ always @ (posedge pixelClock or posedge reset) begin
         
         textForegroundIsVisible <= 1'b0;
         isVisibleCursorPixel <= 1'b0;
-    end else begin
+    end else if (pixelEnable) begin
         
         // STAGE 1 - Calculate positions
         
@@ -351,7 +352,7 @@ always @ (posedge pixelClock or posedge reset) begin
             screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
             
             // If vPos is past the top padding, increment the vertical counters
-            if (vPosIn > topPadding) begin
+            if (vPosIn > topPadding + {{(VACTIVE_BITS-1){1'b0}}, vPosIn[0]}) begin
                 if (vScaleCounter == 2'd0 && vScaleFactor == 2'd3) begin
                     // Increment vScaleCounter by 2
                     vScaleCounter <= 2'd2;
@@ -370,14 +371,14 @@ always @ (posedge pixelClock or posedge reset) begin
                 end
             end
             
-        end else if (vPosIn != vPosInDelayed[0]) begin
-            // vPos has changed by something other than +1 or +2... assume we are starting new frame
+        end else if (vSyncIn) begin
+            // Vertical sync asserted, so assume we are starting new frame
             hScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
             hGlyphCounter <= {GLYPH_WIDTH_BITS{1'b0}};
-            vScaleCounter <= {INTEGER_SCALE_BITS{1'b0}};
-            vGlyphCounter <= {GLYPH_HEIGHT_BITS{1'b0}};
             screenRow <= {SCREEN_HEIGHT_BITS{1'b0}};
             screenColumn <= {SCREEN_WIDTH_BITS{1'b0}};
+            vScaleCounter <= {{(INTEGER_SCALE_BITS-1){1'b0}}, vPosIn[0]};
+            vGlyphCounter <= {{(GLYPH_HEIGHT_BITS-1){1'b0}}, vPosIn[0]};
             
         end else if (hSyncIn) begin
             // Horizontal sync asserted, so reset all horizontal counters
