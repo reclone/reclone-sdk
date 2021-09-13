@@ -126,6 +126,8 @@ module TextOverlayGenerator
     input wire [HACTIVE_BITS-1:0] leftPadding,
     input wire [VACTIVE_BITS-1:0] topPadding,
     input wire [ALPHA_SETTINGS_BITS-1:0] colorAlphas,
+    input wire [HCELL_BITS-1:0] numColumns,
+    input wire [VCELL_BITS-1:0] numRows,
     
     // Glyph RAM port
     output wire glyphRamEnable,
@@ -419,7 +421,8 @@ always @ (posedge pixelClock or posedge reset) begin
         
         // Determine if this is a padding pixel
         isPaddingPixel <= (hPosInDelayed[0] < leftPadding || vPosInDelayed[0] < topPadding ||
-                           screenColumn >= SCREEN_MAX_WIDTH || screenRow >= SCREEN_MAX_HEIGHT);
+                           screenColumn >= SCREEN_MAX_WIDTH || screenRow >= SCREEN_MAX_HEIGHT ||
+                           screenColumn >= numColumns || screenRow >= numRows);
         
         // Determine if this is a visible cursor pixel
         isCursorPixel <= (screenColumn == cursorPositionColumn) && (screenRow == cursorPositionRow) &&

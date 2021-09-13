@@ -161,6 +161,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     _uut.vScaleFactor = 2;
     _uut.leftPadding = 0;
     _uut.topPadding = 0;
+    _uut.numColumns = 80;
+    _uut.numRows = 26;
     _uut.colorAlphas = 0xFFFFFFFF;
     _uut.glyphRamData = 0xAA;
     _uut.screenRamData = 0x0741;
@@ -258,6 +260,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
     _uut.vScaleFactor = 1;
     _uut.leftPadding = 40;
     _uut.topPadding = 40;
+    _uut.numColumns = 80;
+    _uut.numRows = 25;
     _uut.colorAlphas = 0xFFFFFFFF;
     _uut.glyphRamData = 0xAA;
     _uut.screenRamData = 0x0741;
