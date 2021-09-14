@@ -8,6 +8,8 @@ configure_file(../../glyphram/src/CP437_8x8.mem ${CMAKE_BINARY_DIR}/CP437_8x8.me
 configure_file(../../glyphram/src/CP437_8x8.mem ${CMAKE_CURRENT_BINARY_DIR}/CP437_8x8.mem COPYONLY)
 configure_file(../../screenram/src/CharSet_ColorSet.mem ${CMAKE_BINARY_DIR}/CharSet_ColorSet.mem COPYONLY)
 configure_file(../../screenram/src/CharSet_ColorSet.mem ${CMAKE_CURRENT_BINARY_DIR}/CharSet_ColorSet.mem COPYONLY)
+configure_file(../../screenram/src/AlphaBlendOverlays.mem ${CMAKE_BINARY_DIR}/AlphaBlendOverlays.mem COPYONLY)
+configure_file(../../screenram/src/AlphaBlendOverlays.mem ${CMAKE_CURRENT_BINARY_DIR}/AlphaBlendOverlays.mem COPYONLY)
 
 add_executable(testTextOverlayGenerator TextOverlayGeneratorTests.cpp)
 
