@@ -232,6 +232,46 @@ NtscGenerator ntscGen
     .dacSample(videoDac)
 );*/
 
+wire glyphRamReadEnable;
+wire [11:0] glyphRamAddress;
+wire [7:0] glyphRamDataOut;
+TextGlyphRam #(.MEM_INIT_FILE("CP437_8x14.mem")) glyphRam
+(
+    // Read-only Port A
+    .clockA(pixelClock),
+    .enableA(glyphRamReadEnable),
+    .addressA(glyphRamAddress),
+    .dataOutA(glyphRamDataOut),
+    
+    // Read/Write Port B
+    .clockB(pixelClock),
+    .enableB(1'b0),
+    .writeEnableB(1'b0),
+    .addressB(12'd0),
+    .dataInB(8'd0),
+    .dataOutB()
+);
+
+wire screenRamReadEnable;
+wire [10:0] screenRamAddress;
+wire [15:0] screenRamDataOut;
+TextScreenRam #(.MEM_INIT_FILE("CharSet_ColorSet.mem")) screenRam
+(
+    // Read-only Port A
+    .clockA(pixelClock),
+    .enableA(screenRamReadEnable),
+    .addressA(screenRamAddress),
+    .dataOutA(screenRamDataOut),
+    
+    // Read/Write Port B
+    .clockB(pixelClock),
+    .enableB(1'b0),
+    .writeEnableB(1'b0),
+    .addressB(11'd0),
+    .dataInB(16'd0),
+    .dataOutB()
+);
+
 wire [7:0] dviR;
 wire [7:0] dviG;
 wire [7:0] dviB;
@@ -276,29 +316,29 @@ TextOverlayGenerator textOverlay
     
     // Settings
     .blinkIsBackgroundIntensity(1'b1),
-    .enableCursor(1'b0),
-    .cursorScanLineStart(4'd6),
-    .cursorScanLineEnd(4'd7),
-    .cursorPositionColumn(7'd0),
-    .cursorPositionRow(5'd0),
+    .enableCursor(1'b1),
+    .cursorScanLineStart(4'd11),
+    .cursorScanLineEnd(4'd12),
+    .cursorPositionColumn(7'd22),
+    .cursorPositionRow(5'd11),
     .glyphHeight(5'd14),
     .hScaleFactor(3'd2),
     .vScaleFactor(3'd2),
     .leftPadding(11'd0),
-    .topPadding(11'd0),
+    .topPadding(11'd10),
     .colorAlphas(32'hFFFFFFFF),
     .numColumns(7'd80),
     .numRows(5'd25),
     
     // Glyph RAM port
-    .glyphRamEnable(),
-    .glyphRamAddress(),
-    .glyphRamData(8'hAA),
+    .glyphRamEnable(glyphRamReadEnable),
+    .glyphRamAddress(glyphRamAddress),
+    .glyphRamData(glyphRamDataOut),
     
     // Screen RAM port
-    .screenRamEnable(),
-    .screenRamAddress(),
-    .screenRamData(16'h0700)
+    .screenRamEnable(screenRamReadEnable),
+    .screenRamAddress(screenRamAddress),
+    .screenRamData(screenRamDataOut)
 );
 
 HdmiEncoder hdmi

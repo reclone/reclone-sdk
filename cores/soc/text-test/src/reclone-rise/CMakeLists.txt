@@ -42,6 +42,8 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/hdmi/test-pattern/color-bars/720p/src/ColorBars720p.v
     ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v
     ${PROJECT_SOURCE_DIR}/video/text/generator/src/TextOverlayGenerator.v
+    ${PROJECT_SOURCE_DIR}/video/text/glyphram/src/TextGlyphRam.v
+    ${PROJECT_SOURCE_DIR}/video/text/screenram/src/TextScreenRam.v
     )
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)

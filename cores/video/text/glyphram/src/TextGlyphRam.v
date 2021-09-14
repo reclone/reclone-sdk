@@ -66,7 +66,7 @@ BlockRamDualPort #(.BIN_MEM_INIT_FILE(MEM_INIT_FILE),
     .enableA(enableA),
     .writeEnableA(1'b0),
     .addressA(addressA),
-    .dataInA(),
+    .dataInA({DATA_WIDTH{1'b0}}),
     .dataOutA(dataOutA),
     
     .clockB(clockB),
