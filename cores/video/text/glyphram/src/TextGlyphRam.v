@@ -10,7 +10,7 @@
 // initialized with all zero bytes.
 //
 // To help ensure that synthesis tools will infer block RAM resources for this RAM, this module
-// roughly follows Xilinx UG627 "Dual-Port Block RAM With Two Write Ports Verilog Coding Example".
+// wraps the more generic BlockRamDualPort module.
 //
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
@@ -43,7 +43,7 @@ module TextGlyphRam #(parameter MEM_INIT_FILE = "", MEM_INIT_VAL = 8'h00)
     input wire clockA,
     input wire enableA,
     input wire [ADDR_WIDTH-1:0] addressA,
-    output reg [DATA_WIDTH-1:0] dataOutA,
+    output wire [DATA_WIDTH-1:0] dataOutA,
     
     // Read/Write Port B
     input wire clockB,
@@ -51,37 +51,30 @@ module TextGlyphRam #(parameter MEM_INIT_FILE = "", MEM_INIT_VAL = 8'h00)
     input wire writeEnableB,
     input wire [ADDR_WIDTH-1:0] addressB,
     input wire [DATA_WIDTH-1:0] dataInB,
-    output reg [DATA_WIDTH-1:0] dataOutB
+    output wire [DATA_WIDTH-1:0] dataOutB
 );
 
 localparam DATA_WIDTH = 8;
 localparam ADDR_WIDTH = 12;
-localparam RAM_SIZE = 1 << ADDR_WIDTH;
 
-reg [DATA_WIDTH-1:0] ram [0:RAM_SIZE-1];
-
-initial begin
-    if (MEM_INIT_FILE == "") begin
-        integer j;
-        for(j = 0; j < RAM_SIZE; j = j + 1)
-            ram[j] = MEM_INIT_VAL;
-    end else begin
-        $readmemb(MEM_INIT_FILE, ram);
-    end
-end
-
-always @(posedge clockA) begin
-    if (enableA) begin
-        dataOutA <= ram[addressA];
-    end
-end
-
-always @(posedge clockB) begin
-    if (enableB) begin
-        if (writeEnableB)
-            ram[addressB] <= dataInB;
-        dataOutB <= ram[addressB];
-    end
-end
+BlockRamDualPort #(.BIN_MEM_INIT_FILE(MEM_INIT_FILE),
+                   .MEM_INIT_VAL(MEM_INIT_VAL),
+                   .DATA_WIDTH(DATA_WIDTH),
+                   .ADDR_WIDTH(ADDR_WIDTH)) textGlyphRam
+(
+    .clockA(clockA),
+    .enableA(enableA),
+    .writeEnableA(1'b0),
+    .addressA(addressA),
+    .dataInA(),
+    .dataOutA(dataOutA),
+    
+    .clockB(clockB),
+    .enableB(enableB),
+    .writeEnableB(writeEnableB),
+    .addressB(addressB),
+    .dataInB(dataInB),
+    .dataOutB(dataOutB)
+);
 
 endmodule

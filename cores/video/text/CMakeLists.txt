@@ -1,1 +1,3 @@
 add_subdirectory(generator)
+add_subdirectory(glyphram)
+add_subdirectory(screenram)

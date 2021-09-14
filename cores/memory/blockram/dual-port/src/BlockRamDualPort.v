@@ -1,17 +1,14 @@
 //
-// TextScreenRam - Storage of code point and attribute data used to render a text screen
+// BlockRamDualPort - Block RAM module with dual read/write ports
 //
-// This module is a RAM block designed to store data for an 80x25 character screen, each cell
-// having a code point byte and an attribute byte, for a total of 2000 16-bit words or
-// 4000 bytes.  This size is rounded up to the nearest power of 2 - 2048 words, 4096 bytes.
-//
-// The optional parameter MEM_INIT_FILE can be used to specify a text file containing hex codes
-// to initialize the RAM.  If MEM_INIT_FILE is left as an empty string (""), the RAM will be
-// initialized with all zero bytes.  It is a dual-port RAM - a read-only port is used by the text
-// renderer, while a second read/write port allows the text screen to be changed by software.
-//
+// This module represents a dual-port block RAM resource inside the FPGA of parameterized size.
 // To help ensure that synthesis tools will infer block RAM resources for this RAM, this module
-// wraps the more generic BlockRamDualPort module.
+// roughly follows Xilinx UG627 "Dual-Port Block RAM With Two Write Ports Verilog Coding Example".
+//
+// The optional parameters BIN_MEM_INIT_FILE or HEX_MEM_INIT_FILE can be used to specify a
+// text file containing '1'/'0' or hex digits, respectively, to initialize the RAM.
+// If BIN_MEM_INIT_FILE and HEX_MEM_INIT_FILE are both left as empty strings (""), the RAM will be
+// initialized with bytes of value MEM_INIT_VAL (default: 8'h00 bytes).
 //
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
@@ -38,12 +35,18 @@
 
 `default_nettype none
 
-module TextScreenRam #(parameter MEM_INIT_FILE = "", MEM_INIT_VAL = 16'h0000)
+module BlockRamDualPort # ( parameter DATA_WIDTH = 16,
+                                      ADDR_WIDTH = 10,
+                                      BIN_MEM_INIT_FILE = "",
+                                      HEX_MEM_INIT_FILE = "",
+                                      MEM_INIT_VAL = 8'h00)
 (
-    // Read-only Port A
+    // Read/Write Port A
     input wire clockA,
     input wire enableA,
+    input wire writeEnableA,
     input wire [ADDR_WIDTH-1:0] addressA,
+    input wire [DATA_WIDTH-1:0] dataInA,
     output reg [DATA_WIDTH-1:0] dataOutA,
     
     // Read/Write Port B
@@ -55,27 +58,37 @@ module TextScreenRam #(parameter MEM_INIT_FILE = "", MEM_INIT_VAL = 16'h0000)
     output reg [DATA_WIDTH-1:0] dataOutB
 );
 
-localparam DATA_WIDTH = 16;
-localparam ADDR_WIDTH = 11;
+localparam RAM_SIZE = 1 << ADDR_WIDTH;
 
-BlockRamDualPort #(.HEX_MEM_INIT_FILE(MEM_INIT_FILE),
-                   .MEM_INIT_VAL(MEM_INIT_VAL),
-                   .DATA_WIDTH(DATA_WIDTH),
-                   .ADDR_WIDTH(ADDR_WIDTH)) textScreenRam
-(
-    .clockA(clockA),
-    .enableA(enableA),
-    .writeEnableA(1'b0),
-    .addressA(addressA),
-    .dataInA(),
-    .dataOutA(dataOutA),
-    
-    .clockB(clockB),
-    .enableB(enableB),
-    .writeEnableB(writeEnableB),
-    .addressB(addressB),
-    .dataInB(dataInB),
-    .dataOutB(dataOutB)
-);
+reg [DATA_WIDTH-1:0] ram [0:RAM_SIZE-1];
+
+integer j;
+initial begin
+    if (BIN_MEM_INIT_FILE != "") begin
+        $readmemb(BIN_MEM_INIT_FILE, ram);
+    end else if (HEX_MEM_INIT_FILE != "") begin
+        $readmemh(HEX_MEM_INIT_FILE, ram);
+    end else begin
+        for (j = 0; j < RAM_SIZE; j = j + 1)
+            ram[j] = MEM_INIT_VAL;
+    end
+end
+
+always @(posedge clockA) begin
+    if (enableA) begin
+        if (writeEnableA)
+            ram[addressA] <= dataInA;
+        dataOutA <= ram[addressA];
+    end
+end
+
+always @(posedge clockB) begin
+    if (enableB) begin
+        if (writeEnableB)
+            ram[addressB] <= dataInB;
+        dataOutB <= ram[addressB];
+    end
+end
+
 
 endmodule

@@ -109,9 +109,9 @@ module TextOverlayGenerator
     input wire [BITS_PER_COLOR_COMPONENT-1:0] upstreamBlue,
     
     // Output color which includes text overlay
-    output wire [BITS_PER_COLOR_COMPONENT-1:0] red,
-    output wire [BITS_PER_COLOR_COMPONENT-1:0] green,
-    output wire [BITS_PER_COLOR_COMPONENT-1:0] blue,
+    output reg [BITS_PER_COLOR_COMPONENT-1:0] red = {BITS_PER_COLOR_COMPONENT{1'b0}},
+    output reg [BITS_PER_COLOR_COMPONENT-1:0] green = {BITS_PER_COLOR_COMPONENT{1'b0}},
+    output reg [BITS_PER_COLOR_COMPONENT-1:0] blue = {BITS_PER_COLOR_COMPONENT{1'b0}},
     
     // Settings
     input wire blinkIsBackgroundIntensity,
@@ -201,8 +201,8 @@ reg [BITS_PER_COLOR_COMPONENT-1:0] upstreamRedDelayed [0:DELAY_CLOCKS-1];
 reg [BITS_PER_COLOR_COMPONENT-1:0] upstreamGreenDelayed [0:DELAY_CLOCKS-1];
 reg [BITS_PER_COLOR_COMPONENT-1:0] upstreamBlueDelayed [0:DELAY_CLOCKS-1];
 
+integer j;
 initial begin
-    integer j;
     for(j = 0; j < DELAY_CLOCKS; j = j + 1) begin
         vPosInDelayed[j] = {VACTIVE_BITS{1'b1}};
         hPosInDelayed[j] = {HACTIVE_BITS{1'b1}};
@@ -316,6 +316,10 @@ always @ (posedge pixelClock or posedge reset) begin
         
         textForegroundIsVisible <= 1'b0;
         isVisibleCursorPixel <= 1'b0;
+        
+        red <= {BITS_PER_COLOR_COMPONENT{1'b0}};
+        green <= {BITS_PER_COLOR_COMPONENT{1'b0}};
+        blue <= {BITS_PER_COLOR_COMPONENT{1'b0}};
     end else if (pixelEnable) begin
         
         // STAGE 1 - Calculate positions
