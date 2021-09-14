@@ -220,6 +220,113 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
     //vcd_trace.close();
 }
 
+TEST_F(TextOverlayGeneratorTests, TextCharacterSet1080i)
+{
+    VerilatedVcdC vcd_trace;
+    ScanlineBuffer scanlines(1920, 1080, true, false);
+    
+    _uut.trace(&vcd_trace, 99);
+    vcd_trace.open("TextCharacterSet1080i.vcd");
+    
+    ASSERT_TRUE(loadGlyphRam("CP437_8x14.mem"));
+    ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
+
+    _timing.clock = 0;
+    _timing.reset = 0;
+    _timing.hFrontPorch = 88;
+    _timing.hSyncPulse = 44;
+    _timing.hBackPorch = 148;
+    _timing.hActive = 1920;
+    _timing.vFrontPorch = 4;
+    _timing.vSyncPulse = 10;
+    _timing.vBackPorch = 30;
+    _timing.vActive = 1080;
+    _timing.isInterlaced = 1;
+    _timing.eval();
+    
+    _uut.reset = 0;
+    _uut.pixelClock = 0;
+    _uut.pixelEnable = 1;
+    _uut.videoDataEnableIn = 0;
+    _uut.hSyncIn = 0;
+    _uut.vSyncIn = 0;
+    _uut.hPosIn = 0;
+    _uut.vPosIn = 0;
+    _uut.activeVideoPreambleIn = 0;
+    _uut.activeVideoGuardBandIn = 0;
+    _uut.upstreamRed = 0x80;
+    _uut.upstreamGreen = 0x00;
+    _uut.upstreamBlue = 0x00;
+    _uut.blinkIsBackgroundIntensity = 1;
+    _uut.enableCursor = 0;
+    _uut.cursorScanLineStart = 11;
+    _uut.cursorScanLineEnd = 13;
+    _uut.cursorPositionColumn = 0;
+    _uut.cursorPositionRow = 0;
+    _uut.glyphHeight = 14;
+    _uut.hScaleFactor = 3;
+    _uut.vScaleFactor = 3;
+    _uut.leftPadding = 0;
+    _uut.topPadding = 0;
+    _uut.numColumns = 80;
+    _uut.numRows = 26;
+    _uut.colorAlphas = 0xFFFFFFFF;
+    _uut.glyphRamData = 0xAA;
+    _uut.screenRamData = 0x0741;
+    _uut.eval();
+    
+    vcd_trace.dump(_tickCount++);
+    vcd_trace.flush();
+
+    for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
+    {
+        for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_timing.vFrontPorch + _timing.vSyncPulse + _timing.vBackPorch + _timing.vActive); ++vCount)
+        {
+            for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_timing.hFrontPorch + _timing.hSyncPulse + _timing.hBackPorch + _timing.hActive); ++hCount)
+            {
+                scanlines.processPixel(_uut.videoDataEnableOut, _uut.hSyncOut, _uut.vSyncOut, _uut.red, _uut.green, _uut.blue);
+
+                _timing.clock = 1;
+                _timing.eval();
+                _uut.pixelClock = _timing.clock;
+                _uut.videoDataEnableIn = _timing.dataEnable;
+                _uut.hSyncIn = _timing.hSync;
+                _uut.vSyncIn = _timing.vSync;
+                _uut.activeVideoPreambleIn = _timing.activeVideoPreamble;
+                _uut.activeVideoGuardBandIn = _timing.activeVideoGuardBand;
+                _uut.hPosIn = _timing.hPos;
+                _uut.vPosIn = _timing.vPos;
+                uint32_t glyphRamAddress = _uut.glyphRamAddress;
+                uint32_t screenRamAddress = _uut.screenRamAddress;
+                _uut.eval();
+                _uut.glyphRamData = _glyphRam[glyphRamAddress];
+                _uut.screenRamData = _screenRam[screenRamAddress];
+                vcd_trace.dump(_tickCount++);
+                
+                _timing.clock = 0;
+                _timing.eval();
+                _uut.pixelClock = _timing.clock;
+                _uut.videoDataEnableIn = _timing.dataEnable;
+                _uut.hSyncIn = _timing.hSync;
+                _uut.vSyncIn = _timing.vSync;
+                _uut.activeVideoPreambleIn = _timing.activeVideoPreamble;
+                _uut.activeVideoGuardBandIn = _timing.activeVideoGuardBand;
+                _uut.hPosIn = _timing.hPos;
+                _uut.vPosIn = _timing.vPos;
+                _uut.eval();
+                vcd_trace.dump(_tickCount++);
+                
+                //vcd_trace.flush();
+            }
+        }
+        vcd_trace.flush();
+    }
+    
+    EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet1080i.bmp"));
+    
+    vcd_trace.close();
+}
+
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
 {
     //VerilatedVcdC vcd_trace;

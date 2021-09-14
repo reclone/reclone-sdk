@@ -6,9 +6,9 @@
 // utilization, because two of these might be running on the FPGA simultaneously.
 // See https://en.wikipedia.org/wiki/VGA_text_mode for some background.
 //
-// This should be flexible enough to support 80 columns by 25ish rows of monospaced characters
-// at a variety of resolutions like 640x240, 640x480, 1280x720, and 1920x1080.  Each character
-// is eight pixels wide, making each row of a glyph take up exactly one byte (1 bpp).  To support
+// This should be flexible enough to support 80 columns by 25 rows of monospaced characters
+// at a variety of resolutions like 640x200, 640x400, 1280x720, and 1920x1080.  Each character
+// is eight pixels wide, making each row of a glyph take up exactly one byte (@1 bpp).  To support
 // 25 rows at all resolutions, each character may be 8, 14, or 16 pixels tall, therefore each
 // glyph takes up 16 bytes.  With a total of 256 code points (supporting CP-437 character set),
 // the glyph RAM is 4096 bytes in size.
@@ -38,7 +38,7 @@
 // (4000 bytes).  Since this is very close to 2048 words (4096 bytes), the remaining
 // 48 characters can be displayed on a partial line 26, for some creative visual effects.
 // The last entry in screen RAM is repeated for the rightmost 33 characters of screen row 26.
-// Consider 8x14 text being displayed at 720p resolution: if the characters are doubled in size
+// Consider 8x14 text being displayed at 720p resolution - if the characters are doubled in size
 // to 16x28, that means 25 rows take up 700 pixels in height, leaving an extra 20 pixels of height
 // to partially display our sneaky 26th row.
 //
@@ -51,9 +51,9 @@
 // implements integer scaling and character cell tracking using counters.  To do this, several
 // hacky assumptions are made about hPosIn and vPosIn like:
 //      - vPosIn increments by 0 (within a scanline), 1 (progressive), or 2 (interlaced)
-//      - If vPosIn changes by some other amount, we assume it is the start of a new frame/field
+//      - vSync indicates the start of a new frame or field
 //      - hPosIn increments by 0 (within an inactive video region) or 1 (within an active scanline)
-//      - If hPosIn changes by some other amount, we assume it is the start of a new scanline
+//      - hSync indicates the start of a new scanline
 //
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
@@ -355,12 +355,8 @@ always @ (posedge pixelClock or posedge reset) begin
             
             // If vPos is past the top padding, increment the vertical counters
             if (vPosIn > topPadding + {{(VACTIVE_BITS-1){1'b0}}, vPosIn[0]}) begin
-                if (vScaleCounter == 2'd0 && vScaleFactor == 2'd3) begin
-                    // Increment vScaleCounter by 2
-                    vScaleCounter <= 2'd2;
-                end else begin
-                    // Scale counter has reached the scale factor, so roll over vScaleCounter
-                    vScaleCounter <= vScaleCounter + 2'd2 - vScaleFactor;
+                if (vScaleFactor == 2'd1) begin
+                    vScaleCounter <= 2'd0;
                     
                     if ({1'b0, vGlyphCounter} + {{(GLYPH_HEIGHT_BITS-1){1'b0}}, 2'b10} >= glyphHeight) begin
                         // Glyph counter has reached the glyph height, so roll over vGlyphCounter and increment screenRow
@@ -369,6 +365,22 @@ always @ (posedge pixelClock or posedge reset) begin
                     end else begin
                         // Increment vGlyphCounter
                         vGlyphCounter <= vGlyphCounter + {{(GLYPH_HEIGHT_BITS-2){1'b0}}, 2'b10};
+                    end
+                    
+                end else if (vScaleCounter == 2'd0 && vScaleFactor == 2'd3) begin
+                    // Increment vScaleCounter by 2
+                    vScaleCounter <= 2'd2;
+                end else begin
+                    // Scale counter has reached the scale factor, so roll over vScaleCounter
+                    vScaleCounter <= vScaleCounter + 2'd2 - vScaleFactor;
+                    
+                    if ({1'b0, vGlyphCounter} + {{(GLYPH_HEIGHT_BITS){1'b0}}, 1'b1} == glyphHeight) begin
+                        // Glyph counter has reached the glyph height, so zero out vGlyphCounter and increment screenRow
+                        vGlyphCounter <= {GLYPH_HEIGHT_BITS{1'b0}};
+                        screenRow <= screenRow + {{(SCREEN_HEIGHT_BITS-1){1'b0}}, 1'b1};
+                    end else begin
+                        // Increment vGlyphCounter
+                        vGlyphCounter <= vGlyphCounter + {{(GLYPH_HEIGHT_BITS-1){1'b0}}, 1'b1};
                     end
                 end
             end
