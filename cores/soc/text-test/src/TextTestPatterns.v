@@ -305,9 +305,9 @@ TextOverlayGenerator textOverlay
     .activeVideoGuardBandOut(activeVideoGuardBandDelayed),
     
     // Upstream color which may be changed by overlay
-    .upstreamRed(8'h10),
+    .upstreamRed(8'h20),
     .upstreamGreen(8'h00),
-    .upstreamBlue(8'h10),
+    .upstreamBlue(8'h20),
     
     // Output color which includes text overlay
     .red(dviR),
@@ -326,7 +326,7 @@ TextOverlayGenerator textOverlay
     .vScaleFactor(3'd2),
     .leftPadding(11'd0),
     .topPadding(11'd10),
-    .colorAlphas(32'hFFFFFFFF),
+    .colorAlphas(32'hFFFFFFFE),
     .numColumns(7'd80),
     .numRows(5'd25),
     

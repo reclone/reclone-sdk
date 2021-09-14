@@ -239,13 +239,13 @@ function [BITS_PER_COLOR_COMPONENT-1:0] blend;
             // Only topColor
             blend = topColor;
         end else if (topAlpha == 2'd2) begin
+            // 75% topColor, 25% bottomColor
+            blend = {2'b00, bottomColor[BITS_PER_COLOR_COMPONENT-1:2]} +
+                    {1'b0, topColor[BITS_PER_COLOR_COMPONENT-1:1]} +
+                    {2'b00, topColor[BITS_PER_COLOR_COMPONENT-1:2]};
+        end else if (topAlpha == 2'd1) begin
             // 50% topColor, 50% bottomColor
             blend = {1'b0, topColor[BITS_PER_COLOR_COMPONENT-1:1]} + {1'b0, bottomColor[BITS_PER_COLOR_COMPONENT-1:1]};
-        end else if (topAlpha == 2'd1) begin
-            // 25% topColor, 75% bottomColor
-            blend = {2'b00, topColor[BITS_PER_COLOR_COMPONENT-1:2]} +
-                    {1'b0, bottomColor[BITS_PER_COLOR_COMPONENT-1:1]} +
-                    {2'b00, bottomColor[BITS_PER_COLOR_COMPONENT-1:2]};
         end else begin
             // Only bottomColor
             blend = bottomColor;
