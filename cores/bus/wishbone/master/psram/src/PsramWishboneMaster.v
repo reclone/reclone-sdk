@@ -72,7 +72,7 @@ module PsramWishboneMaster
     input wire          psramNOE,
     input wire          psramNWE,
     input wire          psramNADV,
-    output wire         psramNWAIT,
+    output reg          psramNWAIT = 1'b1,
     input wire          psramNUB,
     input wire          psramNLB,
     
@@ -94,7 +94,6 @@ module PsramWishboneMaster
 localparam ERR_DATA_VALUE = 16'hDEAD;
 
 assign psramAD = (!psramNE && !psramNOE) ? dataOut : 16'bZ;
-assign psramNWAIT = !((CYC_O && STB_O && STALL_I) || (CYC_O && !STB_O && !ACK_I && !ERR_I));
 
 reg addressIsLatched = 1'b0;
 reg writeDataReady = 1'b0;
@@ -111,6 +110,7 @@ always @ (posedge CLK_I) begin
         addressIsLatched <= 1'b0;
         writeDataReady <= 1'b0;
         dataOut <= 16'd0;
+        psramNWAIT <= 1'b1;
     end else begin
         if (!psramNE) begin
             // Chip is selected
@@ -129,6 +129,8 @@ always @ (posedge CLK_I) begin
                     WE_O <= 1'b0;
                     // Latch the byte lane selections
                     SEL_O <= {~psramNUB, ~psramNLB};
+                    // Assert active-low wait signal
+                    psramNWAIT <= 1'b0;
                 end else if (CYC_O) begin
                     // Wishbone cycle in progress
                     
@@ -143,11 +145,15 @@ always @ (posedge CLK_I) begin
                         dataOut <= DAT_I;
                         CYC_O <= 1'b0;
                         addressIsLatched <= 1'b0;
+                        // De-assert wait signal
+                        psramNWAIT <= 1'b1;
                     end else if (ERR_I) begin
                         // Read failed
                         dataOut <= ERR_DATA_VALUE;
                         CYC_O <= 1'b0;
                         addressIsLatched <= 1'b0;
+                        // De-assert wait signal
+                        psramNWAIT <= 1'b1;
                     end
                 end
                 
@@ -157,6 +163,8 @@ always @ (posedge CLK_I) begin
                 if (!writeDataReady) begin
                     // Address hold - Delay one clock before sampling the write data
                     writeDataReady <= 1'b1;
+                    // Assert active-low wait signal
+                    psramNWAIT <= 1'b0;
                 end else if (!CYC_O && !STB_O) begin
                     // Assert cycle and strobe outputs to begin the read
                     CYC_O <= 1'b1;
@@ -180,6 +188,9 @@ always @ (posedge CLK_I) begin
                         CYC_O <= 1'b0;
                         addressIsLatched <= 1'b0;
                         writeDataReady <= 1'b0;
+                        // De-assert wait signal
+                        psramNWAIT <= 1'b1;
+
                     end
                 end
             end
@@ -195,6 +206,7 @@ always @ (posedge CLK_I) begin
             ADR_O <= 24'd0;
             DAT_O <= 16'd0;
             dataOut <= 16'd0;
+            psramNWAIT <= 1'b1;
         end
     end
 end
