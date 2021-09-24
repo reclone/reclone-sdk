@@ -135,6 +135,7 @@ always @ (posedge CLK_I) begin
                     if (STB_O && !STALL_I) begin
                         // Wishbone slave accepted the strobe, so de-assert strobe
                         STB_O <= 1'b0;
+                        SEL_O <= 2'b00;
                     end
                     
                     if (ACK_I) begin
@@ -170,6 +171,7 @@ always @ (posedge CLK_I) begin
                     if (STB_O && !STALL_I) begin
                         // Wishbone slave accepted the strobe, so de-assert strobe
                         STB_O <= 1'b0;
+                        SEL_O <= 2'b00;
                         WE_O <= 1'b0;
                     end
                     
@@ -190,6 +192,9 @@ always @ (posedge CLK_I) begin
             STB_O <= 1'b0;
             WE_O <= 1'b0;
             SEL_O <= 2'b00;
+            ADR_O <= 24'd0;
+            DAT_O <= 16'd0;
+            dataOut <= 16'd0;
         end
     end
 end

@@ -1,0 +1,5 @@
+add_executable(testPsramWishboneMaster PsramWishboneMasterTests.cpp)
+
+target_link_libraries(testPsramWishboneMaster VPsramWishboneMaster gtest gtest_main)
+
+add_test(NAME testPsramWishboneMaster COMMAND testPsramWishboneMaster)
