@@ -94,7 +94,7 @@ module PsramWishboneMaster
 localparam ERR_DATA_VALUE = 16'hDEAD;
 
 assign psramAD = (!psramNE && !psramNOE) ? dataOut : 16'bZ;
-assign psramNWAIT = !(CYC_O && STB_O && STALL_I);
+assign psramNWAIT = !((CYC_O && STB_O && STALL_I) || (CYC_O && !STB_O && !ACK_I && !ERR_I));
 
 reg addressIsLatched = 1'b0;
 reg writeDataReady = 1'b0;
