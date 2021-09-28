@@ -62,6 +62,7 @@ module VideoTimingSink #(parameter CHUNK_BITS = 5)
     input wire pixelClock,
     input wire scalerClock,
     input wire reset,
+    
     input wire [6:0] hFrontPorch,
     input wire [7:0] hSyncPulse,
     input wire [7:0] hBackPorch,
@@ -70,7 +71,6 @@ module VideoTimingSink #(parameter CHUNK_BITS = 5)
     input wire [3:0] vSyncPulse,
     input wire [5:0] vBackPorch,
     input wire [VACTIVE_BITS-1:0] vActive,
-    input wire syncIsActiveLow,
     input wire isInterlaced,
     
     input wire requestFifoReadEnable,
@@ -118,7 +118,6 @@ VideoFormatTiming timing
     .vSyncPulse(vSyncPulse),
     .vBackPorch(vBackPorch),
     .vActive(vActive),
-    .syncIsActiveLow(syncIsActiveLow),
     .isInterlaced(isInterlaced),
     .dataEnable(timingDataEnable),
     .hSync(timingHSync),

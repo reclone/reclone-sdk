@@ -75,7 +75,6 @@ TEST_F(VideoTimingSinkTests, Hd720p60GreenScreen)
     _uut.vSyncPulse = 5;
     _uut.vBackPorch = 20;
     _uut.vActive = 720;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.requestFifoReadEnable = 0;
     _uut.responseFifoWriteEnable = 0;
@@ -99,21 +98,21 @@ TEST_F(VideoTimingSinkTests, Hd720p60GreenScreen)
         {
             if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
             {
-                ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                ASSERT_EQ(1U, _uut.hSync);
             }
             else
             {
-                ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                ASSERT_EQ(0U, _uut.hSync);
             }
             
             if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                 (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
             {
-                ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                ASSERT_EQ(1U, _uut.vSync);
             }
             else
             {
-                ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                ASSERT_EQ(0U, _uut.vSync);
             }
             
             if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -228,7 +227,6 @@ TEST_F(VideoTimingSinkTests, Hd720p60RedBluePattern)
     _uut.vSyncPulse = 5;
     _uut.vBackPorch = 20;
     _uut.vActive = 720;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.requestFifoReadEnable = 0;
     _uut.responseFifoWriteEnable = 0;
@@ -252,21 +250,21 @@ TEST_F(VideoTimingSinkTests, Hd720p60RedBluePattern)
         {
             if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
             {
-                ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                ASSERT_EQ(1U, _uut.hSync);
             }
             else
             {
-                ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                ASSERT_EQ(0U, _uut.hSync);
             }
             
             if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                 (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
             {
-                ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                ASSERT_EQ(1U, _uut.vSync);
             }
             else
             {
-                ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                ASSERT_EQ(0U, _uut.vSync);
             }
             
             if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))
@@ -387,7 +385,6 @@ TEST_F(VideoTimingSinkTests, Hd720p60RedWipe)
     _uut.vSyncPulse = 5;
     _uut.vBackPorch = 20;
     _uut.vActive = 720;
-    _uut.syncIsActiveLow = 0;
     _uut.isInterlaced = 0;
     _uut.requestFifoReadEnable = 0;
     _uut.responseFifoWriteEnable = 0;
@@ -411,21 +408,21 @@ TEST_F(VideoTimingSinkTests, Hd720p60RedWipe)
         {
             if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
             {
-                ASSERT_EQ(!_uut.syncIsActiveLow, _uut.hSync);
+                ASSERT_EQ(1U, _uut.hSync);
             }
             else
             {
-                ASSERT_EQ(_uut.syncIsActiveLow, _uut.hSync);
+                ASSERT_EQ(0U, _uut.hSync);
             }
             
             if ((vCount > _uut.vFrontPorch || (vCount == _uut.vFrontPorch && hCount >= _uut.hFrontPorch)) && 
                 (vCount < (_uut.vFrontPorch + _uut.vSyncPulse) || (vCount == (_uut.vFrontPorch + _uut.vSyncPulse) && hCount < _uut.hFrontPorch)))
             {
-                ASSERT_EQ(!_uut.syncIsActiveLow, _uut.vSync);
+                ASSERT_EQ(1U, _uut.vSync);
             }
             else
             {
-                ASSERT_EQ(_uut.syncIsActiveLow, _uut.vSync);
+                ASSERT_EQ(0U, _uut.vSync);
             }
             
             if (hCount >= static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch))

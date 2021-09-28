@@ -148,7 +148,6 @@ TEST_F(VideoGeneratorSourceTests, ReplicateBitmap)
     _sink.vSyncPulse = 5;
     _sink.vBackPorch = 20;
     _sink.vActive = 720;
-    _sink.syncIsActiveLow = 0;
     _sink.isInterlaced = 0;
     _sink.requestFifoReadEnable = 0;
     _sink.responseFifoWriteEnable = 0;
