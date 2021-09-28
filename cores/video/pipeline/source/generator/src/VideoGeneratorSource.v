@@ -15,18 +15,12 @@
 // utilize downstream video pipeline modules to scale, transform, filter, or otherwise manipulate
 // the video frames, as needed.
 //
-// This module does not contain its own FIFOs for handling requests.  Rather, it interacts with the
-// request and response FIFO signals directly to handle requests one at a time, and "stream"
-// requested pixel data into the response FIFO.  Because of this oversimplified design,
-// flow control is broken, and this module does not currently pay attention to responseFifoFull
-// when responding in mid-chunk.  Just ensure that downstream modules have enough response FIFO
-// space to handle each burst of requests (usually at least one scanline worth of buffer).
-// I say this weakness is a small price to pay to keep the module lean and mean!
+// TODO cope with responseFifoFull
 //
 // Assumes 16-bit RGB pixel data (5-6-5 red-green-blue).
 //
 //
-// Copyright 2020 Reclone Labs <reclonelabs.com>
+// Copyright 2020-2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -55,16 +49,16 @@ module VideoGeneratorSource #(parameter CHUNK_BITS = 5)
     input wire scalerClock,
     input wire reset,
 
-    output reg requestFifoReadEnable = 1'b0,
+    output wire requestFifoReadEnable,
     input wire requestFifoEmpty,
     input wire [REQUEST_BITS-1:0] requestFifoReadData,
     
-    output wire responseFifoWriteEnable,
-    input wire responseFifoFull, // <-- not really respected... see above description
+    output reg responseFifoWriteEnable = 1'b0,
+    input wire responseFifoFull,
     output wire [BITS_PER_PIXEL-1:0] responseFifoWriteData,
     
-    output wire [HACTIVE_BITS-1:0] hPos,
-    output wire [VACTIVE_BITS-1:0] vPos,
+    output reg [HACTIVE_BITS-1:0] hPos = {HACTIVE_BITS{1'b0}},
+    output reg [VACTIVE_BITS-1:0] vPos = {VACTIVE_BITS{1'b0}},
     output reg dataEnable = 1'b0,
     input wire [7:0] r,
     input wire [7:0] g,
@@ -79,6 +73,29 @@ localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;
 localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
 localparam BITS_PER_PIXEL = 16;
 
+// One-hot states for downstream request state machine
+localparam DOWNSTREAM_REQUEST_IDLE = 3'b001, DOWNSTREAM_REQUEST_READ = 3'b010, DOWNSTREAM_REQUEST_STORE = 3'b100;
+reg[2:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
+
+wire responseBufferReadEnable;
+wire responseBufferWriteEnable;
+wire responseBufferEmpty;
+wire responseBufferFull;
+wire [BITS_PER_PIXEL-1:0] responseBufferReadData;
+wire [BITS_PER_PIXEL-1:0] responseBufferWriteData;
+SyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(3)) responseBuffer
+(
+    .asyncReset(reset),
+    .clock(scalerClock),
+    .readEnable(responseBufferReadEnable),
+    .empty(responseBufferEmpty),
+    .readData(responseBufferReadData),
+    .writeEnable(responseBufferWriteEnable),
+    .full(responseBufferFull),
+    .writeData(responseBufferWriteData)
+);
+
+
 // Round/truncate r, g, b to the nearest 5, 6, 5 bit values
 /* verilator lint_off UNUSED */
 wire [7:0] rRounded = (r[7:3] == 5'h1F) ? r : (r + 8'd4);
@@ -88,56 +105,99 @@ wire [7:0] bRounded = (b[7:3] == 5'h1F) ? b : (b + 8'd4);
 wire [4:0] rTruncated = rRounded[7:3];
 wire [5:0] gTruncated = gRounded[7:2];
 wire [4:0] bTruncated = bRounded[7:3];
-assign responseFifoWriteData = {rTruncated, gTruncated, bTruncated};
-assign responseFifoWriteEnable = dataEnableDelayed;
+
+// Write to response buffer whenever dataEnableDelayed is asserted;
+// responseBuffer, by design, should never be full due to stalling dataEnable
+// whenever responseFifoFull or responseBufferFull is asserted.
+assign responseBufferWriteData = {rTruncated, gTruncated, bTruncated};
+assign responseBufferWriteEnable = dataEnableDelayed;
+
+// Read items from the response buffer whenever the downstream response FIFO is not full
+assign responseBufferReadEnable = !responseBufferEmpty && !responseFifoFull;
+assign responseFifoWriteData = responseBufferReadData;
 
 // Request is {vPos, chunkNum}.  hPos will be (chunkNum << CHUNK_BITS + pixelCount).
 reg [CHUNK_BITS-1:0] pixelCount = {CHUNK_BITS{1'b0}};
-assign vPos = requestFifoReadData[REQUEST_BITS-1:CHUNKNUM_BITS];
-assign hPos = {requestFifoReadData[CHUNKNUM_BITS-1:0], pixelCount};
+
+reg requestFifoReadEnableReg = 1'b0;
+assign requestFifoReadEnable = requestFifoReadEnableReg && !responseFifoFull && !responseBufferFull;
 
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
-        requestFifoReadEnable <= 1'b0;
+        requestFifoReadEnableReg <= 1'b0;
         dataEnable <= 1'b0;
         pixelCount <= {CHUNK_BITS{1'b0}};
-    end else if (dataEnable) begin
-        // dataEnable is active, indicating that we ARE trying to get pixels out of the generator
-        if (pixelCount == {CHUNK_BITS{1'b1}}) begin
-            // Now responding with the last pixel in the chunk
-            if (requestFifoReadEnable) begin
-                // Next requested chunk number is now present on requestFifoReadData
-                requestFifoReadEnable <= 1'b0;
-            end else begin
-                // De-assert dataEnable because there are no more chunk requests to handle
-                dataEnable <= 1'b0;
-            end
-            // Reset pixel counter to the first pixel of the chunk
-            pixelCount <= {CHUNK_BITS{1'b0}};
-        end else begin
-            if ((pixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) && !requestFifoEmpty && !responseFifoFull) begin
-                // Now responding with the second to last pixel in the chunk, with a new request already queued
-                // Get a request from the request FIFO, which will be on requestFifoReadData next clock
-                requestFifoReadEnable <= 1'b1;
-            end else begin
-                requestFifoReadEnable <= 1'b0;
-            end
-            // Increment pixel counter
-            pixelCount <= pixelCount + {{(CHUNK_BITS-1){1'b0}}, 1'b1};
-        end
+        responseFifoWriteEnable <= 1'b0;
+        hPos <= {HACTIVE_BITS{1'b0}};
+        vPos <= {VACTIVE_BITS{1'b0}};
     end else begin
-        // dataEnable is inactive, indicating that we are NOT yet trying to get pixels out of the generator
-        if (!requestFifoReadEnable && !requestFifoEmpty && !responseFifoFull) begin
-            // Get a request from the request FIFO, which will be on requestFifoReadData next clock
-            requestFifoReadEnable <= 1'b1;
-        end else if (requestFifoReadEnable) begin
-            // Requested chunk number is now present on requestFifoReadData
-            requestFifoReadEnable <= 1'b0;
-            // Assert dataEnable which is our flag that we are requesting pixel data out of the generator
-            dataEnable <= 1'b1;
-            // Start with the first pixel of the chunk
-            pixelCount <= {CHUNK_BITS{1'b0}};
-        end
+        
+        // Request state machine - Get downstream chunk requests and enqueue upstream chunk requests
+        case (downstreamRequestState)
+            DOWNSTREAM_REQUEST_IDLE: begin
+                dataEnable <= 1'b0;
+                if (!requestFifoEmpty && !responseFifoFull && !responseBufferFull) begin
+                    requestFifoReadEnableReg <= 1'b1;
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_READ;
+                end
+            end
+
+            DOWNSTREAM_REQUEST_READ: begin
+                requestFifoReadEnableReg <= 1'b0;
+                dataEnable <= 1'b0;
+                
+                if (!responseFifoFull && !responseBufferFull) begin
+                    // Request should be available next cycle
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
+                    pixelCount <= {CHUNK_BITS{1'b0}};
+                end
+            end
+
+            DOWNSTREAM_REQUEST_STORE: begin
+                if (!responseFifoFull && !responseBufferFull) begin
+                    // Supply the next position to the generator module pipeline
+                    dataEnable <= 1'b1;
+                    vPos <= requestFifoReadData[REQUEST_BITS-1:CHUNKNUM_BITS];
+                    hPos <= {requestFifoReadData[CHUNKNUM_BITS-1:0], pixelCount};
+                    
+                    if (pixelCount == {CHUNK_BITS{1'b1}}) begin
+                        if (requestFifoReadEnableReg) begin
+                            // Already reading the next chunk, so remain in DOWNSTREAM_REQUEST_STORE state
+                            requestFifoReadEnableReg <= 1'b0;
+                            pixelCount <= {CHUNK_BITS{1'b0}};
+                        end else if (!requestFifoEmpty) begin
+                            // Start reading the next chunk request
+                            requestFifoReadEnableReg <= 1'b1;
+                            downstreamRequestState <= DOWNSTREAM_REQUEST_READ;
+                        end else begin
+                            // Return to idle
+                            downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+                        end
+                    end else begin
+                        pixelCount <= pixelCount + {{(CHUNK_BITS-1){1'b0}}, 1'b1};
+                        
+                        // If second to last pixel in chunk
+                        if (pixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
+                            if (!requestFifoEmpty) begin
+                                // Start reading the next chunk request
+                                requestFifoReadEnableReg <= 1'b1;
+                            end
+                        end
+                    end
+                end else begin
+                    // Do not request another pixel position 
+                    dataEnable <= 1'b0;
+                end
+            end
+            
+            default: begin
+                downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+            end
+        endcase
+        
+        // Always write to the downstream FIFO immediately after reading the response buffer
+        responseFifoWriteEnable <= responseBufferReadEnable;
+        
     end
 end
 
