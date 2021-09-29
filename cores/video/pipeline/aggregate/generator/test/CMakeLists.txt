@@ -1,0 +1,5 @@
+add_executable(testVideoGeneratorPipeline VideoGeneratorPipelineTests.cpp)
+
+target_link_libraries(testVideoGeneratorPipeline VVideoGeneratorPipeline gtest gmock_main gmock bmp2generator scanlines2bmp)
+
+add_test(NAME testVideoGeneratorPipeline COMMAND testVideoGeneratorPipeline)
