@@ -86,7 +86,7 @@ module VideoAggregateScaler #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     input wire [1:0] scanlineIntensity, // 0=25%, 1=50%, 2=75%, 3=100%
 
     // Filter module reads from the downstream request FIFO...
-    output reg downstreamRequestFifoReadEnable = 1'b0,
+    output wire downstreamRequestFifoReadEnable,
     input wire downstreamRequestFifoEmpty,
     input wire [REQUEST_BITS-1:0] downstreamRequestFifoReadData,
     // ...and writes to the downstream response FIFO.
@@ -100,7 +100,7 @@ module VideoAggregateScaler #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     output wire [REQUEST_BITS-1:0] upstreamRequestFifoReadData,
     // ...and exposes upstream response FIFO for writing.
     input wire upstreamResponseFifoWriteEnable,
-    output reg upstreamResponseFifoFull,
+    output wire upstreamResponseFifoFull,
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 

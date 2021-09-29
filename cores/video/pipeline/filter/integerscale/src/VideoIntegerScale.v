@@ -93,7 +93,7 @@ module VideoIntegerScale #(parameter CHUNK_BITS = 5)
     // ...and writes to the downstream response FIFO.
     output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
-    output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
+    output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
     
     // Filter module exposes upstream request FIFO for reading...
     input wire upstreamRequestFifoReadEnable,
@@ -233,7 +233,7 @@ SyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(CHUNK_BITS)) upstreamRespons
 // so that the received pixel data can be cached accordingly
 wire pendingUpstreamRequestFifoFull;
 wire pendingUpstreamRequestFifoEmpty;
-wire pendingUpstreamRequestFifoReadEnable;
+reg pendingUpstreamRequestFifoReadEnable = 1'b0;
 wire [REQUEST_BITS-1:0] pendingUpstreamRequestFifoReadData;
 SyncFifo #(.DATA_WIDTH(REQUEST_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingUpstreamRequests
 (
@@ -331,6 +331,7 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamRequestFifoReadEnable <= 1'b0;
         upstreamResponseFifoReadEnable <= 1'b0;
         upstreamRequestFifoWriteEnable <= 1'b0;
+        pendingUpstreamRequestFifoReadEnable <= 1'b0;
         pendingDownstreamResponseFifoWriteEnable <= 1'b0;
         pendingDownstreamResponseFifoReadEnable <= 1'b0;
         upstreamRequestFifoWriteData <= {REQUEST_BITS{1'b0}};
@@ -348,6 +349,7 @@ always @ (posedge scalerClock or posedge reset) begin
         cachedRowBIsOlder <= 1'b0;
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         downstreamResponseFifoWriteEnableReg <= 1'b0;
+        downstreamResponseFifoWriteData <= {BITS_PER_PIXEL{1'b0}};
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,

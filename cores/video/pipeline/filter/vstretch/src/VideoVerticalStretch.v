@@ -53,7 +53,7 @@ module VideoVerticalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     input wire [SCALE_BITS-1:0] vShrinkFactor,
     
     // Filter module reads from the downstream request FIFO...
-    output wire downstreamRequestFifoReadEnable,
+    output reg downstreamRequestFifoReadEnable = 1'b0,
     input wire downstreamRequestFifoEmpty,
     input wire [REQUEST_BITS-1:0] downstreamRequestFifoReadData,
     
@@ -140,7 +140,7 @@ SyncFifo #(.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(CHUNK_BITS)) upstreamRespons
 // so that the received pixel data can be cached accordingly
 wire pendingUpstreamRequestFifoFull;
 wire pendingUpstreamRequestFifoEmpty;
-wire pendingUpstreamRequestFifoReadEnable;
+reg pendingUpstreamRequestFifoReadEnable = 1'b0;
 wire [REQUEST_BITS-1:0] pendingUpstreamRequestFifoReadData;
 SyncFifo #(.DATA_WIDTH(REQUEST_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingUpstreamRequests
 (
@@ -274,6 +274,8 @@ always @ (posedge scalerClock or posedge reset) begin
         // Asynchronous reset
         //TODO
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+        downstreamRequestFifoReadEnable <= 1'b0;
+        pendingUpstreamRequestFifoReadEnable <= 1'b0;
     end else begin
     
         //HACK FIXME TODO

@@ -57,7 +57,7 @@ module VideoCroppingFilter #(parameter CHUNK_BITS = 5)
     
     // ...and exposes upstream response FIFO for writing.
     input wire upstreamResponseFifoWriteEnable,
-    output reg upstreamResponseFifoFull,
+    output wire upstreamResponseFifoFull,
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 
