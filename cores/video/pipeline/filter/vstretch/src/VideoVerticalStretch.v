@@ -60,7 +60,7 @@ module VideoVerticalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     // ...and writes to the downstream response FIFO.
     output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
-    output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
+    output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
     
     // Filter module exposes upstream request FIFO for reading...
     input wire upstreamRequestFifoReadEnable,
@@ -193,12 +193,58 @@ assign pendingDownstreamResponseFifoWriteData = {upstreamRequestCoord, requested
 reg [VACTIVE_BITS-1:0] cachedRowA = {VACTIVE_BITS{1'b1}};
 reg [MAX_CHUNKS_PER_ROW-1:0] cachedChunkValidA = {MAX_CHUNKS_PER_ROW{1'b0}};
 reg [MAX_CHUNKS_PER_ROW-1:0] cachedChunkPendingA = {MAX_CHUNKS_PER_ROW{1'b0}};
-reg [BITS_PER_PIXEL-1:0] cacheA [0:HACTIVE_COLUMNS-1];
+wire cacheWriteEnableA;
+wire [HACTIVE_BITS-1:0] cacheWriteAddressA;
+wire [BITS_PER_PIXEL-1:0] cacheWriteDataA;
+wire cacheReadEnableA;
+wire [HACTIVE_BITS-1:0] cacheReadAddressA;
+wire [BITS_PER_PIXEL-1:0] cacheReadDataA;
+BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheA
+(
+    // Write Port
+    .clockA(scalerClock),
+    .enableA(1'b1),
+    .writeEnableA(cacheWriteEnableA),
+    .addressA(cacheWriteAddressA),
+    .dataInA(cacheWriteDataA),
+    .dataOutA(),
+    
+    // Read Port
+    .clockB(scalerClock),
+    .enableB(cacheReadEnableA),
+    .writeEnableB(1'b0),
+    .addressB(cacheReadAddressA),
+    .dataInB({BITS_PER_PIXEL{1'b0}}),
+    .dataOutB(cacheReadDataA)
+);
 
 reg [VACTIVE_BITS-1:0] cachedRowB = {VACTIVE_BITS{1'b1}};
 reg [MAX_CHUNKS_PER_ROW-1:0] cachedChunkValidB = {MAX_CHUNKS_PER_ROW{1'b0}};
 reg [MAX_CHUNKS_PER_ROW-1:0] cachedChunkPendingB = {MAX_CHUNKS_PER_ROW{1'b0}};
-reg [BITS_PER_PIXEL-1:0] cacheB [0:HACTIVE_COLUMNS-1];
+wire cacheWriteEnableB;
+wire [HACTIVE_BITS-1:0] cacheWriteAddressB;
+wire [BITS_PER_PIXEL-1:0] cacheWriteDataB;
+wire cacheReadEnableB;
+wire [HACTIVE_BITS-1:0] cacheReadAddressB;
+wire [BITS_PER_PIXEL-1:0] cacheReadDataB;
+BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheB
+(
+    // Write Port
+    .clockA(scalerClock),
+    .enableA(1'b1),
+    .writeEnableA(cacheWriteEnableB),
+    .addressA(cacheWriteAddressB),
+    .dataInA(cacheWriteDataB),
+    .dataOutA(),
+    
+    // Read Port
+    .clockB(scalerClock),
+    .enableB(cacheReadEnableB),
+    .writeEnableB(1'b0),
+    .addressB(cacheReadAddressB),
+    .dataInB({BITS_PER_PIXEL{1'b0}}),
+    .dataOutB(cacheReadDataB)
+);
 
 reg cachedRowBIsOlder = 1'b0;
 
@@ -206,6 +252,14 @@ wire [VACTIVE_BITS-1:0] upstreamResponseRow = pendingUpstreamRequestFifoReadData
 wire [CHUNKNUM_BITS-1:0] upstreamResponseChunk = pendingUpstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
 reg [CHUNK_BITS-1:0] upstreamResponsePixelCount = {CHUNK_BITS{1'b0}};
 wire [HACTIVE_BITS-1:0] upstreamResponseColumn = {upstreamResponseChunk, upstreamResponsePixelCount};
+
+// Write the upstream response to cache, when it's ready
+assign cacheWriteAddressA = upstreamResponseColumn;
+assign cacheWriteAddressB = upstreamResponseColumn;
+assign cacheWriteDataA = upstreamResponseFifoReadData;
+assign cacheWriteDataB = upstreamResponseFifoReadData;
+assign cacheWriteEnableA = (upstreamResponseReady && (upstreamResponseRow == cachedRowA));
+assign cacheWriteEnableB = (upstreamResponseReady && (upstreamResponseRow == cachedRowB));
 
 wire [VCOORD_BITS-1:0] downstreamResponseCoord = pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS+REQUEST_BITS-1:SCALE_FRACTION_BITS+REQUEST_BITS-VCOORD_BITS];
 wire [VACTIVE_BITS-1:0] downstreamResponseCoordWhole = downstreamResponseCoord[VCOORD_BITS-1:SCALE_FRACTION_BITS];
@@ -221,6 +275,20 @@ wire [VACTIVE_BITS-1:0] downstreamCacheRowLower = ~|downstreamResponseCoordFract
 wire [SCALE_BITS-1:0] downstreamCoordLowerCoeff = {1'b0, downstreamResponseCoord[SCALE_FRACTION_BITS-1:0]};
 wire [SCALE_BITS-1:0] downstreamCoordUpperCoeff = {1'b0, ~downstreamResponseCoord[SCALE_FRACTION_BITS-1:0]};
 
+// Blend pixel color from cache to downstream response fifo
+assign cacheReadAddressA = downstreamResponseColumn;
+assign cacheReadAddressB = downstreamResponseColumn;
+assign cacheReadEnableA = 1'b1;
+assign cacheReadEnableB = 1'b1;
+reg downstreamUpperRowInCacheA = 1'b0;
+reg downstreamBlend = 1'b0;
+reg [SCALE_BITS-1:0] downstreamBlendUpperCoeff = {SCALE_BITS{1'b0}};
+reg [SCALE_BITS-1:0] downstreamBlendLowerCoeff = {SCALE_BITS{1'b0}};
+wire [BITS_PER_PIXEL-1:0] downstreamUpperPixelColor = downstreamUpperRowInCacheA ? cacheReadDataA : cacheReadDataB;
+wire [BITS_PER_PIXEL-1:0] downstreamLowerPixelColor = downstreamUpperRowInCacheA ? cacheReadDataB : cacheReadDataA;
+assign downstreamResponseFifoWriteData = downstreamBlend ?
+        blend(downstreamUpperPixelColor, downstreamBlendUpperCoeff, downstreamLowerPixelColor, downstreamBlendLowerCoeff) :
+        downstreamUpperPixelColor;
 
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
 assign downstreamResponseFifoWriteEnable = downstreamResponseFifoFull ? 1'b0 : downstreamResponseFifoWriteEnableReg;
@@ -276,6 +344,10 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         downstreamRequestFifoReadEnable <= 1'b0;
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
+        downstreamUpperRowInCacheA <= 1'b0;
+        downstreamBlend <= 1'b0;
+        downstreamBlendUpperCoeff <= {SCALE_BITS{1'b0}};
+        downstreamBlendLowerCoeff <= {SCALE_BITS{1'b0}};
     end else begin
     
         //HACK FIXME TODO
@@ -425,12 +497,7 @@ always @ (posedge scalerClock or posedge reset) begin
             UPSTREAM_RESPONSE_STORE: begin
                 // If we had previously requested a pixel from the upstream FIFO
                 if (upstreamResponseReady) begin
-                    // Store the response in the appropriate line cache
-                    if (upstreamResponseRow == cachedRowA) begin
-                        cacheA[upstreamResponseColumn] <= upstreamResponseFifoReadData;
-                    end else if (upstreamResponseRow == cachedRowB) begin
-                        cacheB[upstreamResponseColumn] <= upstreamResponseFifoReadData;
-                    end
+                    // Store the response in the appropriate line cache (see combinatorial logic for cache block RAMs)
                     
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
                     if (upstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
@@ -444,12 +511,13 @@ always @ (posedge scalerClock or posedge reset) begin
                         end
                         // Reset pixel counter
                         upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
+                        // Do not store next cycle's pixel
+                        upstreamResponseReady <= 1'b0;
                         
                         if (pendingUpstreamRequestFifoEmpty) begin
                             // No incoming chunk at this point, so return to idle
                             pendingUpstreamRequestFifoReadEnable <= 1'b0;
                             upstreamResponseFifoReadEnable <= 1'b0;
-                            upstreamResponseReady <= 1'b0;
                             upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
                         end else begin
                             // Another chunk is incoming, so retrieve its request
@@ -526,7 +594,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     ((cachedRowA == downstreamCacheRowLower && cachedChunkValidA[downstreamResponseChunk]) ||
                      (cachedRowB == downstreamCacheRowLower && cachedChunkValidB[downstreamResponseChunk])) &&
                     !downstreamResponseFifoFull) begin
-                    if (cachedRowA == downstreamCacheRowUpper) begin
+/*                     if (cachedRowA == downstreamCacheRowUpper) begin
                         if (cachedRowA == downstreamCacheRowLower) begin
                             // Same upper and lower rows, so just send that pixel downstream
                             downstreamResponseFifoWriteData <= cacheA[downstreamResponseColumn];
@@ -546,7 +614,11 @@ always @ (posedge scalerClock or posedge reset) begin
                                 blend(cacheB[downstreamResponseColumn], downstreamCoordUpperCoeff,
                                       cacheA[downstreamResponseColumn], downstreamCoordLowerCoeff);
                         end
-                    end
+                    end */
+                    downstreamUpperRowInCacheA <= (cachedRowA == downstreamCacheRowUpper);
+                    downstreamBlend <= ~|downstreamResponseCoordFraction;
+                    downstreamBlendUpperCoeff <= downstreamCoordUpperCoeff;
+                    downstreamBlendLowerCoeff <= downstreamCoordLowerCoeff;
                     
                     // Write to response fifo next cycle
                     downstreamResponseFifoWriteEnableReg <= 1'b1;
