@@ -39,7 +39,7 @@ module BlockRamDualPort # ( parameter DATA_WIDTH = 16,
                                       ADDR_WIDTH = 10,
                                       BIN_MEM_INIT_FILE = "",
                                       HEX_MEM_INIT_FILE = "",
-                                      MEM_INIT_VAL = 8'h00)
+                                      MEM_INIT_VAL = {DATA_WIDTH{1'b0}})
 (
     // Read/Write Port A
     input wire clockA,
