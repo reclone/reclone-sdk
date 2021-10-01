@@ -57,7 +57,7 @@ module VideoHorizontalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 
     input wire [REQUEST_BITS-1:0] downstreamRequestFifoReadData,
     
     // ...and writes to the downstream response FIFO.
-    output wire downstreamResponseFifoWriteEnable,
+    output reg downstreamResponseFifoWriteEnable = 1'b0,
     input wire downstreamResponseFifoFull,
     output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
     
@@ -230,16 +230,14 @@ wire downstreamNeedsCachedChunkB = (downstreamLeftPixelInCacheB || downstreamRig
 wire [BITS_PER_PIXEL-1:0] downstreamLeftPixelColor = (downstreamLeftPixelInCacheA ? cachedChunkA[downstreamLeftPixelWhole] : cachedChunkB[downstreamLeftPixelWhole]);
 wire [BITS_PER_PIXEL-1:0] downstreamRightPixelColor = (downstreamRightPixelInCacheA ? cachedChunkA[downstreamRightPixelWhole] : cachedChunkB[downstreamRightPixelWhole]);
 
-wire [BITS_PER_PIXEL-1:0] downstreamPixelColor = blend(downstreamLeftPixelColor, downstreamLeftPixelCoeff, downstreamRightPixelColor, downstreamRightPixelCoeff);
+// Registers to add a pipeline stage before the blend calculation
+reg [BITS_PER_PIXEL-1:0] blendLeftPixelColor = {BITS_PER_PIXEL{1'b0}};
+reg [BITS_PER_PIXEL-1:0] blendRightPixelColor = {BITS_PER_PIXEL{1'b0}};
+reg [SCALE_BITS-1:0] blendLeftPixelCoeff = {SCALE_BITS{1'b0}};
+reg [SCALE_BITS-1:0] blendRightPixelCoeff = {SCALE_BITS{1'b0}};
 
 wire downstreamLeftPixelIsCached = (downstreamLeftPixelInCacheA && cachedChunkAValid) || (downstreamLeftPixelInCacheB && cachedChunkBValid);
 wire downstreamRightPixelIsCached = (downstreamRightPixelInCacheA && cachedChunkAValid) || (downstreamRightPixelInCacheB && cachedChunkBValid);
-
-// Write the response if we just grabbed a pending downstream response coord and the cache has the upstream pixels we need
-assign downstreamResponseFifoWriteEnable =  !downstreamResponseFifoFull &&
-                                            downstreamLeftPixelIsCached &&
-                                            downstreamRightPixelIsCached &&
-                                            pendingDownstreamResponseAvailable;
 
 // Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
 reg pendingDownstreamResponseAvailable = 1'b0;
@@ -248,7 +246,7 @@ assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseFifoFull && 
     (!pendingDownstreamResponseAvailable || downstreamResponseFifoWriteEnable);
 
 
-assign downstreamResponseFifoWriteData = downstreamPixelColor;
+assign downstreamResponseFifoWriteData = blend(blendLeftPixelColor, blendLeftPixelCoeff, blendRightPixelColor, blendRightPixelCoeff);
 
 
 function [BITS_PER_PIXEL-1:0] blend;
@@ -316,6 +314,11 @@ always @ (posedge scalerClock or posedge reset) begin
         storeUpstreamResponseToCacheB <= 1'b0;
         storeUpstreamResponsePixelCount <= {CHUNK_BITS{1'b1}};
         pendingDownstreamResponseAvailable <= 1'b0;
+        blendLeftPixelColor <= {BITS_PER_PIXEL{1'b0}};
+        blendRightPixelColor <= {BITS_PER_PIXEL{1'b0}};
+        blendLeftPixelCoeff <= {SCALE_BITS{1'b0}};
+        blendRightPixelCoeff <= {SCALE_BITS{1'b0}};
+        downstreamResponseFifoWriteEnable <= 1'b0;
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
@@ -507,11 +510,31 @@ always @ (posedge scalerClock or posedge reset) begin
             end
         end
         
-        // "Available" flag indicates whether a pending downstream response was read last cycle
-        if (pendingDownstreamResponseFifoReadEnable) begin
-            pendingDownstreamResponseAvailable <= 1'b1;
-        end else if (downstreamResponseFifoWriteEnable) begin
-            pendingDownstreamResponseAvailable <= 1'b0;
+        // DOWNSTREAM RESPONSE STAGING
+        // If we read a pending downstream response last cycle, determine if the required pixels
+        // are cached, and if so, store their colors and coefficients for the next stage which
+        // does the actual blend calculation.
+        if  (   !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
+                downstreamLeftPixelIsCached && downstreamRightPixelIsCached ) begin
+            downstreamResponseFifoWriteEnable <= 1'b1;
+            blendLeftPixelColor <= downstreamLeftPixelColor;
+            blendRightPixelColor <= downstreamRightPixelColor;
+            blendLeftPixelCoeff <= downstreamLeftPixelCoeff;
+            blendRightPixelCoeff <= downstreamRightPixelCoeff;
+            
+            // Clear the pendingDownstreamResponseAvailable flag if
+            // we processed this response and there is not another behind it
+            if (!pendingDownstreamResponseFifoReadEnable) begin
+                pendingDownstreamResponseAvailable <= 1'b0;
+            end
+        end else begin
+            downstreamResponseFifoWriteEnable <= 1'b0;
+            
+            // Set the pendingDownstreamResponseAvailable flag if
+            // there is another response coming in to process
+            if (pendingDownstreamResponseFifoReadEnable) begin
+                pendingDownstreamResponseAvailable <= 1'b1;
+            end
         end
 
     end
