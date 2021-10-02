@@ -57,7 +57,7 @@ module VideoHorizontalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 
     input wire [REQUEST_BITS-1:0] downstreamRequestFifoReadData,
     
     // ...and writes to the downstream response FIFO.
-    output reg downstreamResponseFifoWriteEnable = 1'b0,
+    output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
     output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
     
@@ -82,6 +82,8 @@ localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
 localparam BITS_PER_PIXEL = 16;
 localparam SCALE_BITS = SCALE_FRACTION_BITS + 1;
 localparam HCOORD_BITS = HACTIVE_BITS + SCALE_FRACTION_BITS;
+localparam COLOR_COMPONENT_BITS_MAX = 6;
+localparam COLOR_WEIGHT_BITS = SCALE_FRACTION_BITS + COLOR_COMPONENT_BITS_MAX;
 
 // One-hot states for downstream request state machine
 localparam DOWNSTREAM_REQUEST_IDLE = 3'b001, DOWNSTREAM_REQUEST_READ = 3'b010, DOWNSTREAM_REQUEST_STORE = 3'b100;
@@ -154,7 +156,8 @@ reg [CHUNK_BITS-1:0] upstreamResponsePixelCount = {CHUNK_BITS{1'b0}};
 // of each pending downstream pixel (in the coordinate system of the upstream video frame).
 wire pendingDownstreamResponseFifoFull;
 wire pendingDownstreamResponseFifoEmpty;
-wire pendingDownstreamResponseFifoReadEnable;
+reg pendingDownstreamResponseFifoReadEnableReg = 1'b0;
+wire pendingDownstreamResponseFifoReadEnable = pendingDownstreamResponseFifoReadEnableReg && !downstreamResponseStall;
 wire [HCOORD_BITS-1:0] pendingDownstreamResponseFifoReadData;
 reg pendingDownstreamResponseFifoWriteEnable = 1'b0;
 reg [HCOORD_BITS-1:0] pendingDownstreamResponseFifoWriteData = {HCOORD_BITS{1'b0}};
@@ -241,50 +244,81 @@ wire downstreamRightPixelIsCached = (downstreamRightPixelInCacheA && cachedChunk
 
 // Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
 reg pendingDownstreamResponseAvailable = 1'b0;
-// Read the next pending downstream response coord as long as the downstream response fifo can receive it
-assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseFifoFull && !pendingDownstreamResponseFifoEmpty &&
-    (!pendingDownstreamResponseAvailable || downstreamResponseFifoWriteEnable);
 
 
-assign downstreamResponseFifoWriteData = blend(blendLeftPixelColor, blendLeftPixelCoeff, blendRightPixelColor, blendRightPixelCoeff);
+//assign downstreamResponseFifoWriteData = blend(blendLeftPixelColor, blendLeftPixelCoeff, blendRightPixelColor, blendRightPixelCoeff);
 
+reg downstreamBlendParamsReady = 1'b0;
+reg [COLOR_WEIGHT_BITS-1:0] downstreamLeftWeightRed = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamLeftWeightGreen = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamLeftWeightBlue = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamRightWeightRed = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamRightWeightGreen = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamRightWeightBlue = {COLOR_WEIGHT_BITS{1'b0}};
 
-function [BITS_PER_PIXEL-1:0] blend;
-    input [BITS_PER_PIXEL-1:0]  lColor;
-    input [SCALE_BITS-1:0]      lCoeff;
-    input [BITS_PER_PIXEL-1:0]  rColor;
-    input [SCALE_BITS-1:0]      rCoeff;
+/* verilator lint_off UNUSED */
+wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumRed = colorComponentSum(downstreamLeftWeightRed, downstreamRightWeightRed);
+wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumGreen = colorComponentSum(downstreamLeftWeightGreen, downstreamRightWeightGreen);
+wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumBlue = colorComponentSum(downstreamLeftWeightBlue, downstreamRightWeightBlue);
+/* verilator lint_on UNUSED */
+assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
+reg downstreamResponseFifoWriteEnableReg = 1'b0;
+assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseStall;
+
+wire downstreamResponseStall = downstreamResponseFifoFull ||
+                               (pendingDownstreamResponseAvailable &&
+                                (!downstreamLeftPixelIsCached || !downstreamRightPixelIsCached));
+
+// function [BITS_PER_PIXEL-1:0] blend;
+    // input [BITS_PER_PIXEL-1:0]  lColor;
+    // input [SCALE_BITS-1:0]      lCoeff;
+    // input [BITS_PER_PIXEL-1:0]  rColor;
+    // input [SCALE_BITS-1:0]      rCoeff;
     
     
-    reg [4:0] lRed = 5'd0;
-    reg [5:0] lGreen = 6'd0;
-    reg [4:0] lBlue = 5'd0;
-    reg [4:0] rRed = 5'd0;
-    reg [5:0] rGreen = 6'd0;
-    reg [4:0] rBlue = 5'd0;
+    // reg [4:0] lRed = 5'd0;
+    // reg [5:0] lGreen = 6'd0;
+    // reg [4:0] lBlue = 5'd0;
+    // reg [4:0] rRed = 5'd0;
+    // reg [5:0] rGreen = 6'd0;
+    // reg [4:0] rBlue = 5'd0;
     
     
+    // /* verilator lint_off UNUSED */
+    // reg [4+SCALE_FRACTION_BITS:0] blendedRed = {(5+SCALE_FRACTION_BITS){1'b0}};
+    // reg [5+SCALE_FRACTION_BITS:0] blendedGreen = {(6+SCALE_FRACTION_BITS){1'b0}};
+    // reg [4+SCALE_FRACTION_BITS:0] blendedBlue = {(5+SCALE_FRACTION_BITS){1'b0}};
+    // /* verilator lint_on UNUSED */
+    
+    // begin
+        // lRed = lColor[15:11];
+        // lGreen = lColor[10:5];
+        // lBlue = lColor[4:0];
+        // rRed = rColor[15:11];
+        // rGreen = rColor[10:5];
+        // rBlue = rColor[4:0];
+        
+        // blendedRed = lRed * lCoeff + rRed * rCoeff;
+        // blendedGreen = lGreen * lCoeff + rGreen * rCoeff;
+        // blendedBlue = lBlue * lCoeff + rBlue * rCoeff;
+        
+        // blend = {blendedRed[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
+                 // blendedGreen[5+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
+                 // blendedBlue[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS]};
+    // end
+// endfunction
+
+function [COLOR_COMPONENT_BITS_MAX-1:0] colorComponentSum;
+    input [COLOR_WEIGHT_BITS-1:0] addendA;
+    input [COLOR_WEIGHT_BITS-1:0] addendB;
+
     /* verilator lint_off UNUSED */
-    reg [4+SCALE_FRACTION_BITS:0] blendedRed = {(5+SCALE_FRACTION_BITS){1'b0}};
-    reg [5+SCALE_FRACTION_BITS:0] blendedGreen = {(6+SCALE_FRACTION_BITS){1'b0}};
-    reg [4+SCALE_FRACTION_BITS:0] blendedBlue = {(5+SCALE_FRACTION_BITS){1'b0}};
+    reg [COLOR_WEIGHT_BITS-1:0] sum;
     /* verilator lint_on UNUSED */
-    
+
     begin
-        lRed = lColor[15:11];
-        lGreen = lColor[10:5];
-        lBlue = lColor[4:0];
-        rRed = rColor[15:11];
-        rGreen = rColor[10:5];
-        rBlue = rColor[4:0];
-        
-        blendedRed = lRed * lCoeff + rRed * rCoeff;
-        blendedGreen = lGreen * lCoeff + rGreen * rCoeff;
-        blendedBlue = lBlue * lCoeff + rBlue * rCoeff;
-        
-        blend = {blendedRed[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
-                 blendedGreen[5+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
-                 blendedBlue[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS]};
+        sum = addendA + addendB + {{COLOR_COMPONENT_BITS_MAX{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}};
+        colorComponentSum = sum[COLOR_WEIGHT_BITS-1:SCALE_FRACTION_BITS];
     end
 endfunction
 
@@ -299,6 +333,7 @@ always @ (posedge scalerClock or posedge reset) begin
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
         upstreamRequestFifoWriteData <= {REQUEST_BITS{1'b0}};
         upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
+        pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
         pendingDownstreamResponseFifoWriteEnable <= 1'b0;
         pendingDownstreamResponseFifoWriteData <= {HCOORD_BITS{1'b0}};
         lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
@@ -318,7 +353,14 @@ always @ (posedge scalerClock or posedge reset) begin
         blendRightPixelColor <= {BITS_PER_PIXEL{1'b0}};
         blendLeftPixelCoeff <= {SCALE_BITS{1'b0}};
         blendRightPixelCoeff <= {SCALE_BITS{1'b0}};
-        downstreamResponseFifoWriteEnable <= 1'b0;
+        downstreamResponseFifoWriteEnableReg <= 1'b0;
+        downstreamBlendParamsReady <= 1'b0;
+        downstreamLeftWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamLeftWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamLeftWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamRightWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamRightWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamRightWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
@@ -511,31 +553,45 @@ always @ (posedge scalerClock or posedge reset) begin
         end
         
         // DOWNSTREAM RESPONSE STAGING
-        // If we read a pending downstream response last cycle, determine if the required pixels
-        // are cached, and if so, store their colors and coefficients for the next stage which
-        // does the actual blend calculation.
-        if  (   !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
-                downstreamLeftPixelIsCached && downstreamRightPixelIsCached ) begin
-            downstreamResponseFifoWriteEnable <= 1'b1;
-            blendLeftPixelColor <= downstreamLeftPixelColor;
-            blendRightPixelColor <= downstreamRightPixelColor;
-            blendLeftPixelCoeff <= downstreamLeftPixelCoeff;
-            blendRightPixelCoeff <= downstreamRightPixelCoeff;
+        
+        if (!downstreamResponseStall) begin
+            // Read the next pending downstream response coord
+            pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
             
-            // Clear the pendingDownstreamResponseAvailable flag if
-            // we processed this response and there is not another behind it
-            if (!pendingDownstreamResponseFifoReadEnable) begin
-                pendingDownstreamResponseAvailable <= 1'b0;
+            pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnableReg;
+            
+            // If we read a pending downstream response last cycle, determine if the required pixels
+            // are cached, and if so, store their colors and coefficients for the next stage which
+            // does the actual blend calculation.
+            if  (   pendingDownstreamResponseAvailable &&
+                    downstreamLeftPixelIsCached && downstreamRightPixelIsCached ) begin
+                downstreamBlendParamsReady <= 1'b1;
+                blendLeftPixelColor <= downstreamLeftPixelColor;
+                blendRightPixelColor <= downstreamRightPixelColor;
+                blendLeftPixelCoeff <= downstreamLeftPixelCoeff;
+                blendRightPixelCoeff <= downstreamRightPixelCoeff;
+            end else begin
+                downstreamBlendParamsReady <= 1'b0;
             end
-        end else begin
-            downstreamResponseFifoWriteEnable <= 1'b0;
             
-            // Set the pendingDownstreamResponseAvailable flag if
-            // there is another response coming in to process
-            if (pendingDownstreamResponseFifoReadEnable) begin
-                pendingDownstreamResponseAvailable <= 1'b1;
+            if (downstreamBlendParamsReady) begin
+                // Calculate color component weights
+                // Next cycle they will be summed and concatenated to form downstreamResponseFifoWriteData
+                downstreamLeftWeightRed <= {1'b0, blendLeftPixelColor[15:11]} * blendLeftPixelCoeff;
+                downstreamLeftWeightGreen <= blendLeftPixelColor[10:5] * blendLeftPixelCoeff;
+                downstreamLeftWeightBlue <= {1'b0, blendLeftPixelColor[4:0]} * blendLeftPixelCoeff;
+                downstreamRightWeightRed <= {1'b0, blendRightPixelColor[15:11]} * blendRightPixelCoeff;
+                downstreamRightWeightGreen <= blendRightPixelColor[10:5] * blendRightPixelCoeff;
+                downstreamRightWeightBlue <= {1'b0, blendRightPixelColor[4:0]} * blendRightPixelCoeff;
+                
+                downstreamResponseFifoWriteEnableReg <= 1'b1;
+            end else begin
+                // Not ready to calculate this stage
+                downstreamResponseFifoWriteEnableReg <= 1'b0;
             end
         end
+        
+
 
     end
 end
