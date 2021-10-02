@@ -81,8 +81,10 @@ localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;
 localparam MAX_CHUNKS_PER_ROW = 1 << CHUNKNUM_BITS;
 localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
 localparam BITS_PER_PIXEL = 16;
+localparam COLOR_WEIGHT_BITS = SCALE_FRACTION_BITS + 6;
 localparam SCALE_BITS = SCALE_FRACTION_BITS + 1;
 localparam VCOORD_BITS = VACTIVE_BITS + SCALE_FRACTION_BITS;
+localparam COLOR_COMPONENT_BITS_MAX = 6;
 
 // One-hot states for downstream request state machine
 localparam  DOWNSTREAM_REQUEST_IDLE  = 4'b0001,
@@ -284,6 +286,7 @@ assign cacheReadEnableB = 1'b1;
 reg downstreamUpperRowInCacheA = 1'b0;
 reg [SCALE_FRACTION_BITS-1:0] downstreamBlendFraction = {SCALE_FRACTION_BITS{1'b0}};
 reg downstreamBlendFractionReady = 1'b0;
+reg downstreamBlendParamsReady = 1'b0;
 
 reg [SCALE_BITS-1:0] downstreamBlendUpperCoeff = {SCALE_BITS{1'b0}};
 reg [SCALE_BITS-1:0] downstreamBlendLowerCoeff = {SCALE_BITS{1'b0}};
@@ -296,8 +299,22 @@ reg [BITS_PER_PIXEL-1:0] downstreamLowerPixelColor = {BITS_PER_PIXEL{1'b0}};
 /* assign downstreamResponseFifoWriteData = downstreamBlend ?
         blend(downstreamUpperPixelColor, downstreamBlendUpperCoeff, downstreamLowerPixelColor, downstreamBlendLowerCoeff) :
         downstreamUpperPixelColor; */
-assign downstreamResponseFifoWriteData =
-    blend(downstreamUpperPixelColor, downstreamBlendUpperCoeff, downstreamLowerPixelColor, downstreamBlendLowerCoeff);
+/* assign downstreamResponseFifoWriteData =
+    blend(downstreamUpperPixelColor, downstreamBlendUpperCoeff, downstreamLowerPixelColor, downstreamBlendLowerCoeff); */
+
+reg [COLOR_WEIGHT_BITS-1:0] downstreamUpperWeightRed = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamUpperWeightGreen = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamUpperWeightBlue = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamLowerWeightRed = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamLowerWeightGreen = {COLOR_WEIGHT_BITS{1'b0}};
+reg [COLOR_WEIGHT_BITS-1:0] downstreamLowerWeightBlue = {COLOR_WEIGHT_BITS{1'b0}};
+
+/* verilator lint_off UNUSED */
+wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumRed = colorComponentSum(downstreamUpperWeightRed, downstreamLowerWeightRed);
+wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumGreen = colorComponentSum(downstreamUpperWeightGreen, downstreamLowerWeightGreen);
+wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumBlue = colorComponentSum(downstreamUpperWeightBlue, downstreamLowerWeightBlue);
+/* verilator lint_on UNUSED */
+assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
 
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
 assign downstreamResponseFifoWriteEnable = downstreamResponseFifoFull ? 1'b0 : downstreamResponseFifoWriteEnableReg;
@@ -307,42 +324,56 @@ assign pendingDownstreamResponseFifoReadEnable = downstreamResponseFifoFull ? 1'
 
 reg [31:0] totalDownstreamResponses = 32'd0;
 
-function [BITS_PER_PIXEL-1:0] blend;
-    input [BITS_PER_PIXEL-1:0]  uColor;
-    input [SCALE_BITS-1:0]      uCoeff;
-    input [BITS_PER_PIXEL-1:0]  lColor;
-    input [SCALE_BITS-1:0]      lCoeff;
+// function [BITS_PER_PIXEL-1:0] blend;
+    // input [BITS_PER_PIXEL-1:0]  uColor;
+    // input [SCALE_BITS-1:0]      uCoeff;
+    // input [BITS_PER_PIXEL-1:0]  lColor;
+    // input [SCALE_BITS-1:0]      lCoeff;
     
     
-    reg [4:0] uRed = 5'd0;
-    reg [5:0] uGreen = 6'd0;
-    reg [4:0] uBlue = 5'd0;
-    reg [4:0] lRed = 5'd0;
-    reg [5:0] lGreen = 6'd0;
-    reg [4:0] lBlue = 5'd0;
+    // reg [4:0] uRed = 5'd0;
+    // reg [5:0] uGreen = 6'd0;
+    // reg [4:0] uBlue = 5'd0;
+    // reg [4:0] lRed = 5'd0;
+    // reg [5:0] lGreen = 6'd0;
+    // reg [4:0] lBlue = 5'd0;
     
     
+    // /* verilator lint_off UNUSED */
+    // reg [4+SCALE_FRACTION_BITS:0] blendedRed = {(5+SCALE_FRACTION_BITS){1'b0}};
+    // reg [5+SCALE_FRACTION_BITS:0] blendedGreen = {(6+SCALE_FRACTION_BITS){1'b0}};
+    // reg [4+SCALE_FRACTION_BITS:0] blendedBlue = {(5+SCALE_FRACTION_BITS){1'b0}};
+    // /* verilator lint_on UNUSED */
+    
+    // begin
+        // uRed = uColor[15:11];
+        // uGreen = uColor[10:5];
+        // uBlue = uColor[4:0];
+        // lRed = lColor[15:11];
+        // lGreen = lColor[10:5];
+        // lBlue = lColor[4:0];
+        
+        // blendedRed = uRed * uCoeff + lRed * lCoeff;
+        // blendedGreen = uGreen * uCoeff + lGreen * lCoeff;
+        // blendedBlue = uBlue * uCoeff + lBlue * lCoeff;
+        
+        // blend = {blendedRed[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
+                 // blendedGreen[5+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
+                 // blendedBlue[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS]};
+    // end
+// endfunction
+
+function [COLOR_COMPONENT_BITS_MAX-1:0] colorComponentSum;
+    input [COLOR_WEIGHT_BITS-1:0] addendA;
+    input [COLOR_WEIGHT_BITS-1:0] addendB;
+
     /* verilator lint_off UNUSED */
-    reg [4+SCALE_FRACTION_BITS:0] blendedRed = {(5+SCALE_FRACTION_BITS){1'b0}};
-    reg [5+SCALE_FRACTION_BITS:0] blendedGreen = {(6+SCALE_FRACTION_BITS){1'b0}};
-    reg [4+SCALE_FRACTION_BITS:0] blendedBlue = {(5+SCALE_FRACTION_BITS){1'b0}};
+    reg [COLOR_WEIGHT_BITS-1:0] sum;
     /* verilator lint_on UNUSED */
-    
+
     begin
-        uRed = uColor[15:11];
-        uGreen = uColor[10:5];
-        uBlue = uColor[4:0];
-        lRed = lColor[15:11];
-        lGreen = lColor[10:5];
-        lBlue = lColor[4:0];
-        
-        blendedRed = uRed * uCoeff + lRed * lCoeff;
-        blendedGreen = uGreen * uCoeff + lGreen * lCoeff;
-        blendedBlue = uBlue * uCoeff + lBlue * lCoeff;
-        
-        blend = {blendedRed[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
-                 blendedGreen[5+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS],
-                 blendedBlue[4+SCALE_FRACTION_BITS:SCALE_FRACTION_BITS]};
+        sum = addendA + addendB + {{COLOR_COMPONENT_BITS_MAX{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}};
+        colorComponentSum = sum[COLOR_WEIGHT_BITS-1:SCALE_FRACTION_BITS];
     end
 endfunction
 
@@ -360,6 +391,13 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamLowerPixelColor <= {BITS_PER_PIXEL{1'b0}};
         downstreamBlendFraction <= {SCALE_FRACTION_BITS{1'b0}};
         downstreamBlendFractionReady <= 1'b0;
+        downstreamBlendParamsReady <= 1'b0;
+        downstreamUpperWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamUpperWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamUpperWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamLowerWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamLowerWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamLowerWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
 
     end else begin
     
@@ -717,7 +755,23 @@ always @ (posedge scalerClock or posedge reset) begin
                     downstreamBlendLowerCoeff <= {SCALE_BITS{1'b0}};
                 end
                 
-                // Blended color can be written downstream next cycle
+                // Weighted blend addends can be calculated next cycle
+                downstreamBlendParamsReady <= 1'b1;
+            end else begin
+                // Not ready to calculate this stage
+                downstreamBlendParamsReady <= 1'b0;
+            end
+            
+            if (downstreamBlendParamsReady) begin
+                // Calculate color component weights
+                // Next cycle they will be summed and concatenated to form downstreamResponseFifoWriteData
+                downstreamUpperWeightRed <= {1'b0, downstreamUpperPixelColor[15:11]} * downstreamBlendUpperCoeff;
+                downstreamUpperWeightGreen <= downstreamUpperPixelColor[10:5] * downstreamBlendUpperCoeff;
+                downstreamUpperWeightBlue <= {1'b0, downstreamUpperPixelColor[4:0]} * downstreamBlendUpperCoeff;
+                downstreamLowerWeightRed <= {1'b0, downstreamLowerPixelColor[15:11]} * downstreamBlendLowerCoeff;
+                downstreamLowerWeightGreen <= downstreamLowerPixelColor[10:5] * downstreamBlendLowerCoeff;
+                downstreamLowerWeightBlue <= {1'b0, downstreamLowerPixelColor[4:0]} * downstreamBlendLowerCoeff;
+                
                 downstreamResponseFifoWriteEnableReg <= 1'b1;
             end else begin
                 // Not ready to calculate this stage
