@@ -317,7 +317,7 @@ function [COLOR_COMPONENT_BITS_MAX-1:0] colorComponentSum;
     /* verilator lint_on UNUSED */
 
     begin
-        sum = addendA + addendB + {{COLOR_COMPONENT_BITS_MAX{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}};
+        sum = addendA + addendB;// + {{COLOR_COMPONENT_BITS_MAX{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}};
         colorComponentSum = sum[COLOR_WEIGHT_BITS-1:SCALE_FRACTION_BITS];
     end
 endfunction
