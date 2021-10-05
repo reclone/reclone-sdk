@@ -87,11 +87,12 @@ localparam COLOR_COMPONENT_BITS_MAX = 6;
 localparam COLOR_WEIGHT_BITS = SCALE_FRACTION_BITS + COLOR_COMPONENT_BITS_MAX;
 
 // One-hot states for downstream request state machine
-localparam  DOWNSTREAM_REQUEST_IDLE  = 4'b0001,
-            DOWNSTREAM_REQUEST_READ  = 4'b0010,
-            DOWNSTREAM_REQUEST_STORE = 4'b0100,
-            DOWNSTREAM_REQUEST_STALL = 4'b1000;
-reg[3:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
+localparam  DOWNSTREAM_REQUEST_IDLE  = 5'b00001,
+            DOWNSTREAM_REQUEST_READ  = 5'b00010,
+            DOWNSTREAM_REQUEST_CHECK = 5'b00100,
+            DOWNSTREAM_REQUEST_STORE = 5'b01000,
+            DOWNSTREAM_REQUEST_STALL = 5'b10000;
+reg[4:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
 
 // One-hot states for upstream response state machine
 localparam  UPSTREAM_RESPONSE_IDLE = 3'b001,
@@ -188,8 +189,11 @@ wire [VACTIVE_BITS-1:0] upstreamRequestRowUpper = upstreamRequestCoordWhole;
 wire [VACTIVE_BITS-1:0] upstreamRequestRowLower = ~|upstreamRequestCoordFraction ? 
                             upstreamRequestRowUpper : upstreamRequestRowUpper + {{(VACTIVE_BITS-1){1'b0}}, 1'b1};
 
-wire [REQUEST_BITS-1:0] upstreamRequestUpper = {upstreamRequestRowUpper, requestedChunk};
-wire [REQUEST_BITS-1:0] upstreamRequestLower = {upstreamRequestRowLower, requestedChunk};
+reg [VACTIVE_BITS-1:0] upstreamRequestRowUpperStaged = {VACTIVE_BITS{1'b1}};
+reg [VACTIVE_BITS-1:0] upstreamRequestRowLowerStaged = {VACTIVE_BITS{1'b1}};
+reg [CHUNKNUM_BITS-1:0] upstreamRequestChunkStaged = {CHUNKNUM_BITS{1'b1}};
+wire [REQUEST_BITS-1:0] upstreamRequestUpper = {upstreamRequestRowUpperStaged, upstreamRequestChunkStaged};
+wire [REQUEST_BITS-1:0] upstreamRequestLower = {upstreamRequestRowLowerStaged, upstreamRequestChunkStaged};
 
 assign pendingDownstreamResponseFifoWriteData = {upstreamRequestCoord, requestedChunk};
 
@@ -382,6 +386,10 @@ always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
         //TODO
+        upstreamRequestRowUpperStaged <= {VACTIVE_BITS{1'b1}};
+        upstreamRequestRowLowerStaged <= {VACTIVE_BITS{1'b1}};
+        upstreamRequestChunkStaged <= {CHUNKNUM_BITS{1'b1}};
+
         upstreamResponseFifoReadEnableReg <= 1'b0;
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         downstreamRequestFifoReadEnable <= 1'b0;
@@ -433,58 +441,68 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
-                    downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_CHECK;
                 end
             end
 
-            DOWNSTREAM_REQUEST_STORE: begin
+            DOWNSTREAM_REQUEST_CHECK: begin
+                // Save these pre-calculated values for DOWNSTREAM_REQUEST_STORE or DOWNSTREAM_REQUEST_STALL
+                upstreamRequestRowUpperStaged <= upstreamRequestRowUpper;
+                upstreamRequestRowLowerStaged <= upstreamRequestRowLower;
+                upstreamRequestChunkStaged <= requestedChunk;
+                
                 // Determine if the required upstream chunk is already cached in the line buffer
                 if ((upstreamRequestRowUpper == cachedRowA || upstreamRequestRowUpper == cachedRowB) &&
                     (upstreamRequestRowLower == cachedRowA || upstreamRequestRowLower == cachedRowB)) begin
-                    // If we do not already have the requested chunks cached, and we are not repeating the previous request
-                    if ((upstreamRequestRowUpper == cachedRowA) && 
-                         !cachedChunkValidA[requestedChunk] &&
-                         !cachedChunkPendingA[requestedChunk]) begin
-                        // Enqueue the upstream request
-                        upstreamRequestFifoWriteData <= upstreamRequestUpper;
-                        upstreamRequestFifoWriteEnable <= 1'b1;
-                        // Do not repeat this request while it is in progress
-                        cachedChunkPendingA[requestedChunk] <= 1'b1;
-                    end else if ((upstreamRequestRowUpper == cachedRowB) && 
-                                 !cachedChunkValidB[requestedChunk] &&
-                                 !cachedChunkPendingB[requestedChunk]) begin
-                        // Enqueue the upstream request
-                        upstreamRequestFifoWriteData <= upstreamRequestUpper;
-                        upstreamRequestFifoWriteEnable <= 1'b1;
-                        // Do not repeat this request while it is in progress
-                        cachedChunkPendingB[requestedChunk] <= 1'b1;
-                    end else if ((upstreamRequestRowLower == cachedRowA) && 
-                         !cachedChunkValidA[requestedChunk] &&
-                         !cachedChunkPendingA[requestedChunk]) begin
-                        // Enqueue the upstream request
-                        upstreamRequestFifoWriteData <= upstreamRequestLower;
-                        upstreamRequestFifoWriteEnable <= 1'b1;
-                        // Do not repeat this request while it is in progress
-                        cachedChunkPendingA[requestedChunk] <= 1'b1;
-                    end else if ((upstreamRequestRowLower == cachedRowB) && 
-                                 !cachedChunkValidB[requestedChunk] &&
-                                 !cachedChunkPendingB[requestedChunk]) begin
-                        // Enqueue the upstream request
-                        upstreamRequestFifoWriteData <= upstreamRequestLower;
-                        upstreamRequestFifoWriteEnable <= 1'b1;
-                        // Do not repeat this request while it is in progress
-                        cachedChunkPendingB[requestedChunk] <= 1'b1;
-                    end else begin
-                        // Save the downstream response for processing later, and return to idle
-                        pendingDownstreamResponseFifoWriteEnable <= 1'b1;
-                        upstreamRequestFifoWriteEnable <= 1'b0;
-                        downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
-                    end
+                    // Cached rows match the request, so proceed with enqueueing upstream requests
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
                 end else begin
                     // Cached rows are different from requested rows, so stall until all pending requests are complete
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STALL;
                     upstreamRequestFifoWriteEnable <= 1'b0;
                     pendingDownstreamResponseFifoWriteEnable <= 1'b0;
+                end
+            end
+
+            DOWNSTREAM_REQUEST_STORE: begin
+                // If we do not already have the requested chunks cached, and we are not repeating the previous request
+                if ((upstreamRequestRowUpperStaged == cachedRowA) && 
+                     !cachedChunkValidA[upstreamRequestChunkStaged] &&
+                     !cachedChunkPendingA[upstreamRequestChunkStaged]) begin
+                    // Enqueue the upstream request
+                    upstreamRequestFifoWriteData <= upstreamRequestUpper;
+                    upstreamRequestFifoWriteEnable <= 1'b1;
+                    // Do not repeat this request while it is in progress
+                    cachedChunkPendingA[upstreamRequestChunkStaged] <= 1'b1;
+                end else if ((upstreamRequestRowUpperStaged == cachedRowB) && 
+                             !cachedChunkValidB[upstreamRequestChunkStaged] &&
+                             !cachedChunkPendingB[upstreamRequestChunkStaged]) begin
+                    // Enqueue the upstream request
+                    upstreamRequestFifoWriteData <= upstreamRequestUpper;
+                    upstreamRequestFifoWriteEnable <= 1'b1;
+                    // Do not repeat this request while it is in progress
+                    cachedChunkPendingB[upstreamRequestChunkStaged] <= 1'b1;
+                end else if ((upstreamRequestRowLowerStaged == cachedRowA) && 
+                     !cachedChunkValidA[upstreamRequestChunkStaged] &&
+                     !cachedChunkPendingA[upstreamRequestChunkStaged]) begin
+                    // Enqueue the upstream request
+                    upstreamRequestFifoWriteData <= upstreamRequestLower;
+                    upstreamRequestFifoWriteEnable <= 1'b1;
+                    // Do not repeat this request while it is in progress
+                    cachedChunkPendingA[upstreamRequestChunkStaged] <= 1'b1;
+                end else if ((upstreamRequestRowLowerStaged == cachedRowB) && 
+                             !cachedChunkValidB[upstreamRequestChunkStaged] &&
+                             !cachedChunkPendingB[upstreamRequestChunkStaged]) begin
+                    // Enqueue the upstream request
+                    upstreamRequestFifoWriteData <= upstreamRequestLower;
+                    upstreamRequestFifoWriteEnable <= 1'b1;
+                    // Do not repeat this request while it is in progress
+                    cachedChunkPendingB[upstreamRequestChunkStaged] <= 1'b1;
+                end else begin
+                    // Save the downstream response for processing later, and return to idle
+                    pendingDownstreamResponseFifoWriteEnable <= 1'b1;
+                    upstreamRequestFifoWriteEnable <= 1'b0;
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
                 end
             end
             
@@ -497,18 +515,18 @@ always @ (posedge scalerClock or posedge reset) begin
                     // Requested rows do not match the rows cached by the line buffers,
                     // so update the line buffers as needed to start caching new row(s).
                     if (cachedRowBIsOlder) begin
-                        if (cachedRowA == upstreamRequestRowUpper) begin
-                            cachedRowB <= upstreamRequestRowLower;
+                        if (cachedRowA == upstreamRequestRowUpperStaged) begin
+                            cachedRowB <= upstreamRequestRowLowerStaged;
                         end else begin
-                            cachedRowB <= upstreamRequestRowUpper;
+                            cachedRowB <= upstreamRequestRowUpperStaged;
                         end
                         cachedChunkValidB <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         cachedRowBIsOlder <= 1'b0;
                     end else begin
-                        if (cachedRowB == upstreamRequestRowUpper) begin
-                            cachedRowA <= upstreamRequestRowLower;
+                        if (cachedRowB == upstreamRequestRowUpperStaged) begin
+                            cachedRowA <= upstreamRequestRowLowerStaged;
                         end else begin
-                            cachedRowA <= upstreamRequestRowUpper;
+                            cachedRowA <= upstreamRequestRowUpperStaged;
                         end
                         cachedChunkValidA <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         cachedRowBIsOlder <= 1'b1;
