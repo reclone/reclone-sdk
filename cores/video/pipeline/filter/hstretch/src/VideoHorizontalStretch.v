@@ -157,7 +157,11 @@ reg [CHUNK_BITS-1:0] upstreamResponsePixelCount = {CHUNK_BITS{1'b0}};
 wire pendingDownstreamResponseFifoFull;
 wire pendingDownstreamResponseFifoEmpty;
 reg pendingDownstreamResponseFifoReadEnableReg = 1'b0;
-wire pendingDownstreamResponseFifoReadEnable = pendingDownstreamResponseFifoReadEnableReg && !downstreamResponseStall;
+wire pendingDownstreamResponseFifoReadEnable =
+    pendingDownstreamResponseFifoReadEnableReg &&
+    !downstreamResponseStall &&
+    !downstreamCacheStall &&
+    !pendingDownstreamResponseFifoEmpty;
 wire [HCOORD_BITS-1:0] pendingDownstreamResponseFifoReadData;
 reg pendingDownstreamResponseFifoWriteEnable = 1'b0;
 reg [HCOORD_BITS-1:0] pendingDownstreamResponseFifoWriteData = {HCOORD_BITS{1'b0}};
@@ -212,7 +216,9 @@ reg [CHUNK_BITS-1:0] storeUpstreamResponsePixelCount = {CHUNK_BITS{1'b1}};
 wire [HACTIVE_BITS-1:0] downstreamLeftPixelColumn = pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS];
 wire [CHUNKNUM_BITS-1:0] downstreamLeftPixelChunk = downstreamLeftPixelColumn[HACTIVE_BITS-1:CHUNK_BITS];
 wire [CHUNK_BITS-1:0] downstreamLeftPixelWhole = downstreamLeftPixelColumn[CHUNK_BITS-1:0];
-wire [SCALE_BITS-1:0] downstreamLeftPixelCoeff = {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};
+wire [SCALE_BITS-1:0] downstreamLeftPixelCoeff =
+    {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]} +
+    {{(SCALE_BITS-1){1'b0}}, 1'b1};
 
 wire [HACTIVE_BITS-1:0] downstreamRightPixelColumn = ~|downstreamRightPixelCoeff ?
                             downstreamLeftPixelColumn : downstreamLeftPixelColumn + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
@@ -265,9 +271,8 @@ assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstrea
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
 assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseStall;
 
-wire downstreamResponseStall = downstreamResponseFifoFull ||
-                               (pendingDownstreamResponseAvailable &&
-                                (!downstreamLeftPixelIsCached || !downstreamRightPixelIsCached));
+wire downstreamCacheStall = (pendingDownstreamResponseAvailable && (!downstreamLeftPixelIsCached || !downstreamRightPixelIsCached));
+wire downstreamResponseStall = downstreamResponseFifoFull;
 
 // function [BITS_PER_PIXEL-1:0] blend;
     // input [BITS_PER_PIXEL-1:0]  lColor;
@@ -555,21 +560,24 @@ always @ (posedge scalerClock or posedge reset) begin
         // DOWNSTREAM RESPONSE STAGING
         
         if (!downstreamResponseStall) begin
-            // Read the next pending downstream response coord
-            pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
-            
-            pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnableReg;
-            
-            // If we read a pending downstream response last cycle, determine if the required pixels
-            // are cached, and if so, store their colors and coefficients for the next stage which
-            // does the actual blend calculation.
-            if  (   pendingDownstreamResponseAvailable &&
-                    downstreamLeftPixelIsCached && downstreamRightPixelIsCached ) begin
-                downstreamBlendParamsReady <= 1'b1;
-                blendLeftPixelColor <= downstreamLeftPixelColor;
-                blendRightPixelColor <= downstreamRightPixelColor;
-                blendLeftPixelCoeff <= downstreamLeftPixelCoeff;
-                blendRightPixelCoeff <= downstreamRightPixelCoeff;
+            if (!downstreamCacheStall) begin
+                // Read the next pending downstream response coord
+                pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
+                
+                pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnable;
+                
+                // If we read a pending downstream response last cycle, determine if the required pixels
+                // are cached, and if so, store their colors and coefficients for the next stage which
+                // does the actual blend calculation.
+                if  (pendingDownstreamResponseAvailable) begin
+                    downstreamBlendParamsReady <= 1'b1;
+                    blendLeftPixelColor <= downstreamLeftPixelColor;
+                    blendRightPixelColor <= downstreamRightPixelColor;
+                    blendLeftPixelCoeff <= downstreamLeftPixelCoeff;
+                    blendRightPixelCoeff <= downstreamRightPixelCoeff;
+                end else begin
+                    downstreamBlendParamsReady <= 1'b0;
+                end
             end else begin
                 downstreamBlendParamsReady <= 1'b0;
             end
