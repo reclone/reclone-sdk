@@ -199,7 +199,7 @@ reg [BITS_PER_PIXEL-1:0] cachedChunkB [0:CHUNK_SIZE-1];
 
 // Flag to keep track of which cached chunk is older
 reg cachedChunkBIsOlder = 1'b0;
-// Flags indicating whether the cached chunks are valid (filled completely with pixel data
+// Flags indicating whether the cached chunks are valid (filled completely with pixel data)
 reg cachedChunkAValid = 1'b0;
 reg cachedChunkBValid = 1'b0;
 
@@ -213,19 +213,22 @@ reg storeUpstreamResponseToCacheB = 1'b0;
 reg [CHUNK_BITS-1:0] storeUpstreamResponsePixelCount = {CHUNK_BITS{1'b1}};
 
 // Determine the coordinates of the left and right pixels, and their blending coefficients
-wire [HACTIVE_BITS-1:0] downstreamLeftPixelColumn = pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS];
+//wire [HACTIVE_BITS-1:0] downstreamLeftPixelColumn = pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS];
+reg [HACTIVE_BITS-1:0] downstreamLeftPixelColumn = {HACTIVE_BITS{1'b1}};
 wire [CHUNKNUM_BITS-1:0] downstreamLeftPixelChunk = downstreamLeftPixelColumn[HACTIVE_BITS-1:CHUNK_BITS];
 wire [CHUNK_BITS-1:0] downstreamLeftPixelWhole = downstreamLeftPixelColumn[CHUNK_BITS-1:0];
-wire [SCALE_BITS-1:0] downstreamLeftPixelCoeff =
-    {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]} +
-    {{(SCALE_BITS-1){1'b0}}, 1'b1};
+// wire [SCALE_BITS-1:0] downstreamLeftPixelCoeff =
+    // {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]} +
+    // {{(SCALE_BITS-1){1'b0}}, 1'b1};
+reg [SCALE_BITS-1:0] downstreamLeftPixelCoeff = {SCALE_BITS{1'b1}};
 
-wire [HACTIVE_BITS-1:0] downstreamRightPixelColumn = ~|downstreamRightPixelCoeff ?
-                            downstreamLeftPixelColumn : downstreamLeftPixelColumn + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
+// wire [HACTIVE_BITS-1:0] downstreamRightPixelColumn = ~|downstreamRightPixelCoeff ?
+                            // downstreamLeftPixelColumn : downstreamLeftPixelColumn + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
+reg [HACTIVE_BITS-1:0] downstreamRightPixelColumn = {HACTIVE_BITS{1'b1}};
 wire [CHUNKNUM_BITS-1:0] downstreamRightPixelChunk = downstreamRightPixelColumn[HACTIVE_BITS-1:CHUNK_BITS];
 wire [CHUNK_BITS-1:0] downstreamRightPixelWhole = downstreamRightPixelColumn[CHUNK_BITS-1:0];
-wire [SCALE_BITS-1:0] downstreamRightPixelCoeff = {1'b0, pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};
-
+//wire [SCALE_BITS-1:0] downstreamRightPixelCoeff = {1'b0, pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};
+reg [SCALE_BITS-1:0] downstreamRightPixelCoeff = {SCALE_BITS{1'b1}};
 
 // Flags to track whether the downstream state machine still needs cached chunk A or B
 wire downstreamLeftPixelInCacheA = (downstreamLeftPixelChunk == cachedChunkNumA);
@@ -250,6 +253,7 @@ wire downstreamRightPixelIsCached = (downstreamRightPixelInCacheA && cachedChunk
 
 // Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
 reg pendingDownstreamResponseAvailable = 1'b0;
+reg pendingDownstreamCoordsAvailable = 1'b0;
 
 
 //assign downstreamResponseFifoWriteData = blend(blendLeftPixelColor, blendLeftPixelCoeff, blendRightPixelColor, blendRightPixelCoeff);
@@ -271,7 +275,7 @@ assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstrea
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
 assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseFifoFull;
 
-wire downstreamCacheStall = (pendingDownstreamResponseAvailable && (!downstreamLeftPixelIsCached || !downstreamRightPixelIsCached));
+wire downstreamCacheStall = (pendingDownstreamCoordsAvailable && (!downstreamLeftPixelIsCached || !downstreamRightPixelIsCached));
 wire downstreamResponseStall = downstreamResponseFifoFull;
 
 // function [BITS_PER_PIXEL-1:0] blend;
@@ -354,6 +358,7 @@ always @ (posedge scalerClock or posedge reset) begin
         storeUpstreamResponseToCacheB <= 1'b0;
         storeUpstreamResponsePixelCount <= {CHUNK_BITS{1'b1}};
         pendingDownstreamResponseAvailable <= 1'b0;
+        pendingDownstreamCoordsAvailable <= 1'b0;
         blendLeftPixelColor <= {BITS_PER_PIXEL{1'b0}};
         blendRightPixelColor <= {BITS_PER_PIXEL{1'b0}};
         blendLeftPixelCoeff <= {SCALE_BITS{1'b0}};
@@ -366,6 +371,10 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamRightWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamRightWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamRightWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamLeftPixelColumn <= {HACTIVE_BITS{1'b1}};
+        downstreamLeftPixelCoeff <= {SCALE_BITS{1'b1}};
+        downstreamRightPixelColumn <= {HACTIVE_BITS{1'b1}};
+        downstreamRightPixelCoeff <= {SCALE_BITS{1'b1}};
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
@@ -566,17 +575,27 @@ always @ (posedge scalerClock or posedge reset) begin
                 
                 pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnable;
                 
+                // Pre-calculate left/right columns and coefficients to improve timing
+                pendingDownstreamCoordsAvailable <= pendingDownstreamResponseAvailable;
+                if (pendingDownstreamResponseAvailable) begin
+                    downstreamLeftPixelColumn <= pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS];
+                    downstreamLeftPixelCoeff <= {1'b0, ~pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]} +
+                                               {{(SCALE_BITS-1){1'b0}}, 1'b1};
+                    downstreamRightPixelColumn <= ~|pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0] ?
+                        pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS] : 
+                        pendingDownstreamResponseFifoReadData[HCOORD_BITS-1:SCALE_FRACTION_BITS] + {{(HACTIVE_BITS-1){1'b0}}, 1'b1};
+                    downstreamRightPixelCoeff <= {1'b0, pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS-1:0]};
+                end
+                
                 // If we read a pending downstream response last cycle, determine if the required pixels
                 // are cached, and if so, store their colors and coefficients for the next stage which
                 // does the actual blend calculation.
-                if  (pendingDownstreamResponseAvailable) begin
-                    downstreamBlendParamsReady <= 1'b1;
+                downstreamBlendParamsReady <= pendingDownstreamCoordsAvailable;
+                if  (pendingDownstreamCoordsAvailable) begin
                     blendLeftPixelColor <= downstreamLeftPixelColor;
                     blendRightPixelColor <= downstreamRightPixelColor;
                     blendLeftPixelCoeff <= downstreamLeftPixelCoeff;
                     blendRightPixelCoeff <= downstreamRightPixelCoeff;
-                end else begin
-                    downstreamBlendParamsReady <= 1'b0;
                 end
             end else begin
                 downstreamBlendParamsReady <= 1'b0;
