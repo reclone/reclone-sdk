@@ -775,7 +775,7 @@ always @ (posedge scalerClock or posedge reset) begin
             pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
             
             // STAGE 2 - if read, requested pixel will be ready next cycle
-            pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnable;
+            pendingDownstreamResponseAvailable <= !pendingDownstreamResponseFifoEmpty && pendingDownstreamResponseFifoReadEnableReg;
             
             // STAGE 3 - downstreamCacheRow and downstreamCacheColumn have the upstream coords
             // This sets cacheReadAddressA and cacheReadAddressB, so next cycle
