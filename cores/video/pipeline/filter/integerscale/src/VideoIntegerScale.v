@@ -297,8 +297,10 @@ reg downstreamResponseInCacheA = 1'b0;
 reg downstreamResponseScanlineBlend = 1'b0;
 assign cacheReadAddressA = downstreamCacheColumn;
 assign cacheReadAddressB = downstreamCacheColumn;
-assign cacheReadEnableA = !downstreamResponseStall && pendingDownstreamResponseAvailable;
-assign cacheReadEnableB = !downstreamResponseStall && pendingDownstreamResponseAvailable;
+assign cacheReadEnableA = !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
+                          downstreamCacheRow == cachedRowA && cachedChunkValidA[downstreamCacheChunk]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
+assign cacheReadEnableB = !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
+                          downstreamCacheRow == cachedRowB && cachedChunkValidB[downstreamCacheChunk]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
 // wire [BITS_PER_PIXEL-1:0] cacheAPixelColor = downstreamResponseScanlineBlend ?
                             // scanlineBlend(cacheReadDataA, backgroundColor, scanlineIntensity) : cacheReadDataA;
 // wire [BITS_PER_PIXEL-1:0] cacheBPixelColor = downstreamResponseScanlineBlend ?
