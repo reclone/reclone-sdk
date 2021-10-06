@@ -269,7 +269,7 @@ wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumBlue = colorComponentSum(
 /* verilator lint_on UNUSED */
 assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
-assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseStall;
+assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseFifoFull;
 
 wire downstreamCacheStall = (pendingDownstreamResponseAvailable && (!downstreamLeftPixelIsCached || !downstreamRightPixelIsCached));
 wire downstreamResponseStall = downstreamResponseFifoFull;
@@ -582,6 +582,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamBlendParamsReady <= 1'b0;
             end
             
+            downstreamResponseFifoWriteEnableReg <= downstreamBlendParamsReady;
             if (downstreamBlendParamsReady) begin
                 // Calculate color component weights
                 // Next cycle they will be summed and concatenated to form downstreamResponseFifoWriteData
@@ -591,16 +592,9 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamRightWeightRed <= {1'b0, blendRightPixelColor[15:11]} * blendRightPixelCoeff;
                 downstreamRightWeightGreen <= blendRightPixelColor[10:5] * blendRightPixelCoeff;
                 downstreamRightWeightBlue <= {1'b0, blendRightPixelColor[4:0]} * blendRightPixelCoeff;
-                
-                downstreamResponseFifoWriteEnableReg <= 1'b1;
-            end else begin
-                // Not ready to calculate this stage
-                downstreamResponseFifoWriteEnableReg <= 1'b0;
             end
         end
         
-
-
     end
 end
 
