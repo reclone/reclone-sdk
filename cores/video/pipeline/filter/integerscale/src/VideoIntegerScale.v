@@ -222,9 +222,9 @@ end
     // end
 // endfunction
 
-wire downstreamRequestNewRowStall = upstreamRequestAvailable &&
-                                    upstreamRequestRow != cachedRowA &&
-                                    upstreamRequestRow != cachedRowB &&
+wire downstreamRequestNewRowStall = upstreamRequestStaged &&
+                                    upstreamRequestRowStaged != cachedRowA &&
+                                    upstreamRequestRowStaged != cachedRowB &&
                                     !(pendingUpstreamRequestFifoEmpty &&
                                       pendingDownstreamResponseFifoEmpty && 
                                       upstreamResponseState == UPSTREAM_RESPONSE_IDLE &&
@@ -253,9 +253,17 @@ wire [VACTIVE_BITS-1:0] upstreamRequestRow = upstreamRequestRowPrecision[VACTIVE
 /* verilator lint_off UNUSED */
 wire [HACTIVE_BITS-1:0] upstreamRequestColumn = upstreamRequestColumnPrecision[HACTIVE_BITS+RECIPROCAL_FRACTION_BITS-1:RECIPROCAL_FRACTION_BITS];
 /* verilator lint_on UNUSED */
-
 wire [CHUNKNUM_BITS-1:0] upstreamRequestChunk = upstreamRequestColumn[HACTIVE_BITS-1:CHUNK_BITS];
-wire [REQUEST_BITS-1:0] upstreamRequest = {upstreamRequestRow, upstreamRequestChunk};
+
+reg upstreamCachedChunkValidA = 1'b0;
+reg upstreamCachedChunkPendingA = 1'b1;
+reg upstreamCachedChunkValidB = 1'b0;
+reg upstreamCachedChunkPendingB = 1'b1;
+reg [VACTIVE_BITS-1:0] upstreamRequestRowStaged = {VACTIVE_BITS{1'b1}};
+reg [HACTIVE_BITS-1:0] upstreamRequestColumnStaged = {HACTIVE_BITS{1'b1}};
+wire [CHUNKNUM_BITS-1:0] upstreamRequestChunkStaged = upstreamRequestColumnStaged[HACTIVE_BITS-1:CHUNK_BITS];
+reg upstreamRequestStaged = 1'b0;
+wire [REQUEST_BITS-1:0] upstreamRequest = {upstreamRequestRowStaged, upstreamRequestChunkStaged};
 
 wire [VACTIVE_BITS-1:0] upstreamResponseRow = pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
 wire [CHUNKNUM_BITS-1:0] upstreamResponseChunk = pendingUpstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
@@ -314,7 +322,7 @@ wire downstreamResponseStall = downstreamResponseFifoFull ||
 reg downstreamResponsePixelAvailable = 1'b0;
 
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
-assign downstreamResponseFifoWriteEnable = !downstreamResponseStall && downstreamResponseFifoWriteEnableReg;
+assign downstreamResponseFifoWriteEnable = !downstreamResponseFifoFull && downstreamResponseFifoWriteEnableReg;
 //assign downstreamResponseFifoWriteData = downstreamResponseInCacheA ? cacheAPixelColor : cacheBPixelColor;
 //assign downstreamResponseFifoWriteData = downstreamResponseInCacheA ? cacheReadDataA : cacheReadDataB;
 
@@ -464,6 +472,13 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamRequestAvailable <= 1'b0;
         upstreamRequestRowPrecision <= {(VACTIVE_BITS+RECIPROCAL_FRACTION_BITS){1'b0}};
         upstreamRequestColumnPrecision <= {(HACTIVE_BITS+RECIPROCAL_FRACTION_BITS){1'b0}};
+        upstreamCachedChunkValidA <= 1'b0;
+        upstreamCachedChunkPendingA <= 1'b1;
+        upstreamCachedChunkValidB <= 1'b0;
+        upstreamCachedChunkPendingB <= 1'b1;
+        upstreamRequestRowStaged <= {VACTIVE_BITS{1'b1}};
+        upstreamRequestColumnStaged <= {HACTIVE_BITS{1'b1}};
+        upstreamRequestStaged <= 1'b0;
         upstreamResponseFifoReadEnable <= 1'b0;
         upstreamRequestFifoWriteEnableReg <= 1'b0;
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
@@ -528,24 +543,38 @@ always @ (posedge scalerClock or posedge reset) begin
                 upstreamRequestAvailable <= 1'b0;
             end
             
-            // STAGE 4 - Write upstream requests and pending downstream responses
+            // STAGE 4 - Stage upstream request and pending downstream response (to improve timing)
             if (upstreamRequestAvailable) begin
                 // Determine if the required upstream chunk is already cached in the line buffer
-                if (upstreamRequestRow == cachedRowA || upstreamRequestRow == cachedRowB) begin
+                upstreamCachedChunkValidA <= cachedChunkValidA[upstreamRequestChunk];
+                upstreamCachedChunkPendingA <= cachedChunkPendingA[upstreamRequestChunk];
+                upstreamCachedChunkValidB <= cachedChunkValidB[upstreamRequestChunk];
+                upstreamCachedChunkPendingB <= cachedChunkPendingB[upstreamRequestChunk];
+                upstreamRequestRowStaged <= upstreamRequestRow;
+                upstreamRequestColumnStaged <= upstreamRequestColumn;
+                upstreamRequestStaged <= 1'b1;
+            end else begin
+                upstreamRequestStaged <= 1'b0;
+            end
+            
+            // STAGE 5 - Write upstream requests and pending downstream responses
+            if (upstreamRequestStaged) begin
+                // Determine if the required upstream chunk is already cached in the line buffer
+                if (upstreamRequestRowStaged == cachedRowA || upstreamRequestRowStaged == cachedRowB) begin
                     // The requested row is one of the cached rows
                     
                     // If we do not already have the requested chunk cached, and we are not repeating the previous request
-                    if ((upstreamRequestRow == cachedRowA) && 
-                         !cachedChunkValidA[upstreamRequestChunk] &&
-                         !cachedChunkPendingA[upstreamRequestChunk]) begin
+                    if ((upstreamRequestRowStaged == cachedRowA) && 
+                         !upstreamCachedChunkValidA &&
+                         !upstreamCachedChunkPendingA) begin
                         // Enqueue the upstream request
                         upstreamRequestFifoWriteData <= upstreamRequest;
                         upstreamRequestFifoWriteEnableReg <= 1'b1;
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingA[upstreamRequestChunk] <= 1'b1;
-                    end else if ((upstreamRequestRow == cachedRowB) && 
-                                 !cachedChunkValidB[upstreamRequestChunk] &&
-                                 !cachedChunkPendingB[upstreamRequestChunk]) begin
+                    end else if ((upstreamRequestRowStaged == cachedRowB) && 
+                                 !upstreamCachedChunkValidB &&
+                                 !upstreamCachedChunkPendingB) begin
                         // Enqueue the upstream request
                         upstreamRequestFifoWriteData <= upstreamRequest;
                         upstreamRequestFifoWriteEnableReg <= 1'b1;
@@ -563,13 +592,13 @@ always @ (posedge scalerClock or posedge reset) begin
                     // Requested row does not match the row cached by the line buffer,
                     // so reset all of the cachedChunkValid bits and update cachedRow
                     if (cachedRowBIsOlder) begin
-                        cachedRowB <= upstreamRequestRow;
+                        cachedRowB <= upstreamRequestRowStaged;
                         cachedChunkValidB <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingB[upstreamRequestChunk] <= 1'b1;
                         cachedRowBIsOlder <= 1'b0;
                     end else begin
-                        cachedRowA <= upstreamRequestRow;
+                        cachedRowA <= upstreamRequestRowStaged;
                         cachedChunkValidA <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingA[upstreamRequestChunk] <= 1'b1;
@@ -582,7 +611,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 end
                 
                 // Remember to service the downstream request later, when the pixel data is cached
-                pendingDownstreamResponseFifoWriteData <= {pendingDownstreamResponseScanlinePixel, upstreamRequestRow, upstreamRequestColumn};
+                pendingDownstreamResponseFifoWriteData <= {pendingDownstreamResponseScanlinePixel, upstreamRequestRowStaged, upstreamRequestColumnStaged};
                 pendingDownstreamResponseFifoWriteEnableReg <= 1'b1;
                 
             end else begin
@@ -792,7 +821,11 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Tell next stage whether to blend with background color
                 downstreamResponseScanlineBlend <= pendingDownstreamResponseFifoReadData[HACTIVE_BITS+VACTIVE_BITS];
             end
-            
+        end else begin
+            downstreamResponsePixelAvailable <= 1'b0;
+        end
+        
+        if (!downstreamResponseFifoFull) begin
             // STAGE 4 - select between cacheA and cacheB, and optionally scanline blend
             // Write to response fifo next cycle (as soon as the response fifo is not full)
             downstreamResponseFifoWriteEnableReg <= downstreamResponsePixelAvailable;
@@ -811,8 +844,8 @@ always @ (posedge scalerClock or posedge reset) begin
                     end
                 end
             end
-            
         end
+
     end
 end
 
