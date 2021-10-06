@@ -204,6 +204,7 @@ wire cacheWriteEnableA;
 wire [HACTIVE_BITS-1:0] cacheWriteAddressA;
 wire [BITS_PER_PIXEL-1:0] cacheWriteDataA;
 wire cacheReadEnableA;
+//reg [HACTIVE_BITS-1:0] cacheReadAddressA = {HACTIVE_BITS{1'b1}};
 wire [HACTIVE_BITS-1:0] cacheReadAddressA;
 wire [BITS_PER_PIXEL-1:0] cacheReadDataA;
 BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheA
@@ -232,6 +233,7 @@ wire cacheWriteEnableB;
 wire [HACTIVE_BITS-1:0] cacheWriteAddressB;
 wire [BITS_PER_PIXEL-1:0] cacheWriteDataB;
 wire cacheReadEnableB;
+//reg [HACTIVE_BITS-1:0] cacheReadAddressB = {HACTIVE_BITS{1'b1}};
 wire [HACTIVE_BITS-1:0] cacheReadAddressB;
 wire [BITS_PER_PIXEL-1:0] cacheReadDataB;
 BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheB
@@ -291,6 +293,7 @@ assign cacheReadEnableB = 1'b1;
 reg downstreamUpperRowInCacheA = 1'b0;
 reg [SCALE_FRACTION_BITS-1:0] downstreamBlendFraction = {SCALE_FRACTION_BITS{1'b0}};
 reg downstreamBlendFractionReady = 1'b0;
+reg downstreamResponsePixelsCached = 1'b0;
 reg downstreamBlendParamsReady = 1'b0;
 
 reg [SCALE_BITS-1:0] downstreamBlendUpperCoeff = {SCALE_BITS{1'b0}};
@@ -386,6 +389,9 @@ always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
         //TODO
+        //cacheReadAddressA <= {HACTIVE_BITS{1'b1}};
+        //cacheReadAddressB <= {HACTIVE_BITS{1'b1}};
+        
         upstreamRequestRowUpperStaged <= {VACTIVE_BITS{1'b1}};
         upstreamRequestRowLowerStaged <= {VACTIVE_BITS{1'b1}};
         upstreamRequestChunkStaged <= {CHUNKNUM_BITS{1'b1}};
@@ -401,6 +407,7 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamLowerPixelColor <= {BITS_PER_PIXEL{1'b0}};
         downstreamBlendFraction <= {SCALE_FRACTION_BITS{1'b0}};
         downstreamBlendFractionReady <= 1'b0;
+        downstreamResponsePixelsCached <= 1'b0;
         downstreamBlendParamsReady <= 1'b0;
         downstreamUpperWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamUpperWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
@@ -720,6 +727,7 @@ always @ (posedge scalerClock or posedge reset) begin
         // Downstream response pipeline only moves if the downstream response FIFO is not full
         if (!downstreamResponseFifoFull) begin
             if (downstreamResponsePixelCount[CHUNK_BITS]) begin
+                downstreamResponsePixelsCached <= 1'b0;
                 downstreamBlendFractionReady <= 1'b0;
                 
                 // High bit of downstreamResponsePixelCount indicates that we are not currently working on a chunk
@@ -732,31 +740,31 @@ always @ (posedge scalerClock or posedge reset) begin
                     pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
                 end
             end else if (!downstreamResponsePixelCount[CHUNK_BITS]) begin
-                // If the source pixels are present in the cache
-                if (((cachedRowA == downstreamCacheRowUpper && cachedChunkValidA[downstreamResponseChunk]) ||
-                     (cachedRowB == downstreamCacheRowUpper && cachedChunkValidB[downstreamResponseChunk])) &&
-                    ((cachedRowA == downstreamCacheRowLower && cachedChunkValidA[downstreamResponseChunk]) ||
-                     (cachedRowB == downstreamCacheRowLower && cachedChunkValidB[downstreamResponseChunk]))) begin
-                    
-                    // Store what we need to blend the pixels
-                    downstreamUpperRowInCacheA <= (cachedRowA == downstreamCacheRowUpper);
-                    downstreamBlendFraction <= downstreamResponseCoordFraction;
-                    downstreamBlendFractionReady <= 1'b1;
-                    
-                    // If that was the last pixel of the chunk, start the next chunk or return to idle
-                    if (downstreamResponsePixelCount == {1'b0, {CHUNK_BITS{1'b1}}}) begin
-                        // Set counter to all 1's to indicate invalid count
-                        downstreamResponsePixelCount <= {(CHUNK_BITS+1){1'b1}};
-                        // Read the next chunk or return to idle
-                        pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
-                    end else begin
-                        // Not the last pixel in the chunk, so increment pixel counter
-                        downstreamResponsePixelCount <= downstreamResponsePixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
-                    end
-                    
+                // Store what we need to blend the pixels
+                downstreamUpperRowInCacheA <= (cachedRowA == downstreamCacheRowUpper);
+                downstreamBlendFraction <= downstreamResponseCoordFraction;
+                // Determine whether source pixels are in the cache
+                downstreamResponsePixelsCached <=
+                    (((cachedRowA == downstreamCacheRowUpper && cachedChunkValidA[downstreamResponseChunk]) ||
+                      (cachedRowB == downstreamCacheRowUpper && cachedChunkValidB[downstreamResponseChunk])) &&
+                     ((cachedRowA == downstreamCacheRowLower && cachedChunkValidA[downstreamResponseChunk]) ||
+                      (cachedRowB == downstreamCacheRowLower && cachedChunkValidB[downstreamResponseChunk])));
+                // Update read address of pixel cache RAMs
+                // cacheReadAddressA <= downstreamResponseColumn;
+                // cacheReadAddressB <= downstreamResponseColumn;
+            end
+            
+            downstreamBlendFractionReady <= downstreamResponsePixelsCached && !downstreamResponsePixelCount[CHUNK_BITS];
+            if (downstreamResponsePixelsCached && !downstreamResponsePixelCount[CHUNK_BITS]) begin
+                // If that was the last pixel of the chunk, start the next chunk or return to idle
+                if (downstreamResponsePixelCount == {1'b0, {CHUNK_BITS{1'b1}}}) begin
+                    // Set counter to all 1's to indicate invalid count
+                    downstreamResponsePixelCount <= {(CHUNK_BITS+1){1'b1}};
+                    // Read the next chunk or return to idle
+                    pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
                 end else begin
-                    // Source pixels are not present in the cache
-                    downstreamBlendFractionReady <= 1'b0;
+                    // Not the last pixel in the chunk, so increment pixel counter
+                    downstreamResponsePixelCount <= downstreamResponsePixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
                 end
             end
             
