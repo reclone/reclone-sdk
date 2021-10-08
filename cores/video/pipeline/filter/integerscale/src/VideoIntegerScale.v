@@ -298,9 +298,12 @@ assign cacheWriteEnableB = (upstreamResponseReady && upstreamResponseRowIsCacheB
 //wire [HACTIVE_BITS-1:0] downstreamCacheColumn = divideCoordBy(downstreamResponseColumn, hScaleFactor);
 
 reg [VACTIVE_BITS+HACTIVE_BITS:0] pendingDownstreamResponseStaged = {(VACTIVE_BITS+HACTIVE_BITS+1){1'b1}};
-wire [VACTIVE_BITS-1:0] downstreamCacheRow  = pendingDownstreamResponseStaged[HACTIVE_BITS+VACTIVE_BITS-1:HACTIVE_BITS];
-wire [HACTIVE_BITS-1:0] downstreamCacheColumn = pendingDownstreamResponseStaged[HACTIVE_BITS-1:0];;
-wire [CHUNKNUM_BITS-1:0] downstreamCacheChunk = downstreamCacheColumn[HACTIVE_BITS-1:CHUNK_BITS];
+wire [VACTIVE_BITS-1:0] downstreamCacheRow  = pendingDownstreamResponseFifoReadData[HACTIVE_BITS+VACTIVE_BITS-1:HACTIVE_BITS];
+wire [HACTIVE_BITS-1:0] downstreamCacheColumnStaged = pendingDownstreamResponseStaged[HACTIVE_BITS-1:0];;
+wire [CHUNKNUM_BITS-1:0] downstreamCacheChunkStaged = downstreamCacheColumnStaged[HACTIVE_BITS-1:CHUNK_BITS];
+
+reg downstreamCacheRowIsCacheA = 1'b0;
+reg downstreamCacheRowIsCacheB = 1'b0;
 
 // The first row and/or column of a scaled-up pixel is a scanline pixel
 // wire isDownstreamResponseScanlineRow = ((downstreamCacheRow * vScaleFactor) == downstreamResponseRow);
@@ -311,12 +314,12 @@ wire [CHUNKNUM_BITS-1:0] downstreamCacheChunk = downstreamCacheColumn[HACTIVE_BI
 // Copy pixel color from cache to downstream response fifo
 reg downstreamResponseInCacheA = 1'b0;
 reg downstreamResponseScanlineBlend = 1'b0;
-assign cacheReadAddressA = downstreamCacheColumn;
-assign cacheReadAddressB = downstreamCacheColumn;
+assign cacheReadAddressA = downstreamCacheColumnStaged;
+assign cacheReadAddressB = downstreamCacheColumnStaged;
 assign cacheReadEnableA = !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
-                          downstreamCacheRow == cachedRowA && cachedChunkValidA[downstreamCacheChunk]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
+                          downstreamCacheRowIsCacheA && cachedChunkValidA[downstreamCacheChunkStaged]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
 assign cacheReadEnableB = !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
-                          downstreamCacheRow == cachedRowB && cachedChunkValidB[downstreamCacheChunk]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
+                          downstreamCacheRowIsCacheB && cachedChunkValidB[downstreamCacheChunkStaged]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
 // wire [BITS_PER_PIXEL-1:0] cacheAPixelColor = downstreamResponseScanlineBlend ?
                             // scanlineBlend(cacheReadDataA, backgroundColor, scanlineIntensity) : cacheReadDataA;
 // wire [BITS_PER_PIXEL-1:0] cacheBPixelColor = downstreamResponseScanlineBlend ?
@@ -325,8 +328,8 @@ reg pendingDownstreamResponseReady = 1'b0;
 reg pendingDownstreamResponseAvailable = 1'b0;
 wire downstreamResponseStall = downstreamResponseFifoFull || 
                                (pendingDownstreamResponseAvailable &&
-                                !((downstreamCacheRow == cachedRowA && cachedChunkValidA[downstreamCacheChunk]) ||
-                                  (downstreamCacheRow == cachedRowB && cachedChunkValidB[downstreamCacheChunk])));
+                                !((downstreamCacheRowIsCacheA && cachedChunkValidA[downstreamCacheChunkStaged]) ||
+                                  (downstreamCacheRowIsCacheB && cachedChunkValidB[downstreamCacheChunkStaged])));
 
 reg downstreamResponsePixelAvailable = 1'b0;
 
@@ -517,6 +520,8 @@ always @ (posedge scalerClock or posedge reset) begin
         //downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         pendingDownstreamResponseStaged <= {(VACTIVE_BITS+HACTIVE_BITS+1){1'b1}};
         downstreamResponseFifoWriteEnableReg <= 1'b0;
+        downstreamCacheRowIsCacheA <= 1'b0;
+        downstreamCacheRowIsCacheB <= 1'b0;
         downstreamResponseInCacheA <= 1'b0;
         downstreamResponseScanlineBlend <= 1'b0;
         downstreamResponsePixelAvailable <= 1'b0;
@@ -753,6 +758,8 @@ always @ (posedge scalerClock or posedge reset) begin
             
             // STAGE 3 - stage pendingDownstreamResponseFifoReadData to improve timing
             pendingDownstreamResponseStaged <= pendingDownstreamResponseFifoReadData;
+            downstreamCacheRowIsCacheA <= (downstreamCacheRow == cachedRowA);
+            downstreamCacheRowIsCacheB <= (downstreamCacheRow == cachedRowB);
             pendingDownstreamResponseAvailable <= pendingDownstreamResponseReady;
             
             // STAGE 4 - downstreamCacheRow and downstreamCacheColumn have the upstream coords
@@ -764,7 +771,7 @@ always @ (posedge scalerClock or posedge reset) begin
             if (pendingDownstreamResponseAvailable) begin
                 // Requested pixel is available, and downstreamResponseStall says it's in the cache
                 // Tell next stage which cache to use
-                downstreamResponseInCacheA <= (downstreamCacheRow == cachedRowA);
+                downstreamResponseInCacheA <= downstreamCacheRowIsCacheA;
                 // Tell next stage whether to blend with background color
                 downstreamResponseScanlineBlend <= pendingDownstreamResponseStaged[HACTIVE_BITS+VACTIVE_BITS];
             end
