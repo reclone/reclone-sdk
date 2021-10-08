@@ -95,10 +95,11 @@ localparam  DOWNSTREAM_REQUEST_IDLE  = 5'b00001,
 reg[4:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
 
 // One-hot states for upstream response state machine
-localparam  UPSTREAM_RESPONSE_IDLE = 3'b001,
-            UPSTREAM_RESPONSE_READ = 3'b010,
-            UPSTREAM_RESPONSE_STORE = 3'b100;
-reg [2:0] upstreamResponseState = UPSTREAM_RESPONSE_IDLE;
+localparam  UPSTREAM_RESPONSE_IDLE = 4'b0001,
+            UPSTREAM_RESPONSE_READ = 4'b0010,
+            UPSTREAM_RESPONSE_STAGE = 4'b0100,
+            UPSTREAM_RESPONSE_STORE = 4'b1000;
+reg [3:0] upstreamResponseState = UPSTREAM_RESPONSE_IDLE;
 
 // upstreamRequests FIFO provides chunk requests to the upstream pipeline element
 reg upstreamRequestFifoWriteEnable = 1'b0;
@@ -252,8 +253,9 @@ BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cach
 
 reg cachedRowBIsOlder = 1'b0;
 
-wire [VACTIVE_BITS-1:0] upstreamResponseRow = pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
-wire [CHUNKNUM_BITS-1:0] upstreamResponseChunk = pendingUpstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
+reg upstreamResponseRowIsCacheA = 1'b0;
+reg upstreamResponseRowIsCacheB = 1'b0;
+reg [CHUNKNUM_BITS-1:0] upstreamResponseChunk = {CHUNKNUM_BITS{1'b1}};
 reg [CHUNK_BITS-1:0] upstreamResponsePixelCount = {CHUNK_BITS{1'b0}};
 wire [HACTIVE_BITS-1:0] upstreamResponseColumn = {upstreamResponseChunk, upstreamResponsePixelCount};
 
@@ -262,8 +264,8 @@ assign cacheWriteAddressA = upstreamResponseColumn;
 assign cacheWriteAddressB = upstreamResponseColumn;
 assign cacheWriteDataA = upstreamResponseFifoReadData;
 assign cacheWriteDataB = upstreamResponseFifoReadData;
-assign cacheWriteEnableA = (upstreamResponseReady && (upstreamResponseRow == cachedRowA));
-assign cacheWriteEnableB = (upstreamResponseReady && (upstreamResponseRow == cachedRowB));
+assign cacheWriteEnableA = (upstreamResponseReady && (upstreamResponseRowIsCacheA));
+assign cacheWriteEnableB = (upstreamResponseReady && (upstreamResponseRowIsCacheB));
 
 reg pendingDownstreamResponseAvailable = 1'b0;
 reg [SCALE_FRACTION_BITS+REQUEST_BITS-1:0] downstreamResponseStaged = {(SCALE_FRACTION_BITS+REQUEST_BITS){1'b1}};
@@ -288,7 +290,8 @@ assign cacheReadEnableB = 1'b1;
 reg downstreamUpperRowInCacheA = 1'b0;
 reg [SCALE_FRACTION_BITS-1:0] downstreamBlendFraction = {SCALE_FRACTION_BITS{1'b0}};
 reg downstreamBlendFractionReady = 1'b0;
-reg downstreamResponsePixelsCached = 1'b0;
+reg downstreamResponseUpperPixelCached = 1'b0;
+reg downstreamResponseLowerPixelCached = 1'b0;
 reg downstreamBlendParamsReady = 1'b0;
 
 reg [SCALE_BITS-1:0] downstreamBlendUpperCoeff = {SCALE_BITS{1'b0}};
@@ -343,6 +346,9 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamRequestRowUpperStaged <= {VACTIVE_BITS{1'b0}};
         upstreamRequestRowLowerStaged <= {VACTIVE_BITS{1'b0}};
         upstreamResponseFifoReadEnableReg <= 1'b0;
+        upstreamResponseRowIsCacheA <= 1'b0;
+        upstreamResponseRowIsCacheB <= 1'b0;
+        upstreamResponseChunk <= {CHUNKNUM_BITS{1'b1}};
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         downstreamRequestFifoReadEnable <= 1'b0;
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
@@ -353,7 +359,8 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamLowerPixelColor <= {BITS_PER_PIXEL{1'b0}};
         downstreamBlendFraction <= {SCALE_FRACTION_BITS{1'b0}};
         downstreamBlendFractionReady <= 1'b0;
-        downstreamResponsePixelsCached <= 1'b0;
+        downstreamResponseUpperPixelCached <= 1'b0;
+        downstreamResponseLowerPixelCached <= 1'b0;
         downstreamBlendParamsReady <= 1'b0;
         downstreamUpperWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamUpperWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
@@ -516,13 +523,27 @@ always @ (posedge scalerClock or posedge reset) begin
             UPSTREAM_RESPONSE_READ: begin
                 // Next cycle the request item should be available
                 pendingUpstreamRequestFifoReadEnable <= 1'b0;
-                upstreamResponseState <= UPSTREAM_RESPONSE_STORE;
+                upstreamResponseState <= UPSTREAM_RESPONSE_STAGE;
                 
+                // Start reading the next upstream response
+                upstreamResponseFifoReadEnableReg <= !upstreamResponseFifoEmpty;
+            end
+
+            UPSTREAM_RESPONSE_STAGE: begin
+                // Stage the pending upstream request to improve timing
+                upstreamResponseChunk <= pendingUpstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
+                upstreamResponseRowIsCacheA <= 
+                    (cachedRowA == pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS]);
+                upstreamResponseRowIsCacheB <= 
+                    (cachedRowB == pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS]);
+
                 // We should be able to process a pixel next cycle, if available
                 upstreamResponseFifoReadEnableReg <= !upstreamResponseFifoEmpty;
                 // upstreamResponseReady delays upstreamResponseFifoReadEnable by one clock cycle
                 // to synchronize upstreamResponseFifoReadData with upstreamResponseColumn
                 upstreamResponseReady <= upstreamResponseFifoReadEnable;
+
+                upstreamResponseState <= UPSTREAM_RESPONSE_STORE;
             end
 
             UPSTREAM_RESPONSE_STORE: begin
@@ -533,10 +554,10 @@ always @ (posedge scalerClock or posedge reset) begin
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
                     if (upstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                         // Mark the current chunk's cache as valid and no longer pending
-                        if (upstreamResponseRow == cachedRowA) begin
+                        if (upstreamResponseRowIsCacheA) begin
                             cachedChunkValidA[upstreamResponseChunk] <= 1'b1;
                             cachedChunkPendingA[upstreamResponseChunk] <= 1'b0;
-                        end else if (upstreamResponseRow == cachedRowB) begin
+                        end else if (upstreamResponseRowIsCacheB) begin
                             cachedChunkValidB[upstreamResponseChunk] <= 1'b1;
                             cachedChunkPendingB[upstreamResponseChunk] <= 1'b0;
                         end
@@ -593,7 +614,8 @@ always @ (posedge scalerClock or posedge reset) begin
         // Whole pipeline stalls if the downstream response FIFO is full
         if (!downstreamResponseFifoFull) begin
             if (downstreamResponsePixelCount[CHUNK_BITS]) begin
-                downstreamResponsePixelsCached <= 1'b0;
+                downstreamResponseUpperPixelCached <= 1'b0;
+                downstreamResponseLowerPixelCached <= 1'b0;
                 downstreamBlendFractionReady <= 1'b0;
                 
                 // High bit of downstreamResponsePixelCount indicates that we are not currently working on a chunk
@@ -617,15 +639,20 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamUpperRowInCacheA <= (cachedRowA == downstreamCacheRowUpper);
                 downstreamBlendFraction <= downstreamResponseCoordFraction;
                 // Determine whether source pixels are in the cache
-                downstreamResponsePixelsCached <=
-                    (((cachedRowA == downstreamCacheRowUpper && cachedChunkValidA[downstreamResponseChunk]) ||
-                      (cachedRowB == downstreamCacheRowUpper && cachedChunkValidB[downstreamResponseChunk])) &&
-                     ((cachedRowA == downstreamCacheRowLower && cachedChunkValidA[downstreamResponseChunk]) ||
-                      (cachedRowB == downstreamCacheRowLower && cachedChunkValidB[downstreamResponseChunk])));
+                downstreamResponseUpperPixelCached <= 
+                    ((cachedRowA == downstreamCacheRowUpper && cachedChunkValidA[downstreamResponseChunk]) ||
+                     (cachedRowB == downstreamCacheRowUpper && cachedChunkValidB[downstreamResponseChunk]));
+                downstreamResponseLowerPixelCached <= 
+                    ((cachedRowA == downstreamCacheRowLower && cachedChunkValidA[downstreamResponseChunk]) ||
+                     (cachedRowB == downstreamCacheRowLower && cachedChunkValidB[downstreamResponseChunk]));
             end
             
-            downstreamBlendFractionReady <= downstreamResponsePixelsCached && !downstreamResponsePixelCount[CHUNK_BITS];
-            if (downstreamResponsePixelsCached && !downstreamResponsePixelCount[CHUNK_BITS]) begin
+            downstreamBlendFractionReady <= downstreamResponseUpperPixelCached && 
+                                            downstreamResponseLowerPixelCached &&
+                                            !downstreamResponsePixelCount[CHUNK_BITS];
+            if (downstreamResponseUpperPixelCached &&
+                downstreamResponseLowerPixelCached &&
+                !downstreamResponsePixelCount[CHUNK_BITS]) begin
                 // If that was the last pixel of the chunk, start the next chunk or return to idle
                 if (downstreamResponsePixelCount == {1'b0, {CHUNK_BITS{1'b1}}}) begin
                     // Set counter to all 1's to indicate invalid count
