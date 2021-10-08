@@ -59,7 +59,7 @@ module VideoHorizontalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 
     // ...and writes to the downstream response FIFO.
     output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
-    output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
+    output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
     
     // Filter module exposes upstream request FIFO for reading...
     input wire upstreamRequestFifoReadEnable,
@@ -263,6 +263,7 @@ reg pendingDownstreamCoordsAvailable = 1'b0;
 //assign downstreamResponseFifoWriteData = blend(blendLeftPixelColor, blendLeftPixelCoeff, blendRightPixelColor, blendRightPixelCoeff);
 
 reg downstreamBlendParamsReady = 1'b0;
+reg downstreamBlendWeightsReady = 1'b0;
 reg [COLOR_WEIGHT_BITS-1:0] downstreamLeftWeightRed = {COLOR_WEIGHT_BITS{1'b0}};
 reg [COLOR_WEIGHT_BITS-1:0] downstreamLeftWeightGreen = {COLOR_WEIGHT_BITS{1'b0}};
 reg [COLOR_WEIGHT_BITS-1:0] downstreamLeftWeightBlue = {COLOR_WEIGHT_BITS{1'b0}};
@@ -275,7 +276,7 @@ wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumRed = colorComponentSum(d
 wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumGreen = colorComponentSum(downstreamLeftWeightGreen, downstreamRightWeightGreen);
 wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumBlue = colorComponentSum(downstreamLeftWeightBlue, downstreamRightWeightBlue);
 /* verilator lint_on UNUSED */
-assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
+//assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
 assign downstreamResponseFifoWriteEnable = downstreamResponseFifoWriteEnableReg && !downstreamResponseFifoFull;
 
@@ -370,6 +371,7 @@ always @ (posedge scalerClock or posedge reset) begin
         blendRightPixelCoeff <= {SCALE_BITS{1'b0}};
         downstreamResponseFifoWriteEnableReg <= 1'b0;
         downstreamBlendParamsReady <= 1'b0;
+        downstreamBlendWeightsReady <= 1'b0;
         downstreamLeftWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamLeftWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamLeftWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
@@ -380,6 +382,7 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamLeftPixelCoeff <= {SCALE_BITS{1'b1}};
         downstreamRightPixelColumn <= {HACTIVE_BITS{1'b1}};
         downstreamRightPixelCoeff <= {SCALE_BITS{1'b1}};
+        downstreamResponseFifoWriteData <= {BITS_PER_PIXEL{1'b0}};
     end else begin
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
         //                         and enqueue upstream chunk requests
@@ -614,7 +617,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamBlendParamsReady <= 1'b0;
             end
             
-            downstreamResponseFifoWriteEnableReg <= downstreamBlendParamsReady;
+            downstreamBlendWeightsReady <= downstreamBlendParamsReady;
             if (downstreamBlendParamsReady) begin
                 // Calculate color component weights
                 // Next cycle they will be summed and concatenated to form downstreamResponseFifoWriteData
@@ -624,6 +627,13 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamRightWeightRed <= {1'b0, blendRightPixelColor[15:11]} * blendRightPixelCoeff;
                 downstreamRightWeightGreen <= blendRightPixelColor[10:5] * blendRightPixelCoeff;
                 downstreamRightWeightBlue <= {1'b0, blendRightPixelColor[4:0]} * blendRightPixelCoeff;
+            end
+            
+            downstreamResponseFifoWriteEnableReg <= downstreamBlendWeightsReady;
+            if (downstreamBlendWeightsReady) begin
+                downstreamResponseFifoWriteData <= {downstreamWeightSumRed[4:0],
+                                                    downstreamWeightSumGreen[5:0],
+                                                    downstreamWeightSumBlue[4:0]};
             end
         end
         
