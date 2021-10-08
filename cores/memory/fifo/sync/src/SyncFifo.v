@@ -15,8 +15,11 @@
 // The design of this module is much simpler and leaner than AsyncFifo, because this module
 // does not have to deal with crossing clock domains.
 //
+// The RAM encapsulated by this FIFO uses the BlockRamDualPort module, so that large FIFOs
+// may infer block RAM resources instead of consuming LUTs, slices, distributed RAM, etc.
 //
-// Copyright 2020 Reclone Labs <reclonelabs.com>
+//
+// Copyright 2020-2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -47,11 +50,11 @@ module SyncFifo # (parameter DATA_WIDTH = 8, ADDR_WIDTH = 3)
     
     input wire readEnable,
     output reg empty = 1'b1,
-    output reg[DATA_WIDTH-1:0] readData,
+    output wire [DATA_WIDTH-1:0] readData,
     
     input wire writeEnable,
     output reg full = 1'b0,
-    input wire[DATA_WIDTH-1:0] writeData
+    input wire [DATA_WIDTH-1:0] writeData
 );
 
 localparam FIFO_DEPTH = 1 << ADDR_WIDTH;
@@ -61,7 +64,24 @@ localparam FIFO_DEPTH = 1 << ADDR_WIDTH;
 reg [ADDR_WIDTH-1:0] readPointer = {ADDR_WIDTH{1'b0}};
 reg [ADDR_WIDTH-1:0] writePointer = {ADDR_WIDTH{1'b0}};
 
-reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
+BlockRamDualPort # (.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) mem
+(
+    // Write Port
+    .clockA(clock),
+    .enableA(1'b1),
+    .writeEnableA(writeEnable),
+    .addressA(writePointer),
+    .dataInA(writeData),
+    .dataOutA(),
+    
+    // Read Port
+    .clockB(clock),
+    .enableB(readEnable),
+    .writeEnableB(1'b0),
+    .addressB(readPointer),
+    .dataInB({DATA_WIDTH{1'b0}}),
+    .dataOutB(readData)
+);
 
 
 always @ (posedge clock or posedge asyncReset) begin
@@ -73,15 +93,13 @@ always @ (posedge clock or posedge asyncReset) begin
     end else begin
         if (readEnable && !empty && writeEnable && !full) begin
             // Both read and write in the same clock cycle
-            readData <= mem[readPointer];
-            mem[writePointer] <= writeData;
+
             // Increment both pointers
             readPointer <= readPointer + {{(ADDR_WIDTH-1){1'b0}}, 1'b1};
             writePointer <= writePointer + {{(ADDR_WIDTH-1){1'b0}}, 1'b1};
             // Not possible to go full or empty in this circumstance
         end else if (readEnable && !empty) begin
             // Just read
-            readData <= mem[readPointer];
             readPointer <= readPointer + {{(ADDR_WIDTH-1){1'b0}}, 1'b1};
             // No longer full
             full <= 1'b0;
@@ -90,7 +108,6 @@ always @ (posedge clock or posedge asyncReset) begin
                 empty <= 1'b1;
         end else if (writeEnable && !full) begin
             // Just write
-            mem[writePointer] <= writeData;
             writePointer <= writePointer + {{(ADDR_WIDTH-1){1'b0}}, 1'b1};
             // No longer empty
             empty <= 1'b0;

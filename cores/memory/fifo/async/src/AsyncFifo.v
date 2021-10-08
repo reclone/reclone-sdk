@@ -26,7 +26,7 @@
 // read/write pointer design, at the expense of one FIFO item.
 //
 //
-// Copyright 2019 Reclone Labs <reclonelabs.com>
+// Copyright 2019-2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -57,20 +57,18 @@ module AsyncFifo # (parameter DATA_WIDTH = 8, ADDR_WIDTH = 3)
     input wire readClock,
     input wire readEnable,
     output reg empty = 1'b1,
-    output reg[DATA_WIDTH-1:0] readData,
+    output wire [DATA_WIDTH-1:0] readData,
     
     input wire writeClock,
     input wire writeEnable,
     output reg full = 1'b0,
-    input wire[DATA_WIDTH-1:0] writeData
+    input wire [DATA_WIDTH-1:0] writeData
 );
 
 localparam FIFO_DEPTH = 1 << ADDR_WIDTH;
 
 wire [ADDR_WIDTH-1:0] writePointer;
 wire [ADDR_WIDTH-1:0] readPointer;
-
-reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
 
 wire pushEnable = writeEnable && !full;
 wire popEnable = readEnable && !empty;
@@ -84,10 +82,27 @@ wire [ADDR_WIDTH-1:0] readPointerNext;
 reg [ADDR_WIDTH-1:0] readPointerSync1 = {ADDR_WIDTH{1'b0}};
 reg [ADDR_WIDTH-1:0] readPointerSync2 = {ADDR_WIDTH{1'b0}};
 
-
-
 reg readSyncReset = 1'b0;
 reg writeSyncReset = 1'b0;
+
+BlockRamDualPort # (.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) mem
+(
+    // Write Port
+    .clockA(writeClock),
+    .enableA(1'b1),
+    .writeEnableA(pushEnable),
+    .addressA(writePointer),
+    .dataInA(writeData),
+    .dataOutA(),
+    
+    // Read Port
+    .clockB(readClock),
+    .enableB(popEnable),
+    .writeEnableB(1'b0),
+    .addressB(readPointer),
+    .dataInB({DATA_WIDTH{1'b0}}),
+    .dataOutB(readData)
+);
 
 GrayCounter #(.WIDTH(ADDR_WIDTH)) writeGrayCounter
 (
@@ -119,7 +134,6 @@ always @ (posedge writeClock) begin
         readPointerSync1 <= readPointer;
         
         if (pushEnable == 1'b1) begin
-            mem[writePointer] <= writeData;
             full <= (writePointerNextNext == readPointerSync2);
         end else begin
             full <= (writePointerNext == readPointerSync2);
@@ -139,7 +153,6 @@ always @ (posedge readClock) begin
         writePointerSync1 <= writePointer;
         
         if (popEnable == 1'b1) begin
-            readData <= mem[readPointer];
             empty <= (readPointerNext == writePointerSync2);
         end else begin
             empty <= (readPointer == writePointerSync2);

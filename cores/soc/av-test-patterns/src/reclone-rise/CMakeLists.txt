@@ -42,6 +42,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v
     ${PROJECT_SOURCE_DIR}/audio/tones/sine-1khz/src/Sine1kHzTone.v
     ${PROJECT_SOURCE_DIR}/audio/delta-sigma/src/AudioDeltaSigmaDac.v
+    ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/src/BlockRamDualPort.v
     )
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)

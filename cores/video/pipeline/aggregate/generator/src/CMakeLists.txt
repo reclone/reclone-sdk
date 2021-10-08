@@ -21,7 +21,6 @@ add_custom_command (
           ${PROJECT_SOURCE_DIR}/video/pipeline/aggregate/scaler/src/VideoAggregateScaler.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/sink/timing/src/VideoTimingSink.v
           ${PROJECT_SOURCE_DIR}/video/timing/src/VideoFormatTiming.v
-          ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/src/BlockRamDualPort.v
           
   COMMAND perl ${VERILATOR} ${VERILATOR_OPTS} -Mdir ${CMAKE_CURRENT_BINARY_DIR} -cc
           ${CMAKE_CURRENT_SOURCE_DIR}/VideoGeneratorPipeline.v
