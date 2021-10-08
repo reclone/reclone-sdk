@@ -205,10 +205,9 @@ reg storeUpstreamResponseToCacheB = 1'b0;
 reg [CHUNK_BITS-1:0] storeUpstreamResponsePixelCount = {CHUNK_BITS{1'b1}};
 
 // Flags to track whether the downstream state machine still needs cached chunk A or B
-reg [HACTIVE_BITS:0] pendingDownstreamResponseStaged = {(HACTIVE_BITS+1){1'b1}};
-wire downstreamPixelIsPadding = pendingDownstreamResponseStaged[HACTIVE_BITS];
-wire [CHUNKNUM_BITS-1:0] downstreamPixelChunk = pendingDownstreamResponseStaged[HACTIVE_BITS-1:HACTIVE_BITS-CHUNKNUM_BITS];
-wire [CHUNK_BITS-1:0] downstreamPixelWhole = pendingDownstreamResponseStaged[CHUNK_BITS-1:0];
+reg downstreamPixelIsPadding = 1'b0;
+reg [CHUNKNUM_BITS-1:0] downstreamPixelChunk = {CHUNKNUM_BITS{1'b1}};
+reg [CHUNK_BITS-1:0] downstreamPixelWhole = {CHUNK_BITS{1'b1}};
 wire downstreamPixelInCacheA = (downstreamPixelChunk == cachedChunkNumA);
 wire downstreamPixelInCacheB = (downstreamPixelChunk == cachedChunkNumB);
 // Do not discard either chunk while we are providing padding color
@@ -236,7 +235,7 @@ assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseStall &&
 
 wire downstreamResponseStall = downstreamResponseFifoFull ||
                                 (pendingDownstreamResponseReady &&
-                                 (!downstreamPixelIsCached && !pendingDownstreamResponseStaged[HACTIVE_BITS]));
+                                 (!downstreamPixelIsCached && !downstreamPixelIsPadding));
 
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
@@ -265,7 +264,9 @@ always @ (posedge scalerClock or posedge reset) begin
         pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
         pendingDownstreamResponseAvailable <= 1'b0;
         pendingDownstreamResponseReady <= 1'b0;
-        //downstreamPixelColorCached <= {BITS_PER_PIXEL{1'b0}};
+        downstreamPixelIsPadding <= 1'b0;
+        downstreamPixelChunk <= {CHUNKNUM_BITS{1'b1}};
+        downstreamPixelWhole <= {CHUNK_BITS{1'b1}};
         downstreamResponseFifoWriteEnableReg <= 1'b0;
         downstreamResponseFifoWriteData <= {BITS_PER_PIXEL{1'b0}};
     end else begin
@@ -464,7 +465,9 @@ always @ (posedge scalerClock or posedge reset) begin
             
             // STAGE 3 - Register pendingDownstreamResponseFifoReadData to improve timing
             pendingDownstreamResponseReady <= pendingDownstreamResponseAvailable;
-            pendingDownstreamResponseStaged <= pendingDownstreamResponseFifoReadData;
+            downstreamPixelIsPadding <= pendingDownstreamResponseFifoReadData[HACTIVE_BITS];
+            downstreamPixelChunk <= pendingDownstreamResponseFifoReadData[HACTIVE_BITS-1:HACTIVE_BITS-CHUNKNUM_BITS];
+            downstreamPixelWhole <= pendingDownstreamResponseFifoReadData[CHUNK_BITS-1:0];
             
             // STAGE 4 - Determine final pixel color
             downstreamResponseFifoWriteEnableReg <= pendingDownstreamResponseReady;
