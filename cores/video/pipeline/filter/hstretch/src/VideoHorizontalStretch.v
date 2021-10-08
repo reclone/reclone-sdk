@@ -86,8 +86,11 @@ localparam COLOR_COMPONENT_BITS_MAX = 6;
 localparam COLOR_WEIGHT_BITS = SCALE_FRACTION_BITS + COLOR_COMPONENT_BITS_MAX;
 
 // One-hot states for downstream request state machine
-localparam DOWNSTREAM_REQUEST_IDLE = 3'b001, DOWNSTREAM_REQUEST_READ = 3'b010, DOWNSTREAM_REQUEST_STORE = 3'b100;
-reg[2:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
+localparam DOWNSTREAM_REQUEST_IDLE = 4'b0001,
+           DOWNSTREAM_REQUEST_READ = 4'b0010,
+           DOWNSTREAM_REQUEST_STAGE = 4'b0100,
+           DOWNSTREAM_REQUEST_STORE = 4'b1000;
+reg[3:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
 
 // One-hot states for upstream response state machine
 localparam UPSTREAM_RESPONSE_IDLE = 3'b001, UPSTREAM_RESPONSE_READ = 3'b010, UPSTREAM_RESPONSE_STORE = 3'b100;
@@ -180,9 +183,10 @@ SyncFifo #(.DATA_WIDTH(HCOORD_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstre
 reg [REQUEST_BITS-1:0] lastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 reg [REQUEST_BITS-1:0] lastlastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 
+reg [REQUEST_BITS-1:0] downstreamRequestStaged = {REQUEST_BITS{1'b1}};
 reg [CHUNK_BITS:0] downstreamRequestPixelCount = {(CHUNK_BITS+1){1'b0}};
-wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
-wire [HACTIVE_BITS-1:0] downstreamRequestCoord = {downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
+wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestStaged[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
+wire [HACTIVE_BITS-1:0] downstreamRequestCoord = {downstreamRequestStaged[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
 wire [HCOORD_BITS-1:0] upstreamRequestCoord = downstreamRequestCoord * hShrinkFactor + {{(HCOORD_BITS-SCALE_BITS){1'b0}}, hShrinkFactor[SCALE_BITS-1:1]}
     - (hShrinkFactor[SCALE_BITS-1] ? {{HACTIVE_BITS{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}} : {HCOORD_BITS{1'b0}});
 wire needsNextChunkToo = (upstreamRequestCoord[HCOORD_BITS-CHUNKNUM_BITS-1:HCOORD_BITS-HACTIVE_BITS] == {CHUNK_BITS{1'b1}}) &&
@@ -337,6 +341,7 @@ always @ (posedge scalerClock or posedge reset) begin
         // Asynchronous reset
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
+        downstreamRequestStaged <= {REQUEST_BITS{1'b1}};
         downstreamRequestFifoReadEnableReg <= 1'b0;
         upstreamRequestFifoWriteEnable <= 1'b0;
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
@@ -401,6 +406,14 @@ always @ (posedge scalerClock or posedge reset) begin
                 
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
+                if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_STAGE;
+                end
+            end
+            
+            DOWNSTREAM_REQUEST_STAGE: begin
+                downstreamRequestStaged <= downstreamRequestFifoReadData;
+                
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
                     downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
