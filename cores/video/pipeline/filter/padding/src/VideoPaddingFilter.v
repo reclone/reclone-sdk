@@ -59,7 +59,7 @@ module VideoPaddingFilter #(parameter CHUNK_BITS = 5)
     // ...and writes to the downstream response FIFO.
     output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
-    output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
+    output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
     
     // Filter module exposes upstream request FIFO for reading...
     input wire upstreamRequestFifoReadEnable,
@@ -205,9 +205,10 @@ reg storeUpstreamResponseToCacheB = 1'b0;
 reg [CHUNK_BITS-1:0] storeUpstreamResponsePixelCount = {CHUNK_BITS{1'b1}};
 
 // Flags to track whether the downstream state machine still needs cached chunk A or B
-wire downstreamPixelIsPadding = pendingDownstreamResponseFifoReadData[HACTIVE_BITS];
-wire [CHUNKNUM_BITS-1:0] downstreamPixelChunk = pendingDownstreamResponseFifoReadData[HACTIVE_BITS-1:HACTIVE_BITS-CHUNKNUM_BITS];
-wire [CHUNK_BITS-1:0] downstreamPixelWhole = pendingDownstreamResponseFifoReadData[CHUNK_BITS-1:0];
+reg [HACTIVE_BITS:0] pendingDownstreamResponseStaged = {(HACTIVE_BITS+1){1'b1}};
+wire downstreamPixelIsPadding = pendingDownstreamResponseStaged[HACTIVE_BITS];
+wire [CHUNKNUM_BITS-1:0] downstreamPixelChunk = pendingDownstreamResponseStaged[HACTIVE_BITS-1:HACTIVE_BITS-CHUNKNUM_BITS];
+wire [CHUNK_BITS-1:0] downstreamPixelWhole = pendingDownstreamResponseStaged[CHUNK_BITS-1:0];
 wire downstreamPixelInCacheA = (downstreamPixelChunk == cachedChunkNumA);
 wire downstreamPixelInCacheB = (downstreamPixelChunk == cachedChunkNumB);
 // Do not discard either chunk while we are providing padding color
@@ -216,18 +217,26 @@ wire downstreamNeedsCachedChunkB = (downstreamPixelInCacheB || downstreamPixelIs
 
 wire downstreamPixelIsCached = (downstreamPixelInCacheA && cachedChunkAValid) || (downstreamPixelInCacheB && cachedChunkBValid);
 
-// Write the response if we just grabbed a pending downstream response coord and the cache has the upstream pixel we need
-assign downstreamResponseFifoWriteEnable =  !downstreamResponseFifoFull &&
-                                            (downstreamPixelIsCached || downstreamPixelIsPadding) &&
-                                            pendingDownstreamResponseAvailable;
+reg downstreamResponseFifoWriteEnableReg = 1'b0;
+assign downstreamResponseFifoWriteEnable =  !downstreamResponseStall && downstreamResponseFifoWriteEnableReg;
 wire [BITS_PER_PIXEL-1:0] downstreamPixelColorCached = (downstreamPixelInCacheA ? cachedChunkA[downstreamPixelWhole] : cachedChunkB[downstreamPixelWhole]);
-assign downstreamResponseFifoWriteData = downstreamPixelIsPadding ? padColor : downstreamPixelColorCached;
+//reg [BITS_PER_PIXEL-1:0] downstreamPixelColorCached = {BITS_PER_PIXEL{1'b0}};
+//assign downstreamResponseFifoWriteData = downstreamPixelIsPadding ? padColor : downstreamPixelColorCached;
 
 // Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
 reg pendingDownstreamResponseAvailable = 1'b0;
+// Ready flag is delayed copy of available flag
+reg pendingDownstreamResponseReady = 1'b0;
+
 // Read the next pending downstream response coord as long as the downstream response fifo can receive it
-assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseFifoFull && !pendingDownstreamResponseFifoEmpty &&
-    (!pendingDownstreamResponseAvailable || downstreamResponseFifoWriteEnable);
+reg pendingDownstreamResponseFifoReadEnableReg = 1'b0;
+assign pendingDownstreamResponseFifoReadEnable = !downstreamResponseStall &&
+                                                 !pendingDownstreamResponseFifoEmpty &&
+                                                 pendingDownstreamResponseFifoReadEnableReg;
+
+wire downstreamResponseStall = downstreamResponseFifoFull ||
+                                (pendingDownstreamResponseReady &&
+                                 (!downstreamPixelIsCached && !pendingDownstreamResponseStaged[HACTIVE_BITS]));
 
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
@@ -253,7 +262,12 @@ always @ (posedge scalerClock or posedge reset) begin
         storeUpstreamResponse <= 1'b0;
         storeUpstreamResponseToCacheB <= 1'b0;
         storeUpstreamResponsePixelCount <= {CHUNK_BITS{1'b1}};
+        pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
         pendingDownstreamResponseAvailable <= 1'b0;
+        pendingDownstreamResponseReady <= 1'b0;
+        //downstreamPixelColorCached <= {BITS_PER_PIXEL{1'b0}};
+        downstreamResponseFifoWriteEnableReg <= 1'b0;
+        downstreamResponseFifoWriteData <= {BITS_PER_PIXEL{1'b0}};
     end else begin
     
         // Request state machine - Get downstream chunk requests, translate chunk coordinates,
@@ -440,11 +454,21 @@ always @ (posedge scalerClock or posedge reset) begin
             end
         end
         
-        // "Available" flag indicates whether a pending downstream response was read last cycle
-        if (pendingDownstreamResponseFifoReadEnable) begin
-            pendingDownstreamResponseAvailable <= 1'b1;
-        end else if (downstreamResponseFifoWriteEnable) begin
-            pendingDownstreamResponseAvailable <= 1'b0;
+        // Downstream response pipeline
+        if (!downstreamResponseStall) begin
+            // STAGE 1 - Start reading from pending downstream response FIFO
+            pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
+            
+            // STAGE 2 - Pending downstream response should be available next cycle
+            pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnable;
+            
+            // STAGE 3 - Register pendingDownstreamResponseFifoReadData to improve timing
+            pendingDownstreamResponseReady <= pendingDownstreamResponseAvailable;
+            pendingDownstreamResponseStaged <= pendingDownstreamResponseFifoReadData;
+            
+            // STAGE 4 - Determine final pixel color
+            downstreamResponseFifoWriteEnableReg <= pendingDownstreamResponseReady;
+            downstreamResponseFifoWriteData <= downstreamPixelIsPadding ? padColor : downstreamPixelColorCached;
         end
     end
 end
