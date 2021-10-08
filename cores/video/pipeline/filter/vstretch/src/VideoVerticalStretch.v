@@ -265,10 +265,13 @@ assign cacheWriteDataB = upstreamResponseFifoReadData;
 assign cacheWriteEnableA = (upstreamResponseReady && (upstreamResponseRow == cachedRowA));
 assign cacheWriteEnableB = (upstreamResponseReady && (upstreamResponseRow == cachedRowB));
 
-wire [VCOORD_BITS-1:0] downstreamResponseCoord = pendingDownstreamResponseFifoReadData[SCALE_FRACTION_BITS+REQUEST_BITS-1:SCALE_FRACTION_BITS+REQUEST_BITS-VCOORD_BITS];
+reg pendingDownstreamResponseAvailable = 1'b0;
+reg [SCALE_FRACTION_BITS+REQUEST_BITS-1:0] downstreamResponseStaged = {(SCALE_FRACTION_BITS+REQUEST_BITS){1'b1}};
+
+wire [VCOORD_BITS-1:0] downstreamResponseCoord = downstreamResponseStaged[SCALE_FRACTION_BITS+REQUEST_BITS-1:SCALE_FRACTION_BITS+REQUEST_BITS-VCOORD_BITS];
 wire [VACTIVE_BITS-1:0] downstreamResponseCoordWhole = downstreamResponseCoord[VCOORD_BITS-1:SCALE_FRACTION_BITS];
 wire [SCALE_FRACTION_BITS-1:0] downstreamResponseCoordFraction = downstreamResponseCoord[SCALE_FRACTION_BITS-1:0];
-wire [CHUNKNUM_BITS-1:0] downstreamResponseChunk = pendingDownstreamResponseFifoReadData[CHUNKNUM_BITS-1:0];
+wire [CHUNKNUM_BITS-1:0] downstreamResponseChunk = downstreamResponseStaged[CHUNKNUM_BITS-1:0];
 reg [CHUNK_BITS:0] downstreamResponsePixelCount = {(CHUNK_BITS+1){1'b1}};
 wire [HACTIVE_BITS-1:0] downstreamResponseColumn = {downstreamResponseChunk, downstreamResponsePixelCount[CHUNK_BITS-1:0]};
 
@@ -358,6 +361,8 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamLowerWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamLowerWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamLowerWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
+        downstreamResponseStaged <= {(SCALE_FRACTION_BITS+REQUEST_BITS){1'b1}};
+        pendingDownstreamResponseAvailable <= 1'b0;
 
     end else begin
         
@@ -592,15 +597,22 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamBlendFractionReady <= 1'b0;
                 
                 // High bit of downstreamResponsePixelCount indicates that we are not currently working on a chunk
-                if (!pendingDownstreamResponseFifoEmpty && !pendingDownstreamResponseFifoReadEnableReg) begin
+                if (!pendingDownstreamResponseFifoEmpty &&
+                    !pendingDownstreamResponseFifoReadEnableReg &&
+                    !pendingDownstreamResponseAvailable) begin
                     // Initially grabbing a pending downstream response
                     pendingDownstreamResponseFifoReadEnableReg <= 1'b1;
                 end else if (pendingDownstreamResponseFifoReadEnableReg) begin
                     // Initial pending downstream response will be available next cycle
-                    downstreamResponsePixelCount <= {(CHUNK_BITS+1){1'b0}};
                     pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
+                    pendingDownstreamResponseAvailable <= 1'b1;
+                end else if (pendingDownstreamResponseAvailable) begin
+                    pendingDownstreamResponseAvailable <= 1'b0;
+                    // Stage the downstream response to improve timing
+                    downstreamResponseStaged <= pendingDownstreamResponseFifoReadData;
+                    downstreamResponsePixelCount <= {(CHUNK_BITS+1){1'b0}};
                 end
-            end else if (!downstreamResponsePixelCount[CHUNK_BITS]) begin
+            end else begin
                 // Store what we need to blend the pixels
                 downstreamUpperRowInCacheA <= (cachedRowA == downstreamCacheRowUpper);
                 downstreamBlendFraction <= downstreamResponseCoordFraction;
