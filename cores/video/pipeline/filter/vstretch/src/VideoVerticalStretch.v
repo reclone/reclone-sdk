@@ -60,7 +60,7 @@ module VideoVerticalStretch #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     // ...and writes to the downstream response FIFO.
     output wire downstreamResponseFifoWriteEnable,
     input wire downstreamResponseFifoFull,
-    output wire [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData,
+    output reg [BITS_PER_PIXEL-1:0] downstreamResponseFifoWriteData = {BITS_PER_PIXEL{1'b0}},
     
     // Filter module exposes upstream request FIFO for reading...
     input wire upstreamRequestFifoReadEnable,
@@ -293,6 +293,7 @@ reg downstreamBlendFractionReady = 1'b0;
 reg downstreamResponseUpperPixelCached = 1'b0;
 reg downstreamResponseLowerPixelCached = 1'b0;
 reg downstreamBlendParamsReady = 1'b0;
+reg downstreamBlendWeightsReady = 1'b0;
 
 reg [SCALE_BITS-1:0] downstreamBlendUpperCoeff = {SCALE_BITS{1'b0}};
 reg [SCALE_BITS-1:0] downstreamBlendLowerCoeff = {SCALE_BITS{1'b0}};
@@ -312,7 +313,7 @@ wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumRed = colorComponentSum(d
 wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumGreen = colorComponentSum(downstreamUpperWeightGreen, downstreamLowerWeightGreen);
 wire [COLOR_COMPONENT_BITS_MAX-1:0] downstreamWeightSumBlue = colorComponentSum(downstreamUpperWeightBlue, downstreamLowerWeightBlue);
 /* verilator lint_on UNUSED */
-assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
+//assign downstreamResponseFifoWriteData = {downstreamWeightSumRed[4:0], downstreamWeightSumGreen[5:0], downstreamWeightSumBlue[4:0]};
 
 reg downstreamResponseFifoWriteEnableReg = 1'b0;
 assign downstreamResponseFifoWriteEnable = downstreamResponseFifoFull ? 1'b0 : downstreamResponseFifoWriteEnableReg;
@@ -362,6 +363,7 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamResponseUpperPixelCached <= 1'b0;
         downstreamResponseLowerPixelCached <= 1'b0;
         downstreamBlendParamsReady <= 1'b0;
+        downstreamBlendWeightsReady <= 1'b0;
         downstreamUpperWeightRed <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamUpperWeightGreen <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamUpperWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
@@ -370,7 +372,7 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamLowerWeightBlue <= {COLOR_WEIGHT_BITS{1'b0}};
         downstreamResponseStaged <= {(SCALE_FRACTION_BITS+REQUEST_BITS){1'b1}};
         pendingDownstreamResponseAvailable <= 1'b0;
-
+        downstreamResponseFifoWriteData <= {BITS_PER_PIXEL{1'b0}};
     end else begin
         
         // Request state machine - Get downstream chunk requests, translate pixel coordinates,
@@ -697,6 +699,16 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamLowerWeightGreen <= downstreamLowerPixelColor[10:5] * downstreamBlendLowerCoeff;
                 downstreamLowerWeightBlue <= {1'b0, downstreamLowerPixelColor[4:0]} * downstreamBlendLowerCoeff;
                 
+                downstreamBlendWeightsReady <= 1'b1;
+            end else begin
+                // Not ready to calculate this stage
+                downstreamBlendWeightsReady <= 1'b0;
+            end
+            
+            if (downstreamBlendWeightsReady) begin
+                downstreamResponseFifoWriteData <= {downstreamWeightSumRed[4:0],
+                                                    downstreamWeightSumGreen[5:0],
+                                                    downstreamWeightSumBlue[4:0]};
                 downstreamResponseFifoWriteEnableReg <= 1'b1;
             end else begin
                 // Not ready to calculate this stage
