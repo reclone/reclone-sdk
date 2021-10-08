@@ -135,9 +135,9 @@ reg [3:0] upstreamResponseState = UPSTREAM_RESPONSE_IDLE;
 // localparam DOWNSTREAM_RESPONSE_IDLE = 3'b001, DOWNSTREAM_RESPONSE_READ = 3'b010, DOWNSTREAM_RESPONSE_STORE = 3'b100;
 // reg [2:0] downstreamResponseState = DOWNSTREAM_RESPONSE_IDLE;
 
-
-wire [VACTIVE_BITS-1:0] requestedRow = downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
-wire [CHUNKNUM_BITS-1:0] requestedChunk = downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
+reg [REQUEST_BITS-1:0] downstreamRequestStaged = {REQUEST_BITS{1'b1}};
+wire [VACTIVE_BITS-1:0] requestedRow = downstreamRequestStaged[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
+wire [CHUNKNUM_BITS-1:0] requestedChunk = downstreamRequestStaged[CHUNKNUM_BITS-1:0];
 reg [CHUNK_BITS:0] downstreamRequestPixelCount = {(CHUNK_BITS+1){1'b1}};
 //wire [HACTIVE_BITS-1:0] requestedColumn = {requestedChunk, {CHUNK_BITS{1'b0}}}; // Calculate upstream requests based on first pixel in downstream chunk
 wire [HACTIVE_BITS-1:0] requestedColumn = {requestedChunk, downstreamRequestPixelCount[CHUNK_BITS-1:0]};
@@ -239,7 +239,7 @@ wire downstreamRequestPipelineStall = pendingUpstreamRequestFifoFull ||
                                       downstreamRequestNewRowStall;
 reg downstreamRequestFifoReadEnableReg = 1'b0;
 assign downstreamRequestFifoReadEnable = downstreamRequestFifoReadEnableReg && !downstreamRequestPipelineStall;
-//reg downstreamRequestAvailable = 1'b0;
+reg downstreamRequestNewChunk = 1'b0;
 reg upstreamRequestAvailable = 1'b0;
 
 // wire [VACTIVE_BITS-1:0] upstreamRequestRow = divideCoordBy(requestedRow, vScaleFactor);
@@ -480,7 +480,9 @@ always @ (posedge scalerClock or posedge reset) begin
         // Asynchronous reset
         downstreamRequestFifoReadEnableReg <= 1'b0;
         //downstreamRequestAvailable <= 1'b0;
+        downstreamRequestStaged <= {REQUEST_BITS{1'b1}};
         downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b1}};
+        downstreamRequestNewChunk <= 1'b0;
         upstreamRequestAvailable <= 1'b0;
         upstreamRequestRowPrecision <= {(VACTIVE_BITS+RECIPROCAL_FRACTION_BITS){1'b0}};
         upstreamRequestColumnPrecision <= {(HACTIVE_BITS+RECIPROCAL_FRACTION_BITS){1'b0}};
@@ -544,7 +546,11 @@ always @ (posedge scalerClock or posedge reset) begin
             end
             
             // STAGE 2 - Downstream request will be available next cycle
-            if (downstreamRequestFifoReadEnableReg) begin
+            downstreamRequestNewChunk <= downstreamRequestFifoReadEnableReg;
+            
+            // STAGE 3 - Register downstreamRequestFifoReadData to improve timing
+            downstreamRequestStaged <= downstreamRequestFifoReadData;
+            if (downstreamRequestNewChunk) begin
                 // Reset pixel counter if we are starting a new chunk
                 downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
             end else if (!downstreamRequestPixelCount[CHUNK_BITS]) begin
@@ -552,7 +558,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 downstreamRequestPixelCount <= downstreamRequestPixelCount + {{(CHUNK_BITS){1'b0}}, 1'b1};
             end
             
-            // STAGE 3 - Calculate upstream row and column
+            // STAGE 4 - Calculate upstream row and column
             if (!downstreamRequestPixelCount[CHUNK_BITS]) begin
                 upstreamRequestRowPrecision <= requestedRow * reciprocalFactors[vScaleFactor];
                 upstreamRequestColumnPrecision <= requestedColumn * reciprocalFactors[hScaleFactor];
