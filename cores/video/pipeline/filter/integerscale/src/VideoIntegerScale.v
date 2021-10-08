@@ -268,10 +268,12 @@ wire [CHUNKNUM_BITS-1:0] upstreamRequestChunkStaged = upstreamRequestColumnStage
 reg upstreamRequestStaged = 1'b0;
 wire [REQUEST_BITS-1:0] upstreamRequest = {upstreamRequestRowStaged, upstreamRequestChunkStaged};
 
-reg [REQUEST_BITS-1:0] pendingUpstreamRequestStaged = {REQUEST_BITS{1'b1}};
+//reg [REQUEST_BITS-1:0] pendingUpstreamRequestStaged = {REQUEST_BITS{1'b1}};
 
-wire [VACTIVE_BITS-1:0] upstreamResponseRow = pendingUpstreamRequestStaged[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
-wire [CHUNKNUM_BITS-1:0] upstreamResponseChunk = pendingUpstreamRequestStaged[CHUNKNUM_BITS-1:0];
+//wire [VACTIVE_BITS-1:0] upstreamResponseRow = pendingUpstreamRequestStaged[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
+reg upstreamResponseRowIsCacheA = 1'b0;
+reg upstreamResponseRowIsCacheB = 1'b0;
+reg [CHUNKNUM_BITS-1:0] upstreamResponseChunk = {CHUNKNUM_BITS{1'b1}};
 reg [CHUNK_BITS-1:0] upstreamResponsePixelCount = {CHUNK_BITS{1'b0}};
 wire [HACTIVE_BITS-1:0] upstreamResponseColumn = {upstreamResponseChunk, upstreamResponsePixelCount};
 
@@ -284,8 +286,8 @@ assign cacheWriteAddressA = upstreamResponseColumn;
 assign cacheWriteAddressB = upstreamResponseColumn;
 assign cacheWriteDataA = upstreamResponseFifoReadData;
 assign cacheWriteDataB = upstreamResponseFifoReadData;
-assign cacheWriteEnableA = (upstreamResponseReady && (upstreamResponseRow == cachedRowA));
-assign cacheWriteEnableB = (upstreamResponseReady && (upstreamResponseRow == cachedRowB));
+assign cacheWriteEnableA = (upstreamResponseReady && upstreamResponseRowIsCacheA);
+assign cacheWriteEnableB = (upstreamResponseReady && upstreamResponseRowIsCacheB);
 
 //wire [VACTIVE_BITS-1:0] downstreamResponseRow = pendingDownstreamResponseFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
 //wire [CHUNKNUM_BITS-1:0] downstreamResponseChunk = pendingDownstreamResponseFifoReadData[CHUNKNUM_BITS-1:0];
@@ -487,6 +489,8 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamRequestColumnStaged <= {HACTIVE_BITS{1'b1}};
         upstreamRequestStaged <= 1'b0;
         upstreamResponseFifoReadEnable <= 1'b0;
+        upstreamResponseRowIsCacheA <= 1'b0;
+        upstreamResponseRowIsCacheB <= 1'b0;
         upstreamRequestFifoWriteEnableReg <= 1'b0;
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
         //pendingDownstreamResponseRow <= {VACTIVE_BITS{1'b1}};
@@ -500,7 +504,7 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
         upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
         upstreamResponseReady <= 1'b0;
-        pendingUpstreamRequestStaged <= {REQUEST_BITS{1'b1}};
+        upstreamResponseChunk <= {CHUNKNUM_BITS{1'b1}};
         //downstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
         //downstreamResponseState <= DOWNSTREAM_RESPONSE_IDLE;
         cachedRowA <= {VACTIVE_BITS{1'b1}};
@@ -656,7 +660,11 @@ always @ (posedge scalerClock or posedge reset) begin
             
             UPSTREAM_RESPONSE_STAGE: begin
                 // Stage the pending upstream request to improve timing
-                pendingUpstreamRequestStaged <= pendingUpstreamRequestFifoReadData;
+                upstreamResponseChunk <= pendingUpstreamRequestFifoReadData[CHUNKNUM_BITS-1:0];
+                upstreamResponseRowIsCacheA <= 
+                    (cachedRowA == pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS]);
+                upstreamResponseRowIsCacheB <= 
+                    (cachedRowB == pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS]);
                 
                 // We should be able to process a pixel next cycle, if available
                 upstreamResponseFifoReadEnable <= !upstreamResponseFifoEmpty;
@@ -675,10 +683,10 @@ always @ (posedge scalerClock or posedge reset) begin
                     // If that was the last pixel of the chunk, start the next chunk or return to idle
                     if (upstreamResponsePixelCount == {CHUNK_BITS{1'b1}}) begin
                         // Mark the current chunk's cache as valid and no longer pending
-                        if (upstreamResponseRow == cachedRowA) begin
+                        if (upstreamResponseRowIsCacheA) begin
                             cachedChunkValidA[upstreamResponseChunk] <= 1'b1;
                             cachedChunkPendingA[upstreamResponseChunk] <= 1'b0;
-                        end else if (upstreamResponseRow == cachedRowB) begin
+                        end else if (upstreamResponseRowIsCacheB) begin
                             cachedChunkValidB[upstreamResponseChunk] <= 1'b1;
                             cachedChunkPendingB[upstreamResponseChunk] <= 1'b0;
                         end
