@@ -82,8 +82,11 @@ localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
 localparam BITS_PER_PIXEL = 16;
 
 // One-hot states for downstream request state machine
-localparam DOWNSTREAM_REQUEST_IDLE = 3'b001, DOWNSTREAM_REQUEST_READ = 3'b010, DOWNSTREAM_REQUEST_STORE = 3'b100;
-reg[2:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
+localparam DOWNSTREAM_REQUEST_IDLE  = 4'b0001,
+           DOWNSTREAM_REQUEST_READ  = 4'b0010,
+           DOWNSTREAM_REQUEST_STAGE = 4'b0100,
+           DOWNSTREAM_REQUEST_STORE = 4'b1000;
+reg[3:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
 
 // One-hot states for upstream response state machine
 localparam UPSTREAM_RESPONSE_IDLE = 3'b001, UPSTREAM_RESPONSE_READ = 3'b010, UPSTREAM_RESPONSE_STORE = 3'b100;
@@ -169,13 +172,14 @@ SyncFifo #(.DATA_WIDTH(HACTIVE_BITS+1), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDowns
     .writeData(pendingDownstreamResponseFifoWriteData)
 );
 
+reg [REQUEST_BITS-1:0] downstreamRequestStaged = {REQUEST_BITS{1'b0}};
 reg [REQUEST_BITS-1:0] lastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 reg [REQUEST_BITS-1:0] lastlastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 
 reg [CHUNK_BITS:0] downstreamRequestPixelCount = {(CHUNK_BITS+1){1'b0}};
 
-wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
-wire [HACTIVE_BITS-1:0] downstreamRequestColumn = {downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
+wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestStaged[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
+wire [HACTIVE_BITS-1:0] downstreamRequestColumn = {downstreamRequestStaged[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
 wire [VACTIVE_BITS-1:0] upstreamRequestRow = downstreamRequestRow - padTopRows;
 wire [HACTIVE_BITS-1:0] upstreamRequestColumn = downstreamRequestColumn - padLeftColumns;
 wire [CHUNKNUM_BITS-1:0] upstreamRequestChunk = upstreamRequestColumn[HACTIVE_BITS-1:HACTIVE_BITS-CHUNKNUM_BITS];
@@ -241,6 +245,7 @@ always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
+        downstreamRequestStaged <= {REQUEST_BITS{1'b0}};
         upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
         downstreamRequestFifoReadEnableReg <= 1'b0;
         upstreamRequestFifoWriteEnable <= 1'b0;
@@ -297,6 +302,18 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_STAGE;
+                end
+            end
+            
+            DOWNSTREAM_REQUEST_STAGE: begin
+                // Stage the downstream request to improve timing
+                downstreamRequestStaged <= downstreamRequestFifoReadData;
+                pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                
+                // Make sure again that the FIFOs have the space to receive new requests because last cycle
+                // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
+                if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
                     downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
                 end
@@ -333,6 +350,7 @@ always @ (posedge scalerClock or posedge reset) begin
                             // Start working the next request
                             downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
                             downstreamRequestFifoReadEnableReg <= 1'b0;
+                            downstreamRequestState <= DOWNSTREAM_REQUEST_STAGE;
                         end else begin
                             // Do not process another request
                             downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
