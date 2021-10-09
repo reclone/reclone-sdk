@@ -300,10 +300,12 @@ assign cacheWriteEnableB = (upstreamResponseReady && upstreamResponseRowIsCacheB
 reg [VACTIVE_BITS+HACTIVE_BITS:0] pendingDownstreamResponseStaged = {(VACTIVE_BITS+HACTIVE_BITS+1){1'b1}};
 wire [VACTIVE_BITS-1:0] downstreamCacheRow  = pendingDownstreamResponseFifoReadData[HACTIVE_BITS+VACTIVE_BITS-1:HACTIVE_BITS];
 wire [HACTIVE_BITS-1:0] downstreamCacheColumnStaged = pendingDownstreamResponseStaged[HACTIVE_BITS-1:0];;
-wire [CHUNKNUM_BITS-1:0] downstreamCacheChunkStaged = downstreamCacheColumnStaged[HACTIVE_BITS-1:CHUNK_BITS];
+//wire [CHUNKNUM_BITS-1:0] downstreamCacheChunkStaged = downstreamCacheColumnStaged[HACTIVE_BITS-1:CHUNK_BITS];
 
 reg downstreamCacheRowIsCacheA = 1'b0;
 reg downstreamCacheRowIsCacheB = 1'b0;
+reg downstreamCachedChunkValidAStaged = 1'b0;
+reg downstreamCachedChunkValidBStaged = 1'b0;
 
 // The first row and/or column of a scaled-up pixel is a scanline pixel
 // wire isDownstreamResponseScanlineRow = ((downstreamCacheRow * vScaleFactor) == downstreamResponseRow);
@@ -317,9 +319,9 @@ reg downstreamResponseScanlineBlend = 1'b0;
 assign cacheReadAddressA = downstreamCacheColumnStaged;
 assign cacheReadAddressB = downstreamCacheColumnStaged;
 assign cacheReadEnableA = !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
-                          downstreamCacheRowIsCacheA && cachedChunkValidA[downstreamCacheChunkStaged]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
+                          downstreamCacheRowIsCacheA && downstreamCachedChunkValidAStaged; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
 assign cacheReadEnableB = !downstreamResponseFifoFull && pendingDownstreamResponseAvailable &&
-                          downstreamCacheRowIsCacheB && cachedChunkValidB[downstreamCacheChunkStaged]; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
+                          downstreamCacheRowIsCacheB && downstreamCachedChunkValidBStaged; //!downstreamResponseStall && pendingDownstreamResponseAvailable;
 // wire [BITS_PER_PIXEL-1:0] cacheAPixelColor = downstreamResponseScanlineBlend ?
                             // scanlineBlend(cacheReadDataA, backgroundColor, scanlineIntensity) : cacheReadDataA;
 // wire [BITS_PER_PIXEL-1:0] cacheBPixelColor = downstreamResponseScanlineBlend ?
@@ -328,8 +330,8 @@ reg pendingDownstreamResponseReady = 1'b0;
 reg pendingDownstreamResponseAvailable = 1'b0;
 wire downstreamResponseStall = downstreamResponseFifoFull || 
                                (pendingDownstreamResponseAvailable &&
-                                !((downstreamCacheRowIsCacheA && cachedChunkValidA[downstreamCacheChunkStaged]) ||
-                                  (downstreamCacheRowIsCacheB && cachedChunkValidB[downstreamCacheChunkStaged])));
+                                !((downstreamCacheRowIsCacheA && downstreamCachedChunkValidAStaged) ||
+                                  (downstreamCacheRowIsCacheB && downstreamCachedChunkValidBStaged)));
 
 reg downstreamResponsePixelAvailable = 1'b0;
 
@@ -521,6 +523,8 @@ always @ (posedge scalerClock or posedge reset) begin
         cachedRowBIsOlder <= 1'b0;
         //downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         pendingDownstreamResponseStaged <= {(VACTIVE_BITS+HACTIVE_BITS+1){1'b1}};
+        downstreamCachedChunkValidAStaged <= 1'b0;
+        downstreamCachedChunkValidBStaged <= 1'b0;
         downstreamResponseFifoWriteEnableReg <= 1'b0;
         downstreamCacheRowIsCacheA <= 1'b0;
         downstreamCacheRowIsCacheB <= 1'b0;
@@ -784,6 +788,11 @@ always @ (posedge scalerClock or posedge reset) begin
         end else begin
             downstreamResponsePixelAvailable <= 1'b0;
         end
+        
+        // Pre-calculate the cache valid flags for the pending downstream response
+        // These need to get updated every clock so that downstreamResponseStall can also be updated
+        downstreamCachedChunkValidAStaged <= cachedChunkValidA[pendingDownstreamResponseFifoReadData[HACTIVE_BITS-1:CHUNK_BITS]];
+        downstreamCachedChunkValidBStaged <= cachedChunkValidB[pendingDownstreamResponseFifoReadData[HACTIVE_BITS-1:CHUNK_BITS]];
         
         if (!downstreamResponseFifoFull) begin
             // STAGE 5 - select between cacheA and cacheB, and optionally scanline blend
