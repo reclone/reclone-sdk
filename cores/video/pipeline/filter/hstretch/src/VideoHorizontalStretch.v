@@ -416,6 +416,7 @@ always @ (posedge scalerClock or posedge reset) begin
             
             DOWNSTREAM_REQUEST_STAGE: begin
                 downstreamRequestStaged <= downstreamRequestFifoReadData;
+                pendingDownstreamResponseFifoWriteEnable <= 1'b0;
                 
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
@@ -460,6 +461,7 @@ always @ (posedge scalerClock or posedge reset) begin
                             // Start working the next request
                             downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
                             downstreamRequestFifoReadEnableReg <= 1'b0;
+                            downstreamRequestState <= DOWNSTREAM_REQUEST_STAGE;
                         end else begin
                             // Do not process another request
                             downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
