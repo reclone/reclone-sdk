@@ -199,6 +199,8 @@ TEST_F(VideoVerticalStretchTests, TestImage50PercentTaller)
 
     ASSERT_TRUE(sink.writeBitmap("pexels-pixabay-163822_taller50pct.bmp"));
     
+    EXPECT_EQ(3219428807U, sink.getCrc32());
+    
     _vcdTrace.close();
 }
 
@@ -297,6 +299,8 @@ TEST_F(VideoVerticalStretchTests, TestImage25PercentShorter)
     }
 
     ASSERT_TRUE(sink.writeBitmap("pexels-pixabay-163822_shorter25pct.bmp"));
+    
+    EXPECT_EQ(2963859676U, sink.getCrc32());
     
     _vcdTrace.close();
 }

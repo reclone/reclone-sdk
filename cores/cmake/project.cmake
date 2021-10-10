@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project (RecloneCores)
 
 include(cmake/gtest.cmake)
+include(cmake/zlib.cmake)
 
 # Set default VERILATOR_ROOT (at least works in Ubuntu)
 if (MSVC)

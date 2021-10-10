@@ -215,6 +215,8 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesPixelPerfect720p.bmp"));
     
+    EXPECT_EQ(2291977572U, sink.getCrc32());
+    
     //_vcdTrace.close();
 }
 
@@ -330,6 +332,8 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesWider720p.bmp"));
     
+    EXPECT_EQ(1819359014U, sink.getCrc32());
+    
     //_vcdTrace.close();
 }
 
@@ -443,6 +447,8 @@ TEST_F(VideoAggregateScalerTests, NesScanlines720p)
     }
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesScanlines720p.bmp"));
+    
+    EXPECT_EQ(1551251853U, sink.getCrc32());
     
     //_vcdTrace.close();
 }
@@ -558,6 +564,8 @@ TEST_F(VideoAggregateScalerTests, NesBilinear720p)
     }
 
     ASSERT_TRUE(sink.writeBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot_NesBilinear720p.bmp"));
+    
+    EXPECT_EQ(182666122U, sink.getCrc32());
     
     //_vcdTrace.close();
 }

@@ -62,6 +62,8 @@ class BmpPipelineSink
         
         void eval();
         void requestFrame();
+        
+        uint32_t getCrc32() const;
     
     private:
         static const unsigned int VACTIVE_BITS = 11U;

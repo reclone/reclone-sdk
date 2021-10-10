@@ -26,6 +26,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include <zlib.h>
 #include "ScanlineBuffer.h"
 
 
@@ -38,7 +39,7 @@ ScanlineBuffer::ScanlineBuffer(uint16_t hPixels, uint16_t vPixels, bool interlac
     _vPos(oddFieldFirst ? 1U : 0U),
     _frameBuffer(new uint32_t[static_cast<uint32_t>(hPixels) * static_cast<uint32_t>(vPixels)]())
 {
-    for (uint32_t i = 0; i < static_cast<uint32_t>(hPixels * vPixels); ++i)
+    for (uint32_t i = 0; i < static_cast<uint32_t>(hPixels) * static_cast<uint32_t>(vPixels); ++i)
     {
         _frameBuffer[i] = 0U;
     }
@@ -210,4 +211,14 @@ bool ScanlineBuffer::writeBitmap(const char * bmpFilename)
     }
     
     return true;
+}
+
+uint32_t ScanlineBuffer::getCrc32() const
+{
+    // Uses crc32 function from zlib:
+    // https://refspecs.linuxbase.org/LSB_3.0.0/LSB-Core-generic/LSB-Core-generic/zlib-crc32-1.html
+    uint32_t bufferSize = sizeof(uint32_t) * static_cast<uint32_t>(_hPixels) * static_cast<uint32_t>(_vPixels);
+    uint32_t crc = crc32(0L, Z_NULL, 0);
+    crc = crc32(crc, reinterpret_cast<const unsigned char*>(_frameBuffer), bufferSize);
+    return crc;
 }

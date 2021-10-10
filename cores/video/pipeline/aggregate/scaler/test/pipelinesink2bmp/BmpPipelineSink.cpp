@@ -26,6 +26,7 @@
 
 #include <cstdio>
 #include <random>
+#include <zlib.h>
 #include "BmpPipelineSink.h"
 
 BmpPipelineSink::BmpPipelineSink(uint32_t width, uint32_t height) :
@@ -263,4 +264,14 @@ bool BmpPipelineSink::writeBitmap(const char * bmpFilename)
     }
     
     return true;
+}
+
+uint32_t BmpPipelineSink::getCrc32() const
+{
+    // Uses crc32 function from zlib:
+    // https://refspecs.linuxbase.org/LSB_3.0.0/LSB-Core-generic/LSB-Core-generic/zlib-crc32-1.html
+    uint32_t bufferSize = sizeof(BmpPipelineSink::RgbPixel) * static_cast<uint32_t>(_hPixels) * static_cast<uint32_t>(_vPixels);
+    uint32_t crc = crc32(0L, Z_NULL, 0);
+    crc = crc32(crc, reinterpret_cast<const unsigned char*>(_frameBuffer), bufferSize);
+    return crc;
 }
