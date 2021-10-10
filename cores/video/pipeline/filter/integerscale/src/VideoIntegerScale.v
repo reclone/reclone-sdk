@@ -542,6 +542,7 @@ always @ (posedge scalerClock or posedge reset) begin
             
             // STAGE 1 - Read the downstream request when FIFO not empty
             if (!downstreamRequestFifoReadEnableReg &&
+                !downstreamRequestNewChunk &&
                 downstreamRequestPixelCount >= {1'b0, {(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
                 // Read the next request if we are at or beyond the second to last pixel in the chunk
                 downstreamRequestFifoReadEnableReg <= !downstreamRequestFifoEmpty;

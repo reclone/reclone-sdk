@@ -166,7 +166,8 @@ wire pendingDownstreamResponseFifoReadEnable =
     !downstreamCacheStall &&
     !pendingDownstreamResponseFifoEmpty;
 wire [HCOORD_BITS-1:0] pendingDownstreamResponseFifoReadData;
-reg pendingDownstreamResponseFifoWriteEnable = 1'b0;
+reg pendingDownstreamResponseFifoWriteEnableReg = 1'b0;
+wire pendingDownstreamResponseFifoWriteEnable = !pendingDownstreamResponseFifoFull && pendingDownstreamResponseFifoWriteEnableReg;
 reg [HCOORD_BITS-1:0] pendingDownstreamResponseFifoWriteData = {HCOORD_BITS{1'b0}};
 SyncFifo #(.DATA_WIDTH(HCOORD_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstreamResponses
 (
@@ -175,7 +176,7 @@ SyncFifo #(.DATA_WIDTH(HCOORD_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstre
     .readEnable(pendingDownstreamResponseFifoReadEnable),
     .empty(pendingDownstreamResponseFifoEmpty),
     .readData(pendingDownstreamResponseFifoReadData),
-    .writeEnable(pendingDownstreamResponseFifoWriteEnable && !pendingDownstreamResponseFifoFull),
+    .writeEnable(pendingDownstreamResponseFifoWriteEnable),
     .full(pendingDownstreamResponseFifoFull),
     .writeData(pendingDownstreamResponseFifoWriteData)
 );
@@ -336,7 +337,6 @@ function [COLOR_COMPONENT_BITS_MAX-1:0] colorComponentSum;
     end
 endfunction
 
-
 always @ (posedge scalerClock or posedge reset) begin
     if (reset) begin
         // Asynchronous reset
@@ -349,7 +349,7 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamRequestFifoWriteData <= {REQUEST_BITS{1'b0}};
         upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
         pendingDownstreamResponseFifoReadEnableReg <= 1'b0;
-        pendingDownstreamResponseFifoWriteEnable <= 1'b0;
+        pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
         pendingDownstreamResponseFifoWriteData <= {HCOORD_BITS{1'b0}};
         lastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
         lastlastUpstreamChunkRequest <= {REQUEST_BITS{1'b1}};
@@ -390,7 +390,9 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_IDLE: begin
                 // Reset write enables if coming from DOWNSTREAM_REQUEST_STORE
                 upstreamRequestFifoWriteEnable <= 1'b0;
-                pendingDownstreamResponseFifoWriteEnable <= 1'b0;
+                if (pendingDownstreamResponseFifoWriteEnable) begin
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                end
 
                 // Wait for a request
                 if (!downstreamRequestFifoEmpty && !pendingUpstreamRequestFifoFull &&
@@ -406,6 +408,7 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_READ: begin
                 // Request should be available next cycle
                 downstreamRequestFifoReadEnableReg <= 1'b0;
+                upstreamRequestFifoWriteEnable <= 1'b0;
                 
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
@@ -416,7 +419,8 @@ always @ (posedge scalerClock or posedge reset) begin
             
             DOWNSTREAM_REQUEST_STAGE: begin
                 downstreamRequestStaged <= downstreamRequestFifoReadData;
-                pendingDownstreamResponseFifoWriteEnable <= 1'b0;
+                pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                upstreamRequestFifoWriteEnable <= 1'b0;
                 
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
                     downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
@@ -447,7 +451,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     
                     // Save horizontal coordinate as pending downstream response
                     pendingDownstreamResponseFifoWriteData <= upstreamRequestCoord;
-                    pendingDownstreamResponseFifoWriteEnable <= 1'b1;
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b1;
                     
                     // If second to last pixel of the chunk, then start reading the next request, if there is one
                     if (downstreamRequestPixelCount == {1'b0, {(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
@@ -638,7 +642,6 @@ always @ (posedge scalerClock or posedge reset) begin
                                                     downstreamWeightSumBlue[4:0]};
             end
         end
-        
     end
 end
 

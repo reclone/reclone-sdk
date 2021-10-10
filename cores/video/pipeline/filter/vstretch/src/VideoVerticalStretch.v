@@ -479,7 +479,8 @@ always @ (posedge scalerClock or posedge reset) begin
                 if (pendingUpstreamRequestFifoEmpty && pendingDownstreamResponseFifoEmpty && 
                         upstreamResponseState == UPSTREAM_RESPONSE_IDLE &&
                         downstreamResponsePixelCount[CHUNK_BITS] &&
-                        !pendingDownstreamResponseFifoReadEnableReg) begin
+                        !pendingDownstreamResponseFifoReadEnableReg &&
+                        !pendingDownstreamResponseAvailable) begin
                     // Requested rows do not match the rows cached by the line buffers,
                     // so update the line buffers as needed to start caching new row(s).
                     if (cachedRowBIsOlder) begin
