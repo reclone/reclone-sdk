@@ -222,11 +222,11 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet720p)
 
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet1080i)
 {
-    VerilatedVcdC vcd_trace;
+    //VerilatedVcdC vcd_trace;
     ScanlineBuffer scanlines(1920, 1080, true, false);
     
-    _uut.trace(&vcd_trace, 99);
-    vcd_trace.open("TextCharacterSet1080i.vcd");
+    //_uut.trace(&vcd_trace, 99);
+    //vcd_trace.open("TextCharacterSet1080i.vcd");
     
     ASSERT_TRUE(loadGlyphRam("CP437_8x14.mem"));
     ASSERT_TRUE(loadScreenRam("CharSet_ColorSet.mem"));
@@ -275,8 +275,8 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet1080i)
     _uut.screenRamData = 0x0741;
     _uut.eval();
     
-    vcd_trace.dump(_tickCount++);
-    vcd_trace.flush();
+    //vcd_trace.dump(_tickCount++);
+    //vcd_trace.flush();
 
     for (unsigned int frameCount = 0; frameCount < 2; ++frameCount)
     {
@@ -301,7 +301,7 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet1080i)
                 _uut.eval();
                 _uut.glyphRamData = _glyphRam[glyphRamAddress];
                 _uut.screenRamData = _screenRam[screenRamAddress];
-                vcd_trace.dump(_tickCount++);
+                //vcd_trace.dump(_tickCount++);
                 
                 _timing.clock = 0;
                 _timing.eval();
@@ -314,17 +314,17 @@ TEST_F(TextOverlayGeneratorTests, TextCharacterSet1080i)
                 _uut.hPosIn = _timing.hPos;
                 _uut.vPosIn = _timing.vPos;
                 _uut.eval();
-                vcd_trace.dump(_tickCount++);
+                //vcd_trace.dump(_tickCount++);
                 
                 //vcd_trace.flush();
             }
         }
-        vcd_trace.flush();
+        //vcd_trace.flush();
     }
     
     EXPECT_TRUE(scanlines.writeBitmap("TextCharacterSet1080i.bmp"));
     
-    vcd_trace.close();
+    //vcd_trace.close();
 }
 
 TEST_F(TextOverlayGeneratorTests, TextCharacterSet480iNtsc)
