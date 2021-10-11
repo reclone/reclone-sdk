@@ -5,6 +5,6 @@ configure_file(tetiana-bykovets-z-kkcidqW_U-unsplash.bmp ${CMAKE_CURRENT_BINARY_
 
 add_executable(testVideoHorizontalStretch VideoHorizontalStretchTests.cpp)
 
-target_link_libraries(testVideoHorizontalStretch VVideoHorizontalStretch gtest gmock gmock_main pipelinesink2bmp bmp2pipelinesrc)
+target_link_libraries(testVideoHorizontalStretch VVideoHorizontalStretch gmock_main gtest gmock pipelinesink2bmp bmp2pipelinesrc)
 
 add_test(NAME testVideoHorizontalStretch COMMAND testVideoHorizontalStretch)

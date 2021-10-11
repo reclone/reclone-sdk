@@ -51,62 +51,12 @@ class VideoHorizontalStretchTests : public Test
         VerilatedVcdC _vcdTrace;
         VVideoHorizontalStretch _uut;
         unsigned int _tickCount;
-        
-        std::queue<uint32_t> _downstreamRequests;
-        std::queue<uint16_t> _downstreamResponses;
-        std::queue<uint16_t> _upstreamResponses;
-        
-        MOCK_METHOD(void, requestUpstreamChunk, (uint16_t row, uint16_t chunk), (const));
-        MOCK_METHOD(bool, downstreamResponseFifoFull, (), (const));
-        
-        void executeCycle()
-        {
-            _uut.scalerClock = 0;
-            _uut.eval();
-            _vcdTrace.dump(_tickCount++);
-
-            if (_uut.downstreamRequestFifoReadEnable && !_downstreamRequests.empty())
-            {
-                _uut.downstreamRequestFifoReadData = _downstreamRequests.front();
-                _downstreamRequests.pop();
-            }
-            _uut.downstreamRequestFifoEmpty = _downstreamRequests.empty();
-            
-            bool responseFifoFull = downstreamResponseFifoFull();
-            if (_uut.downstreamResponseFifoWriteEnable && !responseFifoFull)
-            {
-                _downstreamResponses.push(_uut.downstreamResponseFifoWriteData);
-            }
-            _uut.downstreamResponseFifoFull = responseFifoFull;
-            
-            if (_uut.upstreamRequestFifoReadEnable)
-            {
-                requestUpstreamChunk((_uut.upstreamRequestFifoReadData >> 6) & 0x7FF, _uut.upstreamRequestFifoReadData & 0x3F);
-            }
-            
-            _uut.upstreamRequestFifoReadEnable = !_uut.upstreamRequestFifoEmpty;
-            
-            if (!_uut.upstreamResponseFifoFull && !_upstreamResponses.empty())
-            {
-                _uut.upstreamResponseFifoWriteData = _upstreamResponses.front();
-                _upstreamResponses.pop();
-                _uut.upstreamResponseFifoWriteEnable = 1;
-            }
-            else
-            {
-                _uut.upstreamResponseFifoWriteEnable = 0;
-            }
-
-            _uut.scalerClock = 1;
-            _uut.eval();
-            _vcdTrace.dump(_tickCount++);
-        }
 };
 
 TEST_F(VideoHorizontalStretchTests, TestImage4by3)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoHorizontalStretch_TestImage4by3.vcd");
+    //_vcdTrace.open("VideoHorizontalStretch_TestImage4by3.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_330518.bmp"));
@@ -138,28 +88,20 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
-
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -168,27 +110,20 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -199,13 +134,15 @@ TEST_F(VideoHorizontalStretchTests, TestImage4by3)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_330518_4x3.bmp"));
     
-    _vcdTrace.close();
+    EXPECT_EQ(4173735073U, sink.getCrc32());
+    
+    //_vcdTrace.close();
 }
 
 TEST_F(VideoHorizontalStretchTests, TestImageHalf)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoHorizontalStretch_TestImageHalf.vcd");
+    //_vcdTrace.open("VideoHorizontalStretch_TestImageHalf.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_330518.bmp"));
@@ -237,28 +174,20 @@ TEST_F(VideoHorizontalStretchTests, TestImageHalf)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
-
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -267,27 +196,20 @@ TEST_F(VideoHorizontalStretchTests, TestImageHalf)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -298,7 +220,9 @@ TEST_F(VideoHorizontalStretchTests, TestImageHalf)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_330518_half.bmp"));
     
-    _vcdTrace.close();
+    EXPECT_EQ(835141933U, sink.getCrc32());
+    
+    //_vcdTrace.close();
 }
 
 TEST_F(VideoHorizontalStretchTests, TestPhotoUpscale)
@@ -336,26 +260,18 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoUpscale)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
-
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
         //_vcdTrace.dump(_tickCount++);
         
@@ -366,25 +282,18 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoUpscale)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         
         //_vcdTrace.dump(_tickCount++);
         
@@ -396,6 +305,8 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoUpscale)
     }
 
     ASSERT_TRUE(sink.writeBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash_upscale.bmp"));
+    
+    EXPECT_EQ(2893314438U, sink.getCrc32());
     
     //_vcdTrace.close();
 }
@@ -435,26 +346,18 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoDownscale)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
-
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
         //_vcdTrace.dump(_tickCount++);
         
@@ -465,25 +368,18 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoDownscale)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         
         //_vcdTrace.dump(_tickCount++);
         
@@ -496,12 +392,14 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoDownscale)
 
     ASSERT_TRUE(sink.writeBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash_downscale.bmp"));
     
+    EXPECT_EQ(1233755839U, sink.getCrc32());
+    
     //_vcdTrace.close();
 }
 
 TEST_F(VideoHorizontalStretchTests, TestPhotoIdentity)
 {
-    //_uut.trace(&_vcdTrace, 99);
+    _uut.trace(&_vcdTrace, 99);
     //_vcdTrace.open("VideoHorizontalStretch_TestPhotoIdentity.vcd");
     
     BmpPipelineSource source;
@@ -594,6 +492,8 @@ TEST_F(VideoHorizontalStretchTests, TestPhotoIdentity)
     }
 
     ASSERT_TRUE(sink.writeBitmap("tetiana-bykovets-z-kkcidqW_U-unsplash_identity.bmp"));
+    
+    EXPECT_EQ(1398576017U, sink.getCrc32());
     
     //_vcdTrace.close();
 }

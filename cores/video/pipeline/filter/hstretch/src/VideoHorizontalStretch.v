@@ -256,7 +256,7 @@ reg [SCALE_BITS-1:0] blendRightPixelCoeff = {SCALE_BITS{1'b0}};
 wire downstreamLeftPixelIsCached = (downstreamLeftPixelInCacheA && cachedChunkAValid) || (downstreamLeftPixelInCacheB && cachedChunkBValid);
 wire downstreamRightPixelIsCached = (downstreamRightPixelInCacheA && cachedChunkAValid) || (downstreamRightPixelInCacheB && cachedChunkBValid);
 
-// Available flag is delayed copy of pendingDownstreamResponseFifoReadEnable
+// Available flag is delayed copy of pendingDownstreamResponseFifoReadEnableReg
 reg pendingDownstreamResponseAvailable = 1'b0;
 reg pendingDownstreamCoordsAvailable = 1'b0;
 
@@ -419,7 +419,9 @@ always @ (posedge scalerClock or posedge reset) begin
             
             DOWNSTREAM_REQUEST_STAGE: begin
                 downstreamRequestStaged <= downstreamRequestFifoReadData;
-                pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                if (pendingDownstreamResponseFifoWriteEnable) begin
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                end
                 upstreamRequestFifoWriteEnable <= 1'b0;
                 
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
@@ -595,7 +597,8 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Read the next pending downstream response coord
                 pendingDownstreamResponseFifoReadEnableReg <= !pendingDownstreamResponseFifoEmpty;
                 
-                pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnable;
+                pendingDownstreamResponseAvailable <= pendingDownstreamResponseFifoReadEnableReg &&
+                                                      !pendingDownstreamResponseFifoEmpty;
                 
                 // Pre-calculate left/right columns and coefficients to improve timing
                 pendingDownstreamCoordsAvailable <= pendingDownstreamResponseAvailable;
