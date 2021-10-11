@@ -9,6 +9,6 @@ configure_file(${CMAKE_SOURCE_DIR}/video/pipeline/filter/integerscale/src/intege
 
 add_executable(testVideoAggregateScaler VideoAggregateScalerTests.cpp)
 
-target_link_libraries(testVideoAggregateScaler VVideoAggregateScaler gtest gmock gmock_main pipelinesink2bmp bmp2pipelinesrc)
+target_link_libraries(testVideoAggregateScaler VVideoAggregateScaler gmock_main gtest gmock pipelinesink2bmp bmp2pipelinesrc)
 
 add_test(NAME testVideoAggregateScaler COMMAND testVideoAggregateScaler)

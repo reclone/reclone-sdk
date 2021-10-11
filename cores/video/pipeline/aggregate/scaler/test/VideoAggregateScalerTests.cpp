@@ -55,52 +55,6 @@ class VideoAggregateScalerTests : public Test
         std::queue<uint32_t> _downstreamRequests;
         std::queue<uint16_t> _downstreamResponses;
         std::queue<uint16_t> _upstreamResponses;
-        
-        MOCK_METHOD(void, requestUpstreamChunk, (uint16_t row, uint16_t chunk), (const));
-        MOCK_METHOD(bool, downstreamResponseFifoFull, (), (const));
-        
-        void executeCycle()
-        {
-            _uut.scalerClock = 0;
-            _uut.eval();
-            _vcdTrace.dump(_tickCount++);
-
-            if (_uut.downstreamRequestFifoReadEnable && !_downstreamRequests.empty())
-            {
-                _uut.downstreamRequestFifoReadData = _downstreamRequests.front();
-                _downstreamRequests.pop();
-            }
-            _uut.downstreamRequestFifoEmpty = _downstreamRequests.empty();
-            
-            bool responseFifoFull = downstreamResponseFifoFull();
-            if (_uut.downstreamResponseFifoWriteEnable && !responseFifoFull)
-            {
-                _downstreamResponses.push(_uut.downstreamResponseFifoWriteData);
-            }
-            _uut.downstreamResponseFifoFull = responseFifoFull;
-            
-            if (_uut.upstreamRequestFifoReadEnable)
-            {
-                requestUpstreamChunk((_uut.upstreamRequestFifoReadData >> 6) & 0x7FF, _uut.upstreamRequestFifoReadData & 0x3F);
-            }
-            
-            _uut.upstreamRequestFifoReadEnable = !_uut.upstreamRequestFifoEmpty;
-            
-            if (!_uut.upstreamResponseFifoFull && !_upstreamResponses.empty())
-            {
-                _uut.upstreamResponseFifoWriteData = _upstreamResponses.front();
-                _upstreamResponses.pop();
-                _uut.upstreamResponseFifoWriteEnable = 1;
-            }
-            else
-            {
-                _uut.upstreamResponseFifoWriteEnable = 0;
-            }
-
-            _uut.scalerClock = 1;
-            _uut.eval();
-            _vcdTrace.dump(_tickCount++);
-        }
 };
 
 TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
@@ -111,7 +65,7 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
     
-    BmpPipelineSink sink(1280, 720);
+    BmpPipelineSink sink(1280, 720, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -228,7 +182,7 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
     
-    BmpPipelineSink sink(1280, 720);
+    BmpPipelineSink sink(1280, 720, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -345,7 +299,7 @@ TEST_F(VideoAggregateScalerTests, NesScanlines720p)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
     
-    BmpPipelineSink sink(1280, 720);
+    BmpPipelineSink sink(1280, 720, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -461,7 +415,7 @@ TEST_F(VideoAggregateScalerTests, NesBilinear720p)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("310314-Chagall77-mobygames-castlevania-nes-screenshot.bmp"));
     
-    BmpPipelineSink sink(1280, 720);
+    BmpPipelineSink sink(1280, 720, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;

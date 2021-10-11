@@ -280,6 +280,7 @@ wire [HACTIVE_BITS-1:0] upstreamResponseColumn = {upstreamResponseChunk, upstrea
 wire pendingDownstreamResponseScanlinePixel =
     (hScanlineEnable && ({1'b0, upstreamRequestRowPrecision[RECIPROCAL_FRACTION_BITS-1:0]} < reciprocalFactors[vScaleFactor])) ||
     (vScanlineEnable && ({1'b0, upstreamRequestColumnPrecision[RECIPROCAL_FRACTION_BITS-1:0]} < reciprocalFactors[hScaleFactor]));
+reg pendingDownstreamResponseScanlinePixelStaged = 1'b0;
 
 // Write the upstream response to cache, when it's ready
 assign cacheWriteAddressA = upstreamResponseColumn;
@@ -495,6 +496,7 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamRequestRowStaged <= {VACTIVE_BITS{1'b1}};
         upstreamRequestColumnStaged <= {HACTIVE_BITS{1'b1}};
         upstreamRequestStaged <= 1'b0;
+        pendingDownstreamResponseScanlinePixelStaged <= 1'b0;
         upstreamResponseFifoReadEnable <= 1'b0;
         upstreamResponseRowIsCacheA <= 1'b0;
         upstreamResponseRowIsCacheB <= 1'b0;
@@ -582,6 +584,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 upstreamCachedChunkPendingB <= cachedChunkPendingB[upstreamRequestChunk];
                 upstreamRequestRowStaged <= upstreamRequestRow;
                 upstreamRequestColumnStaged <= upstreamRequestColumn;
+                pendingDownstreamResponseScanlinePixelStaged <= pendingDownstreamResponseScanlinePixel;
                 upstreamRequestStaged <= 1'b1;
             end else begin
                 upstreamRequestStaged <= 1'b0;
@@ -626,12 +629,14 @@ always @ (posedge scalerClock or posedge reset) begin
                         cachedChunkValidB <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingB[upstreamRequestChunk] <= 1'b1;
+                        upstreamCachedChunkPendingB <= 1'b1;
                         cachedRowBIsOlder <= 1'b0;
                     end else begin
                         cachedRowA <= upstreamRequestRowStaged;
                         cachedChunkValidA <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingA[upstreamRequestChunk] <= 1'b1;
+                        upstreamCachedChunkPendingA <= 1'b1;
                         cachedRowBIsOlder <= 1'b1;
                     end
                     
@@ -641,7 +646,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 end
                 
                 // Remember to service the downstream request later, when the pixel data is cached
-                pendingDownstreamResponseFifoWriteData <= {pendingDownstreamResponseScanlinePixel, upstreamRequestRowStaged, upstreamRequestColumnStaged};
+                pendingDownstreamResponseFifoWriteData <= {pendingDownstreamResponseScanlinePixelStaged, upstreamRequestRowStaged, upstreamRequestColumnStaged};
                 pendingDownstreamResponseFifoWriteEnableReg <= 1'b1;
                 
             end else begin
@@ -786,7 +791,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Tell next stage whether to blend with background color
                 downstreamResponseScanlineBlend <= pendingDownstreamResponseStaged[HACTIVE_BITS+VACTIVE_BITS];
             end
-        end else begin
+        end else if (!downstreamResponseFifoFull) begin
             downstreamResponsePixelAvailable <= 1'b0;
         end
         

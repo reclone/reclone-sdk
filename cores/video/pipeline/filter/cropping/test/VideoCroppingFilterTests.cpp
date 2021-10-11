@@ -56,7 +56,7 @@ class VideoCroppingFilterTests : public Test
 TEST_F(VideoCroppingFilterTests, TestImageNoCrop)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoCroppingFilter_TestImageNoCrop.vcd");
+    //_vcdTrace.open("VideoCroppingFilter_TestImageNoCrop.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327550.bmp"));
@@ -109,7 +109,7 @@ TEST_F(VideoCroppingFilterTests, TestImageNoCrop)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         scalerClock = 1;
         
@@ -138,7 +138,7 @@ TEST_F(VideoCroppingFilterTests, TestImageNoCrop)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -149,13 +149,15 @@ TEST_F(VideoCroppingFilterTests, TestImageNoCrop)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327550_noCrop.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(2109623126U, sink.getCrc32());
 }
 
 TEST_F(VideoCroppingFilterTests, TestImageCropTop)
 {
-    _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoCroppingFilter_TestImageCropTop.vcd");
+    //_uut.trace(&_vcdTrace, 99);
+   // _vcdTrace.open("VideoCroppingFilter_TestImageCropTop.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327550.bmp"));
@@ -208,7 +210,7 @@ TEST_F(VideoCroppingFilterTests, TestImageCropTop)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         scalerClock = 1;
         
@@ -237,7 +239,7 @@ TEST_F(VideoCroppingFilterTests, TestImageCropTop)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -248,7 +250,9 @@ TEST_F(VideoCroppingFilterTests, TestImageCropTop)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327550_cropTop.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(376826640U, sink.getCrc32());
 }
 
 TEST_F(VideoCroppingFilterTests, TestImageCropLeft)
@@ -307,7 +311,7 @@ TEST_F(VideoCroppingFilterTests, TestImageCropLeft)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         scalerClock = 1;
         
@@ -336,7 +340,7 @@ TEST_F(VideoCroppingFilterTests, TestImageCropLeft)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -347,7 +351,9 @@ TEST_F(VideoCroppingFilterTests, TestImageCropLeft)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327550_cropLeft.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(3545964577U, sink.getCrc32());
 }
 
 TEST_F(VideoCroppingFilterTests, TestImageCropAllSides)
@@ -406,7 +412,7 @@ TEST_F(VideoCroppingFilterTests, TestImageCropAllSides)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         scalerClock = 1;
         
@@ -435,7 +441,7 @@ TEST_F(VideoCroppingFilterTests, TestImageCropAllSides)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -446,6 +452,8 @@ TEST_F(VideoCroppingFilterTests, TestImageCropAllSides)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327550_cropAllSides.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(1879602040U, sink.getCrc32());
 }
 

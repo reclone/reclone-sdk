@@ -282,7 +282,9 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_IDLE: begin
                 // Reset write enables if coming from DOWNSTREAM_REQUEST_STORE
                 upstreamRequestFifoWriteEnable <= 1'b0;
-                pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                if (pendingDownstreamResponseFifoWriteEnable) begin
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                end
             
                 // Wait for a request
                 if (!downstreamRequestFifoEmpty && !pendingUpstreamRequestFifoFull &&
@@ -298,6 +300,9 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_READ: begin
                 // Request should be available next cycle
                 downstreamRequestFifoReadEnableReg <= 1'b0;
+                if (pendingDownstreamResponseFifoWriteEnable) begin
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                end
                 
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull
@@ -309,7 +314,9 @@ always @ (posedge scalerClock or posedge reset) begin
             DOWNSTREAM_REQUEST_STAGE: begin
                 // Stage the downstream request to improve timing
                 downstreamRequestStaged <= downstreamRequestFifoReadData;
-                pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                if (pendingDownstreamResponseFifoWriteEnable) begin
+                    pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
+                end
                 
                 // Make sure again that the FIFOs have the space to receive new requests because last cycle
                 // pendingDownstreamResponseFifoWriteEnable could have caused pendingDownstreamResponseFifoFull

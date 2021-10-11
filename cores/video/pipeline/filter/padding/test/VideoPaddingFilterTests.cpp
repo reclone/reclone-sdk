@@ -56,7 +56,7 @@ class VideoPaddingFilterTests : public Test
 TEST_F(VideoPaddingFilterTests, TestImageNoPad)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoPaddingFilter_TestImageNoPad.vcd");
+    //_vcdTrace.open("VideoPaddingFilter_TestImageNoPad.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
@@ -113,7 +113,7 @@ TEST_F(VideoPaddingFilterTests, TestImageNoPad)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -142,7 +142,7 @@ TEST_F(VideoPaddingFilterTests, TestImageNoPad)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -153,13 +153,15 @@ TEST_F(VideoPaddingFilterTests, TestImageNoPad)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327895_noPad.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(285282491U, sink.getCrc32());
 }
 
 TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoPaddingFilter_TestImagePadCyanAllSides.vcd");
+    //_vcdTrace.open("VideoPaddingFilter_TestImagePadCyanAllSides.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
@@ -195,28 +197,20 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
-
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -225,27 +219,20 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
         sink.setResponseFifoWriteEnable(_uut.downstreamResponseFifoWriteEnable);
         sink.setResponseFifoWriteData(_uut.downstreamResponseFifoWriteData);
         sink.eval();
-        _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
-        _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
-        _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
-        _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
-        _uut.eval();
         source.setScalerClock(_uut.scalerClock);
         source.setRequestFifoEmpty(_uut.upstreamRequestFifoEmpty);
         source.setRequestFifoReadData(_uut.upstreamRequestFifoReadData);
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
+        _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -256,13 +243,15 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327895_padCyanAllSides.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(632203506U, sink.getCrc32());
 }
 
 TEST_F(VideoPaddingFilterTests, TestImagePadLetterbox)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoPaddingFilter_TestImagePadLetterbox.vcd");
+    //_vcdTrace.open("VideoPaddingFilter_TestImagePadLetterbox.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
@@ -319,7 +308,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadLetterbox)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -348,7 +337,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadLetterbox)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -359,13 +348,15 @@ TEST_F(VideoPaddingFilterTests, TestImagePadLetterbox)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327895_padLetterbox.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(4279157494U, sink.getCrc32());
 }
 
 TEST_F(VideoPaddingFilterTests, TestImagePadPillarbox)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoPaddingFilter_TestImagePadPillarbox.vcd");
+    //_vcdTrace.open("VideoPaddingFilter_TestImagePadPillarbox.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
@@ -422,7 +413,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadPillarbox)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -451,7 +442,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadPillarbox)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -462,13 +453,15 @@ TEST_F(VideoPaddingFilterTests, TestImagePadPillarbox)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327895_padPillarbox.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(2390047568U, sink.getCrc32());
 }
 
 TEST_F(VideoPaddingFilterTests, TestImagePadTrimRed)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoPaddingFilter_TestImagePadTrimRed.vcd");
+    //_vcdTrace.open("VideoPaddingFilter_TestImagePadTrimRed.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
@@ -525,7 +518,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadTrimRed)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -554,7 +547,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadTrimRed)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -565,6 +558,8 @@ TEST_F(VideoPaddingFilterTests, TestImagePadTrimRed)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327895_trimRed.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(3813773975U, sink.getCrc32());
 }
 

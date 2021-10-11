@@ -56,7 +56,7 @@ class VideoBinningFilterTests : public Test
 TEST_F(VideoBinningFilterTests, TestImageNoBin)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoBinningFilter_TestImageNoBin.vcd");
+    //_vcdTrace.open("VideoBinningFilter_TestImageNoBin.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("pexels-pawel-fijalkowski-1253748.bmp"));
@@ -109,7 +109,7 @@ TEST_F(VideoBinningFilterTests, TestImageNoBin)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -138,7 +138,7 @@ TEST_F(VideoBinningFilterTests, TestImageNoBin)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -149,13 +149,15 @@ TEST_F(VideoBinningFilterTests, TestImageNoBin)
 
     ASSERT_TRUE(sink.writeBitmap("pexels-pawel-fijalkowski-1253748_noBin.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(589974805U, sink.getCrc32());
 }
 
 TEST_F(VideoBinningFilterTests, TestImageBinned)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoBinningFilter_TestImageBinned.vcd");
+    //_vcdTrace.open("VideoBinningFilter_TestImageBinned.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("pexels-pawel-fijalkowski-1253748.bmp"));
@@ -208,7 +210,7 @@ TEST_F(VideoBinningFilterTests, TestImageBinned)
         _uut.eval();
 
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -237,7 +239,7 @@ TEST_F(VideoBinningFilterTests, TestImageBinned)
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -248,7 +250,9 @@ TEST_F(VideoBinningFilterTests, TestImageBinned)
 
     ASSERT_TRUE(sink.writeBitmap("pexels-pawel-fijalkowski-1253748_binned.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(2023018772U, sink.getCrc32());
 }
 
 

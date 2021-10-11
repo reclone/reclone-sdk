@@ -61,10 +61,6 @@ class VideoIntegerScaleTests : public Test
         
         void executeCycle()
         {
-            _uut.scalerClock = 0;
-            _uut.eval();
-            _vcdTrace.dump(_tickCount++);
-
             if (_uut.downstreamRequestFifoReadEnable && !_downstreamRequests.empty())
             {
                 _uut.downstreamRequestFifoReadData = _downstreamRequests.front();
@@ -85,6 +81,10 @@ class VideoIntegerScaleTests : public Test
             }
             
             _uut.upstreamRequestFifoReadEnable = !_uut.upstreamRequestFifoEmpty;
+
+            _uut.scalerClock = 0;
+            _uut.eval();
+            _vcdTrace.dump(_tickCount++);
             
             if (!_uut.upstreamResponseFifoFull && !_upstreamResponses.empty())
             {
@@ -190,12 +190,12 @@ TEST_F(VideoIntegerScaleTests, OneRequestOneResponse)
 TEST_F(VideoIntegerScaleTests, TestImage3x)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImage3x.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImage3x.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
     
-    BmpPipelineSink sink(source.getWidth()*3, source.getHeight()*3);
+    BmpPipelineSink sink(source.getWidth()*3, source.getHeight()*3, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
@@ -218,7 +218,7 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
     sink.requestFrame();
 
     unsigned int responseNum = 0;
-    for (unsigned int i = 0; i < 1000000; ++i)
+    for (unsigned int i = 0; i < 1100000; ++i)
     {
         _uut.scalerClock = 0;
         
@@ -233,14 +233,14 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -255,14 +255,14 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
         source.setResponseFifoFull(_uut.upstreamResponseFifoFull);
         source.eval();
         _uut.downstreamRequestFifoEmpty = sink.getRequestFifoEmpty();
-        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         _uut.upstreamRequestFifoReadEnable = source.getRequestFifoReadEnable();
         _uut.upstreamResponseFifoWriteEnable = source.getResponseFifoWriteEnable();
         _uut.upstreamResponseFifoWriteData = source.getResponseFifoWriteData();
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
+        _uut.downstreamResponseFifoFull = sink.getResponseFifoFull();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -273,13 +273,15 @@ TEST_F(VideoIntegerScaleTests, TestImage3x)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_3x.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(3159173939U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImage5x2)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImage5x2.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImage5x2.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -329,7 +331,7 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -351,7 +353,7 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -362,13 +364,15 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_5x2.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(281027650U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImage5x2VScanlines)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImage5x2_VScanlines.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImage5x2_VScanlines.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -418,7 +422,7 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2VScanlines)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -440,7 +444,7 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2VScanlines)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -451,13 +455,15 @@ TEST_F(VideoIntegerScaleTests, TestImage5x2VScanlines)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_5x2_vscanlines.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(191738808U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarkest)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageVScanlinesDarkest.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageVScanlinesDarkest.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -507,7 +513,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarkest)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -529,7 +535,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarkest)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -540,13 +546,15 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarkest)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_VScanlinesDarkest.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(3687786822U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarker)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageVScanlinesDarker.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageVScanlinesDarker.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -596,7 +604,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarker)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -618,7 +626,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarker)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -629,13 +637,15 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesDarker)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_VScanlinesDarker.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(2932492000U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageVScanlinesMedium)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageVScanlinesMedium.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageVScanlinesMedium.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -685,7 +695,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesMedium)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -707,7 +717,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesMedium)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -718,13 +728,15 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesMedium)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_VScanlinesMedium.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(4185548724U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageVScanlinesLight)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageVScanlinesLight.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageVScanlinesLight.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -774,7 +786,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesLight)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -796,7 +808,7 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesLight)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -807,13 +819,15 @@ TEST_F(VideoIntegerScaleTests, TestImageVScanlinesLight)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_VScanlinesLight.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(2637780032U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarkest)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageHScanlinesDarkest.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageHScanlinesDarkest.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -863,7 +877,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarkest)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -885,7 +899,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarkest)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -896,13 +910,15 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarkest)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_HScanlinesDarkest.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(1435764121U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarker)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageHScanlinesDarker.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageHScanlinesDarker.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -952,7 +968,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarker)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -974,7 +990,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarker)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -985,13 +1001,15 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesDarker)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_HScanlinesDarker.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(3690360325U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageHScanlinesMedium)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageHScanlinesMedium.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageHScanlinesMedium.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -1041,7 +1059,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesMedium)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -1063,7 +1081,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesMedium)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -1074,13 +1092,15 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesMedium)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_HScanlinesMedium.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(4111869078U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageHScanlinesLight)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageHScanlinesLight.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageHScanlinesLight.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -1130,7 +1150,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesLight)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -1152,7 +1172,7 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesLight)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -1163,13 +1183,15 @@ TEST_F(VideoIntegerScaleTests, TestImageHScanlinesLight)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_HScanlinesLight.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(1397551830U, sink.getCrc32());
 }
 
 TEST_F(VideoIntegerScaleTests, TestImageBothScanlinesMedium)
 {
     _uut.trace(&_vcdTrace, 99);
-    _vcdTrace.open("VideoIntegerScale_TestImageBothScanlinesMedium.vcd");
+    //_vcdTrace.open("VideoIntegerScale_TestImageBothScanlinesMedium.vcd");
     
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("openclipart_327413.bmp"));
@@ -1219,7 +1241,7 @@ TEST_F(VideoIntegerScaleTests, TestImageBothScanlinesMedium)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         _uut.scalerClock = 1;
         
@@ -1241,7 +1263,7 @@ TEST_F(VideoIntegerScaleTests, TestImageBothScanlinesMedium)
         _uut.eval();
         _uut.downstreamRequestFifoReadData = sink.getRequestFifoReadData();
         
-        _vcdTrace.dump(_tickCount++);
+        //_vcdTrace.dump(_tickCount++);
         
         if (_uut.upstreamResponseFifoWriteEnable)
         {
@@ -1252,6 +1274,8 @@ TEST_F(VideoIntegerScaleTests, TestImageBothScanlinesMedium)
 
     ASSERT_TRUE(sink.writeBitmap("openclipart_327413_BothScanlinesMedium.bmp"));
     
-    _vcdTrace.close();
+    //_vcdTrace.close();
+    
+    EXPECT_EQ(1411095394U, sink.getCrc32());
 }
 
