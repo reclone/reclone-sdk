@@ -1,3 +1,6 @@
+configure_file(${CMAKE_SOURCE_DIR}/video/pipeline/filter/integerscale/src/integerScaleReciprocalFactors.mem ${CMAKE_BINARY_DIR}/integerScaleReciprocalFactors.mem COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/video/pipeline/filter/integerscale/src/integerScaleReciprocalFactors.mem ${CMAKE_CURRENT_BINARY_DIR}/integerScaleReciprocalFactors.mem COPYONLY)
+
 add_executable(testVideoGeneratorPipeline VideoGeneratorPipelineTests.cpp)
 
 target_link_libraries(testVideoGeneratorPipeline VVideoGeneratorPipeline gtest gmock_main gmock bmp2generator scanlines2bmp)
