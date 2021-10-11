@@ -162,7 +162,7 @@ TEST_F(VideoBinningFilterTests, TestImageBinned)
     BmpPipelineSource source;
     ASSERT_TRUE(source.readBitmap("pexels-pawel-fijalkowski-1253748.bmp"));
     
-    BmpPipelineSink sink(source.getWidth() / 2, source.getHeight() / 2);
+    BmpPipelineSink sink(source.getWidth() / 2, source.getHeight() / 2, 0.5f);
     
     // Initialize inputs
     _uut.scalerClock = 0;
