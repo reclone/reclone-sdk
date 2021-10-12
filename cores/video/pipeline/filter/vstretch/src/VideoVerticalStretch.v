@@ -436,8 +436,6 @@ always @ (posedge scalerClock or posedge reset) begin
                 cachedChunkValidBStaged <= cachedChunkValidB[requestedChunk];
                 cachedChunkPendingAStaged <= cachedChunkPendingA[requestedChunk];
                 cachedChunkPendingBStaged <= cachedChunkPendingB[requestedChunk];
-                //upstreamRequestRowUpperStaged <= upstreamRequestRowUpper;
-                //upstreamRequestRowLowerStaged <= upstreamRequestRowLower;
                 
                 // Determine if the required upstream chunk is already cached in the line buffer
                 if ((upstreamRequestRowUpper == cachedRowA || upstreamRequestRowUpper == cachedRowB) &&
