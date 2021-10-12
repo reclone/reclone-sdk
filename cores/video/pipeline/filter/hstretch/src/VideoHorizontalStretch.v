@@ -86,11 +86,12 @@ localparam COLOR_COMPONENT_BITS_MAX = 6;
 localparam COLOR_WEIGHT_BITS = SCALE_FRACTION_BITS + COLOR_COMPONENT_BITS_MAX;
 
 // One-hot states for downstream request state machine
-localparam DOWNSTREAM_REQUEST_IDLE = 4'b0001,
-           DOWNSTREAM_REQUEST_READ = 4'b0010,
-           DOWNSTREAM_REQUEST_STAGE = 4'b0100,
-           DOWNSTREAM_REQUEST_STORE = 4'b1000;
-reg[3:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
+localparam DOWNSTREAM_REQUEST_IDLE   = 5'b00001,
+           DOWNSTREAM_REQUEST_READ   = 5'b00010,
+           DOWNSTREAM_REQUEST_STAGE  = 5'b00100,
+           DOWNSTREAM_REQUEST_OFFSET = 5'b01000,
+           DOWNSTREAM_REQUEST_STORE  = 5'b10000;
+reg[4:0] downstreamRequestState = DOWNSTREAM_REQUEST_IDLE;
 
 // One-hot states for upstream response state machine
 localparam UPSTREAM_RESPONSE_IDLE = 3'b001, UPSTREAM_RESPONSE_READ = 3'b010, UPSTREAM_RESPONSE_STORE = 3'b100;
@@ -184,12 +185,9 @@ SyncFifo #(.DATA_WIDTH(HCOORD_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) pendingDownstre
 reg [REQUEST_BITS-1:0] lastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 reg [REQUEST_BITS-1:0] lastlastUpstreamChunkRequest = {REQUEST_BITS{1'b1}};
 
-reg [REQUEST_BITS-1:0] downstreamRequestStaged = {REQUEST_BITS{1'b1}};
 reg [CHUNK_BITS:0] downstreamRequestPixelCount = {(CHUNK_BITS+1){1'b0}};
-wire [VACTIVE_BITS-1:0] downstreamRequestRow = downstreamRequestStaged[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
-wire [HACTIVE_BITS-1:0] downstreamRequestCoord = {downstreamRequestStaged[CHUNKNUM_BITS-1:0], downstreamRequestPixelCount[CHUNK_BITS-1:0]};
-wire [HCOORD_BITS-1:0] upstreamRequestCoord = downstreamRequestCoord * hShrinkFactor + {{(HCOORD_BITS-SCALE_BITS){1'b0}}, hShrinkFactor[SCALE_BITS-1:1]}
-    - (hShrinkFactor[SCALE_BITS-1] ? {{HACTIVE_BITS{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}} : {HCOORD_BITS{1'b0}});
+reg [VACTIVE_BITS-1:0] downstreamRequestRow = {VACTIVE_BITS{1'b1}};
+reg [HCOORD_BITS-1:0] upstreamRequestCoord = {HCOORD_BITS{1'b1}};
 wire needsNextChunkToo = (upstreamRequestCoord[HCOORD_BITS-CHUNKNUM_BITS-1:HCOORD_BITS-HACTIVE_BITS] == {CHUNK_BITS{1'b1}}) &&
                          (|upstreamRequestCoord[SCALE_FRACTION_BITS-1:0]);
 wire [REQUEST_BITS-1:0] upstreamChunkRequest = {downstreamRequestRow, upstreamRequestCoord[HCOORD_BITS-1:HCOORD_BITS-CHUNKNUM_BITS]};
@@ -342,7 +340,8 @@ always @ (posedge scalerClock or posedge reset) begin
         // Asynchronous reset
         downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
         upstreamResponseState <= UPSTREAM_RESPONSE_IDLE;
-        downstreamRequestStaged <= {REQUEST_BITS{1'b1}};
+        downstreamRequestRow <= {VACTIVE_BITS{1'b1}};
+        upstreamRequestCoord <= {HCOORD_BITS{1'b1}};
         downstreamRequestFifoReadEnableReg <= 1'b0;
         upstreamRequestFifoWriteEnable <= 1'b0;
         pendingUpstreamRequestFifoReadEnable <= 1'b0;
@@ -418,15 +417,29 @@ always @ (posedge scalerClock or posedge reset) begin
             end
             
             DOWNSTREAM_REQUEST_STAGE: begin
-                downstreamRequestStaged <= downstreamRequestFifoReadData;
                 if (pendingDownstreamResponseFifoWriteEnable) begin
                     pendingDownstreamResponseFifoWriteEnableReg <= 1'b0;
                 end
                 upstreamRequestFifoWriteEnable <= 1'b0;
                 
                 if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
-                    downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
+                    downstreamRequestRow <= downstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS];
                     downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
+                    upstreamRequestCoord <=
+                        {downstreamRequestFifoReadData[CHUNKNUM_BITS-1:0], {CHUNK_BITS{1'b0}}} * hShrinkFactor;
+                    
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_OFFSET;
+                end
+            end
+            
+            DOWNSTREAM_REQUEST_OFFSET: begin
+                if (!pendingUpstreamRequestFifoFull && !upstreamRequestFifoFull && !pendingDownstreamResponseFifoFull) begin
+                    // Apply an offset which sets the correct linear interpolation coordinate for the first pixel of the chunk
+                    upstreamRequestCoord <= upstreamRequestCoord +
+                        {{(HCOORD_BITS-SCALE_BITS){1'b0}}, hShrinkFactor[SCALE_BITS-1:1]} -
+                        (hShrinkFactor[SCALE_BITS-1] ? {{HACTIVE_BITS{1'b0}}, 1'b1, {(SCALE_FRACTION_BITS-1){1'b0}}} : {HCOORD_BITS{1'b0}});
+
+                    downstreamRequestState <= DOWNSTREAM_REQUEST_STORE;
                 end
             end
 
@@ -458,6 +471,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     // If second to last pixel of the chunk, then start reading the next request, if there is one
                     if (downstreamRequestPixelCount == {1'b0, {(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
                         downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
+                        upstreamRequestCoord <= upstreamRequestCoord + {{(HACTIVE_BITS-1){1'b0}}, hShrinkFactor};
                         if (!downstreamRequestFifoEmpty) begin
                             downstreamRequestFifoReadEnableReg <= 1'b1;
                         end
@@ -465,16 +479,15 @@ always @ (posedge scalerClock or posedge reset) begin
                     end else if (downstreamRequestPixelCount == {1'b0, {CHUNK_BITS{1'b1}}}) begin
                         if (downstreamRequestFifoReadEnableReg) begin
                             // Start working the next request
-                            downstreamRequestPixelCount <= {(CHUNK_BITS+1){1'b0}};
                             downstreamRequestFifoReadEnableReg <= 1'b0;
                             downstreamRequestState <= DOWNSTREAM_REQUEST_STAGE;
                         end else begin
                             // Do not process another request
-                            downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
                             downstreamRequestState <= DOWNSTREAM_REQUEST_IDLE;
                         end
                     end else begin
                         downstreamRequestPixelCount <= downstreamRequestPixelCount + {{CHUNK_BITS{1'b0}}, 1'b1};
+                        upstreamRequestCoord <= upstreamRequestCoord + {{(HACTIVE_BITS-1){1'b0}}, hShrinkFactor};
                     end
                     
                 end else begin
