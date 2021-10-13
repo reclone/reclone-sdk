@@ -74,11 +74,16 @@ void VideoGeneratorPipelineTests::applyColorPattern(VVideoGeneratorPipeline & ge
 
 TEST_F(VideoGeneratorPipelineTests, ColorPattern720p)
 {
+    const bool enableTrace = false;
+    const unsigned int testCycles = 1300000;
     ScanlineBuffer scanlines(1280, 720, false, false);
     
-    //VerilatedVcdC vcd_trace;
-    //_uut.trace(&vcd_trace, 99);
-    //vcd_trace.open("VideoGeneratorPipelineTests_ColorPattern720p.vcd");
+    VerilatedVcdC vcd_trace;
+    if (enableTrace)
+    {
+        _uut.trace(&vcd_trace, 99);
+        vcd_trace.open("VideoGeneratorPipelineTests_ColorPattern720p.vcd");
+    }
 
     _uut.scalerClock = 0;
     _uut.pixelClock = 0;
@@ -113,40 +118,42 @@ TEST_F(VideoGeneratorPipelineTests, ColorPattern720p)
     _uut.generatorB = 0;
     _uut.generatorDataEnableDelayed = 0;
     _uut.eval();
-    //vcd_trace.dump(_tickCount++);
+    if (enableTrace) vcd_trace.dump(_tickCount++);
 
     
-    for (unsigned int cycle = 0; cycle < 1300000; ++cycle)
+    for (unsigned int cycle = 0; cycle < testCycles; ++cycle)
     {
         SCOPED_TRACE(cycle);
         
         _uut.scalerClock = 1;
         _uut.pixelClock = 1;
         _uut.eval();
-        //vcd_trace.dump(_tickCount++);
+        if (enableTrace) vcd_trace.dump(_tickCount++);
         applyColorPattern(_uut);
         scanlines.processPixel(_uut.dataEnable, _uut.hSync, _uut.vSync, _uut.red, _uut.green, _uut.blue);
 
         _uut.scalerClock = 0;
         _uut.pixelClock = 1;
         _uut.eval();
-        //vcd_trace.dump(_tickCount++);
+        if (enableTrace) vcd_trace.dump(_tickCount++);
 
         _uut.scalerClock = 1;
         _uut.pixelClock = 0;
         _uut.eval();
-        //vcd_trace.dump(_tickCount++);
+        if (enableTrace) vcd_trace.dump(_tickCount++);
         applyColorPattern(_uut);
 
         _uut.scalerClock = 0;
         _uut.pixelClock = 0;
         _uut.eval();
-        //vcd_trace.dump(_tickCount++);
+        if (enableTrace) vcd_trace.dump(_tickCount++);
     }
     
     ASSERT_TRUE(scanlines.writeBitmap("VideoGeneratorPipelineTests_ColorPattern720p.bmp"));
+    
+    EXPECT_EQ(561443426U, scanlines.getCrc32());
 
-    //vcd_trace.close();
+    if (enableTrace) vcd_trace.close();
     
     GeneratorBuffer sinkBitmap;
     ASSERT_TRUE(sinkBitmap.readBitmap("VideoGeneratorPipelineTests_ColorPattern720p.bmp"));
@@ -173,4 +180,179 @@ TEST_F(VideoGeneratorPipelineTests, ColorPattern720p)
     }
 
 }
+
+TEST_F(VideoGeneratorPipelineTests, ColorPattern720pUpscaleScanlines)
+{
+    const bool enableTrace = false;
+    const unsigned int testCycles = 1300000;
+    ScanlineBuffer scanlines(1280, 720, false, false);
+    
+    VerilatedVcdC vcd_trace;
+    if (enableTrace)
+    {
+        _uut.trace(&vcd_trace, 99);
+        vcd_trace.open("VideoGeneratorPipelineTests_ColorPattern720pUpscaleScanlines.vcd");
+    }
+
+    _uut.scalerClock = 0;
+    _uut.pixelClock = 0;
+    _uut.reset = 0;
+    _uut.cropRows = 0;
+    _uut.cropChunks = 0;
+    _uut.padTopRows = 0;
+    _uut.padLeftColumns = 0;
+    _uut.sourceRows = 720;
+    _uut.sourceColumns = 1280;
+    _uut.padColor = 0;
+    _uut.enableBinning = 0;
+    _uut.hScaleFactor = 5;
+    _uut.vScaleFactor = 3;
+    _uut.hShrinkFactor = 31;
+    _uut.vShrinkFactor = 43;
+    //_uut.hShrinkFactor = 64;
+    //_uut.vShrinkFactor = 64;
+    _uut.backgroundColor = 0;
+    _uut.hScanlineEnable = 1;
+    //_uut.hScanlineEnable = 0;
+    _uut.vScanlineEnable = 0;
+    _uut.scanlineIntensity = 2;
+    _uut.hFrontPorch = 110;
+    _uut.hSyncPulse = 40;
+    _uut.hBackPorch = 220;
+    _uut.hActive = 1280;
+    _uut.vFrontPorch = 5;
+    _uut.vSyncPulse = 5;
+    _uut.vBackPorch = 20;
+    _uut.vActive = 720;
+    _uut.isInterlaced = 0;
+    _uut.generatorR = 0;
+    _uut.generatorG = 0;
+    _uut.generatorB = 0;
+    _uut.generatorDataEnableDelayed = 0;
+    _uut.eval();
+    if (enableTrace) vcd_trace.dump(_tickCount++);
+
+    
+    for (unsigned int cycle = 0; cycle < testCycles; ++cycle)
+    {
+        SCOPED_TRACE(cycle);
+        
+        _uut.scalerClock = 1;
+        _uut.pixelClock = 1;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+        applyColorPattern(_uut);
+        scanlines.processPixel(_uut.dataEnable, _uut.hSync, _uut.vSync, _uut.red, _uut.green, _uut.blue);
+
+        _uut.scalerClock = 0;
+        _uut.pixelClock = 1;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+
+        _uut.scalerClock = 1;
+        _uut.pixelClock = 0;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+        applyColorPattern(_uut);
+
+        _uut.scalerClock = 0;
+        _uut.pixelClock = 0;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+    }
+    
+    ASSERT_TRUE(scanlines.writeBitmap("VideoGeneratorPipelineTests_ColorPattern720pUpscaleScanlines.bmp"));
+
+    if (enableTrace) vcd_trace.close();
+    
+    EXPECT_EQ(866791038U, scanlines.getCrc32());
+}
+
+/* This binning test fails because scaler clock is <4x the pixel clock.
+TEST_F(VideoGeneratorPipelineTests, ColorPattern720pBinning)
+{
+    const bool enableTrace = true;
+    const unsigned int testCycles = 1000000;
+    ScanlineBuffer scanlines(1280, 720, false, false);
+    
+    VerilatedVcdC vcd_trace;
+    if (enableTrace)
+    {
+        _uut.trace(&vcd_trace, 99);
+        vcd_trace.open("VideoGeneratorPipelineTests_ColorPattern720pBinning.vcd");
+    }
+
+    _uut.scalerClock = 0;
+    _uut.pixelClock = 0;
+    _uut.reset = 0;
+    _uut.cropRows = 0;
+    _uut.cropChunks = 0;
+    _uut.padTopRows = 0;
+    _uut.padLeftColumns = 0;
+    _uut.sourceRows = 720;
+    _uut.sourceColumns = 1280;
+    _uut.padColor = 0;
+    _uut.enableBinning = 1;
+    _uut.hScaleFactor = 1;
+    _uut.vScaleFactor = 1;
+    //_uut.hShrinkFactor = 31;
+    //_uut.vShrinkFactor = 43;
+    _uut.hShrinkFactor = 64;
+    _uut.vShrinkFactor = 64;
+    _uut.backgroundColor = 0;
+    _uut.hScanlineEnable = 0;
+    //_uut.hScanlineEnable = 0;
+    _uut.vScanlineEnable = 0;
+    _uut.scanlineIntensity = 2;
+    _uut.hFrontPorch = 110;
+    _uut.hSyncPulse = 40;
+    _uut.hBackPorch = 220;
+    _uut.hActive = 1280;
+    _uut.vFrontPorch = 5;
+    _uut.vSyncPulse = 5;
+    _uut.vBackPorch = 20;
+    _uut.vActive = 720;
+    _uut.isInterlaced = 0;
+    _uut.generatorR = 0;
+    _uut.generatorG = 0;
+    _uut.generatorB = 0;
+    _uut.generatorDataEnableDelayed = 0;
+    _uut.eval();
+    if (enableTrace) vcd_trace.dump(_tickCount++);
+
+    
+    for (unsigned int cycle = 0; cycle < testCycles; ++cycle)
+    {
+        SCOPED_TRACE(cycle);
+        
+        _uut.scalerClock = 1;
+        _uut.pixelClock = 1;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+        applyColorPattern(_uut);
+        scanlines.processPixel(_uut.dataEnable, _uut.hSync, _uut.vSync, _uut.red, _uut.green, _uut.blue);
+
+        _uut.scalerClock = 0;
+        _uut.pixelClock = 1;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+
+        _uut.scalerClock = 1;
+        _uut.pixelClock = 0;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+        applyColorPattern(_uut);
+
+        _uut.scalerClock = 0;
+        _uut.pixelClock = 0;
+        _uut.eval();
+        if (enableTrace) vcd_trace.dump(_tickCount++);
+    }
+    
+    ASSERT_TRUE(scanlines.writeBitmap("VideoGeneratorPipelineTests_ColorPattern720pBinning.bmp"));
+
+    if (enableTrace) vcd_trace.close();
+    
+    EXPECT_EQ(0U, scanlines.getCrc32());
+} */
 
