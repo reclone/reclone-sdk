@@ -361,7 +361,8 @@ SyncFifo #(.DATA_WIDTH(REQUEST_BITS), .ADDR_WIDTH(CHUNKNUM_BITS)) upstreamReques
     .writeData(upstreamRequestFifoWriteData)
 );
 
-reg upstreamResponseFifoReadEnable = 1'b0;
+reg upstreamResponseFifoReadEnableReg = 1'b0;
+wire upstreamResponseFifoReadEnable = !upstreamResponseFifoEmpty && upstreamResponseFifoReadEnableReg;
 reg upstreamResponseReady = 1'b0;
 wire upstreamResponseFifoEmpty;
 wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoReadData;
@@ -501,7 +502,7 @@ always @ (posedge scalerClock or posedge reset) begin
         upstreamRequestColumnStaged <= {HACTIVE_BITS{1'b1}};
         upstreamRequestStaged <= 1'b0;
         pendingDownstreamResponseScanlinePixelStaged <= 1'b0;
-        upstreamResponseFifoReadEnable <= 1'b0;
+        upstreamResponseFifoReadEnableReg <= 1'b0;
         upstreamResponseRowIsCacheA <= 1'b0;
         upstreamResponseRowIsCacheB <= 1'b0;
         upstreamRequestFifoWriteEnableReg <= 1'b0;
@@ -641,6 +642,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     // so reset all of the cachedChunkValid bits and update cachedRow
                     if (cachedRowBIsOlder) begin
                         cachedRowB <= upstreamRequestRowStaged;
+                        upstreamRequestRowIsCacheB <= 1'b1;
                         cachedChunkValidB <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingB[upstreamRequestChunk] <= 1'b1;
@@ -648,6 +650,7 @@ always @ (posedge scalerClock or posedge reset) begin
                         cachedRowBIsOlder <= 1'b0;
                     end else begin
                         cachedRowA <= upstreamRequestRowStaged;
+                        upstreamRequestRowIsCacheA <= 1'b1;
                         cachedChunkValidA <= {MAX_CHUNKS_PER_ROW{1'b0}};
                         // Do not repeat this request while it is in progress
                         cachedChunkPendingA[upstreamRequestChunk] <= 1'b1;
@@ -679,7 +682,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 // Wait until we can grab a pending upstream request
                 if (!pendingUpstreamRequestFifoEmpty) begin
                     pendingUpstreamRequestFifoReadEnable <= 1'b1;
-                    upstreamResponseFifoReadEnable <= 1'b0;
+                    upstreamResponseFifoReadEnableReg <= 1'b0;
                     upstreamResponsePixelCount <= {CHUNK_BITS{1'b0}};
                     upstreamResponseState <= UPSTREAM_RESPONSE_READ;
                 end
@@ -691,7 +694,7 @@ always @ (posedge scalerClock or posedge reset) begin
                 upstreamResponseState <= UPSTREAM_RESPONSE_STAGE;
                 
                 // Start reading the next upstream response
-                upstreamResponseFifoReadEnable <= !upstreamResponseFifoEmpty;
+                upstreamResponseFifoReadEnableReg <= 1'b1;
             end
             
             UPSTREAM_RESPONSE_STAGE: begin
@@ -703,7 +706,7 @@ always @ (posedge scalerClock or posedge reset) begin
                     (cachedRowB == pendingUpstreamRequestFifoReadData[REQUEST_BITS-1:REQUEST_BITS-VACTIVE_BITS]);
                 
                 // We should be able to process a pixel next cycle, if available
-                upstreamResponseFifoReadEnable <= !upstreamResponseFifoEmpty;
+                upstreamResponseFifoReadEnableReg <= 1'b1;
                 // upstreamResponseReady delays upstreamResponseFifoReadEnable by one clock cycle
                 // to synchronize upstreamResponseFifoReadData with upstreamResponseColumn
                 upstreamResponseReady <= upstreamResponseFifoReadEnable;
@@ -731,7 +734,7 @@ always @ (posedge scalerClock or posedge reset) begin
                         // Do not store next cycle's pixel
                         upstreamResponseReady <= 1'b0;
                         // Do not read another upstream response
-                        upstreamResponseFifoReadEnable <= 1'b0;
+                        upstreamResponseFifoReadEnableReg <= 1'b0;
                         
                         if (pendingUpstreamRequestFifoEmpty) begin
                             // No incoming chunk at this point, so return to idle
@@ -759,14 +762,14 @@ always @ (posedge scalerClock or posedge reset) begin
                         
                         if (upstreamResponsePixelCount == {{(CHUNK_BITS-1){1'b1}}, 1'b0}) begin
                             // Second to last pixel in the chunk, so stop reading response data until we grab the next pending request
-                            upstreamResponseFifoReadEnable <= 1'b0;
+                            upstreamResponseFifoReadEnableReg <= 1'b0;
                         end else begin
-                            upstreamResponseFifoReadEnable <= !upstreamResponseFifoEmpty;
+                            upstreamResponseFifoReadEnableReg <= 1'b1;
                         end
                     end
                 end else begin
                     // We should be able to process a pixel next cycle, if available
-                    upstreamResponseFifoReadEnable <= !upstreamResponseFifoEmpty;
+                    upstreamResponseFifoReadEnableReg <= 1'b1;
                     upstreamResponseReady <= upstreamResponseFifoReadEnable;
                 end
             end
