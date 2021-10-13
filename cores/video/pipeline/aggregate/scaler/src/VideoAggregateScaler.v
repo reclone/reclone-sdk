@@ -10,15 +10,13 @@
 //
 //  VideoCroppingFilter
 //  |
-//  --> VideoBinningFilter
+//  --> VideoIntegerScale
 //      |
-//      --> VideoIntegerScale
+//      --> VideoVerticalStretch
 //          |
-//          --> VideoVerticalStretch
+//          --> VideoHorizontalStretch
 //              |
-//              --> VideoHorizontalStretch
-//                  |
-//                  --> VideoPaddingFilter
+//              --> VideoPaddingFilter
 //
 // Here are some use cases that this aggregate scaler element should be able to handle:
 //  - Upscaling low-resolution video content for rendering on higher-resolution displays
@@ -67,9 +65,6 @@ module VideoAggregateScaler #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 6)
     input wire [VACTIVE_BITS-1:0] sourceRows,
     input wire [HACTIVE_BITS-1:0] sourceColumns,
     input wire [BITS_PER_PIXEL-1:0] padColor,
-
-    // Binning configuration
-    input wire enableBinning,
 
     // Integer scaling configuration
     input wire [INTEGER_SCALE_BITS-1:0] hScaleFactor,
@@ -142,34 +137,6 @@ VideoCroppingFilter #(.CHUNK_BITS(CHUNK_BITS)) croppingFilter
     .downstreamResponseFifoWriteData(croppingDownstreamResponseFifoWriteData)
 );
 
-wire binningDownstreamRequestFifoReadEnable;
-wire binningDownstreamRequestFifoEmpty;
-wire [REQUEST_BITS-1:0] binningDownstreamRequestFifoReadData;
-wire binningDownstreamResponseFifoWriteEnable;
-wire binningDownstreamResponseFifoFull;
-wire [BITS_PER_PIXEL-1:0] binningDownstreamResponseFifoWriteData;
-VideoBinningFilter #(.CHUNK_BITS(CHUNK_BITS)) binningFilter
-(
-    .scalerClock(scalerClock),
-    .reset(reset),
-    
-    .enableBinning(enableBinning),
-    
-    .upstreamRequestFifoReadEnable(croppingDownstreamRequestFifoReadEnable),
-    .upstreamRequestFifoEmpty(croppingDownstreamRequestFifoEmpty),
-    .upstreamRequestFifoReadData(croppingDownstreamRequestFifoReadData),
-    .upstreamResponseFifoWriteEnable(croppingDownstreamResponseFifoWriteEnable),
-    .upstreamResponseFifoFull(croppingDownstreamResponseFifoFull),
-    .upstreamResponseFifoWriteData(croppingDownstreamResponseFifoWriteData),
-    
-    .downstreamRequestFifoReadEnable(binningDownstreamRequestFifoReadEnable),
-    .downstreamRequestFifoEmpty(binningDownstreamRequestFifoEmpty),
-    .downstreamRequestFifoReadData(binningDownstreamRequestFifoReadData),
-    .downstreamResponseFifoWriteEnable(binningDownstreamResponseFifoWriteEnable),
-    .downstreamResponseFifoFull(binningDownstreamResponseFifoFull),
-    .downstreamResponseFifoWriteData(binningDownstreamResponseFifoWriteData)
-);
-
 wire scaleDownstreamRequestFifoReadEnable;
 wire scaleDownstreamRequestFifoEmpty;
 wire [REQUEST_BITS-1:0] scaleDownstreamRequestFifoReadData;
@@ -188,12 +155,12 @@ VideoIntegerScale #(.CHUNK_BITS(CHUNK_BITS)) integerScale
     .vScanlineEnable(vScanlineEnable),
     .scanlineIntensity(scanlineIntensity),
     
-    .upstreamRequestFifoReadEnable(binningDownstreamRequestFifoReadEnable),
-    .upstreamRequestFifoEmpty(binningDownstreamRequestFifoEmpty),
-    .upstreamRequestFifoReadData(binningDownstreamRequestFifoReadData),
-    .upstreamResponseFifoWriteEnable(binningDownstreamResponseFifoWriteEnable),
-    .upstreamResponseFifoFull(binningDownstreamResponseFifoFull),
-    .upstreamResponseFifoWriteData(binningDownstreamResponseFifoWriteData),
+    .upstreamRequestFifoReadEnable(croppingDownstreamRequestFifoReadEnable),
+    .upstreamRequestFifoEmpty(croppingDownstreamRequestFifoEmpty),
+    .upstreamRequestFifoReadData(croppingDownstreamRequestFifoReadData),
+    .upstreamResponseFifoWriteEnable(croppingDownstreamResponseFifoWriteEnable),
+    .upstreamResponseFifoFull(croppingDownstreamResponseFifoFull),
+    .upstreamResponseFifoWriteData(croppingDownstreamResponseFifoWriteData),
     
     .downstreamRequestFifoReadEnable(scaleDownstreamRequestFifoReadEnable),
     .downstreamRequestFifoEmpty(scaleDownstreamRequestFifoEmpty),

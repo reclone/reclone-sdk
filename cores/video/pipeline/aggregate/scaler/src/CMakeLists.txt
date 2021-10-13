@@ -11,7 +11,6 @@ add_custom_command (
           ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/src/BlockRamDualPort.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/cropping/src/VideoCroppingFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
-          ${PROJECT_SOURCE_DIR}/video/pipeline/filter/binning/src/VideoBinningFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/integerscale/src/VideoIntegerScale.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/vstretch/src/VideoVerticalStretch.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/hstretch/src/VideoHorizontalStretch.v
@@ -22,7 +21,6 @@ add_custom_command (
           ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/src/BlockRamDualPort.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/cropping/src/VideoCroppingFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
-          ${PROJECT_SOURCE_DIR}/video/pipeline/filter/binning/src/VideoBinningFilter.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/integerscale/src/VideoIntegerScale.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/vstretch/src/VideoVerticalStretch.v
           ${PROJECT_SOURCE_DIR}/video/pipeline/filter/hstretch/src/VideoHorizontalStretch.v
@@ -40,7 +38,6 @@ add_library (VVideoAggregateScaler STATIC
     ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/src/BlockRamDualPort.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/cropping/src/VideoCroppingFilter.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/padding/src/VideoPaddingFilter.v
-    ${PROJECT_SOURCE_DIR}/video/pipeline/filter/binning/src/VideoBinningFilter.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/integerscale/src/VideoIntegerScale.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/vstretch/src/VideoVerticalStretch.v
     ${PROJECT_SOURCE_DIR}/video/pipeline/filter/hstretch/src/VideoHorizontalStretch.v

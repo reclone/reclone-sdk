@@ -95,7 +95,6 @@ TEST_F(VideoGeneratorPipelineTests, ColorPattern720p)
     _uut.sourceRows = 720;
     _uut.sourceColumns = 1280;
     _uut.padColor = 0;
-    _uut.enableBinning = 0;
     _uut.hScaleFactor = 0;
     _uut.vScaleFactor = 0;
     _uut.hShrinkFactor = 64;
@@ -204,7 +203,6 @@ TEST_F(VideoGeneratorPipelineTests, ColorPattern720pUpscaleScanlines)
     _uut.sourceRows = 720;
     _uut.sourceColumns = 1280;
     _uut.padColor = 0;
-    _uut.enableBinning = 0;
     _uut.hScaleFactor = 5;
     _uut.vScaleFactor = 3;
     _uut.hShrinkFactor = 31;

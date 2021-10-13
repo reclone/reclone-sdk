@@ -78,7 +78,6 @@ TEST_F(VideoAggregateScalerTests, NesPixelPerfect720p)
     _uut.sourceRows = 224*3;
     _uut.sourceColumns = 256*3;
     _uut.padColor = 0;
-    _uut.enableBinning = 0;
     _uut.hScaleFactor = 3;
     _uut.vScaleFactor = 3;
     _uut.hShrinkFactor = 64;
@@ -195,7 +194,6 @@ TEST_F(VideoAggregateScalerTests, NesWider720p)
     _uut.sourceRows = 224*3;
     _uut.sourceColumns = 256*4;
     _uut.padColor = 0;
-    _uut.enableBinning = 0;
     _uut.hScaleFactor = 4;
     _uut.vScaleFactor = 3;
     _uut.hShrinkFactor = 64;
@@ -312,7 +310,6 @@ TEST_F(VideoAggregateScalerTests, NesScanlines720p)
     _uut.sourceRows = 717;
     _uut.sourceColumns = 820;
     _uut.padColor = 0;
-    _uut.enableBinning = 0;
     _uut.hScaleFactor = 1;
     _uut.vScaleFactor = 2;
     _uut.hShrinkFactor = 20;
@@ -428,7 +425,6 @@ TEST_F(VideoAggregateScalerTests, NesBilinear720p)
     _uut.sourceRows = 717;
     _uut.sourceColumns = 820;
     _uut.padColor = 0;
-    _uut.enableBinning = 0;
     _uut.hScaleFactor = 1;
     _uut.vScaleFactor = 1;
     _uut.hShrinkFactor = 20;

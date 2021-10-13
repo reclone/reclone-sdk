@@ -59,9 +59,6 @@ module VideoGeneratorPipeline #(parameter CHUNK_BITS = 5, SCALE_FRACTION_BITS = 
     input wire [HACTIVE_BITS-1:0] sourceColumns,
     input wire [BITS_PER_PIXEL-1:0] padColor,
 
-    // Binning configuration
-    input wire enableBinning,
-
     // Integer scaling configuration
     input wire [INTEGER_SCALE_BITS-1:0] hScaleFactor,
     input wire [INTEGER_SCALE_BITS-1:0] vScaleFactor,
@@ -170,9 +167,6 @@ VideoAggregateScaler #(.CHUNK_BITS(CHUNK_BITS), .SCALE_FRACTION_BITS(SCALE_FRACT
     .sourceRows(sourceRows),
     .sourceColumns(sourceColumns),
     .padColor(padColor),
-
-    // Binning configuration
-    .enableBinning(enableBinning),
 
     // Integer scaling configuration
     .hScaleFactor(hScaleFactor),
