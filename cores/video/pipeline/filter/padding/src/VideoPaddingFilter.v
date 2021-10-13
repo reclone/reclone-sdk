@@ -487,7 +487,7 @@ always @ (posedge scalerClock or posedge reset) begin
             
             // STAGE 2 - Pending downstream response should be available next cycle
             pendingDownstreamResponseAvailable <= !pendingDownstreamResponseFifoEmpty &&
-                                                  pendingDownstreamResponseFifoReadEnableReg;
+                                                 pendingDownstreamResponseFifoReadEnableReg;
             
             // STAGE 3 - Register pendingDownstreamResponseFifoReadData to improve timing
             pendingDownstreamResponseReady <= pendingDownstreamResponseAvailable;

@@ -163,7 +163,7 @@ TEST_F(VideoPaddingFilterTests, TestImagePadCyanAllSides)
     _uut.trace(&_vcdTrace, 99);
     //_vcdTrace.open("VideoPaddingFilter_TestImagePadCyanAllSides.vcd");
     
-    BmpPipelineSource source;
+    BmpPipelineSource source(0.5f);
     ASSERT_TRUE(source.readBitmap("openclipart_327895.bmp"));
     
     BmpPipelineSink sink(source.getWidth() + 128, source.getHeight() + 128, 0.9f);
