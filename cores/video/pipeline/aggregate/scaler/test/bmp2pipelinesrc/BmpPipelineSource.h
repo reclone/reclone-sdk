@@ -26,12 +26,14 @@
 
 #include <stdint.h>
 #include <queue>
+#include <random>
 #include "GeneratorBuffer.h"
 
 class BmpPipelineSource
 {
     public:
         BmpPipelineSource();
+        BmpPipelineSource(float emptyProbability);
         virtual ~BmpPipelineSource();
         
         bool readBitmap(const char * bmpFilename) { return _buffer.readBitmap(bmpFilename); }
@@ -68,6 +70,8 @@ class BmpPipelineSource
         bool _responseFifoWriteEnable;
         bool _responseFifoFull;
         uint16_t _responseFifoWriteData;
-        
+        float _emptyProbability;
+        std::mt19937 _randomEngine;
+        std::uniform_real_distribution<float> _randomDistribution;
         
 };

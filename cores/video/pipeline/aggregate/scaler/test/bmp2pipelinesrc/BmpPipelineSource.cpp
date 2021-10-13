@@ -35,7 +35,26 @@ BmpPipelineSource::BmpPipelineSource() :
     _requestFifoReadData(0),
     _responseFifoWriteEnable(false),
     _responseFifoFull(false),
-    _responseFifoWriteData(0)
+    _responseFifoWriteData(0),
+    _emptyProbability(0.0f),
+    _randomEngine(1337),
+    _randomDistribution(0.0, 1.0)
+{
+    
+}
+
+BmpPipelineSource::BmpPipelineSource(float emptyProbability) :
+    _scalerClock(false),
+    _lastScalerClock(false),
+    _requestFifoReadEnable(false),
+    _requestFifoEmpty(true),
+    _requestFifoReadData(0),
+    _responseFifoWriteEnable(false),
+    _responseFifoFull(false),
+    _responseFifoWriteData(0),
+    _emptyProbability(emptyProbability),
+    _randomEngine(1337),
+    _randomDistribution(0.0, 1.0)
 {
     
 }
@@ -73,7 +92,9 @@ void BmpPipelineSource::eval()
         
         // If the response FIFO is not empty, and the downstream response FIFO is not full,
         // then write the next response
-        if (!_responseQueue.empty() && !_responseFifoFull)
+        // Get a random number to decide whether to supply a response
+        float rnd = _randomDistribution(_randomEngine);
+        if (!_responseQueue.empty() && !_responseFifoFull && rnd >= _emptyProbability)
         {
             _responseFifoWriteData = _responseQueue.front();
             _responseFifoWriteEnable = true;
