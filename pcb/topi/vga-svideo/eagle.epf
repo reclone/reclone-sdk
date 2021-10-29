@@ -1,0 +1,34 @@
+[Eagle]
+Version="07 06 00"
+Platform="Windows"
+Serial="742319E554-LS-WLM-1CS"
+Globals="Globals"
+Desktop="Desktop"
+
+[Globals]
+AutoSaveProject=1
+UsedLibrary="C:/EAGLE-7.6.0/lbr/adafruit.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/cadsoft/xilinx_devices_V6.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-Connectors.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/adafruit/adafruit.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/reclone-rise.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/ftdichip-3.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-DigitalIC.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/scout119/Gadgeteer.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-Passives.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/GeekAmmo.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-FreqCtrl.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-Electromechanical.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-LED.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/sparkfun/SparkFun-DiscreteSemi.lbr"
+UsedLibrary="C:/Users/Jeff/Documents/svn/reclone-sdk.git/branches/develop/pcb/rise/lbr/seeed/Seeed-Connector.lbr"
+
+[Win_1]
+Type="Control Panel"
+Loc="1384 358 3365 1845"
+State=2
+Number=0
+
+[Desktop]
+Screen="3840 2160"
+Window="Win_1"
