@@ -82,12 +82,9 @@ module VideoBinningFilter #(parameter CHUNK_BITS = 5)
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 
-localparam CHUNK_SIZE = 1 << CHUNK_BITS;
 localparam HACTIVE_BITS = 11;
-localparam HACTIVE_COLUMNS = 1 << HACTIVE_BITS;
 localparam VACTIVE_BITS = 11;
 localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;
-localparam MAX_CHUNKS_PER_ROW = 1 << CHUNKNUM_BITS;
 localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
 localparam BITS_PER_PIXEL = 16;
 localparam ROW_BUFFER_WORD_BITS = BITS_PER_PIXEL * 2;

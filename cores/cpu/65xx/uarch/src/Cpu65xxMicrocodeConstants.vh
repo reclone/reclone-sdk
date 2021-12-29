@@ -30,6 +30,8 @@
 `ifndef __CPU6502MICROCODECONSTANTS_VH_
 `define __CPU6502MICROCODECONSTANTS_VH_
 
+/* verilator lint_off UNUSED */
+
 // Address bus mux selector
 localparam ADDR_PC          = 2'h0; // addr <= PC
 localparam ADDR_SP          = 2'h1; // addr <= {$01, SP}
@@ -157,5 +159,7 @@ localparam USEQ_BR_IF_SET   = 1'b1; // Branch if flag is set (1) or page boundar
 localparam USEQ_ADDR_RESET  = 10'h000;
 localparam USEQ_ADDR_IRQ    = 10'h008;
 localparam USEQ_ADDR_NMI    = 10'h010;
+
+/* verilator lint_on UNUSED */
 
 `endif //__CPU6502MICROCODECONSTANTS_VH_

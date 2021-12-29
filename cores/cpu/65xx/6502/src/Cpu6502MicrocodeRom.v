@@ -64,7 +64,6 @@ localparam USEQ_ADDR_FETCH  = USEQ_ADDR_NMI + 10'd7;
 localparam USEQ_ADDR_WASTE1  = USEQ_ADDR_NMI + 10'd6;
 localparam USEQ_ADDR_LDA_ABS = {UPAGE_OP, LDA_IMM, 1'b1};
 localparam USEQ_ADDR_HALT   = 10'h1FF;
-localparam USEQ_ADDR_NONE   = USEQ_ADDR_HALT;
 localparam USEQ_ADDR_LDA_ZPG_X = USEQ_ADDR_NMI + 10'd8;
 localparam USEQ_ADDR_LDX_ZPG_Y = USEQ_ADDR_LDA_ZPG_X + 10'd2;
 localparam USEQ_ADDR_LDY_ZPG_X = USEQ_ADDR_LDX_ZPG_Y + 10'd2;

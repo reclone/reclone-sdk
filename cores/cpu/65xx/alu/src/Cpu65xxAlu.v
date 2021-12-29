@@ -24,23 +24,25 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+`default_nettype none
+
 `include "Cpu65xxMicrocodeConstants.vh"
 
 module Cpu65xxAlu
 (
-    input   [7:0]   operandA,
-    input   [7:0]   operandB,
-    input           carryIn,
-    input           overflowIn,
-    input   [3:0]   operation,
-    input   [2:0]   opExtension,
-    input           decimalMode,
-    output  [7:0]   result,
-    output          carryOut,
-    output          zero,
-    output          negative,
-    output          overflowOut,
-    output          branchCondition
+    input wire [7:0]    operandA,
+    input wire [7:0]    operandB,
+    input wire          carryIn,
+    input wire          overflowIn,
+    input wire [3:0]    operation,
+    input wire [2:0]    opExtension,
+    input wire          decimalMode,
+    output reg [7:0]    result,
+    output reg          carryOut,
+    output reg          zero,
+    output reg          negative,
+    output reg          overflowOut,
+    output reg          branchCondition
 );
 
 wire subtract = (operation == ALU_OP_SBC || operation == ALU_OP_CMP || operation == ALU_OP_DEC || 
@@ -55,8 +57,8 @@ wire halfCarry = rawSumL[4] | (decimalMode & withCarry & !subtract & (rawSumL[3:
 wire [4:0] rawSumH = addend1[7:4] + addend2[7:4] + {3'd0, halfCarry};
 wire fullCarry = rawSumH[4] | (decimalMode & withCarry & !subtract & (rawSumH[3:1] >= 3'd5));
 wire [7:0] rawSum = {rawSumH[3:0], rawSumL[3:0]};
-wire [3:0] finalSumL;
-wire [3:0] finalSumH;
+reg [3:0] finalSumL;
+reg [3:0] finalSumH;
 wire [7:0] finalSum = {finalSumH, finalSumL};
 
 // NMOS 6502 quirk - Z and V flags reflect the result of binary addition, even in decimal mode

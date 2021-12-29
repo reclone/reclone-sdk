@@ -1,25 +1,15 @@
 cmake_minimum_required(VERSION 3.0)
 
-project (RecloneCores)
-
 include(cmake/gtest.cmake)
 include(cmake/zlib.cmake)
 
-# Set default VERILATOR_ROOT (at least works in Ubuntu)
-if (MSVC)
-  set(VERILATOR_ROOT C:\\msys64\\usr\\share\\verilator)
-else()
-  set(VERILATOR_ROOT /usr/share/verilator)
+find_package(verilator HINTS $ENV{VERILATOR_ROOT} ${VERILATOR_ROOT})
+if (NOT verilator_FOUND)
+  message(FATAL_ERROR "Verilator was not found. Either install it, or set the VERILATOR_ROOT environment variable")
 endif()
 
-# Verilated code compile flags normally in verilated.mk
-set(VK_CPPFLAGS -MMD -I${VERILATOR_ROOT}/include -I${VERILATOR_ROOT}/include/vltstd -DVL_PRINTF=printf)
-
-find_file(VERILATOR verilator PATHS C:\\msys64\\usr\\bin C:\\msys32\\usr\\bin /usr/bin NO_DEFAULT_PATH)
-
 # Global verilator options
-set(VERILATOR_OPTS -Wall -Wno-PINCONNECTEMPTY --trace --default-language 1364-2005)
-
+set(VERILATOR_OPTS -Wall -Wno-PINCONNECTEMPTY --default-language 1364-2005 --bin "${VERILATOR_BIN}")
 
 # Overall C++ compile flags
 if (MSVC)

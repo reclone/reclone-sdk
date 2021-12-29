@@ -27,6 +27,7 @@
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VPalTiming.h"
+#include "VPalTiming___024root.h"
 
 class PalTimingTests : public ::testing::Test
 {
@@ -109,8 +110,8 @@ TEST_F(PalTimingTests, Interlaced)
             {
                 unsigned int vPos;
                 
-                ASSERT_EQ(_uut.PalTiming__DOT__vCount, line) << frame;
-                ASSERT_EQ(_uut.PalTiming__DOT__hCount, pixel) << frame;
+                ASSERT_EQ(_uut.rootp->PalTiming__DOT__vCount, line) << frame;
+                ASSERT_EQ(_uut.rootp->PalTiming__DOT__hCount, pixel) << frame;
                 
                 bool vBlank = (line < 25U) || (line == 25U && pixel < 567U) || (line >= 313U && line < 338U);
                 bool vSync = (line >= 3U && (line < 5U || (line == 5U && pixel < 567U))) || ((line > 315U || (line == 315U && pixel >= 567U)) && (line < 318U));
@@ -261,8 +262,8 @@ TEST_F(PalTimingTests, FakeProgressive)
             {
                 unsigned int vPos;
                 
-                ASSERT_EQ(_uut.PalTiming__DOT__vCount, line) << frame;
-                ASSERT_EQ(_uut.PalTiming__DOT__hCount, pixel) << frame;
+                ASSERT_EQ(_uut.rootp->PalTiming__DOT__vCount, line) << frame;
+                ASSERT_EQ(_uut.rootp->PalTiming__DOT__hCount, pixel) << frame;
                 
                 bool vBlank = (line < 25U) || (line == 25U && pixel < 567U);
                 bool vSync = (line >= 3U && (line < 5U || (line == 5U && pixel < 567U)));

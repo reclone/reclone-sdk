@@ -28,6 +28,7 @@
 #include <time.h>
 #include "gtest/gtest.h"
 #include "VRgbEncoder8to10.h"
+#include "VRgbEncoder8to10___024root.h"
 
 class RgbEncoder8to10Tests : public ::testing::Test
 {
@@ -184,12 +185,12 @@ void RgbEncoder8to10Tests::testEncodingByteWithTmds(unsigned char d)
     
     // Check the new disparity count
     // Normalize to an unsigned 5-bit field for comparison to the internal disparity count register
-    ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
     
     // Rising clock edge to store the new disparity count
     _uut.clock = 1;
     _uut.eval();
-    ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    ASSERT_EQ((_expectedDisparityCnt + 0x20) % 0x20, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt);
     
     // Disparity count should never stray outside of -10..10
     ASSERT_LE(abs(_expectedDisparityCnt), 10);
@@ -198,7 +199,7 @@ void RgbEncoder8to10Tests::testEncodingByteWithTmds(unsigned char d)
 TEST_F(RgbEncoder8to10Tests, InitialConditions)
 {
     _uut.eval();
-    ASSERT_EQ(0U, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    ASSERT_EQ(0U, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt);
 }
 
 TEST_F(RgbEncoder8to10Tests, XnorWithFive1Bits)
@@ -229,7 +230,7 @@ TEST_F(RgbEncoder8to10Tests, ZeroDisparityCntXor)
     ASSERT_EQ(0U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(1U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0xC7, _uut.q & 0xFF); //11000111
-    ASSERT_EQ(2, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(2, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
 TEST_F(RgbEncoder8to10Tests, ZeroDisparityCntXnor)
@@ -239,7 +240,7 @@ TEST_F(RgbEncoder8to10Tests, ZeroDisparityCntXnor)
     ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0x82, _uut.q & 0xFF); //10000010
-    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x20-4, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
 TEST_F(RgbEncoder8to10Tests, PosDisparityMoreOnes)
@@ -250,16 +251,16 @@ TEST_F(RgbEncoder8to10Tests, PosDisparityMoreOnes)
     ASSERT_EQ(0U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(1U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0xC7, _uut.q & 0xFF); //11000111
-    ASSERT_EQ(2, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(2, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
     _uut.clock = 1;
     _uut.eval();
-    ASSERT_EQ(2, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    ASSERT_EQ(2, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt);
     _uut.d = 0xFF;
     _uut.eval();
     ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0x00, _uut.q & 0xFF);
-    ASSERT_EQ(0x20-6, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x20-6, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
 TEST_F(RgbEncoder8to10Tests, PosDisparityMoreZeros)
@@ -270,16 +271,16 @@ TEST_F(RgbEncoder8to10Tests, PosDisparityMoreZeros)
     ASSERT_EQ(0U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(1U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0xC7, _uut.q & 0xFF); //11000111
-    ASSERT_EQ(2, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(2, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
     _uut.clock = 1;
     _uut.eval();
-    ASSERT_EQ(2, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    ASSERT_EQ(2, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt);
     _uut.d = 0x00;
     _uut.eval();
     ASSERT_EQ(0U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(1U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0x00, _uut.q & 0xFF);
-    ASSERT_EQ(0x20-6, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x20-6, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
 TEST_F(RgbEncoder8to10Tests, NegDisparityMoreOnes)
@@ -289,16 +290,16 @@ TEST_F(RgbEncoder8to10Tests, NegDisparityMoreOnes)
     ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0x82, _uut.q & 0xFF); //10000010
-    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x20-4, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
     _uut.clock = 1;
     _uut.eval();
-    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    ASSERT_EQ(0x20-4, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt);
     _uut.d = 0xFF;
     _uut.eval();
     ASSERT_EQ(0U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0xFF, _uut.q & 0xFF);
-    ASSERT_EQ(0x02, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x02, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
 TEST_F(RgbEncoder8to10Tests, NegDisparityMoreZeros)
@@ -308,16 +309,16 @@ TEST_F(RgbEncoder8to10Tests, NegDisparityMoreZeros)
     ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(0U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0x82, _uut.q & 0xFF); //10000010
-    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x20-4, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
     _uut.clock = 1;
     _uut.eval();
-    ASSERT_EQ(0x20-4, _uut.RgbEncoder8to10__DOT__disparity_cnt);
+    ASSERT_EQ(0x20-4, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt);
     _uut.d = 0x00;
     _uut.eval();
     ASSERT_EQ(1U, (_uut.q >> 9) & 1U);
     ASSERT_EQ(1U, (_uut.q >> 8) & 1U);
     ASSERT_EQ(0xFF, _uut.q & 0xFF);
-    ASSERT_EQ(0x06, _uut.RgbEncoder8to10__DOT__disparity_cnt_next);
+    ASSERT_EQ(0x06, _uut.rootp->RgbEncoder8to10__DOT__disparity_cnt_next);
 }
 
 TEST_F(RgbEncoder8to10Tests, InputSweepAscending)

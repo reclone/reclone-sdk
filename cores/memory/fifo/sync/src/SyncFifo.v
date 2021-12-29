@@ -57,19 +57,21 @@ module SyncFifo # (parameter DATA_WIDTH = 8, ADDR_WIDTH = 3)
     input wire [DATA_WIDTH-1:0] writeData
 );
 
-localparam FIFO_DEPTH = 1 << ADDR_WIDTH;
+localparam DATA_BYTES = 1;
+localparam DATA_REMAINDER = DATA_WIDTH - (DATA_BYTES * 8);
 
 // Read and write pointers are equal whenever the FIFO is empty or full.
 // Observe the 'empty' and 'full' output registers to distinguish.
 reg [ADDR_WIDTH-1:0] readPointer = {ADDR_WIDTH{1'b0}};
 reg [ADDR_WIDTH-1:0] writePointer = {ADDR_WIDTH{1'b0}};
 
-BlockRamDualPort # (.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) mem
+BlockRamDualPort # (.DATA_BYTES(DATA_BYTES), .PARITY_BITS(DATA_REMAINDER), .ADDR_WIDTH(ADDR_WIDTH)) mem
 (
     // Write Port
     .clockA(clock),
     .enableA(1'b1),
-    .writeEnableA(writeEnable),
+    .resetA(1'b0),
+    .writeEnableA({DATA_BYTES{writeEnable}}),
     .addressA(writePointer),
     .dataInA(writeData),
     .dataOutA(),
@@ -77,7 +79,8 @@ BlockRamDualPort # (.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) mem
     // Read Port
     .clockB(clock),
     .enableB(readEnable),
-    .writeEnableB(1'b0),
+    .resetB(1'b0),
+    .writeEnableB({DATA_BYTES{1'b0}}),
     .addressB(readPointer),
     .dataInB({DATA_WIDTH{1'b0}}),
     .dataOutB(readData)

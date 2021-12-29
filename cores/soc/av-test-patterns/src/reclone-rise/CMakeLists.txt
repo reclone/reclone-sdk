@@ -17,7 +17,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/spd-infoframe/src/SpdInfoFramePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-sample/src/AudioSamplePacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-clock-regen/src/AudioClockRegenPacket.v
-    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-content-protection/src/AudioContentProtectionPacket.v
+    ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/audio-cntnt-prtctn/src/AudioCntntPrtctnPckt.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/general-control/src/GeneralControlPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/null/src/NullDataIslandPacket.v
     ${PROJECT_SOURCE_DIR}/video/hdmi/data-island/packet/serializer/src/DataIslandPacketSerializer.v
@@ -42,7 +42,7 @@ set(VERILOG_SRCS
     ${PROJECT_SOURCE_DIR}/video/conversion/color-space/rgb-yiq/src/RgbToYiq.v
     ${PROJECT_SOURCE_DIR}/audio/tones/sine-1khz/src/Sine1kHzTone.v
     ${PROJECT_SOURCE_DIR}/audio/delta-sigma/src/AudioDeltaSigmaDac.v
-    ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/src/BlockRamDualPort.v
+    ${PROJECT_SOURCE_DIR}/memory/blockram/dual-port/symmetric/src/BlockRamDualPort.v
     )
 
 include(${PROJECT_SOURCE_DIR}/target/reclone-rise/reclone-rise.cmake)

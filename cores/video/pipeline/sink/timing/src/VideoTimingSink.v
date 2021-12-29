@@ -2,7 +2,7 @@
 // VideoTimingSink - Generate VGA-style timing and color signals from a video pipeline
 //
 // This is the final stage of a video pipeline - outputting video timing and color signals
-// that are suitable to be consumed by an encoder for DVI, composite video, etc.
+// that are suitable to be consumed by an encoder for VGA, DVI, HDMI, etc.
 //
 // Prior stages of the video pipeline have intermediate resolutions and operate in small
 // data bursts, so inherently, they do not have any timing information and just perform small
@@ -93,7 +93,6 @@ module VideoTimingSink #(parameter CHUNK_BITS = 5)
 
 );
 
-localparam CHUNK_SIZE = 1 << CHUNK_BITS;
 localparam HACTIVE_BITS = 11;
 localparam VACTIVE_BITS = 11;
 localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;

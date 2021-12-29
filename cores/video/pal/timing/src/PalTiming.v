@@ -73,6 +73,7 @@ module PalTiming # (parameter PHASE_BITS = 4)
     input wire progressive,
     
     output reg [PHASE_BITS-1:0] phase = {(PHASE_BITS){1'b0}},
+    output reg pixelEnable = 1'b0,
     output reg blank = 1'b1,
     output reg hSync = 1'b0,
     output reg vSync = 1'b0,
@@ -167,6 +168,7 @@ wire [9:0] vPosNext = progressive ? vPosProgressiveNextHalfLines[10:1] : vPosInt
 always @ (posedge phaseClock) begin
     if (reset == 1'b1) begin
         phase <= {(PHASE_BITS){1'b0}};
+        pixelEnable <= 1'b0;
         hCount <= 11'd568;
         vCount <= 10'd0;
         hPos <= 10'd380;
@@ -191,11 +193,14 @@ always @ (posedge phaseClock) begin
             linePhase <= linePhaseNext;
             hPos <= hPosNext[9:0];
             vPos <= vPosNext;
+            pixelEnable <= 1'b1;
             
             if (vSyncNext == 1'b1 && vSync == 1'b0) begin
                 // Active edge of vertical sync, so increment field counter
                 fieldCount <= fieldCount + 2'd1;
             end
+        end else begin
+            pixelEnable <= 1'b0;
         end
 
         // Increment phase counter

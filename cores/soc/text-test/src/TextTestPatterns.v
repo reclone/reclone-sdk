@@ -239,17 +239,15 @@ TextGlyphRam #(.MEM_INIT_FILE("CP437_8x14.mem")) glyphRam
 (
     // Read-only Port A
     .clockA(pixelClock),
-    .enableA(glyphRamReadEnable),
+    //.enableA(glyphRamReadEnable),
     .addressA(glyphRamAddress),
     .dataOutA(glyphRamDataOut),
     
-    // Read/Write Port B
+    // Write-only Port B
     .clockB(pixelClock),
-    .enableB(1'b0),
     .writeEnableB(1'b0),
     .addressB(12'd0),
-    .dataInB(8'd0),
-    .dataOutB()
+    .dataInB(8'd0)
 );
 
 wire screenRamReadEnable;
@@ -266,7 +264,7 @@ TextScreenRam #(.MEM_INIT_FILE("CharSet_ColorSet.mem")) screenRam
     // Read/Write Port B
     .clockB(pixelClock),
     .enableB(1'b0),
-    .writeEnableB(1'b0),
+    .writeEnableB(2'b0),
     .addressB(11'd0),
     .dataInB(16'd0),
     .dataOutB()
@@ -331,12 +329,10 @@ TextOverlayGenerator textOverlay
     .numRows(5'd25),
     
     // Glyph RAM port
-    .glyphRamEnable(glyphRamReadEnable),
     .glyphRamAddress(glyphRamAddress),
     .glyphRamData(glyphRamDataOut),
     
     // Screen RAM port
-    .screenRamEnable(screenRamReadEnable),
     .screenRamAddress(screenRamAddress),
     .screenRamData(screenRamDataOut)
 );

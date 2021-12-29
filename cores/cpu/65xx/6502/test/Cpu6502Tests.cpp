@@ -33,6 +33,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "VCpu6502.h"
+#include "VCpu6502___024root.h"
 
 // From perfect6502
 extern "C"
@@ -412,7 +413,7 @@ TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_LockStep)
         pc = readPC(_perfect6502state);
         addr = readAddressBus(_perfect6502state);
         rw = readRW(_perfect6502state);
-        ASSERT_EQ(addr, _uut.address) << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress;
+        ASSERT_EQ(addr, _uut.address) << "uCodeAddress=" << _uut.rootp->Cpu6502__DOT__uCodeAddress;
         ASSERT_EQ(rw, _uut.nWrite);
         // Supply data from memory
         _uut.dataIn = _uutMem[_uut.address];
@@ -427,7 +428,7 @@ TEST_F(Cpu6502Tests, DISABLED_FunctionalSelfTest_LockStep)
                 
                 // Validate written data on clock rising edge only
                 ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut)
-                    << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress
+                    << "uCodeAddress=" << _uut.rootp->Cpu6502__DOT__uCodeAddress
                     << " clock=" << _uut.clock;
             }
             
@@ -506,7 +507,7 @@ TEST_F(Cpu6502Tests, FunctionalSelfTest_Cpu6502Only)
         _uut.clock = !_uut.clock;
         _uut.eval();
         
-        pc = _uut.Cpu6502__DOT__uArch__DOT__regPC;
+        pc = _uut.rootp->Cpu6502__DOT__uArch__DOT__regPC;
         addr = _uut.address;
         rw = _uut.nWrite;
         
@@ -671,7 +672,7 @@ TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_LockStep)
     _uut.dataIn = 0x02;
     
     // Sync the stack pointer
-    _uut.Cpu6502__DOT__uArch__DOT__regS = readSP(_perfect6502state);
+    _uut.rootp->Cpu6502__DOT__uArch__DOT__regS = readSP(_perfect6502state);
     
     uint16_t pc = 0xFFFF;
     uint16_t addr = 0xFFFF;
@@ -688,7 +689,7 @@ TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_LockStep)
         pc = readPC(_perfect6502state);
         addr = readAddressBus(_perfect6502state);
         rw = readRW(_perfect6502state);
-        ASSERT_EQ(addr, _uut.address) << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress;
+        ASSERT_EQ(addr, _uut.address) << "uCodeAddress=" << _uut.rootp->Cpu6502__DOT__uCodeAddress;
         ASSERT_EQ(rw, _uut.nWrite);
         // Supply data from memory
         _uut.dataIn = _uutMem[_uut.address];
@@ -706,7 +707,7 @@ TEST_F(Cpu6502Tests, DISABLED_DecimalModeTest_LockStep)
                 
                 // Validate written data on clock rising edge only
                 ASSERT_EQ(readDataBus(_perfect6502state), _uut.dataOut)
-                    << "uCodeAddress=" << _uut.Cpu6502__DOT__uCodeAddress
+                    << "uCodeAddress=" << _uut.rootp->Cpu6502__DOT__uCodeAddress
                     << " clock=" << _uut.clock;
             }
             
@@ -786,7 +787,7 @@ TEST_F(Cpu6502Tests, DecimalModeTest_Cpu6502Only)
         _uut.clock = !_uut.clock;
         _uut.eval();
         
-        pc = _uut.Cpu6502__DOT__uArch__DOT__regPC;
+        pc = _uut.rootp->Cpu6502__DOT__uArch__DOT__regPC;
         addr = _uut.address;
         rw = _uut.nWrite;
         

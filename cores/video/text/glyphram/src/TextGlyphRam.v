@@ -45,25 +45,27 @@ module TextGlyphRam #(parameter MEM_INIT_FILE = "", MEM_INIT_VAL = 8'h00)
     input wire [ADDR_WIDTH-1:0] addressA,
     output wire [DATA_WIDTH-1:0] dataOutA,
     
-    // Read/Write Port B
+    // Write-only Port B
     input wire clockB,
     input wire enableB,
     input wire writeEnableB,
     input wire [ADDR_WIDTH-1:0] addressB,
-    input wire [DATA_WIDTH-1:0] dataInB,
-    output wire [DATA_WIDTH-1:0] dataOutB
+    input wire [DATA_WIDTH-1:0] dataInB
 );
 
-localparam DATA_WIDTH = 8;
+localparam DATA_BYTES = 1;
 localparam ADDR_WIDTH = 12;
+localparam COLUMN_WIDTH = 8;
+localparam DATA_WIDTH = DATA_BYTES * COLUMN_WIDTH;
 
 BlockRamDualPort #(.BIN_MEM_INIT_FILE(MEM_INIT_FILE),
                    .MEM_INIT_VAL(MEM_INIT_VAL),
-                   .DATA_WIDTH(DATA_WIDTH),
+                   .DATA_BYTES(DATA_BYTES),
                    .ADDR_WIDTH(ADDR_WIDTH)) textGlyphRam
 (
     .clockA(clockA),
     .enableA(enableA),
+    .resetA(1'b0),
     .writeEnableA(1'b0),
     .addressA(addressA),
     .dataInA({DATA_WIDTH{1'b0}}),
@@ -71,10 +73,11 @@ BlockRamDualPort #(.BIN_MEM_INIT_FILE(MEM_INIT_FILE),
     
     .clockB(clockB),
     .enableB(enableB),
+    .resetB(1'b0),
     .writeEnableB(writeEnableB),
     .addressB(addressB),
     .dataInB(dataInB),
-    .dataOutB(dataOutB)
+    .dataOutB()
 );
 
 endmodule

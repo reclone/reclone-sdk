@@ -49,29 +49,33 @@ module TextScreenRam #(parameter MEM_INIT_FILE = "", MEM_INIT_VAL = 16'h0000)
     // Read/Write Port B
     input wire clockB,
     input wire enableB,
-    input wire writeEnableB,
+    input wire [DATA_BYTES-1:0] writeEnableB,
     input wire [ADDR_WIDTH-1:0] addressB,
     input wire [DATA_WIDTH-1:0] dataInB,
     output wire [DATA_WIDTH-1:0] dataOutB
 );
 
-localparam DATA_WIDTH = 16;
+localparam DATA_BYTES = 2;
 localparam ADDR_WIDTH = 11;
+localparam COLUMN_WIDTH = 8;
+localparam DATA_WIDTH = DATA_BYTES * COLUMN_WIDTH;
 
 BlockRamDualPort #(.HEX_MEM_INIT_FILE(MEM_INIT_FILE),
                    .MEM_INIT_VAL(MEM_INIT_VAL),
-                   .DATA_WIDTH(DATA_WIDTH),
+                   .DATA_BYTES(DATA_BYTES),
                    .ADDR_WIDTH(ADDR_WIDTH)) textScreenRam
 (
     .clockA(clockA),
     .enableA(enableA),
-    .writeEnableA(1'b0),
+    .resetA(1'b0),
+    .writeEnableA({DATA_BYTES{1'b0}}),
     .addressA(addressA),
     .dataInA({DATA_WIDTH{1'b0}}),
     .dataOutA(dataOutA),
     
     .clockB(clockB),
     .enableB(enableB),
+    .resetB(1'b0),
     .writeEnableB(writeEnableB),
     .addressB(addressB),
     .dataInB(dataInB),

@@ -1,30 +1,8 @@
-# Enable ExternalProject CMake module
-include(ExternalProject)
+include(FetchContent)
 
-# Download perfect6502
-ExternalProject_Add(
-    perfect6502_external
-    URL https://github.com/reclone/perfect6502/archive/master.zip
-    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external
-    # Disable install step
-    INSTALL_COMMAND ""
+FetchContent_Declare(
+  perfect6502
+  GIT_REPOSITORY https://github.com/reclone/perfect6502.git
 )
-ExternalProject_Get_property(perfect6502_external SOURCE_DIR)
 
-include_directories(${SOURCE_DIR})
-
-# Create a perfect6502 target to be used as a dependency by test programs
-add_library(perfect6502 IMPORTED STATIC GLOBAL)
-add_dependencies(perfect6502 perfect6502_external)
-
-# Set perfect6502 properties
-if (MSVC)
-  set_target_properties(perfect6502 PROPERTIES
-      "IMPORTED_LOCATION" "${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external/src/perfect6502_external-build/Debug/perfect6502.lib"
-  )
-else()
-  set_target_properties(perfect6502 PROPERTIES
-      "IMPORTED_LOCATION" "${CMAKE_CURRENT_BINARY_DIR}/perfect6502_external/src/perfect6502_external-build/libperfect6502.a"
-  )
-endif(MSVC)
-
+FetchContent_MakeAvailable(perfect6502)

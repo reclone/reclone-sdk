@@ -27,6 +27,7 @@
 #include <verilated_vcd_c.h>
 #include "gtest/gtest.h"
 #include "VVideoFormatTiming.h"
+#include "VVideoFormatTiming___024root.h"
 
 class VideoFormatTimingTests : public ::testing::Test
 {
@@ -71,7 +72,7 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
-            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+            ASSERT_EQ(vCount, _uut.rootp->VideoFormatTiming__DOT__vCount);
 
             if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
             {
@@ -85,7 +86,7 @@ TEST_F(VideoFormatTimingTests, Hd720p60)
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
             {
                 //std::cout << vCount << " " << hCount << std::endl;
-                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                ASSERT_EQ(hCount, _uut.rootp->VideoFormatTiming__DOT__hCount);
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
@@ -171,7 +172,7 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
         // even field
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); vCount += 2)
         {
-            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+            ASSERT_EQ(vCount, _uut.rootp->VideoFormatTiming__DOT__vCount);
 
             if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
             {
@@ -185,7 +186,7 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
             {
                 //std::cout << vCount << " " << hCount << std::endl;
-                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                ASSERT_EQ(hCount, _uut.rootp->VideoFormatTiming__DOT__hCount);
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
@@ -242,7 +243,7 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
         for (unsigned int vCount = 1; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive + 2U); vCount += 2U)
         {
             //std::cout << vCount << std::endl;
-            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+            ASSERT_EQ(vCount, _uut.rootp->VideoFormatTiming__DOT__vCount);
 
             if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + 2))
             {
@@ -256,7 +257,7 @@ TEST_F(VideoFormatTimingTests, Hd1080i60)
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
             {
                 //std::cout << vCount << " " << hCount << std::endl;
-                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                ASSERT_EQ(hCount, _uut.rootp->VideoFormatTiming__DOT__hCount);
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
@@ -340,7 +341,7 @@ TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
-            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+            ASSERT_EQ(vCount, _uut.rootp->VideoFormatTiming__DOT__vCount);
 
             if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
             {
@@ -354,7 +355,7 @@ TEST_F(VideoFormatTimingTests, Vga640x480at60Hz)
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
             {
                 //std::cout << vCount << " " << hCount << std::endl;
-                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                ASSERT_EQ(hCount, _uut.rootp->VideoFormatTiming__DOT__hCount);
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
@@ -422,7 +423,7 @@ TEST_F(VideoFormatTimingTests, Svga800x600at72Hz)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
-            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+            ASSERT_EQ(vCount, _uut.rootp->VideoFormatTiming__DOT__vCount);
 
             if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
             {
@@ -436,7 +437,7 @@ TEST_F(VideoFormatTimingTests, Svga800x600at72Hz)
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
             {
                 //std::cout << vCount << " " << hCount << std::endl;
-                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                ASSERT_EQ(hCount, _uut.rootp->VideoFormatTiming__DOT__hCount);
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {
@@ -504,7 +505,7 @@ TEST_F(VideoFormatTimingTests, Xga1024x768at85Hz)
     {
         for (unsigned int vCount = 0; vCount < static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch + _uut.vActive); ++vCount)
         {
-            ASSERT_EQ(vCount, _uut.VideoFormatTiming__DOT__vCount);
+            ASSERT_EQ(vCount, _uut.rootp->VideoFormatTiming__DOT__vCount);
 
             if (vCount >= static_cast<unsigned int>(_uut.vFrontPorch + _uut.vSyncPulse + _uut.vBackPorch))
             {
@@ -518,7 +519,7 @@ TEST_F(VideoFormatTimingTests, Xga1024x768at85Hz)
             for (unsigned int hCount = 0; hCount < static_cast<unsigned int>(_uut.hFrontPorch + _uut.hSyncPulse + _uut.hBackPorch + _uut.hActive); ++hCount)
             {
                 //std::cout << vCount << " " << hCount << std::endl;
-                ASSERT_EQ(hCount, _uut.VideoFormatTiming__DOT__hCount);
+                ASSERT_EQ(hCount, _uut.rootp->VideoFormatTiming__DOT__hCount);
                 
                 if (hCount >= _uut.hFrontPorch && hCount < (_uut.hFrontPorch + _uut.hSyncPulse))
                 {

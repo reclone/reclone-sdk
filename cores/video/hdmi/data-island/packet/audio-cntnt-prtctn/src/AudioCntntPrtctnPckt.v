@@ -1,5 +1,5 @@
 //
-// AudioContentProtectionPacket - HDMI data island asserting no Audio Content Protection
+// AudioCntntPrtctnPckt - HDMI data island asserting no Audio Content Protection
 //
 // The Audio Content Protection packet declares the current type of copy protection used for
 // audio data.
@@ -34,7 +34,7 @@
 
 `default_nettype none
 
-module AudioContentProtectionPacket
+module AudioCntntPrtctnPckt
 (
     output wire [23:0] header,
     output wire [55:0] subpacket0,

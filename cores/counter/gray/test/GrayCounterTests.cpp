@@ -2,7 +2,7 @@
 // GrayCounterTests - Unit tests for verilated GrayCounter module
 //
 //
-// Copyright 2019 Reclone Labs <reclonelabs.com>
+// Copyright 2019 - 2021 Reclone Labs <reclonelabs.com>
 //
 // Redistribution and use in source and binary forms, with or without modification, are permitted
 // provided that the following conditions are met:
@@ -26,6 +26,7 @@
 
 #include "gtest/gtest.h"
 #include "VGrayCounter.h"
+#include "VGrayCounter___024root.h"
 
 class GrayCounterTests : public ::testing::Test
 {
@@ -50,13 +51,13 @@ TEST_F(GrayCounterTests, InitialDefaults)
     ASSERT_EQ(0x0, _uut.grayCount);
     ASSERT_EQ(0x1, _uut.grayCountNext);
     ASSERT_EQ(0x3, _uut.grayCountNextNext);
-    ASSERT_EQ(0U, _uut.GrayCounter__DOT__binaryCount);
+    ASSERT_EQ(0U, _uut.rootp->GrayCounter__DOT__binaryCount);
 }
 
 TEST_F(GrayCounterTests, Reset)
 {
     ASSERT_EQ(0U, _uut.grayCount);
-    ASSERT_EQ(0U, _uut.GrayCounter__DOT__binaryCount);
+    ASSERT_EQ(0U, _uut.rootp->GrayCounter__DOT__binaryCount);
     
     _uut.clock = 0;
     _uut.enable = 1;
@@ -82,7 +83,7 @@ TEST_F(GrayCounterTests, Reset)
     ASSERT_EQ(0x0, _uut.grayCount);
     ASSERT_EQ(0x1, _uut.grayCountNext);
     ASSERT_EQ(0x3, _uut.grayCountNextNext);
-    ASSERT_EQ(0U, _uut.GrayCounter__DOT__binaryCount);
+    ASSERT_EQ(0U, _uut.rootp->GrayCounter__DOT__binaryCount);
     _uut.clock = 0;
     _uut.eval();
 
@@ -97,7 +98,7 @@ TEST_F(GrayCounterTests, Reset)
 TEST_F(GrayCounterTests, Enable)
 {
     ASSERT_EQ(0U, _uut.grayCount);
-    ASSERT_EQ(0U, _uut.GrayCounter__DOT__binaryCount);
+    ASSERT_EQ(0U, _uut.rootp->GrayCounter__DOT__binaryCount);
     
     _uut.clock = 0;
     _uut.enable = 1;

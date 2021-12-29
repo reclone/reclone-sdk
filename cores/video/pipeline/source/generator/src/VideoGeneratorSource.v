@@ -66,7 +66,6 @@ module VideoGeneratorSource #(parameter CHUNK_BITS = 5)
     input wire dataEnableDelayed
 );
 
-localparam CHUNK_SIZE = 1 << CHUNK_BITS;
 localparam HACTIVE_BITS = 11;
 localparam VACTIVE_BITS = 11;
 localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;

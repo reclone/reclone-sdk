@@ -25,7 +25,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
-#include "VAudioContentProtectionPacket.h"
+#include "VAudioCntntPrtctnPckt.h"
 
 class AudioContentProtectionPacketTests : public ::testing::Test
 {
@@ -37,7 +37,7 @@ class AudioContentProtectionPacketTests : public ::testing::Test
         }
         
     protected:
-        VAudioContentProtectionPacket _uut;
+        VAudioCntntPrtctnPckt _uut;
 };
 
 TEST_F(AudioContentProtectionPacketTests, ExpectedValues)

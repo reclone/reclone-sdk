@@ -1,5 +1,5 @@
 add_executable(testAudioContentProtectionPacket AudioContentProtectionPacketTests.cpp)
 
-target_link_libraries(testAudioContentProtectionPacket VAudioContentProtectionPacket gtest gtest_main)
+target_link_libraries(testAudioContentProtectionPacket VAudioCntntPrtctnPckt gtest gtest_main)
 
 add_test(NAME testAudioContentProtectionPacket COMMAND testAudioContentProtectionPacket)

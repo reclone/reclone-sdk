@@ -27,6 +27,8 @@
 `ifndef __CPU6502OPCODES_VH_
 `define __CPU6502OPCODES_VH_
 
+/* verilator lint_off UNUSED */
+
 localparam BRK          = 8'h00;
 localparam ORA_X_IND    = 8'h01;
 localparam JAM_02       = 8'h02;
@@ -283,5 +285,7 @@ localparam NOP_ABS_X_FC = 8'hFC;
 localparam SBC_ABS_X    = 8'hFD;
 localparam INC_ABS_X    = 8'hFE;
 localparam ISC_ABS_X    = 8'hFF;
+
+/* verilator lint_on UNUSED */
 
 `endif //__CPU6502OPCODES_VH_

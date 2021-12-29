@@ -36,9 +36,9 @@ module Cpu65xxMicroArchitecture
     input reset,
 
     input wire [7:0] dataIn,
-    output wire [7:0] dataOut,
+    output reg [7:0] dataOut,
     output wire nWrite,
-    output wire [15:0] address,
+    output reg [15:0] address,
 
     input wire nNMI,
     input wire nIRQ,
@@ -75,8 +75,8 @@ reg latchedRESET = 1'b0;
 reg [9:0] uCodeAddressLast = 10'd0;
 reg [7:0] unstableConst = 8'h00;
 
-wire [7:0] aluOperandA;
-wire [7:0] aluOperandB;
+reg [7:0] aluOperandA;
+reg [7:0] aluOperandB;
 wire [7:0] aluResult;
 wire aluCarryOut;
 wire aluOverflowOut;

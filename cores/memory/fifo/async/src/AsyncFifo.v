@@ -65,7 +65,8 @@ module AsyncFifo # (parameter DATA_WIDTH = 8, ADDR_WIDTH = 3)
     input wire [DATA_WIDTH-1:0] writeData
 );
 
-localparam FIFO_DEPTH = 1 << ADDR_WIDTH;
+localparam DATA_BYTES = 1;
+localparam DATA_REMAINDER = DATA_WIDTH - (DATA_BYTES * 8);
 
 wire [ADDR_WIDTH-1:0] writePointer;
 wire [ADDR_WIDTH-1:0] readPointer;
@@ -85,12 +86,13 @@ reg [ADDR_WIDTH-1:0] readPointerSync2 = {ADDR_WIDTH{1'b0}};
 reg readSyncReset = 1'b0;
 reg writeSyncReset = 1'b0;
 
-BlockRamDualPort # (.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) mem
+BlockRamDualPort # (.DATA_BYTES(DATA_BYTES), .PARITY_BITS(DATA_REMAINDER), .ADDR_WIDTH(ADDR_WIDTH)) mem
 (
     // Write Port
     .clockA(writeClock),
     .enableA(1'b1),
-    .writeEnableA(pushEnable),
+    .resetA(writeSyncReset),
+    .writeEnableA({DATA_BYTES{pushEnable}}),
     .addressA(writePointer),
     .dataInA(writeData),
     .dataOutA(),
@@ -98,7 +100,8 @@ BlockRamDualPort # (.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) mem
     // Read Port
     .clockB(readClock),
     .enableB(popEnable),
-    .writeEnableB(1'b0),
+    .resetB(readSyncReset),
+    .writeEnableB({DATA_BYTES{1'b0}}),
     .addressB(readPointer),
     .dataInB({DATA_WIDTH{1'b0}}),
     .dataOutB(readData)

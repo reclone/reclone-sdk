@@ -185,7 +185,7 @@ wire [55:0] acpSubpacket0;
 wire [55:0] acpSubpacket1;
 wire [55:0] acpSubpacket2;
 wire [55:0] acpSubpacket3;
-AudioContentProtectionPacket acpPacket
+AudioCntntPrtctnPckt acpPacket
 (
     .header(acpHeader),
     .subpacket0(acpSubpacket0),

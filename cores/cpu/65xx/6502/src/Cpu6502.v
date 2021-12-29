@@ -1,6 +1,8 @@
 //
 // Cpu6502 - A hopefully cycle-accurate implementation of the MOS 6502
 //
+// This module pairs a Cpu65xxMicroArchitecture with the Cpu6502MicrocodeRom.
+//
 //
 // Copyright 2021 Reclone Labs <reclonelabs.com>
 // 

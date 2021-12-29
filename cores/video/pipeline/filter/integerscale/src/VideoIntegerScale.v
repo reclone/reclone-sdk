@@ -108,14 +108,13 @@ module VideoIntegerScale #(parameter CHUNK_BITS = 5)
     input wire [BITS_PER_PIXEL-1:0] upstreamResponseFifoWriteData
 );
 
-localparam CHUNK_SIZE = 1 << CHUNK_BITS;
 localparam HACTIVE_BITS = 11;
-localparam HACTIVE_COLUMNS = 1 << HACTIVE_BITS;
 localparam VACTIVE_BITS = 11;
 localparam CHUNKNUM_BITS = HACTIVE_BITS - CHUNK_BITS;
 localparam MAX_CHUNKS_PER_ROW = 1 << CHUNKNUM_BITS;
 localparam REQUEST_BITS = VACTIVE_BITS + CHUNKNUM_BITS;
 localparam BITS_PER_PIXEL = 16;
+localparam BYTES_PER_PIXEL = BITS_PER_PIXEL / 8;
 localparam SCALE_BITS = 3;
 localparam RECIPROCAL_FRACTION_BITS = 15;
 localparam RECIPROCAL_BITS = 1 + RECIPROCAL_FRACTION_BITS;
@@ -154,12 +153,13 @@ wire [BITS_PER_PIXEL-1:0] cacheWriteDataA;
 wire cacheReadEnableA;
 wire [HACTIVE_BITS-1:0] cacheReadAddressA;
 wire [BITS_PER_PIXEL-1:0] cacheReadDataA;
-BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheA
+BlockRamDualPort # (.DATA_BYTES(BYTES_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheA
 (
     // Write Port
     .clockA(scalerClock),
     .enableA(1'b1),
-    .writeEnableA(cacheWriteEnableA),
+    .resetA(1'b0),
+    .writeEnableA({BYTES_PER_PIXEL{cacheWriteEnableA}}),
     .addressA(cacheWriteAddressA),
     .dataInA(cacheWriteDataA),
     .dataOutA(),
@@ -167,7 +167,8 @@ BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cach
     // Read Port
     .clockB(scalerClock),
     .enableB(cacheReadEnableA),
-    .writeEnableB(1'b0),
+    .resetB(1'b0),
+    .writeEnableB({BYTES_PER_PIXEL{1'b0}}),
     .addressB(cacheReadAddressA),
     .dataInB({BITS_PER_PIXEL{1'b0}}),
     .dataOutB(cacheReadDataA)
@@ -182,12 +183,13 @@ wire [BITS_PER_PIXEL-1:0] cacheWriteDataB;
 wire cacheReadEnableB;
 wire [HACTIVE_BITS-1:0] cacheReadAddressB;
 wire [BITS_PER_PIXEL-1:0] cacheReadDataB;
-BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheB
+BlockRamDualPort # (.DATA_BYTES(BYTES_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cacheB
 (
     // Write Port
     .clockA(scalerClock),
     .enableA(1'b1),
-    .writeEnableA(cacheWriteEnableB),
+    .resetA(1'b0),
+    .writeEnableA({BYTES_PER_PIXEL{cacheWriteEnableB}}),
     .addressA(cacheWriteAddressB),
     .dataInA(cacheWriteDataB),
     .dataOutA(),
@@ -195,7 +197,8 @@ BlockRamDualPort # (.DATA_WIDTH(BITS_PER_PIXEL), .ADDR_WIDTH(HACTIVE_BITS)) cach
     // Read Port
     .clockB(scalerClock),
     .enableB(cacheReadEnableB),
-    .writeEnableB(1'b0),
+    .resetB(1'b0),
+    .writeEnableB({BYTES_PER_PIXEL{1'b0}}),
     .addressB(cacheReadAddressB),
     .dataInB({BITS_PER_PIXEL{1'b0}}),
     .dataOutB(cacheReadDataB)
@@ -539,6 +542,7 @@ always @ (posedge scalerClock or posedge reset) begin
         downstreamResponseScanlineBlend <= 1'b0;
         downstreamResponsePixelAvailable <= 1'b0;
         downstreamResponseFifoWriteData <= {BITS_PER_PIXEL{1'b0}};
+        
 
     end else begin
         
