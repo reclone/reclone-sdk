@@ -1,3 +1,5 @@
 add_subdirectory(blinky)
 add_subdirectory(av-test-patterns)
+add_subdirectory(scaler-test)
 add_subdirectory(text-test)
+#add_subdirectory(ram-test)
