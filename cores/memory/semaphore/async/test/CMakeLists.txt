@@ -1,0 +1,5 @@
+add_executable(testAsyncSemaphore AsyncSemaphoreTests.cpp)
+
+target_link_libraries(testAsyncSemaphore VAsyncSemaphore gtest gtest_main)
+
+add_test(NAME testAsyncSemaphore COMMAND testAsyncSemaphore)
